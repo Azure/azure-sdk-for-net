@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary></summary>
-    internal partial class PrivateEndpointConnectionOperationSource : IOperationSource<PrivateEndpointConnectionResource>
+    internal partial class HDInsightPrivateEndpointConnectionOperationSource : IOperationSource<HDInsightPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PrivateEndpointConnectionOperationSource(ArmClient client)
+        internal HDInsightPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HDInsightPrivateEndpointConnectionResource IOperationSource<HDInsightPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             HDInsightPrivateEndpointConnectionData data = HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateEndpointConnectionResource(_client, data);
+            return new HDInsightPrivateEndpointConnectionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HDInsightPrivateEndpointConnectionResource> IOperationSource<HDInsightPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             HDInsightPrivateEndpointConnectionData data = HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PrivateEndpointConnectionResource(_client, data);
+            return new HDInsightPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

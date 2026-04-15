@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ClusterFlavors = new ChangeTrackingList<string>();
             NodeTypes = new ChangeTrackingList<string>();
             ClusterVersions = new ChangeTrackingList<string>();
-            OsType = new ChangeTrackingList<HDInsightOSType>();
+            OSType = new ChangeTrackingList<HDInsightOSType>();
             VmSizes = new ChangeTrackingList<string>();
         }
 
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="osType"> The OSType affected, Windows or Linux. </param>
         /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
         /// <param name="espApplied"> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </param>
-        /// <param name="computeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
+        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string computeIsolationSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string isComputeIsolationSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilterMode = filterMode;
             Regions = regions;
             ClusterFlavors = clusterFlavors;
             NodeTypes = nodeTypes;
             ClusterVersions = clusterVersions;
-            OsType = osType;
+            OSType = osType;
             VmSizes = vmSizes;
             EspApplied = espApplied;
-            ComputeIsolationSupported = computeIsolationSupported;
+            IsComputeIsolationSupported = isComputeIsolationSupported;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IReadOnlyList<string> ClusterVersions { get; }
 
         /// <summary> The OSType affected, Windows or Linux. </summary>
-        public IList<HDInsightOSType> OsType { get; }
+        public IReadOnlyList<HDInsightOSType> OSType { get; }
 
         /// <summary> The list of virtual machine sizes to include or exclude. </summary>
         public IReadOnlyList<string> VmSizes { get; }
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string EspApplied { get; }
 
         /// <summary> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </summary>
-        public string ComputeIsolationSupported { get; }
+        public string IsComputeIsolationSupported { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         public HDInsightSecurityProfile()
         {
-            LdapsUrls = new ChangeTrackingList<string>();
+            LdapUris = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
@@ -28,19 +29,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="directoryType"> The directory type. </param>
         /// <param name="domain"> The organization's active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
-        /// <param name="ldapsUrls"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
+        /// <param name="ldapUris"> The LDAPS protocol URLs to communicate with the Active Directory. </param>
         /// <param name="domainUsername"> The domain user account that will have admin privileges on the cluster. </param>
         /// <param name="domainUserPassword"> The domain admin password. </param>
         /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
         /// <param name="aaddsResourceId"> The resource ID of the user's Azure Active Directory Domain Service. </param>
         /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<string> ldapsUrls, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, string aaddsResourceId, string msiResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DirectoryType = directoryType;
             Domain = domain;
             OrganizationalUnitDN = organizationalUnitDN;
-            LdapsUrls = ldapsUrls;
+            LdapUris = ldapUris;
             DomainUsername = domainUsername;
             DomainUserPassword = domainUserPassword;
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string OrganizationalUnitDN { get; set; }
 
         /// <summary> The LDAPS protocol URLs to communicate with the Active Directory. </summary>
-        public IList<string> LdapsUrls { get; }
+        public IList<Uri> LdapUris { get; }
 
         /// <summary> The domain user account that will have admin privileges on the cluster. </summary>
         public string DomainUsername { get; set; }
@@ -71,9 +72,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IList<string> ClusterUsersGroupDNs { get; }
 
         /// <summary> The resource ID of the user's Azure Active Directory Domain Service. </summary>
-        public string AaddsResourceId { get; set; }
+        public ResourceIdentifier AaddsResourceId { get; set; }
 
         /// <summary> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </summary>
-        public string MsiResourceId { get; set; }
+        public ResourceIdentifier MsiResourceId { get; set; }
     }
 }

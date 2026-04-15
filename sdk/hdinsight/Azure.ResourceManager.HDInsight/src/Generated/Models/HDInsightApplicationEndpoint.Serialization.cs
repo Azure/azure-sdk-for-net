@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.HDInsight;
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string endpointLocation = default;
             int? destinationPort = default;
             int? publicPort = default;
-            string privateIPAddress = default;
+            IPAddress privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +169,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("privateIPAddress"u8))
                 {
-                    privateIPAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

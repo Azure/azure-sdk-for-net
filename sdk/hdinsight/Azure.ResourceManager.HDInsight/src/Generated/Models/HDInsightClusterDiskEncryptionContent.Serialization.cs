@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
-                writer.WriteStringValue(VaultUri);
+                writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string vaultUri = default;
+            Uri vaultUri = default;
             string keyName = default;
             string keyVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (prop.NameEquals("vaultUri"u8))
                 {
-                    vaultUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyName"u8))

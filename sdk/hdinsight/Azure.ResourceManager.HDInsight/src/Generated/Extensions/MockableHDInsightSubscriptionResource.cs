@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HDInsight.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableHDInsightSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _clustersClientDiagnostics;
-        private Clusters _clustersRestClient;
+        private ClientDiagnostics _hdInsightClusterClientDiagnostics;
+        private HDInsightCluster _hdInsightClusterRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
         private Locations _locationsRestClient;
 
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         {
         }
 
-        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics HDInsightClusterClientDiagnostics => _hdInsightClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
+        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllAsyncCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>

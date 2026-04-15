@@ -12,24 +12,24 @@ using Azure.ResourceManager.HDInsight;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The parameters for the script actions to execute on a running cluster. </summary>
-    public partial class ExecuteScriptActionParameters
+    public partial class ExecuteScriptActionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
         /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
-        public ExecuteScriptActionParameters(bool persistOnSuccess)
+        public ExecuteScriptActionContent(bool persistOnSuccess)
         {
             ScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
             PersistOnSuccess = persistOnSuccess;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
         /// <param name="scriptActions"> The list of run time script actions. </param>
         /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteScriptActionParameters(IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteScriptActionContent(IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScriptActions = scriptActions;
             PersistOnSuccess = persistOnSuccess;

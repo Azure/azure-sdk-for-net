@@ -7,31 +7,33 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The CreateCluster request parameters. </summary>
-    public partial class ClusterCreateParametersExtended
+    public partial class HDInsightClusterCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterCreateParametersExtended"/>. </summary>
-        public ClusterCreateParametersExtended()
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
+        public HDInsightClusterCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterCreateParametersExtended"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location of the cluster. </param>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> The cluster create parameters. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterCreateParametersExtended(string location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ClusterIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterCreateOrUpdateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Tags = tags;
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The location of the cluster. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -54,6 +56,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightClusterCreateOrUpdateProperties Properties { get; set; }
 
         /// <summary> The identity of the cluster, if configured. </summary>
-        public ClusterIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

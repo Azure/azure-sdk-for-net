@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightAutoScaleConfigurationUpdateContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Autoscale))
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(Autoscale, options);
+                writer.WriteObjectValue(AutoScale, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            HDInsightAutoScaleConfiguration autoscale = default;
+            HDInsightAutoScaleConfiguration autoScale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoscale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(prop.Value, options);
+                    autoScale = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightAutoScaleConfigurationUpdateContent(autoscale, additionalBinaryDataProperties);
+            return new HDInsightAutoScaleConfigurationUpdateContent(autoScale, additionalBinaryDataProperties);
         }
     }
 }

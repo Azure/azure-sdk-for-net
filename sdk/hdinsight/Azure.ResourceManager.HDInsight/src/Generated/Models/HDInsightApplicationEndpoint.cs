@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="publicPort"> The public port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationEndpoint(string endpointLocation, int? destinationPort, int? publicPort, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightApplicationEndpoint(string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointLocation = endpointLocation;
             DestinationPort = destinationPort;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? PublicPort { get; set; }
 
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

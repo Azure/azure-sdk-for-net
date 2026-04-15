@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -35,14 +36,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/>. </summary>
         /// <param name="id"> The private link configuration id. </param>
         /// <param name="name"> The name of private link configuration. </param>
-        /// <param name="type"> The type of the private link configuration. </param>
+        /// <param name="resourceType"> The type of the private link configuration. </param>
         /// <param name="properties"> The private link configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightPrivateLinkConfiguration(string id, string name, string @type, PrivateLinkConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightPrivateLinkConfiguration(string id, string name, ResourceType? resourceType, PrivateLinkConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The type of the private link configuration. </summary>
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The private link configuration properties. </summary>
         internal PrivateLinkConfigurationProperties Properties { get; set; }
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The IP configurations for the private link service. </summary>
-        public IList<HDInsightIPConfiguration> IpConfigurations
+        public IList<HDInsightIPConfiguration> IPConfigurations
         {
             get
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     Properties = new PrivateLinkConfigurationProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
     }

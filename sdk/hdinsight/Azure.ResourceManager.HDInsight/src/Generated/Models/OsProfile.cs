@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OsProfile"/>. </summary>
-        /// <param name="linuxOperatingSystemProfile"> The Linux OS profile. </param>
+        /// <param name="linuxProfile"> The Linux OS profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsProfile(HDInsightLinuxOSProfile linuxOperatingSystemProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OsProfile(HDInsightLinuxOSProfile linuxProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LinuxOperatingSystemProfile = linuxOperatingSystemProfile;
+            LinuxProfile = linuxProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Linux OS profile. </summary>
-        public HDInsightLinuxOSProfile LinuxOperatingSystemProfile { get; set; }
+        public HDInsightLinuxOSProfile LinuxProfile { get; set; }
     }
 }

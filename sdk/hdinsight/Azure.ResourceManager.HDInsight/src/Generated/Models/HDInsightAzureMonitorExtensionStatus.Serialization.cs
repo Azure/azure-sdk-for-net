@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClusterMonitoringEnabled))
+            if (Optional.IsDefined(IsClusterMonitoringEnabled))
             {
                 writer.WritePropertyName("clusterMonitoringEnabled"u8);
-                writer.WriteBooleanValue(ClusterMonitoringEnabled.Value);
+                writer.WriteBooleanValue(IsClusterMonitoringEnabled.Value);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            bool? clusterMonitoringEnabled = default;
+            bool? isClusterMonitoringEnabled = default;
             string workspaceId = default;
             HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clusterMonitoringEnabled = prop.Value.GetBoolean();
+                    isClusterMonitoringEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightAzureMonitorExtensionStatus(clusterMonitoringEnabled, workspaceId, selectedConfigurations, additionalBinaryDataProperties);
+            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations, additionalBinaryDataProperties);
         }
     }
 }

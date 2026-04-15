@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a PrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetPrivateLinkResources method.
+    /// A class representing a HDInsightPrivateLinkResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightPrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightPrivateLinkResources method.
     /// </summary>
-    public partial class PrivateLinkResource : ArmResource
+    public partial class HDInsightPrivateLinkResource : ArmResource
     {
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _hdInsightPrivateLinkResourcesClientDiagnostics;
+        private readonly HDInsightPrivateLinkResources _hdInsightPrivateLinkResourcesRestClient;
         private readonly HDInsightPrivateLinkResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateLinkResources";
 
-        /// <summary> Initializes a new instance of PrivateLinkResource for mocking. </summary>
-        protected PrivateLinkResource()
+        /// <summary> Initializes a new instance of HDInsightPrivateLinkResource for mocking. </summary>
+        protected HDInsightPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, HDInsightPrivateLinkResourceData data) : this(client, data.Id)
+        internal HDInsightPrivateLinkResource(ArmClient client, HDInsightPrivateLinkResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HDInsightPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkResourceApiVersion ?? "2025-01-15-preview");
+            TryGetApiVersion(ResourceType, out string hdInsightPrivateLinkResourceApiVersion);
+            _hdInsightPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", ResourceType.Namespace, Diagnostics);
+            _hdInsightPrivateLinkResourcesRestClient = new HDInsightPrivateLinkResources(_hdInsightPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateLinkResourceApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResource.Get");
+            using DiagnosticScope scope = _hdInsightPrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _hdInsightPrivateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

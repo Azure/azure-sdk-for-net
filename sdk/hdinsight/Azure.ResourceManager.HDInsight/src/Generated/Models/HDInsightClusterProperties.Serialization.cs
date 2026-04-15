@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("clusterHdpVersion"u8);
                 writer.WriteStringValue(ClusterHdpVersion);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(Tier))
             {
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ClusterState))
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             HDInsightSecurityProfile securityProfile = default;
             ComputeProfile computeProfile = default;
             HDInsightClusterProvisioningState? provisioningState = default;
-            string createdDate = default;
+            DateTimeOffset? createdOn = default;
             string clusterState = default;
             QuotaInfo quotaInfo = default;
             IList<ResponseError> errors = default;
@@ -368,7 +368,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("createdDate"u8))
                 {
-                    createdDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("clusterState"u8))
@@ -523,7 +527,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 securityProfile,
                 computeProfile,
                 provisioningState,
-                createdDate,
+                createdOn,
                 clusterState,
                 quotaInfo,
                 errors ?? new ChangeTrackingList<ResponseError>(),

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfigurationUpdateContent"/>. </summary>
-        /// <param name="autoscale"> The autoscale configuration. </param>
+        /// <param name="autoScale"> The autoscale configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightAutoScaleConfigurationUpdateContent(HDInsightAutoScaleConfiguration autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightAutoScaleConfigurationUpdateContent(HDInsightAutoScaleConfiguration autoScale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Autoscale = autoscale;
+            AutoScale = autoScale;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The autoscale configuration. </summary>
-        public HDInsightAutoScaleConfiguration Autoscale { get; set; }
+        public HDInsightAutoScaleConfiguration AutoScale { get; set; }
     }
 }

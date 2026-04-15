@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.HDInsight
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             HDInsightClusterProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             IList<string> zones = default;
-            ClusterIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -230,7 +230,11 @@ namespace Azure.ResourceManager.HDInsight
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.HDInsight
                     {
                         continue;
                     }
-                    identity = ClusterIdentity.DeserializeClusterIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHDInsightContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

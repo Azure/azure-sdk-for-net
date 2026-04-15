@@ -99,30 +99,30 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (Optional.IsDefined(MemoryInMb))
+            if (Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMb"u8);
-                writer.WriteNumberValue(MemoryInMb.Value);
+                writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (Optional.IsDefined(SupportedByVirtualMachines))
+            if (Optional.IsDefined(IsSupportedByVirtualMachines))
             {
                 writer.WritePropertyName("supportedByVirtualMachines"u8);
-                writer.WriteBooleanValue(SupportedByVirtualMachines.Value);
+                writer.WriteBooleanValue(IsSupportedByVirtualMachines.Value);
             }
-            if (Optional.IsDefined(SupportedByWebWorkerRoles))
+            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
             {
                 writer.WritePropertyName("supportedByWebWorkerRoles"u8);
-                writer.WriteBooleanValue(SupportedByWebWorkerRoles.Value);
+                writer.WriteBooleanValue(IsSupportedByWebWorkerRoles.Value);
             }
-            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMb))
+            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("virtualMachineResourceDiskSizeInMb"u8);
-                writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMb.Value);
+                writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMb))
+            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
-                writer.WriteNumberValue(WebWorkerResourceDiskSizeInMb.Value);
+                writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             string dataDiskStorageTier = default;
             string label = default;
             long? maxDataDiskCount = default;
-            long? memoryInMb = default;
-            bool? supportedByVirtualMachines = default;
-            bool? supportedByWebWorkerRoles = default;
-            long? virtualMachineResourceDiskSizeInMb = default;
-            long? webWorkerResourceDiskSizeInMb = default;
+            long? memoryInMB = default;
+            bool? isSupportedByVirtualMachines = default;
+            bool? isSupportedByWebWorkerRoles = default;
+            long? virtualMachineResourceDiskSizeInMB = default;
+            long? webWorkerResourceDiskSizeInMB = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    memoryInMb = prop.Value.GetInt64();
+                    memoryInMB = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("supportedByVirtualMachines"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    supportedByVirtualMachines = prop.Value.GetBoolean();
+                    isSupportedByVirtualMachines = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportedByWebWorkerRoles"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    supportedByWebWorkerRoles = prop.Value.GetBoolean();
+                    isSupportedByWebWorkerRoles = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualMachineResourceDiskSizeInMb"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    virtualMachineResourceDiskSizeInMb = prop.Value.GetInt64();
+                    virtualMachineResourceDiskSizeInMB = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("webWorkerResourceDiskSizeInMb"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    webWorkerResourceDiskSizeInMb = prop.Value.GetInt64();
+                    webWorkerResourceDiskSizeInMB = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 dataDiskStorageTier,
                 label,
                 maxDataDiskCount,
-                memoryInMb,
-                supportedByVirtualMachines,
-                supportedByWebWorkerRoles,
-                virtualMachineResourceDiskSizeInMb,
-                webWorkerResourceDiskSizeInMb,
+                memoryInMB,
+                isSupportedByVirtualMachines,
+                isSupportedByWebWorkerRoles,
+                virtualMachineResourceDiskSizeInMB,
+                webWorkerResourceDiskSizeInMB,
                 additionalBinaryDataProperties);
         }
     }

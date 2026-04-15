@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
         /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterHostInfo(string name, string fqdn, string effectiveDiskEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Fqdn = fqdn;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Fqdn { get; }
 
         /// <summary> The effective disk encryption key URL used by the host. </summary>
-        public string EffectiveDiskEncryptionKeyUri { get; }
+        public Uri EffectiveDiskEncryptionKeyUri { get; }
     }
 }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(Tier))
             {

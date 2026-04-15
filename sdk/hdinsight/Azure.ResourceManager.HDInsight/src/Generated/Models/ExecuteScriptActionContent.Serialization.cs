@@ -15,66 +15,66 @@ using Azure.ResourceManager.HDInsight;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The parameters for the script actions to execute on a running cluster. </summary>
-    public partial class ExecuteScriptActionParameters : IJsonModel<ExecuteScriptActionParameters>
+    public partial class ExecuteScriptActionContent : IJsonModel<ExecuteScriptActionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionParameters"/> for deserialization. </summary>
-        internal ExecuteScriptActionParameters()
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/> for deserialization. </summary>
+        internal ExecuteScriptActionContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteScriptActionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExecuteScriptActionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExecuteScriptActionParameters(document.RootElement, options);
+                        return DeserializeExecuteScriptActionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteScriptActionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteScriptActionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteScriptActionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteScriptActionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExecuteScriptActionParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExecuteScriptActionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteScriptActionParameters IPersistableModel<ExecuteScriptActionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExecuteScriptActionContent IPersistableModel<ExecuteScriptActionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExecuteScriptActionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExecuteScriptActionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="executeScriptActionParameters"> The <see cref="ExecuteScriptActionParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExecuteScriptActionParameters executeScriptActionParameters)
+        /// <param name="executeScriptActionContent"> The <see cref="ExecuteScriptActionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExecuteScriptActionContent executeScriptActionContent)
         {
-            if (executeScriptActionParameters == null)
+            if (executeScriptActionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(executeScriptActionParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(executeScriptActionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExecuteScriptActionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExecuteScriptActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteScriptActionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteScriptActionContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(ScriptActions))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteScriptActionParameters IJsonModel<ExecuteScriptActionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExecuteScriptActionContent IJsonModel<ExecuteScriptActionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteScriptActionParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExecuteScriptActionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExecuteScriptActionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteScriptActionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteScriptActionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecuteScriptActionParameters(document.RootElement, options);
+            return DeserializeExecuteScriptActionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExecuteScriptActionParameters DeserializeExecuteScriptActionParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExecuteScriptActionContent DeserializeExecuteScriptActionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecuteScriptActionParameters(scriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), persistOnSuccess, additionalBinaryDataProperties);
+            return new ExecuteScriptActionContent(scriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(), persistOnSuccess, additionalBinaryDataProperties);
         }
     }
 }

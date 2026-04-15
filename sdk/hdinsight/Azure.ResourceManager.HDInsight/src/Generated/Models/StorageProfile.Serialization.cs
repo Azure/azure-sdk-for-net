@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Storageaccounts))
+            if (Optional.IsCollectionDefined(Accounts))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
-                foreach (HDInsightStorageAccountInfo item in Storageaccounts)
+                foreach (HDInsightStorageAccountInfo item in Accounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            IList<HDInsightStorageAccountInfo> storageaccounts = default;
+            IList<HDInsightStorageAccountInfo> accounts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         array.Add(HDInsightStorageAccountInfo.DeserializeHDInsightStorageAccountInfo(item, options));
                     }
-                    storageaccounts = array;
+                    accounts = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageProfile(storageaccounts ?? new ChangeTrackingList<HDInsightStorageAccountInfo>(), additionalBinaryDataProperties);
+            return new StorageProfile(accounts ?? new ChangeTrackingList<HDInsightStorageAccountInfo>(), additionalBinaryDataProperties);
         }
     }
 }

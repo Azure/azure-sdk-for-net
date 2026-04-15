@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterDataDiskGroup"/>. </summary>
         /// <param name="disksPerNode"> The number of disks per node. </param>
         /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
-        /// <param name="diskSizeGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
+        /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterDataDiskGroup(int? disksPerNode, string storageAccountType, int? diskSizeGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterDataDiskGroup(int? disksPerNode, string storageAccountType, int? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisksPerNode = disksPerNode;
             StorageAccountType = storageAccountType;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeInGB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string StorageAccountType { get; }
 
         /// <summary> ReadOnly. The DiskSize in GB. Do not set this value. </summary>
-        public int? DiskSizeGB { get; }
+        public int? DiskSizeInGB { get; }
     }
 }

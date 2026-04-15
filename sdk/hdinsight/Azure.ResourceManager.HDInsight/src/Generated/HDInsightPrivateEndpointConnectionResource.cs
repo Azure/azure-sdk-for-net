@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a PrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetPrivateEndpointConnections method.
+    /// A class representing a HDInsightPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightPrivateEndpointConnections method.
     /// </summary>
-    public partial class PrivateEndpointConnectionResource : ArmResource
+    public partial class HDInsightPrivateEndpointConnectionResource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionResource for mocking. </summary>
-        protected PrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionResource for mocking. </summary>
+        protected HDInsightPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, HDInsightPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal HDInsightPrivateEndpointConnectionResource(ArmClient client, HDInsightPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HDInsightPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string hdInsightPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2025-01-15-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, hdInsightPrivateEndpointConnectionApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HDInsightPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a HDInsightPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="data"> The private endpoint connection create or update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HDInsightPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -324,8 +324,8 @@ namespace Azure.ResourceManager.HDInsight
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HDInsightPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HDInsightArmOperation<PrivateEndpointConnectionResource> operation = new HDInsightArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource> operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(
+                    new HDInsightPrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Update a PrivateEndpointConnection.
+        /// Update a HDInsightPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.HDInsight
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="HDInsightPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="data"> The private endpoint connection create or update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HDInsightPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HDInsightPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("HDInsightPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -383,8 +383,8 @@ namespace Azure.ResourceManager.HDInsight
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HDInsightPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HDInsightArmOperation<PrivateEndpointConnectionResource> operation = new HDInsightArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionOperationSource(Client),
+                HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource> operation = new HDInsightArmOperation<HDInsightPrivateEndpointConnectionResource>(
+                    new HDInsightPrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

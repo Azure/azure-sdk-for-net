@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
-                writer.WriteNumberValue(DiskSizeGB.Value);
+                writer.WriteNumberValue(DiskSizeInGB.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             int? disksPerNode = default;
             string storageAccountType = default;
-            int? diskSizeGB = default;
+            int? diskSizeInGB = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    diskSizeGB = prop.Value.GetInt32();
+                    diskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeGB, additionalBinaryDataProperties);
+            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB, additionalBinaryDataProperties);
         }
     }
 }

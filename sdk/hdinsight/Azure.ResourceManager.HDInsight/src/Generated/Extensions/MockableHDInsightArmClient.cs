@@ -44,22 +44,31 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             return new HDInsightClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HDInsightPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            HDInsightPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HDInsightPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HDInsightPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightPrivateLinkResource"/> object. </returns>
+        public virtual HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            HDInsightPrivateLinkResource.ValidateResourceId(id);
+            return new HDInsightPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
+        public virtual ScriptActionResource GetScriptActionResource(ResourceIdentifier id)
+        {
+            ScriptActionResource.ValidateResourceId(id);
+            return new ScriptActionResource(Client, id);
         }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.HDInsight;
 
@@ -79,15 +80,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -142,8 +143,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default;
-            bool? primary = default;
-            string privateIPAddress = default;
+            bool? isPrimary = default;
+            IPAddress privateIPAddress = default;
             HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = default;
             ResourceId subnet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,12 +165,16 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("privateIPAddress"u8))
                 {
-                    privateIPAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateIPAllocationMethod"u8))
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             return new IPConfigurationProperties(
                 provisioningState,
-                primary,
+                isPrimary,
                 privateIPAddress,
                 privateIPAllocationMethod,
                 subnet,

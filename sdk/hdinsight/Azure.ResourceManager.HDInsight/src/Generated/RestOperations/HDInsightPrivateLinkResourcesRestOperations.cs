@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class PrivateLinkResources
+    internal partial class HDInsightPrivateLinkResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PrivateLinkResources for mocking. </summary>
-        protected PrivateLinkResources()
+        /// <summary> Initializes a new instance of HDInsightPrivateLinkResources for mocking. </summary>
+        protected HDInsightPrivateLinkResources()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of HDInsightPrivateLinkResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HDInsightPrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

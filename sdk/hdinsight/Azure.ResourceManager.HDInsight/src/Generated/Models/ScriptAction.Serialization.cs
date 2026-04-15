@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("parameters"u8);
             writer.WriteStringValue(Parameters);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string name = default;
-            string uri = default;
+            Uri uri = default;
             string parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

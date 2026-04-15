@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="applicationType"> The application type. </param>
         /// <param name="applicationState"> The application state. </param>
         /// <param name="errors"> The list of errors. </param>
-        /// <param name="createdDate"> The application create date time. </param>
+        /// <param name="createdOn"> The application create date time. </param>
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, DateTimeOffset? createdOn, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ApplicationType = applicationType;
             ApplicationState = applicationState;
             Errors = errors;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             MarketplaceIdentifier = marketplaceIdentifier;
             PrivateLinkConfigurations = privateLinkConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IList<ResponseError> Errors { get; }
 
         /// <summary> The application create date time. </summary>
-        public string CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The marketplace identifier. </summary>
         public string MarketplaceIdentifier { get; }

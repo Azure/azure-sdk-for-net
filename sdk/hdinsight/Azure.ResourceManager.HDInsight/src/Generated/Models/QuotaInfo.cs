@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuotaInfo"/>. </summary>
-        internal QuotaInfo()
+        public QuotaInfo()
         {
         }
 
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The cores used by the cluster. </summary>
-        public int? CoresUsed { get; }
+        public int? CoresUsed { get; set; }
     }
 }

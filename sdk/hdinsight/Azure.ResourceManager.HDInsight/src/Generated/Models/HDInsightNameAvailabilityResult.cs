@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> This indicates whether the name is available. </param>
+        /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
         /// <param name="reason"> The reason of the result. </param>
         /// <param name="message"> The related message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This indicates whether the name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
 
         /// <summary> The reason of the result. </summary>
         public string Reason { get; }

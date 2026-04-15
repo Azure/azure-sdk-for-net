@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary></summary>
-    public partial class PrivateLinkResource : IJsonModel<HDInsightPrivateLinkResourceData>
+    public partial class HDInsightPrivateLinkResource : IJsonModel<HDInsightPrivateLinkResourceData>
     {
         private static IJsonModel<HDInsightPrivateLinkResourceData> s_dataDeserializationInstance;
 

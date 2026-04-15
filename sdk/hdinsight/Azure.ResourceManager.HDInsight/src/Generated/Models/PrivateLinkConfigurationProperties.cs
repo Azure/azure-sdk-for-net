@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             GroupId = groupId;
-            IpConfigurations = ipConfigurations.ToList();
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkConfigurationProperties"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             GroupId = groupId;
             ProvisioningState = provisioningState;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> The IP configurations for the private link service. </summary>
-        public IList<HDInsightIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<HDInsightIPConfiguration>();
+        public IList<HDInsightIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<HDInsightIPConfiguration>();
     }
 }

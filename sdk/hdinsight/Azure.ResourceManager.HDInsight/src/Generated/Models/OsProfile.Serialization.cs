@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(OsProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LinuxOperatingSystemProfile))
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxOperatingSystemProfile"u8);
-                writer.WriteObjectValue(LinuxOperatingSystemProfile, options);
+                writer.WriteObjectValue(LinuxProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            HDInsightLinuxOSProfile linuxOperatingSystemProfile = default;
+            HDInsightLinuxOSProfile linuxProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    linuxOperatingSystemProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(prop.Value, options);
+                    linuxProfile = HDInsightLinuxOSProfile.DeserializeHDInsightLinuxOSProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OsProfile(linuxOperatingSystemProfile, additionalBinaryDataProperties);
+            return new OsProfile(linuxProfile, additionalBinaryDataProperties);
         }
     }
 }

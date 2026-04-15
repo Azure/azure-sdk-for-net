@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityEndpoint"/>. </summary>
-        internal ConnectivityEndpoint()
+        public ConnectivityEndpoint()
         {
         }
 
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="port"> The port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityEndpoint(string name, string protocol, string endpointLocation, int? port, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectivityEndpoint(string name, string protocol, string endpointLocation, int? port, IPAddress privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
@@ -39,18 +40,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The name of the endpoint. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The protocol of the endpoint. </summary>
-        public string Protocol { get; }
+        public string Protocol { get; set; }
 
         /// <summary> The location of the endpoint. </summary>
-        public string EndpointLocation { get; }
+        public string EndpointLocation { get; set; }
 
         /// <summary> The port to connect to. </summary>
-        public int? Port { get; }
+        public int? Port { get; set; }
 
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

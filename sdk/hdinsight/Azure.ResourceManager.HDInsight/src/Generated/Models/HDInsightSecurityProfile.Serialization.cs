@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -89,18 +90,18 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (Optional.IsCollectionDefined(LdapsUrls))
+            if (Optional.IsCollectionDefined(LdapUris))
             {
                 writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
-                foreach (string item in LdapsUrls)
+                foreach (Uri item in LdapUris)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -184,12 +185,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             AuthenticationDirectoryType? directoryType = default;
             string domain = default;
             string organizationalUnitDN = default;
-            IList<string> ldapsUrls = default;
+            IList<Uri> ldapUris = default;
             string domainUsername = default;
             string domainUserPassword = default;
             IList<string> clusterUsersGroupDNs = default;
-            string aaddsResourceId = default;
-            string msiResourceId = default;
+            ResourceIdentifier aaddsResourceId = default;
+            ResourceIdentifier msiResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -227,10 +228,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(string.IsNullOrEmpty(item.GetString()) ? null : new Uri(item.GetString(), UriKind.RelativeOrAbsolute));
                         }
                     }
-                    ldapsUrls = array;
+                    ldapUris = array;
                     continue;
                 }
                 if (prop.NameEquals("domainUsername"u8))
@@ -266,12 +267,20 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("aaddsResourceId"u8))
                 {
-                    aaddsResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aaddsResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("msiResourceId"u8))
                 {
-                    msiResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    msiResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -283,7 +292,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 directoryType,
                 domain,
                 organizationalUnitDN,
-                ldapsUrls ?? new ChangeTrackingList<string>(),
+                ldapUris ?? new ChangeTrackingList<Uri>(),
                 domainUsername,
                 domainUserPassword,
                 clusterUsersGroupDNs ?? new ChangeTrackingList<string>(),

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(EffectiveDiskEncryptionKeyUri))
             {
                 writer.WritePropertyName("effectiveDiskEncryptionKeyUrl"u8);
-                writer.WriteStringValue(EffectiveDiskEncryptionKeyUri);
+                writer.WriteStringValue(EffectiveDiskEncryptionKeyUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             string name = default;
             string fqdn = default;
-            string effectiveDiskEncryptionKeyUri = default;
+            Uri effectiveDiskEncryptionKeyUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("effectiveDiskEncryptionKeyUrl"u8))
                 {
-                    effectiveDiskEncryptionKeyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    effectiveDiskEncryptionKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

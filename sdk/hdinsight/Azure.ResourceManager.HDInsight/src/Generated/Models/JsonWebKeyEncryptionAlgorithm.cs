@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         private readonly string _value;
         /// <summary> RSA-OAEP. </summary>
-        private const string RSAOAEPValue = "RSA-OAEP";
+        private const string RsaOaepValue = "RSA-OAEP";
         /// <summary> RSA-OAEP-256. </summary>
-        private const string RSAOAEP256Value = "RSA-OAEP-256";
+        private const string RsaOaep256Value = "RSA-OAEP-256";
         /// <summary> RSA1_5. </summary>
-        private const string RSA15Value = "RSA1_5";
+        private const string Rsa15Value = "RSA1_5";
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> RSA-OAEP. </summary>
-        public static JsonWebKeyEncryptionAlgorithm RSAOAEP { get; } = new JsonWebKeyEncryptionAlgorithm(RSAOAEPValue);
+        public static JsonWebKeyEncryptionAlgorithm RsaOaep { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaepValue);
 
         /// <summary> RSA-OAEP-256. </summary>
-        public static JsonWebKeyEncryptionAlgorithm RSAOAEP256 { get; } = new JsonWebKeyEncryptionAlgorithm(RSAOAEP256Value);
+        public static JsonWebKeyEncryptionAlgorithm RsaOaep256 { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaep256Value);
 
         /// <summary> RSA1_5. </summary>
-        public static JsonWebKeyEncryptionAlgorithm RSA15 { get; } = new JsonWebKeyEncryptionAlgorithm(RSA15Value);
+        public static JsonWebKeyEncryptionAlgorithm Rsa15 { get; } = new JsonWebKeyEncryptionAlgorithm(Rsa15Value);
 
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

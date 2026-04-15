@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -22,20 +23,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegionalQuotaCapability"/>. </summary>
-        /// <param name="regionName"> The region name. </param>
+        /// <param name="region"> The region name. </param>
         /// <param name="coresUsed"> The number of cores used in the region. </param>
         /// <param name="coresAvailable"> The number of cores available in the region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionalQuotaCapability(string regionName, long? coresUsed, long? coresAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegionalQuotaCapability(AzureLocation? region, long? coresUsed, long? coresAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RegionName = regionName;
+            Region = region;
             CoresUsed = coresUsed;
             CoresAvailable = coresAvailable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The region name. </summary>
-        public string RegionName { get; }
+        public AzureLocation? Region { get; }
 
         /// <summary> The number of cores used in the region. </summary>
         public long? CoresUsed { get; }

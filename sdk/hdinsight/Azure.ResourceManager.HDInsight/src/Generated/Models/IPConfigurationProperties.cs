@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -23,15 +25,15 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of <see cref="IPConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="primary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
+        /// <param name="isPrimary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
         /// <param name="privateIPAddress"> The IP address. </param>
         /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
         /// <param name="subnet"> The subnet resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPConfigurationProperties(HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? primary, string privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceId subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPConfigurationProperties(HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceId subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            Primary = primary;
+            IsPrimary = isPrimary;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
@@ -42,10 +44,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
 
         /// <summary> The IP address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
 
         /// <summary> The method that private IP address is allocated. </summary>
         public HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal ResourceId Subnet { get; set; }
 
         /// <summary> The azure resource id. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -18,25 +19,25 @@ namespace Azure.ResourceManager.HDInsight.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> The private link service connection state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public PrivateEndpointConnectionProperties(HDInsightPrivateLinkServiceConnectionState connectionState)
         {
-            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The private endpoint of the private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state. </param>
+        /// <param name="connectionState"> The private link service connection state. </param>
         /// <param name="linkIdentifier"> The link identifier. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string linkIdentifier, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, HDInsightPrivateLinkServiceConnectionState connectionState, string linkIdentifier, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             LinkIdentifier = linkIdentifier;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal PrivateEndpoint PrivateEndpoint { get; }
 
         /// <summary> The private link service connection state. </summary>
-        public HDInsightPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public HDInsightPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The link identifier. </summary>
         public string LinkIdentifier { get; }
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The private endpoint id. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

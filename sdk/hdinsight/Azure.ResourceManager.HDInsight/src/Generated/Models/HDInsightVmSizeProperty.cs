@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="dataDiskStorageTier"> The data disk storage tier of the vm size. </param>
         /// <param name="label"> The label of the vm size. </param>
         /// <param name="maxDataDiskCount"> The max data disk count of the vm size. </param>
-        /// <param name="memoryInMb"> The memory whose unit is MB of the vm size. </param>
-        /// <param name="supportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
-        /// <param name="supportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
-        /// <param name="virtualMachineResourceDiskSizeInMb"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
-        /// <param name="webWorkerResourceDiskSizeInMb"> The web worker resource disk size whose unit is MB of the vm size. </param>
+        /// <param name="memoryInMB"> The memory whose unit is MB of the vm size. </param>
+        /// <param name="isSupportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
+        /// <param name="isSupportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
+        /// <param name="virtualMachineResourceDiskSizeInMB"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
+        /// <param name="webWorkerResourceDiskSizeInMB"> The web worker resource disk size whose unit is MB of the vm size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMb, bool? supportedByVirtualMachines, bool? supportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMb, long? webWorkerResourceDiskSizeInMb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMB, bool? isSupportedByVirtualMachines, bool? isSupportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMB, long? webWorkerResourceDiskSizeInMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Cores = cores;
             DataDiskStorageTier = dataDiskStorageTier;
             Label = label;
             MaxDataDiskCount = maxDataDiskCount;
-            MemoryInMb = memoryInMb;
-            SupportedByVirtualMachines = supportedByVirtualMachines;
-            SupportedByWebWorkerRoles = supportedByWebWorkerRoles;
-            VirtualMachineResourceDiskSizeInMb = virtualMachineResourceDiskSizeInMb;
-            WebWorkerResourceDiskSizeInMb = webWorkerResourceDiskSizeInMb;
+            MemoryInMB = memoryInMB;
+            IsSupportedByVirtualMachines = isSupportedByVirtualMachines;
+            IsSupportedByWebWorkerRoles = isSupportedByWebWorkerRoles;
+            VirtualMachineResourceDiskSizeInMB = virtualMachineResourceDiskSizeInMB;
+            WebWorkerResourceDiskSizeInMB = webWorkerResourceDiskSizeInMB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         public long? MaxDataDiskCount { get; }
 
         /// <summary> The memory whose unit is MB of the vm size. </summary>
-        public long? MemoryInMb { get; }
+        public long? MemoryInMB { get; }
 
         /// <summary> This indicates this vm size is supported by virtual machines or not. </summary>
-        public bool? SupportedByVirtualMachines { get; }
+        public bool? IsSupportedByVirtualMachines { get; }
 
         /// <summary> The indicates this vm size is supported by web worker roles or not. </summary>
-        public bool? SupportedByWebWorkerRoles { get; }
+        public bool? IsSupportedByWebWorkerRoles { get; }
 
         /// <summary> The virtual machine resource disk size whose unit is MB of the vm size. </summary>
-        public long? VirtualMachineResourceDiskSizeInMb { get; }
+        public long? VirtualMachineResourceDiskSizeInMB { get; }
 
         /// <summary> The web worker resource disk size whose unit is MB of the vm size. </summary>
-        public long? WebWorkerResourceDiskSizeInMb { get; }
+        public long? WebWorkerResourceDiskSizeInMB { get; }
     }
 }

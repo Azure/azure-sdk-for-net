@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string name = default;
-            string uri = default;
+            Uri uri = default;
             string parameters = default;
             IList<string> roles = default;
             string applicationName = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="keyName"> Key name that is used for enabling disk encryption. </param>
         /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterDiskEncryptionContent(string vaultUri, string keyName, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterDiskEncryptionContent(Uri vaultUri, string keyName, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultUri = vaultUri;
             KeyName = keyName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>
-        public string VaultUri { get; set; }
+        public Uri VaultUri { get; set; }
 
         /// <summary> Key name that is used for enabling disk encryption. </summary>
         public string KeyName { get; set; }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreatePromoteRequest(string subscriptionId, string resourceGroupName, string clusterName, string scriptExecutionId, RequestContext context)
+        internal HttpMessage CreatePromoteScriptExecutionHistoryRequest(string subscriptionId, string resourceGroupName, string clusterName, string scriptExecutionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

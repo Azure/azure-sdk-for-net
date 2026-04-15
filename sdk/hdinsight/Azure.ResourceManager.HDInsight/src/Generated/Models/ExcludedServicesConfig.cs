@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExcludedServicesConfig"/>. </summary>
-        internal ExcludedServicesConfig()
+        public ExcludedServicesConfig()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The config id of excluded services. </summary>
-        public string ExcludedServicesConfigId { get; }
+        public string ExcludedServicesConfigId { get; set; }
 
         /// <summary> The list of excluded services. </summary>
-        public string ExcludedServicesList { get; }
+        public string ExcludedServicesList { get; set; }
     }
 }

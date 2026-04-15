@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -23,18 +24,18 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterAaddsDetail"/>. </summary>
         /// <param name="domainName"> The Azure active directory domain service name. </param>
-        /// <param name="initialSyncComplete"> This indicates whether initial sync complete or not. </param>
-        /// <param name="ldapsEnabled"> This indicates whether enable ldaps or not. </param>
+        /// <param name="isInitialSyncComplete"> This indicates whether initial sync complete or not. </param>
+        /// <param name="isLdapsEnabled"> This indicates whether enable ldaps or not. </param>
         /// <param name="ldapsPublicCertificateInBase64"> The base 64 format string of public ldap certificate. </param>
         /// <param name="resourceId"> The resource id of azure active directory domain service. </param>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="tenantId"> The tenant id of azure active directory domain service . </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterAaddsDetail(string domainName, bool? initialSyncComplete, bool? ldapsEnabled, string ldapsPublicCertificateInBase64, string resourceId, string subnetId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, ResourceIdentifier resourceId, ResourceIdentifier subnetId, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainName = domainName;
-            InitialSyncComplete = initialSyncComplete;
-            LdapsEnabled = ldapsEnabled;
+            IsInitialSyncComplete = isInitialSyncComplete;
+            IsLdapsEnabled = isLdapsEnabled;
             LdapsPublicCertificateInBase64 = ldapsPublicCertificateInBase64;
             ResourceId = resourceId;
             SubnetId = subnetId;
@@ -46,21 +47,21 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string DomainName { get; }
 
         /// <summary> This indicates whether initial sync complete or not. </summary>
-        public bool? InitialSyncComplete { get; }
+        public bool? IsInitialSyncComplete { get; }
 
         /// <summary> This indicates whether enable ldaps or not. </summary>
-        public bool? LdapsEnabled { get; }
+        public bool? IsLdapsEnabled { get; }
 
         /// <summary> The base 64 format string of public ldap certificate. </summary>
         public string LdapsPublicCertificateInBase64 { get; }
 
         /// <summary> The resource id of azure active directory domain service. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The subnet resource id. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
 
         /// <summary> The tenant id of azure active directory domain service . </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script provided. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="parameters"/> is null. </exception>
-        public ScriptAction(string name, string uri, string parameters)
+        public ScriptAction(string name, Uri uri, string parameters)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script provided. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptAction(string name, string uri, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScriptAction(string name, Uri uri, string parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The URI to the script. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The parameters for the script provided. </summary>
         public string Parameters { get; set; }

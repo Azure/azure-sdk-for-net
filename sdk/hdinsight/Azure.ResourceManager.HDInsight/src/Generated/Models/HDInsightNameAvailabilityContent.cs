@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -23,12 +24,12 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

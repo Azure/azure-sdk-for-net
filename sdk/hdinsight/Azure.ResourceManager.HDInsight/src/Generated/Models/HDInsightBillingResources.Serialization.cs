@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                writer.WriteStringValue(Region.Value);
             }
             if (Optional.IsCollectionDefined(BillingMeters))
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string region = default;
+            AzureLocation? region = default;
             IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
             IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +150,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (prop.NameEquals("region"u8))
                 {
-                    region = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    region = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingMeters"u8))

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -30,26 +32,26 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightIPConfiguration"/>. </summary>
         /// <param name="id"> The private link IP configuration id. </param>
         /// <param name="name"> The name of private link IP configuration. </param>
-        /// <param name="type"> The type of the private link IP configuration. </param>
+        /// <param name="resourceType"> The type of the private link IP configuration. </param>
         /// <param name="properties"> The private link ip configuration properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightIPConfiguration(string id, string name, string @type, IPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The private link IP configuration id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The name of private link IP configuration. </summary>
         public string Name { get; set; }
 
         /// <summary> The type of the private link IP configuration. </summary>
-        public string Type { get; }
+        public ResourceType? ResourceType { get; }
 
         /// <summary> The private link ip configuration properties. </summary>
         internal IPConfigurationProperties Properties { get; set; }
@@ -64,11 +66,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Indicates whether this IP configuration is primary for the corresponding NIC. </summary>
-        public bool? Primary
+        public bool? IsPrimary
         {
             get
             {
-                return Properties is null ? default : Properties.Primary;
+                return Properties is null ? default : Properties.IsPrimary;
             }
             set
             {
@@ -76,12 +78,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     Properties = new IPConfigurationProperties();
                 }
-                Properties.Primary = value.Value;
+                Properties.IsPrimary = value.Value;
             }
         }
 
         /// <summary> The IP address. </summary>
-        public string PrivateIPAddress
+        public IPAddress PrivateIPAddress
         {
             get
             {
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The azure resource id. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

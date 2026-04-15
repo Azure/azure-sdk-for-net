@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
         /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, string privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessModes = accessModes;
             EndpointLocation = endpointLocation;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? PublicPort { get; }
 
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; set; }
+        public IPAddress PrivateIPAddress { get; set; }
 
         /// <summary> The subdomain suffix of the application. </summary>
         public string SubDomainSuffix { get; set; }

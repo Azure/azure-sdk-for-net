@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 throw new FormatException($"The model {nameof(HDInsightClusterIPTag)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ipTagType"u8);
-            writer.WriteStringValue(IpTagType);
+            writer.WriteStringValue(IPTagType);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -79,15 +80,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsDefined(InitialSyncComplete))
+            if (Optional.IsDefined(IsInitialSyncComplete))
             {
                 writer.WritePropertyName("initialSyncComplete"u8);
-                writer.WriteBooleanValue(InitialSyncComplete.Value);
+                writer.WriteBooleanValue(IsInitialSyncComplete.Value);
             }
-            if (Optional.IsDefined(LdapsEnabled))
+            if (Optional.IsDefined(IsLdapsEnabled))
             {
                 writer.WritePropertyName("ldapsEnabled"u8);
-                writer.WriteBooleanValue(LdapsEnabled.Value);
+                writer.WriteBooleanValue(IsLdapsEnabled.Value);
             }
             if (Optional.IsDefined(LdapsPublicCertificateInBase64))
             {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,12 +153,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string domainName = default;
-            bool? initialSyncComplete = default;
-            bool? ldapsEnabled = default;
+            bool? isInitialSyncComplete = default;
+            bool? isLdapsEnabled = default;
             string ldapsPublicCertificateInBase64 = default;
-            string resourceId = default;
-            string subnetId = default;
-            string tenantId = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier subnetId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    initialSyncComplete = prop.Value.GetBoolean();
+                    isInitialSyncComplete = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ldapsEnabled"u8))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    ldapsEnabled = prop.Value.GetBoolean();
+                    isLdapsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ldapsPublicCertificateInBase64"u8))
@@ -191,17 +192,29 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,8 +224,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             return new HDInsightClusterAaddsDetail(
                 domainName,
-                initialSyncComplete,
-                ldapsEnabled,
+                isInitialSyncComplete,
+                isLdapsEnabled,
                 ldapsPublicCertificateInBase64,
                 resourceId,
                 subnetId,

@@ -1,65 +1,5 @@
 namespace Azure.ResourceManager.HDInsight
 {
-    public static partial class ArmHDInsightModelFactory
-    {
-        public static Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended ClusterCreateParametersExtended(string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties properties = null, Azure.ResourceManager.HDInsight.Models.ClusterIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ClusterIdentity ClusterIdentity(string principalId = null, string tenantId = null, Azure.ResourceManager.HDInsight.Models.ResourceIdentityType? type = default(Azure.ResourceManager.HDInsight.Models.ResourceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity> userAssignedIdentities = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint ConnectivityEndpoint(string name = null, string protocol = null, string endpointLocation = null, int? port = default(int?), string privateIPAddress = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig ExcludedServicesConfig(string excludedServicesConfigId = null, string excludedServicesList = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters ExecuteScriptActionParameters(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = false) { throw null; }
-        public static Azure.ResourceManager.HDInsight.HDInsightApplicationData HDInsightApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties properties = null, string etag = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint HDInsightApplicationHttpsEndpoint(System.Collections.Generic.IEnumerable<string> accessModes = null, string endpointLocation = null, int? destinationPort = default(int?), int? publicPort = default(int?), string privateIPAddress = null, string subDomainSuffix = null, bool? disableGatewayAuth = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties HDInsightApplicationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> installScriptActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> uninstallScriptActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint> httpsEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint> sshEndpoints = null, string provisioningState = null, string applicationType = null, string applicationState = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string createdDate = null, string marketplaceIdentifier = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult HDInsightAsyncOperationResult(Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationState? status = default(Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationState?), Azure.ResourceManager.HDInsight.Models.Errors error = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence HDInsightAutoScaleRecurrence(string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule> schedule = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule HDInsightAutoScaleSchedule(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek> days = null, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity timeAndCapacity = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus HDInsightAzureMonitorExtensionStatus(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = null, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations HDInsightAzureMonitorSelectedConfigurations(string configurationVersion = null, System.Collections.Generic.IDictionary<string, string> globalConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration> tableList = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters HDInsightBillingMeters(string meterParameter = null, string meter = null, string unit = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources HDInsightBillingResources(string region = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> billingMeters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> diskBillingMeters = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult HDInsightBillingSpecsListResult(System.Collections.Generic.IEnumerable<string> vmSizes = null, System.Collections.Generic.IEnumerable<string> vmSizesWithEncryptionAtHost = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty> vmSizeProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources> billingResources = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult HDInsightCapabilitiesResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability> versions = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.RegionsCapability> regions = null, System.Collections.Generic.IEnumerable<string> features = null, Azure.ResourceManager.HDInsight.Models.QuotaCapability quota = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, Azure.Core.ResourceIdentifier resourceId, Azure.Core.ResourceIdentifier subnetId, System.Guid? tenantId) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail HDInsightClusterAaddsDetail(string domainName = null, bool? initialSyncComplete = default(bool?), bool? ldapsEnabled = default(bool?), string ldapsPublicCertificateInBase64 = null, string resourceId = null, string subnetId = null, string tenantId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations HDInsightClusterConfigurations(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IDictionary<string, string>> configurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties HDInsightClusterCreateOrUpdateProperties(string clusterVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightOSType? osType = default(Azure.ResourceManager.HDInsight.Models.HDInsightOSType?), Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?), Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition clusterDefinition = null, Azure.ResourceManager.HDInsight.Models.KafkaRestProperties kafkaRestProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile securityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> storageStorageaccounts = null, Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties diskEncryptionProperties = null, bool? isEncryptionInTransitEnabled = default(bool?), string minSupportedTlsVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties networkProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties computeIsolationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent HDInsightClusterCreationValidateContent(string location = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties properties = null, Azure.ResourceManager.HDInsight.Models.ClusterIdentity identity = null, string name = null, string type = null, string tenantId = null, bool? fetchAaddsResource = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult HDInsightClusterCreationValidateResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> validationErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> validationWarnings = null, System.TimeSpan? estimatedCreationDuration = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail> aaddsResourcesDetails = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties properties = null, string etag = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.ClusterIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties properties, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = default(int?), string storageAccountType = null, int? diskSizeGB = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition HDInsightClusterDefinition(string blueprint = null, string kind = null, System.Collections.Generic.IDictionary<string, string> componentVersion = null, System.BinaryData configurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings HDInsightClusterGatewaySettings(string isCredentialEnabled = null, string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> restAuthEntraUsers = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo HDInsightClusterHostInfo(string name = null, string fqdn = null, string effectiveDiskEncryptionKeyUri = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = null, string clusterHdpVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightOSType? osType = default(Azure.ResourceManager.HDInsight.Models.HDInsightOSType?), Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?), string clusterId = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition clusterDefinition = null, Azure.ResourceManager.HDInsight.Models.KafkaRestProperties kafkaRestProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile securityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState?), string createdDate = null, string clusterState = null, int? quotaInfoCoresUsed = default(int?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint> connectivityEndpoints = null, Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties diskEncryptionProperties = null, bool? isEncryptionInTransitEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> storageStorageaccounts = null, string minSupportedTlsVersion = null, Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig excludedServicesConfig = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties networkProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties computeIsolationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole HDInsightClusterRole(string name = null, int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), string vmGroupName = null, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration autoscaleConfiguration = null, string hardwareVmSize = null, Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile osLinuxOperatingSystemProfile = null, Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile virtualNetworkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup> dataDisksGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ScriptAction> scriptActions = null, bool? encryptDataDisks = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled = default(bool?), string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> restAuthEntraUsers = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity HDInsightClusterUserAssignedIdentity(string principalId = null, string clientId = null, string tenantId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo HDInsightClusterValidationErrorInfo(string code = null, string message = null, string errorResource = null, System.Collections.Generic.IEnumerable<string> messageArguments = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters HDInsightDiskBillingMeters(string diskRpMeter = null, string sku = null, Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration HDInsightIPConfiguration(string id = null, string name = null, string type = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState?), bool? primary = default(bool?), string privateIPAddress = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod?), string subnetId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName HDInsightLocalizedName(string value = null, string localizedValue = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string linkIdentifier = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState?), string privateEndpointId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = null, string name = null, string type = null, string groupId = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> ipConfigurations = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData HDInsightPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile HDInsightSecurityProfile(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? directoryType = default(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType?), string domain = null, string organizationalUnitDN = null, System.Collections.Generic.IEnumerable<string> ldapsUrls = null, string domainUsername = null, string domainUserPassword = null, System.Collections.Generic.IEnumerable<string> clusterUsersGroupDNs = null, string aaddsResourceId = null, string msiResourceId = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightUsage HDInsightUsage(string unit = null, long? currentValue = default(long?), long? limit = default(long?), Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName name = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability HDInsightVersionsCapability(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec> available = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> componentVersions = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2 HDInsightVmSizeCompatibilityFilterV2(Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode? filterMode = default(Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode?), System.Collections.Generic.IEnumerable<string> regions = null, System.Collections.Generic.IEnumerable<string> clusterFlavors = null, System.Collections.Generic.IEnumerable<string> nodeTypes = null, System.Collections.Generic.IEnumerable<string> clusterVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> osType = null, System.Collections.Generic.IEnumerable<string> vmSizes = null, string espApplied = null, string computeIsolationSupported = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty HDInsightVmSizeProperty(string name = null, int? cores = default(int?), string dataDiskStorageTier = null, string label = null, long? maxDataDiskCount = default(long?), long? memoryInMb = default(long?), bool? supportedByVirtualMachines = default(bool?), bool? supportedByWebWorkerRoles = default(bool?), long? virtualMachineResourceDiskSizeInMb = default(long?), long? webWorkerResourceDiskSizeInMb = default(long?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.KafkaRestProperties KafkaRestProperties(Azure.ResourceManager.HDInsight.Models.ClientGroupInfo clientGroupInfo = null, System.Collections.Generic.IDictionary<string, string> configurationOverride = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.QuotaCapability QuotaCapability(long? coresUsed = default(long?), long? maxCoresAllowed = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability> regionalQuotas = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability RegionalQuotaCapability(string regionName = null, long? coresUsed = default(long?), long? coresAvailable = default(long?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.RegionsCapability RegionsCapability(System.Collections.Generic.IEnumerable<string> available = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction RuntimeScriptAction(string name = null, string uri = null, string parameters = null, System.Collections.Generic.IEnumerable<string> roles = null, string applicationName = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail RuntimeScriptActionDetail(string name = null, string uri = null, string parameters = null, System.Collections.Generic.IEnumerable<string> roles = null, string applicationName = null, long? scriptExecutionId = default(long?), string startTime = null, string endTime = null, string status = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary> executionSummary = null, string debugInformation = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail RuntimeScriptActionDetail(string name, System.Uri uri, string parameters, System.Collections.Generic.IEnumerable<string> roles, string applicationName, long? scriptExecutionId, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, string status, string operation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary> executionSummary, string debugInformation) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary ScriptActionExecutionSummary(string status = null, int? instanceCount = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.UsagesListResult UsagesListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightUsage> value = null) { throw null; }
-    }
     public partial class AzureResourceManagerHDInsightContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerHDInsightContext() { }
@@ -70,14 +10,18 @@ namespace Azure.ResourceManager.HDInsight
     {
         protected HDInsightApplicationCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.HDInsight.HDInsightApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.HDInsight.HDInsightApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> GetAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> GetIfExists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> GetIfExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>.GetEnumerator() { throw null; }
@@ -86,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight
     public partial class HDInsightApplicationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>
     {
         public HDInsightApplicationData() { }
-        public string ETag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -106,15 +50,20 @@ namespace Azure.ResourceManager.HDInsight
         public virtual Azure.ResourceManager.HDInsight.HDInsightApplicationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.HDInsight.HDInsightApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -122,20 +71,25 @@ namespace Azure.ResourceManager.HDInsight
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HDInsightClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightClusterResource>, System.Collections.IEnumerable
     {
         protected HDInsightClusterCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended clusterCreateParametersExtended, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended clusterCreateParametersExtended, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> Get(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.HDInsightClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.HDInsightClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightClusterResource>.GetEnumerator() { throw null; }
@@ -143,10 +97,10 @@ namespace Azure.ResourceManager.HDInsight
     }
     public partial class HDInsightClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>
     {
-        internal HDInsightClusterData() { }
-        public string ETag { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.ClusterIdentity Identity { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties Properties { get { throw null; } }
+        public HDInsightClusterData(Azure.Core.AzureLocation location) { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -164,57 +118,80 @@ namespace Azure.ResourceManager.HDInsight
         protected HDInsightClusterResource() { }
         public virtual Azure.ResourceManager.HDInsight.HDInsightClusterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation Create(Azure.WaitUntil waitUntil, string extensionName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateAsync(Azure.WaitUntil waitUntil, string extensionName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteScriptAction(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteScriptActionAsync(string scriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DisableAzureMonitor(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DisableAzureMonitorAgent(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableAzureMonitorAgentAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableAzureMonitorAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DisableMonitoring(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DisableMonitoringAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableAzureMonitor(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableAzureMonitorAgent(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableAzureMonitorAgentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableAzureMonitorAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionEnableContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableMonitoring(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableMonitoringAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterEnableClusterMonitoringContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ExecuteScriptActions(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteScriptActionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ExecuteScriptActions(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteScriptActionsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus> GetAzureMonitorAgentStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorAgentStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus> GetAzureMonitorStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetByCluster(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetByClusterAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings> GetGatewaySettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings>> GetGatewaySettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource> GetHDInsightApplication(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightApplicationResource>> GetHDInsightApplicationAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightApplicationCollection GetHDInsightApplications() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> GetHDInsightPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> GetHDInsightPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionCollection GetHDInsightPrivateEndpointConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> GetHDInsightPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>> GetHDInsightPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceCollection GetHDInsightPrivateLinkResources() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo> GetHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo> GetHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus> GetMonitoringStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>> GetMonitoringStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HDInsight.PrivateEndpointConnectionCollection GetPrivateEndpointConnections() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.HDInsight.PrivateLinkResourceCollection GetPrivateLinkResources() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetScriptExecutionHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetScriptExecutionHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Promote(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> PromoteAsync(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetScriptAction(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>> GetScriptActionAsync(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.ScriptActionCollection GetScriptActions() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Resize(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightRoleName roleName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightRoleName roleName, Azure.ResourceManager.HDInsight.Models.HDInsightClusterResizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RotateDiskEncryptionKey(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RotateDiskEncryptionKeyAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.HDInsight.HDInsightClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -222,44 +199,77 @@ namespace Azure.ResourceManager.HDInsight
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> Update(Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> UpdateAsync(Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UpdateAutoScaleConfiguration(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightRoleName roleName, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAutoScaleConfigurationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightRoleName roleName, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UpdateGatewaySettings(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateGatewaySettingsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation UpdateIdentityCertificate(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateIdentityCertificateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class HDInsightExtensions
     {
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult> CheckNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>> CheckNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult> GetAzureAsyncOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>> GetAzureAsyncOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult> GetBillingSpecs(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult>> GetBillingSpecsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult> GetCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult>> GetCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HDInsight.HDInsightApplicationResource GetHDInsightApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetHDInsightClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HDInsight.HDInsightClusterResource GetHDInsightClusterResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HDInsight.HDInsightClusterCollection GetHDInsightClusters(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.HDInsight.PrivateLinkResource GetPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.HDInsight.ScriptActionResource GetScriptActionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.UsagesListResult> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.UsagesListResult>> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult> ValidateClusterCreateRequest(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult>> ValidateClusterCreateRequestAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class HDInsightPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>, System.Collections.IEnumerable
+    {
+        protected HDInsightPrivateEndpointConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class HDInsightPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>
     {
-        public HDInsightPrivateEndpointConnectionData(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
+        public HDInsightPrivateEndpointConnectionData(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState connectionState) { }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public string LinkIdentifier { get { throw null; } }
-        public string PrivateEndpointId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -271,9 +281,65 @@ namespace Azure.ResourceManager.HDInsight
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HDInsightPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected HDInsightPrivateEndpointConnectionResource() { }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class HDInsightPrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected HDInsightPrivateLinkResource() { }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateLinkResourceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HDInsightPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>, System.Collections.IEnumerable
+    {
+        protected HDInsightPrivateLinkResourceCollection() { }
+        public virtual Azure.Response<bool> Exists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> Get(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>> GetAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> GetIfExists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class HDInsightPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>
     {
-        internal HDInsightPrivateLinkResourceData() { }
+        public HDInsightPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
@@ -287,71 +353,39 @@ namespace Azure.ResourceManager.HDInsight
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>, System.Collections.IEnumerable
+    public partial class ScriptActionCollection : Azure.ResourceManager.ArmCollection
     {
-        protected PrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        protected ScriptActionCollection() { }
+        public virtual Azure.Response<bool> Exists(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> Get(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>> GetAsync(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.ScriptActionResource> GetIfExists(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.ScriptActionResource>> GetIfExistsAsync(string scriptExecutionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>
+    public partial class ScriptActionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateEndpointConnectionResource() { }
-        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData Data { get { throw null; } }
+        protected ScriptActionResource() { }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightClusterData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class PrivateLinkResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateLinkResource() { }
-        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateLinkResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.PrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.PrivateLinkResource>, System.Collections.IEnumerable
-    {
-        protected PrivateLinkResourceCollection() { }
-        public virtual Azure.Response<bool> Exists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource> Get(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.PrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.PrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.PrivateLinkResource>> GetAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.HDInsight.PrivateLinkResource> GetIfExists(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HDInsight.PrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HDInsight.PrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HDInsight.PrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HDInsight.PrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.PrivateLinkResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string scriptExecutionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetScriptExecutionHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail> GetScriptExecutionHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response PromoteScriptExecutionHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
+        public virtual System.Threading.Tasks.Task<Azure.Response> PromoteScriptExecutionHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HDInsight.HDInsightClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.HDInsightClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.HDInsightClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HDInsight.Mocking
@@ -361,13 +395,15 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         protected MockableHDInsightArmClient() { }
         public virtual Azure.ResourceManager.HDInsight.HDInsightApplicationResource GetHDInsightApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightClusterResource GetHDInsightClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HDInsight.PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.HDInsight.PrivateLinkResource GetPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HDInsight.ScriptActionResource GetScriptActionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableHDInsightResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHDInsightResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetHDInsightClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightClusterCollection GetHDInsightClusters() { throw null; }
     }
@@ -375,23 +411,83 @@ namespace Azure.ResourceManager.HDInsight.Mocking
     {
         protected MockableHDInsightSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult> CheckNameAvailability(string location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>> CheckNameAvailabilityAsync(string location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult> GetAzureAsyncOperationStatus(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult>> GetAzureAsyncOperationStatusAsync(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult> GetBillingSpecs(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult>> GetBillingSpecsAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult> GetCapabilities(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult>> GetCapabilitiesAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.UsagesListResult> GetUsages(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.UsagesListResult>> GetUsagesAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult> ValidateClusterCreateRequest(string location, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult>> ValidateClusterCreateRequestAsync(string location, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HDInsight.Models
 {
+    public static partial class ArmHDInsightModelFactory
+    {
+        public static Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent ExecuteScriptActionContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = false) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightApplicationData HDInsightApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint HDInsightApplicationHttpsEndpoint(System.Collections.Generic.IEnumerable<string> accessModes = null, string endpointLocation = null, int? destinationPort = default(int?), int? publicPort = default(int?), string privateIPAddress = null, string subDomainSuffix = null, bool? disableGatewayAuth = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties HDInsightApplicationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> installScriptActions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> uninstallScriptActions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint> httpsEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors, System.DateTimeOffset? createdOn, string marketplaceIdentifier, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightApplicationProperties HDInsightApplicationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> installScriptActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> uninstallScriptActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint> httpsEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint> sshEndpoints = null, string provisioningState = null, string applicationType = null, string applicationState = null, System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string createdDate = null, string marketplaceIdentifier = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationResult HDInsightAsyncOperationResult(Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationState? status = default(Azure.ResourceManager.HDInsight.Models.HDInsightAsyncOperationState?), Azure.ResourceManager.HDInsight.Models.Errors error = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleRecurrence HDInsightAutoScaleRecurrence(string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule> schedule = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleSchedule HDInsightAutoScaleSchedule(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightDayOfWeek> days = null, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleTimeAndCapacity timeAndCapacity = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorExtensionStatus HDInsightAzureMonitorExtensionStatus(bool? clusterMonitoringEnabled = default(bool?), string workspaceId = null, Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorSelectedConfigurations HDInsightAzureMonitorSelectedConfigurations(string configurationVersion = null, System.Collections.Generic.IDictionary<string, string> globalConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightAzureMonitorTableConfiguration> tableList = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters HDInsightBillingMeters(string meterParameter = null, string meter = null, string unit = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources HDInsightBillingResources(Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> billingMeters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> diskBillingMeters = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult HDInsightBillingSpecsListResult(System.Collections.Generic.IEnumerable<string> vmSizes = null, System.Collections.Generic.IEnumerable<string> vmSizesWithEncryptionAtHost = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty> vmSizeProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources> billingResources = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightCapabilitiesResult HDInsightCapabilitiesResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability> versions = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Models.RegionsCapability> regions = null, System.Collections.Generic.IEnumerable<string> features = null, Azure.ResourceManager.HDInsight.Models.QuotaCapability quota = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail HDInsightClusterAaddsDetail(string domainName = null, bool? isInitialSyncComplete = default(bool?), bool? isLdapsEnabled = default(bool?), string ldapsPublicCertificateInBase64 = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier subnetId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations HDInsightClusterConfigurations(System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IDictionary<string, string>> configurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent HDInsightClusterCreateOrUpdateContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties HDInsightClusterCreateOrUpdateProperties(string clusterVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightOSType? osType = default(Azure.ResourceManager.HDInsight.Models.HDInsightOSType?), Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?), Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition clusterDefinition = null, Azure.ResourceManager.HDInsight.Models.KafkaRestProperties kafkaRestProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile securityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> storageAccounts = null, Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties diskEncryptionProperties = null, bool? isEncryptionInTransitEnabled = default(bool?), string minSupportedTlsVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties networkProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties computeIsolationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent HDInsightClusterCreationValidateContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string name = null, string clusterCreateRequestValidationParametersType = null, System.Guid? tenantId = default(System.Guid?), bool? fetchAaddsResource = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateResult HDInsightClusterCreationValidateResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> validationErrors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo> validationWarnings = null, System.TimeSpan? estimatedCreationDuration = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail> aaddsResourcesDetails = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = default(int?), string storageAccountType = null, int? diskSizeInGB = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition HDInsightClusterDefinition(string blueprint = null, string kind = null, System.Collections.Generic.IDictionary<string, string> componentVersion = null, System.BinaryData configurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled = default(bool?), string workspaceId = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings HDInsightClusterGatewaySettings(bool? isCredentialEnabled = default(bool?), string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> restAuthEntraUsers = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo HDInsightClusterHostInfo(string name = null, string fqdn = null, System.Uri effectiveDiskEncryptionKeyUri = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = null, string clusterHdpVersion = null, Azure.ResourceManager.HDInsight.Models.HDInsightOSType? osType = default(Azure.ResourceManager.HDInsight.Models.HDInsightOSType?), Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?), string clusterId = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition clusterDefinition = null, Azure.ResourceManager.HDInsight.Models.KafkaRestProperties kafkaRestProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile securityProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> computeRoles = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string clusterState = null, int? quotaInfoCoresUsed = default(int?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint> connectivityEndpoints = null, Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties diskEncryptionProperties = null, bool? isEncryptionInTransitEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> storageAccounts = null, string minSupportedTlsVersion = null, Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig excludedServicesConfig = null, Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties networkProperties = null, Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties computeIsolationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole HDInsightClusterRole(string name = null, int? minInstanceCount = default(int?), int? targetInstanceCount = default(int?), string vmGroupName = null, Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration autoScaleConfiguration = null, string hardwareVmSize = null, Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile osLinuxProfile = null, Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile virtualNetworkProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup> dataDisksGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ScriptAction> scriptActions = null, bool? encryptDataDisks = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateGatewaySettingsContent HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled = default(bool?), string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> restAuthEntraUsers = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo HDInsightClusterValidationErrorInfo(string code = null, string message = null, string errorResource = null, System.Collections.Generic.IEnumerable<string> messageArguments = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters HDInsightDiskBillingMeters(string diskRpMeter = null, string sku = null, Azure.ResourceManager.HDInsight.Models.HDInsightTier? tier = default(Azure.ResourceManager.HDInsight.Models.HDInsightTier?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration HDInsightIPConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState?), bool? isPrimary = default(bool?), System.Net.IPAddress privateIPAddress = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod?), Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName HDInsightLocalizedName(string value = null, string localizedValue = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkServiceConnectionState connectionState = null, string linkIdentifier = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string groupId = null, Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> ipConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResourceData HDInsightPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile HDInsightSecurityProfile(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? directoryType = default(Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType?), string domain = null, string organizationalUnitDN = null, System.Collections.Generic.IEnumerable<System.Uri> ldapUris = null, string domainUsername = null, string domainUserPassword = null, System.Collections.Generic.IEnumerable<string> clusterUsersGroupDNs = null, Azure.Core.ResourceIdentifier aaddsResourceId = null, Azure.Core.ResourceIdentifier msiResourceId = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightUsage HDInsightUsage(string unit = null, long? currentValue = default(long?), long? limit = default(long?), Azure.ResourceManager.HDInsight.Models.HDInsightLocalizedName name = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightVersionsCapability HDInsightVersionsCapability(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec> available = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = default(bool?), System.Collections.Generic.IReadOnlyDictionary<string, string> componentVersions = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2 HDInsightVmSizeCompatibilityFilterV2(Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode? filterMode = default(Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode?), System.Collections.Generic.IEnumerable<string> regions = null, System.Collections.Generic.IEnumerable<string> clusterFlavors = null, System.Collections.Generic.IEnumerable<string> nodeTypes = null, System.Collections.Generic.IEnumerable<string> clusterVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> osType = null, System.Collections.Generic.IEnumerable<string> vmSizes = null, string espApplied = null, string isComputeIsolationSupported = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty HDInsightVmSizeProperty(string name = null, int? cores = default(int?), string dataDiskStorageTier = null, string label = null, long? maxDataDiskCount = default(long?), long? memoryInMB = default(long?), bool? isSupportedByVirtualMachines = default(bool?), bool? isSupportedByWebWorkerRoles = default(bool?), long? virtualMachineResourceDiskSizeInMB = default(long?), long? webWorkerResourceDiskSizeInMB = default(long?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.KafkaRestProperties KafkaRestProperties(Azure.ResourceManager.HDInsight.Models.ClientGroupInfo clientGroupInfo = null, System.Collections.Generic.IDictionary<string, string> configurationOverride = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.QuotaCapability QuotaCapability(long? coresUsed = default(long?), long? maxCoresAllowed = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability> regionalQuotas = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability RegionalQuotaCapability(Azure.Core.AzureLocation? region = default(Azure.Core.AzureLocation?), long? coresUsed = default(long?), long? coresAvailable = default(long?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.RegionsCapability RegionsCapability(System.Collections.Generic.IEnumerable<string> available = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction RuntimeScriptAction(string name = null, System.Uri uri = null, string parameters = null, System.Collections.Generic.IEnumerable<string> roles = null, string applicationName = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail RuntimeScriptActionDetail(string name = null, System.Uri uri = null, string parameters = null, System.Collections.Generic.IEnumerable<string> roles = null, string applicationName = null, long? scriptExecutionId = default(long?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string status = null, string operation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary> executionSummary = null, string debugInformation = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary ScriptActionExecutionSummary(string status = null, int? instanceCount = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Models.UsagesListResult UsagesListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightUsage> value = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AuthenticationDirectoryType : System.IEquatable<Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType>
     {
@@ -423,49 +519,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClientGroupInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClientGroupInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClusterCreateParametersExtended : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>
-    {
-        public ClusterCreateParametersExtended() { }
-        public Azure.ResourceManager.HDInsight.Models.ClusterIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties Properties { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ClusterIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>
-    {
-        public ClusterIdentity() { }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.ResourceIdentityType? Type { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ClusterIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ClusterIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HDInsight.Models.ClusterIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.Models.ClusterIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ClusterIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ConnectivityEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint>
     {
-        internal ConnectivityEndpoint() { }
-        public string EndpointLocation { get { throw null; } }
-        public string Name { get { throw null; } }
-        public int? Port { get { throw null; } }
-        public string PrivateIPAddress { get { throw null; } }
-        public string Protocol { get { throw null; } }
+        public ConnectivityEndpoint() { }
+        public string EndpointLocation { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public int? Port { get { throw null; } set { } }
+        public string PrivateIPAddress { get { throw null; } set { } }
+        public string Protocol { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -509,9 +570,9 @@ namespace Azure.ResourceManager.HDInsight.Models
     }
     public partial class ExcludedServicesConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>
     {
-        internal ExcludedServicesConfig() { }
-        public string ExcludedServicesConfigId { get { throw null; } }
-        public string ExcludedServicesList { get { throw null; } }
+        public ExcludedServicesConfig() { }
+        public string ExcludedServicesConfigId { get { throw null; } set { } }
+        public string ExcludedServicesList { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -522,20 +583,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExecuteScriptActionParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>
+    public partial class ExecuteScriptActionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>
     {
-        public ExecuteScriptActionParameters(bool persistOnSuccess) { }
+        public ExecuteScriptActionContent(bool persistOnSuccess) { }
         public bool PersistOnSuccess { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> ScriptActions { get { throw null; } }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ExecuteScriptActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HDInsightApplicationEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationEndpoint>
     {
@@ -665,7 +726,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightAutoScaleConfigurationUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent>
     {
         public HDInsightAutoScaleConfigurationUpdateContent() { }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration Autoscale { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration AutoScale { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfigurationUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -805,7 +866,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightBillingResources() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightBillingMeters> BillingMeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightDiskBillingMeters> DiskBillingMeters { get { throw null; } }
-        public string Region { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightBillingResources PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -855,12 +916,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal HDInsightClusterAaddsDetail() { }
         public string DomainName { get { throw null; } }
-        public bool? InitialSyncComplete { get { throw null; } }
-        public bool? LdapsEnabled { get { throw null; } }
+        public bool? IsInitialSyncComplete { get { throw null; } }
+        public bool? IsLdapsEnabled { get { throw null; } }
         public string LdapsPublicCertificateInBase64 { get { throw null; } }
-        public string ResourceId { get { throw null; } }
-        public string SubnetId { get { throw null; } }
-        public string TenantId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterAaddsDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -885,6 +946,39 @@ namespace Azure.ResourceManager.HDInsight.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterConfigurations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HDInsightClusterCreateExtensionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>
+    {
+        public HDInsightClusterCreateExtensionContent() { }
+        public string PrimaryKey { get { throw null; } set { } }
+        public string WorkspaceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateExtensionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HDInsightClusterCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>
+    {
+        public HDInsightClusterCreateOrUpdateContent() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class HDInsightClusterCreateOrUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>
     {
         public HDInsightClusterCreateOrUpdateProperties() { }
@@ -897,10 +991,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.KafkaRestProperties KafkaRestProperties { get { throw null; } set { } }
         public string MinSupportedTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties NetworkProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightOSType? OsType { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightOSType? OSType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile SecurityProfile { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageStorageaccounts { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -912,16 +1006,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HDInsightClusterCreationValidateContent : Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>
+    public partial class HDInsightClusterCreationValidateContent : Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>
     {
         public HDInsightClusterCreationValidateContent() { }
+        public string ClusterCreateRequestValidationParametersType { get { throw null; } set { } }
         public bool? FetchAaddsResource { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
-        protected override Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.HDInsight.Models.ClusterCreateParametersExtended PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterCreationValidateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -949,7 +1043,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterDataDiskGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup>
     {
         public HDInsightClusterDataDiskGroup() { }
-        public int? DiskSizeGB { get { throw null; } }
+        public int? DiskSizeInGB { get { throw null; } }
         public int? DisksPerNode { get { throw null; } set { } }
         public string StorageAccountType { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -984,7 +1078,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightClusterDiskEncryptionContent() { }
         public string KeyName { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
-        public string VaultUri { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterDiskEncryptionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1013,7 +1107,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterExtensionStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus>
     {
         internal HDInsightClusterExtensionStatus() { }
-        public bool? ClusterMonitoringEnabled { get { throw null; } }
+        public bool? IsClusterMonitoringEnabled { get { throw null; } }
         public string WorkspaceId { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterExtensionStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1028,7 +1122,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterGatewaySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterGatewaySettings>
     {
         internal HDInsightClusterGatewaySettings() { }
-        public string IsCredentialEnabled { get { throw null; } }
+        public bool? IsCredentialEnabled { get { throw null; } }
         public string Password { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.EntraUserInfo> RestAuthEntraUsers { get { throw null; } }
         public string UserName { get { throw null; } }
@@ -1045,7 +1139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterHostInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo>
     {
         internal HDInsightClusterHostInfo() { }
-        public string EffectiveDiskEncryptionKeyUri { get { throw null; } }
+        public System.Uri EffectiveDiskEncryptionKeyUri { get { throw null; } }
         public string Fqdn { get { throw null; } }
         public string Name { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterHostInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1061,7 +1155,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterIPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag>
     {
         public HDInsightClusterIPTag(string ipTagType, string tag) { }
-        public string IpTagType { get { throw null; } set { } }
+        public string IPTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1078,7 +1172,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightClusterNetworkProperties() { }
         public Azure.ResourceManager.HDInsight.Models.OutboundDependenciesManagedType? OutboundDependenciesManagedType { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkState? PrivateLink { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag PublicIpTag { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterIPTag PublicIPTag { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightResourceProviderConnection? ResourceProviderConnection { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1093,7 +1187,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch>
     {
         public HDInsightClusterPatch() { }
-        public Azure.ResourceManager.HDInsight.Models.ClusterIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1107,31 +1201,31 @@ namespace Azure.ResourceManager.HDInsight.Models
     }
     public partial class HDInsightClusterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties>
     {
-        internal HDInsightClusterProperties() { }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition ClusterDefinition { get { throw null; } }
-        public string ClusterHdpVersion { get { throw null; } }
-        public string ClusterId { get { throw null; } }
-        public string ClusterState { get { throw null; } }
-        public string ClusterVersion { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties ComputeIsolationProperties { get { throw null; } }
+        public HDInsightClusterProperties(Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition clusterDefinition) { }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterDefinition ClusterDefinition { get { throw null; } set { } }
+        public string ClusterHdpVersion { get { throw null; } set { } }
+        public string ClusterId { get { throw null; } set { } }
+        public string ClusterState { get { throw null; } set { } }
+        public string ClusterVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties ComputeIsolationProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> ComputeRoles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint> ConnectivityEndpoints { get { throw null; } }
-        public string CreatedDate { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties DiskEncryptionProperties { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties DiskEncryptionProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig ExcludedServicesConfig { get { throw null; } }
-        public bool? IsEncryptionInTransitEnabled { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.KafkaRestProperties KafkaRestProperties { get { throw null; } }
-        public string MinSupportedTlsVersion { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties NetworkProperties { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightOSType? OsType { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig ExcludedServicesConfig { get { throw null; } set { } }
+        public bool? IsEncryptionInTransitEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.KafkaRestProperties KafkaRestProperties { get { throw null; } set { } }
+        public string MinSupportedTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterNetworkProperties NetworkProperties { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightOSType? OSType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState? ProvisioningState { get { throw null; } }
-        public int? QuotaInfoCoresUsed { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile SecurityProfile { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageStorageaccounts { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightClusterProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public int? QuotaInfoCoresUsed { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo> StorageAccounts { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightTier? Tier { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1179,17 +1273,17 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightClusterRole : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole>
     {
         public HDInsightClusterRole() { }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration AutoscaleConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightAutoScaleConfiguration AutoScaleConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterDataDiskGroup> DataDisksGroups { get { throw null; } }
         public bool? EncryptDataDisks { get { throw null; } set { } }
         public string HardwareVmSize { get { throw null; } set { } }
         public int? MinInstanceCount { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile OsLinuxOperatingSystemProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Models.HDInsightLinuxOSProfile OSLinuxProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.ScriptAction> ScriptActions { get { throw null; } }
         public int? TargetInstanceCount { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile VirtualNetworkProfile { get { throw null; } set { } }
-        public string VMGroupName { get { throw null; } set { } }
+        public string VmGroupName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1232,22 +1326,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUpdateIdentityCertificateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class HDInsightClusterUserAssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>
-    {
-        public HDInsightClusterUserAssignedIdentity() { }
-        public string ClientId { get { throw null; } }
-        public string PrincipalId { get { throw null; } }
-        public string TenantId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterUserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HDInsightClusterValidationErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightClusterValidationErrorInfo>
     {
@@ -1323,11 +1401,11 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightDiskEncryptionProperties() { }
         public Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm? EncryptionAlgorithm { get { throw null; } set { } }
-        public bool? EncryptionAtHost { get { throw null; } set { } }
+        public bool? IsEncryptionAtHostEnabled { get { throw null; } set { } }
         public string KeyName { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
-        public string MsiResourceId { get { throw null; } set { } }
-        public string VaultUri { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
+        public System.Uri VaultUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1360,14 +1438,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightIPConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration>
     {
         public HDInsightIPConfiguration(string name) { }
-        public string Id { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public bool? IsPrimary { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool? Primary { get { throw null; } set { } }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public string SubnetId { get { throw null; } set { } }
-        public string Type { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1413,7 +1491,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         public HDInsightNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1427,8 +1505,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>
     {
         internal HDInsightNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1500,10 +1578,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightPrivateLinkConfiguration(string name, string groupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> ipConfigurations) { }
         public string GroupId { get { throw null; } set { } }
         public string Id { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> IpConfigurations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightIPConfiguration> IPConfigurations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public string Type { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightPrivateLinkConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1622,14 +1700,14 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile>
     {
         public HDInsightSecurityProfile() { }
-        public string AaddsResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AaddsResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ClusterUsersGroupDNs { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.AuthenticationDirectoryType? DirectoryType { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public string DomainUsername { get { throw null; } set { } }
         public string DomainUserPassword { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LdapsUrls { get { throw null; } }
-        public string MsiResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Uri> LdapUris { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public string OrganizationalUnitDN { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1664,10 +1742,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string FileSystem { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
-        public string MsiResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
-        public string Saskey { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        public string SasKey { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightStorageAccountInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1746,7 +1824,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class HDInsightVirtualNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile>
     {
         public HDInsightVirtualNetworkProfile() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Subnet { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightVirtualNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1763,11 +1841,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeCompatibilityFilterV2() { }
         public System.Collections.Generic.IReadOnlyList<string> ClusterFlavors { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ClusterVersions { get { throw null; } }
-        public string ComputeIsolationSupported { get { throw null; } }
         public string EspApplied { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightFilterMode? FilterMode { get { throw null; } }
+        public string IsComputeIsolationSupported { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NodeTypes { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> OsType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.HDInsightOSType> OSType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Regions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> VmSizes { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeCompatibilityFilterV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1785,14 +1863,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightVmSizeProperty() { }
         public int? Cores { get { throw null; } }
         public string DataDiskStorageTier { get { throw null; } }
+        public bool? IsSupportedByVirtualMachines { get { throw null; } }
+        public bool? IsSupportedByWebWorkerRoles { get { throw null; } }
         public string Label { get { throw null; } }
         public long? MaxDataDiskCount { get { throw null; } }
-        public long? MemoryInMb { get { throw null; } }
+        public long? MemoryInMB { get { throw null; } }
         public string Name { get { throw null; } }
-        public bool? SupportedByVirtualMachines { get { throw null; } }
-        public bool? SupportedByWebWorkerRoles { get { throw null; } }
-        public long? VirtualMachineResourceDiskSizeInMb { get { throw null; } }
-        public long? WebWorkerResourceDiskSizeInMb { get { throw null; } }
+        public long? VirtualMachineResourceDiskSizeInMB { get { throw null; } }
+        public long? WebWorkerResourceDiskSizeInMB { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.HDInsightVmSizeProperty PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1809,9 +1887,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public JsonWebKeyEncryptionAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm RSA15 { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm RSAOAEP { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm RSAOAEP256 { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm Rsa15 { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm RsaOaep { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm RsaOaep256 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HDInsight.Models.JsonWebKeyEncryptionAlgorithm other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1874,7 +1952,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal RegionalQuotaCapability() { }
         public long? CoresAvailable { get { throw null; } }
         public long? CoresUsed { get { throw null; } }
-        public string RegionName { get { throw null; } }
+        public Azure.Core.AzureLocation? Region { get { throw null; } }
         protected virtual Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.RegionalQuotaCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1899,33 +1977,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RegionsCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RegionsCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceIdentityType : System.IEquatable<Azure.ResourceManager.HDInsight.Models.ResourceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Models.ResourceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.ResourceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.ResourceIdentityType SystemAssignedUserAssigned { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Models.ResourceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HDInsight.Models.ResourceIdentityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HDInsight.Models.ResourceIdentityType left, Azure.ResourceManager.HDInsight.Models.ResourceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Models.ResourceIdentityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.HDInsight.Models.ResourceIdentityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HDInsight.Models.ResourceIdentityType left, Azure.ResourceManager.HDInsight.Models.ResourceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class RuntimeScriptAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction>
     {
-        public RuntimeScriptAction(string name, string uri, System.Collections.Generic.IEnumerable<string> roles) { }
+        public RuntimeScriptAction(string name, System.Uri uri, System.Collections.Generic.IEnumerable<string> roles) { }
         public string ApplicationName { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string Parameters { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Roles { get { throw null; } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1938,13 +1997,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     }
     public partial class RuntimeScriptActionDetail : Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.RuntimeScriptActionDetail>
     {
-        internal RuntimeScriptActionDetail() : base (default(string), default(string), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public RuntimeScriptActionDetail(string name, System.Uri uri, System.Collections.Generic.IEnumerable<string> roles) : base (default(string), default(System.Uri), default(System.Collections.Generic.IEnumerable<string>)) { }
         public string DebugInformation { get { throw null; } }
-        public string EndTime { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Models.ScriptActionExecutionSummary> ExecutionSummary { get { throw null; } }
         public string Operation { get { throw null; } }
         public long? ScriptExecutionId { get { throw null; } }
-        public string StartTime { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         protected override Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1958,10 +2017,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     }
     public partial class ScriptAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HDInsight.Models.ScriptAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HDInsight.Models.ScriptAction>
     {
-        public ScriptAction(string name, string uri, string parameters) { }
+        public ScriptAction(string name, System.Uri uri, string parameters) { }
         public string Name { get { throw null; } set { } }
         public string Parameters { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HDInsight.Models.ScriptAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HDInsight.Models.ScriptAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

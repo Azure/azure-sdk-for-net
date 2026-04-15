@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightClusterCreateOrUpdateProperties(string clusterVersion, HDInsightOSType? osType, HDInsightTier? tier, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, StorageProfile storageProfile, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, string minSupportedTlsVersion, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterVersion = clusterVersion;
-            OsType = osType;
+            OSType = osType;
             Tier = tier;
             ClusterDefinition = clusterDefinition;
             KafkaRestProperties = kafkaRestProperties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ClusterVersion { get; set; }
 
         /// <summary> The type of operating system. </summary>
-        public HDInsightOSType? OsType { get; set; }
+        public HDInsightOSType? OSType { get; set; }
 
         /// <summary> The cluster tier. </summary>
         public HDInsightTier? Tier { get; set; }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The list of storage accounts in the cluster. </summary>
-        public IList<HDInsightStorageAccountInfo> StorageStorageaccounts
+        public IList<HDInsightStorageAccountInfo> StorageAccounts
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     StorageProfile = new StorageProfile();
                 }
-                return StorageProfile.Storageaccounts;
+                return StorageProfile.Accounts;
             }
         }
 

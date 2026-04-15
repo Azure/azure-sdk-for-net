@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -109,10 +110,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
             }
-            if (Optional.IsDefined(Saskey))
+            if (Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("saskey"u8);
-                writer.WriteStringValue(Saskey);
+                writer.WriteStringValue(SasKey);
             }
             if (Optional.IsDefined(Fileshare))
             {
@@ -171,9 +172,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             string container = default;
             string fileSystem = default;
             string key = default;
-            string resourceId = default;
-            string msiResourceId = default;
-            string saskey = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier msiResourceId = default;
+            string sasKey = default;
             string fileshare = default;
             bool? enableSecureChannel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,17 +211,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("msiResourceId"u8))
                 {
-                    msiResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    msiResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("saskey"u8))
                 {
-                    saskey = prop.Value.GetString();
+                    sasKey = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("fileshare"u8))
@@ -250,7 +259,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 key,
                 resourceId,
                 msiResourceId,
-                saskey,
+                sasKey,
                 fileshare,
                 enableSecureChannel,
                 additionalBinaryDataProperties);

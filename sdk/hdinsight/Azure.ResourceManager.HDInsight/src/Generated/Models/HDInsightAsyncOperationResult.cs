@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="status"> The async operation state. </param>
         /// <param name="error"> The operation error information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, Errors error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Error = error;
@@ -36,6 +37,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightAsyncOperationState? Status { get; }
 
         /// <summary> The operation error information. </summary>
-        public Errors Error { get; }
+        internal ErrorResponse Error { get; }
+
+        /// <summary> The error object. </summary>
+        public ResponseError Error
+        {
+            get
+            {
+                return Error.Error;
+            }
+        }
     }
 }

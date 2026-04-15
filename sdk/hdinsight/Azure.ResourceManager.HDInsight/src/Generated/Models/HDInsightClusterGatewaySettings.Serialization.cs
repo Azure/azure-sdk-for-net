@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(IsCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
-                writer.WriteStringValue(IsCredentialEnabled);
+                writer.WriteBooleanValue(IsCredentialEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(UserName))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string isCredentialEnabled = default;
+            bool? isCredentialEnabled = default;
             string userName = default;
             string password = default;
             IList<EntraUserInfo> restAuthEntraUsers = default;
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (prop.NameEquals("restAuthCredential.isEnabled"u8))
                 {
-                    isCredentialEnabled = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isCredentialEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("restAuthCredential.username"u8))

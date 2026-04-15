@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="id"> The ID of the virtual network. </param>
         /// <param name="subnet"> The name of the subnet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVirtualNetworkProfile(string id, string subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightVirtualNetworkProfile(ResourceIdentifier id, string subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Subnet = subnet;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The ID of the virtual network. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> The name of the subnet. </summary>
         public string Subnet { get; set; }

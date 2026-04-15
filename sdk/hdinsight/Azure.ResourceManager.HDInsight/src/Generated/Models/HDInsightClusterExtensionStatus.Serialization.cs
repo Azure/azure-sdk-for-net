@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightClusterExtensionStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClusterMonitoringEnabled))
+            if (Optional.IsDefined(IsClusterMonitoringEnabled))
             {
                 writer.WritePropertyName("clusterMonitoringEnabled"u8);
-                writer.WriteBooleanValue(ClusterMonitoringEnabled.Value);
+                writer.WriteBooleanValue(IsClusterMonitoringEnabled.Value);
             }
             if (Optional.IsDefined(WorkspaceId))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            bool? clusterMonitoringEnabled = default;
+            bool? isClusterMonitoringEnabled = default;
             string workspaceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    clusterMonitoringEnabled = prop.Value.GetBoolean();
+                    isClusterMonitoringEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightClusterExtensionStatus(clusterMonitoringEnabled, workspaceId, additionalBinaryDataProperties);
+            return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId, additionalBinaryDataProperties);
         }
     }
 }

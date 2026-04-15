@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
-        public RuntimeScriptAction(string name, string uri, IEnumerable<string> roles)
+        public RuntimeScriptAction(string name, Uri uri, IEnumerable<string> roles)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <param name="applicationName"> The application name of the script action, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeScriptAction(string name, string uri, string parameters, IList<string> roles, string applicationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeScriptAction(string name, Uri uri, string parameters, IList<string> roles, string applicationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Uri = uri;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The URI to the script. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The parameters for the script. </summary>
         public string Parameters { get; set; }

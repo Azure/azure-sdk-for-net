@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -29,11 +30,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="key"> The storage account access key. </param>
         /// <param name="resourceId"> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
         /// <param name="msiResourceId"> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </param>
-        /// <param name="saskey"> The shared access signature key. </param>
+        /// <param name="sasKey"> The shared access signature key. </param>
         /// <param name="fileshare"> The file share name. </param>
         /// <param name="enableSecureChannel"> Enable secure channel or not, it's an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, string resourceId, string msiResourceId, string saskey, string fileshare, bool? enableSecureChannel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare, bool? enableSecureChannel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDefault = isDefault;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Key = key;
             ResourceId = resourceId;
             MsiResourceId = msiResourceId;
-            Saskey = saskey;
+            SasKey = sasKey;
             Fileshare = fileshare;
             EnableSecureChannel = enableSecureChannel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -64,13 +65,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Key { get; set; }
 
         /// <summary> The resource ID of storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The managed identity (MSI) that is allowed to access the storage account, only to be specified for Azure Data Lake Storage Gen 2. </summary>
-        public string MsiResourceId { get; set; }
+        public ResourceIdentifier MsiResourceId { get; set; }
 
         /// <summary> The shared access signature key. </summary>
-        public string Saskey { get; set; }
+        public string SasKey { get; set; }
 
         /// <summary> The file share name. </summary>
         public string Fileshare { get; set; }

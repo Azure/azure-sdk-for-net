@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            bool? nameAvailable = default;
+            bool? isNameAvailable = default;
             string reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    nameAvailable = prop.Value.GetBoolean();
+                    isNameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties);
+            return new HDInsightNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

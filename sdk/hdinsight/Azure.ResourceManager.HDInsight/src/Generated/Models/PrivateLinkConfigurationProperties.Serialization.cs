@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (HDInsightIPConfiguration item in IpConfigurations)
+            foreach (HDInsightIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }

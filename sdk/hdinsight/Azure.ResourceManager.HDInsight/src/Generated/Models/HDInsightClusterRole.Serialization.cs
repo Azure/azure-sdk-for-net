@@ -89,25 +89,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
-            if (Optional.IsDefined(VMGroupName))
+            if (Optional.IsDefined(VmGroupName))
             {
                 writer.WritePropertyName("VMGroupName"u8);
-                writer.WriteStringValue(VMGroupName);
+                writer.WriteStringValue(VmGroupName);
             }
-            if (Optional.IsDefined(AutoscaleConfiguration))
+            if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoscaleConfiguration, options);
+                writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             int? minInstanceCount = default;
             int? targetInstanceCount = default;
             string vmGroupName = default;
-            HDInsightAutoScaleConfiguration autoscaleConfiguration = default;
+            HDInsightAutoScaleConfiguration autoScaleConfiguration = default;
             HardwareProfile hardwareProfile = default;
             OsProfile osProfile = default;
             HDInsightVirtualNetworkProfile virtualNetworkProfile = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    autoscaleConfiguration = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(prop.Value, options);
+                    autoScaleConfiguration = HDInsightAutoScaleConfiguration.DeserializeHDInsightAutoScaleConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hardwareProfile"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 minInstanceCount,
                 targetInstanceCount,
                 vmGroupName,
-                autoscaleConfiguration,
+                autoScaleConfiguration,
                 hardwareProfile,
                 osProfile,
                 virtualNetworkProfile,

@@ -8,18 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster create request specification. </summary>
-    public partial class HDInsightClusterCreationValidateContent : ClusterCreateParametersExtended, IJsonModel<HDInsightClusterCreationValidateContent>
+    public partial class HDInsightClusterCreationValidateContent : HDInsightClusterCreateOrUpdateContent, IJsonModel<HDInsightClusterCreationValidateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClusterCreateParametersExtended PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HDInsightClusterCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreationValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -91,15 +93,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ClusterCreateRequestValidationParametersType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ClusterCreateRequestValidationParametersType);
             }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(FetchAaddsResource))
             {
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ClusterCreateParametersExtended JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HDInsightClusterCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreationValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -133,21 +135,25 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
             HDInsightClusterCreateOrUpdateProperties properties = default;
-            ClusterIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
-            string tenantId = default;
+            string clusterCreateRequestValidationParametersType = default;
+            Guid? tenantId = default;
             bool? fetchAaddsResource = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -207,7 +213,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    identity = ClusterIdentity.DeserializeClusterIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHDInsightContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -217,12 +223,16 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    clusterCreateRequestValidationParametersType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fetchAaddsResource"u8))
@@ -247,7 +257,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 identity,
                 additionalBinaryDataProperties,
                 name,
-                @type,
+                clusterCreateRequestValidationParametersType,
                 tenantId,
                 fetchAaddsResource);
         }

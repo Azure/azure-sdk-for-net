@@ -14,21 +14,21 @@ using Azure.ResourceManager.HDInsight.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class ClustersGetByResourceGroupCollectionResultOfT : Pageable<HDInsightClusterData>
+    internal partial class HDInsightClusterGetByResourceGroupCollectionResultOfT : Pageable<HDInsightClusterData>
     {
-        private readonly Clusters _client;
+        private readonly HDInsightCluster _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ClustersGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Clusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of HDInsightClusterGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HDInsightCluster client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ClustersGetByResourceGroupCollectionResultOfT(Clusters client, string subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public HDInsightClusterGetByResourceGroupCollectionResultOfT(HDInsightCluster client, string subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.HDInsight
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HDInsightClusterGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ClustersGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of HDInsightClusterGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<HDInsightClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

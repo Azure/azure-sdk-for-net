@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("privateLink"u8);
                 writer.WriteStringValue(PrivateLink.Value.ToString());
             }
-            if (Optional.IsDefined(PublicIpTag))
+            if (Optional.IsDefined(PublicIPTag))
             {
                 writer.WritePropertyName("publicIpTag"u8);
-                writer.WriteObjectValue(PublicIpTag, options);
+                writer.WriteObjectValue(PublicIPTag, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             OutboundDependenciesManagedType? outboundDependenciesManagedType = default;
             HDInsightResourceProviderConnection? resourceProviderConnection = default;
             HDInsightPrivateLinkState? privateLink = default;
-            HDInsightClusterIPTag publicIpTag = default;
+            HDInsightClusterIPTag publicIPTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    publicIpTag = HDInsightClusterIPTag.DeserializeHDInsightClusterIPTag(prop.Value, options);
+                    publicIPTag = HDInsightClusterIPTag.DeserializeHDInsightClusterIPTag(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightClusterNetworkProperties(outboundDependenciesManagedType, resourceProviderConnection, privateLink, publicIpTag, additionalBinaryDataProperties);
+            return new HDInsightClusterNetworkProperties(outboundDependenciesManagedType, resourceProviderConnection, privateLink, publicIPTag, additionalBinaryDataProperties);
         }
     }
 }

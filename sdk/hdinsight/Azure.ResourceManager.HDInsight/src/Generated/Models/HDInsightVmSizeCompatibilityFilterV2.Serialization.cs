@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OsType))
+            if (Optional.IsCollectionDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStartArray();
-                foreach (HDInsightOSType item in OsType)
+                foreach (HDInsightOSType item in OSType)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("espApplied"u8);
                 writer.WriteStringValue(EspApplied);
             }
-            if (Optional.IsDefined(ComputeIsolationSupported))
+            if (Optional.IsDefined(IsComputeIsolationSupported))
             {
                 writer.WritePropertyName("computeIsolationSupported"u8);
-                writer.WriteStringValue(ComputeIsolationSupported);
+                writer.WriteStringValue(IsComputeIsolationSupported);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             IReadOnlyList<string> clusterFlavors = default;
             IReadOnlyList<string> nodeTypes = default;
             IReadOnlyList<string> clusterVersions = default;
-            IList<HDInsightOSType> osType = default;
+            IReadOnlyList<HDInsightOSType> osType = default;
             IReadOnlyList<string> vmSizes = default;
             string espApplied = default;
-            string computeIsolationSupported = default;
+            string isComputeIsolationSupported = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("computeIsolationSupported"u8))
                 {
-                    computeIsolationSupported = prop.Value.GetString();
+                    isComputeIsolationSupported = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 osType ?? new ChangeTrackingList<HDInsightOSType>(),
                 vmSizes ?? new ChangeTrackingList<string>(),
                 espApplied,
-                computeIsolationSupported,
+                isComputeIsolationSupported,
                 additionalBinaryDataProperties);
         }
     }

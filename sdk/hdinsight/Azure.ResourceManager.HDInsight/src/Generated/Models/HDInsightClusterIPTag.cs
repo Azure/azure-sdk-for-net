@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Argument.AssertNotNull(ipTagType, nameof(ipTagType));
             Argument.AssertNotNull(tag, nameof(tag));
 
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
         }
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HDInsightClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the ipTag type: Example FirstPartyUsage. </summary>
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
 
         /// <summary> Gets or sets value of the IpTag associated with the public IP. Example HDInsight, SQL, Storage etc. </summary>
         public string Tag { get; set; }

@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +161,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new HDInsightNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

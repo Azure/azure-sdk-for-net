@@ -15,19 +15,19 @@ using Azure.ResourceManager.HDInsight.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class ClustersGetAllAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterData>
+    internal partial class HDInsightClusterGetAllAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterData>
     {
-        private readonly Clusters _client;
+        private readonly HDInsightCluster _client;
         private readonly string _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ClustersGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Clusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of HDInsightClusterGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The HDInsightCluster client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ClustersGetAllAsyncCollectionResultOfT(Clusters client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public HDInsightClusterGetAllAsyncCollectionResultOfT(HDInsightCluster client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.HDInsight
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ClustersGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of HDInsightClusterGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ClustersGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of HDInsightClusterGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<HDInsightClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

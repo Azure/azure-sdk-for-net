@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class Clusters
+    internal partial class HDInsightCluster
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Clusters for mocking. </summary>
-        protected Clusters()
+        /// <summary> Initializes a new instance of HDInsightCluster for mocking. </summary>
+        protected HDInsightCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of Clusters. </summary>
+        /// <summary> Initializes a new instance of HDInsightCluster. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Clusters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal HDInsightCluster(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.HDInsight;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="tags"> The resource tags. </param>
         /// <param name="identity"> The identity of the cluster, if configured. Setting this property will override the existing identity configuration of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPatch(IDictionary<string, string> tags, ClusterIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +39,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary> The identity of the cluster, if configured. Setting this property will override the existing identity configuration of the cluster. </summary>
-        public ClusterIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

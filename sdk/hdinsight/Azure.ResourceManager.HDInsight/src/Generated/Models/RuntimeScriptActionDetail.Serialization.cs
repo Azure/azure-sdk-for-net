@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -61,6 +62,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RuntimeScriptActionDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RuntimeScriptActionDetail"/> from. </param>
+        internal static RuntimeScriptActionDetail FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRuntimeScriptActionDetail(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeScriptActionDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -85,15 +93,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("scriptExecutionId"u8);
                 writer.WriteNumberValue(ScriptExecutionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -148,14 +156,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string name = default;
-            string uri = default;
+            Uri uri = default;
             string parameters = default;
             IList<string> roles = default;
             string applicationName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? scriptExecutionId = default;
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             string status = default;
             string operation = default;
             IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
@@ -169,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -210,12 +218,20 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -260,8 +276,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 applicationName,
                 additionalBinaryDataProperties,
                 scriptExecutionId,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 status,
                 operation,
                 executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),

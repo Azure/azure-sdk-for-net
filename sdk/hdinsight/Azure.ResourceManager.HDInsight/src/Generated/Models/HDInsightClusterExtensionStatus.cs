@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterExtensionStatus"/>. </summary>
-        /// <param name="clusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
+        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
         /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterExtensionStatus(bool? clusterMonitoringEnabled, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterMonitoringEnabled = clusterMonitoringEnabled;
+            IsClusterMonitoringEnabled = isClusterMonitoringEnabled;
             WorkspaceId = workspaceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the monitor on the HDInsight cluster. </summary>
-        public bool? ClusterMonitoringEnabled { get; }
+        public bool? IsClusterMonitoringEnabled { get; }
 
         /// <summary> The workspace ID of the monitor on the HDInsight cluster. </summary>
         public string WorkspaceId { get; }

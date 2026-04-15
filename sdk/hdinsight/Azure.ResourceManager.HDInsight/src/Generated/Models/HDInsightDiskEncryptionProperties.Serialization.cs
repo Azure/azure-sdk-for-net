@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
-                writer.WriteStringValue(VaultUri);
+                writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
-                writer.WriteBooleanValue(EncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,18 +147,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string vaultUri = default;
+            Uri vaultUri = default;
             string keyName = default;
             string keyVersion = default;
             JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm = default;
-            string msiResourceId = default;
-            bool? encryptionAtHost = default;
+            ResourceIdentifier msiResourceId = default;
+            bool? isEncryptionAtHostEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vaultUri"u8))
                 {
-                    vaultUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyName"u8))
@@ -181,7 +186,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("msiResourceId"u8))
                 {
-                    msiResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    msiResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionAtHost"u8))
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    encryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +213,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 keyVersion,
                 encryptionAlgorithm,
                 msiResourceId,
-                encryptionAtHost,
+                isEncryptionAtHostEnabled,
                 additionalBinaryDataProperties);
         }
     }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RegionName))
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("regionName"u8);
-                writer.WriteStringValue(RegionName);
+                writer.WriteStringValue(Region.Value);
             }
             if (Optional.IsDefined(CoresUsed))
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            string regionName = default;
+            AzureLocation? region = default;
             long? coresUsed = default;
             long? coresAvailable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 if (prop.NameEquals("regionName"u8))
                 {
-                    regionName = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    region = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("coresUsed"u8))
@@ -165,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegionalQuotaCapability(regionName, coresUsed, coresAvailable, additionalBinaryDataProperties);
+            return new RegionalQuotaCapability(region, coresUsed, coresAvailable, additionalBinaryDataProperties);
         }
     }
 }

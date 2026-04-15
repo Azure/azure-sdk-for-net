@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceIdentifier))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string applicationType = default;
             string applicationState = default;
             IList<ResponseError> errors = default;
-            string createdDate = default;
+            DateTimeOffset? createdOn = default;
             string marketplaceIdentifier = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -331,7 +331,11 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (prop.NameEquals("createdDate"u8))
                 {
-                    createdDate = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("marketplaceIdentifier"u8))
@@ -368,7 +372,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 applicationType,
                 applicationState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                createdDate,
+                createdOn,
                 marketplaceIdentifier,
                 privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),
                 additionalBinaryDataProperties);

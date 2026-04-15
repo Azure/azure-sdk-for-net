@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="minInstanceCount"> The minimum instance count of the cluster. </param>
         /// <param name="targetInstanceCount"> The instance count of the cluster. </param>
         /// <param name="vmGroupName"> The name of the virtual machine group. </param>
-        /// <param name="autoscaleConfiguration"> The autoscale configurations. </param>
+        /// <param name="autoScaleConfiguration"> The autoscale configurations. </param>
         /// <param name="hardwareProfile"> The hardware profile. </param>
         /// <param name="osProfile"> The operating system profile. </param>
         /// <param name="virtualNetworkProfile"> The virtual network profile. </param>
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="scriptActions"> The list of script actions on the role. </param>
         /// <param name="encryptDataDisks"> Indicates whether encrypt the data disks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoscaleConfiguration, HardwareProfile hardwareProfile, OsProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OsProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
             TargetInstanceCount = targetInstanceCount;
-            VMGroupName = vmGroupName;
-            AutoscaleConfiguration = autoscaleConfiguration;
+            VmGroupName = vmGroupName;
+            AutoScaleConfiguration = autoScaleConfiguration;
             HardwareProfile = hardwareProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             VirtualNetworkProfile = virtualNetworkProfile;
             DataDisksGroups = dataDisksGroups;
             ScriptActions = scriptActions;
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         public int? TargetInstanceCount { get; set; }
 
         /// <summary> The name of the virtual machine group. </summary>
-        public string VMGroupName { get; set; }
+        public string VmGroupName { get; set; }
 
         /// <summary> The autoscale configurations. </summary>
-        public HDInsightAutoScaleConfiguration AutoscaleConfiguration { get; set; }
+        public HDInsightAutoScaleConfiguration AutoScaleConfiguration { get; set; }
 
         /// <summary> The hardware profile. </summary>
         internal HardwareProfile HardwareProfile { get; set; }
 
         /// <summary> The operating system profile. </summary>
-        internal OsProfile OsProfile { get; set; }
+        internal OsProfile OSProfile { get; set; }
 
         /// <summary> The virtual network profile. </summary>
         public HDInsightVirtualNetworkProfile VirtualNetworkProfile { get; set; }
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The Linux OS profile. </summary>
-        public HDInsightLinuxOSProfile OsLinuxOperatingSystemProfile
+        public HDInsightLinuxOSProfile OSLinuxProfile
         {
             get
             {
-                return OsProfile is null ? default : OsProfile.LinuxOperatingSystemProfile;
+                return OSProfile is null ? default : OSProfile.LinuxProfile;
             }
             set
             {
-                if (OsProfile is null)
+                if (OSProfile is null)
                 {
-                    OsProfile = new OsProfile();
+                    OSProfile = new OsProfile();
                 }
-                OsProfile.LinuxOperatingSystemProfile = value;
+                OSProfile.LinuxProfile = value;
             }
         }
     }

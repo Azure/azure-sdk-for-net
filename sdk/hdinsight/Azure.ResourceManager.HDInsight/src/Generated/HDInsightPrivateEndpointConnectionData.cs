@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.HDInsight
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState"> The private link service connection state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> The private link service connection state. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public HDInsightPrivateEndpointConnectionData(HDInsightPrivateLinkServiceConnectionState connectionState)
         {
-            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            Properties = new PrivateEndpointConnectionProperties(privateLinkServiceConnectionState);
+            Properties = new PrivateEndpointConnectionProperties(connectionState);
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionData"/>. </summary>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.HDInsight
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The private link service connection state. </summary>
-        public HDInsightPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public HDInsightPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary> The private endpoint id. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

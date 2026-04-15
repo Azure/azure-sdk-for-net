@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue<ErrorResponse>(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightAsyncOperationState? status = default;
-            Errors error = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    error = Errors.DeserializeErrors(prop.Value, options);
+                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

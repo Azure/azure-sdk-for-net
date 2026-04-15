@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster create request specification. </summary>
-    public partial class HDInsightClusterCreationValidateContent : ClusterCreateParametersExtended
+    public partial class HDInsightClusterCreationValidateContent : HDInsightClusterCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateContent"/>. </summary>
         public HDInsightClusterCreationValidateContent()
@@ -26,13 +28,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The cluster name. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="clusterCreateRequestValidationParametersType"> The resource type. </param>
         /// <param name="tenantId"> The tenant id. </param>
         /// <param name="fetchAaddsResource"> This indicates whether fetch Aadds resource or not. </param>
-        internal HDInsightClusterCreationValidateContent(string location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ClusterIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, string tenantId, bool? fetchAaddsResource) : base(location, tags, zones, properties, identity, additionalBinaryDataProperties)
+        internal HDInsightClusterCreationValidateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string clusterCreateRequestValidationParametersType, Guid? tenantId, bool? fetchAaddsResource) : base(location, tags, zones, properties, identity, additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ClusterCreateRequestValidationParametersType = clusterCreateRequestValidationParametersType;
             TenantId = tenantId;
             FetchAaddsResource = fetchAaddsResource;
         }
@@ -41,10 +43,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Name { get; set; }
 
         /// <summary> The resource type. </summary>
-        public string Type { get; set; }
+        public string ClusterCreateRequestValidationParametersType { get; set; }
 
         /// <summary> The tenant id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> This indicates whether fetch Aadds resource or not. </summary>
         public bool? FetchAaddsResource { get; set; }

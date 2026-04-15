@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="properties"> The properties of the application. </param>
         /// <param name="eTag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
-        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HDInsightApplicationProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HDInsightApplicationProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight
         public HDInsightApplicationProperties Properties { get; set; }
 
         /// <summary> The ETag for the application. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The tags for the application. </summary>
         public IDictionary<string, string> Tags { get; }
