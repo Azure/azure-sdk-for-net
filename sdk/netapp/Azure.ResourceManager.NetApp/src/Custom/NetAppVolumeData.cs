@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             CreationToken = creationToken;
             UsageThreshold = usageThreshold;
-            SubnetId = subnetId?.ToString();
+            SubnetId = subnetId;
         }
 
         /// <summary> A unique file path for the volume. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> The Azure Resource URI for a delegated subnet. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> Restoring. ReadOnly property indicating if volume is being restored. </summary>
         public bool? IsRestoring
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Data store resource unique identifier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<string> DataStoreResourceId { get; }
+        public IReadOnlyList<ResourceIdentifier> DataStoreResourceId { get; }
 
         /// <summary> Default group quota for volume in KiBs. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The effective value of the network features type available to the volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Unique FileSystem Identifier. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string FileSystemId { get; }
+        public Guid? FileSystemId { get; }
 
         /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Network Sibling Set ID for the group of volumes sharing networking resources. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string NetworkSiblingSetId { get; }
+        public Guid? NetworkSiblingSetId { get; }
 
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Resource identifier used to identify the Snapshot. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier SnapshotId { get; set; }
+        public string SnapshotId { get; set; }
 
         /// <summary> Provides storage to network proximity information for the volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -1348,17 +1348,17 @@ namespace Azure.ResourceManager.NetApp
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> DataStoreResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> DataStoreResourceId { get { throw null; } }
         public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
         public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
         public bool? DeleteBaseSnapshot { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? EffectiveNetworkFeatures { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? EnableSubvolumes { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? FileAccessLogs { get { throw null; } }
-        public string FileSystemId { get { throw null; } }
+        public System.Guid? FileSystemId { get { throw null; } }
         public long? InheritedSizeInBytes { get { throw null; } }
         public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.NetApp
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> MountTargets { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? NetAppAvsDataStore { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? NetworkFeatures { get { throw null; } set { } }
-        public string NetworkSiblingSetId { get { throw null; } }
+        public System.Guid? NetworkSiblingSetId { get { throw null; } }
         public Azure.Core.ResourceIdentifier OriginatingResourceId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> PlacementRules { get { throw null; } }
         public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
@@ -1386,9 +1386,9 @@ namespace Azure.ResourceManager.NetApp
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? SmbNonBrowsable { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SnapshotId { get { throw null; } set { } }
+        public string SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public string T2Network { get { throw null; } }
         public float? ThroughputMibps { get { throw null; } set { } }
         public string UnixPermissions { get { throw null; } set { } }
