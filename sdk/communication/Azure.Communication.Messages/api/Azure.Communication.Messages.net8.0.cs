@@ -416,6 +416,8 @@ namespace Azure.Communication.Messages
     public partial class ConversationThreadClient
     {
         protected ConversationThreadClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public ConversationThreadClient(Azure.Communication.Messages.ConversationThreadClientSettings settings) { }
         public ConversationThreadClient(System.Uri endpoint, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
         public ConversationThreadClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ConversationThreadClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }

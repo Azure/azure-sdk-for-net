@@ -12,9 +12,6 @@ namespace Azure.Communication.Messages
     [CodeGenSuppress("CommunicationTokenCredential")]
     public partial class ConversationThreadClientSettings
     {
-        /// <summary> Gets or sets the CommunicationTokenCredential token string. </summary>
-        public string CommunicationTokenCredential { get; set; }
-
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
@@ -23,17 +20,7 @@ namespace Azure.Communication.Messages
             {
                 Endpoint = endpoint;
             }
-
-            IConfigurationSection communicationTokenCredentialSection = section.GetSection("CommunicationTokenCredential");
-            if (communicationTokenCredentialSection.Exists())
-            {
-                string token = communicationTokenCredentialSection.Value;
-                if (!string.IsNullOrEmpty(token))
-                {
-                    CommunicationTokenCredential = token;
-                }
-            }
-
+            
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {

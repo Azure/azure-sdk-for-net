@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -60,6 +61,13 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConversationThreadClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationThreadClient from a <see cref="ConversationThreadClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for ConversationThreadClient. </param>
+        [Experimental("SCME0002")]
+        public ConversationThreadClient(ConversationThreadClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
