@@ -79,7 +79,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.noOperationParams",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [],
           "response": {},
@@ -123,7 +124,30 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword"
+                "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
+                "methodParameterSegments": [
+                  {
+                    "$id": "11",
+                    "kind": "method",
+                    "name": "keyword",
+                    "serializedName": "keyword",
+                    "type": {
+                      "$id": "12",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -142,29 +166,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [
             {
-              "$id": "11",
-              "kind": "method",
-              "name": "keyword",
-              "serializedName": "keyword",
-              "type": {
-                "$id": "12",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "11"
             }
           ],
           "response": {},
@@ -229,7 +236,8 @@
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [
         "v1.0"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

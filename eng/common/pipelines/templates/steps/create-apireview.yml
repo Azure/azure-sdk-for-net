@@ -37,29 +37,29 @@ steps:
       parameters:
         WorkingDirectory: ${{ parameters.SourceRootPath }}
 
-    - task: Powershell@2
-      inputs:
-        filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
-        arguments: >
-          -PackageInfoFiles ('${{ convertToJson(parameters.PackageInfoFiles) }}' | ConvertFrom-Json -NoEnumerate)
-          -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
-          -ArtifactPath '${{parameters.ArtifactPath}}'
-          -ArtifactName ${{ parameters.ArtifactName }}
-          -APIKey '$(azuresdk-apiview-apikey)'
-          -PackageName '${{parameters.PackageName}}'
-          -SourceBranch '$(Build.SourceBranchName)'
-          -DefaultBranch '$(DefaultBranch)'
-          -ConfigFileDir '${{parameters.ConfigFileDir}}'
-          -BuildId '$(Build.BuildId)'
-          -RepoName '$(Build.Repository.Name)'
-          -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
-        pwsh: true
-      displayName: Create API Review
-      condition: >-
-        and(
-          succeededOrFailed(),
-          ne(variables['Skip.CreateApiReview'], 'true'),
-          ne(variables['Build.Reason'],'PullRequest'),
-          eq(variables['System.TeamProject'], 'internal'),
-          not(endsWith(variables['Build.Repository.Name'], '-pr'))
-        )
+    - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(endsWith(variables['Build.Repository.Name'], '-pr'))) }}:
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'APIView prod deployment'
+          scriptType: pscore
+          scriptLocation: scriptPath
+          scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
+          # PackageInfoFiles example: @('a/file1.json','a/file2.json')
+          arguments: >
+            -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
+            -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
+            -ArtifactPath '${{parameters.ArtifactPath}}'
+            -ArtifactName ${{ parameters.ArtifactName }}
+            -PackageName '${{parameters.PackageName}}'
+            -SourceBranch '$(Build.SourceBranchName)'
+            -DefaultBranch '$(DefaultBranch)'
+            -ConfigFileDir '${{parameters.ConfigFileDir}}'
+            -BuildId '$(Build.BuildId)'
+            -RepoName '$(Build.Repository.Name)'
+            -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
+        displayName: Create API Review
+        condition: >-
+          and(
+            succeededOrFailed(),
+            ne(variables['Skip.CreateApiReview'], 'true')
+          )

@@ -4,6 +4,7 @@ import "@azure-tools/typespec-azure-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
+using TypeSpec.Versioning;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
@@ -19,6 +20,8 @@ model Foo is TrackedResource<FooProperties, false> {
 
   #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Existing usage of legacy type"
   ...Azure.ResourceManager.Legacy.ManagedServiceIdentityV4Property;
+
+  ...ResourcePlanProperty;
 }
 
 @useSystemTextJsonConverter("csharp")
@@ -45,8 +48,20 @@ model FooProperties {
 
   optionalProperty?: SafeFlattenModel;
 
+  /** Test ApplicationProfile flattening scenario */
+  vmProfile?: VmProfile;
+
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
+
+  /** WritableSubResource property for testing WritableSubResource type replacement */
+  writableSubResourceProp?: WritableSubResourceProp;
+
+  /** Test case for multi-layer safe flatten */
+  computeFleetVmProfile?: ComputeFleetVmProfile;
+}
+
+model WritableSubResourceProp {
 }
 
 model NestedFooModel {
@@ -54,7 +69,50 @@ model NestedFooModel {
 }
 
 model SafeFlattenModel {
-  flattenedProperty: string;
+  flattenedProperty?: string[];
+}
+
+// Test case for ApplicationProfile -> GalleryApplications flattening
+// This tests that when a suffix (Profile) is stripped, singular/plural matching works correctly
+model ApplicationProfile {
+  /** Specifies the gallery applications that should be made available */
+  galleryApplications?: string[];
+}
+
+model VmProfile {
+  /** Application profile */
+  applicationProfile?: ApplicationProfile;
+}
+
+// Test case for multi-layer safe flatten with internal properties
+// This should flatten CapacityReservationGroupId all the way up to ComputeFleetVmProfile
+model TestSubResource {
+  id?: armResourceIdentifier;
+}
+
+model CapacityReservationProfile {
+  capacityReservationGroup?: TestSubResource;
+}
+
+model ComputeFleetVmProfile {
+  capacityReservation?: CapacityReservationProfile;
+}
+
+/** Provisioning state of the Foo resource. */
+union FooProvisioningState {
+  string,
+
+  /** The resource is being provisioned. */
+  Provisioning: "Provisioning",
+
+  /** The resource has been provisioned successfully. */
+  Succeeded: "Succeeded",
+
+  /** The resource provisioning has failed. */
+  Failed: "Failed",
+
+  /** The resource provisioning has been canceled. */
+  Canceled: "Canceled",
 }
 
 @armResourceOperations
@@ -78,6 +136,23 @@ interface Foos {
       ArmLroLocationHeader<FinalResult = FooActionResult> &
       Azure.Core.Foundations.RetryAfterHeader
   >;
+
+  @get
+  @action("listDependencies")
+  listDependencies is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooDependency[]>
+  >;
+
+  /** Get the provisioning state of a Foo resource. */
+  @get
+  @action("getProvisioningState")
+  getProvisioningState is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooProvisioningState>
+  >;
 }
 
 model FooActionRequest {
@@ -89,6 +164,12 @@ model FooActionResult {
   error?: Azure.ResourceManager.Foundations.ErrorDetail;
 }
 
+model FooDependency {
+  dependencyName: string;
+  version?: string;
+}
+
+@added(Versions.v2024_05_01)
 @singleton
 model FooSettings is ProxyResource<FooSettingsProperties> {
   @doc("The default Foo settings.")
@@ -100,6 +181,7 @@ model FooSettings is ProxyResource<FooSettingsProperties> {
   name: string;
 }
 
+@added(Versions.v2024_05_01)
 @armResourceOperations
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;
@@ -124,3 +206,10 @@ model FooSettingsProperties is BaseResourceProperties {
 model FooSettingsPropertiesMetaData {
   metaDatas?: string[];
 }
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles for provisioning"
+@@clientOption(Foo, "resource-rbac-roles", #{
+  FooContributor: "00000000-0000-0000-0000-000000000001",
+  FooReader: "00000000-0000-0000-0000-000000000002",
+  FooDataOperator: "00000000-0000-0000-0000-000000000003",
+}, "csharp");

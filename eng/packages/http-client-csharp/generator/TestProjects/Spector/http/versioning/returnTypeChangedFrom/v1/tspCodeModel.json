@@ -60,7 +60,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "testContentType",
+      "name": "TestRequestContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -76,7 +76,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "TestRequestContentType1",
+      "name": "testContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -143,15 +143,34 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType"
+                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "16",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "type": {
+                      "$ref": "4"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "16",
+                "$id": "17",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
                 "type": {
-                  "$ref": "6"
+                  "$ref": "8"
                 },
                 "isApiVersion": false,
                 "optional": false,
@@ -159,15 +178,34 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept"
+                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "18",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "8"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               },
               {
-                "$id": "17",
+                "$id": "19",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
                 "type": {
-                  "$id": "18",
+                  "$id": "20",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -182,7 +220,30 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body"
+                "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "21",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$id": "22",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -191,7 +252,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$id": "19",
+                  "$id": "23",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -202,7 +263,7 @@
                     "name": "contentType",
                     "nameInResponse": "content-type",
                     "type": {
-                      "$ref": "8"
+                      "$ref": "10"
                     }
                   }
                 ],
@@ -222,68 +283,23 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.ReturnTypeChangedFrom"
           },
           "parameters": [
             {
-              "$id": "20",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "type": {
-                "$ref": "10"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "16"
             },
             {
-              "$id": "21",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$id": "22",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "21"
             },
             {
-              "$id": "23",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "6"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "18"
             }
           ],
           "response": {
             "type": {
-              "$ref": "19"
+              "$ref": "23"
             }
           },
           "isOverride": false,
@@ -347,7 +363,8 @@
       "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom",
       "apiVersions": [
         "v1"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

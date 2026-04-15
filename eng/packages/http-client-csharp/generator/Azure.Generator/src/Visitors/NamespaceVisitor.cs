@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -16,6 +15,7 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
+        private const string ModelsNamespacePiece = "Models";
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
@@ -41,7 +41,7 @@ namespace Azure.Generator.Visitors
 
         protected override TypeProvider? VisitType(TypeProvider type)
         {
-            if (type is EnumProvider && type.Name == "ServiceVersion")
+            if (type is EnumProvider)
             {
                 return type;
             }
@@ -51,7 +51,7 @@ namespace Azure.Generator.Visitors
                 return type;
             }
 
-            if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
+            if (type is ModelProvider || type is ModelFactoryProvider
                 || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {
                 UpdateModelsNamespace(type);
@@ -67,23 +67,13 @@ namespace Azure.Generator.Visitors
                 // If the type is customized, then we don't want to override the namespace.
                 if (type.CustomCodeView == null)
                 {
+                    var ns = type.Type.Namespace;
+                    if (ns.Split('.')[^1] != ModelsNamespacePiece)
+                    {
+                        ns = $"{ns}.{ModelsNamespacePiece}";
+                    }
                     type.Update(
-                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
-                }
-            }
-            else
-            {
-                // TODO - remove this once all libraries have been migrated to the new generator. Leaving this
-                // here to make diffs easier to review while migrating. Calculate the fileName as it won't always match the Name
-                // property, e.g. for serialization providers.
-                // https://github.com/Azure/azure-sdk-for-net/issues/50286
-                var separator = Path.DirectorySeparatorChar;
-                if (type.RelativeFilePath.Contains($"Generated{separator}Models{separator}"))
-                {
-                    var fileName = Path.GetRelativePath(Path.Combine("src", "Generated", "Models"),
-                        type.RelativeFilePath);
-                    type.Update(relativeFilePath: Path.Combine("src", "Generated", fileName));
+                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(ns));
                 }
             }
         }

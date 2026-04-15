@@ -47,20 +47,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal JooProperties Properties { get; set; }
-
-        /// <summary> Gets or sets the Name. </summary>
-        [WirePath("properties.name")]
-        public string JooName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Name;
-            }
-            set
-            {
-                Properties = new JooProperties(value);
-            }
-        }
+        public JooProperties Properties { get; set; }
     }
 }

@@ -51,6 +51,10 @@ If any details are missing, prompt the user accordingly:
 - If SDK pull requests exist:
     - Collect the pull request links from the user
     - Use `azsdk_link_sdk_pull_request_to_release_plan` to link each SDK pull request to the release plan
+        > **GitHub CLI Authentication Required:**  
+        > Before running any SDK PR linking steps, ensure you are authenticated with GitHub CLI.  
+        > Run: `gh auth login`  
+        > You can check authentication status with `gh auth status`. 
     - Confirm successful linking for each SDK pull request
 
 ## Step 7: Summary

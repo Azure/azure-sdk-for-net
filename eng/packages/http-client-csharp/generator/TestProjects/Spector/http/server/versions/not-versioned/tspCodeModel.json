@@ -40,7 +40,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withoutApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [],
           "response": {},
@@ -79,7 +80,30 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion.apiVersion",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "8",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "type": {
+                      "$id": "9",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -98,29 +122,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [
             {
-              "$id": "8",
-              "kind": "method",
-              "name": "apiVersion",
-              "serializedName": "api-version",
-              "type": {
-                "$id": "9",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion.apiVersion",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "8"
             }
           ],
           "response": {},
@@ -162,7 +169,30 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion"
+                "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion",
+                "methodParameterSegments": [
+                  {
+                    "$id": "14",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "apiVersion",
+                    "type": {
+                      "$id": "15",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": []
+                  }
+                ]
               }
             ],
             "responses": [
@@ -181,29 +211,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Versions.NotVersioned"
           },
           "parameters": [
             {
-              "$id": "14",
-              "kind": "method",
-              "name": "apiVersion",
-              "serializedName": "apiVersion",
-              "type": {
-                "$id": "15",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "14"
             }
           ],
           "response": {},
@@ -239,7 +252,8 @@
       "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.NotVersioned",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

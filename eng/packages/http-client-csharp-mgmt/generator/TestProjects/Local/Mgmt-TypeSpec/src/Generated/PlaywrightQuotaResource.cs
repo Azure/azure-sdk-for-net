@@ -88,7 +88,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a PlaywrightQuota
+        /// Update a PlaywrightQuota.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -245,7 +245,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a PlaywrightQuota
+        /// Update a PlaywrightQuota.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -342,4 +342,153 @@ options:
 
         { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
     }
+
+    it("should interpolate package-name in namespace") {
+        $testTspConfigPackageName = Join-Path $testTspConfigDir "tspconfig-package-name-namespace.yaml"
+        $testConfigPackageName = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: testservice
+"@
+        $testConfigPackageName | Out-File -FilePath $testTspConfigPackageName -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageName -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
+
+    it("should interpolate package-name in namespace with emitter-output-dir") {
+        $testTspConfigPackageNameEmitter = Join-Path $testTspConfigDir "tspconfig-package-name-emitter-output.yaml"
+        $testConfigPackageNameEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: sdk/compute
+"@
+        $testConfigPackageNameEmitter | Out-File -FilePath $testTspConfigPackageNameEmitter -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageNameEmitter -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "sdk" "compute" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
+
+    it("should interpolate namespace in package-name") {
+        $testTspConfigNsInPkgName = Join-Path $testTspConfigDir "tspconfig-ns-in-package-name.yaml"
+        $testConfigNsInPkgName = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp":
+    namespace: Azure.TestService.Client
+    package-name: "{namespace}"
+    service-dir: testservice
+"@
+        $testConfigNsInPkgName | Out-File -FilePath $testTspConfigNsInPkgName -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigNsInPkgName -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.Client"
+        $result | Should -Be $expected
+    }
+
+}
+
+Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
+    BeforeAll {
+        $script:testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        
+        if (!(Test-Path $script:testProjectDir)) {
+            New-Item -ItemType Directory -Path $script:testProjectDir | Out-Null
+        }
+    }
+    
+    AfterAll {
+        if (Test-Path $script:testProjectDir) {
+            Remove-Item -Recurse -Force $script:testProjectDir
+        }
+    }
+    
+    BeforeEach {
+        # Clean up any existing CHANGELOG.md before each test
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        if (Test-Path $changelogPath) {
+            Remove-Item $changelogPath
+        }
+    }
+    
+    it("should create CHANGELOG.md when it doesn't exist") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        Test-Path $changelogPath | Should -Be $true
+    }
+    
+    it("should create CHANGELOG.md with correct version") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "1\.0\.0-beta\.1"
+    }
+    
+    it("should create CHANGELOG.md with Release History header") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "# Release History"
+    }
+    
+    it("should create CHANGELOG.md with Unreleased status") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "\(Unreleased\)"
+    }
+    
+    it("should not overwrite existing CHANGELOG.md") {
+        $version = "1.0.0-beta.1"
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $existingContent = "# Existing Content"
+        Set-Content -Path $changelogPath -Value $existingContent
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $content = Get-Content $changelogPath -Raw
+        # Should contain the existing content (ignoring line ending differences)
+        $content.Trim() | Should -Be $existingContent.Trim()
+    }
+    
+    it("should handle different version formats") {
+        $version = "2.0.0"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "2\.0\.0"
+    }
 }

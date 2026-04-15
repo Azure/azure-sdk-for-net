@@ -5,62 +5,82 @@ param (
   [string]$BuildID,
   [Parameter(mandatory = $false)]
   [string]$PackageNames = "",
-  [Parameter(mandatory = $true)]
+  [Parameter(mandatory = $false)]
+  # ServiceDirectory is required when using PackageNames,
+  # or when Artifacts do not include their own ServiceDirectory property.
   [string]$ServiceDirectory,
   [Parameter(mandatory = $false)]
   [string]$TagSeparator = "_",
   [Parameter(mandatory = $false)]
-  [string]$ArtifactsJson = ""
+  [object[]]$Artifacts = @()
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+# Ensure Artifacts is always an array
+$Artifacts = @($Artifacts)
+
 Write-Host "PackageNames: $PackageNames"
 Write-Host "ServiceDirectory: $ServiceDirectory"
 Write-Host "BuildID: $BuildID"
-Write-Host "ArtifactsJson: $ArtifactsJson"
+Write-Host "Artifacts count: $($Artifacts.Count)"
 
-$packageNamesArray = @()
-$artifacts = $null
-
-# If ArtifactsJson is provided, extract package names from it
-if (![String]::IsNullOrWhiteSpace($ArtifactsJson)) {
-  Write-Host "Using ArtifactsJson to determine package names"
+if ($Artifacts -and $Artifacts.Count -gt 0) {
+  # When using Artifacts, process each artifact with its name and groupId (if applicable)
   try {
-    $artifacts = $ArtifactsJson | ConvertFrom-Json
-    $packageNamesArray = $artifacts | ForEach-Object { $_.name }
-    Write-Host "Extracted package names from ArtifactsJson: $($packageNamesArray -join ', ')"
-  }
-  catch {
-    LogError "Failed to parse ArtifactsJson: $($_.Exception.Message)"
-    exit 1
-  }
-}
-elseif (![String]::IsNullOrWhiteSpace($PackageNames)) {
-  $packageNamesArray = $PackageNames.Split(',')
-}
-else {
-  LogError "Either PackageNames or ArtifactsJson must be provided."
-  exit 1
-}
+    foreach ($artifact in $Artifacts) {
+      # Validate required properties
+      if (-not (Get-Member -InputObject $artifact -Name 'name' -MemberType Properties)) {
+        LogError "Artifact is missing required 'name' property."
+        exit 1
+      }
 
-if ($artifacts) {
-  # When using ArtifactsJson, process each artifact with its name and groupId (if applicable)
-  try {
-    foreach ($artifact in $artifacts) {
       $packageName = $artifact.name
+      if ([String]::IsNullOrWhiteSpace($packageName)) {
+        LogError "Artifact 'name' property is null or empty."
+        exit 1
+      }
+
+      $artifactServiceDirectory = $null
+      # Check for ServiceDirectory property
+      if (Get-Member -InputObject $artifact -Name 'ServiceDirectory' -MemberType Properties) {
+        if (![String]::IsNullOrWhiteSpace($artifact.ServiceDirectory)) {
+          $artifactServiceDirectory = $artifact.ServiceDirectory
+        }
+      }
+
+      if ([String]::IsNullOrWhiteSpace($artifactServiceDirectory)) {
+        $artifactServiceDirectory = $ServiceDirectory
+      }
+      
+      # Validate ServiceDirectory is available
+      if ([String]::IsNullOrWhiteSpace($artifactServiceDirectory)) {
+        LogError "ServiceDirectory is required but not provided for artifact '$packageName'. Provide it via script parameter or artifact property."
+        exit 1
+      }
+
       $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
       $prefix = "$packageName$TagSeparator"
 
       if ($Language -eq "java") {
+        # Check for groupId property
+        if (-not (Get-Member -InputObject $artifact -Name 'groupId' -MemberType Properties)) {
+          LogError "Artifact '$packageName' is missing required 'groupId' property for Java language."
+          exit 1
+        }
+
         $groupId = $artifact.groupId
-        Write-Host "Processing $packageName with groupId $groupId"
         if ([String]::IsNullOrWhiteSpace($groupId)) {
           LogError "GroupId is missing for package $packageName."
           exit 1
         }
+
+        Write-Host "Processing $packageName with groupId $groupId"
         # Use groupId+artifactName format for tag prefix (e.g., "com.azure.v2+azure-sdk-template_")
         $prefix = "$groupId+$packageName$TagSeparator"
+      }
+      else {
+        Write-Host "Processing $packageName"
       }
 
       Write-Host "Get Latest Tag : git tag -l $prefix*"
@@ -87,21 +107,27 @@ if ($artifacts) {
       if ($Language -ne "java") {
         SetPackageVersion -PackageName $packageName `
           -Version $newVersion.ToString() `
-          -ServiceDirectory $ServiceDirectory
+          -ServiceDirectory $artifactServiceDirectory
       } else {
         SetPackageVersion -PackageName $packageName `
           -Version $newVersion.ToString() `
-          -ServiceDirectory $ServiceDirectory `
+          -ServiceDirectory $artifactServiceDirectory `
           -GroupId $groupId
       }
     }
   }
   catch {
-    LogError "Failed to process ArtifactsJson: $ArtifactsJson, exception: $($_.Exception.Message)"
+    LogError "Failed to process Artifacts: exception: $($_.Exception.Message)"
     exit 1
   }
-} else {
+} elseif (![String]::IsNullOrWhiteSpace($PackageNames)) {
   # Fallback to original logic when using PackageNames string
+  if ([String]::IsNullOrWhiteSpace($ServiceDirectory)) {
+    LogError "ServiceDirectory is required when using PackageNames."
+    exit 1
+  }
+
+  $packageNamesArray = $PackageNames.Split(',')
   foreach ($packageName in $packageNamesArray) {
     Write-Host "Processing $packageName"
     $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
@@ -131,4 +157,7 @@ if ($artifacts) {
       -Version $newVersion.ToString() `
       -ServiceDirectory $ServiceDirectory
   }
+} else {
+  LogError "Either PackageNames or Artifacts must be provided."
+  exit 1
 }

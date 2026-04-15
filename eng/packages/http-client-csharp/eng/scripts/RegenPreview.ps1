@@ -9,7 +9,7 @@
     
     1. Builds a local npm package of @azure-typespec/http-client-csharp with a versioned name (1.0.0-alpha.YYYYMMDD.hash)
     2. Builds and packages the NuGet generator framework packages with the same versioning
-    3. Updates Packages.Data.props in azure-sdk-for-net with the local NuGet version
+    3. Updates Directory.Packages.props in azure-sdk-for-net with the local NuGet version
     4. Updates the management plane generator (@azure-typespec/http-client-csharp-mgmt) to use local generators
     5. Updates the eng folder package.json artifacts in azure-sdk-for-net
     6. Regenerates libraries based on specified filters (all, by generator type, or interactively selected)
@@ -121,10 +121,11 @@ Write-Host ""
 # Generate version string with timestamp and hash
 # Used for both npm and NuGet packages to ensure consistency
 function Get-LocalPackageVersion {
-    $timestamp = Get-Date -Format "yyyyMMdd"
-    $hash = (git -C $packageRoot rev-parse --short HEAD 2>$null) ?? "local"
-    return "1.0.0-alpha.$timestamp.$hash"
+    $timestamp = Get-Date -Format "yyyyMMddHHmmss"
+    $hash = (git -C $packageRoot rev-parse --short=7 HEAD 2>$null) ?? "local"
+    return "1.0.0-alpha-$timestamp.$hash"
 }
+
 
 # Run npm pack and return the package file path
 function Invoke-NpmPack {
@@ -179,52 +180,88 @@ function Update-PackageJsonVersion {
     $packageJson | ConvertTo-Json -Depth 100 | Set-Content $PackageJsonPath -Encoding utf8 -NoNewline
 }
 
-# Parse Library_Inventory.md to get libraries
+# Compute libraries to regenerate by scanning the repository
 function Get-LibrariesToRegenerate {
-    param([string]$InventoryPath)
+    param([string]$SdkRepoPath)
     
-    $libraries = @()
-    $content = Get-Content $InventoryPath -Raw
+    $EmitterMap = @{
+        'eng/azure-typespec-http-client-csharp-emitter-package.json' = '@azure-typespec/http-client-csharp'
+        'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json' = '@azure-typespec/http-client-csharp-mgmt'
+        'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
+    }
     
-    # Helper function to parse library section
-    $parseSection = {
-        param($SectionContent, $GeneratorName)
+    function Get-GeneratorType {
+        param([string]$LibraryPath)
         
-        $lines = $SectionContent -split "`n" | Where-Object { 
-            $_ -match '^\|.*\|.*\|.*\|' -and 
-            $_ -notmatch '^\|\s*Service\s*\|' -and 
-            $_ -notmatch '^\|\s*-+\s*\|' -and
-            $_.Trim() -ne ''
-        }
+        # Check for tsp-location.yaml files to identify TypeSpec libraries
+        $tspLocationFiles = Get-ChildItem -Path $LibraryPath -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue
         
-        $result = @()
-        foreach ($line in $lines) {
-            $parts = $line -split '\|' | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -notmatch '^-+$' }
-            if ($parts.Count -eq 3 -and $parts[0] -ne 'Service' -and $parts[0] -notmatch '^-+$') {
-                $result += @{
-                    Service = $parts[0]
-                    Library = $parts[1]
-                    Path = $parts[2]
-                    Generator = $GeneratorName
+        foreach ($tspLocationFile in $tspLocationFiles) {
+            try {
+                $content = Get-Content $tspLocationFile.FullName -Raw -ErrorAction SilentlyContinue
+                if ($content -and $content -match 'emitterPackageJsonPath:\s*(?<val>"[^"]+"|[^,\s]+)\s*,?') {
+                    $emitterPath = $matches['val'].Trim('"')
+                    
+                    if ($EmitterMap.ContainsKey($emitterPath)) {
+                        return $EmitterMap[$emitterPath]
+                    }
                 }
             }
+            catch {
+                # Continue to next file if error
+            }
         }
-        return $result
+        
+        return $null
     }
     
-    # Parse @azure-typespec/http-client-csharp libraries
-    if ($content -match '## Data Plane Libraries using TypeSpec \(@azure-typespec/http-client-csharp\)[\s\S]*?Total: (\d+)([\s\S]*?)(?=##|\z)') {
-        $libraries += & $parseSection $Matches[2] "@azure-typespec/http-client-csharp"
+    $libraries = @()
+    $sdkRoot = Join-Path $SdkRepoPath "sdk"
+    
+    if (-not (Test-Path $sdkRoot)) {
+        Write-Warning "SDK directory not found at: $sdkRoot"
+        return @()
     }
     
-    # Parse @typespec/http-client-csharp libraries
-    if ($content -match '## Data Plane Libraries using TypeSpec \(@typespec/http-client-csharp\)[\s\S]*?Total: (\d+)([\s\S]*?)(?=##|\z)') {
-        $libraries += & $parseSection $Matches[2] "@typespec/http-client-csharp"
-    }
-    
-    # Parse @azure-typespec/http-client-csharp-mgmt libraries (management plane)
-    if ($content -match '## Management Plane Libraries using TypeSpec \(@azure-typespec/http-client-csharp-mgmt\)[\s\S]*?Total: (\d+)([\s\S]*?)(?=##|\z)') {
-        $libraries += & $parseSection $Matches[2] "@azure-typespec/http-client-csharp-mgmt"
+    # Scan through all service directories
+    $serviceDirs = Get-ChildItem -Path $sdkRoot -Directory -Force -ErrorAction SilentlyContinue
+    foreach ($serviceDir in $serviceDirs) {
+        # Look for library directories
+        $libraryDirs = Get-ChildItem -Path $serviceDir.FullName -Directory -Force -ErrorAction SilentlyContinue
+        foreach ($libraryDir in $libraryDirs) {
+            # Skip directories that don't look like libraries
+            if ($libraryDir.Name -in @("tests", "samples", "perf", "assets", "docs")) {
+                continue
+            }
+            
+            # Skip libraries that start with "Microsoft." or don't start with "Azure."
+            if ($libraryDir.Name.StartsWith("Microsoft.") -or -not $libraryDir.Name.StartsWith("Azure.")) {
+                continue
+            }
+            
+            # If it has a /src directory, it's likely a library
+            $srcPath = Join-Path $libraryDir.FullName "src"
+            if (-not (Test-Path $srcPath)) {
+                continue
+            }
+            
+            # Check if this library uses TypeSpec with one of our generators
+            $generator = Get-GeneratorType $libraryDir.FullName
+            if (-not $generator) {
+                continue
+            }
+            
+            # Calculate relative path from SDK repo root
+            $relativePath = $libraryDir.FullName.Substring($SdkRepoPath.Length + 1)
+            $relativePath = $relativePath -replace "\\", "/"
+            
+            $libraries += @{
+                Service = $serviceDir.Name
+                Library = $libraryDir.Name
+                Path = $relativePath
+                Generator = $generator
+            }
+        }
     }
     
     return @($libraries)
@@ -409,14 +446,9 @@ $scriptStartTime = Get-Date
 try {
     # Step 1: Load and select libraries
     if ($Select) {
-        Write-Host "`n[1/6] Loading libraries from Library_Inventory.md..." -ForegroundColor Cyan
+        Write-Host "`n[1/6] Loading TypeSpec libraries from repository..." -ForegroundColor Cyan
         
-        $inventoryPath = Join-Path $sdkRepoPath "doc" "GeneratorMigration" "Library_Inventory.md"
-        if (-not (Test-Path $inventoryPath)) {
-            throw "Library_Inventory.md not found at: $inventoryPath"
-        }
-        
-        $allLibraries = Get-LibrariesToRegenerate -InventoryPath $inventoryPath
+        $allLibraries = Get-LibrariesToRegenerate -SdkRepoPath $sdkRepoPath
         
         # Apply generator filter before interactive selection
         $filteredLibraries = @(Filter-LibrariesByGenerator `
@@ -497,10 +529,10 @@ try {
         Set-Content $azurePackageJson $originalPackageJson -Encoding utf8 -NoNewline
     }
     
-    # Update Packages.Data.props with local NuGet version
-    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "Packages.Data.props"
+    # Update Directory.Generation.Packages.props with local NuGet version
+    $packagesDataPropsPath = Join-Path $sdkRepoPath "eng" "centralpackagemanagement" "Directory.Generation.Packages.props"
     if (-not (Test-Path $packagesDataPropsPath)) {
-        throw "Packages.Data.props not found at: $packagesDataPropsPath"
+        throw "Directory.Generation.Packages.props not found at: $packagesDataPropsPath"
     }
 
     Update-AzureGeneratorVersion -PackagesDataPropsPath $packagesDataPropsPath -NewVersion $localVersion
@@ -518,12 +550,7 @@ try {
         $librariesToAnalyze = $libraries
     } else {
         # Load all libraries and apply filters to determine what would be regenerated
-        $inventoryPath = Join-Path $sdkRepoPath "doc" "GeneratorMigration" "Library_Inventory.md"
-        if (-not (Test-Path $inventoryPath)) {
-            throw "Library_Inventory.md not found at: $inventoryPath"
-        }
-        
-        $allLibraries = Get-LibrariesToRegenerate -InventoryPath $inventoryPath
+        $allLibraries = Get-LibrariesToRegenerate -SdkRepoPath $sdkRepoPath
         $librariesToAnalyze = Filter-LibrariesByGenerator `
             -Libraries $allLibraries `
             -Azure:$Azure `
@@ -631,12 +658,7 @@ try {
     
     if (-not $Select) {
         # Load all libraries if not using -Select flag
-        $inventoryPath = Join-Path $sdkRepoPath "doc" "GeneratorMigration" "Library_Inventory.md"
-        if (-not (Test-Path $inventoryPath)) {
-            throw "Library_Inventory.md not found at: $inventoryPath"
-        }
-        
-        $allLibraries = Get-LibrariesToRegenerate -InventoryPath $inventoryPath
+        $allLibraries = Get-LibrariesToRegenerate -SdkRepoPath $sdkRepoPath
         
         # Apply generator filter
         $libraries = Filter-LibrariesByGenerator `
@@ -809,7 +831,7 @@ try {
                 "eng/packages/http-client-csharp/package-lock.json"
                 "eng/packages/http-client-csharp-mgmt/package.json"
                 "eng/packages/http-client-csharp-mgmt/package-lock.json"
-                "eng/Packages.Data.props"
+                "eng/centralpackagemanagement/Directory.Packages.props"
                 "NuGet.Config"
             )
             $restoreCmd = "git restore $($filesToRestore -join ' ')"

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<TargetFrameworks>net9.0</TargetFrameworks>
-		<RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<PackageId>Azure.Generator.Management</PackageId>
 		<Version>1.0.0-beta.1</Version>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

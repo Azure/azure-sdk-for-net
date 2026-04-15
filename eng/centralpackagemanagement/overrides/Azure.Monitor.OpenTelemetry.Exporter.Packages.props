@@ -1,0 +1,15 @@
+<Project> 
+  <ItemGroup>
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="$(OpenTelemetryExtensionsHostingVersion)" />
+    <PackageVersion Include="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
+  </ItemGroup>
+
+  <!--
+    xunit is only approved for legacy use. Azure SDK test projects should use NUnit.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="Microsoft.Extensions.Telemetry" Version="10.1.0" />
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+  </ItemGroup>
+</Project>

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -22,10 +21,10 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         private const string KeyAuthCategory = "WithKeyAuth";
         private const string OAuth2Category = "WithOAuth2";
         private const string TestClientName = "TestClient";
-        private static readonly InputClient _testClient = new(TestClientName, "Samples", "", "TestClient description", null, [], [], _testClient, [], []);
-        private static readonly InputClient _animalClient = new("animal", "Samples", "", "AnimalClient description", null, [], [], _testClient, [], []);
-        private static readonly InputClient _dogClient = new("dog", "Samples", "", "DogClient description", null, [], [], _animalClient, [], []);
-        private static readonly InputClient _huskyClient = new("husky", "Samples", "", "HuskyClient description", null, [], [], _dogClient, [], []);
+        private static readonly InputClient _testClient = InputFactory.Client(TestClientName, "Samples", "TestClient description");
+        private static readonly InputClient _animalClient = InputFactory.Client("animal", "Samples", "AnimalClient description", parent: _testClient);
+        private static readonly InputClient _dogClient = InputFactory.Client("dog", "Samples", "DogClient description", parent: _testClient);
+        private static readonly InputClient _huskyClient = InputFactory.Client("husky", "Samples", "HuskyClient description", parent: _testClient);
 
         private bool _containsSubClients;
         private bool _hasKeyAuth;
@@ -64,21 +63,23 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
 
             if (_hasKeyAuth)
             {
-                // key auth should have the following fields: AuthorizationHeader, _keyCredential
+                // key auth should have the AuthorizationHeader const field; _keyCredential is no longer stored
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Const, new CSharpType(typeof(string)), "AuthorizationHeader"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(AzureKeyCredential)), "_keyCredential")
                 });
+                // _keyCredential field is no longer on the client (auth handled via AuthenticationPolicy parameter)
+                Assert.IsFalse(clientProvider.Fields.Any(f => f.Name == "_keyCredential"));
             }
             if (_hasOAuth2)
             {
-                // oauth2 auth should have the following fields: AuthorizationScopes, _tokenCredential
+                // oauth2 auth should have the AuthorizationScopes field; _tokenCredential is no longer stored
                 AssertHasFields(clientProvider, new List<ExpectedFieldProvider>
                 {
                     new(FieldModifiers.Private | FieldModifiers.Static | FieldModifiers.ReadOnly, new CSharpType(typeof(string[])), "AuthorizationScopes"),
-                    new(FieldModifiers.Private | FieldModifiers.ReadOnly, new CSharpType(typeof(TokenCredential)), "_tokenCredential"),
                 });
+                // _tokenCredential field is no longer on the client (auth handled via AuthenticationPolicy parameter)
+                Assert.IsFalse(clientProvider.Fields.Any(f => f.Name == "_tokenCredential"));
             }
         }
 
