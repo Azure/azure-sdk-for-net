@@ -15,10 +15,11 @@ Migrate an Azure SDK for .NET management library from AutoRest/Swagger to TypeSp
 
 ## Phase 1 — Setup & First Generation
 
-1. Sync both repos to latest `main`.
-2. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-3. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
-4. Build — expect errors, proceed to Phase 2.
+1. **Check for `MIGRATION_STATUS.md`** in the package directory. If it exists, read it and resume from the recorded phase — skip completed work.
+2. Sync both repos to latest `main`.
+3. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
+4. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
+5. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Fix Build Errors
 
