@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="RestorePointProperties"/>. </summary>
         public RestorePointProperties()
         {
-            ExcludeDisks = new ChangeTrackingList<ApiEntityReference>();
+            ExcludeDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePointProperties"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The restore point instance view. </param>
         /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointProperties(IList<ApiEntityReference> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ApiEntityReference sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointProperties(IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ApiEntityReference sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
-        public IList<ApiEntityReference> ExcludeDisks { get; } = new ChangeTrackingList<ApiEntityReference>();
+        public IList<WritableSubResource> ExcludeDisks { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Gets the details of the VM captured at the time of the restore point creation. </summary>
         public RestorePointSourceMetadata SourceMetadata { get; set; }

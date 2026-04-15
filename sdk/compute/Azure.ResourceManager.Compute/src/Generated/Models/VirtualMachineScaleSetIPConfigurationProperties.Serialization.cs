@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -98,9 +100,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in ApplicationGatewayBackendAddressPools)
+                foreach (SubResource item in ApplicationGatewayBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,9 +115,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in ApplicationSecurityGroups)
+                foreach (SubResource item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,9 +130,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in LoadBalancerBackendAddressPools)
+                foreach (SubResource item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,9 +145,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in LoadBalancerInboundNatPools)
+                foreach (SubResource item in LoadBalancerInboundNatPools)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,10 +202,10 @@ namespace Azure.ResourceManager.Compute.Models
             bool? primary = default;
             VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersion? privateIPAddressVersion = default;
-            IList<ComputeSubResourceData> applicationGatewayBackendAddressPools = default;
-            IList<ComputeSubResourceData> applicationSecurityGroups = default;
-            IList<ComputeSubResourceData> loadBalancerBackendAddressPools = default;
-            IList<ComputeSubResourceData> loadBalancerInboundNatPools = default;
+            IList<SubResource> applicationGatewayBackendAddressPools = default;
+            IList<SubResource> applicationSecurityGroups = default;
+            IList<SubResource> loadBalancerBackendAddressPools = default;
+            IList<SubResource> loadBalancerInboundNatPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,10 +251,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     applicationGatewayBackendAddressPools = array;
                     continue;
@@ -243,10 +272,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     applicationSecurityGroups = array;
                     continue;
@@ -257,10 +293,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -271,10 +314,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     loadBalancerInboundNatPools = array;
                     continue;
@@ -289,10 +339,10 @@ namespace Azure.ResourceManager.Compute.Models
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
-                applicationSecurityGroups ?? new ChangeTrackingList<ComputeSubResourceData>(),
-                loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
-                loadBalancerInboundNatPools ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<SubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<SubResource>(),
                 additionalBinaryDataProperties);
         }
     }

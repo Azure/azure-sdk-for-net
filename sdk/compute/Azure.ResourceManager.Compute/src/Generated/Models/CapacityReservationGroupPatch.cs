@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal CapacityReservationGroupProperties Properties { get; set; }
 
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> CapacityReservations
+        public IReadOnlyList<SubResource> CapacityReservations
         {
             get
             {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachinesAssociated
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated
         {
             get
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<ComputeSubResourceData> SharingSubscriptionIds
+        public IList<WritableSubResource> SharingSubscriptionIds
         {
             get
             {

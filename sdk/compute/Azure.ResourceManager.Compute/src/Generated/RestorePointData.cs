@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         internal RestorePointProperties Properties { get; set; }
 
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
-        public IList<ApiEntityReference> ExcludeDisks
+        public IList<WritableSubResource> ExcludeDisks
         {
             get
             {

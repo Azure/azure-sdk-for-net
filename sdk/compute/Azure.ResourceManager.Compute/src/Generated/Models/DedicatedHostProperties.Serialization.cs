@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -93,9 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (ComputeWriteableSubResourceData item in VirtualMachines)
+                foreach (SubResource item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? platformFaultDomain = default;
             bool? autoReplaceOnFailure = default;
             string hostId = default;
-            IReadOnlyList<ComputeWriteableSubResourceData> virtualMachines = default;
+            IReadOnlyList<SubResource> virtualMachines = default;
             DedicatedHostLicenseType? licenseType = default;
             DateTimeOffset? provisioningOn = default;
             string provisioningState = default;
@@ -207,10 +214,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     virtualMachines = array;
                     continue;
@@ -265,7 +279,7 @@ namespace Azure.ResourceManager.Compute.Models
                 platformFaultDomain,
                 autoReplaceOnFailure,
                 hostId,
-                virtualMachines ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
+                virtualMachines ?? new ChangeTrackingList<SubResource>(),
                 licenseType,
                 provisioningOn,
                 provisioningState,

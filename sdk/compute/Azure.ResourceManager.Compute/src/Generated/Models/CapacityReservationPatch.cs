@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachinesAssociated
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated
         {
             get
             {

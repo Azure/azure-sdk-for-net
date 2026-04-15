@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a Shared Image Gallery. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryProperties properties, GalleryIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute
         internal GalleryProperties Properties { get; set; }
 
         /// <summary> The identity of the gallery, if configured. </summary>
-        public GalleryIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>
         public string Description

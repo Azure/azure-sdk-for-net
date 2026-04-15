@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute
             ComputePlan plan = default;
             IReadOnlyList<VirtualMachineExtensionData> resources = default;
             IReadOnlyList<string> zones = default;
-            VirtualMachineIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = VirtualMachineIdentity.DeserializeVirtualMachineIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -78,9 +80,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in SubscriptionIds)
+                foreach (WritableSubResource item in SubscriptionIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<ComputeSubResourceData> subscriptionIds = default;
+            IList<WritableSubResource> subscriptionIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +143,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     subscriptionIds = array;
                     continue;
@@ -149,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceSharingProfile(subscriptionIds ?? new ChangeTrackingList<ComputeSubResourceData>(), additionalBinaryDataProperties);
+            return new ResourceSharingProfile(subscriptionIds ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
         }
     }
 }

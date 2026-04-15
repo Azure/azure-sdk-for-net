@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -153,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
             ComputeSku sku = default;
             ComputePlan plan = default;
             VirtualMachineScaleSetPatchProperties properties = default;
-            VirtualMachineScaleSetIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    identity = VirtualMachineScaleSetIdentity.DeserializeVirtualMachineScaleSetIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

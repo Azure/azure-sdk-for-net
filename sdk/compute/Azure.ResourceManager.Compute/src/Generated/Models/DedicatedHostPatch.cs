@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachines
+        public IReadOnlyList<SubResource> VirtualMachines
         {
             get
             {

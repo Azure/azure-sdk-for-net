@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHostProperties"/>. </summary>
         public DedicatedHostProperties()
         {
-            VirtualMachines = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            VirtualMachines = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostProperties"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<ComputeWriteableSubResourceData> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostProperties(int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformFaultDomain = platformFaultDomain;
             AutoReplaceOnFailure = autoReplaceOnFailure;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string HostId { get; }
 
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachines { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+        public IReadOnlyList<SubResource> VirtualMachines { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
         public DedicatedHostLicenseType? LicenseType { get; set; }

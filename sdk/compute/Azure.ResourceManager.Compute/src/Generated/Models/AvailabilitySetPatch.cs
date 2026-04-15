@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<ComputeSubResourceData> VirtualMachines
+        public IList<WritableSubResource> VirtualMachines
         {
             get
             {

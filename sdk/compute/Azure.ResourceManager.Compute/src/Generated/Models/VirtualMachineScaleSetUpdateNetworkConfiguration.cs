@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -114,6 +114,23 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
+        /// <summary> The network security group. </summary>
+        public SubResource NetworkSecurityGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
+                }
+                Properties.NetworkSecurityGroup = value;
+            }
+        }
+
         /// <summary> The virtual machine scale set IP Configuration. </summary>
         public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations
         {
@@ -192,23 +209,6 @@ namespace Azure.ResourceManager.Compute.Models
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
                 Properties.AuxiliarySku = value.Value;
-            }
-        }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier NetworkSecurityGroupId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkSecurityGroupId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
-                }
-                Properties.NetworkSecurityGroupId = value;
             }
         }
 

@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -83,9 +85,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();
-                foreach (ComputeWriteableSubResourceData item in VirtualMachinesAllocated)
+                foreach (SubResource item in VirtualMachinesAllocated)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int? currentCapacity = default;
-            IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAllocated = default;
+            IReadOnlyList<SubResource> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +158,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeWriteableSubResourceData> array = new List<ComputeWriteableSubResourceData>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeWriteableSubResourceData.DeserializeComputeWriteableSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     virtualMachinesAllocated = array;
                     continue;
@@ -164,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(), additionalBinaryDataProperties);
+            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
         }
     }
 }

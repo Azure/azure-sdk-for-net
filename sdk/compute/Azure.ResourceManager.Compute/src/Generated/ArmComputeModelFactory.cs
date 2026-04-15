@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine scale set hardware placement. This property cannot be changed once VMSS is provisioned. Minimum api-version: 2025-04-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetProperties properties = default, VirtualMachineScaleSetIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string etag = default, VirtualMachinePlacement placement = default)
+        public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetProperties properties = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string etag = default, VirtualMachinePlacement placement = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -341,25 +341,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
+        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetNetworkConfiguration VirtualMachineScaleSetNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineScaleSetIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineScaleSetNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null ? default : new VirtualMachineScaleSetNetworkConfigurationProperties(
+            return new VirtualMachineScaleSetNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && networkSecurityGroup is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null ? default : new VirtualMachineScaleSetNetworkConfigurationProperties(
                 primary,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,
                 enableFpga,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                networkSecurityGroup,
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -490,28 +490,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeSkuProfile(vmSizes.ToList(), allocationStrategy, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Identity for the virtual machine scale set. </summary>
-        /// <param name="principalId"> The principal id of virtual machine scale set identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the virtual machine scale set. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the virtual machine scale set. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine scale set. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the virtual machine scale set. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetIdentity"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetIdentity VirtualMachineScaleSetIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
-
-            return new VirtualMachineScaleSetIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UserAssignedIdentitiesValue. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentitiesValue"/> instance for mocking. </returns>
-        public static UserAssignedIdentitiesValue UserAssignedIdentitiesValue(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentitiesValue(principalId, clientId, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes the user-defined constraints for resource hardware placement. </summary>
         /// <param name="zonePlacementPolicy"> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </param>
         /// <param name="includeZones"> This property supplements the 'zonePlacementPolicy' property. If 'zonePlacementPolicy' is set to 'Any'/'Auto', availability zone selected by the system must be present in the list of availability zones passed with 'includeZones'. If 'includeZones' is not provided, all availability zones in region will be considered for selection. </param>
@@ -533,7 +511,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetPatch VirtualMachineScaleSetPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetPatchProperties properties = default, VirtualMachineScaleSetIdentity identity = default, IEnumerable<string> zones = default)
+        public static VirtualMachineScaleSetPatch VirtualMachineScaleSetPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, ComputePlan plan = default, VirtualMachineScaleSetPatchProperties properties = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -615,25 +593,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
+        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> The virtual machine scale set IP Configuration. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateNetworkConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineScaleSetUpdateNetworkConfiguration VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default, bool? primary = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default, bool? enableIPForwarding = default, ComputeDeleteOption? deleteOption = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null ? default : new VirtualMachineScaleSetUpdateNetworkConfigurationProperties(
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(name, primary is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && networkSecurityGroup is null && ipConfigurations is null && enableIPForwarding is null && deleteOption is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null ? default : new VirtualMachineScaleSetUpdateNetworkConfigurationProperties(
                 primary,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,
                 enableFpga,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                networkSecurityGroup,
                 new VirtualMachineScaleSetNetworkConfigurationDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>()).ToList(),
                 enableIPForwarding,
@@ -943,45 +921,6 @@ namespace Azure.ResourceManager.Compute.Models
                 null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Describes the properties of a virtual machine scale set virtual machine. </param>
-        /// <param name="instanceId"> The virtual machine instance ID. </param>
-        /// <param name="sku"> The virtual machine SKU. </param>
-        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
-        /// <param name="resources"> The virtual machine child extension resources. </param>
-        /// <param name="zones"> The virtual machine zones. </param>
-        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
-        /// <param name="etag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineScaleSetVmProperties properties = default, string instanceId = default, ComputeSku sku = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, IEnumerable<string> zones = default, VirtualMachineIdentity identity = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new VirtualMachineScaleSetVmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                instanceId,
-                sku,
-                plan,
-                resources.ToList(),
-                zones.ToList(),
-                identity,
-                etag);
-        }
-
         /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
         /// <param name="vmId"> Azure VM unique ID. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
@@ -1227,26 +1166,26 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
+        /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        /// <param name="networkSecurityGroupId"> Resource Id. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="dscpConfigurationId"> Resource Id. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, ResourceIdentifier dscpConfigurationId = default, IDictionary<string, string> tags = default)
+        public static VirtualMachineNetworkInterfaceConfiguration VirtualMachineNetworkInterfaceConfiguration(string name = default, bool? primary = default, ComputeDeleteOption? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, SubResource networkSecurityGroup = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default, IEnumerable<string> dnsServers = default, ResourceIdentifier dscpConfigurationId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualMachineNetworkInterfaceConfiguration(name, primary is null && deleteOption is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && enableIPForwarding is null && ipConfigurations is null && auxiliaryMode is null && auxiliarySku is null && networkSecurityGroupId is null && dnsServers is null && dscpConfigurationId is null ? default : new VirtualMachineNetworkInterfaceConfigurationProperties(
+            return new VirtualMachineNetworkInterfaceConfiguration(name, primary is null && deleteOption is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableFpga is null && enableIPForwarding is null && networkSecurityGroup is null && ipConfigurations is null && auxiliaryMode is null && auxiliarySku is null && dnsServers is null && dscpConfigurationId is null ? default : new VirtualMachineNetworkInterfaceConfigurationProperties(
                 primary,
                 deleteOption,
                 enableAcceleratedNetworking,
                 disableTcpStateTracking,
                 enableFpga,
                 enableIPForwarding,
-                new ComputeSubResourceData(networkSecurityGroupId, null),
+                networkSecurityGroup,
                 new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 (ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
                 new ComputeSubResourceData(dscpConfigurationId, null),
@@ -1328,19 +1267,6 @@ namespace Azure.ResourceManager.Compute.Models
                     protectedSettingsFromKeyVault,
                     (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
                     null));
-        }
-
-        /// <summary> Identity for the virtual machine. </summary>
-        /// <param name="principalId"> The principal id of virtual machine identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id associated with the virtual machine. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the virtual machine. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the Virtual Machine. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineIdentity"/> instance for mocking. </returns>
-        public static VirtualMachineIdentity VirtualMachineIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
-
-            return new VirtualMachineIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the input for attaching and detaching a list of managed data disks. </summary>
@@ -1534,7 +1460,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineData"/> instance for mocking. </returns>
-        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string etag = default, VirtualMachinePlacement placement = default)
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default, ExtendedLocation extendedLocation = default, string managedBy = default, string etag = default, VirtualMachinePlacement placement = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
@@ -1696,80 +1622,6 @@ namespace Azure.ResourceManager.Compute.Models
                 lastModifiedOn,
                 error,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
-        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
-        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
-        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
-        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
-        /// <param name="priority"> Specifies the priority for the virtual machine. Minimum api-version: 2019-03-01. </param>
-        /// <param name="evictionPolicy"> Specifies the eviction policy for the Azure Spot virtual machine and Azure Spot scale set. For Azure Spot virtual machines, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2019-03-01. For Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported and the minimum api-version is 2017-10-30-preview. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The virtual machine instance view. </param>
-        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
-        /// <param name="vmId"> Specifies the VM unique ID which is a 128-bits identifier that is encoded and stored in all Azure IaaS VMs SMBIOS and can be read using platform BIOS commands. </param>
-        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum api-version: 2020-06-01. </param>
-        /// <param name="platformFaultDomain"> Specifies the scale set logical fault domain into which the Virtual Machine will be created. By default, the Virtual Machine will by automatically assigned to a fault domain that best maintains balance across available fault domains. This is applicable only if the 'virtualMachineScaleSet' property of this Virtual Machine is set. The Virtual Machine Scale Set that is referenced, must have 'platformFaultDomainCount' greater than 1. This property cannot be updated once the Virtual Machine is created. Fault domain assignment can be viewed in the Virtual Machine Instance View. Minimum api‐version: 2020‐12‐01. </param>
-        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
-        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
-        /// <param name="availabilitySetId"> Resource Id. </param>
-        /// <param name="virtualMachineScaleSetId"> Resource Id. </param>
-        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
-        /// <param name="billingMaxPrice"> Specifies the maximum price you are willing to pay for a Azure Spot VM/VMSS. This price is in US Dollars. &lt;br&gt;&lt;br&gt; This price will be compared with the current Azure Spot price for the VM size. Also, the prices are compared at the time of create/update of Azure Spot VM/VMSS and the operation will only succeed if  the maxPrice is greater than the current Azure Spot price. &lt;br&gt;&lt;br&gt; The maxPrice will also be used for evicting a Azure Spot VM/VMSS if the current Azure Spot price goes beyond the maxPrice after creation of VM/VMSS. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; - Any decimal value greater than zero. Example: 0.01538 &lt;br&gt;&lt;br&gt; -1 – indicates default price to be up-to on-demand. &lt;br&gt;&lt;br&gt; You can set the maxPrice to -1 to indicate that the Azure Spot VM/VMSS should not be evicted for price reasons. Also, the default max price is -1 if it is not provided by you. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </param>
-        /// <param name="hostId"> Resource Id. </param>
-        /// <param name="hostGroupId"> Resource Id. </param>
-        /// <param name="capacityReservationGroupId"> Resource Id. </param>
-        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
-        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
-        /// <param name="zones"> The virtual machine zones. </param>
-        /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, DateTimeOffset? timeCreated = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, VirtualMachineIdentity identity = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new VirtualMachinePatch(
-                tags,
-                additionalBinaryDataProperties: null,
-                plan,
-                hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && priority is null && evictionPolicy is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && timeCreated is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && billingMaxPrice is null && hostId is null && hostGroupId is null && capacityReservationGroupId is null && galleryApplications is null ? default : new VirtualMachineProperties(
-                    hardwareProfile,
-                    scheduledEventsPolicy,
-                    storageProfile,
-                    additionalCapabilities,
-                    osProfile,
-                    networkProfile,
-                    securityProfile,
-                    new DiagnosticsProfile(bootDiagnostics, null),
-                    new ComputeSubResourceData(availabilitySetId, null),
-                    new ComputeSubResourceData(virtualMachineScaleSetId, null),
-                    new ComputeSubResourceData(proximityPlacementGroupId, null),
-                    priority,
-                    evictionPolicy,
-                    new BillingProfile(billingMaxPrice, null),
-                    new ComputeSubResourceData(hostId, null),
-                    new ComputeSubResourceData(hostGroupId, null),
-                    provisioningState,
-                    instanceView,
-                    licenseType,
-                    vmId,
-                    extensionsTimeBudget,
-                    platformFaultDomain,
-                    scheduledEventsProfile,
-                    userData,
-                    new CapacityReservationProfile(new ComputeSubResourceData(capacityReservationGroupId, null), null),
-                    new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VirtualMachineGalleryApplication>()).ToList(), null),
-                    timeCreated,
-                    null),
-                identity,
-                zones.ToList());
         }
 
         /// <summary> Describes the properties of an AssessPatches result. </summary>
@@ -2051,45 +1903,6 @@ namespace Azure.ResourceManager.Compute.Models
                     null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
-        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
-        /// <param name="sku"> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </param>
-        /// <returns> A new <see cref="Compute.AvailabilitySetData"/> instance for mocking. </returns>
-        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, ResourceIdentifier proximityPlacementGroupId = default, ComputeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AvailabilitySetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                platformUpdateDomainCount is null && platformFaultDomainCount is null && virtualMachines is null && statuses is null && scheduledEventsPolicy is null && virtualMachineScaleSetMigrationInfo is null && proximityPlacementGroupId is null ? default : new AvailabilitySetProperties(
-                    platformUpdateDomainCount,
-                    platformFaultDomainCount,
-                    (virtualMachines ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                    new ComputeSubResourceData(proximityPlacementGroupId, null),
-                    (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
-                    scheduledEventsPolicy,
-                    virtualMachineScaleSetMigrationInfo,
-                    null),
-                sku);
-        }
-
         /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
         /// <param name="migrateToVirtualMachineScaleSetId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetMigrationInfo"/> instance for mocking. </returns>
@@ -2104,31 +1917,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = default, ResourceIdentifier defaultVirtualMachineScaleSetId = default)
         {
             return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId is null ? default : new ComputeSubResourceData(defaultVirtualMachineScaleSetId, null), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
-        /// <param name="proximityPlacementGroupId"> Resource Id. </param>
-        /// <param name="sku"> Sku of the availability set. </param>
-        /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<ComputeSubResourceData> virtualMachines = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default, ResourceIdentifier proximityPlacementGroupId = default, ComputeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AvailabilitySetPatch(tags, additionalBinaryDataProperties: null, platformUpdateDomainCount is null && platformFaultDomainCount is null && virtualMachines is null && statuses is null && scheduledEventsPolicy is null && virtualMachineScaleSetMigrationInfo is null && proximityPlacementGroupId is null ? default : new AvailabilitySetProperties(
-                platformUpdateDomainCount,
-                platformFaultDomainCount,
-                (virtualMachines ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                new ComputeSubResourceData(proximityPlacementGroupId, null),
-                (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
-                scheduledEventsPolicy,
-                virtualMachineScaleSetMigrationInfo,
-                null), sku);
         }
 
         /// <param name="virtualMachineScaleSetFlexibleId"> Resource Id. </param>
@@ -2170,7 +1958,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="ultraSSDEnabled"> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="Compute.DedicatedHostGroupData"/> instance for mocking. </returns>
-        public static DedicatedHostGroupData DedicatedHostGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformFaultDomainCount = default, IEnumerable<ComputeWriteableSubResourceData> hosts = default, bool? supportAutomaticPlacement = default, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = default, bool? ultraSSDEnabled = default, IEnumerable<string> zones = default)
+        public static DedicatedHostGroupData DedicatedHostGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformFaultDomainCount = default, IEnumerable<SubResource> hosts = default, bool? supportAutomaticPlacement = default, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = default, bool? ultraSSDEnabled = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -2185,7 +1973,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 platformFaultDomainCount is null && hosts is null && supportAutomaticPlacement is null && instanceViewHosts is null && ultraSSDEnabled is null ? default : new DedicatedHostGroupProperties(
                     platformFaultDomainCount.Value,
-                    (hosts ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                    (hosts ?? new ChangeTrackingList<SubResource>()).ToList(),
                     new DedicatedHostGroupInstanceView((instanceViewHosts ?? new ChangeTrackingList<DedicatedHostInstanceViewWithName>()).ToList(), null),
                     supportAutomaticPlacement,
                     new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSSDEnabled, null),
@@ -2233,90 +2021,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="ultraSSDEnabled"> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </param>
         /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
         /// <returns> A new <see cref="Models.DedicatedHostGroupPatch"/> instance for mocking. </returns>
-        public static DedicatedHostGroupPatch DedicatedHostGroupPatch(IDictionary<string, string> tags = default, int? platformFaultDomainCount = default, IEnumerable<ComputeWriteableSubResourceData> hosts = default, bool? supportAutomaticPlacement = default, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = default, bool? ultraSSDEnabled = default, IEnumerable<string> zones = default)
+        public static DedicatedHostGroupPatch DedicatedHostGroupPatch(IDictionary<string, string> tags = default, int? platformFaultDomainCount = default, IEnumerable<SubResource> hosts = default, bool? supportAutomaticPlacement = default, IEnumerable<DedicatedHostInstanceViewWithName> instanceViewHosts = default, bool? ultraSSDEnabled = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
             return new DedicatedHostGroupPatch(tags, additionalBinaryDataProperties: null, platformFaultDomainCount is null && hosts is null && supportAutomaticPlacement is null && instanceViewHosts is null && ultraSSDEnabled is null ? default : new DedicatedHostGroupProperties(
                 platformFaultDomainCount.Value,
-                (hosts ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
+                (hosts ?? new ChangeTrackingList<SubResource>()).ToList(),
                 new DedicatedHostGroupInstanceView((instanceViewHosts ?? new ChangeTrackingList<DedicatedHostInstanceViewWithName>()).ToList(), null),
                 supportAutomaticPlacement,
                 new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSSDEnabled, null),
                 null), zones.ToList());
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
-        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
-        /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
-        /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </param>
-        /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The dedicated host instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="sku"> SKU of the dedicated host for Hardware Generation and VM family. Only name is required to be set. List Microsoft.Compute SKUs for a list of possible values. </param>
-        /// <returns> A new <see cref="Compute.DedicatedHostData"/> instance for mocking. </returns>
-        public static DedicatedHostData DedicatedHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? platformFaultDomain = default, bool? autoReplaceOnFailure = default, string hostId = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachines = default, DedicatedHostLicenseType? licenseType = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, DedicatedHostInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ComputeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DedicatedHostData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                platformFaultDomain is null && autoReplaceOnFailure is null && hostId is null && virtualMachines is null && licenseType is null && provisioningOn is null && provisioningState is null && instanceView is null && timeCreated is null ? default : new DedicatedHostProperties(
-                    platformFaultDomain,
-                    autoReplaceOnFailure,
-                    hostId,
-                    (virtualMachines ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                    licenseType,
-                    provisioningOn,
-                    provisioningState,
-                    instanceView,
-                    timeCreated,
-                    null),
-                sku);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
-        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
-        /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
-        /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </param>
-        /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The dedicated host instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
-        /// <returns> A new <see cref="Models.DedicatedHostPatch"/> instance for mocking. </returns>
-        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags = default, int? platformFaultDomain = default, bool? autoReplaceOnFailure = default, string hostId = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachines = default, DedicatedHostLicenseType? licenseType = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, DedicatedHostInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ComputeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DedicatedHostPatch(tags, additionalBinaryDataProperties: null, platformFaultDomain is null && autoReplaceOnFailure is null && hostId is null && virtualMachines is null && licenseType is null && provisioningOn is null && provisioningState is null && instanceView is null && timeCreated is null ? default : new DedicatedHostProperties(
-                platformFaultDomain,
-                autoReplaceOnFailure,
-                hostId,
-                (virtualMachines ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                licenseType,
-                provisioningOn,
-                provisioningState,
-                instanceView,
-                timeCreated,
-                null), sku);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2455,39 +2171,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static RestorePointGroupSource RestorePointGroupSource(string location = default, ResourceIdentifier id = default)
         {
             return new RestorePointGroupSource(location, id, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="excludeDisks"> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </param>
-        /// <param name="sourceMetadata"> Gets the details of the VM captured at the time of the restore point creation. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the restore point. </param>
-        /// <param name="consistencyMode"> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </param>
-        /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
-        /// <param name="instanceView"> The restore point instance view. </param>
-        /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
-        /// <param name="sourceRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
-        /// <returns> A new <see cref="Compute.RestorePointData"/> instance for mocking. </returns>
-        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApiEntityReference> excludeDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default, ResourceIdentifier sourceRestorePointId = default)
-        {
-            return new RestorePointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                excludeDisks is null && sourceMetadata is null && provisioningState is null && consistencyMode is null && timeCreated is null && instanceView is null && instantAccessDurationMinutes is null && sourceRestorePointId is null ? default : new RestorePointProperties(
-                    (excludeDisks ?? new ChangeTrackingList<ApiEntityReference>()).ToList(),
-                    sourceMetadata,
-                    provisioningState,
-                    consistencyMode,
-                    timeCreated,
-                    new ApiEntityReference(sourceRestorePointId, null),
-                    instanceView,
-                    instantAccessDurationMinutes,
-                    null));
         }
 
         /// <param name="hardwareProfile"> Gets the hardware profile. </param>
@@ -2635,50 +2318,14 @@ namespace Azure.ResourceManager.Compute.Models
                 null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
-        /// <param name="sharingSubscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="Compute.CapacityReservationGroupData"/> instance for mocking. </returns>
-        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ComputeWriteableSubResourceData> capacityReservations = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeSubResourceData> sharingSubscriptionIds = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new CapacityReservationGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                capacityReservations is null && virtualMachinesAssociated is null && instanceView is null && reservationType is null && sharingSubscriptionIds is null ? default : new CapacityReservationGroupProperties(
-                    (capacityReservations ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                    (virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                    instanceView,
-                    new ResourceSharingProfile((sharingSubscriptionIds ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(), null),
-                    reservationType,
-                    null),
-                zones.ToList());
-        }
-
         /// <summary> The CapacityReservationGroupInstanceView. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
         /// <param name="sharedSubscriptionIds"> List of the subscriptions that the capacity reservation group is shared with. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupInstanceView"/> instance for mocking. </returns>
-        public static CapacityReservationGroupInstanceView CapacityReservationGroupInstanceView(IEnumerable<CapacityReservationInstanceViewWithName> capacityReservations = default, IEnumerable<ComputeWriteableSubResourceData> sharedSubscriptionIds = default)
+        public static CapacityReservationGroupInstanceView CapacityReservationGroupInstanceView(IEnumerable<CapacityReservationInstanceViewWithName> capacityReservations = default, IEnumerable<SubResource> sharedSubscriptionIds = default)
         {
             capacityReservations ??= new ChangeTrackingList<CapacityReservationInstanceViewWithName>();
-            sharedSubscriptionIds ??= new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            sharedSubscriptionIds ??= new ChangeTrackingList<SubResource>();
 
             return new CapacityReservationGroupInstanceView(capacityReservations.ToList(), sharedSubscriptionIds.ToList(), additionalBinaryDataProperties: null);
         }
@@ -2710,102 +2357,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="currentCapacity"> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed. Minimum api-version: 2022-08-01. </param>
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
         /// <returns> A new <see cref="Models.CapacityReservationUtilization"/> instance for mocking. </returns>
-        public static CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachinesAllocated = default)
+        public static CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity = default, IEnumerable<SubResource> virtualMachinesAllocated = default)
         {
-            virtualMachinesAllocated ??= new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            virtualMachinesAllocated ??= new ChangeTrackingList<SubResource>();
 
             return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
-        /// <param name="sharingSubscriptionIds"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
-        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<ComputeWriteableSubResourceData> capacityReservations = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeSubResourceData> sharingSubscriptionIds = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityReservationGroupPatch(tags, additionalBinaryDataProperties: null, capacityReservations is null && virtualMachinesAssociated is null && instanceView is null && reservationType is null && sharingSubscriptionIds is null ? default : new CapacityReservationGroupProperties(
-                (capacityReservations ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                (virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                instanceView,
-                new ResourceSharingProfile((sharingSubscriptionIds ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(), null),
-                reservationType,
-                null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
-        /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. <b>Note:</b> The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
-        /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
-        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
-        /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set.  For Block capacity reservations, sku.capacity can only accept values 1, 2, 4, 8, 16, 32, 64. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="Compute.CapacityReservationData"/> instance for mocking. </returns>
-        public static CapacityReservationData CapacityReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string reservationId = default, int? platformFaultDomainCount = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachinesAssociated = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, CapacityReservationInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ScheduleProfile scheduleProfile = default, ComputeSku sku = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new CapacityReservationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                reservationId is null && platformFaultDomainCount is null && virtualMachinesAssociated is null && provisioningOn is null && provisioningState is null && instanceView is null && timeCreated is null && scheduleProfile is null ? default : new CapacityReservationProperties(
-                    reservationId,
-                    platformFaultDomainCount,
-                    (virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                    provisioningOn,
-                    provisioningState,
-                    instanceView,
-                    timeCreated,
-                    scheduleProfile,
-                    null),
-                sku,
-                zones.ToList());
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
-        /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. <b>Note:</b> The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
-        /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
-        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
-        /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. <b>Note:</b> The SKU name and capacity cannot be updated for Block capacity reservations. </param>
-        /// <returns> A new <see cref="Models.CapacityReservationPatch"/> instance for mocking. </returns>
-        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags = default, string reservationId = default, int? platformFaultDomainCount = default, IEnumerable<ComputeWriteableSubResourceData> virtualMachinesAssociated = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, CapacityReservationInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ScheduleProfile scheduleProfile = default, ComputeSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityReservationPatch(tags, additionalBinaryDataProperties: null, reservationId is null && platformFaultDomainCount is null && virtualMachinesAssociated is null && provisioningOn is null && provisioningState is null && instanceView is null && timeCreated is null && scheduleProfile is null ? default : new CapacityReservationProperties(
-                reservationId,
-                platformFaultDomainCount,
-                (virtualMachinesAssociated ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(),
-                provisioningOn,
-                provisioningState,
-                instanceView,
-                timeCreated,
-                scheduleProfile,
-                null), sku);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3512,60 +3068,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputePrivateLinkResourceData(groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ComputePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null), id, name, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
-        /// <param name="activeKey"> The key vault key which is currently used by this disk encryption set. </param>
-        /// <param name="previousKeys"> A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is no ongoing key rotation. </param>
-        /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
-        /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
-        /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
-        /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
-        /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
-        /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
-        /// <returns> A new <see cref="Compute.DiskEncryptionSetData"/> instance for mocking. </returns>
-        public static DiskEncryptionSetData DiskEncryptionSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiskEncryptionSetType? encryptionType = default, KeyForDiskEncryptionSet activeKey = default, IEnumerable<KeyForDiskEncryptionSet> previousKeys = default, string provisioningState = default, bool? rotationToLatestKeyVersionEnabled = default, DateTimeOffset? lastKeyRotationTimestamp = default, ComputeApiError autoKeyRotationError = default, string federatedClientId = default, EncryptionSetIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiskEncryptionSetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
-                    encryptionType,
-                    activeKey,
-                    (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
-                    provisioningState,
-                    rotationToLatestKeyVersionEnabled,
-                    lastKeyRotationTimestamp,
-                    autoKeyRotationError,
-                    federatedClientId,
-                    null),
-                identity);
-        }
-
-        /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>
-        /// <param name="type"> The type of Managed Identity used by the DiskEncryptionSet. Only SystemAssigned is supported for new creations. Disk Encryption Sets can be updated with Identity type None during migration of subscription to a new Azure Active Directory tenant; it will cause the encrypted resources to lose access to the keys. </param>
-        /// <param name="principalId"> The object id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-identity-principal-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </param>
-        /// <param name="tenantId"> The tenant id of the Managed Identity Resource. This will be sent to the RP from ARM via the x-ms-client-tenant-id header in the PUT request if the resource has a systemAssigned(implicit) identity. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the disk encryption set. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.EncryptionSetIdentity"/> instance for mocking. </returns>
-        public static EncryptionSetIdentity EncryptionSetIdentity(DiskEncryptionSetIdentityType? @type = default, string principalId = default, string tenantId = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
-
-            return new EncryptionSetIdentity(@type, principalId, tenantId, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="activeKey"> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
@@ -3573,7 +3075,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
         /// <returns> A new <see cref="Models.DiskEncryptionSetPatch"/> instance for mocking. </returns>
-        public static DiskEncryptionSetPatch DiskEncryptionSetPatch(DiskEncryptionSetType? encryptionType = default, KeyForDiskEncryptionSet activeKey = default, bool? rotationToLatestKeyVersionEnabled = default, string federatedClientId = default, IDictionary<string, string> tags = default, EncryptionSetIdentity identity = default)
+        public static DiskEncryptionSetPatch DiskEncryptionSetPatch(DiskEncryptionSetType? encryptionType = default, KeyForDiskEncryptionSet activeKey = default, bool? rotationToLatestKeyVersionEnabled = default, string federatedClientId = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3752,43 +3254,6 @@ namespace Azure.ResourceManager.Compute.Models
                 null), tags, sku, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
-        /// <param name="sharingStatus"> Sharing status of current gallery. </param>
-        /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
-        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
-        /// <param name="identity"> The identity of the gallery, if configured. </param>
-        /// <returns> A new <see cref="Compute.GalleryData"/> instance for mocking. </returns>
-        public static GalleryData GalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, GalleryIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new GalleryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                description is null && provisioningState is null && sharingProfile is null && sharingStatus is null && identifierUniqueName is null && isSoftDeleteEnabled is null ? default : new GalleryProperties(
-                    description,
-                    new GalleryIdentifier(identifierUniqueName, null),
-                    provisioningState,
-                    sharingProfile,
-                    new SoftDeletePolicy(isSoftDeleteEnabled, null),
-                    sharingStatus,
-                    null),
-                identity);
-        }
-
         /// <summary> Profile for gallery sharing to subscription or tenant. </summary>
         /// <param name="permissions"> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
@@ -3855,19 +3320,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new RegionalSharingStatus(region, state, details, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Identity for the virtual machine. </summary>
-        /// <param name="principalId"> The principal id of the gallery identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The AAD tenant id of the gallery identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the gallery. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove all identities from the gallery. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the gallery. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.GalleryIdentity"/> instance for mocking. </returns>
-        public static GalleryIdentity GalleryIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentitiesValue>();
-
-            return new GalleryIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -3880,7 +3332,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
-        public static GalleryPatch GalleryPatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, GalleryIdentity identity = default)
+        public static GalleryPatch GalleryPatch(string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5664,8 +5116,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="zones"></param>
         /// <param name="identity"></param>
         /// <param name="etag"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, string etag)
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
@@ -5897,8 +5348,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
         /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <returns> A new <see cref="Compute.AvailabilitySetData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo)
+        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeSku sku = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<WritableSubResource> virtualMachines = default, ResourceIdentifier proximityPlacementGroupId = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
@@ -5930,8 +5380,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sharingSubscriptionIds"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
         /// <returns> A new <see cref="Compute.CapacityReservationGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, IEnumerable<WritableSubResource> sharingSubscriptionIds, CapacityReservationType? reservationType)
+        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default, IEnumerable<SubResource> capacityReservations = default, IEnumerable<SubResource> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, IEnumerable<WritableSubResource> sharingSubscriptionIds = default, CapacityReservationType? reservationType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -6296,8 +5745,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The restore point instance view. </param>
         /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <returns> A new <see cref="Compute.RestorePointData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorePointData RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ResourceIdentifier sourceRestorePointId, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes)
+        public static RestorePointData RestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<WritableSubResource> excludeDisks = default, RestorePointSourceMetadata sourceMetadata = default, string provisioningState = default, ConsistencyModeType? consistencyMode = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceRestorePointId = default, RestorePointInstanceView instanceView = default, int? instantAccessDurationMinutes = default)
         {
             excludeDisks ??= new ChangeTrackingList<WritableSubResource>();
 
@@ -6321,8 +5769,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
         /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo)
+        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, int? platformUpdateDomainCount = default, int? platformFaultDomainCount = default, IEnumerable<WritableSubResource> virtualMachines = default, ResourceIdentifier proximityPlacementGroupId = default, IEnumerable<InstanceViewStatus> statuses = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
@@ -6339,8 +5786,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sharingSubscriptionIds"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, IEnumerable<WritableSubResource> sharingSubscriptionIds, CapacityReservationType? reservationType)
+        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<SubResource> capacityReservations = default, IEnumerable<SubResource> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, IEnumerable<WritableSubResource> sharingSubscriptionIds = default, CapacityReservationType? reservationType = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             capacityReservations ??= new ChangeTrackingList<SubResource>();
@@ -6368,8 +5814,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
         /// <returns> A new <see cref="Compute.CapacityReservationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationData CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IEnumerable<string> zones, string reservationId, int? platformFaultDomainCount, IEnumerable<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile)
+        public static CapacityReservationData CapacityReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeSku sku = default, IEnumerable<string> zones = default, string reservationId = default, int? platformFaultDomainCount = default, IEnumerable<SubResource> virtualMachinesAssociated = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, CapacityReservationInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ScheduleProfile scheduleProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -6400,8 +5845,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
         /// <returns> A new <see cref="Models.CapacityReservationPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags, ComputeSku sku, string reservationId, int? platformFaultDomainCount, IEnumerable<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile)
+        public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, string reservationId = default, int? platformFaultDomainCount = default, IEnumerable<SubResource> virtualMachinesAssociated = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, CapacityReservationInstanceView instanceView = default, DateTimeOffset? timeCreated = default, ScheduleProfile scheduleProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             virtualMachinesAssociated ??= new ChangeTrackingList<SubResource>();
@@ -6447,8 +5891,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Compute.DedicatedHostData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DedicatedHostData DedicatedHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IEnumerable<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated)
+        public static DedicatedHostData DedicatedHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeSku sku = default, int? platformFaultDomain = default, bool? autoReplaceOnFailure = default, string hostId = default, IEnumerable<SubResource> virtualMachines = default, DedicatedHostLicenseType? licenseType = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, DedicatedHostInstanceView instanceView = default, DateTimeOffset? timeCreated = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             virtualMachines ??= new ChangeTrackingList<SubResource>();
@@ -6478,8 +5921,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="instanceView"> The dedicated host instance view. </param>
         /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.DedicatedHostPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IEnumerable<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated)
+        public static DedicatedHostPatch DedicatedHostPatch(IDictionary<string, string> tags = default, ComputeSku sku = default, int? platformFaultDomain = default, bool? autoReplaceOnFailure = default, string hostId = default, IEnumerable<SubResource> virtualMachines = default, DedicatedHostLicenseType? licenseType = default, DateTimeOffset? provisioningOn = default, string provisioningState = default, DedicatedHostInstanceView instanceView = default, DateTimeOffset? timeCreated = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             virtualMachines ??= new ChangeTrackingList<SubResource>();
@@ -6681,8 +6123,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM/VMSS. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, ManagedServiceIdentity identity, IEnumerable<string> zones, VirtualMachineHardwareProfile hardwareProfile, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
+        public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags = default, ComputePlan plan = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default, VirtualMachineHardwareProfile hardwareProfile = default, ScheduledEventsPolicy scheduledEventsPolicy = default, VirtualMachineStorageProfile storageProfile = default, AdditionalCapabilities additionalCapabilities = default, VirtualMachineOSProfile osProfile = default, VirtualMachineNetworkProfile networkProfile = default, SecurityProfile securityProfile = default, BootDiagnostics bootDiagnostics = default, ResourceIdentifier availabilitySetId = default, ResourceIdentifier virtualMachineScaleSetId = default, ResourceIdentifier proximityPlacementGroupId = default, VirtualMachinePriorityType? priority = default, VirtualMachineEvictionPolicyType? evictionPolicy = default, double? billingMaxPrice = default, ResourceIdentifier hostId = default, ResourceIdentifier hostGroupId = default, string provisioningState = default, VirtualMachineInstanceView instanceView = default, string licenseType = default, string vmId = default, string extensionsTimeBudget = default, int? platformFaultDomain = default, ComputeScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = default, DateTimeOffset? timeCreated = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -6765,8 +6206,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
         /// <returns> A new <see cref="Compute.DiskEncryptionSetData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskEncryptionSetData DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IEnumerable<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId)
+        public static DiskEncryptionSetData DiskEncryptionSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, DiskEncryptionSetType? encryptionType = default, KeyForDiskEncryptionSet activeKey = default, IEnumerable<KeyForDiskEncryptionSet> previousKeys = default, string provisioningState = default, bool? rotationToLatestKeyVersionEnabled = default, DateTimeOffset? lastKeyRotationTimestamp = default, ComputeApiError autoKeyRotationError = default, string federatedClientId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             previousKeys ??= new ChangeTrackingList<KeyForDiskEncryptionSet>();
@@ -7058,8 +6498,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isSoftDeleteEnabled"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
         /// <returns> A new <see cref="Compute.GalleryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryData GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, string identifierUniqueName, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, bool? isSoftDeleteEnabled, SharingStatus sharingStatus)
+        public static GalleryData GalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string description = default, string identifierUniqueName = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, bool? isSoftDeleteEnabled = default, SharingStatus sharingStatus = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -7783,15 +7222,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RestorePointData RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, ResourceIdentifier sourceRestorePointId, RestorePointInstanceView instanceView)
         {
-            excludeDisks ??= new ChangeTrackingList<WritableSubResource>();
-
-            return new RestorePointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
+            return RestorePointData(id, name, resourceType, systemData, excludeDisks, sourceMetadata, provisioningState, consistencyMode, timeCreated, instanceView, instantAccessDurationMinutes: default, sourceRestorePointId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskRestorePointInstanceView"/>. </summary>
@@ -7836,22 +7267,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, IEnumerable<WritableSubResource> sharingSubscriptionIds)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-            capacityReservations ??= new ChangeTrackingList<SubResource>();
-            virtualMachinesAssociated ??= new ChangeTrackingList<SubResource>();
-            sharingSubscriptionIds ??= new ChangeTrackingList<WritableSubResource>();
-
-            return new CapacityReservationGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                zones.ToList());
+            return CapacityReservationGroupData(id, name, resourceType, systemData, tags, location, capacityReservations, virtualMachinesAssociated, instanceView, reservationType: default, sharingSubscriptionIds, zones);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetData"/>. </summary>
@@ -7962,12 +7378,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, IEnumerable<WritableSubResource> sharingSubscriptionIds)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            capacityReservations ??= new ChangeTrackingList<SubResource>();
-            virtualMachinesAssociated ??= new ChangeTrackingList<SubResource>();
-            sharingSubscriptionIds ??= new ChangeTrackingList<WritableSubResource>();
-
-            return new CapacityReservationGroupPatch(tags, additionalBinaryDataProperties: null, default);
+            return CapacityReservationGroupPatch(tags, capacityReservations, virtualMachinesAssociated, instanceView, reservationType: default, sharingSubscriptionIds);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationData"/>. </summary>
@@ -7990,21 +7401,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationData CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IEnumerable<string> zones, string reservationId, int? platformFaultDomainCount, IEnumerable<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-            virtualMachinesAssociated ??= new ChangeTrackingList<SubResource>();
-
-            return new CapacityReservationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                sku,
-                zones.ToList());
+            return CapacityReservationData(id, name, resourceType, systemData, tags, location, reservationId, platformFaultDomainCount, virtualMachinesAssociated, provisioningOn, provisioningState, instanceView, timeCreated, scheduleProfile: default, sku, zones);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationPatch"/>. </summary>
@@ -8021,10 +7418,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationPatch CapacityReservationPatch(IDictionary<string, string> tags, ComputeSku sku, string reservationId, int? platformFaultDomainCount, IEnumerable<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            virtualMachinesAssociated ??= new ChangeTrackingList<SubResource>();
-
-            return new CapacityReservationPatch(tags, additionalBinaryDataProperties: null, default, sku);
+            return CapacityReservationPatch(tags, reservationId, platformFaultDomainCount, virtualMachinesAssociated, provisioningOn, provisioningState, instanceView, timeCreated, scheduleProfile: default, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OrchestrationServiceSummary"/>. </summary>
@@ -8325,20 +7719,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
-            statuses ??= new ChangeTrackingList<InstanceViewStatus>();
-
-            return new AvailabilitySetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                sku);
+            return AvailabilitySetData(id, name, resourceType, systemData, tags, location, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines, statuses, scheduledEventsPolicy, virtualMachineScaleSetMigrationInfo: default, proximityPlacementGroupId, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
@@ -8354,11 +7735,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
-            statuses ??= new ChangeTrackingList<InstanceViewStatus>();
-
-            return new AvailabilitySetPatch(tags, additionalBinaryDataProperties: null, default, sku);
+            return AvailabilitySetPatch(tags, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines, statuses, scheduledEventsPolicy, virtualMachineScaleSetMigrationInfo: default, proximityPlacementGroupId, sku);
         }
 
         /// <param name="id"></param>
@@ -8824,20 +8201,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
-            statuses ??= new ChangeTrackingList<InstanceViewStatus>();
-
-            return new AvailabilitySetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                sku);
+            return AvailabilitySetData(id, name, resourceType, systemData, tags, location, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines, statuses, scheduledEventsPolicy: default, virtualMachineScaleSetMigrationInfo: default, proximityPlacementGroupId, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
@@ -8852,11 +8216,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            virtualMachines ??= new ChangeTrackingList<WritableSubResource>();
-            statuses ??= new ChangeTrackingList<InstanceViewStatus>();
-
-            return new AvailabilitySetPatch(tags, additionalBinaryDataProperties: null, default, sku);
+            return AvailabilitySetPatch(tags, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines, statuses, scheduledEventsPolicy: default, virtualMachineScaleSetMigrationInfo: default, proximityPlacementGroupId, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DiskRestorePointData"/>. </summary>
@@ -9007,17 +8367,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachinePatch VirtualMachinePatch(IDictionary<string, string> tags, ComputePlan plan, ManagedServiceIdentity identity, IEnumerable<string> zones, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-            galleryApplications ??= new ChangeTrackingList<VirtualMachineGalleryApplication>();
-
-            return new VirtualMachinePatch(
-                tags,
-                additionalBinaryDataProperties: null,
-                plan,
-                default,
-                identity,
-                zones.ToList());
+            return VirtualMachinePatch(tags, plan, hardwareProfile, scheduledEventsPolicy: default, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, priority, evictionPolicy, provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, scheduledEventsProfile, userData, timeCreated, bootDiagnostics, availabilitySetId, virtualMachineScaleSetId, proximityPlacementGroupId, billingMaxPrice, hostId, hostGroupId, capacityReservationGroupId, galleryApplications, identity, zones);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskCreationData"/>. </summary>

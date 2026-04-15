@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -88,9 +90,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
-                foreach (ComputeSubResourceData item in VirtualMachines)
+                foreach (WritableSubResource item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? platformUpdateDomainCount = default;
             int? platformFaultDomainCount = default;
-            IList<ComputeSubResourceData> virtualMachines = default;
+            IList<WritableSubResource> virtualMachines = default;
             ComputeSubResourceData proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
@@ -195,10 +202,17 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<ComputeSubResourceData> array = new List<ComputeSubResourceData>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeSubResourceData.DeserializeComputeSubResourceData(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                        }
                     }
                     virtualMachines = array;
                     continue;
@@ -252,7 +266,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new AvailabilitySetProperties(
                 platformUpdateDomainCount,
                 platformFaultDomainCount,
-                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceData>(),
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
                 proximityPlacementGroup,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 scheduledEventsPolicy,

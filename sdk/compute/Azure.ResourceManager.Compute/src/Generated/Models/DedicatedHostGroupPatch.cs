@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> Hosts
+        public IReadOnlyList<SubResource> Hosts
         {
             get
             {

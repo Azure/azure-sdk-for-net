@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a Shared Image Gallery. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
-        internal GalleryPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryProperties properties, GalleryIdentity identity) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal GalleryPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryProperties properties, ManagedServiceIdentity identity) : base(id, name, @type, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal GalleryProperties Properties { get; set; }
 
         /// <summary> The identity of the gallery, if configured. </summary>
-        public GalleryIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>
         public string Description

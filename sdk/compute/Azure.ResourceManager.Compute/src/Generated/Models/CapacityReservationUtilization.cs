@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,14 +21,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationUtilization"/>. </summary>
         internal CapacityReservationUtilization()
         {
-            VirtualMachinesAllocated = new ChangeTrackingList<ComputeWriteableSubResourceData>();
+            VirtualMachinesAllocated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationUtilization"/>. </summary>
         /// <param name="currentCapacity"> The value provides the current capacity of the VM size which was reserved successfully and for which the customer is getting billed. Minimum api-version: 2022-08-01. </param>
         /// <param name="virtualMachinesAllocated"> A list of all virtual machines resource ids allocated against the capacity reservation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationUtilization(int? currentCapacity, IReadOnlyList<ComputeWriteableSubResourceData> virtualMachinesAllocated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationUtilization(int? currentCapacity, IReadOnlyList<SubResource> virtualMachinesAllocated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentCapacity = currentCapacity;
             VirtualMachinesAllocated = virtualMachinesAllocated;
@@ -38,6 +39,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? CurrentCapacity { get; }
 
         /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
-        public IReadOnlyList<ComputeWriteableSubResourceData> VirtualMachinesAllocated { get; }
+        public IReadOnlyList<SubResource> VirtualMachinesAllocated { get; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="properties"> Describes the properties of a Virtual Machine. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="zones"> The virtual machine zones. </param>
-        internal VirtualMachinePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputePlan plan, VirtualMachineProperties properties, VirtualMachineIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
+        internal VirtualMachinePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputePlan plan, VirtualMachineProperties properties, ManagedServiceIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
         {
             Plan = plan;
             Properties = properties;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineProperties Properties { get; set; }
 
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public VirtualMachineIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The virtual machine zones. </summary>
         public IList<string> Zones { get; }

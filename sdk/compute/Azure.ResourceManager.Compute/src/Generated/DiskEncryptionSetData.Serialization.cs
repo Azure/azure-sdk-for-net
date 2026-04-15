@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             EncryptionSetProperties properties = default;
-            EncryptionSetIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    identity = EncryptionSetIdentity.DeserializeEncryptionSetIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

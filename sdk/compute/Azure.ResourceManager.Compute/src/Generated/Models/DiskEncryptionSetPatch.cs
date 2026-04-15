@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSetPatch(DiskEncryptionSetUpdateProperties properties, IDictionary<string, string> tags, EncryptionSetIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryptionSetPatch(DiskEncryptionSetUpdateProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>
-        public EncryptionSetIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
         public DiskEncryptionSetType? EncryptionType

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<ComputeSubResourceData> ApplicationGatewayBackendAddressPools
+        public IList<SubResource> ApplicationGatewayBackendAddressPools
         {
             get
             {
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<ComputeSubResourceData> ApplicationSecurityGroups
+        public IList<SubResource> ApplicationSecurityGroups
         {
             get
             {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<ComputeSubResourceData> LoadBalancerBackendAddressPools
+        public IList<SubResource> LoadBalancerBackendAddressPools
         {
             get
             {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<ComputeSubResourceData> LoadBalancerInboundNatPools
+        public IList<SubResource> LoadBalancerInboundNatPools
         {
             get
             {

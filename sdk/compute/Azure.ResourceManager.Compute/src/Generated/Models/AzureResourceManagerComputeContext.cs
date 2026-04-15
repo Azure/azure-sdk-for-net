@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -157,12 +158,11 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(DiskUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(EncryptionIdentity))]
     [ModelReaderWriterBuildable(typeof(EncryptionImages))]
-    [ModelReaderWriterBuildable(typeof(EncryptionSetIdentity))]
     [ModelReaderWriterBuildable(typeof(EncryptionSetProperties))]
     [ModelReaderWriterBuildable(typeof(EncryptionSettingsElement))]
     [ModelReaderWriterBuildable(typeof(EncryptionSettingsGroup))]
     [ModelReaderWriterBuildable(typeof(EventGridAndResourceGraph))]
-    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(Models.ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomAction))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomActionParameter))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationData))]
@@ -187,7 +187,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(GalleryDiskImageSource))]
     [ModelReaderWriterBuildable(typeof(GalleryExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GalleryIdentifier))]
-    [ModelReaderWriterBuildable(typeof(GalleryIdentity))]
     [ModelReaderWriterBuildable(typeof(GalleryImageData))]
     [ModelReaderWriterBuildable(typeof(GalleryImageExecutedValidation))]
     [ModelReaderWriterBuildable(typeof(GalleryImageFeature))]
@@ -281,6 +280,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(ManagedDiskData))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskPatch))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskResource))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MaxInstancePercentPerZonePolicy))]
     [ModelReaderWriterBuildable(typeof(MigrateToVirtualMachineScaleSetInput))]
     [ModelReaderWriterBuildable(typeof(MigrateVmToVirtualMachineScaleSetContent))]
@@ -396,6 +396,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(SshPublicKeyResource))]
     [ModelReaderWriterBuildable(typeof(SshPublicKeyResourceProperties))]
     [ModelReaderWriterBuildable(typeof(SshPublicKeysGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedCapabilities))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetRegion))]
@@ -411,7 +412,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(UserArtifactManagement))]
     [ModelReaderWriterBuildable(typeof(UserArtifactSettings))]
     [ModelReaderWriterBuildable(typeof(UserArtifactSource))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesValue))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedReboot))]
     [ModelReaderWriterBuildable(typeof(UserInitiatedRedeploy))]
     [ModelReaderWriterBuildable(typeof(VaultCertificate))]
@@ -438,7 +439,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VirtualMachineGalleryApplication))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineHardwareProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineHealthStatus))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineImage))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineImageBase))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineImageFeature))]
@@ -485,7 +485,6 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetExtensionProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetExtensionResource))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetHardwareProfile))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetInstanceView))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetInstanceViewStatusesSummary))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetIPConfiguration))]
@@ -561,6 +560,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(WindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMListener))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneAllocationPolicy))]
     public partial class AzureResourceManagerComputeContext : ModelReaderWriterContext
     {

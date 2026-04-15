@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set. </param>
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. </param>
-        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, VirtualMachineScaleSetIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeSku sku, ComputePlan plan, VirtualMachineScaleSetPatchProperties properties, ManagedServiceIdentity identity, IList<string> zones) : base(tags, additionalBinaryDataProperties)
         {
             Sku = sku;
             Plan = plan;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetPatchProperties Properties { get; set; }
 
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
-        public VirtualMachineScaleSetIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The virtual machine scale set zones. </summary>
         public IList<string> Zones { get; }
