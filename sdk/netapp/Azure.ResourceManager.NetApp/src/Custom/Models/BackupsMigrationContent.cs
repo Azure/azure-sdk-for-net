@@ -3,8 +3,9 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using Azure.Core;
+
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -13,11 +14,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
         /// <param name="backupVaultId"> The resource ID of the backup vault. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public BackupsMigrationContent(string backupVaultId) : this(new ResourceIdentifier(backupVaultId)) { }
-
-        /// <summary> The resource ID of the backup vault. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string BackupVaultId => BackupVaultIdValue;
     }
 }

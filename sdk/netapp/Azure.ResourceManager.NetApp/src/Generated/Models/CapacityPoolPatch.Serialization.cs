@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string location = default;
-            string id = default;
+            AzureLocation? location = default;
+            ResourceIdentifier id = default;
             string name = default;
             string @type = default;
             IDictionary<string, string> tags = default;
@@ -179,12 +179,20 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

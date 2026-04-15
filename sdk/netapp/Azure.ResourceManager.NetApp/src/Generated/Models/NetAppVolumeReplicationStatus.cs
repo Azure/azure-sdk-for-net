@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal NetAppVolumeReplicationStatus(bool? healthy, VolumeReplicationRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Healthy = healthy;
-            RelationshipStatusValue = relationshipStatus;
+            RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             TotalProgress = totalProgress;
             ErrorMessage = errorMessage;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? Healthy { get; }
 
         /// <summary> Status of the mirror relationship. </summary>
-        internal VolumeReplicationRelationshipStatus? RelationshipStatusValue { get; }
+        public VolumeReplicationRelationshipStatus? RelationshipStatus { get; }
 
         /// <summary> The status of the replication. </summary>
         public NetAppMirrorState? MirrorState { get; }

@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
-        public IReadOnlyList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints
+        public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints
         {
             get
             {
-                return (IReadOnlyList<NetAppKeyVaultPrivateEndpoint>)Properties.KeyVaultPrivateEndpoints;
+                return Properties.KeyVaultPrivateEndpoints;
             }
         }
     }

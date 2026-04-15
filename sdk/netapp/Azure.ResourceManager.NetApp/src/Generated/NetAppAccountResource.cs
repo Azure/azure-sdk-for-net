@@ -1284,32 +1284,6 @@ namespace Azure.ResourceManager.NetApp
             return GetCachedClient(client => new NetAppResourceQuotaLimitsAccountCollection(client, Id));
         }
 
-        /// <summary> Get the default, current and usages account quota limit. </summary>
-        /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        internal virtual async Task<Response<NetAppResourceQuotaLimitsAccountResource>> GetNetAppResourceQuotaLimitsAccountResourceAsync(string quotaLimitName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
-
-            return await GetNetAppResourceQuotaLimitsAccounts().GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get the default, current and usages account quota limit. </summary>
-        /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        internal virtual Response<NetAppResourceQuotaLimitsAccountResource> GetNetAppResourceQuotaLimitsAccountResource(string quotaLimitName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(quotaLimitName, nameof(quotaLimitName));
-
-            return GetNetAppResourceQuotaLimitsAccounts().Get(quotaLimitName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of NetAppVolumeGroups in the <see cref="NetAppAccountResource"/>. </summary>
         /// <returns> An object representing collection of NetAppVolumeGroups and their operations over a NetAppVolumeGroupResource. </returns>
         public virtual NetAppVolumeGroupCollection GetNetAppVolumeGroups()

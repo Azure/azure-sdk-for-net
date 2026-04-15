@@ -230,10 +230,23 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CapacityPoolData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), tags, location,
-                poolId is null && size == 0 && serviceLevel == default && provisioningState is null && totalThroughputMibps is null && utilizedThroughputMibps is null && customThroughputMibps is null && qosType is null && isCoolAccessEnabled is null && encryptionType is null ? default : new PoolProperties(
-                    poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null, qosType, isCoolAccessEnabled, encryptionType, null),
-                etag?.ToString());
+            return CapacityPoolData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                poolId: poolId,
+                size: (long?)size,
+                serviceLevel: (NetAppFileServiceLevel?)serviceLevel,
+                provisioningState: provisioningState,
+                totalThroughputMibps: totalThroughputMibps,
+                utilizedThroughputMibps: utilizedThroughputMibps,
+                customThroughputMibps: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
+                qosType: qosType,
+                isCoolAccessEnabled: isCoolAccessEnabled,
+                encryptionType: encryptionType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>

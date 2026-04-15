@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(Healthy.Value);
             }
-            if (Optional.IsDefined(RelationshipStatusValue))
+            if (Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
-                writer.WriteStringValue(RelationshipStatusValue.Value.ToString());
+                writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
             if (Optional.IsDefined(MirrorState))
             {

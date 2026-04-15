@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeGroupResult(string location, string id, string name, string @type, VolumeGroupListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LocationString = location;
+            Location = location;
             Id = id;
             Name = name;
             Type = @type;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource location. </summary>
-        internal string LocationString { get; }
+        public string Location { get; }
 
         /// <summary> Resource Id. </summary>
         public string Id { get; }

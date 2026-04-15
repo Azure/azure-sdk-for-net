@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeRevertContent(ResourceIdentifier snapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SnapshotResourceId = snapshotId;
+            SnapshotId = snapshotId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id of the snapshot. </summary>
-        internal ResourceIdentifier SnapshotResourceId { get; set; }
+        public ResourceIdentifier SnapshotId { get; set; }
     }
 }

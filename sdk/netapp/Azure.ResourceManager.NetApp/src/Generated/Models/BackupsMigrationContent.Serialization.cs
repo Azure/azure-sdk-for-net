@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(BackupsMigrationContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("backupVaultId"u8);
-            writer.WriteStringValue(BackupVaultIdValue);
+            writer.WriteStringValue(BackupVaultId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

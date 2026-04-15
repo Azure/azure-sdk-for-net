@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.NetApp
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            ETagValue = eTag;
+            ETag = eTag;
         }
 
         /// <summary> Backup policy Properties. </summary>
         internal BackupPolicyProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        internal string ETagValue { get; }
+        public string ETag { get; }
 
         /// <summary> Backup Policy GUID ID. </summary>
         public ResourceIdentifier BackupPolicyId

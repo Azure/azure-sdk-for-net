@@ -25,9 +25,5 @@ namespace Azure.ResourceManager.NetApp
                 Properties.NfsV4IdDomain = value;
             }
         }
-
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ETag? ETag => ETagValue is string etag ? new ETag(etag) : null;
     }
 }

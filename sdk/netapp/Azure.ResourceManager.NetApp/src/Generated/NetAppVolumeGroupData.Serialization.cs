@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(LocationString))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(LocationString);
+                writer.WriteStringValue(Location);
             }
         }
 

@@ -248,7 +248,6 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyResource))]
-    [ModelReaderWriterBuildable(typeof(SnapshotPolicyVolumeList))]
     [ModelReaderWriterBuildable(typeof(SnapshotPolicyWeeklySchedule))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SnapshotsList))]

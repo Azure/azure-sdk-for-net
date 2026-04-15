@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.NetApp
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            LocationString = location;
+            Location = location;
         }
 
         /// <summary> Volume group properties. </summary>
         internal VolumeGroupProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        internal string LocationString { get; set; }
+        public string Location { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState

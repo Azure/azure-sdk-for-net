@@ -58,13 +58,5 @@ namespace Azure.ResourceManager.NetApp
                 Properties.IsCoolAccessEnabled = value;
             }
         }
-
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ETag? ETag => ETagValue is string etag ? new ETag(etag) : null;
-
-        /// <summary> UUID v4 used to identify the Pool. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public Guid? PoolId => Guid.TryParse(PoolIdString, out var g) ? g : null;
     }
 }

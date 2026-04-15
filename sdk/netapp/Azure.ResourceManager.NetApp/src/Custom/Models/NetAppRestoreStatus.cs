@@ -7,20 +7,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary> Gets or sets the IsHealthy property. </summary>
+        /// <summary> Health check. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsHealthy => Healthy;
-
-        /// <summary> The status of the restore relationship. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public VolumeRestoreRelationshipStatus? VolumeRestoreRelationshipStatus => RelationshipStatusValue;
-
-        /// <summary> The status of the restore relationship (old API type). </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetAppRelationshipStatus? RelationshipStatus =>
-            RelationshipStatusValue.HasValue ? new NetAppRelationshipStatus(RelationshipStatusValue.Value.ToString()) : null;
     }
 }
