@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ClientModel;
 using Azure.Generator.Visitors;
 
 namespace Client.Plugin
@@ -15,24 +14,12 @@ namespace Client.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
-            // Use Azure-specific configuration schema settings
-            if (generator is ScmCodeModelGenerator scmGenerator)
-            {
-                scmGenerator.ConfigurationSchema.SectionName = "AzureClients";
-                scmGenerator.ConfigurationSchema.OptionsRef = "azureOptions";
-                scmGenerator.ConfigurationSchema.GenerateNuGetTargets = false;
-            }
-
             // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
             generator.AddVisitor(new ModelFactoryRenamerVisitor());
 
             // Rest of the visitors can be added in any order.
             generator.AddVisitor(new NamespaceVisitor());
             generator.AddVisitor(new ClientRequestIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
-            // Note the shared source TaskExtensions must be added manually to the csproj currently as plugins
-            // don't support modifying the shared source files currently.
-            // https://github.com/Azure/azure-sdk-for-net/issues/55574
-            generator.AddVisitor(new MultiPartFormDataVisitor());
         }
     }
 }
