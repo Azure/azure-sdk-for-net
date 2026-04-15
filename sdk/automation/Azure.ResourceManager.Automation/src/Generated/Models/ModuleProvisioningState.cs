@@ -5,89 +5,42 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Gets or sets the provisioning state of the module. </summary>
-    public readonly partial struct ModuleProvisioningState : IEquatable<ModuleProvisioningState>
+    public enum ModuleProvisioningState
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ModuleProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ModuleProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string CreatedValue = "Created";
-        private const string CreatingValue = "Creating";
-        private const string StartingImportModuleRunbookValue = "StartingImportModuleRunbook";
-        private const string RunningImportModuleRunbookValue = "RunningImportModuleRunbook";
-        private const string ContentRetrievedValue = "ContentRetrieved";
-        private const string ContentDownloadedValue = "ContentDownloaded";
-        private const string ContentValidatedValue = "ContentValidated";
-        private const string ConnectionTypeImportedValue = "ConnectionTypeImported";
-        private const string ContentStoredValue = "ContentStored";
-        private const string ModuleDataStoredValue = "ModuleDataStored";
-        private const string ActivitiesStoredValue = "ActivitiesStored";
-        private const string ModuleImportRunbookCompleteValue = "ModuleImportRunbookComplete";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string UpdatingValue = "Updating";
-
         /// <summary> Created. </summary>
-        public static ModuleProvisioningState Created { get; } = new ModuleProvisioningState(CreatedValue);
+        Created,
         /// <summary> Creating. </summary>
-        public static ModuleProvisioningState Creating { get; } = new ModuleProvisioningState(CreatingValue);
+        Creating,
         /// <summary> StartingImportModuleRunbook. </summary>
-        public static ModuleProvisioningState StartingImportModuleRunbook { get; } = new ModuleProvisioningState(StartingImportModuleRunbookValue);
+        StartingImportModuleRunbook,
         /// <summary> RunningImportModuleRunbook. </summary>
-        public static ModuleProvisioningState RunningImportModuleRunbook { get; } = new ModuleProvisioningState(RunningImportModuleRunbookValue);
+        RunningImportModuleRunbook,
         /// <summary> ContentRetrieved. </summary>
-        public static ModuleProvisioningState ContentRetrieved { get; } = new ModuleProvisioningState(ContentRetrievedValue);
+        ContentRetrieved,
         /// <summary> ContentDownloaded. </summary>
-        public static ModuleProvisioningState ContentDownloaded { get; } = new ModuleProvisioningState(ContentDownloadedValue);
+        ContentDownloaded,
         /// <summary> ContentValidated. </summary>
-        public static ModuleProvisioningState ContentValidated { get; } = new ModuleProvisioningState(ContentValidatedValue);
+        ContentValidated,
         /// <summary> ConnectionTypeImported. </summary>
-        public static ModuleProvisioningState ConnectionTypeImported { get; } = new ModuleProvisioningState(ConnectionTypeImportedValue);
+        ConnectionTypeImported,
         /// <summary> ContentStored. </summary>
-        public static ModuleProvisioningState ContentStored { get; } = new ModuleProvisioningState(ContentStoredValue);
+        ContentStored,
         /// <summary> ModuleDataStored. </summary>
-        public static ModuleProvisioningState ModuleDataStored { get; } = new ModuleProvisioningState(ModuleDataStoredValue);
+        ModuleDataStored,
         /// <summary> ActivitiesStored. </summary>
-        public static ModuleProvisioningState ActivitiesStored { get; } = new ModuleProvisioningState(ActivitiesStoredValue);
+        ActivitiesStored,
         /// <summary> ModuleImportRunbookComplete. </summary>
-        public static ModuleProvisioningState ModuleImportRunbookComplete { get; } = new ModuleProvisioningState(ModuleImportRunbookCompleteValue);
+        ModuleImportRunbookComplete,
         /// <summary> Succeeded. </summary>
-        public static ModuleProvisioningState Succeeded { get; } = new ModuleProvisioningState(SucceededValue);
+        Succeeded,
         /// <summary> Failed. </summary>
-        public static ModuleProvisioningState Failed { get; } = new ModuleProvisioningState(FailedValue);
+        Failed,
         /// <summary> Canceled. </summary>
-        public static ModuleProvisioningState Canceled { get; } = new ModuleProvisioningState(CanceledValue);
+        Cancelled,
         /// <summary> Updating. </summary>
-        public static ModuleProvisioningState Updating { get; } = new ModuleProvisioningState(UpdatingValue);
-        /// <summary> Determines if two <see cref="ModuleProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(ModuleProvisioningState left, ModuleProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ModuleProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(ModuleProvisioningState left, ModuleProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ModuleProvisioningState"/>. </summary>
-        public static implicit operator ModuleProvisioningState(string value) => new ModuleProvisioningState(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ModuleProvisioningState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ModuleProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Updating
     }
 }

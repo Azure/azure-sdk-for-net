@@ -82,11 +82,6 @@ namespace Azure.ResourceManager.Automation
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/> for deserialization. </summary>
-        internal HybridRunbookWorkerData()
-        {
-        }
-
         /// <summary> Gets or sets the assigned machine IP address. </summary>
         public string IP { get; set; }
         /// <summary> Gets or sets the registration time of the worker machine. </summary>

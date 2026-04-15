@@ -153,6 +153,7 @@ rename-mapping:
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
   Certificate.properties.thumbprint: ThumbprintString
   CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
+  ModuleProvisioningState.Canceled: Cancelled
 
 prepend-rp-prefix:
   - Certificate
@@ -405,4 +406,14 @@ directive:
     where: $.definitions.DscConfigurationProperties.properties.provisioningState
     transform: >
       $['x-ms-enum']['name'] = 'DscConfigurationProvisioningState';
+  - from: openapi.json
+    where: $.definitions.ModuleProvisioningState
+    transform: >
+      $['x-ms-enum']['modelAsString'] = false;
+  # DscCompilationJob only appears in responses, so the generator classifies it as output-only.
+  # Marking it as input+output restores the public constructor and property setters lost in v1.1.1 → v1.2.0.
+  - from: dscCompilationJob.json
+    where: $.definitions.DscCompilationJob
+    transform: >
+      $['x-csharp-usage'] = 'model,input,output';
 ```

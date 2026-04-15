@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobData"/>. </summary>
-        internal DscCompilationJobData()
+        public DscCompilationJobData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IReadOnlyDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Configuration = configuration;
             StartedBy = startedBy;
@@ -97,11 +97,17 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the configuration. </summary>
-        internal DscConfigurationAssociationProperty Configuration { get; }
+        internal DscConfigurationAssociationProperty Configuration { get; set; }
         /// <summary> Gets or sets the name of the Dsc configuration. </summary>
         public string ConfigurationName
         {
-            get => Configuration?.ConfigurationName;
+            get => Configuration is null ? default : Configuration.ConfigurationName;
+            set
+            {
+                if (Configuration is null)
+                    Configuration = new DscConfigurationAssociationProperty();
+                Configuration.ConfigurationName = value;
+            }
         }
 
         /// <summary> Gets the compilation job started by. </summary>
@@ -111,13 +117,13 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets the creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState { get; }
+        public JobProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
-        public string RunOn { get; }
+        public string RunOn { get; set; }
         /// <summary> Gets or sets the status of the job. </summary>
-        public AutomationJobStatus? Status { get; }
+        public AutomationJobStatus? Status { get; set; }
         /// <summary> Gets or sets the status details of the job. </summary>
-        public string StatusDetails { get; }
+        public string StatusDetails { get; set; }
         /// <summary> Gets the start time of the job. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> Gets the end time of the job. </summary>
@@ -129,6 +135,6 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets the last status modified time of the job. </summary>
         public DateTimeOffset? LastStatusModifiedOn { get; }
         /// <summary> Gets or sets the parameters of the job. </summary>
-        public IReadOnlyDictionary<string, string> Parameters { get; }
+        public IDictionary<string, string> Parameters { get; }
     }
 }

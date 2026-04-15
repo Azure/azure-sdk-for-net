@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Automation
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupData"/> for deserialization. </summary>
-        internal HybridRunbookWorkerGroupData()
-        {
-        }
-
         /// <summary> Type of the HybridWorkerGroup. </summary>
         public HybridWorkerGroup? GroupType { get; set; }
         /// <summary> Sets the credential of a worker group. </summary>

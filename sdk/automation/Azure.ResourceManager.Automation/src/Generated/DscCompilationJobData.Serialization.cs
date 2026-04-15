@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Automation
             string exception = default;
             DateTimeOffset? lastModifiedTime = default;
             DateTimeOffset? lastStatusModifiedTime = default;
-            IReadOnlyDictionary<string, string> parameters = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
