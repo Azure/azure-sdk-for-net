@@ -251,18 +251,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerInstanceUsage> GetUsageAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsageAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetUsagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -284,18 +280,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerInstanceUsage> GetUsage(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerInstanceUsage> GetUsagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetUsageCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetUsagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -317,18 +309,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CachedImages> GetCachedImagesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetCachedImagesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -350,18 +338,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CachedImages> GetCachedImages(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<CachedImages> GetCachedImagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCachedImagesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetCachedImagesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -383,18 +367,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetCapabilitiesWithLocationAsyncCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -416,18 +396,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerCapabilities> GetCapabilities(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetCapabilitiesCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new LocationGetCapabilitiesWithLocationCollectionResultOfT(LocationRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
 
         /// <summary>
@@ -454,13 +430,13 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using DiagnosticScope scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.Delete");
+            using DiagnosticScope scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.DeleteSubnetServiceAssociationLink");
             scope.Start();
             try
             {
@@ -468,7 +444,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, virtualNetworkName, subnetName, context);
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, virtualNetworkName, subnetName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -508,13 +484,13 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
             Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
 
-            using DiagnosticScope scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.Delete");
+            using DiagnosticScope scope = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.DeleteSubnetServiceAssociationLink");
             scope.Start();
             try
             {
@@ -522,7 +498,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, virtualNetworkName, subnetName, context);
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, virtualNetworkName, subnetName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

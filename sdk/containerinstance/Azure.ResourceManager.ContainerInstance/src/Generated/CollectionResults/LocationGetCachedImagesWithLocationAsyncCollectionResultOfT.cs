@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,19 +15,19 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class LocationGetCachedImagesCollectionResultOfT : Pageable<CachedImages>
+    internal partial class LocationGetCachedImagesWithLocationAsyncCollectionResultOfT : AsyncPageable<CachedImages>
     {
         private readonly Location _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LocationGetCachedImagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of LocationGetCachedImagesWithLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Location client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocationGetCachedImagesCollectionResultOfT(Location client, Guid subscriptionId, string location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LocationGetCachedImagesWithLocationAsyncCollectionResultOfT(Location client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -34,16 +35,16 @@ namespace Azure.ResourceManager.ContainerInstance
             _context = context;
         }
 
-        /// <summary> Gets the pages of LocationGetCachedImagesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LocationGetCachedImagesWithLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LocationGetCachedImagesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CachedImages>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LocationGetCachedImagesWithLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<CachedImages>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -62,14 +63,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCachedImagesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetCachedImagesRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetCachedImages");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetCachedImagesWithLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetCachedImagesWithLocationRequest(_subscriptionId, _location, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

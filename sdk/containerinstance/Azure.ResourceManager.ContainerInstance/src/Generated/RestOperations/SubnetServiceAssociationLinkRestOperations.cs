@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
+        internal HttpMessage CreateDeleteSubnetServiceAssociationLinkRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

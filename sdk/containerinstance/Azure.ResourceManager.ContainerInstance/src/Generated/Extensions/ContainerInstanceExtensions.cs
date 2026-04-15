@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Get the usage for a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsageAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsagesWithLocationAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -395,18 +395,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerInstanceUsage> GetUsageAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsageAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Get the usage for a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsage(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerInstanceUsage"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerInstanceUsage> GetUsage(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsage(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
         /// Get the list of cached images on specific OS type for a subscription in a region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImagesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocationAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -433,18 +433,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CachedImages> GetCachedImagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImagesAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Get the list of cached images on specific OS type for a subscription in a region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImages(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -452,18 +452,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CachedImages"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CachedImages> GetCachedImages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImages(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
         /// Get the list of CPU/memory/GPU capabilities of a region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilitiesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocationAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -471,18 +471,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerCapabilities> GetCapabilitiesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilitiesAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Get the list of CPU/memory/GPU capabilities of a region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilities(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -490,18 +490,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerCapabilities"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerCapabilities> GetCapabilities(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilities(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
         /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.DeleteAsync(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.DeleteSubnetServiceAssociationLinkAsync(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -511,18 +511,18 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableContainerInstanceSubscriptionResource(subscriptionResource).DeleteAsync(waitUntil, resourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerInstanceSubscriptionResource(subscriptionResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, resourceGroupName, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.Delete(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.DeleteSubnetServiceAssociationLink(WaitUntil, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation Delete(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
+        public static ArmOperation DeleteSubnetServiceAssociationLink(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).Delete(waitUntil, resourceGroupName, virtualNetworkName, subnetName, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).DeleteSubnetServiceAssociationLink(waitUntil, resourceGroupName, virtualNetworkName, subnetName, cancellationToken);
         }
     }
 }

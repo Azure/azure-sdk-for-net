@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetUsageRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetUsagesWithLocationRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerInstance/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateNextGetUsageRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesWithLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateGetCachedImagesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetCachedImagesWithLocationRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerInstance/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/cachedImages", false);
             if (_apiVersion != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateNextGetCachedImagesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetCachedImagesWithLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateGetCapabilitiesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetCapabilitiesWithLocationRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ContainerInstance/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/capabilities", false);
             if (_apiVersion != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateNextGetCapabilitiesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetCapabilitiesWithLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

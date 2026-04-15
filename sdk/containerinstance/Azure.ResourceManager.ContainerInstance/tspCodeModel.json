@@ -49371,7 +49371,7 @@
             {
               "$id": "4130",
               "kind": "paging",
-              "name": "listUsage",
+              "name": "GetUsagesWithLocation",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -49379,7 +49379,7 @@
               "doc": "Get the usage for a subscription",
               "operation": {
                 "$id": "4131",
-                "name": "listUsage",
+                "name": "GetUsagesWithLocation",
                 "resourceName": "LocationOperationGroup",
                 "doc": "Get the usage for a subscription",
                 "accessibility": "public",
@@ -49554,8 +49554,15 @@
                     "type": {
                       "$id": "4145",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "azureLocation",
+                      "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                      "baseType": {
+                        "$id": "4146",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -49579,16 +49586,23 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listUsage.location",
                     "methodParameterSegments": [
                       {
-                        "$id": "4146",
+                        "$id": "4147",
                         "kind": "method",
                         "name": "location",
                         "serializedName": "location",
                         "doc": "The location name.",
                         "type": {
-                          "$id": "4147",
+                          "$id": "4148",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "4149",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "Path",
@@ -49612,7 +49626,7 @@
                     ]
                   },
                   {
-                    "$id": "4148",
+                    "$id": "4150",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -49628,7 +49642,7 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listUsage.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "4149",
+                        "$id": "4151",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -49672,7 +49686,7 @@
                 "decorators": [],
                 "examples": [
                   {
-                    "$id": "4150",
+                    "$id": "4152",
                     "kind": "http",
                     "name": "ContainerUsage",
                     "description": "ContainerUsage",
@@ -49683,7 +49697,7 @@
                           "$ref": "4132"
                         },
                         "value": {
-                          "$id": "4151",
+                          "$id": "4153",
                           "kind": "string",
                           "type": {
                             "$ref": "4133"
@@ -49696,7 +49710,7 @@
                           "$ref": "4144"
                         },
                         "value": {
-                          "$id": "4152",
+                          "$id": "4154",
                           "kind": "string",
                           "type": {
                             "$ref": "4145"
@@ -49709,7 +49723,7 @@
                           "$ref": "4138"
                         },
                         "value": {
-                          "$id": "4153",
+                          "$id": "4155",
                           "kind": "string",
                           "type": {
                             "$ref": "4139"
@@ -49735,35 +49749,35 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "4154",
+                          "$id": "4156",
                           "kind": "model",
                           "type": {
                             "$ref": "834"
                           },
                           "value": {
                             "value": {
-                              "$id": "4155",
+                              "$id": "4157",
                               "kind": "array",
                               "type": {
                                 "$ref": "836"
                               },
                               "value": [
                                 {
-                                  "$id": "4156",
+                                  "$id": "4158",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "837"
                                   },
                                   "value": {
                                     "name": {
-                                      "$id": "4157",
+                                      "$id": "4159",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "847"
                                       },
                                       "value": {
                                         "localizedValue": {
-                                          "$id": "4158",
+                                          "$id": "4160",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "851"
@@ -49771,7 +49785,7 @@
                                           "value": "Container Groups"
                                         },
                                         "value": {
-                                          "$id": "4159",
+                                          "$id": "4161",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "849"
@@ -49781,7 +49795,7 @@
                                       }
                                     },
                                     "currentValue": {
-                                      "$id": "4160",
+                                      "$id": "4162",
                                       "kind": "number",
                                       "type": {
                                         "$ref": "843"
@@ -49789,7 +49803,7 @@
                                       "value": 1
                                     },
                                     "limit": {
-                                      "$id": "4161",
+                                      "$id": "4163",
                                       "kind": "number",
                                       "type": {
                                         "$ref": "845"
@@ -49797,7 +49811,7 @@
                                       "value": 2000
                                     },
                                     "unit": {
-                                      "$id": "4162",
+                                      "$id": "4164",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "841"
@@ -49818,13 +49832,13 @@
               },
               "parameters": [
                 {
-                  "$ref": "4146"
+                  "$ref": "4147"
                 },
                 {
-                  "$ref": "4149"
+                  "$ref": "4151"
                 },
                 {
-                  "$id": "4163",
+                  "$id": "4165",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
@@ -49866,9 +49880,9 @@
               }
             },
             {
-              "$id": "4164",
+              "$id": "4166",
               "kind": "paging",
-              "name": "listCachedImages",
+              "name": "GetCachedImagesWithLocation",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -49876,21 +49890,21 @@
               "doc": "Get the list of cached images on specific OS type for a subscription in a region.",
               "summary": "Get the list of cached images.",
               "operation": {
-                "$id": "4165",
-                "name": "listCachedImages",
+                "$id": "4167",
+                "name": "GetCachedImagesWithLocation",
                 "resourceName": "LocationOperationGroup",
                 "summary": "Get the list of cached images.",
                 "doc": "Get the list of cached images on specific OS type for a subscription in a region.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "4166",
+                    "$id": "4168",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "4167",
+                      "$id": "4169",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -49900,7 +49914,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "4168",
+                        "$id": "4170",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -49928,18 +49942,18 @@
                     ]
                   },
                   {
-                    "$id": "4169",
+                    "$id": "4171",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "4170",
+                      "$id": "4172",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "4171",
+                        "$id": "4173",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -49973,16 +49987,23 @@
                     ]
                   },
                   {
-                    "$id": "4172",
+                    "$id": "4174",
                     "kind": "path",
                     "name": "location",
                     "serializedName": "location",
                     "doc": "The location name.",
                     "type": {
-                      "$id": "4173",
+                      "$id": "4175",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "azureLocation",
+                      "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                      "baseType": {
+                        "$id": "4176",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -50006,16 +50027,23 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listCachedImages.location",
                     "methodParameterSegments": [
                       {
-                        "$id": "4174",
+                        "$id": "4177",
                         "kind": "method",
                         "name": "location",
                         "serializedName": "location",
                         "doc": "The location name.",
                         "type": {
-                          "$id": "4175",
+                          "$id": "4178",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "4179",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "Path",
@@ -50039,7 +50067,7 @@
                     ]
                   },
                   {
-                    "$id": "4176",
+                    "$id": "4180",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -50055,7 +50083,7 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listCachedImages.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "4177",
+                        "$id": "4181",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -50099,7 +50127,7 @@
                 "decorators": [],
                 "examples": [
                   {
-                    "$id": "4178",
+                    "$id": "4182",
                     "kind": "http",
                     "name": "CachedImages",
                     "description": "CachedImages",
@@ -50107,39 +50135,39 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "4166"
+                          "$ref": "4168"
                         },
                         "value": {
-                          "$id": "4179",
+                          "$id": "4183",
                           "kind": "string",
                           "type": {
-                            "$ref": "4167"
+                            "$ref": "4169"
                           },
                           "value": "2025-09-01"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "4172"
+                          "$ref": "4174"
                         },
                         "value": {
-                          "$id": "4180",
+                          "$id": "4184",
                           "kind": "string",
                           "type": {
-                            "$ref": "4173"
+                            "$ref": "4175"
                           },
                           "value": "westcentralus"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "4169"
+                          "$ref": "4171"
                         },
                         "value": {
-                          "$id": "4181",
+                          "$id": "4185",
                           "kind": "string",
                           "type": {
-                            "$ref": "4170"
+                            "$ref": "4172"
                           },
                           "value": "00000000-0000-0000-0000-000000000000"
                         }
@@ -50162,28 +50190,28 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "4182",
+                          "$id": "4186",
                           "kind": "model",
                           "type": {
                             "$ref": "854"
                           },
                           "value": {
                             "value": {
-                              "$id": "4183",
+                              "$id": "4187",
                               "kind": "array",
                               "type": {
                                 "$ref": "856"
                               },
                               "value": [
                                 {
-                                  "$id": "4184",
+                                  "$id": "4188",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "857"
                                   },
                                   "value": {
                                     "image": {
-                                      "$id": "4185",
+                                      "$id": "4189",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "861"
@@ -50191,7 +50219,7 @@
                                       "value": "ubuntu:16.04"
                                     },
                                     "osType": {
-                                      "$id": "4186",
+                                      "$id": "4190",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "859"
@@ -50201,14 +50229,14 @@
                                   }
                                 },
                                 {
-                                  "$id": "4187",
+                                  "$id": "4191",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "857"
                                   },
                                   "value": {
                                     "image": {
-                                      "$id": "4188",
+                                      "$id": "4192",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "861"
@@ -50216,7 +50244,7 @@
                                       "value": "alpine:3.6"
                                     },
                                     "osType": {
-                                      "$id": "4189",
+                                      "$id": "4193",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "859"
@@ -50226,14 +50254,14 @@
                                   }
                                 },
                                 {
-                                  "$id": "4190",
+                                  "$id": "4194",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "857"
                                   },
                                   "value": {
                                     "image": {
-                                      "$id": "4191",
+                                      "$id": "4195",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "861"
@@ -50241,7 +50269,7 @@
                                       "value": "microsoft/nanoserver:10.0.14393.2485"
                                     },
                                     "osType": {
-                                      "$id": "4192",
+                                      "$id": "4196",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "859"
@@ -50262,18 +50290,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "4174"
-                },
-                {
                   "$ref": "4177"
                 },
                 {
-                  "$id": "4193",
+                  "$ref": "4181"
+                },
+                {
+                  "$id": "4197",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "4170"
+                    "$ref": "4172"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -50310,9 +50338,9 @@
               }
             },
             {
-              "$id": "4194",
+              "$id": "4198",
               "kind": "paging",
-              "name": "listCapabilities",
+              "name": "GetCapabilitiesWithLocation",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -50320,21 +50348,21 @@
               "doc": "Get the list of CPU/memory/GPU capabilities of a region.",
               "summary": "Get the list of capabilities of the location.",
               "operation": {
-                "$id": "4195",
-                "name": "listCapabilities",
+                "$id": "4199",
+                "name": "GetCapabilitiesWithLocation",
                 "resourceName": "LocationOperationGroup",
                 "summary": "Get the list of capabilities of the location.",
                 "doc": "Get the list of CPU/memory/GPU capabilities of a region.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "4196",
+                    "$id": "4200",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "4197",
+                      "$id": "4201",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -50344,7 +50372,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "4198",
+                        "$id": "4202",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -50372,18 +50400,18 @@
                     ]
                   },
                   {
-                    "$id": "4199",
+                    "$id": "4203",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "4200",
+                      "$id": "4204",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "4201",
+                        "$id": "4205",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -50417,16 +50445,23 @@
                     ]
                   },
                   {
-                    "$id": "4202",
+                    "$id": "4206",
                     "kind": "path",
                     "name": "location",
                     "serializedName": "location",
                     "doc": "The location name.",
                     "type": {
-                      "$id": "4203",
+                      "$id": "4207",
                       "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "name": "azureLocation",
+                      "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                      "baseType": {
+                        "$id": "4208",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
                       "decorators": []
                     },
                     "isApiVersion": false,
@@ -50450,16 +50485,23 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listCapabilities.location",
                     "methodParameterSegments": [
                       {
-                        "$id": "4204",
+                        "$id": "4209",
                         "kind": "method",
                         "name": "location",
                         "serializedName": "location",
                         "doc": "The location name.",
                         "type": {
-                          "$id": "4205",
+                          "$id": "4210",
                           "kind": "string",
-                          "name": "string",
-                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "4211",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
                           "decorators": []
                         },
                         "location": "Path",
@@ -50483,7 +50525,7 @@
                     ]
                   },
                   {
-                    "$id": "4206",
+                    "$id": "4212",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -50499,7 +50541,7 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.LocationOperationGroup.listCapabilities.accept",
                     "methodParameterSegments": [
                       {
-                        "$id": "4207",
+                        "$id": "4213",
                         "kind": "method",
                         "name": "accept",
                         "serializedName": "Accept",
@@ -50543,7 +50585,7 @@
                 "decorators": [],
                 "examples": [
                   {
-                    "$id": "4208",
+                    "$id": "4214",
                     "kind": "http",
                     "name": "GetCapabilities",
                     "description": "GetCapabilities",
@@ -50551,39 +50593,39 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "4196"
+                          "$ref": "4200"
                         },
                         "value": {
-                          "$id": "4209",
+                          "$id": "4215",
                           "kind": "string",
                           "type": {
-                            "$ref": "4197"
+                            "$ref": "4201"
                           },
                           "value": "2025-09-01"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "4202"
+                          "$ref": "4206"
                         },
                         "value": {
-                          "$id": "4210",
+                          "$id": "4216",
                           "kind": "string",
                           "type": {
-                            "$ref": "4203"
+                            "$ref": "4207"
                           },
                           "value": "westus"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "4199"
+                          "$ref": "4203"
                         },
                         "value": {
-                          "$id": "4211",
+                          "$id": "4217",
                           "kind": "string",
                           "type": {
-                            "$ref": "4200"
+                            "$ref": "4204"
                           },
                           "value": "00000000-0000-0000-0000-000000000000"
                         }
@@ -50606,35 +50648,35 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "4212",
+                          "$id": "4218",
                           "kind": "model",
                           "type": {
                             "$ref": "864"
                           },
                           "value": {
                             "value": {
-                              "$id": "4213",
+                              "$id": "4219",
                               "kind": "array",
                               "type": {
                                 "$ref": "866"
                               },
                               "value": [
                                 {
-                                  "$id": "4214",
+                                  "$id": "4220",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "867"
                                   },
                                   "value": {
                                     "capabilities": {
-                                      "$id": "4215",
+                                      "$id": "4221",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "880"
                                       },
                                       "value": {
                                         "maxCpu": {
-                                          "$id": "4216",
+                                          "$id": "4222",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "884"
@@ -50642,7 +50684,7 @@
                                           "value": 4
                                         },
                                         "maxGpuCount": {
-                                          "$id": "4217",
+                                          "$id": "4223",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "886"
@@ -50650,7 +50692,7 @@
                                           "value": 4
                                         },
                                         "maxMemoryInGB": {
-                                          "$id": "4218",
+                                          "$id": "4224",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "882"
@@ -50660,7 +50702,7 @@
                                       }
                                     },
                                     "gpu": {
-                                      "$id": "4219",
+                                      "$id": "4225",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "878"
@@ -50668,7 +50710,7 @@
                                       "value": "K80"
                                     },
                                     "ipAddressType": {
-                                      "$id": "4220",
+                                      "$id": "4226",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "876"
@@ -50676,7 +50718,7 @@
                                       "value": "Public"
                                     },
                                     "location": {
-                                      "$id": "4221",
+                                      "$id": "4227",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "873"
@@ -50684,7 +50726,7 @@
                                       "value": "West US"
                                     },
                                     "osType": {
-                                      "$id": "4222",
+                                      "$id": "4228",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "871"
@@ -50692,7 +50734,7 @@
                                       "value": "Linux"
                                     },
                                     "resourceType": {
-                                      "$id": "4223",
+                                      "$id": "4229",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "869"
@@ -50702,21 +50744,21 @@
                                   }
                                 },
                                 {
-                                  "$id": "4224",
+                                  "$id": "4230",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "867"
                                   },
                                   "value": {
                                     "capabilities": {
-                                      "$id": "4225",
+                                      "$id": "4231",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "880"
                                       },
                                       "value": {
                                         "maxCpu": {
-                                          "$id": "4226",
+                                          "$id": "4232",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "884"
@@ -50724,7 +50766,7 @@
                                           "value": 4
                                         },
                                         "maxGpuCount": {
-                                          "$id": "4227",
+                                          "$id": "4233",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "886"
@@ -50732,7 +50774,7 @@
                                           "value": 0
                                         },
                                         "maxMemoryInGB": {
-                                          "$id": "4228",
+                                          "$id": "4234",
                                           "kind": "number",
                                           "type": {
                                             "$ref": "882"
@@ -50742,7 +50784,7 @@
                                       }
                                     },
                                     "gpu": {
-                                      "$id": "4229",
+                                      "$id": "4235",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "878"
@@ -50750,7 +50792,7 @@
                                       "value": "None"
                                     },
                                     "ipAddressType": {
-                                      "$id": "4230",
+                                      "$id": "4236",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "876"
@@ -50758,7 +50800,7 @@
                                       "value": "Public"
                                     },
                                     "location": {
-                                      "$id": "4231",
+                                      "$id": "4237",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "873"
@@ -50766,7 +50808,7 @@
                                       "value": "West US"
                                     },
                                     "osType": {
-                                      "$id": "4232",
+                                      "$id": "4238",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "871"
@@ -50774,7 +50816,7 @@
                                       "value": "Windows"
                                     },
                                     "resourceType": {
-                                      "$id": "4233",
+                                      "$id": "4239",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "869"
@@ -50795,18 +50837,18 @@
               },
               "parameters": [
                 {
-                  "$ref": "4204"
+                  "$ref": "4209"
                 },
                 {
-                  "$ref": "4207"
+                  "$ref": "4213"
                 },
                 {
-                  "$id": "4234",
+                  "$id": "4240",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "4200"
+                    "$ref": "4204"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -50845,13 +50887,13 @@
           ],
           "parameters": [
             {
-              "$id": "4235",
+              "$id": "4241",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "4236",
+                "$id": "4242",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -50862,7 +50904,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "4237",
+                  "$id": "4243",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -50890,15 +50932,15 @@
           "isMultiServiceClient": false
         },
         {
-          "$id": "4238",
+          "$id": "4244",
           "kind": "client",
           "name": "SubnetServiceAssociationLink",
           "namespace": "Azure.ResourceManager.ContainerInstance",
           "methods": [
             {
-              "$id": "4239",
+              "$id": "4245",
               "kind": "lro",
-              "name": "delete",
+              "name": "DeleteSubnetServiceAssociationLink",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -50906,21 +50948,21 @@
               "doc": "Delete container group virtual network association links. The operation does not delete other resources provided by the user.",
               "summary": "Delete container group virtual network association links.",
               "operation": {
-                "$id": "4240",
-                "name": "delete",
+                "$id": "4246",
+                "name": "DeleteSubnetServiceAssociationLink",
                 "resourceName": "SubnetServiceAssociationLinkOperationGroup",
                 "summary": "Delete container group virtual network association links.",
                 "doc": "Delete container group virtual network association links. The operation does not delete other resources provided by the user.",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "4241",
+                    "$id": "4247",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "4242",
+                      "$id": "4248",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -50930,7 +50972,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "4243",
+                        "$id": "4249",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -50953,13 +50995,13 @@
                     "readOnly": false,
                     "methodParameterSegments": [
                       {
-                        "$id": "4244",
+                        "$id": "4250",
                         "kind": "method",
                         "name": "apiVersion",
                         "serializedName": "apiVersion",
                         "doc": "The API version to use for this operation.",
                         "type": {
-                          "$id": "4245",
+                          "$id": "4251",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -50969,7 +51011,7 @@
                         "isApiVersion": true,
                         "defaultValue": {
                           "type": {
-                            "$id": "4246",
+                            "$id": "4252",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string"
@@ -50995,18 +51037,18 @@
                     ]
                   },
                   {
-                    "$id": "4247",
+                    "$id": "4253",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "4248",
+                      "$id": "4254",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "4249",
+                        "$id": "4255",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51035,18 +51077,18 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.SubnetServiceAssociationLinkOperationGroup.delete.subscriptionId",
                     "methodParameterSegments": [
                       {
-                        "$id": "4250",
+                        "$id": "4256",
                         "kind": "method",
                         "name": "subscriptionId",
                         "serializedName": "subscriptionId",
                         "doc": "The ID of the target subscription. The value must be an UUID.",
                         "type": {
-                          "$id": "4251",
+                          "$id": "4257",
                           "kind": "string",
                           "name": "uuid",
                           "crossLanguageDefinitionId": "Azure.Core.uuid",
                           "baseType": {
-                            "$id": "4252",
+                            "$id": "4258",
                             "kind": "string",
                             "name": "string",
                             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51075,13 +51117,13 @@
                     ]
                   },
                   {
-                    "$id": "4253",
+                    "$id": "4259",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "4254",
+                      "$id": "4260",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51122,13 +51164,13 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.SubnetServiceAssociationLinkOperationGroup.delete.resourceGroupName",
                     "methodParameterSegments": [
                       {
-                        "$id": "4255",
+                        "$id": "4261",
                         "kind": "method",
                         "name": "resourceGroupName",
                         "serializedName": "resourceGroupName",
                         "doc": "The name of the resource group. The name is case insensitive.",
                         "type": {
-                          "$id": "4256",
+                          "$id": "4262",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51169,13 +51211,13 @@
                     ]
                   },
                   {
-                    "$id": "4257",
+                    "$id": "4263",
                     "kind": "path",
                     "name": "virtualNetworkName",
                     "serializedName": "virtualNetworkName",
                     "doc": "The name of the virtual network.",
                     "type": {
-                      "$id": "4258",
+                      "$id": "4264",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51193,13 +51235,13 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.SubnetServiceAssociationLinkOperationGroup.delete.virtualNetworkName",
                     "methodParameterSegments": [
                       {
-                        "$id": "4259",
+                        "$id": "4265",
                         "kind": "method",
                         "name": "virtualNetworkName",
                         "serializedName": "virtualNetworkName",
                         "doc": "The name of the virtual network.",
                         "type": {
-                          "$id": "4260",
+                          "$id": "4266",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51217,13 +51259,13 @@
                     ]
                   },
                   {
-                    "$id": "4261",
+                    "$id": "4267",
                     "kind": "path",
                     "name": "subnetName",
                     "serializedName": "subnetName",
                     "doc": "The name of the subnet.",
                     "type": {
-                      "$id": "4262",
+                      "$id": "4268",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51241,13 +51283,13 @@
                     "crossLanguageDefinitionId": "Microsoft.ContainerInstance.SubnetServiceAssociationLinkOperationGroup.delete.subnetName",
                     "methodParameterSegments": [
                       {
-                        "$id": "4263",
+                        "$id": "4269",
                         "kind": "method",
                         "name": "subnetName",
                         "serializedName": "subnetName",
                         "doc": "The name of the subnet.",
                         "type": {
-                          "$id": "4264",
+                          "$id": "4270",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51283,7 +51325,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "4265",
+                          "$id": "4271",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -51295,7 +51337,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "4266",
+                          "$id": "4272",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -51323,7 +51365,7 @@
                 "decorators": [],
                 "examples": [
                   {
-                    "$id": "4267",
+                    "$id": "4273",
                     "kind": "http",
                     "name": "SubnetServiceAssociationLinkDelete",
                     "description": "SubnetServiceAssociationLinkDelete",
@@ -51331,15 +51373,41 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "4241"
+                          "$ref": "4247"
                         },
                         "value": {
-                          "$id": "4268",
+                          "$id": "4274",
                           "kind": "string",
                           "type": {
-                            "$ref": "4242"
+                            "$ref": "4248"
                           },
                           "value": "2025-09-01"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "4259"
+                        },
+                        "value": {
+                          "$id": "4275",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "4260"
+                          },
+                          "value": "demo"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "4267"
+                        },
+                        "value": {
+                          "$id": "4276",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "4268"
+                          },
+                          "value": "demo3"
                         }
                       },
                       {
@@ -51347,49 +51415,23 @@
                           "$ref": "4253"
                         },
                         "value": {
-                          "$id": "4269",
+                          "$id": "4277",
                           "kind": "string",
                           "type": {
                             "$ref": "4254"
-                          },
-                          "value": "demo"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "4261"
-                        },
-                        "value": {
-                          "$id": "4270",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "4262"
-                          },
-                          "value": "demo3"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "4247"
-                        },
-                        "value": {
-                          "$id": "4271",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "4248"
                           },
                           "value": "00000000-0000-0000-0000-000000000000"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "4257"
+                          "$ref": "4263"
                         },
                         "value": {
-                          "$id": "4272",
+                          "$id": "4278",
                           "kind": "string",
                           "type": {
-                            "$ref": "4258"
+                            "$ref": "4264"
                           },
                           "value": "demo2"
                         }
@@ -51417,7 +51459,7 @@
                               "nameInResponse": "Location",
                               "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                               "type": {
-                                "$ref": "4265"
+                                "$ref": "4271"
                               }
                             },
                             {
@@ -51425,7 +51467,7 @@
                               "nameInResponse": "Retry-After",
                               "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                               "type": {
-                                "$ref": "4266"
+                                "$ref": "4272"
                               }
                             }
                           ],
@@ -51450,21 +51492,21 @@
               },
               "parameters": [
                 {
-                  "$ref": "4255"
+                  "$ref": "4261"
                 },
                 {
-                  "$ref": "4259"
+                  "$ref": "4265"
                 },
                 {
-                  "$ref": "4263"
+                  "$ref": "4269"
                 },
                 {
-                  "$id": "4273",
+                  "$id": "4279",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
                   "type": {
-                    "$ref": "4248"
+                    "$ref": "4254"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -51492,13 +51534,13 @@
           ],
           "parameters": [
             {
-              "$id": "4274",
+              "$id": "4280",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "4275",
+                "$id": "4281",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -51509,7 +51551,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "4276",
+                  "$id": "4282",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -51522,7 +51564,7 @@
               "crossLanguageDefinitionId": "Microsoft.ContainerInstance.endpoint"
             },
             {
-              "$ref": "4244"
+              "$ref": "4250"
             }
           ],
           "initializedBy": 0,

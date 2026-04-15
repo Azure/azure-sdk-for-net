@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,19 +14,19 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class LocationGetCapabilitiesAsyncCollectionResultOfT : AsyncPageable<ContainerCapabilities>
+    internal partial class LocationGetUsagesWithLocationCollectionResultOfT : Pageable<ContainerInstanceUsage>
     {
         private readonly Location _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LocationGetCapabilitiesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of LocationGetUsagesWithLocationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Location client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocationGetCapabilitiesAsyncCollectionResultOfT(Location client, Guid subscriptionId, string location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LocationGetUsagesWithLocationCollectionResultOfT(Location client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,22 +34,22 @@ namespace Azure.ResourceManager.ContainerInstance
             _context = context;
         }
 
-        /// <summary> Gets the pages of LocationGetCapabilitiesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LocationGetUsagesWithLocationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LocationGetCapabilitiesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ContainerCapabilities>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LocationGetUsagesWithLocationCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ContainerInstanceUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                CapabilitiesListResult result = CapabilitiesListResult.FromResponse(response);
-                yield return Page<ContainerCapabilities>.FromValues((IReadOnlyList<ContainerCapabilities>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                UsageListResult result = UsageListResult.FromResponse(response);
+                yield return Page<ContainerInstanceUsage>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -63,14 +62,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCapabilitiesRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetCapabilitiesRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetCapabilities");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUsagesWithLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetUsagesWithLocationRequest(_subscriptionId, _location, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
