@@ -349,7 +349,7 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 ## Troubleshoot brokered authentication issues
 
-### `TypeLoadException` for `IMsalSettablePublicClientInitializerOptions` after updating `Azure.Identity`
+### `TypeLoadException` for `IMsalSettablePublicClientInitializerOptions` or `IMsalPublicClientInitializerOptions` after updating `Azure.Identity`
 
 If you see the following error after updating to `Azure.Identity` 1.21.0+ or `Azure.Core` 1.53.0+:
 
