@@ -218,7 +218,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation, excludeWaitUntil: !ShouldApplyLroHandling);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: ShouldApplyLroHandling);
         }
 
         protected virtual MethodSignature CreateSignature()
