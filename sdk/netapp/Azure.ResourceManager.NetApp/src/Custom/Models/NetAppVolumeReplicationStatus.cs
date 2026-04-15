@@ -15,5 +15,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Replication health check. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsHealthy => Healthy;
+
+        /// <summary> The status of the replication relationship. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VolumeReplicationRelationshipStatus? VolumeReplicationRelationshipStatus => RelationshipStatus;
     }
 }

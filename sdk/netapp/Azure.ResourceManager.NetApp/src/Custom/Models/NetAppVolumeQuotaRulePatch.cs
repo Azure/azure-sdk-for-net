@@ -3,15 +3,15 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
+using System.ComponentModel;
 
-// TODO: NetAppVolumeQuotaRulePatch was renamed to VolumeQuotaRulePatch during TypeSpec migration.
-// This backward compat shim needs to be reworked - 'Properties' no longer exists on this standalone class.
-// namespace Azure.ResourceManager.NetApp.Models
-// {
-//     public partial class NetAppVolumeQuotaRulePatch
-//     {
-//         public NetAppProvisioningState? ProvisioningState =>
-//             Properties?.ProvisioningState;
-//     }
-// }
+namespace Azure.ResourceManager.NetApp.Models
+{
+    public partial class NetAppVolumeQuotaRulePatch
+    {
+        /// <summary> Gets the provisioning state of the quota rule. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumeQuotaRuleProvisioningState? VolumeQuotaRuleProvisioningState =>
+            ProvisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(ProvisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
+    }
+}

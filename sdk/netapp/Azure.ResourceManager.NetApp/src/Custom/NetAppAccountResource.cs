@@ -166,5 +166,41 @@ namespace Azure.ResourceManager.NetApp
         {
             return MigrateBackups(waitUntil, body, cancellationToken);
         }
+
+        /// <summary> Gets the NetAppSubscriptionQuotaItems collection. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems()
+        {
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimits() instead.");
+        }
+
+        /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimit() instead.");
+        }
+
+        /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitAsync() instead.");
+        }
+
+        /// <summary> Gets quota limits for accounts. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccounts(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitsAccounts() instead.");
+        }
+
+        /// <summary> Gets quota limits for accounts. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccountsAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitsAccounts() instead.");
+        }
     }
 }

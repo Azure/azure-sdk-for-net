@@ -13,5 +13,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Gets or sets the IsHealthy property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsHealthy => Healthy;
+
+        /// <summary> The status of the restore relationship. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VolumeRestoreRelationshipStatus? VolumeRestoreRelationshipStatus => RelationshipStatus;
     }
 }

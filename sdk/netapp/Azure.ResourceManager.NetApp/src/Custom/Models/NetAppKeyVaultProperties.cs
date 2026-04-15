@@ -28,5 +28,13 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyName = keyName;
             KeyVaultArmResourceId = new ResourceIdentifier(keyVaultResourceId);
         }
+
+        /// <summary> The resource ID of KeyVault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string KeyVaultResourceId
+        {
+            get => KeyVaultArmResourceId?.ToString();
+            set => KeyVaultArmResourceId = string.IsNullOrEmpty(value) ? null : new ResourceIdentifier(value);
+        }
     }
 }

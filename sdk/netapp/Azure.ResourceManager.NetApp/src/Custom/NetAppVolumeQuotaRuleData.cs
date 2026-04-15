@@ -3,14 +3,16 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
+using System.ComponentModel;
+using Azure.ResourceManager.NetApp.Models;
 
-// TODO: NetAppVolumeQuotaRuleData 'Properties' no longer exists on this standalone class after TypeSpec migration.
-// namespace Azure.ResourceManager.NetApp
-// {
-//     public partial class NetAppVolumeQuotaRuleData
-//     {
-//         public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState =>
-//             Properties?.ProvisioningState;
-//     }
-// }
+namespace Azure.ResourceManager.NetApp
+{
+    public partial class NetAppVolumeQuotaRuleData
+    {
+        /// <summary> Gets the provisioning state of the quota rule. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumeQuotaRuleProvisioningState? VolumeQuotaRuleProvisioningState =>
+            ProvisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(ProvisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
+    }
+}

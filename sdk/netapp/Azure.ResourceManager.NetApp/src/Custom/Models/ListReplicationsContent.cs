@@ -3,18 +3,18 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
+using System.ComponentModel;
 
-// TODO: ListReplicationsContent was renamed to ListReplicationsRequest and ExcludeReplicationsFilter was renamed to Exclude.
-// This backward compat shim needs to be reworked or removed.
-// namespace Azure.ResourceManager.NetApp.Models
-// {
-//     public partial class ListReplicationsContent
-//     {
-//         public ExcludeReplicationsFilter? ExcludeReplicationsFilter
-//         {
-//             get => Exclude;
-//             set => Exclude = value;
-//         }
-//     }
-// }
+namespace Azure.ResourceManager.NetApp.Models
+{
+    public partial class ListReplicationsContent
+    {
+        /// <summary> Exclude replications filter. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ExcludeReplicationsFilter? ExcludeReplicationsFilter
+        {
+            get => Exclude;
+            set => Exclude = value;
+        }
+    }
+}

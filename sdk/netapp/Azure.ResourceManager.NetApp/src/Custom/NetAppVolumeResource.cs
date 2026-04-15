@@ -319,6 +319,10 @@ namespace Azure.ResourceManager.NetApp
             get => throw new NotSupportedException("This property is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Data instead.");
         }
 
+        /// <summary> Gets whether this resource has data. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual bool HasData => false;
+
         // ---- Non-LRO methods ----
 
         /// <summary> Get the specified volume. </summary>
@@ -882,6 +886,35 @@ namespace Azure.ResourceManager.NetApp
         public virtual RansomwareReportCollection GetRansomwareReports()
         {
             throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get a ransomware report. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<RansomwareReportResource> GetRansomwareReport(string ransomwareReportName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get a ransomware report. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<RansomwareReportResource>> GetRansomwareReportAsync(string ransomwareReportName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get latest backup restore status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppRestoreStatus> GetVolumeLatestRestoreStatusBackup(CancellationToken cancellationToken = default)
+        {
+            return GetRestoreStatus(cancellationToken);
+        }
+
+        /// <summary> Get latest backup restore status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusBackupAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetRestoreStatusAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get latest backup status. </summary>
