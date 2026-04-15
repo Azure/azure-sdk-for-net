@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(FileSystemId))
             {
                 writer.WritePropertyName("fileSystemId"u8);
-                writer.WriteStringValue(FileSystemId);
+                writer.WriteStringValue(FileSystemId.Value);
             }
             writer.WritePropertyName("creationToken"u8);
             writer.WriteStringValue(CreationToken);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
-                writer.WriteStringValue(NetworkSiblingSetId);
+                writer.WriteStringValue(NetworkSiblingSetId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageToNetworkProximity))
             {
@@ -341,10 +341,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("capacityPoolResourceId"u8);
                 writer.WriteStringValue(CapacityPoolResourceId);
             }
-            if (Optional.IsDefined(ProximityPlacementGroup))
+            if (Optional.IsDefined(ProximityPlacementGroupId))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                writer.WriteStringValue(ProximityPlacementGroup);
+                writer.WriteStringValue(ProximityPlacementGroupId);
             }
             if (options.Format != "W" && Optional.IsDefined(T2Network))
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string fileSystemId = default;
+            Guid? fileSystemId = default;
             string creationToken = default;
             NetAppFileServiceLevel? serviceLevel = default;
             long usageThreshold = default;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
             NetAppNetworkFeature? effectiveNetworkFeatures = default;
-            string networkSiblingSetId = default;
+            Guid? networkSiblingSetId = default;
             NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default;
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? maximumNumberOfFiles = default;
             string volumeGroupName = default;
             string capacityPoolResourceId = default;
-            ResourceIdentifier proximityPlacementGroup = default;
+            ResourceIdentifier proximityPlacementGroupId = default;
             string t2Network = default;
             string volumeSpecName = default;
             bool? isEncrypted = default;
@@ -520,7 +520,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("fileSystemId"u8))
                 {
-                    fileSystemId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileSystemId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("creationToken"u8))
@@ -636,7 +640,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("networkSiblingSetId"u8))
                 {
-                    networkSiblingSetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkSiblingSetId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageToNetworkProximity"u8))
@@ -960,7 +968,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    proximityPlacementGroup = new ResourceIdentifier(prop.Value.GetString());
+                    proximityPlacementGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("t2Network"u8))
@@ -1125,7 +1133,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 maximumNumberOfFiles,
                 volumeGroupName,
                 capacityPoolResourceId,
-                proximityPlacementGroup,
+                proximityPlacementGroupId,
                 t2Network,
                 volumeSpecName,
                 isEncrypted,

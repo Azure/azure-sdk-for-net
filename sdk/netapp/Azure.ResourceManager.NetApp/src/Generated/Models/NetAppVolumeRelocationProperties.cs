@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
-        /// <param name="relocationRequested"> Has relocation been requested for this volume. </param>
-        /// <param name="readyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
+        /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
+        /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeRelocationProperties(bool? relocationRequested, bool? readyToBeFinalized, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RelocationRequested = relocationRequested;
-            ReadyToBeFinalized = readyToBeFinalized;
+            IsRelocationRequested = isRelocationRequested;
+            IsReadyToBeFinalized = isReadyToBeFinalized;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Has relocation been requested for this volume. </summary>
-        public bool? RelocationRequested { get; set; }
+        public bool? IsRelocationRequested { get; set; }
 
         /// <summary> Has relocation finished and is ready to be cleaned up. </summary>
-        public bool? ReadyToBeFinalized { get; }
+        public bool? IsReadyToBeFinalized { get; }
     }
 }

@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeRelocationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RelocationRequested))
+            if (Optional.IsDefined(IsRelocationRequested))
             {
                 writer.WritePropertyName("relocationRequested"u8);
-                writer.WriteBooleanValue(RelocationRequested.Value);
+                writer.WriteBooleanValue(IsRelocationRequested.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReadyToBeFinalized))
+            if (options.Format != "W" && Optional.IsDefined(IsReadyToBeFinalized))
             {
                 writer.WritePropertyName("readyToBeFinalized"u8);
-                writer.WriteBooleanValue(ReadyToBeFinalized.Value);
+                writer.WriteBooleanValue(IsReadyToBeFinalized.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            bool? relocationRequested = default;
-            bool? readyToBeFinalized = default;
+            bool? isRelocationRequested = default;
+            bool? isReadyToBeFinalized = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    relocationRequested = prop.Value.GetBoolean();
+                    isRelocationRequested = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("readyToBeFinalized"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    readyToBeFinalized = prop.Value.GetBoolean();
+                    isReadyToBeFinalized = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppVolumeRelocationProperties(relocationRequested, readyToBeFinalized, additionalBinaryDataProperties);
+            return new NetAppVolumeRelocationProperties(isRelocationRequested, isReadyToBeFinalized, additionalBinaryDataProperties);
         }
     }
 }

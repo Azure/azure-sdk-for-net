@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
         /// <param name="volumeGroupName"> Volume Group Name. </param>
         /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
-        /// <param name="proximityPlacementGroup"> Proximity placement group associated with the volume. </param>
+        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
         /// <param name="t2Network"> T2 network information. </param>
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, string fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, string networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroup = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 @type,
                 tags,
                 zones.ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && usageThreshold is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && ldapServerType is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroup is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && largeVolumeType is null && originatingResourceId is null && inheritedSizeInBytes is null && language is null && breakthroughMode is null && exportRules is null ? default : new VolumeProperties(
+                fileSystemId is null && creationToken is null && serviceLevel is null && usageThreshold is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && ldapServerType is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && largeVolumeType is null && originatingResourceId is null && inheritedSizeInBytes is null && language is null && breakthroughMode is null && exportRules is null ? default : new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     maximumNumberOfFiles,
                     volumeGroupName,
                     capacityPoolResourceId,
-                    proximityPlacementGroup,
+                    proximityPlacementGroupId,
                     t2Network,
                     volumeSpecName,
                     isEncrypted,
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeMountTarget"/> instance for mocking. </returns>
-        public static NetAppVolumeMountTarget NetAppVolumeMountTarget(string mountTargetId = default, string fileSystemId = default, string ipAddress = default, string smbServerFqdn = default)
+        public static NetAppVolumeMountTarget NetAppVolumeMountTarget(Guid? mountTargetId = default, Guid fileSystemId = default, IPAddress ipAddress = default, string smbServerFqdn = default)
         {
             return new NetAppVolumeMountTarget(mountTargetId, fileSystemId, ipAddress, smbServerFqdn, additionalBinaryDataProperties: null);
         }
@@ -295,12 +295,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Volume relocation properties. </summary>
-        /// <param name="relocationRequested"> Has relocation been requested for this volume. </param>
-        /// <param name="readyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
+        /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
+        /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeRelocationProperties"/> instance for mocking. </returns>
-        public static NetAppVolumeRelocationProperties NetAppVolumeRelocationProperties(bool? relocationRequested = default, bool? readyToBeFinalized = default)
+        public static NetAppVolumeRelocationProperties NetAppVolumeRelocationProperties(bool? isRelocationRequested = default, bool? isReadyToBeFinalized = default)
         {
-            return new NetAppVolumeRelocationProperties(relocationRequested, readyToBeFinalized, additionalBinaryDataProperties: null);
+            return new NetAppVolumeRelocationProperties(isRelocationRequested, isReadyToBeFinalized, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Advanced Ransomware Protection reports (ARP) settings. </summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </param>
         /// <param name="volumeGroupName"> Volume Group Name. </param>
         /// <param name="capacityPoolResourceId"> Pool Resource Id used in case of creating a volume through volume group. </param>
-        /// <param name="proximityPlacementGroup"> Proximity placement group associated with the volume. </param>
+        /// <param name="proximityPlacementGroupId"> Proximity placement group associated with the volume. </param>
         /// <param name="t2Network"> T2 network information. </param>
         /// <param name="volumeSpecName"> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </param>
         /// <param name="isEncrypted"> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </param>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="zones"> The availability zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="NetApp.VolumeData"/> instance for mocking. </returns>
-        public static VolumeData VolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, string networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroup = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, string etag = default, IEnumerable<string> zones = default)
+        public static VolumeData VolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, string etag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                fileSystemId is null && creationToken is null && serviceLevel is null && usageThreshold is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && ldapServerType is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroup is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && largeVolumeType is null && originatingResourceId is null && inheritedSizeInBytes is null && language is null && breakthroughMode is null && exportRules is null ? default : new VolumeProperties(
+                fileSystemId is null && creationToken is null && serviceLevel is null && usageThreshold is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && ldapServerType is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && largeVolumeType is null && originatingResourceId is null && inheritedSizeInBytes is null && language is null && breakthroughMode is null && exportRules is null ? default : new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     maximumNumberOfFiles,
                     volumeGroupName,
                     capacityPoolResourceId,
-                    proximityPlacementGroup,
+                    proximityPlacementGroupId,
                     t2Network,
                     volumeSpecName,
                     isEncrypted,
@@ -814,11 +814,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="enabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
-        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? enabled = default, string provisioningState = default, string etag = default)
+        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default, string etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -830,12 +830,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && enabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
+                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
                     hourlySchedule,
                     dailySchedule,
                     weeklySchedule,
                     monthlySchedule,
-                    enabled,
+                    isEnabled,
                     provisioningState,
                     null),
                 etag);
@@ -850,10 +850,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="enabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.SnapshotPolicyPatch"/> instance for mocking. </returns>
-        public static SnapshotPolicyPatch SnapshotPolicyPatch(string location = default, string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? enabled = default, string provisioningState = default)
+        public static SnapshotPolicyPatch SnapshotPolicyPatch(string location = default, string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -863,12 +863,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 name,
                 @type,
                 tags,
-                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && enabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
+                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
                     hourlySchedule,
                     dailySchedule,
                     weeklySchedule,
                     monthlySchedule,
-                    enabled,
+                    isEnabled,
                     provisioningState,
                     null),
                 additionalBinaryDataProperties: null);
@@ -2406,24 +2406,24 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="size"> Size of subvolume. </param>
         /// <param name="bytesUsed"> Bytes used. </param>
         /// <param name="permissions"> Permissions of the subvolume. </param>
-        /// <param name="creationTimeStamp"> Creation time and date. </param>
-        /// <param name="accessedTimeStamp"> Most recent access time and date. </param>
-        /// <param name="modifiedTimeStamp"> Most recent modification time and date. </param>
-        /// <param name="changedTimeStamp"> Most recent change time and date. </param>
+        /// <param name="createdOn"> Creation time and date. </param>
+        /// <param name="accessedOn"> Most recent access time and date. </param>
+        /// <param name="modifiedOn"> Most recent modification time and date. </param>
+        /// <param name="changedOn"> Most recent change time and date. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.NetAppSubvolumeMetadata"/> instance for mocking. </returns>
-        public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(string id = default, string name = default, string @type = default, string path = default, string parentPath = default, long? size = default, long? bytesUsed = default, string permissions = default, DateTimeOffset? creationTimeStamp = default, DateTimeOffset? accessedTimeStamp = default, DateTimeOffset? modifiedTimeStamp = default, DateTimeOffset? changedTimeStamp = default, string provisioningState = default)
+        public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(string id = default, string name = default, string @type = default, string path = default, string parentPath = default, long? size = default, long? bytesUsed = default, string permissions = default, DateTimeOffset? createdOn = default, DateTimeOffset? accessedOn = default, DateTimeOffset? modifiedOn = default, DateTimeOffset? changedOn = default, string provisioningState = default)
         {
-            return new NetAppSubvolumeMetadata(id, name, @type, path is null && parentPath is null && size is null && bytesUsed is null && permissions is null && creationTimeStamp is null && accessedTimeStamp is null && modifiedTimeStamp is null && changedTimeStamp is null && provisioningState is null ? default : new SubvolumeModelProperties(
+            return new NetAppSubvolumeMetadata(id, name, @type, path is null && parentPath is null && size is null && bytesUsed is null && permissions is null && createdOn is null && accessedOn is null && modifiedOn is null && changedOn is null && provisioningState is null ? default : new SubvolumeModelProperties(
                 path,
                 parentPath,
                 size,
                 bytesUsed,
                 permissions,
-                creationTimeStamp,
-                accessedTimeStamp,
-                modifiedTimeStamp,
-                changedTimeStamp,
+                createdOn,
+                accessedOn,
+                modifiedOn,
+                changedOn,
                 provisioningState,
                 null), additionalBinaryDataProperties: null);
         }

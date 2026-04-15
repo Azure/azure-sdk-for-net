@@ -40,5 +40,22 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Converts a string to a <see cref="NetAppVolumeQuotaRuleProvisioningState"/>. </summary>
         public static implicit operator NetAppVolumeQuotaRuleProvisioningState(string value) => new NetAppVolumeQuotaRuleProvisioningState(value);
+
+        /// <summary> Accepted. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Accepted { get; } = new NetAppVolumeQuotaRuleProvisioningState("Accepted");
+        /// <summary> Creating. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Creating { get; } = new NetAppVolumeQuotaRuleProvisioningState("Creating");
+        /// <summary> Patching. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Patching { get; } = new NetAppVolumeQuotaRuleProvisioningState("Patching");
+        /// <summary> Deleting. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Deleting { get; } = new NetAppVolumeQuotaRuleProvisioningState("Deleting");
+        /// <summary> Moving. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Moving { get; } = new NetAppVolumeQuotaRuleProvisioningState("Moving");
+        /// <summary> Failed. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Failed { get; } = new NetAppVolumeQuotaRuleProvisioningState("Failed");
+        /// <summary> Succeeded. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Succeeded { get; } = new NetAppVolumeQuotaRuleProvisioningState("Succeeded");
+        /// <summary> Updating. </summary>
+        public static NetAppVolumeQuotaRuleProvisioningState Updating { get; } = new NetAppVolumeQuotaRuleProvisioningState("Updating");
     }
 }

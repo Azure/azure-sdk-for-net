@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
@@ -82,14 +83,14 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(MountTargetId))
             {
                 writer.WritePropertyName("mountTargetId"u8);
-                writer.WriteStringValue(MountTargetId);
+                writer.WriteStringValue(MountTargetId.Value);
             }
             writer.WritePropertyName("fileSystemId"u8);
             writer.WriteStringValue(FileSystemId);
             if (options.Format != "W" && Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IpAddress.ToString());
             }
             if (Optional.IsDefined(SmbServerFqdn))
             {
@@ -138,26 +139,34 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string mountTargetId = default;
-            string fileSystemId = default;
-            string ipAddress = default;
+            Guid? mountTargetId = default;
+            Guid fileSystemId = default;
+            IPAddress ipAddress = default;
             string smbServerFqdn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mountTargetId"u8))
                 {
-                    mountTargetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mountTargetId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fileSystemId"u8))
                 {
-                    fileSystemId = prop.Value.GetString();
+                    fileSystemId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("smbServerFqdn"u8))

@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule, options);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SnapshotPolicyDailySchedule dailySchedule = default;
             SnapshotPolicyWeeklySchedule weeklySchedule = default;
             SnapshotPolicyMonthlySchedule monthlySchedule = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 dailySchedule,
                 weeklySchedule,
                 monthlySchedule,
-                enabled,
+                isEnabled,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

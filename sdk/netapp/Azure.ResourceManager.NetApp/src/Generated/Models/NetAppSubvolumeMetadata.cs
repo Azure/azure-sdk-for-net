@@ -94,38 +94,38 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Creation time and date. </summary>
-        public DateTimeOffset? CreationTimeStamp
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties.CreationTimeStamp;
+                return Properties.CreatedOn;
             }
         }
 
         /// <summary> Most recent access time and date. </summary>
-        public DateTimeOffset? AccessedTimeStamp
+        public DateTimeOffset? AccessedOn
         {
             get
             {
-                return Properties.AccessedTimeStamp;
+                return Properties.AccessedOn;
             }
         }
 
         /// <summary> Most recent modification time and date. </summary>
-        public DateTimeOffset? ModifiedTimeStamp
+        public DateTimeOffset? ModifiedOn
         {
             get
             {
-                return Properties.ModifiedTimeStamp;
+                return Properties.ModifiedOn;
             }
         }
 
         /// <summary> Most recent change time and date. </summary>
-        public DateTimeOffset? ChangedTimeStamp
+        public DateTimeOffset? ChangedOn
         {
             get
             {
-                return Properties.ChangedTimeStamp;
+                return Properties.ChangedOn;
             }
         }
 

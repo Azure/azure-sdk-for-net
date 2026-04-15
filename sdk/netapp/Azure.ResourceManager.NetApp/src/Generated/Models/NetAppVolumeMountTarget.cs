@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
-        internal NetAppVolumeMountTarget(string fileSystemId)
+        internal NetAppVolumeMountTarget(Guid fileSystemId)
         {
             FileSystemId = fileSystemId;
         }
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeMountTarget(string mountTargetId, string fileSystemId, string ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
@@ -39,13 +40,13 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        public string MountTargetId { get; }
+        public Guid? MountTargetId { get; }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        public string FileSystemId { get; }
+        public Guid FileSystemId { get; }
 
         /// <summary> The mount target's IPv4 address. </summary>
-        public string IpAddress { get; }
+        public IPAddress IpAddress { get; }
 
         /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
         public string SmbServerFqdn { get; }

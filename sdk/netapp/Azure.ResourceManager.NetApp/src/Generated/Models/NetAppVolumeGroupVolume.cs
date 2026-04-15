@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal VolumeProperties Properties { get; set; }
 
         /// <summary> Unique FileSystem Identifier. </summary>
-        public string FileSystemId
+        public Guid? FileSystemId
         {
             get
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Network Sibling Set ID for the the group of volumes sharing networking resources. </summary>
-        public string NetworkSiblingSetId
+        public Guid? NetworkSiblingSetId
         {
             get
             {
@@ -792,11 +792,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Proximity placement group associated with the volume. </summary>
-        public ResourceIdentifier ProximityPlacementGroup
+        public ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {
-                return Properties is null ? default : Properties.ProximityPlacementGroup;
+                return Properties is null ? default : Properties.ProximityPlacementGroupId;
             }
             set
             {
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.ProximityPlacementGroup = value;
+                Properties.ProximityPlacementGroupId = value;
             }
         }
 

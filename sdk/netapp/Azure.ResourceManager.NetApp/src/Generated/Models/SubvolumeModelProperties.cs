@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="size"> Size of subvolume. </param>
         /// <param name="bytesUsed"> Bytes used. </param>
         /// <param name="permissions"> Permissions of the subvolume. </param>
-        /// <param name="creationTimeStamp"> Creation time and date. </param>
-        /// <param name="accessedTimeStamp"> Most recent access time and date. </param>
-        /// <param name="modifiedTimeStamp"> Most recent modification time and date. </param>
-        /// <param name="changedTimeStamp"> Most recent change time and date. </param>
+        /// <param name="createdOn"> Creation time and date. </param>
+        /// <param name="accessedOn"> Most recent access time and date. </param>
+        /// <param name="modifiedOn"> Most recent modification time and date. </param>
+        /// <param name="changedOn"> Most recent change time and date. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubvolumeModelProperties(string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? creationTimeStamp, DateTimeOffset? accessedTimeStamp, DateTimeOffset? modifiedTimeStamp, DateTimeOffset? changedTimeStamp, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubvolumeModelProperties(string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             ParentPath = parentPath;
             Size = size;
             BytesUsed = bytesUsed;
             Permissions = permissions;
-            CreationTimeStamp = creationTimeStamp;
-            AccessedTimeStamp = accessedTimeStamp;
-            ModifiedTimeStamp = modifiedTimeStamp;
-            ChangedTimeStamp = changedTimeStamp;
+            CreatedOn = createdOn;
+            AccessedOn = accessedOn;
+            ModifiedOn = modifiedOn;
+            ChangedOn = changedOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.NetApp.Models
         public string Permissions { get; }
 
         /// <summary> Creation time and date. </summary>
-        public DateTimeOffset? CreationTimeStamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Most recent access time and date. </summary>
-        public DateTimeOffset? AccessedTimeStamp { get; }
+        public DateTimeOffset? AccessedOn { get; }
 
         /// <summary> Most recent modification time and date. </summary>
-        public DateTimeOffset? ModifiedTimeStamp { get; }
+        public DateTimeOffset? ModifiedOn { get; }
 
         /// <summary> Most recent change time and date. </summary>
-        public DateTimeOffset? ChangedTimeStamp { get; }
+        public DateTimeOffset? ChangedOn { get; }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

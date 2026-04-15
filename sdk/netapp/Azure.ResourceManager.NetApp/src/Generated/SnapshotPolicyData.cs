@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     Properties = new SnapshotPolicyProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.IsEnabled = value.Value;
             }
         }
 

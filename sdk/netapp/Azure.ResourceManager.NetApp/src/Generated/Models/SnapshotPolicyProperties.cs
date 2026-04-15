@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
         /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="enabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotPolicyProperties(SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? enabled, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotPolicyProperties(SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HourlySchedule = hourlySchedule;
             DailySchedule = dailySchedule;
             WeeklySchedule = weeklySchedule;
             MonthlySchedule = monthlySchedule;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

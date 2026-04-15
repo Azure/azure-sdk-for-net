@@ -99,25 +99,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (Optional.IsDefined(CreationTimeStamp))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
-                writer.WriteStringValue(CreationTimeStamp.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(AccessedTimeStamp))
+            if (Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedTimeStamp"u8);
-                writer.WriteStringValue(AccessedTimeStamp.Value, "O");
+                writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (Optional.IsDefined(ModifiedTimeStamp))
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTimeStamp"u8);
-                writer.WriteStringValue(ModifiedTimeStamp.Value, "O");
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ChangedTimeStamp))
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTimeStamp"u8);
-                writer.WriteStringValue(ChangedTimeStamp.Value, "O");
+                writer.WriteStringValue(ChangedOn.Value, "O");
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             long? bytesUsed = default;
             string permissions = default;
-            DateTimeOffset? creationTimeStamp = default;
-            DateTimeOffset? accessedTimeStamp = default;
-            DateTimeOffset? modifiedTimeStamp = default;
-            DateTimeOffset? changedTimeStamp = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? accessedOn = default;
+            DateTimeOffset? modifiedOn = default;
+            DateTimeOffset? changedOn = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    creationTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("accessedTimeStamp"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    accessedTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    accessedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("modifiedTimeStamp"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    modifiedTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("changedTimeStamp"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    changedTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    changedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 size,
                 bytesUsed,
                 permissions,
-                creationTimeStamp,
-                accessedTimeStamp,
-                modifiedTimeStamp,
-                changedTimeStamp,
+                createdOn,
+                accessedOn,
+                modifiedOn,
+                changedOn,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

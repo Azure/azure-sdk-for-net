@@ -296,5 +296,451 @@ namespace Azure.ResourceManager.NetApp
         {
             throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetReplications instead.");
         }
+
+        // ---- Static members ----
+
+        /// <summary> Generate the resource identifier of a <see cref="NetAppVolumeResource"/> instance. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            return VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+        }
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceType ResourceType => VolumeResource.ResourceType;
+
+        // ---- Instance property ----
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppVolumeData Data
+        {
+            get => throw new NotSupportedException("This property is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Data instead.");
+        }
+
+        // ---- Non-LRO methods ----
+
+        /// <summary> Get the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppVolumeResource> Get(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Get instead.");
+        }
+
+        /// <summary> Get the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppVolumeResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetAsync instead.");
+        }
+
+        /// <summary> Get the replication status for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppVolumeReplicationStatus> GetReplicationStatus(CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetReplicationStatus instead.");
+        }
+
+        /// <summary> Get the replication status for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppVolumeReplicationStatus>> GetReplicationStatusAsync(CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetReplicationStatusAsync instead.");
+        }
+
+        /// <summary> Get the quota report for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppVolumeQuotaReport> GetQuotaReport(QuotaReportFilterContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetQuotaReport instead.");
+        }
+
+        /// <summary> Get the quota report for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppVolumeQuotaReport> GetQuotaReportAsync(QuotaReportFilterContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetQuotaReportAsync instead.");
+        }
+
+        /// <summary> Returns the list of group Ids for a specific LDAP User. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<GetGroupIdListForLdapUserResult> GetGroupIdListForLdapUser(GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetGroupIdListForLdapUser instead.");
+        }
+
+        /// <summary> Returns the list of group Ids for a specific LDAP User. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<GetGroupIdListForLdapUserResult>> GetGroupIdListForLdapUserAsync(GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.GetGroupIdListForLdapUserAsync instead.");
+        }
+
+        /// <summary> Get a NetAppVolumeQuotaRuleResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppVolumeQuotaRuleResource> GetNetAppVolumeQuotaRule(string quotaRuleName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get a NetAppVolumeQuotaRuleResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppVolumeQuotaRuleResource>> GetNetAppVolumeQuotaRuleAsync(string quotaRuleName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Gets a collection of NetAppVolumeQuotaRuleResources. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppVolumeQuotaRuleCollection GetNetAppVolumeQuotaRules()
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get a NetAppVolumeSnapshotResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppVolumeSnapshotResource> GetNetAppVolumeSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Get a NetAppVolumeSnapshotResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppVolumeSnapshotResource>> GetNetAppVolumeSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        /// <summary> Gets a collection of NetAppVolumeSnapshotResources. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppVolumeSnapshotCollection GetNetAppVolumeSnapshots()
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
+        }
+
+        // ---- LRO operation methods (returning ArmOperation) ----
+
+        /// <summary> Authorize the replication connection on the source volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation AuthorizeReplication(WaitUntil waitUntil, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.AuthorizeReplication instead.");
+        }
+
+        /// <summary> Authorize the replication connection on the source volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> AuthorizeReplicationAsync(WaitUntil waitUntil, NetAppVolumeAuthorizeReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.AuthorizeReplicationAsync instead.");
+        }
+
+        /// <summary> Break file locks. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation BreakFileLocks(WaitUntil waitUntil, NetAppVolumeBreakFileLocksContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.BreakFileLocks instead.");
+        }
+
+        /// <summary> Break file locks. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> BreakFileLocksAsync(WaitUntil waitUntil, NetAppVolumeBreakFileLocksContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.BreakFileLocksAsync instead.");
+        }
+
+        /// <summary> Break the replication connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation BreakReplication(WaitUntil waitUntil, NetAppVolumeBreakReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.BreakReplication instead.");
+        }
+
+        /// <summary> Break the replication connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> BreakReplicationAsync(WaitUntil waitUntil, NetAppVolumeBreakReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.BreakReplicationAsync instead.");
+        }
+
+        /// <summary> Delete the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Delete instead.");
+        }
+
+        /// <summary> Delete the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.DeleteAsync instead.");
+        }
+
+        /// <summary> Delete the replication connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation DeleteReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.DeleteReplication instead.");
+        }
+
+        /// <summary> Delete the replication connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> DeleteReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.DeleteReplicationAsync instead.");
+        }
+
+        /// <summary> Finalize the external replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation FinalizeExternalReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.FinalizeExternalReplication instead.");
+        }
+
+        /// <summary> Finalize the external replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> FinalizeExternalReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.FinalizeExternalReplicationAsync instead.");
+        }
+
+        /// <summary> Finalize relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation FinalizeRelocation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.FinalizeRelocation instead.");
+        }
+
+        /// <summary> Finalize relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> FinalizeRelocationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.FinalizeRelocationAsync instead.");
+        }
+
+        /// <summary> Migrate backups under volume to backup vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation MigrateBackupsBackupsUnderVolume(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.MigrateBackupsBackupsUnderVolume instead.");
+        }
+
+        /// <summary> Migrate backups under volume to backup vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderVolumeAsync(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.MigrateBackupsBackupsUnderVolumeAsync instead.");
+        }
+
+        /// <summary> Perform a replication transfer. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation PerformReplicationTransfer(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.PerformReplicationTransfer instead.");
+        }
+
+        /// <summary> Perform a replication transfer. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> PerformReplicationTransferAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.PerformReplicationTransferAsync instead.");
+        }
+
+        /// <summary> Change pool for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation PoolChange(WaitUntil waitUntil, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.PoolChange instead.");
+        }
+
+        /// <summary> Change pool for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> PoolChangeAsync(WaitUntil waitUntil, NetAppVolumePoolChangeContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.PoolChangeAsync instead.");
+        }
+
+        /// <summary> Re-initialize replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ReInitializeReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReInitializeReplication instead.");
+        }
+
+        /// <summary> Re-initialize replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ReInitializeReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReInitializeReplicationAsync instead.");
+        }
+
+        /// <summary> Re-establish replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ReestablishReplication(WaitUntil waitUntil, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReestablishReplication instead.");
+        }
+
+        /// <summary> Re-establish replication. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ReestablishReplicationAsync(WaitUntil waitUntil, NetAppVolumeReestablishReplicationContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReestablishReplicationAsync instead.");
+        }
+
+        /// <summary> Relocate volume to a new stamp. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Relocate(WaitUntil waitUntil, RelocateVolumeContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Relocate instead.");
+        }
+
+        /// <summary> Relocate volume to a new stamp. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> RelocateAsync(WaitUntil waitUntil, RelocateVolumeContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.RelocateAsync instead.");
+        }
+
+        /// <summary> Reset CIFS password. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ResetCifsPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ResetCifsPassword instead.");
+        }
+
+        /// <summary> Reset CIFS password. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ResetCifsPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ResetCifsPasswordAsync instead.");
+        }
+
+        /// <summary> Resync the connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ResyncReplication(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ResyncReplication instead.");
+        }
+
+        /// <summary> Resync the connection on the destination volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ResyncReplicationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ResyncReplicationAsync instead.");
+        }
+
+        /// <summary> Revert a volume to the snapshot. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Revert(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Revert instead.");
+        }
+
+        /// <summary> Revert a volume to the snapshot. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> RevertAsync(WaitUntil waitUntil, NetAppVolumeRevertContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.RevertAsync instead.");
+        }
+
+        /// <summary> Reverse relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ReverseRelocation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReverseRelocation instead.");
+        }
+
+        /// <summary> Reverse relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ReverseRelocationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ReverseRelocationAsync instead.");
+        }
+
+        /// <summary> Revert relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation RevertRelocation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.RevertRelocation instead.");
+        }
+
+        /// <summary> Revert relocation of a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> RevertRelocationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.RevertRelocationAsync instead.");
+        }
+
+        // ---- LRO operation methods returning typed result ----
+
+        /// <summary> Update the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetAppVolumeResource> Update(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.Update instead.");
+        }
+
+        /// <summary> Update the specified volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetAppVolumeResource>> UpdateAsync(WaitUntil waitUntil, NetAppVolumePatch patch, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.UpdateAsync instead.");
+        }
+
+        /// <summary> Transition encryption. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation EncryptionTransition(WaitUntil waitUntil, NetAppEncryptionTransitionContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.EncryptionTransition instead.");
+        }
+
+        /// <summary> Transition encryption. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> EncryptionTransitionAsync(WaitUntil waitUntil, NetAppEncryptionTransitionContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.EncryptionTransitionAsync instead.");
+        }
+
+        /// <summary> Change zone for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation ChangeZone(WaitUntil waitUntil, ChangeZoneContent content, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ChangeZone instead.");
+        }
+
+        /// <summary> Change zone for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> ChangeZoneAsync(WaitUntil waitUntil, ChangeZoneContent content, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource.ChangeZoneAsync instead.");
+        }
     }
 }
