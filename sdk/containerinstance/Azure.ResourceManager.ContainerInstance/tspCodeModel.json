@@ -45777,7 +45777,7 @@
             {
               "$id": "3864",
               "kind": "basic",
-              "name": "listLogs",
+              "name": "GetContainerLogs",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -45786,7 +45786,7 @@
               "summary": "Get the logs for a specified container instance.",
               "operation": {
                 "$id": "3865",
-                "name": "listLogs",
+                "name": "GetContainerLogs",
                 "resourceName": "ContainerGroups",
                 "summary": "Get the logs for a specified container instance.",
                 "doc": "Get the logs for a specified container instance in a specified resource group and container group.",
@@ -46486,7 +46486,7 @@
             {
               "$id": "3910",
               "kind": "basic",
-              "name": "executeCommand",
+              "name": "ExecuteContainerCommand",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -46495,7 +46495,7 @@
               "summary": "Executes a command in a specific container instance.",
               "operation": {
                 "$id": "3911",
-                "name": "executeCommand",
+                "name": "ExecuteContainerCommand",
                 "resourceName": "ContainerGroups",
                 "summary": "Executes a command in a specific container instance.",
                 "doc": "Executes a command for a specific container instance in a specified resource group and container group.",
@@ -47155,7 +47155,7 @@
             {
               "$id": "3951",
               "kind": "basic",
-              "name": "attach",
+              "name": "AttachContainer",
               "accessibility": "public",
               "apiVersions": [
                 "2025-09-01"
@@ -47164,7 +47164,7 @@
               "summary": "Attach to the output of a specific container instance.",
               "operation": {
                 "$id": "3952",
-                "name": "attach",
+                "name": "AttachContainer",
                 "resourceName": "ContainerGroups",
                 "summary": "Attach to the output of a specific container instance.",
                 "doc": "Attach to the output stream of a specific container instance in a specified resource group and container group.",

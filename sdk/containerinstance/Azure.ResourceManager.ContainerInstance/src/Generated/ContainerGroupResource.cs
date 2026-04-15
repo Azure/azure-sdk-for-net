@@ -432,11 +432,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerAttachResult>> AttachAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAttachResult>> AttachContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.Attach");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
             try
             {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateAttachRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,11 +485,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerAttachResult> Attach(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAttachResult> AttachContainer(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.Attach");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
             try
             {
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateAttachRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
+                HttpMessage message = _containersRestClient.CreateAttachContainerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAttachResult> response = Response.FromValue(ContainerAttachResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -539,12 +539,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerExecResult>> ExecuteCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerExecResult>> ExecuteContainerCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteCommand");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateExecuteCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -594,12 +594,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerExecResult> ExecuteCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerExecResult> ExecuteContainerCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteCommand");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateExecuteCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
+                HttpMessage message = _containersRestClient.CreateExecuteContainerCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, ContainerExecContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerExecResult> response = Response.FromValue(ContainerExecResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -714,11 +714,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ContainerLogs>> GetLogsAsync(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerLogs>> GetContainerLogsAsync(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetLogs");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
                 if (response.Value == null)
@@ -769,11 +769,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ContainerLogs> GetLogs(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerLogs> GetContainerLogs(string containerName, int? tail = default, bool? timestamps = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetLogs");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containersRestClient.CreateGetLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
+                HttpMessage message = _containersRestClient.CreateGetContainerLogsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, containerName, tail, timestamps, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerLogs> response = Response.FromValue(ContainerLogs.FromResponse(result), result);
                 if (response.Value == null)

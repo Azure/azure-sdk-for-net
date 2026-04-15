@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetLogsRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps, RequestContext context)
+        internal HttpMessage CreateGetContainerLogsRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, int? tail, bool? timestamps, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateExecuteCommandRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExecuteContainerCommandRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return message;
         }
 
-        internal HttpMessage CreateAttachRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, RequestContext context)
+        internal HttpMessage CreateAttachContainerRequest(Guid subscriptionId, string resourceGroupName, string containerGroupName, string containerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
