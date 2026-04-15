@@ -1,3 +1,5 @@
 {
-  "apiVersions": {}
+  "apiVersions": {
+    "Language.Conversations.Authoring": "2025-11-15-preview"
+  }
 }
