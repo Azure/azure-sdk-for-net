@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
         private ClientDiagnostics _configurationAssignmentsClientDiagnostics;
-        private ConfigurationAssignments _configurationAssignmentsRestClient;
+        private MaintenanceConfigurationAssignment _configurationAssignmentsRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
         private Updates _updatesRestClient;
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ClientDiagnostics ConfigurationAssignmentsClientDiagnostics => _configurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationAssignments ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignments(ConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private MaintenanceConfigurationAssignment ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new MaintenanceConfigurationAssignment(ConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         // ===== ApplyUpdate operations =====
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
+            return new MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
         }
 
         /// <summary> List configurationAssignments for resource. </summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetAllCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
+            return new MaintenanceConfigurationAssignmentGetAllCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
         }
 
         /// <summary> List configurationAssignments for resource with parent. </summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
+            return new MaintenanceConfigurationAssignmentGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
         }
 
         /// <summary> List configurationAssignments for resource with parent. </summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetConfigurationAssignmentsByParentCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
+            return new MaintenanceConfigurationAssignmentGetConfigurationAssignmentsByParentCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
         }
 
         /// <summary> Register configuration for resource. </summary>

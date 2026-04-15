@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance.Models;
+using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Maintenance
+namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Configuration Assignment. </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData, IJsonModel<MaintenanceConfigurationAssignmentData>

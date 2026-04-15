@@ -15,48 +15,42 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT : AsyncPageable<MaintenanceConfigurationAssignmentData>
+    internal partial class MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceConfigurationAssignmentData>
     {
-        private readonly ConfigurationAssignments _client;
+        private readonly MaintenanceConfigurationAssignment _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _providerName;
-        private readonly string _resourceParentType;
-        private readonly string _resourceParentName;
         private readonly string _resourceType;
         private readonly string _resourceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConfigurationAssignments client used to send requests. </param>
+        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MaintenanceConfigurationAssignment client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource name. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(ConfigurationAssignments client, Guid subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT(MaintenanceConfigurationAssignment client, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _providerName = providerName;
-            _resourceParentType = resourceParentType;
-            _resourceParentName = resourceParentName;
             _resourceType = resourceType;
             _resourceName = resourceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<MaintenanceConfigurationAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -82,7 +76,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetConfigurationAssignmentsByParentRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _resourceParentType, _resourceParentName, _resourceType, _resourceName, _context) : _client.CreateGetConfigurationAssignmentsByParentRequest(_subscriptionId, _resourceGroupName, _providerName, _resourceParentType, _resourceParentName, _resourceType, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _providerName, _resourceType, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
