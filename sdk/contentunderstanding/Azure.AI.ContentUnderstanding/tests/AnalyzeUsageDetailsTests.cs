@@ -525,6 +525,23 @@ namespace Azure.AI.ContentUnderstanding.Tests
         }
 
         [Test]
+        public void ModelFactory_AnalyzeUsageDetails_MutatingOriginalDictDoesNotAffectInstance()
+        {
+            var original = new Dictionary<string, int> { { "model.input", 100 } };
+
+            AnalyzeUsageDetails usage = ContentUnderstandingModelFactory.AnalyzeUsageDetails(tokens: original);
+
+            // Mutate the original dictionary after creation
+            original["model.input"] = 999;
+            original["new.key"] = 50;
+
+            // The instance should be isolated from the original dictionary
+            Assert.AreEqual(100, usage.Tokens["model.input"]);
+            Assert.AreEqual(1, usage.Tokens.Count);
+            Assert.IsFalse(usage.Tokens.ContainsKey("new.key"));
+        }
+
+        [Test]
         public void ModelFactory_AnalyzeUsageDetails_WithZeroValues_SetsZeros()
         {
             AnalyzeUsageDetails usage = ContentUnderstandingModelFactory.AnalyzeUsageDetails(

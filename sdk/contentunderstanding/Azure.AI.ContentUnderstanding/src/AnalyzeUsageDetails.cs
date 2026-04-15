@@ -94,7 +94,7 @@ namespace Azure.AI.ContentUnderstanding
                 usage.ContextualizationTokens = ctxEl.GetInt32();
             }
 
-            if (element.TryGetProperty("tokens", out JsonElement tokensEl) && tokensEl.ValueKind != JsonValueKind.Null)
+            if (element.TryGetProperty("tokens", out JsonElement tokensEl) && tokensEl.ValueKind == JsonValueKind.Object)
             {
                 var tokens = new Dictionary<string, int>();
                 foreach (JsonProperty prop in tokensEl.EnumerateObject())

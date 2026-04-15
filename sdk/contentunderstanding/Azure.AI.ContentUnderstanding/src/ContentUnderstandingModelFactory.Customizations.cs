@@ -107,7 +107,7 @@ namespace Azure.AI.ContentUnderstanding
                 VideoHours = videoHours,
                 ContextualizationTokens = contextualizationTokens,
                 Tokens = new System.Collections.ObjectModel.ReadOnlyDictionary<string, int>(
-                    tokens is Dictionary<string, int> dict ? dict : tokens.ToDictionary(k => k.Key, k => k.Value))
+                    new Dictionary<string, int>(tokens))
             };
         }
     }

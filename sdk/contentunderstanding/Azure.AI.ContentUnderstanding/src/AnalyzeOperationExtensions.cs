@@ -52,10 +52,15 @@ namespace Azure.AI.ContentUnderstanding
                     return AnalyzeUsageDetails.FromJsonElement(usageElement);
                 }
             }
-            catch (Exception)
+            catch (JsonException)
             {
-                // Swallow JSON parse or deserialization failures — return null
-                // when the response is malformed or does not contain valid usage data.
+                // Swallow JSON parse failures — return null when the response
+                // is malformed or does not contain valid usage data.
+            }
+            catch (InvalidOperationException)
+            {
+                // Swallow deserialization/state failures (e.g. wrong JsonValueKind)
+                // caused by unexpected usage data shapes.
             }
 
             return null;
