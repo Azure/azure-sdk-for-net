@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(_bandwidthSchedulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BandwidthScheduleResource(Client, data));
+            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _bandwidthSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BandwidthScheduleCollection.GetAll"), data => new BandwidthScheduleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceCollectionResultOfT(_bandwidthSchedulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new BandwidthScheduleResource(Client, data));
+            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _bandwidthSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BandwidthScheduleCollection.GetAll"), data => new BandwidthScheduleResource(Client, data));
         }
 
         /// <summary>

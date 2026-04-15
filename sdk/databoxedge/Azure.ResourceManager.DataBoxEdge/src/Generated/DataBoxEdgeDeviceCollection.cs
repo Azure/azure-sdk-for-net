@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -301,7 +301,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupAsyncCollectionResultOfT(_devicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, expand, context), data => new DataBoxEdgeDeviceResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupAsyncCollectionResultOfT(
+                _devicesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                expand,
+                context,
+                "DataBoxEdgeDeviceCollection.GetAll"), data => new DataBoxEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +336,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupCollectionResultOfT(_devicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, expand, context), data => new DataBoxEdgeDeviceResource(Client, data));
+            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetByResourceGroupCollectionResultOfT(
+                _devicesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                expand,
+                context,
+                "DataBoxEdgeDeviceCollection.GetAll"), data => new DataBoxEdgeDeviceResource(Client, data));
         }
 
         /// <summary>

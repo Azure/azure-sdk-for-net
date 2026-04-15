@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly string _deviceName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Triggers client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deviceName"> The device name. </param>
         /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(Triggers client, string subscriptionId, string resourceGroupName, string deviceName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(Triggers client, string subscriptionId, string resourceGroupName, string deviceName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             _deviceName = deviceName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TriggersGetByDataBoxEdgeDeviceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDataBoxEdgeDeviceRequest(nextLink, _subscriptionId, _resourceGroupName, _deviceName, _filter, _context) : _client.CreateGetByDataBoxEdgeDeviceRequest(_subscriptionId, _resourceGroupName, _deviceName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxEdgeTriggerCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

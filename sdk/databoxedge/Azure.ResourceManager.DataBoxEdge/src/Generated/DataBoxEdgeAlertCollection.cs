@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(_alertsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeAlertResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _alertsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeAlertCollection.GetAll"), data => new DataBoxEdgeAlertResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceCollectionResultOfT(_alertsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeAlertResource(Client, data));
+            return new PageableWrapper<DataBoxEdgeAlertData, DataBoxEdgeAlertResource>(new AlertsGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _alertsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeAlertCollection.GetAll"), data => new DataBoxEdgeAlertResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != DataBoxEdgeStorageAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeStorageAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeStorageAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataBoxEdgeStorageContainerResource(Client, data));
+                context,
+                "DataBoxEdgeStorageContainerCollection.GetAll"), data => new DataBoxEdgeStorageContainerResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DataBoxEdgeStorageContainerResource(Client, data));
+                context,
+                "DataBoxEdgeStorageContainerCollection.GetAll"), data => new DataBoxEdgeStorageContainerResource(Client, data));
         }
 
         /// <summary>

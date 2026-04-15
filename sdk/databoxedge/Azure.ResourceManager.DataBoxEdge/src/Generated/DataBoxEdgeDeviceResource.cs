@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -1034,7 +1034,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new NodesGetEdgeNodesAsyncCollectionResultOfT(_nodesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new NodesGetEdgeNodesAsyncCollectionResultOfT(
+                _nodesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeDeviceResource.GetEdgeNodes");
         }
 
         /// <summary>
@@ -1066,7 +1072,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new NodesGetEdgeNodesCollectionResultOfT(_nodesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new NodesGetEdgeNodesCollectionResultOfT(
+                _nodesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeDeviceResource.GetEdgeNodes");
         }
 
         /// <summary>

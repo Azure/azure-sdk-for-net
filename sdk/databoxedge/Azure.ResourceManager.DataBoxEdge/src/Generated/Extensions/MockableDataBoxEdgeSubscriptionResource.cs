@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetBySubscriptionAsyncCollectionResultOfT(DevicesRestClient, Id.SubscriptionId, expand, context), data => new DataBoxEdgeDeviceResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetBySubscriptionAsyncCollectionResultOfT(DevicesRestClient, Id.SubscriptionId, expand, context, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices"), data => new DataBoxEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetBySubscriptionCollectionResultOfT(DevicesRestClient, Id.SubscriptionId, expand, context), data => new DataBoxEdgeDeviceResource(Client, data));
+            return new PageableWrapper<DataBoxEdgeDeviceData, DataBoxEdgeDeviceResource>(new DevicesGetBySubscriptionCollectionResultOfT(DevicesRestClient, Id.SubscriptionId, expand, context, "MockableDataBoxEdgeSubscriptionResource.GetDataBoxEdgeDevices"), data => new DataBoxEdgeDeviceResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableSkusGetAvailableSkusAsyncCollectionResultOfT(AvailableSkusRestClient, Id.SubscriptionId, context);
+            return new AvailableSkusGetAvailableSkusAsyncCollectionResultOfT(AvailableSkusRestClient, Id.SubscriptionId, context, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableSkusGetAvailableSkusCollectionResultOfT(AvailableSkusRestClient, Id.SubscriptionId, context);
+            return new AvailableSkusGetAvailableSkusCollectionResultOfT(AvailableSkusRestClient, Id.SubscriptionId, context, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus");
         }
     }
 }

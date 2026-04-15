@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly string _deviceName;
         private readonly string _storageAccountName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ContainersGetByStorageAccountCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Containers client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deviceName"> The device name. </param>
         /// <param name="storageAccountName"> The storage account name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ContainersGetByStorageAccountCollectionResultOfT(Containers client, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ContainersGetByStorageAccountCollectionResultOfT(Containers client, string subscriptionId, string resourceGroupName, string deviceName, string storageAccountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             _deviceName = deviceName;
             _storageAccountName = storageAccountName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ContainersGetByStorageAccountCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStorageAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _deviceName, _storageAccountName, _context) : _client.CreateGetByStorageAccountRequest(_subscriptionId, _resourceGroupName, _deviceName, _storageAccountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

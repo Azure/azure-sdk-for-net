@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(_rolesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeRoleResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _rolesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeRoleCollection.GetAll"), data => new DataBoxEdgeRoleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceCollectionResultOfT(_rolesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeRoleResource(Client, data));
+            return new PageableWrapper<DataBoxEdgeRoleData, DataBoxEdgeRoleResource>(new RolesGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _rolesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeRoleCollection.GetAll"), data => new DataBoxEdgeRoleResource(Client, data));
         }
 
         /// <summary>

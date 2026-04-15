@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly string _deviceName;
         private readonly string _roleName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AddonsGetByRoleCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Addons client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deviceName"> The name of the device. </param>
         /// <param name="roleName"> The name of the role. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AddonsGetByRoleCollectionResultOfT(Addons client, string subscriptionId, string resourceGroupName, string deviceName, string roleName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AddonsGetByRoleCollectionResultOfT(Addons client, string subscriptionId, string resourceGroupName, string deviceName, string roleName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             _deviceName = deviceName;
             _roleName = roleName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AddonsGetByRoleCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByRoleRequest(nextLink, _subscriptionId, _resourceGroupName, _deviceName, _roleName, _context) : _client.CreateGetByRoleRequest(_subscriptionId, _resourceGroupName, _deviceName, _roleName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

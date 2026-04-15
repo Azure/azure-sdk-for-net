@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly string _resourceGroupName;
         private readonly string _expand;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DevicesGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Devices client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DevicesGetByResourceGroupCollectionResultOfT(Devices client, string subscriptionId, string resourceGroupName, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DevicesGetByResourceGroupCollectionResultOfT(Devices client, string subscriptionId, string resourceGroupName, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _expand = expand;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DevicesGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _expand, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataBoxEdgeDeviceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

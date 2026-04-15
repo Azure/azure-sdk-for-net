@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(_storageAccountCredentialsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _storageAccountCredentialsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeStorageAccountCredentialCollection.GetAll"), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceCollectionResultOfT(_storageAccountCredentialsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
+            return new PageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _storageAccountCredentialsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataBoxEdgeStorageAccountCredentialCollection.GetAll"), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
         }
 
         /// <summary>
