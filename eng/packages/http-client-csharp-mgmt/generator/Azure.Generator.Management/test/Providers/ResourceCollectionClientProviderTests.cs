@@ -249,8 +249,15 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var existsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Exists");
             Assert.NotNull(existsMethod);
-            Assert.AreEqual(typeof(Response<>), existsMethod!.Signature.ReturnType?.FrameworkType,
+            var signature = existsMethod!.Signature;
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType,
                 "Exists should return Response<bool> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "Exists should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "Exists should not have a WaitUntil parameter even when Get is an LRO");
         }
 
         [TestCase]
@@ -263,10 +270,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var existsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "ExistsAsync");
             Assert.NotNull(existsAsyncMethod);
-            Assert.AreEqual(typeof(Task<>), existsAsyncMethod!.Signature.ReturnType?.FrameworkType,
+            var signature = existsAsyncMethod!.Signature;
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType,
                 "ExistsAsync should return Task<Response<bool>> even when Get is an LRO");
-            Assert.AreEqual(typeof(Response<>), existsAsyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType,
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.Arguments[0].FrameworkType,
                 "ExistsAsync inner type should be Response<bool> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "ExistsAsync should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "ExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
         }
 
         [TestCase]
@@ -279,8 +293,15 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var getIfExistsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExists");
             Assert.NotNull(getIfExistsMethod);
-            Assert.AreEqual(typeof(NullableResponse<>), getIfExistsMethod!.Signature.ReturnType?.FrameworkType,
+            var signature = getIfExistsMethod!.Signature;
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.FrameworkType,
                 "GetIfExists should return NullableResponse<> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "GetIfExists should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "GetIfExists should not have a WaitUntil parameter even when Get is an LRO");
         }
 
         [TestCase]
@@ -293,10 +314,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var getIfExistsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExistsAsync");
             Assert.NotNull(getIfExistsAsyncMethod);
-            Assert.AreEqual(typeof(Task<>), getIfExistsAsyncMethod!.Signature.ReturnType?.FrameworkType,
+            var signature = getIfExistsAsyncMethod!.Signature;
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType,
                 "GetIfExistsAsync should return Task<NullableResponse<>> even when Get is an LRO");
-            Assert.AreEqual(typeof(NullableResponse<>), getIfExistsAsyncMethod.Signature.ReturnType?.Arguments[0].FrameworkType,
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.Arguments[0].FrameworkType,
                 "GetIfExistsAsync inner type should be NullableResponse<> even when Get is an LRO");
+            // Verify no WaitUntil parameter and correct parameter shape
+            Assert.AreEqual(2, signature.Parameters.Count, "GetIfExistsAsync should have 2 parameters (testName, cancellationToken)");
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsFalse(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))),
+                "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
         }
     }
 }

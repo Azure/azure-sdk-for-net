@@ -24,14 +24,15 @@ namespace Azure.Generator.Management.Utilities
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool forceLro = false)
+            bool forceLro = false,
+            bool excludeWaitUntil = false)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
             var scopeParameterTransformed = false;
 
             // Add WaitUntil parameter for long-running operations
-            if (forceLro || serviceMethod.IsLongRunningOperation())
+            if (!excludeWaitUntil && (forceLro || serviceMethod.IsLongRunningOperation()))
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
