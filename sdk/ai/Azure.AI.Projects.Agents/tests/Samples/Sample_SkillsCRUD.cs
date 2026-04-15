@@ -54,41 +54,18 @@ public class Sample_Skills_CRUD : SamplesBase
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");
         #region Snippet:Sample_CreateSkill_SkillsCRUD_Async
-        AgentsSkill skillFromFile, simpleSkill;
-        try
-        {
-            skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            skillFromFile = await skillsClient.GetSkillAsync("roll-dice");
-        }
+        AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
         Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-        try
-        {
-            simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-            To calculate the sum  run
-            ```bash
-            echo $((<first> + <second>))
-            ```
-            ```powershell
-            (<first> + <second>)
-            ```
-            Replace <first> and <second> by the actual summation arguments.
-            """);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            simpleSkill = await skillsClient.GetSkillAsync("simpleSkill");
-        }
+        AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+        To calculate the sum  run
+        ```bash
+        echo $((<first> + <second>))
+        ```
+        ```powershell
+        (<first> + <second>)
+        ```
+        Replace <first> and <second> by the actual summation arguments.
+        """);
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
 
@@ -96,7 +73,10 @@ public class Sample_Skills_CRUD : SamplesBase
         AgentsSkill skill = await skillsClient.GetSkillAsync(skillName: skillFromFile.Name);
         Console.WriteLine($"Retrieved skill: {skill.Name}, Id: {skill.Description}");
         #endregion
-
+        if (Directory.Exists(Path.GetFullPath("saved_skill")))
+        {
+            Directory.Delete(Path.GetFullPath("saved_skill"), true);
+        }
         #region Snippet:Sample_DownloadSkill_SkillsCRUD_Async
         string savePath = Path.GetFullPath("saved_skill");
         await skillsClient.DownloadSkillAsync(skillFromFile.Name, savePath);
@@ -129,12 +109,12 @@ public class Sample_Skills_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_ListSkills_SkillsCRUD_Async
-        //List<AgentsSkill> skills = await skillsClient.GetSkillsAsync().ToListAsync();
-        //Console.WriteLine($"Found {skills.Count} skills.");
-        //foreach (AgentsSkill item in skills)
-        //{
-        //    Console.WriteLine($"  - {item.SkillId} ({item.Name})");
-        //}
+        List<AgentsSkill> skills = await skillsClient.GetSkillsAsync().ToListAsync();
+        Console.WriteLine($"Found {skills.Count} skills.");
+        foreach (AgentsSkill item in skills)
+        {
+            Console.WriteLine($"  - {item.SkillId} ({item.Name})");
+        }
         #endregion
 
         #region Snippet:Sample_DeleteSkills_SkillsCRUD_Async
@@ -161,23 +141,9 @@ public class Sample_Skills_CRUD : SamplesBase
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");
         #region Snippet:Sample_CreateSkill_SkillsCRUD_Sync
-        AgentsSkill skillFromFile, simpleSkill;
-        try
-        {
-            skillFromFile = skillsClient.CreateSkillFromPackage(GetDirectory("roll-dice"));
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            skillFromFile = skillsClient.GetSkill("roll-dice");
-        }
+        AgentsSkill skillFromFile = skillsClient.CreateSkillFromPackage(GetDirectory("roll-dice"));
         Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-        try
-        {
-            simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+        AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
             To calculate the sum  run
             ```bash
             echo $((<first> + <second>))
@@ -187,15 +153,6 @@ public class Sample_Skills_CRUD : SamplesBase
             ```
             Replace <first> and <second> by the actual summation arguments.
             """);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            simpleSkill = skillsClient.GetSkill("simpleSkill");
-        }
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
 
@@ -203,7 +160,10 @@ public class Sample_Skills_CRUD : SamplesBase
         AgentsSkill skill = skillsClient.GetSkill(skillName: skillFromFile.Name);
         Console.WriteLine($"Retrieved skill: {skill.Name}, Id: {skill.Description}");
         #endregion
-
+        if (Directory.Exists(Path.GetFullPath("saved_skill")))
+        {
+            Directory.Delete(Path.GetFullPath("saved_skill"), true);
+        }
         #region Snippet:Sample_DownloadSkill_SkillsCRUD_Sync
         string savePath = Path.GetFullPath("saved_skill");
         skillsClient.DownloadSkill(skillFromFile.Name, savePath);

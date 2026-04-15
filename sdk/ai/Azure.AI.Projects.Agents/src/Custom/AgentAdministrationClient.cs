@@ -591,6 +591,64 @@ public partial class AgentAdministrationClient
         );
     }
 
+    /// <summary>
+    /// Updates an agent endpoint.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+    /// <param name="agentCard"> Optional agent card for the agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentEndpoint"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual ClientResult<ProjectsAgentRecord> PatchAgentObject(string agentName, AgentEndpoint agentEndpoint, AgentCard agentCard, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNull(agentEndpoint, nameof(agentEndpoint));
+
+        ClientResult result = PatchAgentObject(
+            agentName: agentName,
+            content: BinaryContent.Create(((IJsonModel<AgentEndpoint>)agentEndpoint).Write(ModelReaderWriterOptions.Json)),
+            foundryFeatures: default,
+            cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+    }
+
+    /// <summary>
+    /// Updates an agent endpoint.
+    /// <list type="bullet">
+    /// <item>
+    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+    /// </item>
+    /// </list>
+    /// </summary>
+    /// <param name="agentName"> The name of the agent to retrieve. </param>
+    /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+    /// <param name="agentCard"> Optional agent card for the agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentEndpoint"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The response returned from the service. </returns>
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentObjectAsync(string agentName, AgentEndpoint agentEndpoint, AgentCard agentCard, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNull(agentEndpoint, nameof(agentEndpoint));
+
+        ClientResult result = await PatchAgentObjectAsync(
+            agentName: agentName,
+            content: BinaryContent.Create(((IJsonModel<AgentEndpoint>)agentEndpoint).Write(ModelReaderWriterOptions.Json)),
+            foundryFeatures: default,
+            cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+    }
+
     /// <summary> Retrieves a session by ID. </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session identifier. </param>

@@ -11,9 +11,12 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentSessionFiles
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
+        private static PipelineMessageClassifier _pipelineMessageClassifier201;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+
+        private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
@@ -31,7 +34,7 @@ namespace Azure.AI.Projects.Agents
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier200);
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
             if (foundryFeatures != null)
             {
