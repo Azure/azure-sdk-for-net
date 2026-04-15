@@ -70,3 +70,33 @@ Review changes against the `mpg-migration-pr-review` skill rules locally — che
 1. Create an issue with minimum TypeSpec repro.
 2. Document workaround in `client.tsp` linking the issue.
 3. If no workaround, pause migration until fix is merged.
+
+## Pausing & Resuming
+
+When pausing a migration (end of session, blocked on generator fix, etc.), save a status file at `sdk/<service>/Azure.ResourceManager.<Service>/MIGRATION_STATUS.md`:
+
+```markdown
+# Migration Status: Azure.ResourceManager.<Service>
+
+## Current Phase
+Phase 2 — Fix Build Errors
+
+## Completed
+- Phase 1: Setup & first generation
+
+## Blocked On
+- Generator bug: [#58138](https://github.com/Azure/azure-sdk-for-net/issues/58138) — CollectionResultOfT name collision
+
+## Remaining Breaking Changes
+- ServiceFabricApplicationPatch base type: TrackedResourceData → ServiceFabricProxyResource
+- Model factory signature changes
+
+## PRs
+- Spec: https://github.com/Azure/azure-rest-api-specs/pull/XXXXX
+- SDK: https://github.com/Azure/azure-sdk-for-net/pull/XXXXX
+
+## Notes
+- <any context the next session needs>
+```
+
+On resume, read this file first to pick up where you left off. Delete it when the migration PR is merged.
