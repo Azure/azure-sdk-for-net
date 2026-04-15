@@ -22,6 +22,7 @@ T:Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute
+T:Microsoft.Cci.DummyTypeReference
 T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
 T:Azure.Data.AppConfiguration.CodeGenMemberAttribute
 T:Azure.Data.AppConfiguration.CodeGenSerializationAttribute

@@ -7,23 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies the identity for a datasource to use. </summary>
     public partial class SearchIndexerDataUserAssignedIdentity : SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
-        /// <param name="resourceId"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public SearchIndexerDataUserAssignedIdentity(string resourceId) : base("#Microsoft.Azure.Search.DataUserAssignedIdentity")
-        {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            ResourceId = resourceId;
-        }
-
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
         /// <param name="odataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

@@ -159,11 +159,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteObjectValue(EncryptionKey, options);
             }
-            if (Optional.IsDefined(Cache))
-            {
-                writer.WritePropertyName("cache"u8);
-                writer.WriteObjectValue(Cache, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -218,7 +213,6 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isDisabled = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            SearchIndexerCache cache = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -324,16 +318,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("cache"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        cache = null;
-                        continue;
-                    }
-                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -352,7 +336,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 isDisabled,
                 eTag,
                 encryptionKey,
-                cache,
                 additionalBinaryDataProperties);
         }
     }

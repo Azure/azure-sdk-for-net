@@ -131,7 +131,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string knowledgeSourceName = default;
             bool? includeReferences = default;
             bool? includeReferenceSourceData = default;
-            bool? alwaysQuerySource = default;
             float? rerankerThreshold = default;
             KnowledgeSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,15 +161,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         continue;
                     }
                     includeReferenceSourceData = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("alwaysQuerySource"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    alwaysQuerySource = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("rerankerThreshold"u8))
@@ -220,7 +210,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
-                alwaysQuerySource,
                 rerankerThreshold,
                 kind,
                 additionalBinaryDataProperties,
