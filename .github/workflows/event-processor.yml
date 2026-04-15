@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Az CLI login'
-        uses: azure/login@v2
+        uses: azure/login@v3
         if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
         with:
             client-id: a6dd2dfe-7352-41a7-9020-05301c3bca1a
