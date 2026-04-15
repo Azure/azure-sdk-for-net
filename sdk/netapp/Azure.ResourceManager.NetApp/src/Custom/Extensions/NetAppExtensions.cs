@@ -125,6 +125,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a region info resource. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<RegionInfoResource>> GetRegionInfoResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -132,6 +133,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Gets a region info resource. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<RegionInfoResource> GetRegionInfoResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
