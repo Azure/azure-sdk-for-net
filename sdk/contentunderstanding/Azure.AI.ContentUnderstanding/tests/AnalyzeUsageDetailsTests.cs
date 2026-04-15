@@ -49,8 +49,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ""videoHours"": 0.0,
                     ""contextualizationTokens"": 1234,
                     ""tokens"": {
-                        ""gpt-4.1.input"": 500,
-                        ""gpt-4.1.output"": 100
+                        ""gpt-4.1-input"": 500,
+                        ""gpt-4.1-output"": 100
                     }
                 }
             }";
@@ -66,8 +66,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0.0f, usage.VideoHours);
             Assert.AreEqual(1234, usage.ContextualizationTokens);
             Assert.AreEqual(2, usage.Tokens.Count);
-            Assert.AreEqual(500, usage.Tokens["gpt-4.1.input"]);
-            Assert.AreEqual(100, usage.Tokens["gpt-4.1.output"]);
+            Assert.AreEqual(500, usage.Tokens["gpt-4.1-input"]);
+            Assert.AreEqual(100, usage.Tokens["gpt-4.1-output"]);
         }
 
         [Test]
@@ -224,10 +224,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ""result"": {},
                 ""usage"": {
                     ""tokens"": {
-                        ""gpt-4.1.input"": 1000,
-                        ""gpt-4.1.cached input"": 200,
-                        ""gpt-4.1.output"": 300,
-                        ""text-embedding-3-large.input"": 500
+                        ""gpt-4.1-input"": 1000,
+                        ""gpt-4.1-cached_input"": 200,
+                        ""gpt-4.1-output"": 300,
+                        ""text-embedding-3-large-input"": 500
                     }
                 }
             }";
@@ -237,10 +237,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             Assert.IsNotNull(usage);
             Assert.AreEqual(4, usage!.Tokens.Count);
-            Assert.AreEqual(1000, usage.Tokens["gpt-4.1.input"]);
-            Assert.AreEqual(200, usage.Tokens["gpt-4.1.cached input"]);
-            Assert.AreEqual(300, usage.Tokens["gpt-4.1.output"]);
-            Assert.AreEqual(500, usage.Tokens["text-embedding-3-large.input"]);
+            Assert.AreEqual(1000, usage.Tokens["gpt-4.1-input"]);
+            Assert.AreEqual(200, usage.Tokens["gpt-4.1-cached_input"]);
+            Assert.AreEqual(300, usage.Tokens["gpt-4.1-output"]);
+            Assert.AreEqual(500, usage.Tokens["text-embedding-3-large-input"]);
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 ""status"": ""Succeeded"",
                 ""result"": {},
                 ""usage"": {
-                    ""tokens"": { ""gpt-4.1.input"": 100 }
+                    ""tokens"": { ""gpt-4.1-input"": 100 }
                 }
             }";
 
@@ -316,7 +316,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     ""audioHours"": 0.0,
                     ""videoHours"": 0.0,
                     ""contextualizationTokens"": 0,
-                    ""tokens"": { ""gpt-4.1.input"": 0 }
+                    ""tokens"": { ""gpt-4.1-input"": 0 }
                 }
             }";
 
@@ -330,7 +330,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.AreEqual(0.0f, usage.AudioHours);
             Assert.AreEqual(0.0f, usage.VideoHours);
             Assert.AreEqual(0, usage.ContextualizationTokens);
-            Assert.AreEqual(0, usage.Tokens["gpt-4.1.input"]);
+            Assert.AreEqual(0, usage.Tokens["gpt-4.1-input"]);
         }
 
         [Test]

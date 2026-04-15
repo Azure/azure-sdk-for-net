@@ -75,7 +75,7 @@ The `AnalyzeUsageDetails` object contains:
 - **`DocumentPagesMinimal`**, **`DocumentPagesBasic`**, **`DocumentPagesStandard`** — pages processed at each extraction tier. Standard = layout + OCR (scanned docs), Basic = OCR only, Minimal = digital formats (DOCX, XLSX, HTML, TXT) that need no OCR. Charged per 1,000 pages.
 - **`AudioHours`**, **`VideoHours`** — hours of audio/video processed
 - **`ContextualizationTokens`** — fixed-rate tokens charged by Content Understanding for preparing context, generating confidence scores, source grounding, and formatting output. Typically ~1,000 tokens per page. Charged separately from LLM tokens.
-- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-4.1.input"`, `"gpt-4.1.output"`). These are billed on your Foundry deployment, not on Content Understanding.
+- **`Tokens`** — a dictionary of LLM and embedding token counts consumed by your Foundry model deployment, grouped by model and type (e.g., `"gpt-4.1-input"`, `"gpt-4.1-output"`). These are billed on your Foundry deployment, not on Content Understanding.
 
 For full pricing details, see the [Content Understanding pricing explainer][pricing-explainer].
 
