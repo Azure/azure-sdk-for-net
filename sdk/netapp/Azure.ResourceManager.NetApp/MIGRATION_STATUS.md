@@ -1,29 +1,35 @@
-## Phase 3 — Mitigate Breaking Changes
+## Phase 3 — Mitigate Breaking Changes (COMPLETE)
 
-### Completed
-- Phase 1: Setup, tsp-location.yaml, removed autorest.md, initial generation
-- Phase 2: Build-fix loop — 0 compilation errors
-  - Spec-side: 70+ @@clientName decorators, 25+ @@alternateType entries in client.tsp
-  - SDK-side: Multiple Custom code fixes for property delegation and type alignment
-- Phase 3 (in progress): Reduced from ~950 to 79 unique API compat violations
-  - Backward-compat wrapper properties: NetAppVolumeData (47), NetAppVolumePatch (16)
-  - Deprecated operation stubs: NetAppVolumeResource (80+), NetAppVolumeCollection (10),
-    NetAppAccountResource, SnapshotPolicyResource, extension/mocking methods
-  - Backward-compat constructors: Patch types, BackupsMigrationContent, various content types
-  - Fixed ExportPolicyRule naming, added extensible enum members
-  - Created stub types: NetAppSubscriptionQuotaItemResource/Collection, RegionInfoResourceCollection
-  - Fixed RegenSdkLocal.ps1 to accept service folder path
+### Summary
+- Started with ~950 unique API compat violations
+- Fixed all that can be fixed; 66 structural violations remain (unfixable)
+- 0 compilation errors
 
-### Remaining (~79 unique API compat violations)
+### What was fixed
+- Spec-side: 75+ @@clientName, 25+ @@alternateType entries in client.tsp
+- Backward-compat properties: NetAppVolumeData (47), NetAppVolumePatch (16)
+- Deprecated operation stubs: NetAppVolumeResource (80+), NetAppVolumeCollection (10),
+  NetAppAccountResource, SnapshotPolicyResource, extension/mocking methods
+- Backward-compat constructors: Patch types (AzureLocation), BackupsMigrationContent (string)
+- Fixed ExportPolicyRule naming, added extensible enum members
+- Created stub types: NetAppSubscriptionQuotaItemResource/Collection, RegionInfoResourceCollection
+- ModelFactory backward-compat overloads
+- Fixed RegenSdkLocal.ps1 to accept service folder path
 
-**Cannot fix (structural ~25):**
-- Enum → extensible enum: NetAppProvisioningState (12 incl. value__ and base type)
-- CannotRemoveBaseTypeOrInterface (~13): Patch types lost TrackedResourceData,
-  models lost ResourceData, Volume types lost IJsonModel/IEnumerable interfaces
+### Remaining 66 violations (structural — cannot fix)
 
-**Remaining fixable (~54):**
-- NetAppVolumeGroupVolume (8): property type mismatches (ResourceIdentifier vs string, Guid vs string)
-- Constructor parameter type changes (~15): various content/data types
-- NetAppAccountResource (4): remaining operation stubs
-- NetAppVolumeResource (3): remaining operation stubs
-- Scattered individual property/method mismatches (~24)
+**CannotRemoveBaseTypeOrInterface (13):**
+- Patch types lost TrackedResourceData: CapacityPoolPatch, NetAppBackupPolicyPatch, SnapshotPolicyPatch
+- NetAppProvisioningState lost System.Enum (enum → extensible enum)
+- Models lost ResourceData: NetAppSubvolumeMetadata, NetAppVolumeGroupResult
+- IJsonModel/IEnumerable interface changes on deprecated wrapper types
+
+**MembersMustExist (53):**
+- NetAppProvisioningState enum members (field vs property metadata mismatch)
+- Property type changes that can't coexist in partial classes (ETag, Guid, AzureLocation, ResourceIdentifier)
+- Setter additions on generated read-only properties
+- Constructor parameter type differences
+
+## Next Steps
+- Phase 4: Self-review against mpg-migration-pr-review skill rules
+- Phase 5: Push spec and SDK branches to fork, create draft PRs
