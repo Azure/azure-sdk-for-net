@@ -128,7 +128,8 @@ SearchClient client = new SearchClient(endpoint, indexName, credential);
 ```
 
 ### ASP.NET Core
-To inject Azure AI Search clients as dependencies in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`. Then register the clients in your service registration code (for example, in `Program.cs` with `WebApplicationBuilder`, or in `Startup.ConfigureServices` for earlier hosting patterns):
+To inject Azure AI Search clients as dependencies in an ASP.NET Core app, first install the package `Microsoft.Extensions.Azure`.
+Then register the clients in your service registration code (for example, in `Program.cs` with `WebApplicationBuilder`, or in `Startup.ConfigureServices` for earlier hosting patterns):
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -164,7 +165,9 @@ To use the preceding code, add this to your configuration:
     }
 }
 ```
-When you use configuration-based registration, each configuration section maps to a strongly-typed settings class. These classes (`SearchClientSettings`, `SearchIndexClientSettings`, `SearchIndexerClientSettings`, and `KnowledgeBaseRetrievalClientSettings`) are used to create the corresponding clients, while credentials are provided separately (for example, through user secrets or environment variables).
+When you use configuration-based registration, each configuration section maps to a strongly-typed settings class.
+These classes (`SearchClientSettings`, `SearchIndexClientSettings`, `SearchIndexerClientSettings`, and `KnowledgeBaseRetrievalClientSettings`) are used to create the corresponding clients.
+Credentials are provided separately (for example, through user secrets or environment variables as described below).
 
 You'll also need to provide your resource key to authenticate the client, but you shouldn't be putting that information in the configuration. Instead, when in development, use [User-Secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets?view=aspnetcore-5.0&tabs=windows#how-the-secret-manager-tool-works). Add the following to `secrets.json`:
 
@@ -214,7 +217,8 @@ exposes operations on these resources through four main client types.
 
 * `SearchIndexerClient` allows you to:
   * [Create indexers to automatically crawl data sources](https://learn.microsoft.com/rest/api/searchservice/indexer-operations)
-  * [Define AI powered Skillsets to transform and enrich your data](https://learn.microsoft.com/rest/api/searchservice/skillset-operations), including ChatCompletionSkill, ContentUnderstandingSkill, and DocumentIntelligenceLayoutSkill
+  * [Define AI powered Skillsets to transform and enrich your data](https://learn.microsoft.com/rest/api/searchservice/skillset-operations)
+  * New skills include `ChatCompletionSkill`, `ContentUnderstandingSkill`, and `DocumentIntelligenceLayoutSkill`
 
 * `KnowledgeBaseRetrievalClient` helps you:
   * Retrieve grounded responses and references from a knowledge base for agentic retrieval workflows
@@ -235,7 +239,7 @@ Additionally, for more comprehensive information about semantic ranking, includi
 
 **Vector search** is an information retrieval technique that uses numeric representations of searchable documents and query strings. By searching for numeric representations of content that are most similar to the numeric query, vector search can find relevant matches, even if the exact terms of the query are not present in the index. Moreover, vector search can be applied to various types of content, including images and videos and translated text, not just same-language text.
 
-For image-based vector search queries, use `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`.
+The SDK supports image-based vector search queries through `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`.
 
 To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
 
