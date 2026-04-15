@@ -681,46 +681,46 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CostAllocationRuleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleDefinitionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CostAllocationRuleDefinitionResource"/> object. </returns>
-        public static CostAllocationRuleDefinitionResource GetCostAllocationRuleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostAllocationRuleResource"/> object. </returns>
+        public static CostAllocationRuleResource GetCostAllocationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetCostAllocationRuleDefinitionResource(id);
+            return GetMockableCostManagementArmClient(client).GetCostAllocationRuleResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="CostAllocationRuleDefinitionCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="CostAllocationRuleCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleDefinitions(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRules(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="CostAllocationRuleDefinitionResource"/> objects. </returns>
-        public static CostAllocationRuleDefinitionCollection GetCostAllocationRuleDefinitions(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="CostAllocationRuleResource"/> objects. </returns>
+        public static CostAllocationRuleCollection GetCostAllocationRules(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetCostAllocationRuleDefinitions(scope);
+            return GetMockableCostManagementArmClient(client).GetCostAllocationRules(scope);
         }
 
         /// <summary>
         /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleDefinition(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRule(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -729,18 +729,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CostAllocationRuleDefinitionResource> GetCostAllocationRuleDefinition(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public static Response<CostAllocationRuleResource> GetCostAllocationRule(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetCostAllocationRuleDefinition(scope, ruleName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetCostAllocationRule(scope, ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleDefinitionAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostAllocationRuleAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -749,11 +749,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CostAllocationRuleDefinitionResource>> GetCostAllocationRuleDefinitionAsync(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostAllocationRuleResource>> GetCostAllocationRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GetCostAllocationRuleDefinitionAsync(scope, ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetCostAllocationRuleAsync(scope, ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -838,40 +838,40 @@ namespace Azure.ResourceManager.CostManagement
         /// This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a 'Location' and 'Retry-After' header. The 'Location' header will provide the endpoint to poll to get the result of the report generation. The 'Retry-After' provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a 'Location' header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperationAsync(WaitUntil, ResourceIdentifier, GenerateCostDetailsReportRequestDefinition, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperationAsync(WaitUntil, ResourceIdentifier, GenerateCostDetailsReportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportRequestDefinition generateCostDetailsReportRequestDefinition, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).CreateOperationAsync(waitUntil, scope, generateCostDetailsReportRequestDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).CreateOperationAsync(waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// This API is the replacement for all previously release Usage Details APIs. Request to generate a cost details report for the provided date range, billing period (Only enterprise customers) or Invoice Id asynchronously at a certain scope. The initial call to request a report will return a 202 with a 'Location' and 'Retry-After' header. The 'Location' header will provide the endpoint to poll to get the result of the report generation. The 'Retry-After' provides the duration to wait before polling for the generated report. A call to poll the report operation will provide a 202 response with a 'Location' header if the operation is still in progress. Once the report generation operation completes, the polling endpoint will provide a 200 response along with details on the report blob(s) that are available for download. The details on the file(s) available for download will be available in the polling response body. To Understand cost details (formerly known as usage details) fields found in files ,see https://learn.microsoft.com/en-us/azure/cost-management-billing/automate/understand-usage-details-fields
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperation(WaitUntil, ResourceIdentifier, GenerateCostDetailsReportRequestDefinition, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperation(WaitUntil, ResourceIdentifier, GenerateCostDetailsReportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<CostDetailsOperationResults> CreateOperation(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportRequestDefinition generateCostDetailsReportRequestDefinition, CancellationToken cancellationToken = default)
+        public static ArmOperation<CostDetailsOperationResults> CreateOperation(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).CreateOperation(waitUntil, scope, generateCostDetailsReportRequestDefinition, cancellationToken);
+            return GetMockableCostManagementArmClient(client).CreateOperation(waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -1340,40 +1340,40 @@ namespace Azure.ResourceManager.CostManagement
         /// Generates the detailed cost report for provided date range, billing period(only enterprise customers) or Invoice ID asynchronously at a certain scope. Call returns a 202 with header Azure-Consumption-AsyncOperation providing a link to the operation created. A call on the operation will provide the status and if the operation is completed the blob file where generated detailed cost report is being stored.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperationAsync(WaitUntil, ResourceIdentifier, GenerateDetailedCostReportDefinition, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperationAsync(WaitUntil, ResourceIdentifier, GenerateDetailedCostReportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateDetailedCostReportDefinition"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportDefinition generateDetailedCostReportDefinition, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).CreateOperationAsync(waitUntil, scope, generateDetailedCostReportDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).CreateOperationAsync(waitUntil, scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Generates the detailed cost report for provided date range, billing period(only enterprise customers) or Invoice ID asynchronously at a certain scope. Call returns a 202 with header Azure-Consumption-AsyncOperation providing a link to the operation created. A call on the operation will provide the status and if the operation is completed the blob file where generated detailed cost report is being stored.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperation(WaitUntil, ResourceIdentifier, GenerateDetailedCostReportDefinition, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.CreateOperation(WaitUntil, ResourceIdentifier, GenerateDetailedCostReportContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateDetailedCostReportDefinition"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportDefinition generateDetailedCostReportDefinition, CancellationToken cancellationToken = default)
+        public static ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).CreateOperation(waitUntil, scope, generateDetailedCostReportDefinition, cancellationToken);
+            return GetMockableCostManagementArmClient(client).CreateOperation(waitUntil, scope, content, cancellationToken);
         }
 
         /// <summary>

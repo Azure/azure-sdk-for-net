@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The request payload body provided in Cost Details call. </summary>
-        public GenerateCostDetailsReportRequestDefinition RequestBody
+        public GenerateCostDetailsReportContent RequestBody
         {
             get
             {

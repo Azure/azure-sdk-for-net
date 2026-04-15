@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CostAllocationRuleDefinitionData item in Value)
+                foreach (CostAllocationRuleData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            IList<CostAllocationRuleDefinitionData> value = default;
+            IList<CostAllocationRuleData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<CostAllocationRuleDefinitionData> array = new List<CostAllocationRuleDefinitionData>();
+                    List<CostAllocationRuleData> array = new List<CostAllocationRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CostAllocationRuleDefinitionData.DeserializeCostAllocationRuleDefinitionData(item, options));
+                        array.Add(CostAllocationRuleData.DeserializeCostAllocationRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CostAllocationRuleList(value ?? new ChangeTrackingList<CostAllocationRuleDefinitionData>(), nextLink, additionalBinaryDataProperties);
+            return new CostAllocationRuleList(value ?? new ChangeTrackingList<CostAllocationRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

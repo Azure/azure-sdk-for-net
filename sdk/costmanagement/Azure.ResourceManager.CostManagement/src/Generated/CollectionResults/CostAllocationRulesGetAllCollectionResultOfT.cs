@@ -14,7 +14,7 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal partial class CostAllocationRulesGetAllCollectionResultOfT : Pageable<CostAllocationRuleDefinitionData>
+    internal partial class CostAllocationRulesGetAllCollectionResultOfT : Pageable<CostAllocationRuleData>
     {
         private readonly CostAllocationRules _client;
         private readonly string _billingAccountId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CostAllocationRulesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CostAllocationRuleDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CostAllocationRuleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement
                     yield break;
                 }
                 CostAllocationRuleList result = CostAllocationRuleList.FromResponse(response);
-                yield return Page<CostAllocationRuleDefinitionData>.FromValues((IReadOnlyList<CostAllocationRuleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CostAllocationRuleData>.FromValues((IReadOnlyList<CostAllocationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -15,61 +15,61 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The definition of a cost detailed report. </summary>
-    public partial class GenerateDetailedCostReportDefinition : IJsonModel<GenerateDetailedCostReportDefinition>
+    public partial class GenerateDetailedCostReportContent : IJsonModel<GenerateDetailedCostReportContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateDetailedCostReportDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GenerateDetailedCostReportContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenerateDetailedCostReportDefinition(document.RootElement, options);
+                        return DeserializeGenerateDetailedCostReportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateDetailedCostReportDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateDetailedCostReportContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateDetailedCostReportDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerateDetailedCostReportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenerateDetailedCostReportDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GenerateDetailedCostReportContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateDetailedCostReportDefinition IPersistableModel<GenerateDetailedCostReportDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GenerateDetailedCostReportContent IPersistableModel<GenerateDetailedCostReportContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenerateDetailedCostReportDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenerateDetailedCostReportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="generateDetailedCostReportDefinition"> The <see cref="GenerateDetailedCostReportDefinition"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GenerateDetailedCostReportDefinition generateDetailedCostReportDefinition)
+        /// <param name="generateDetailedCostReportContent"> The <see cref="GenerateDetailedCostReportContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GenerateDetailedCostReportContent generateDetailedCostReportContent)
         {
-            if (generateDetailedCostReportDefinition == null)
+            if (generateDetailedCostReportContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(generateDetailedCostReportDefinition, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(generateDetailedCostReportContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenerateDetailedCostReportDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenerateDetailedCostReportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateDetailedCostReportDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateDetailedCostReportContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Metric))
             {
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateDetailedCostReportDefinition IJsonModel<GenerateDetailedCostReportDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GenerateDetailedCostReportContent IJsonModel<GenerateDetailedCostReportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateDetailedCostReportDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GenerateDetailedCostReportContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenerateDetailedCostReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateDetailedCostReportDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerateDetailedCostReportContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenerateDetailedCostReportDefinition(document.RootElement, options);
+            return DeserializeGenerateDetailedCostReportContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenerateDetailedCostReportDefinition DeserializeGenerateDetailedCostReportDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static GenerateDetailedCostReportContent DeserializeGenerateDetailedCostReportContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenerateDetailedCostReportDefinition(
+            return new GenerateDetailedCostReportContent(
                 metric,
                 timePeriod,
                 billingPeriod,

@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="error"> The details of the error. </param>
         /// <returns> A new <see cref="Models.CostDetailsOperationResults"/> instance for mocking. </returns>
-        public static CostDetailsOperationResults CostDetailsOperationResults(string id = default, string name = default, string @type = default, CostDetailsStatusType? status = default, string manifestVersion = default, CostDetailsDataFormat? dataFormat = default, long? byteCount = default, int? blobCount = default, bool? compressData = default, IEnumerable<BlobInfo> blobs = default, string requestScope = default, GenerateCostDetailsReportRequestDefinition requestBody = default, DateTimeOffset? validTill = default, ExportRunErrorDetails error = default)
+        public static CostDetailsOperationResults CostDetailsOperationResults(string id = default, string name = default, string @type = default, CostDetailsStatusType? status = default, string manifestVersion = default, CostDetailsDataFormat? dataFormat = default, long? byteCount = default, int? blobCount = default, bool? compressData = default, IEnumerable<BlobInfo> blobs = default, string requestScope = default, GenerateCostDetailsReportContent requestBody = default, DateTimeOffset? validTill = default, ExportRunErrorDetails error = default)
         {
             return new CostDetailsOperationResults(
                 id,
@@ -827,10 +827,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Cost allocation rule properties. </param>
-        /// <returns> A new <see cref="CostManagement.CostAllocationRuleDefinitionData"/> instance for mocking. </returns>
-        public static CostAllocationRuleDefinitionData CostAllocationRuleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CostAllocationRuleProperties properties = default)
+        /// <returns> A new <see cref="CostManagement.CostAllocationRuleData"/> instance for mocking. </returns>
+        public static CostAllocationRuleData CostAllocationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CostAllocationRuleProperties properties = default)
         {
-            return new CostAllocationRuleDefinitionData(
+            return new CostAllocationRuleData(
                 id,
                 name,
                 resourceType,

@@ -473,35 +473,21 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await GetSettings(scope).GetAsync(@type, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="CostAllocationRuleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CostAllocationRuleDefinitionResource"/> object. </returns>
-        public virtual CostAllocationRuleDefinitionResource GetCostAllocationRuleDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostAllocationRuleResource"/> object. </returns>
+        public virtual CostAllocationRuleResource GetCostAllocationRuleResource(ResourceIdentifier id)
         {
-            CostAllocationRuleDefinitionResource.ValidateResourceId(id);
-            return new CostAllocationRuleDefinitionResource(Client, id);
+            CostAllocationRuleResource.ValidateResourceId(id);
+            return new CostAllocationRuleResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="CostAllocationRuleDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="CostAllocationRuleCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="CostAllocationRuleDefinitionResource"/> objects. </returns>
-        public virtual CostAllocationRuleDefinitionCollection GetCostAllocationRuleDefinitions(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="CostAllocationRuleResource"/> objects. </returns>
+        public virtual CostAllocationRuleCollection GetCostAllocationRules(ResourceIdentifier scope)
         {
-            return new CostAllocationRuleDefinitionCollection(Client, scope);
-        }
-
-        /// <summary> Get a cost allocation rule by rule name and billing account or enterprise enrollment. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CostAllocationRuleDefinitionResource> GetCostAllocationRuleDefinition(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-
-            return GetCostAllocationRuleDefinitions(scope).Get(ruleName, cancellationToken);
+            return new CostAllocationRuleCollection(Client, scope);
         }
 
         /// <summary> Get a cost allocation rule by rule name and billing account or enterprise enrollment. </summary>
@@ -511,11 +497,25 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CostAllocationRuleDefinitionResource>> GetCostAllocationRuleDefinitionAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<CostAllocationRuleResource> GetCostAllocationRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return await GetCostAllocationRuleDefinitions(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return GetCostAllocationRules(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Get a cost allocation rule by rule name and billing account or enterprise enrollment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostAllocationRuleResource>> GetCostAllocationRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetCostAllocationRules(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -755,14 +755,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="generateCostDetailsReportRequestDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportRequestDefinition generateCostDetailsReportRequestDefinition, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CostDetailsOperationResults>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNull(generateCostDetailsReportRequestDefinition, nameof(generateCostDetailsReportRequestDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
             scope0.Start();
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportRequestDefinition.ToRequestContent(generateCostDetailsReportRequestDefinition), context);
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -813,14 +813,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateCostDetailsReportRequestDefinition"> Parameters supplied to the Create cost details operation. </param>
+        /// <param name="content"> Parameters supplied to the Create cost details operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="generateCostDetailsReportRequestDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CostDetailsOperationResults> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportRequestDefinition generateCostDetailsReportRequestDefinition, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CostDetailsOperationResults> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateCostDetailsReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNull(generateCostDetailsReportRequestDefinition, nameof(generateCostDetailsReportRequestDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateCostDetailsReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
             scope0.Start();
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportRequestDefinition.ToRequestContent(generateCostDetailsReportRequestDefinition), context);
+                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -2005,14 +2005,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateDetailedCostReportDefinition"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="generateDetailedCostReportDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportDefinition generateDetailedCostReportDefinition, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GenerateDetailedCostReportOperationResultResource>> CreateOperationAsync(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNull(generateDetailedCostReportDefinition, nameof(generateDetailedCostReportDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
             scope0.Start();
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportDefinition.ToRequestContent(generateDetailedCostReportDefinition), context);
+                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultOperationSource(Client),
@@ -2063,14 +2063,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="generateDetailedCostReportDefinition"> Parameters supplied to the Create detailed cost report operation. </param>
+        /// <param name="content"> Parameters supplied to the Create detailed cost report operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="generateDetailedCostReportDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportDefinition generateDetailedCostReportDefinition, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GenerateDetailedCostReportOperationResultResource> CreateOperation(WaitUntil waitUntil, ResourceIdentifier scope, GenerateDetailedCostReportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNull(generateDetailedCostReportDefinition, nameof(generateDetailedCostReportDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope0 = GenerateDetailedCostReportClientDiagnostics.CreateScope("MockableCostManagementArmClient.CreateOperation");
             scope0.Start();
@@ -2080,7 +2080,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportDefinition.ToRequestContent(generateDetailedCostReportDefinition), context);
+                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultOperationSource(Client),

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="requestScope"> The request scope of the request. </param>
         /// <param name="requestBody"> The request payload body provided in Cost Details call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestContext(string requestScope, GenerateCostDetailsReportRequestDefinition requestBody, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestContext(string requestScope, GenerateCostDetailsReportContent requestBody, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestScope = requestScope;
             RequestBody = requestBody;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string RequestScope { get; }
 
         /// <summary> The request payload body provided in Cost Details call. </summary>
-        public GenerateCostDetailsReportRequestDefinition RequestBody { get; }
+        public GenerateCostDetailsReportContent RequestBody { get; }
     }
 }

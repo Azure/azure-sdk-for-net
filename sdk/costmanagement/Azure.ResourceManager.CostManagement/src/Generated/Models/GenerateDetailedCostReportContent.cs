@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The definition of a cost detailed report. </summary>
-    public partial class GenerateDetailedCostReportDefinition
+    public partial class GenerateDetailedCostReportContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GenerateDetailedCostReportDefinition"/>. </summary>
-        public GenerateDetailedCostReportDefinition()
+        /// <summary> Initializes a new instance of <see cref="GenerateDetailedCostReportContent"/>. </summary>
+        public GenerateDetailedCostReportContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenerateDetailedCostReportDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateDetailedCostReportContent"/>. </summary>
         /// <param name="metric"> The type of the detailed report. By default ActualCost is provided. </param>
         /// <param name="timePeriod"> Has time period for pulling data for the cost detailed report. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
         /// <param name="billingPeriod"> Billing period in YearMonth(e.g. 202008) format. Only for legacy enterprise customers can use this. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
         /// <param name="invoiceId"> Invoice ID for Pay-as-you-go and Microsoft Customer Agreement scopes. Can only have one of either timePeriod or invoiceId or billingPeriod parameters. If none provided current month cost is provided. </param>
         /// <param name="customerId"> Customer ID for Microsoft Customer Agreement scopes (Invoice Id is also required for this). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateDetailedCostReportDefinition(GenerateDetailedCostReportMetricType? metric, GenerateDetailedCostReportTimePeriod timePeriod, string billingPeriod, string invoiceId, string customerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateDetailedCostReportContent(GenerateDetailedCostReportMetricType? metric, GenerateDetailedCostReportTimePeriod timePeriod, string billingPeriod, string invoiceId, string customerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metric = metric;
             TimePeriod = timePeriod;

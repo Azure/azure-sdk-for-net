@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostAllocationRuleDefinitionResource"/> and their operations.
-    /// Each <see cref="CostAllocationRuleDefinitionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CostAllocationRuleDefinitionCollection"/> instance call the GetCostAllocationRuleDefinitions method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="CostAllocationRuleResource"/> and their operations.
+    /// Each <see cref="CostAllocationRuleResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostAllocationRuleCollection"/> instance call the GetCostAllocationRules method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class CostAllocationRuleDefinitionCollection : ArmCollection, IEnumerable<CostAllocationRuleDefinitionResource>, IAsyncEnumerable<CostAllocationRuleDefinitionResource>
+    public partial class CostAllocationRuleCollection : ArmCollection, IEnumerable<CostAllocationRuleResource>, IAsyncEnumerable<CostAllocationRuleResource>
     {
         private readonly ClientDiagnostics _costAllocationRulesClientDiagnostics;
         private readonly CostAllocationRules _costAllocationRulesRestClient;
 
-        /// <summary> Initializes a new instance of CostAllocationRuleDefinitionCollection for mocking. </summary>
-        protected CostAllocationRuleDefinitionCollection()
+        /// <summary> Initializes a new instance of CostAllocationRuleCollection for mocking. </summary>
+        protected CostAllocationRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CostAllocationRuleDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CostAllocationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CostAllocationRuleDefinitionResource.ResourceType, out string costAllocationRuleDefinitionApiVersion);
-            _costAllocationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostAllocationRuleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _costAllocationRulesRestClient = new CostAllocationRules(_costAllocationRulesClientDiagnostics, Pipeline, Endpoint, costAllocationRuleDefinitionApiVersion ?? "2025-03-01");
+            TryGetApiVersion(CostAllocationRuleResource.ResourceType, out string costAllocationRuleApiVersion);
+            _costAllocationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostAllocationRuleResource.ResourceType.Namespace, Diagnostics);
+            _costAllocationRulesRestClient = new CostAllocationRules(_costAllocationRulesClientDiagnostics, Pipeline, Endpoint, costAllocationRuleApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CostAllocationRuleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, CostAllocationRuleDefinitionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CostAllocationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, CostAllocationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostAllocationRuleDefinitionData> response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostAllocationRuleDefinitionResource> operation = new CostManagementArmOperation<CostAllocationRuleDefinitionResource>(Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<CostAllocationRuleResource> operation = new CostManagementArmOperation<CostAllocationRuleResource>(Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CostAllocationRuleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, CostAllocationRuleDefinitionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CostAllocationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, CostAllocationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostAllocationRuleDefinitionData> response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostAllocationRuleDefinitionResource> operation = new CostManagementArmOperation<CostAllocationRuleDefinitionResource>(Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<CostAllocationRuleResource> operation = new CostManagementArmOperation<CostAllocationRuleResource>(Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CostAllocationRuleDefinitionResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostAllocationRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.Get");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.CostManagement
                 };
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostAllocationRuleDefinitionData> response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CostAllocationRuleDefinitionResource> Get(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<CostAllocationRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.Get");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.CostManagement
                 };
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostAllocationRuleDefinitionData> response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostAllocationRuleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostAllocationRuleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostAllocationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CostAllocationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostAllocationRuleDefinitionData, CostAllocationRuleDefinitionResource>(new CostAllocationRulesGetAllAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleDefinitionCollection.GetAll"), data => new CostAllocationRuleDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -308,14 +308,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostAllocationRuleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostAllocationRuleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CostAllocationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostAllocationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostAllocationRuleDefinitionData, CostAllocationRuleDefinitionResource>(new CostAllocationRulesGetAllCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleDefinitionCollection.GetAll"), data => new CostAllocationRuleDefinitionResource(Client, data));
+            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CostAllocationRuleDefinitionData> response = default;
+                Response<CostAllocationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleDefinitionData)null, result);
+                        response = Response.FromValue((CostAllocationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CostAllocationRuleDefinitionData> response = default;
+                Response<CostAllocationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleDefinitionData)null, result);
+                        response = Response.FromValue((CostAllocationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -453,11 +453,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CostAllocationRuleDefinitionResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CostAllocationRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -468,23 +468,23 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CostAllocationRuleDefinitionData> response = default;
+                Response<CostAllocationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleDefinitionData)null, result);
+                        response = Response.FromValue((CostAllocationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CostAllocationRuleDefinitionResource>(response.GetRawResponse());
+                    return new NoValueResponse<CostAllocationRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -514,11 +514,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CostAllocationRuleDefinitionResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CostAllocationRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -529,23 +529,23 @@ namespace Azure.ResourceManager.CostManagement
                 HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CostAllocationRuleDefinitionData> response = default;
+                Response<CostAllocationRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleDefinitionData.FromResponse(result), result);
+                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleDefinitionData)null, result);
+                        response = Response.FromValue((CostAllocationRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CostAllocationRuleDefinitionResource>(response.GetRawResponse());
+                    return new NoValueResponse<CostAllocationRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        IEnumerator<CostAllocationRuleDefinitionResource> IEnumerable<CostAllocationRuleDefinitionResource>.GetEnumerator()
+        IEnumerator<CostAllocationRuleResource> IEnumerable<CostAllocationRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<CostAllocationRuleDefinitionResource> IAsyncEnumerable<CostAllocationRuleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CostAllocationRuleResource> IAsyncEnumerable<CostAllocationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

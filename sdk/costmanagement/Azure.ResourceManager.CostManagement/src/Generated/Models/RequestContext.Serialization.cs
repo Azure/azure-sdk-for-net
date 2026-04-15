@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             string requestScope = default;
-            GenerateCostDetailsReportRequestDefinition requestBody = default;
+            GenerateCostDetailsReportContent requestBody = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    requestBody = GenerateCostDetailsReportRequestDefinition.DeserializeGenerateCostDetailsReportRequestDefinition(prop.Value, options);
+                    requestBody = GenerateCostDetailsReportContent.DeserializeGenerateCostDetailsReportContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
