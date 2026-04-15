@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dnsForwardingRuleData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dnsForwardingRuleData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsForwardingRuleData"/> from. </param>

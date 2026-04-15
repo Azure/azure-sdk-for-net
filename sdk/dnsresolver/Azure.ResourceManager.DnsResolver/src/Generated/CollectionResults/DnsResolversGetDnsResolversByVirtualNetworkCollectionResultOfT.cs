@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly string _virtualNetworkName;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DnsResolvers client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT(DnsResolvers client, Guid subscriptionId, string resourceGroupName, string virtualNetworkName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT(DnsResolvers client, Guid subscriptionId, string resourceGroupName, string virtualNetworkName, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
             _virtualNetworkName = virtualNetworkName;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DnsResolver
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDnsResolversByVirtualNetworkRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualNetworkName, _top, _context) : _client.CreateGetDnsResolversByVirtualNetworkRequest(_subscriptionId, _resourceGroupName, _virtualNetworkName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDnsResolverResourceGroupResource.GetDnsResolversByVirtualNetwork");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

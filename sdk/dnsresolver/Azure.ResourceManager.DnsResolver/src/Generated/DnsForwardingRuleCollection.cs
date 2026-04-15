@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             if (id.ResourceType != DnsForwardingRulesetResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsForwardingRulesetResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsForwardingRulesetResource.ResourceType), nameof(id));
             }
         }
 
@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.DnsResolver
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DnsForwardingRuleResource(Client, data));
+                context,
+                "DnsForwardingRuleCollection.GetAll"), data => new DnsForwardingRuleResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +332,8 @@ namespace Azure.ResourceManager.DnsResolver
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DnsForwardingRuleResource(Client, data));
+                context,
+                "DnsForwardingRuleCollection.GetAll"), data => new DnsForwardingRuleResource(Client, data));
         }
 
         /// <summary>

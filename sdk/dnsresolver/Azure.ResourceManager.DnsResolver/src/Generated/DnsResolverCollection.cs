@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -297,7 +297,13 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupAsyncCollectionResultOfT(_dnsResolversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DnsResolverResource(Client, data));
+            return new AsyncPageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupAsyncCollectionResultOfT(
+                _dnsResolversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DnsResolverCollection.GetAll"), data => new DnsResolverResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,13 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupCollectionResultOfT(_dnsResolversRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DnsResolverResource(Client, data));
+            return new PageableWrapper<DnsResolverData, DnsResolverResource>(new DnsResolversGetByResourceGroupCollectionResultOfT(
+                _dnsResolversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DnsResolverCollection.GetAll"), data => new DnsResolverResource(Client, data));
         }
 
         /// <summary>

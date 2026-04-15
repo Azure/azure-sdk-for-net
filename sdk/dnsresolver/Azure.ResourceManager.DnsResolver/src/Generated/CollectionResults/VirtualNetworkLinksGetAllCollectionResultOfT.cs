@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly string _rulesetName;
         private readonly int? _top;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of VirtualNetworkLinksGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualNetworkLinks client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualNetworkLinksGetAllCollectionResultOfT(VirtualNetworkLinks client, Guid subscriptionId, string resourceGroupName, string rulesetName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public VirtualNetworkLinksGetAllCollectionResultOfT(VirtualNetworkLinks client, Guid subscriptionId, string resourceGroupName, string rulesetName, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
             _rulesetName = rulesetName;
             _top = top;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of VirtualNetworkLinksGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.DnsResolver
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _rulesetName, _top, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _rulesetName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

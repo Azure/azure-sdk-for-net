@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -297,7 +297,13 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupAsyncCollectionResultOfT(_dnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DnsResolverDomainListResource(Client, data));
+            return new AsyncPageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupAsyncCollectionResultOfT(
+                _dnsResolverDomainListsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DnsResolverDomainListCollection.GetAll"), data => new DnsResolverDomainListResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +332,13 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupCollectionResultOfT(_dnsResolverDomainListsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DnsResolverDomainListResource(Client, data));
+            return new PageableWrapper<DnsResolverDomainListData, DnsResolverDomainListResource>(new DnsResolverDomainListsGetByResourceGroupCollectionResultOfT(
+                _dnsResolverDomainListsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DnsResolverDomainListCollection.GetAll"), data => new DnsResolverDomainListResource(Client, data));
         }
 
         /// <summary>

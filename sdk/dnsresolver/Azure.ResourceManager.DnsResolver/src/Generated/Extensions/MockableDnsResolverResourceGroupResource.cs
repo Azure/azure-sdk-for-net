@@ -349,7 +349,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
                 Id.ResourceGroupName,
                 virtualNetworkName,
                 top,
-                context);
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolversByVirtualNetwork");
         }
 
         /// <summary>
@@ -389,7 +390,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
                 Id.ResourceGroupName,
                 virtualNetworkName,
                 top,
-                context);
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolversByVirtualNetwork");
         }
 
         /// <summary>
@@ -429,7 +431,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
                 Id.ResourceGroupName,
                 virtualNetworkName,
                 top,
-                context);
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesetsByVirtualNetwork");
         }
 
         /// <summary>
@@ -469,7 +472,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
                 Id.ResourceGroupName,
                 virtualNetworkName,
                 top,
-                context);
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesetsByVirtualNetwork");
         }
 
         /// <summary>
@@ -502,7 +506,13 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkName, context);
+            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT(
+                DnsResolverPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork");
         }
 
         /// <summary>
@@ -535,7 +545,13 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkCollectionResultOfT(DnsResolverPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualNetworkName, context);
+            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkCollectionResultOfT(
+                DnsResolverPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork");
         }
     }
 }

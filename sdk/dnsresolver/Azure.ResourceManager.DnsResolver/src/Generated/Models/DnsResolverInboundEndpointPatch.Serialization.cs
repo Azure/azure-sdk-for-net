@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dnsResolverInboundEndpointPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dnsResolverInboundEndpointPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

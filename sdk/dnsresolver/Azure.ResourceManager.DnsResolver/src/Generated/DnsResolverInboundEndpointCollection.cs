@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             if (id.ResourceType != DnsResolverResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsResolverResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsResolverResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +302,8 @@ namespace Azure.ResourceManager.DnsResolver
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DnsResolverInboundEndpointResource(Client, data));
+                context,
+                "DnsResolverInboundEndpointCollection.GetAll"), data => new DnsResolverInboundEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.DnsResolver
                 Id.ResourceGroupName,
                 Id.Name,
                 top,
-                context), data => new DnsResolverInboundEndpointResource(Client, data));
+                context,
+                "DnsResolverInboundEndpointCollection.GetAll"), data => new DnsResolverInboundEndpointResource(Client, data));
         }
 
         /// <summary>
