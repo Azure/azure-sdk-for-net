@@ -1,6 +1,6 @@
 ---
 name: mpg-migration-simplified
-description: "Migrate Azure SDK for .NET management-plane libraries from AutoRest/Swagger to TypeSpec-based generation. Covers setup, code generation, build-fix cycle, breaking change mitigation, and PR creation. Use when asked to migrate a management SDK, do an MPG migration, or move from Swagger to TypeSpec."
+description: Migrate Azure SDK for .NET management-plane libraries from AutoRest/Swagger to TypeSpec. Use when asked to do an MPG migration or move from Swagger to TypeSpec.
 ---
 
 # MPG Migration Workflow
