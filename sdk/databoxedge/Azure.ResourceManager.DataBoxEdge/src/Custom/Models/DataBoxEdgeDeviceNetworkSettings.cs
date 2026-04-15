@@ -1,59 +1,48 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Baseline had this type in Models namespace as a plain model. New generator creates it as
-// DataBoxEdgeDeviceNetworkSettingsData in the base namespace. This subclass provides backward-compatible
-// type name and namespace.
-
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The network settings of a device. </summary>
+    // In the old SDK (autorest-based), these types were plain models returned directly by device resource methods.
+    // In the new SDK (TypeSpec-based), they are full ARM sub-resources with their own resource classes
+    // (DataBoxEdgeDeviceNetworkSettingsResource) and data classes (DataBoxEdgeDeviceNetworkSettingsData).
+    // These stubs are kept only for ApiCompat backward compatibility. All members throw NotSupportedException
+    // at runtime; callers should migrate to GetDataBoxEdgeDeviceNetworkSettings().Get().Data.
+    /// <summary>
+    /// The network settings of a device.
+    /// This class is obsolete; use <see cref="DataBoxEdgeDeviceNetworkSettingsData"/> via
+    /// <c>GetDataBoxEdgeDeviceNetworkSettings().Get().Data</c> instead.
+    /// </summary>
+    [Obsolete("Use DataBoxEdgeDeviceNetworkSettingsData via GetDataBoxEdgeDeviceNetworkSettings().Get().Data instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class DataBoxEdgeDeviceNetworkSettings : DataBoxEdgeDeviceNetworkSettingsData,
-        IJsonModel<DataBoxEdgeDeviceNetworkSettings>,
-        IPersistableModel<DataBoxEdgeDeviceNetworkSettings>
+    public partial class DataBoxEdgeDeviceNetworkSettings : ResourceData, IJsonModel<DataBoxEdgeDeviceNetworkSettings>
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettings"/>. </summary>
-        public DataBoxEdgeDeviceNetworkSettings() : base()
-        {
-        }
+        public DataBoxEdgeDeviceNetworkSettings() { }
 
-        internal DataBoxEdgeDeviceNetworkSettings(DataBoxEdgeDeviceNetworkSettingsData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, null, data.Properties)
-        {
-        }
+        /// <summary> The network adapter list on the device. </summary>
+        public IReadOnlyList<DataBoxEdgeNetworkAdapter> NetworkAdapters { get => throw new NotSupportedException(); }
 
-        void IJsonModel<DataBoxEdgeDeviceNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<DataBoxEdgeDeviceNetworkSettingsData>)this).Write(writer, options);
+        /// <inheritdoc/>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
 
         DataBoxEdgeDeviceNetworkSettings IJsonModel<DataBoxEdgeDeviceNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var data = ((IJsonModel<DataBoxEdgeDeviceNetworkSettingsData>)this).Create(ref reader, options);
-            return new DataBoxEdgeDeviceNetworkSettings(data);
-        }
-
-        BinaryData IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Write(ModelReaderWriterOptions options)
-        {
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                ((IJsonModel<DataBoxEdgeDeviceNetworkSettings>)this).Write(writer, options);
-            }
-            return new BinaryData(stream.ToArray());
-        }
-
+            => throw new NotSupportedException();
+        void IJsonModel<DataBoxEdgeDeviceNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
         DataBoxEdgeDeviceNetworkSettings IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var utf8Reader = new Utf8JsonReader(data);
-            return ((IJsonModel<DataBoxEdgeDeviceNetworkSettings>)this).Create(ref utf8Reader, options);
-        }
-
-        string IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            => throw new NotSupportedException();
+        string IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
+        BinaryData IPersistableModel<DataBoxEdgeDeviceNetworkSettings>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
     }
 }

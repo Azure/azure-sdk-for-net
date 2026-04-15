@@ -1,81 +1,54 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Baseline had this type in Models namespace as a plain model. New generator creates it as
-// DataBoxEdgeDeviceCapacityInfoData in the base namespace. This subclass provides backward-compatible
-// type name and namespace.
-
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The device capacity info. </summary>
+    // In the old SDK (autorest-based), these types were plain models returned directly by device resource methods.
+    // In the new SDK (TypeSpec-based), they are full ARM sub-resources with their own resource classes
+    // (DataBoxEdgeDeviceCapacityInfoResource) and data classes (DataBoxEdgeDeviceCapacityInfoData).
+    // These stubs are kept only for ApiCompat backward compatibility. All members throw NotSupportedException
+    // at runtime; callers should migrate to GetDataBoxEdgeDeviceCapacityInfo().Get().Data.
+    /// <summary>
+    /// Object for capturing device capacity info.
+    /// This class is obsolete; use <see cref="DataBoxEdgeDeviceCapacityInfoData"/> via
+    /// <c>GetDataBoxEdgeDeviceCapacityInfo().Get().Data</c> instead.
+    /// </summary>
+    [Obsolete("Use DataBoxEdgeDeviceCapacityInfoData via GetDataBoxEdgeDeviceCapacityInfo().Get().Data instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class DataBoxEdgeDeviceCapacityInfo : DataBoxEdgeDeviceCapacityInfoData,
-        IJsonModel<DataBoxEdgeDeviceCapacityInfo>,
-        IPersistableModel<DataBoxEdgeDeviceCapacityInfo>
+    public partial class DataBoxEdgeDeviceCapacityInfo : ResourceData, IJsonModel<DataBoxEdgeDeviceCapacityInfo>
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfo"/>. </summary>
-        public DataBoxEdgeDeviceCapacityInfo() : base()
-        {
-        }
+        public DataBoxEdgeDeviceCapacityInfo() { }
 
-        // Baseline had setters on these output-only properties. Shadow with new + no-op setter for backward compat.
-        /// <summary> Cluster Compute Data. </summary>
-        public new EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo
-        {
-            get => base.ClusterComputeCapacityInfo;
-            set { }
-        }
+        /// <summary> Timestamp of request in UTC. </summary>
+        public DateTimeOffset? TimeStamp { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        /// <summary> Cluster capacity data for storage resources (CSV). </summary>
+        public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        /// <summary> Cluster capacity data for compute resources (Memory and GPU). </summary>
+        public EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        /// <summary> The dictionary of individual node names and node capacities in the cluster. </summary>
+        public IDictionary<string, HostCapacity> NodeCapacityInfos { get => throw new NotSupportedException(); }
 
-        /// <summary> Cluster Storage Data. </summary>
-        public new EdgeClusterStorageViewInfo ClusterStorageCapacityInfo
-        {
-            get => base.ClusterStorageCapacityInfo;
-            set { }
-        }
-
-        /// <summary> The time stamp of the capacity info. </summary>
-        public new DateTimeOffset? TimeStamp
-        {
-            get => base.TimeStamp;
-            set { }
-        }
-
-        internal DataBoxEdgeDeviceCapacityInfo(DataBoxEdgeDeviceCapacityInfoData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, null, data.Properties)
-        {
-        }
-
-        void IJsonModel<DataBoxEdgeDeviceCapacityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<DataBoxEdgeDeviceCapacityInfoData>)this).Write(writer, options);
+        /// <inheritdoc/>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
 
         DataBoxEdgeDeviceCapacityInfo IJsonModel<DataBoxEdgeDeviceCapacityInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var data = ((IJsonModel<DataBoxEdgeDeviceCapacityInfoData>)this).Create(ref reader, options);
-            return new DataBoxEdgeDeviceCapacityInfo(data);
-        }
-
-        BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)
-        {
-            using var stream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(stream))
-            {
-                ((IJsonModel<DataBoxEdgeDeviceCapacityInfo>)this).Write(writer, options);
-            }
-            return new BinaryData(stream.ToArray());
-        }
-
+            => throw new NotSupportedException();
+        void IJsonModel<DataBoxEdgeDeviceCapacityInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
         DataBoxEdgeDeviceCapacityInfo IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var utf8Reader = new Utf8JsonReader(data);
-            return ((IJsonModel<DataBoxEdgeDeviceCapacityInfo>)this).Create(ref utf8Reader, options);
-        }
-
-        string IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            => throw new NotSupportedException();
+        string IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
+        BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)
+            => throw new NotSupportedException();
     }
 }
