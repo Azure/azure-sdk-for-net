@@ -24,11 +24,11 @@ namespace Azure.SdkAnalyzers.Tests
                 {
                     var project = solution.GetProject(projectId);
                     var parseOptions = (CSharpParseOptions?)project?.ParseOptions;
-                    if (parseOptions != null && solution != null && project != null)
+                    if (parseOptions != null && project != null)
                     {
                         return solution.WithProjectParseOptions(projectId, parseOptions.WithLanguageVersion(LanguageVersion.Latest));
                     }
-                    return solution!;
+                    return solution;
                 }},
                 TestCode = source,
                 FixedCode = fixedSource,
