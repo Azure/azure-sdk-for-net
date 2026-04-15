@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("disableShowmount"u8);
                 writer.WriteBooleanValue(DisableShowmount.Value);
             }
-            if (Optional.IsDefined(NfsV4IDDomain))
+            if (Optional.IsDefined(NfsV4IdDomain))
             {
                 writer.WritePropertyName("nfsV4IDDomain"u8);
-                writer.WriteStringValue(NfsV4IDDomain);
+                writer.WriteStringValue(NfsV4IdDomain);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiAdStatus))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
             EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
-            string nfsV4IDDomain = default;
+            string nfsV4IdDomain = default;
             MultiAdStatus? multiAdStatus = default;
             LdapConfiguration ldapConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nfsV4IDDomain = null;
+                        nfsV4IdDomain = null;
                         continue;
                     }
-                    nfsV4IDDomain = prop.Value.GetString();
+                    nfsV4IdDomain = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("multiAdStatus"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 entraIdConfig,
                 encryption,
                 disableShowmount,
-                nfsV4IDDomain,
+                nfsV4IdDomain,
                 multiAdStatus,
                 ldapConfiguration,
                 additionalBinaryDataProperties);

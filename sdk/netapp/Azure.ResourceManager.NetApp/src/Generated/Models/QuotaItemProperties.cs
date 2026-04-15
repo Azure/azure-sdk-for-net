@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The current quota value. </summary>
-        [WirePath("current")]
         public int? Current { get; }
 
         /// <summary> The default quota value. </summary>
-        [WirePath("default")]
         public int? Default { get; }
 
         /// <summary> The usage quota value. </summary>
-        [WirePath("usage")]
         public int? Usage { get; }
     }
 }

@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -76,12 +75,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,12 +133,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,12 +191,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,12 +240,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,12 +289,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,7 +302,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NetAppAccountResource(Client, data));
+            return new AsyncPageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -338,12 +317,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +330,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new NetAppAccountResource(Client, data));
+            return new PageableWrapper<NetAppAccountData, NetAppAccountResource>(new AccountsGetAllCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetAppAccountCollection.GetAll"), data => new NetAppAccountResource(Client, data));
         }
 
         /// <summary>
@@ -370,12 +345,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,12 +402,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,12 +459,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -557,12 +520,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

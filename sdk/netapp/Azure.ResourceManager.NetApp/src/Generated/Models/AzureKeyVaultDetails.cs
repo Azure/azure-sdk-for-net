@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -41,11 +40,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies the Azure Key Vault settings for retrieving the bucket server certificate. </summary>
-        [WirePath("certificateAkvDetails")]
         public CertificateAkvDetails CertificateAkvDetails { get; set; }
 
         /// <summary> Specifies the Azure Key Vault settings for storing the bucket credentials. </summary>
-        [WirePath("credentialsAkvDetails")]
         public CredentialsAkvDetails CredentialsAkvDetails { get; set; }
     }
 }

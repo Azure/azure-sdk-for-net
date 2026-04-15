@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -23,6 +22,7 @@ namespace Azure.ResourceManager.NetApp
         private readonly string _resourceGroupName;
         private readonly string _accountName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ElasticBackupPolicies client used to send requests. </param>
@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the ElasticAccount. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT(ElasticBackupPolicies client, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT(ElasticBackupPolicies client, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _accountName = accountName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.NetApp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByElasticAccountRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetByElasticAccountRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticBackupPolicyCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

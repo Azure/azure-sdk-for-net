@@ -7,46 +7,61 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Backup policy Details for create and update. </summary>
-    public partial class NetAppBackupPolicyPatch : TrackedResourceData
+    public partial class NetAppBackupPolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public NetAppBackupPolicyPatch(AzureLocation location) : base(location)
+        public NetAppBackupPolicyPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Backup policy Properties. </param>
-        internal NetAppBackupPolicyPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, string name, IDictionary<string, string> tags, BackupPolicyProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupPolicyPatch(string location, string id, string name, string @type, IDictionary<string, string> tags, BackupPolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Location = location;
+            Id = id;
+            Name = name;
+            Type = @type;
+            Tags = tags;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Resource location. </summary>
+        public string Location { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Resource name. </summary>
+        public string Name { get; }
+
+        /// <summary> Resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
         /// <summary> Backup policy Properties. </summary>
-        [WirePath("properties")]
         internal BackupPolicyProperties Properties { get; set; }
 
         /// <summary> Backup Policy GUID ID. </summary>
-        [WirePath("properties.backupPolicyId")]
-        public ResourceIdentifier BackupPolicyId
+        public string BackupPolicyId
         {
             get
             {
@@ -55,7 +70,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -65,7 +79,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Daily backups count to keep. </summary>
-        [WirePath("properties.dailyBackupsToKeep")]
         public int? DailyBackupsToKeep
         {
             get
@@ -83,7 +96,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Weekly backups count to keep. </summary>
-        [WirePath("properties.weeklyBackupsToKeep")]
         public int? WeeklyBackupsToKeep
         {
             get
@@ -101,7 +113,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Monthly backups count to keep. </summary>
-        [WirePath("properties.monthlyBackupsToKeep")]
         public int? MonthlyBackupsToKeep
         {
             get
@@ -119,7 +130,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Volumes using current backup policy. </summary>
-        [WirePath("properties.volumesAssigned")]
         public int? VolumesAssigned
         {
             get
@@ -129,7 +139,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
-        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -147,7 +156,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A list of volumes assigned to this policy. </summary>
-        [WirePath("properties.volumeBackups")]
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups
         {
             get

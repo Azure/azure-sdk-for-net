@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(volumeData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(volumeData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VolumeData"/> from. </param>
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.NetApp
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             VolumeProperties properties = default;
-            ETag? eTag = default;
+            string eTag = default;
             IList<string> zones = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,11 +227,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

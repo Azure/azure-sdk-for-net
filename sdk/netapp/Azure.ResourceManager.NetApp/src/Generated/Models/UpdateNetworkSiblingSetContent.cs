@@ -52,19 +52,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </summary>
-        [WirePath("networkSiblingSetId")]
         public string NetworkSiblingSetId { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </summary>
-        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; }
 
         /// <summary> Network sibling set state Id identifying the current state of the sibling set. </summary>
-        [WirePath("networkSiblingSetStateId")]
         public string NetworkSiblingSetStateId { get; }
 
         /// <summary> Network features available to the volume. </summary>
-        [WirePath("networkFeatures")]
         public NetAppNetworkFeature NetworkFeatures { get; }
     }
 }

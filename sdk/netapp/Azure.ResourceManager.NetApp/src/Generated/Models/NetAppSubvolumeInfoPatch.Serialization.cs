@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppSubvolumeInfoPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppSubvolumeInfoPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

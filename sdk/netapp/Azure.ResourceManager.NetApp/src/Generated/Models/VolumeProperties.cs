@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public VolumeProperties(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
+        public VolumeProperties(string creationToken, long usageThreshold, string subnetId)
         {
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ProtocolTypes = new ChangeTrackingList<string>();
             SubnetId = subnetId;
             MountTargets = new ChangeTrackingList<NetAppVolumeMountTarget>();
-            DataStoreResourceId = new ChangeTrackingList<ResourceIdentifier>();
+            DataStoreResourceId = new ChangeTrackingList<string>();
             PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
         /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
-        /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
+        /// <param name="ldapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
         /// <param name="ldapServerType"> Specifies the type of LDAP server for a given NFS volume. </param>
-        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolAccess"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="language"> Language supported for volume. </param>
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, NetAppLargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, NetAppBreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeProperties(string fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicyRule exportPolicy, IList<string> protocolTypes, string provisioningState, ResourceIdentifier snapshotId, bool? deleteBaseSnapshot, ResourceIdentifier backupId, string baremetalTenantId, string subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, string networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? snapshotDirectoryVisible, bool? kerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? smbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, string keyVaultPrivateEndpointResourceId, bool? ldapEnabled, LdapServerType? ldapServerType, bool? coolAccess, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<string> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, string capacityPoolResourceId, string proximityPlacementGroup, string t2Network, string volumeSpecName, bool? encrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, string originatingResourceId, long? inheritedSizeInBytes, VolumeLanguage? language, BreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.NetApp.Models
             ActualThroughputMibps = actualThroughputMibps;
             EncryptionKeySource = encryptionKeySource;
             KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
-            IsLdapEnabled = isLdapEnabled;
+            LdapEnabled = ldapEnabled;
             LdapServerType = ldapServerType;
-            IsCoolAccessEnabled = isCoolAccessEnabled;
+            CoolAccess = coolAccess;
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
@@ -182,20 +182,18 @@ namespace Azure.ResourceManager.NetApp.Models
             InheritedSizeInBytes = inheritedSizeInBytes;
             Language = language;
             BreakthroughMode = breakthroughMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique FileSystem Identifier. </summary>
-        [WirePath("fileSystemId")]
         public string FileSystemId { get; }
 
         /// <summary> A unique file path for the volume. Used when creating mount targets. </summary>
-        [WirePath("creationToken")]
         public string CreationToken { get; set; }
 
         /// <summary> The service level of the file system. </summary>
-        [WirePath("serviceLevel")]
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
+
         /// <summary>
         /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
@@ -204,127 +202,99 @@ namespace Azure.ResourceManager.NetApp.Models
         public long UsageThreshold { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
-        [WirePath("exportPolicy")]
         internal NetAppVolumeExportPolicyRule ExportPolicy { get; set; }
 
         /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
-        [WirePath("protocolTypes")]
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Resource identifier used to identify the Snapshot. </summary>
-        [WirePath("snapshotId")]
         public ResourceIdentifier SnapshotId { get; set; }
 
         /// <summary> If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false. </summary>
-        [WirePath("deleteBaseSnapshot")]
         public bool? DeleteBaseSnapshot { get; set; }
 
         /// <summary> Resource identifier used to identify the Backup. </summary>
-        [WirePath("backupId")]
         public ResourceIdentifier BackupId { get; set; }
 
         /// <summary> Unique Baremetal Tenant Identifier. </summary>
-        [WirePath("baremetalTenantId")]
         public string BaremetalTenantId { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        [WirePath("subnetId")]
-        public ResourceIdentifier SubnetId { get; set; }
+        public string SubnetId { get; set; }
 
         /// <summary> The original value of the network features type available to the volume at the time it was created. </summary>
-        [WirePath("networkFeatures")]
         public NetAppNetworkFeature? NetworkFeatures { get; set; }
 
         /// <summary> The effective value of the network features type available to the volume, or current effective state of update. </summary>
-        [WirePath("effectiveNetworkFeatures")]
         public NetAppNetworkFeature? EffectiveNetworkFeatures { get; }
 
         /// <summary> Network Sibling Set ID for the the group of volumes sharing networking resources. </summary>
-        [WirePath("networkSiblingSetId")]
         public string NetworkSiblingSetId { get; }
 
         /// <summary> Provides storage to network proximity information for the volume. </summary>
-        [WirePath("storageToNetworkProximity")]
         public NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get; }
 
         /// <summary> List of mount targets. </summary>
-        [WirePath("mountTargets")]
         public IReadOnlyList<NetAppVolumeMountTarget> MountTargets { get; } = new ChangeTrackingList<NetAppVolumeMountTarget>();
 
         /// <summary> What type of volume is this. For destination volumes in Cross Region Replication, set type to DataProtection. For creating clone volume, set type to ShortTermClone. </summary>
-        [WirePath("volumeType")]
         public string VolumeType { get; set; }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        [WirePath("dataProtection")]
         public NetAppVolumeDataProtection DataProtection { get; set; }
 
         /// <summary> While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted. </summary>
-        [WirePath("acceptGrowCapacityPoolForShortTermCloneSplit")]
         public AcceptGrowCapacityPoolForShortTermCloneSplit? AcceptGrowCapacityPoolForShortTermCloneSplit { get; set; }
 
         /// <summary> Restoring. </summary>
-        [WirePath("isRestoring")]
         public bool? IsRestoring { get; }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
-        [WirePath("snapshotDirectoryVisible")]
         public bool? SnapshotDirectoryVisible { get; set; }
 
         /// <summary> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </summary>
-        [WirePath("kerberosEnabled")]
         public bool? KerberosEnabled { get; set; }
 
         /// <summary> The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol. </summary>
-        [WirePath("securityStyle")]
         public NetAppVolumeSecurityStyle? SecurityStyle { get; set; }
 
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </summary>
-        [WirePath("smbEncryption")]
         public bool? SmbEncryption { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("smbAccessBasedEnumeration")]
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("smbNonBrowsable")]
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
 
         /// <summary> Enables continuously available share property for smb volume. Only applicable for SMB volume. </summary>
-        [WirePath("smbContinuouslyAvailable")]
         public bool? SmbContinuouslyAvailable { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
-        [WirePath("throughputMibps")]
         public float? ThroughputMibps { get; set; }
 
         /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
-        [WirePath("actualThroughputMibps")]
         public float? ActualThroughputMibps { get; }
 
         /// <summary> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
-        [WirePath("encryptionKeySource")]
         public NetAppEncryptionKeySource? EncryptionKeySource { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
-        [WirePath("keyVaultPrivateEndpointResourceId")]
-        public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
+        public string KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
-        public bool? IsLdapEnabled { get; set; }
+        public bool? LdapEnabled { get; set; }
+
         /// <summary> Specifies the type of LDAP server for a given NFS volume. </summary>
-        public NetAppLdapServerType? LdapServerType { get; set; }
+        public LdapServerType? LdapServerType { get; set; }
+
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        [WirePath("coolAccess")]
         public bool? CoolAccess { get; set; }
 
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
-        [WirePath("coolnessPeriod")]
         public int? CoolnessPeriod { get; set; }
 
         /// <summary>
@@ -333,104 +303,98 @@ namespace Azure.ResourceManager.NetApp.Models
         /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </summary>
-        [WirePath("coolAccessRetrievalPolicy")]
         public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get; set; }
 
         /// <summary> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </summary>
-        [WirePath("coolAccessTieringPolicy")]
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy { get; set; }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        [WirePath("unixPermissions")]
         public string UnixPermissions { get; set; }
 
         /// <summary> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </summary>
-        [WirePath("cloneProgress")]
         public int? CloneProgress { get; }
 
         /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
-        [WirePath("fileAccessLogs")]
         public NetAppFileAccessLog? FileAccessLogs { get; }
 
         /// <summary> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </summary>
-        [WirePath("avsDataStore")]
         public NetAppAvsDataStore? AvsDataStore { get; set; }
 
         /// <summary> Data store resource unique identifier. </summary>
-        [WirePath("dataStoreResourceId")]
-        public IReadOnlyList<ResourceIdentifier> DataStoreResourceId { get; } = new ChangeTrackingList<ResourceIdentifier>();
+        public IReadOnlyList<string> DataStoreResourceId { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
-        [WirePath("isDefaultQuotaEnabled")]
         public bool? IsDefaultQuotaEnabled { get; set; }
 
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
-        [WirePath("defaultUserQuotaInKiBs")]
         public long? DefaultUserQuotaInKiBs { get; set; }
 
         /// <summary> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </summary>
-        [WirePath("defaultGroupQuotaInKiBs")]
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary> Maximum number of files allowed. Needs a service request in order to be changed. Only allowed to be changed if volume quota is more than 4TiB. </summary>
-        [WirePath("maximumNumberOfFiles")]
         public long? MaximumNumberOfFiles { get; }
 
         /// <summary> Volume Group Name. </summary>
-        [WirePath("volumeGroupName")]
         public string VolumeGroupName { get; }
 
         /// <summary> Pool Resource Id used in case of creating a volume through volume group. </summary>
-        [WirePath("capacityPoolResourceId")]
-        public ResourceIdentifier CapacityPoolResourceId { get; set; }
+        public string CapacityPoolResourceId { get; set; }
 
         /// <summary> Proximity placement group associated with the volume. </summary>
-        [WirePath("proximityPlacementGroup")]
-        public ResourceIdentifier ProximityPlacementGroup { get; set; }
+        public string ProximityPlacementGroup { get; set; }
 
         /// <summary> T2 network information. </summary>
-        [WirePath("t2Network")]
         public string T2Network { get; }
 
         /// <summary> Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log. </summary>
-        [WirePath("volumeSpecName")]
         public string VolumeSpecName { get; set; }
 
         /// <summary> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </summary>
-        [WirePath("encrypted")]
         public bool? Encrypted { get; }
 
         /// <summary> Application specific placement rules for the particular volume. </summary>
-        [WirePath("placementRules")]
         public IList<NetAppVolumePlacementRule> PlacementRules { get; } = new ChangeTrackingList<NetAppVolumePlacementRule>();
 
         /// <summary> Flag indicating whether subvolume operations are enabled on the volume. </summary>
-        [WirePath("enableSubvolumes")]
         public EnableNetAppSubvolume? EnableSubvolumes { get; set; }
 
         /// <summary> The availability zone where the volume is provisioned. This refers to the logical availability zone where the volume resides. </summary>
-        [WirePath("provisionedAvailabilityZone")]
         public string ProvisionedAvailabilityZone { get; }
 
         /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
-        [WirePath("isLargeVolume")]
         public bool? IsLargeVolume { get; set; }
+
         /// <summary>
         /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
         /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
         /// delivering higher capacity limit with lower costs.
         /// </summary>
-        public NetAppLargeVolumeType? LargeVolumeType { get; set; }
+        public LargeVolumeType? LargeVolumeType { get; set; }
+
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
-        [WirePath("originatingResourceId")]
-        public ResourceIdentifier OriginatingResourceId { get; }
+        public string OriginatingResourceId { get; }
 
         /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
-        [WirePath("inheritedSizeInBytes")]
         public long? InheritedSizeInBytes { get; }
+
         /// <summary> Language supported for volume. </summary>
-        public NetAppVolumeLanguage? Language { get; set; }
+        public VolumeLanguage? Language { get; set; }
+
         /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
-        public NetAppBreakthroughMode? BreakthroughMode { get; set; }
+        public BreakthroughMode? BreakthroughMode { get; set; }
+
+        /// <summary> Export policy rule. </summary>
+        public IList<ExportPolicyRule> ExportRules
+        {
+            get
+            {
+                if (ExportPolicy is null)
+                {
+                    ExportPolicy = new NetAppVolumeExportPolicyRule();
+                }
+                return ExportPolicy.Rules;
+            }
+        }
     }
 }

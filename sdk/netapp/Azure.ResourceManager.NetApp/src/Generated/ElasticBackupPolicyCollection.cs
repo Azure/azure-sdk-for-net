@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ElasticAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +293,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT(_elasticBackupPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticBackupPolicyResource(Client, data));
+            return new AsyncPageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountAsyncCollectionResultOfT(
+                _elasticBackupPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticBackupPolicyCollection.GetAll"), data => new ElasticBackupPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +327,13 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountCollectionResultOfT(_elasticBackupPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ElasticBackupPolicyResource(Client, data));
+            return new PageableWrapper<ElasticBackupPolicyData, ElasticBackupPolicyResource>(new ElasticBackupPoliciesGetByElasticAccountCollectionResultOfT(
+                _elasticBackupPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ElasticBackupPolicyCollection.GetAll"), data => new ElasticBackupPolicyResource(Client, data));
         }
 
         /// <summary>

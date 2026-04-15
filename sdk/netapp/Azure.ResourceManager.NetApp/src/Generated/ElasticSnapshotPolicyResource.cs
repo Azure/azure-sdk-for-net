@@ -14,9 +14,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Foundations.Models;
+using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -442,7 +441,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticVolumeResource(Client, data));
+                context,
+                "ElasticSnapshotPolicyResource.GetElasticVolumes"), data => new ElasticVolumeResource(Client, data));
         }
 
         /// <summary>
@@ -480,7 +480,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticVolumeResource(Client, data));
+                context,
+                "ElasticSnapshotPolicyResource.GetElasticVolumes"), data => new ElasticVolumeResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

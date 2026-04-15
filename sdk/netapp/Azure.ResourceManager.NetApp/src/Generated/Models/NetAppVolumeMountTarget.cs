@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -40,19 +39,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        [WirePath("mountTargetId")]
         public string MountTargetId { get; }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>
-        [WirePath("fileSystemId")]
         public string FileSystemId { get; }
 
         /// <summary> The mount target's IPv4 address. </summary>
-        [WirePath("ipAddress")]
         public string IpAddress { get; }
 
         /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
-        [WirePath("smbServerFqdn")]
         public string SmbServerFqdn { get; }
     }
 }

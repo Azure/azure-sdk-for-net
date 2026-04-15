@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -40,23 +39,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Replication health check. </summary>
-        [WirePath("healthy")]
         public bool? Healthy { get; }
 
         /// <summary> Status of the mirror relationship. </summary>
-        [WirePath("relationshipStatus")]
         public VolumeReplicationRelationshipStatus? RelationshipStatus { get; }
 
         /// <summary> The status of the replication. </summary>
-        [WirePath("mirrorState")]
         public NetAppMirrorState? MirrorState { get; }
 
         /// <summary> The progress of the replication. </summary>
-        [WirePath("totalProgress")]
         public string TotalProgress { get; }
 
         /// <summary> Displays error message if the replication is in an error state. </summary>
-        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

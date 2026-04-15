@@ -14,9 +14,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -1462,7 +1461,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ListQuotaReportResult>> GetQuotaReportAsync(WaitUntil waitUntil, QuotaReportFilterContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ListQuotaReportResult>> GetQuotaReportAsync(WaitUntil waitUntil, QuotaReportFilterRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetQuotaReport");
             scope.Start();
@@ -1472,7 +1471,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateGetQuotaReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, QuotaReportFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _volumesRestClient.CreateGetQuotaReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, QuotaReportFilterRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<ListQuotaReportResult> operation = new NetAppArmOperation<ListQuotaReportResult>(
                     new ListQuotaReportResultOperationSource(),
@@ -1518,7 +1517,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ListQuotaReportResult> GetQuotaReport(WaitUntil waitUntil, QuotaReportFilterContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ListQuotaReportResult> GetQuotaReport(WaitUntil waitUntil, QuotaReportFilterRequest content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("VolumeResource.GetQuotaReport");
             scope.Start();
@@ -1528,7 +1527,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateGetQuotaReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, QuotaReportFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _volumesRestClient.CreateGetQuotaReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, QuotaReportFilterRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<ListQuotaReportResult> operation = new NetAppArmOperation<ListQuotaReportResult>(
                     new ListQuotaReportResultOperationSource(),
@@ -1588,7 +1587,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Name,
                 Id.Name,
                 ListReplicationsContent.ToRequestContent(content),
-                context);
+                context,
+                "VolumeResource.GetReplications");
         }
 
         /// <summary>
@@ -1629,7 +1629,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Name,
                 Id.Name,
                 ListReplicationsContent.ToRequestContent(content),
-                context);
+                context,
+                "VolumeResource.GetReplications");
         }
 
         /// <summary>

@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ElasticVolumeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticVolumeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticVolumeResource.ResourceType), nameof(id));
             }
         }
 
@@ -301,7 +300,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticSnapshotResource(Client, data));
+                context,
+                "ElasticSnapshotCollection.GetAll"), data => new ElasticSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +336,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new ElasticSnapshotResource(Client, data));
+                context,
+                "ElasticSnapshotCollection.GetAll"), data => new ElasticSnapshotResource(Client, data));
         }
 
         /// <summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
-        [WirePath("keySource")]
         public NetAppKeySource? KeySource { get; set; }
 
         /// <summary> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        [WirePath("keyVaultProperties")]
         public NetAppKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
-        [WirePath("identity")]
         public NetAppEncryptionIdentity Identity { get; set; }
     }
 }

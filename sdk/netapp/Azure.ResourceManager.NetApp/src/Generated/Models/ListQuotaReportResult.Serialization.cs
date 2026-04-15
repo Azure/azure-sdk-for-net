@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ListQuotaReportResponse properties = default;
+            NetAppVolumeQuotaReportListResult properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    properties = ListQuotaReportResponse.DeserializeListQuotaReportResponse(prop.Value, options);
+                    properties = NetAppVolumeQuotaReportListResult.DeserializeNetAppVolumeQuotaReportListResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

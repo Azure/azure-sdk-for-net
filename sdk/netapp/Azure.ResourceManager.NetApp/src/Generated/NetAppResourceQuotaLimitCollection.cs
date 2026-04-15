@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitResource>(new NetAppResourceQuotaLimitsGetAllAsyncCollectionResultOfT(_netAppResourceQuotaLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new NetAppResourceQuotaLimitResource(Client, data));
+            return new AsyncPageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitResource>(new NetAppResourceQuotaLimitsGetAllAsyncCollectionResultOfT(_netAppResourceQuotaLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppResourceQuotaLimitCollection.GetAll"), data => new NetAppResourceQuotaLimitResource(Client, data));
         }
 
         /// <summary>
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitResource>(new NetAppResourceQuotaLimitsGetAllCollectionResultOfT(_netAppResourceQuotaLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new NetAppResourceQuotaLimitResource(Client, data));
+            return new PageableWrapper<NetAppSubscriptionQuotaItemData, NetAppResourceQuotaLimitResource>(new NetAppResourceQuotaLimitsGetAllCollectionResultOfT(_netAppResourceQuotaLimitsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "NetAppResourceQuotaLimitCollection.GetAll"), data => new NetAppResourceQuotaLimitResource(Client, data));
         }
 
         /// <summary>

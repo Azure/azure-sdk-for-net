@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<string> groupIdsForLdapUser = default;
+            IReadOnlyList<string> groupIdsForLdapUser = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

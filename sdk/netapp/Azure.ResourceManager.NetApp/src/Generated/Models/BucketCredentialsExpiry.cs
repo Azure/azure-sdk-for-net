@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The number of days from now until the newly generated Access and Secret key pair will expire. </summary>
-        [WirePath("keyPairExpiryDays")]
         public int? KeyPairExpiryDays { get; set; }
     }
 }

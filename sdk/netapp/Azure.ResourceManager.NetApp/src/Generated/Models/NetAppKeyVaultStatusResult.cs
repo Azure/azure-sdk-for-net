@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,11 +32,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Represents the properties of the getKeyVaultStatus. </summary>
-        [WirePath("properties")]
         internal GetKeyVaultStatusResponseProperties Properties { get; }
 
         /// <summary> The URI of the key vault/managed HSM that should be used for encryption. </summary>
-        [WirePath("properties.keyVaultUri")]
         public Uri KeyVaultUri
         {
             get
@@ -47,7 +44,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The name of the key that should be used for encryption. </summary>
-        [WirePath("properties.keyName")]
         public string KeyName
         {
             get
@@ -57,7 +53,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure resource ID of the key vault/managed HSM that should be used for encryption. </summary>
-        [WirePath("properties.keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId
         {
             get
@@ -67,7 +62,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
-        [WirePath("properties.keyVaultPrivateEndpoints")]
         public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints
         {
             get

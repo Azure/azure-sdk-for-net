@@ -49,23 +49,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the Azure Key Vault configuration. </summary>
-        [WirePath("keyVaultId")]
         public string KeyVaultId { get; }
 
         /// <summary> The Uri of KeyVault. </summary>
-        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> The name of KeyVault key. </summary>
-        [WirePath("keyName")]
         public string KeyName { get; set; }
 
         /// <summary> The resource ID of KeyVault. </summary>
-        [WirePath("keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId { get; set; }
 
         /// <summary> Status of the KeyVault connection. </summary>
-        [WirePath("status")]
         public NetAppKeyVaultStatus? Status { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </summary>
-        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </summary>
-        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
 
         /// <summary> ClientId of the multi-tenant Entra ID Application. Used to access cross-tenant keyvaults. </summary>
-        [WirePath("federatedClientId")]
         public string FederatedClientId { get; set; }
     }
 }

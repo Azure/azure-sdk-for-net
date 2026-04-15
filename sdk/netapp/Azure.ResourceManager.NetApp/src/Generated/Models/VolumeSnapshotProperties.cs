@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,7 +32,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
-        [WirePath("snapshotPolicyId")]
         public ResourceIdentifier SnapshotPolicyId { get; set; }
     }
 }

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppVolumePoolChangeContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppVolumePoolChangeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -136,13 +134,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ResourceIdentifier newPoolResourceId = default;
+            string newPoolResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("newPoolResourceId"u8))
                 {
-                    newPoolResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    newPoolResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

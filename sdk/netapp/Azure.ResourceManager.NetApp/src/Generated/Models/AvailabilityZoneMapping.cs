@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -16,8 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
@@ -31,11 +28,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Logical availability zone. </summary>
-        [WirePath("availabilityZone")]
         public string AvailabilityZone { get; }
 
         /// <summary> Available availability zone. </summary>
-        [WirePath("isAvailable")]
         public bool? IsAvailable { get; }
     }
 }

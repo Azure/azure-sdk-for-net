@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private readonly string _value;
         private const string SAPHANAValue = "SAP-HANA";
         private const string ORACLEValue = "ORACLE";
-        /// <summary> Custom application type allows min 2 and max 12 data volumes in a volume group. </summary>
-        private const string CUSTOMValue = "CUSTOM";
 
         /// <summary> Initializes a new instance of <see cref="NetAppApplicationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,9 +33,6 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Gets the ORACLE. </summary>
         public static NetAppApplicationType ORACLE { get; } = new NetAppApplicationType(ORACLEValue);
-
-        /// <summary> Custom application type allows min 2 and max 12 data volumes in a volume group. </summary>
-        public static NetAppApplicationType CUSTOM { get; } = new NetAppApplicationType(CUSTOMValue);
 
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

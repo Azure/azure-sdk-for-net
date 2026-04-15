@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Encryption settings. </summary>
-        [WirePath("encryption")]
         public ElasticEncryption Encryption { get; set; }
     }
 }

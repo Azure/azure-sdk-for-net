@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Volume group properties. </param>
         /// <param name="location"> Resource location. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeGroupProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeGroupProperties properties, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,15 +40,12 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Volume group properties. </summary>
-        [WirePath("properties")]
         internal VolumeGroupProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
+        public string Location { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -58,8 +55,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Volume group details. </summary>
-        [WirePath("properties.groupMetaData")]
-        public VolumeGroupMetaData GroupMetaData
+        public NetAppVolumeGroupMetadata GroupMetaData
         {
             get
             {
@@ -76,7 +72,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> List of volumes from group. </summary>
-        [WirePath("properties.volumes")]
         public IList<NetAppVolumeGroupVolume> Volumes
         {
             get

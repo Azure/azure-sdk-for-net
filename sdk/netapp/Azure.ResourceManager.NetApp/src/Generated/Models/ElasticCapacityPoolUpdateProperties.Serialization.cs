@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticCapacityPool. </summary>
     public partial class ElasticCapacityPoolUpdateProperties : IJsonModel<ElasticCapacityPoolUpdateProperties>

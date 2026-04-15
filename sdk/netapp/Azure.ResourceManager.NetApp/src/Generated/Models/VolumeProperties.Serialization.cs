@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("dataStoreResourceId"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in DataStoreResourceId)
+                foreach (string item in DataStoreResourceId)
                 {
                     if (item == null)
                     {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? deleteBaseSnapshot = default;
             ResourceIdentifier backupId = default;
             string baremetalTenantId = default;
-            ResourceIdentifier subnetId = default;
+            string subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
             NetAppNetworkFeature? effectiveNetworkFeatures = default;
             string networkSiblingSetId = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NetApp.Models
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource? encryptionKeySource = default;
-            ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
+            string keyVaultPrivateEndpointResourceId = default;
             bool? ldapEnabled = default;
             LdapServerType? ldapServerType = default;
             bool? coolAccess = default;
@@ -495,14 +495,14 @@ namespace Azure.ResourceManager.NetApp.Models
             int? cloneProgress = default;
             NetAppFileAccessLog? fileAccessLogs = default;
             NetAppAvsDataStore? avsDataStore = default;
-            IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
+            IReadOnlyList<string> dataStoreResourceId = default;
             bool? isDefaultQuotaEnabled = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
             long? maximumNumberOfFiles = default;
             string volumeGroupName = default;
-            ResourceIdentifier capacityPoolResourceId = default;
-            ResourceIdentifier proximityPlacementGroup = default;
+            string capacityPoolResourceId = default;
+            string proximityPlacementGroup = default;
             string t2Network = default;
             string volumeSpecName = default;
             bool? encrypted = default;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             LargeVolumeType? largeVolumeType = default;
-            ResourceIdentifier originatingResourceId = default;
+            string originatingResourceId = default;
             long? inheritedSizeInBytes = default;
             VolumeLanguage? language = default;
             BreakthroughMode? breakthroughMode = default;
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("networkFeatures"u8))
@@ -788,11 +788,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    keyVaultPrivateEndpointResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ldapEnabled"u8))
@@ -893,7 +889,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -902,7 +898,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         }
                         else
                         {
-                            array.Add(new ResourceIdentifier(item.GetString()));
+                            array.Add(item.GetString());
                         }
                     }
                     dataStoreResourceId = array;
@@ -951,20 +947,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("capacityPoolResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacityPoolResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    capacityPoolResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("proximityPlacementGroup"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    proximityPlacementGroup = new ResourceIdentifier(prop.Value.GetString());
+                    proximityPlacementGroup = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("t2Network"u8))
@@ -1041,9 +1029,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        originatingResourceId = null;
                         continue;
                     }
-                    originatingResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    originatingResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("inheritedSizeInBytes"u8))
@@ -1122,7 +1111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 cloneProgress,
                 fileAccessLogs,
                 avsDataStore,
-                dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
+                dataStoreResourceId ?? new ChangeTrackingList<string>(),
                 isDefaultQuotaEnabled,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,

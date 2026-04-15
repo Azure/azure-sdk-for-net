@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != VolumeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VolumeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VolumeResource.ResourceType), nameof(id));
             }
         }
 
@@ -69,12 +68,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,12 +119,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,12 +171,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +191,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RansomwareReportResource(Client, data));
+                context,
+                "RansomwareReportCollection.GetAll"), data => new RansomwareReportResource(Client, data));
         }
 
         /// <summary>
@@ -222,12 +210,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +230,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new RansomwareReportResource(Client, data));
+                context,
+                "RansomwareReportCollection.GetAll"), data => new RansomwareReportResource(Client, data));
         }
 
         /// <summary>
@@ -261,12 +246,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,12 +303,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,12 +360,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,12 +421,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RansomwareReportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

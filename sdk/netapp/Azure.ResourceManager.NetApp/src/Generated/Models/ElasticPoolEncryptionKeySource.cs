@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticPoolEncryptionKeySource : IEquatable<ElasticPoolEncryptionKeySource>
     {
         private readonly string _value;
+        /// <summary> Represents the encryption key source of Elastic pool is Microsoft.NetApp. </summary>
+        private const string NetAppValue = "NetApp";
+        /// <summary> Represents the encryption key source of Elastic pool is Microsoft.KeyVault. </summary>
+        private const string KeyVaultValue = "KeyVault";
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticPoolEncryptionKeySource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NetAppValue = "NetApp";
-        private const string KeyVaultValue = "KeyVault";
+            _value = value;
+        }
 
         /// <summary> Represents the encryption key source of Elastic pool is Microsoft.NetApp. </summary>
         public static ElasticPoolEncryptionKeySource NetApp { get; } = new ElasticPoolEncryptionKeySource(NetAppValue);
+
         /// <summary> Represents the encryption key source of Elastic pool is Microsoft.KeyVault. </summary>
         public static ElasticPoolEncryptionKeySource KeyVault { get; } = new ElasticPoolEncryptionKeySource(KeyVaultValue);
+
         /// <summary> Determines if two <see cref="ElasticPoolEncryptionKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticPoolEncryptionKeySource left, ElasticPoolEncryptionKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticPoolEncryptionKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticPoolEncryptionKeySource left, ElasticPoolEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticPoolEncryptionKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticPoolEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticPoolEncryptionKeySource(string value) => new ElasticPoolEncryptionKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticPoolEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticPoolEncryptionKeySource?(string value) => value == null ? null : new ElasticPoolEncryptionKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticPoolEncryptionKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticPoolEncryptionKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

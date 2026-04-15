@@ -64,59 +64,45 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the Backup. </summary>
-        [WirePath("backupId")]
         public string BackupId { get; }
 
         /// <summary> The creation date of the backup. </summary>
-        [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The snapshot creation date of the backup. </summary>
-        [WirePath("snapshotCreationDate")]
         public DateTimeOffset? SnapshotCreationOn { get; }
 
         /// <summary> The completion date of the backup. </summary>
-        [WirePath("completionDate")]
         public DateTimeOffset? CompletionOn { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Size of backup in bytes. </summary>
-        [WirePath("size")]
         public long? Size { get; }
 
         /// <summary> Label for backup. </summary>
-        [WirePath("label")]
         public string Label { get; set; }
 
         /// <summary> Type of backup Manual or Scheduled. </summary>
-        [WirePath("backupType")]
         public NetAppBackupType? BackupType { get; }
 
         /// <summary> Failure reason. </summary>
-        [WirePath("failureReason")]
         public string FailureReason { get; }
 
         /// <summary> ResourceId used to identify the Volume. </summary>
-        [WirePath("volumeResourceId")]
         public ResourceIdentifier VolumeResourceId { get; set; }
 
         /// <summary> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </summary>
-        [WirePath("useExistingSnapshot")]
         public bool? UseExistingSnapshot { get; set; }
 
         /// <summary> The name of the snapshot. </summary>
-        [WirePath("snapshotName")]
         public string SnapshotName { get; set; }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        [WirePath("backupPolicyResourceId")]
         public ResourceIdentifier BackupPolicyResourceId { get; }
 
         /// <summary> Specifies if the backup is for a large volume. </summary>
-        [WirePath("isLargeVolume")]
         public bool? IsLargeVolume { get; }
     }
 }

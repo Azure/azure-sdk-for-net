@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ipAddress"> IP Address. </param>
         /// <param name="volumeResourceIds"> Volume resource Ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NicInfo(string ipAddress, IList<ResourceIdentifier> volumeResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NicInfo(string ipAddress, IReadOnlyList<ResourceIdentifier> volumeResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpAddress = ipAddress;
             VolumeResourceIds = volumeResourceIds;
@@ -36,11 +36,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> IP Address. </summary>
-        [WirePath("ipAddress")]
         public string IpAddress { get; }
 
         /// <summary> Volume resource Ids. </summary>
-        [WirePath("volumeResourceIds")]
-        public IList<ResourceIdentifier> VolumeResourceIds { get; }
+        public IReadOnlyList<ResourceIdentifier> VolumeResourceIds { get; }
     }
 }

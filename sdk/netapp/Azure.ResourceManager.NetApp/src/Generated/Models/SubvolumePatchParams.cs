@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
-        [WirePath("size")]
         public long? Size { get; set; }
 
         /// <summary> path to the subvolume. </summary>
-        [WirePath("path")]
         public string Path { get; set; }
     }
 }

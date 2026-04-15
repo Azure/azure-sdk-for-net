@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The type used for update operations of the Cache. </summary>
     public partial class CachePatch
@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.Foundations.Models
         }
 
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
         public CacheUpdateProperties Properties { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="ransomwareProtection"> Advanced Ransomware Protection updatable settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumePatchDataProtection(VolumeBackupProperties backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Backup = backup;
             Snapshot = snapshot;
@@ -37,19 +36,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Properties. </summary>
-        [WirePath("backup")]
-        public NetAppVolumeBackupConfiguration Backup { get; set; }
+        public VolumeBackupProperties Backup { get; set; }
 
         /// <summary> Snapshot properties. </summary>
-        [WirePath("snapshot")]
         internal VolumeSnapshotProperties Snapshot { get; set; }
 
         /// <summary> Advanced Ransomware Protection updatable settings. </summary>
-        [WirePath("ransomwareProtection")]
         internal RansomwareProtectionPatchSettings RansomwareProtection { get; set; }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
-        [WirePath("snapshot.snapshotPolicyId")]
         public ResourceIdentifier SnapshotPolicyId
         {
             get
@@ -67,7 +62,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The desired value of the ARP feature state available to the volume. </summary>
-        [WirePath("ransomwareProtection.desiredRansomwareProtectionState")]
         public DesiredRansomwareProtectionState? DesiredRansomwareProtectionState
         {
             get

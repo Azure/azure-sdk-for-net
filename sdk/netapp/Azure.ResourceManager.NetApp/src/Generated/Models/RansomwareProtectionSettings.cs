@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The desired value of the Advanced Ransomware Protection feature state available to the volume. </summary>
-        [WirePath("desiredRansomwareProtectionState")]
         public DesiredRansomwareProtectionState? DesiredRansomwareProtectionState { get; set; }
 
         /// <summary> The actual state of the Advanced Ransomware Protection feature currently active on the volume. </summary>
-        [WirePath("actualRansomwareProtectionState")]
         public ActualRansomwareProtectionState? ActualRansomwareProtectionState { get; }
     }
 }

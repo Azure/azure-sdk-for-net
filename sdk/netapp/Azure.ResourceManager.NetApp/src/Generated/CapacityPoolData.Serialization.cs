@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(capacityPoolData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(capacityPoolData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CapacityPoolData"/> from. </param>
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
         }
 
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.NetApp
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             PoolProperties properties = default;
-            ETag? eTag = default;
+            string eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -213,11 +211,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

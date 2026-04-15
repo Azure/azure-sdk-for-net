@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The type used for update operations of the ElasticVolume. </summary>
     public partial class ElasticVolumePatch : IJsonModel<ElasticVolumePatch>
@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Foundations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticVolumePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticVolumePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

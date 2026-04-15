@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -25,6 +24,7 @@ namespace Azure.ResourceManager.NetApp
         private readonly string _poolName;
         private readonly string _volumeName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ElasticSnapshots client used to send requests. </param>
@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="poolName"> The name of the ElasticCapacityPool. </param>
         /// <param name="volumeName"> The name of the ElasticVolume. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT(ElasticSnapshots client, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT(ElasticSnapshots client, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.NetApp
             _poolName = poolName;
             _volumeName = volumeName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ElasticSnapshotsGetByElasticVolumeAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.NetApp
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByElasticVolumeRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context) : _client.CreateGetByElasticVolumeRequest(_subscriptionId, _resourceGroupName, _accountName, _poolName, _volumeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticSnapshotCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The service level of the file system. </summary>
-        [WirePath("serviceLevel")]
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
+
         /// <summary>
         /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
@@ -84,43 +84,33 @@ namespace Azure.ResourceManager.NetApp.Models
         public long? UsageThreshold { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
-        [WirePath("exportPolicy")]
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
-        [WirePath("protocolTypes")]
         public IList<string> ProtocolTypes { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
-        [WirePath("throughputMibps")]
         public float? ThroughputMibps { get; set; }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        [WirePath("dataProtection")]
         public NetAppVolumePatchDataProtection DataProtection { get; set; }
 
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
-        [WirePath("isDefaultQuotaEnabled")]
         public bool? IsDefaultQuotaEnabled { get; set; }
 
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
-        [WirePath("defaultUserQuotaInKiBs")]
         public long? DefaultUserQuotaInKiBs { get; set; }
 
         /// <summary> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </summary>
-        [WirePath("defaultGroupQuotaInKiBs")]
         public long? DefaultGroupQuotaInKiBs { get; set; }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        [WirePath("unixPermissions")]
         public string UnixPermissions { get; set; }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        [WirePath("coolAccess")]
         public bool? CoolAccess { get; set; }
 
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
-        [WirePath("coolnessPeriod")]
         public int? CoolnessPeriod { get; set; }
 
         /// <summary>
@@ -129,27 +119,21 @@ namespace Azure.ResourceManager.NetApp.Models
         /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </summary>
-        [WirePath("coolAccessRetrievalPolicy")]
         public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get; set; }
 
         /// <summary> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </summary>
-        [WirePath("coolAccessTieringPolicy")]
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy { get; set; }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
-        [WirePath("snapshotDirectoryVisible")]
         public bool? SnapshotDirectoryVisible { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("smbAccessBasedEnumeration")]
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("smbNonBrowsable")]
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
 
         /// <summary> Export policy rule. </summary>
-        [WirePath("exportPolicy.rules")]
         public IList<ExportPolicyRule> ExportRules
         {
             get

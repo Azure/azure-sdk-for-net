@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ActiveDirectoryConfig. </summary>
     public partial class ActiveDirectoryConfigUpdateProperties : IJsonModel<ActiveDirectoryConfigUpdateProperties>

@@ -39,19 +39,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Suspect File extension. </summary>
-        [WirePath("extension")]
         public string Extension { get; }
 
         /// <summary> ARP report suspect resolution. </summary>
-        [WirePath("resolution")]
         public RansomwareSuspectResolution? Resolution { get; }
 
         /// <summary> The number of suspect files at the time of ARP report, this number can change as files get created and report status progresses. </summary>
-        [WirePath("fileCount")]
         public int? FileCount { get; }
 
         /// <summary> Suspect files. </summary>
-        [WirePath("suspectFiles")]
         public IReadOnlyList<SuspectFile> SuspectFiles { get; }
     }
 }

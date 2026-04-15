@@ -69,59 +69,45 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </summary>
-        [WirePath("filePath")]
         public string FilePath { get; set; }
 
         /// <summary> Maximum size allowed for a volume in bytes. Valid values are in the range 1GiB to 16TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
-        [WirePath("size")]
         public long Size { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
-        [WirePath("exportPolicy")]
         internal ElasticExportPolicy ExportPolicy { get; set; }
 
         /// <summary> Set of support protocol types for the elastic volume. </summary>
-        [WirePath("protocolTypes")]
         public IList<ElasticProtocolType> ProtocolTypes { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Current availability status of the resource. </summary>
-        [WirePath("availabilityStatus")]
         public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }
 
         /// <summary> Resource identifier used to identify the Elastic Snapshot. </summary>
-        [WirePath("snapshotResourceId")]
         public ResourceIdentifier SnapshotResourceId { get; set; }
 
         /// <summary> List of mount targets that can be used to mount this volume. </summary>
-        [WirePath("mountTargets")]
         public IReadOnlyList<ElasticMountTargetProperties> MountTargets { get; }
 
         /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
-        [WirePath("dataProtection")]
         public ElasticVolumeDataProtectionProperties DataProtection { get; set; }
 
         /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
-        [WirePath("snapshotDirectoryVisibility")]
         public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
 
         /// <summary> SMB Properties. </summary>
-        [WirePath("smbProperties")]
         internal ElasticSmbProperties SmbProperties { get; set; }
 
         /// <summary> Resource identifier used to identify the Elastic Backup. </summary>
-        [WirePath("backupResourceId")]
         public ResourceIdentifier BackupResourceId { get; set; }
 
         /// <summary> The current state of the restoration process. </summary>
-        [WirePath("restorationState")]
         public ElasticVolumeRestorationState? RestorationState { get; }
 
         /// <summary> Export policy rule. </summary>
-        [WirePath("exportPolicy.rules")]
         public IList<ElasticExportPolicyRule> ExportRules
         {
             get
@@ -135,7 +121,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>
-        [WirePath("smbProperties.smbEncryption")]
         public ElasticSmbEncryption? SmbEncryption
         {
             get

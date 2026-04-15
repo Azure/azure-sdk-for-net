@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The base URI of the Azure Key Vault that is used when retrieving the bucket certificate. </summary>
-        [WirePath("certificateKeyVaultUri")]
         public Uri CertificateKeyVaultUri { get; set; }
 
         /// <summary> The name of the bucket server certificate stored in the Azure Key Vault. </summary>
-        [WirePath("certificateName")]
         public string CertificateName { get; set; }
     }
 }

@@ -30,12 +30,16 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             Identity = identity;
             ProvisioningState = provisioningState;
-            ActiveDirectories = activeDirectories?.ToList();
+            if (activeDirectories != null)
+            {
+                foreach (var ad in activeDirectories)
+                    ActiveDirectories.Add(ad);
+            }
             Encryption = encryption;
             DisableShowmount = disableShowmount;
             NfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = serializedAdditionalRawData;
         }
     }
 }

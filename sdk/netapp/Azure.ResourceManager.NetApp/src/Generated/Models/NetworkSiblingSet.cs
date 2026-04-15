@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Gets the status of the NetworkSiblingSet at the time the operation was called. </param>
         /// <param name="nicInfoList"> List of NIC information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSiblingSet(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature? networkFeatures, NetworkSiblingSetProvisioningState? provisioningState, IList<NicInfo> nicInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSiblingSet(string networkSiblingSetId, ResourceIdentifier subnetId, string networkSiblingSetStateId, NetAppNetworkFeature? networkFeatures, NetworkSiblingSetProvisioningState? provisioningState, IReadOnlyList<NicInfo> nicInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSiblingSetId = networkSiblingSetId;
             SubnetId = subnetId;
@@ -44,27 +44,21 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </summary>
-        [WirePath("networkSiblingSetId")]
         public string NetworkSiblingSetId { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </summary>
-        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; }
 
         /// <summary> Network sibling set state Id identifying the current state of the sibling set. </summary>
-        [WirePath("networkSiblingSetStateId")]
         public string NetworkSiblingSetStateId { get; }
 
         /// <summary> Network features available to the volume, or current state of update. </summary>
-        [WirePath("networkFeatures")]
         public NetAppNetworkFeature? NetworkFeatures { get; }
 
         /// <summary> Gets the status of the NetworkSiblingSet at the time the operation was called. </summary>
-        [WirePath("provisioningState")]
         public NetworkSiblingSetProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of NIC information. </summary>
-        [WirePath("nicInfoList")]
-        public IList<NicInfo> NicInfoList { get; }
+        public IReadOnlyList<NicInfo> NicInfoList { get; }
     }
 }

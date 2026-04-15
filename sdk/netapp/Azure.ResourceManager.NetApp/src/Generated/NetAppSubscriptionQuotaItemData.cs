@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.NetApp
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
-
-        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,11 +33,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> QuotaItem properties. </summary>
-        [WirePath("properties")]
         internal QuotaItemProperties Properties { get; }
 
         /// <summary> The current quota value. </summary>
-        [WirePath("properties.current")]
         public int? Current
         {
             get
@@ -49,7 +45,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The default quota value. </summary>
-        [WirePath("properties.default")]
         public int? Default
         {
             get
@@ -59,7 +54,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The usage quota value. </summary>
-        [WirePath("properties.usage")]
         public int? Usage
         {
             get

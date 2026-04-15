@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Hourly snapshot count to keep. </summary>
-        [WirePath("snapshotsToKeep")]
         public int? SnapshotsToKeep { get; set; }
 
         /// <summary> Indicates which minute snapshot should be taken. </summary>
-        [WirePath("minute")]
         public int? Minute { get; set; }
 
         /// <summary> Resource size in bytes, current storage usage for the volume in bytes. </summary>
-        [WirePath("usedBytes")]
         public long? UsedBytes { get; set; }
     }
 }

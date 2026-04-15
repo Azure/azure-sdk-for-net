@@ -45,15 +45,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> List of files to be restored. </summary>
-        [WirePath("fileList")]
         public IList<string> FileList { get; }
 
         /// <summary> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </summary>
-        [WirePath("restoreFilePath")]
         public string RestoreFilePath { get; set; }
 
         /// <summary> Resource Id of the destination volume on which the files need to be restored. </summary>
-        [WirePath("destinationVolumeId")]
         public string DestinationVolumeId { get; }
     }
 }

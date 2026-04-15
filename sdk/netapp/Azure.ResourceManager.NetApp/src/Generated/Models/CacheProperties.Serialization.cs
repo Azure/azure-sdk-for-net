@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(CacheProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("filepath"u8);
-            writer.WriteStringValue(Filepath);
+            writer.WritePropertyName("filePath"u8);
+            writer.WriteStringValue(FilePath);
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
             if (Optional.IsDefined(ExportPolicy))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string filepath = default;
+            string filePath = default;
             long size = default;
             NetAppCachePropertiesExportPolicy exportPolicy = default;
             IList<ProtocolTypes> protocolTypes = default;
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.NetApp.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("filepath"u8))
+                if (prop.NameEquals("filePath"u8))
                 {
-                    filepath = prop.Value.GetString();
+                    filePath = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new CacheProperties(
-                filepath,
+                filePath,
                 size,
                 exportPolicy,
                 protocolTypes ?? new ChangeTrackingList<ProtocolTypes>(),

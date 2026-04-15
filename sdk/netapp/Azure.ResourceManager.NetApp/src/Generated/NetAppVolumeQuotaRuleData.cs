@@ -41,11 +41,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Volume Quota Rule Properties. </summary>
-        [WirePath("properties")]
         internal VolumeQuotaRulesProperties Properties { get; set; }
 
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-        [WirePath("properties.provisioningState")]
         public NetAppProvisioningState? ProvisioningState
         {
             get
@@ -55,7 +53,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Size of quota. </summary>
-        [WirePath("properties.quotaSizeInKiBs")]
         public long? QuotaSizeInKiBs
         {
             get
@@ -73,7 +70,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Type of quota. </summary>
-        [WirePath("properties.quotaType")]
         public NetAppVolumeQuotaType? QuotaType
         {
             get
@@ -91,7 +87,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
-        [WirePath("properties.quotaTarget")]
         public string QuotaTarget
         {
             get

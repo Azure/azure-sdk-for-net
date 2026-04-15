@@ -41,11 +41,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Backup Vault Properties. </summary>
-        [WirePath("properties")]
         internal BackupVaultProperties Properties { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

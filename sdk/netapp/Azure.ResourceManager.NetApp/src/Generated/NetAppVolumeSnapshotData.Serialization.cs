@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppVolumeSnapshotData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppVolumeSnapshotData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppVolumeSnapshotData"/> from. </param>
@@ -143,7 +141,7 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SnapshotProperties properties = default;
-            AzureLocation location = default;
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

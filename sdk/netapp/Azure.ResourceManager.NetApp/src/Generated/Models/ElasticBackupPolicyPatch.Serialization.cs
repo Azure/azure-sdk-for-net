@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The type used for update operations of the ElasticBackupPolicy. </summary>
     public partial class ElasticBackupPolicyPatch : IJsonModel<ElasticBackupPolicyPatch>
@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Foundations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticBackupPolicyPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticBackupPolicyPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

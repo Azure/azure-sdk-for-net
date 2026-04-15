@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -39,19 +38,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The resource ID of the remote volume. </summary>
-        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
-        [WirePath("replicationType")]
         public NetAppReplicationType? ReplicationType { get; }
 
         /// <summary> The remote region for the destination volume. </summary>
-        [WirePath("region")]
         public string Region { get; }
 
         /// <summary> The remote zone for the destination volume. </summary>
-        [WirePath("zone")]
         public string Zone { get; }
     }
 }

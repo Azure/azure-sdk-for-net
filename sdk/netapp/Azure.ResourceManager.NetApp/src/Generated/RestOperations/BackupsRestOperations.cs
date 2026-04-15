@@ -20,10 +20,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of Backups for mocking. </summary>
         protected Backups()
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-12-15-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         /// <summary> Initializes a new instance of Backups. </summary>
@@ -121,7 +117,7 @@ namespace Azure.ResourceManager.NetApp
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

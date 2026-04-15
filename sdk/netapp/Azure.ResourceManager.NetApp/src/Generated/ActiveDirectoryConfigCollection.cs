@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetByResourceGroupAsyncCollectionResultOfT(_activeDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ActiveDirectoryConfigResource(Client, data));
+            return new AsyncPageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetByResourceGroupAsyncCollectionResultOfT(_activeDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActiveDirectoryConfigCollection.GetAll"), data => new ActiveDirectoryConfigResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetByResourceGroupCollectionResultOfT(_activeDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ActiveDirectoryConfigResource(Client, data));
+            return new PageableWrapper<ActiveDirectoryConfigData, ActiveDirectoryConfigResource>(new ActiveDirectoryConfigsGetByResourceGroupCollectionResultOfT(_activeDirectoryConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActiveDirectoryConfigCollection.GetAll"), data => new ActiveDirectoryConfigResource(Client, data));
         }
 
         /// <summary>

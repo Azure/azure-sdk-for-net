@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the Snapshot. </summary>
-        [WirePath("snapshotId")]
         public string SnapshotId { get; }
 
         /// <summary> The creation date of the snapshot. </summary>
-        [WirePath("created")]
         public DateTimeOffset? Created { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

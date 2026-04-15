@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -37,15 +36,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Azure Key Vault URI where the Entra ID credentials are stored. </summary>
-        [WirePath("azureKeyVaultUri")]
         public Uri AzureKeyVaultUri { get; set; }
 
         /// <summary> The name of the certificate in Azure Key Vault. </summary>
-        [WirePath("certificateName")]
         public string CertificateName { get; set; }
 
         /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </summary>
-        [WirePath("userAssignedIdentity")]
         public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }

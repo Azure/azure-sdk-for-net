@@ -37,11 +37,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The BackupPolicy items on this page. </summary>
-        [WirePath("value")]
         public IList<NetAppBackupPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
-        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

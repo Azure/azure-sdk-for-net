@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Access Key that is required along with the Secret Key to access the bucket. </summary>
-        [WirePath("accessKey")]
         public string AccessKey { get; }
 
         /// <summary> The Secret Key that is required along with the Access Key to access the bucket. </summary>
-        [WirePath("secretKey")]
         public string SecretKey { get; }
 
         /// <summary> The bucket's Access and Secret key pair expiry date and time (in UTC). </summary>
-        [WirePath("keyPairExpiry")]
         public DateTimeOffset? KeyPairExpiry { get; }
     }
 }

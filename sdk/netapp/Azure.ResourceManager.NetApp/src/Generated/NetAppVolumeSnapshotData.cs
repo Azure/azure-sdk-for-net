@@ -21,8 +21,11 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="location"> Resource location. </param>
-        public NetAppVolumeSnapshotData(AzureLocation location)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public NetAppVolumeSnapshotData(string location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
             Location = location;
         }
 
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Snapshot Properties. </param>
         /// <param name="location"> Resource location. </param>
-        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties, AzureLocation location) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties, string location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,15 +45,12 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Snapshot Properties. </summary>
-        [WirePath("properties")]
         internal SnapshotProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        [WirePath("location")]
-        public AzureLocation Location { get; set; }
+        public string Location { get; set; }
 
         /// <summary> UUID v4 used to identify the Snapshot. </summary>
-        [WirePath("properties.snapshotId")]
         public string SnapshotId
         {
             get
@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The creation date of the snapshot. </summary>
-        [WirePath("properties.created")]
         public DateTimeOffset? Created
         {
             get
@@ -70,7 +69,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

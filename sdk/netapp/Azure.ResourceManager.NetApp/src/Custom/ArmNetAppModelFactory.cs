@@ -3,6 +3,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -264,15 +266,15 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
 
             return CapacityPoolPatch(
-                id,
-                resourceType,
-                systemData,
-                location,
-                name: null,
-                tags,
-                size,
-                qosType,
-                isCoolAccessEnabled,
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                size: size,
+                qosType: qosType,
+                isCoolAccessEnabled: isCoolAccessEnabled,
                 customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null);
         }
 

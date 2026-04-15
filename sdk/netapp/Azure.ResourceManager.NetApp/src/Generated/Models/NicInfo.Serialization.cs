@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string ipAddress = default;
-            IList<ResourceIdentifier> volumeResourceIds = default;
+            IReadOnlyList<ResourceIdentifier> volumeResourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

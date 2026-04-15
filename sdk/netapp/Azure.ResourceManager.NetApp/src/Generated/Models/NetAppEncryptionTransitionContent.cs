@@ -43,11 +43,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Identifier for the virtual network. </summary>
-        [WirePath("virtualNetworkId")]
         public ResourceIdentifier VirtualNetworkId { get; }
 
         /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
-        [WirePath("privateEndpointId")]
         public ResourceIdentifier PrivateEndpointId { get; }
     }
 }

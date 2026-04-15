@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,11 +33,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The NFS user's UID. </summary>
-        [WirePath("userId")]
         public long? UserId { get; set; }
 
         /// <summary> The NFS user's GID. </summary>
-        [WirePath("groupId")]
         public long? GroupId { get; set; }
     }
 }

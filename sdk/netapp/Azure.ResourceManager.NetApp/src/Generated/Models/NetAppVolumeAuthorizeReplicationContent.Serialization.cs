@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppVolumeAuthorizeReplicationContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppVolumeAuthorizeReplicationContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -134,17 +132,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ResourceIdentifier remoteVolumeResourceId = default;
+            string remoteVolumeResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("remoteVolumeResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    remoteVolumeResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    remoteVolumeResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

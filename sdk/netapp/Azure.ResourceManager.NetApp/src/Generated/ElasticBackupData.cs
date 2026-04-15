@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
         public ElasticBackupProperties Properties { get; set; }
     }
 }

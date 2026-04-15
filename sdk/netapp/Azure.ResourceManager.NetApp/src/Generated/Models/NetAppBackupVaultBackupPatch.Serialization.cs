@@ -57,16 +57,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetAppBackupVaultBackupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="backupPatch"> The <see cref="NetAppBackupVaultBackupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetAppBackupVaultBackupPatch backupPatch)
+        /// <param name="netAppBackupVaultBackupPatch"> The <see cref="NetAppBackupVaultBackupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppBackupVaultBackupPatch netAppBackupVaultBackupPatch)
         {
-            if (backupPatch == null)
+            if (netAppBackupVaultBackupPatch == null)
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(backupPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppBackupVaultBackupPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

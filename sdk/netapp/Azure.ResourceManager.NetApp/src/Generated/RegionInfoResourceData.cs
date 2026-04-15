@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.NetApp
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegionInfoResourceData"/>. </summary>
-
-        /// <summary> Initializes a new instance of <see cref="RegionInfoResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,11 +33,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> regionInfo properties. </summary>
-        [WirePath("properties")]
         internal NetAppRegionInfo Properties { get; }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
-        [WirePath("properties.storageToNetworkProximity")]
         public RegionStorageToNetworkProximity? StorageToNetworkProximity
         {
             get
@@ -49,8 +45,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        [WirePath("properties.availabilityZoneMappings")]
-        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings
+        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings
         {
             get
             {

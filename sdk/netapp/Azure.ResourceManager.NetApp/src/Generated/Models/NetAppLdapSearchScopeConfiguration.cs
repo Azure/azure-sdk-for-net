@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,15 +35,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> This specifies the user DN, which overrides the base DN for user lookups. </summary>
-        [WirePath("userDN")]
         public string UserDN { get; set; }
 
         /// <summary> This specifies the group DN, which overrides the base DN for group lookups. </summary>
-        [WirePath("groupDN")]
         public string GroupDN { get; set; }
 
         /// <summary> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </summary>
-        [WirePath("groupMembershipFilter")]
         public string GroupMembershipFilter { get; set; }
     }
 }

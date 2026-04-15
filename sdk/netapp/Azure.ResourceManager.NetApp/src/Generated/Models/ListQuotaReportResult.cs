@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -25,19 +24,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
         /// <param name="properties"> Represents the properties of the ListQuotaReport. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListQuotaReportResult(ListQuotaReportResponse properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListQuotaReportResult(NetAppVolumeQuotaReportListResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the properties of the ListQuotaReport. </summary>
-        [WirePath("properties")]
-        internal ListQuotaReportResponse Properties { get; }
+        internal NetAppVolumeQuotaReportListResult Properties { get; }
 
         /// <summary> List of quota reports. </summary>
-        [WirePath("properties.quotaReportRecords")]
-        public IList<NetAppVolumeQuotaReport> QuotaReportRecords
+        public IList<QuotaReport> QuotaReportRecords
         {
             get
             {

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppFilePathAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(netAppFilePathAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string name = default;
-            ResourceIdentifier subnetId = default;
+            string subnetId = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("availabilityZone"u8))

@@ -27,43 +27,37 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="nfsV4IDDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectories = activeDirectories;
             EntraIdConfig = entraIdConfig;
             Encryption = encryption;
-            NfsV4IDDomain = nfsV4IDDomain;
+            NfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
             LdapConfiguration = ldapConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Active Directories. </summary>
-        [WirePath("activeDirectories")]
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectory>();
 
         /// <summary> Entra ID configuration for the account. </summary>
-        [WirePath("entraIdConfig")]
         public EntraIdConfigPatch EntraIdConfig { get; set; }
 
         /// <summary> Encryption settings. </summary>
-        [WirePath("encryption")]
         public NetAppAccountEncryption Encryption { get; set; }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        [WirePath("nfsV4IDDomain")]
-        public string NfsV4IDDomain { get; set; }
+        public string NfsV4IdDomain { get; set; }
 
         /// <summary> MultiAD Status for the account. </summary>
-        [WirePath("multiAdStatus")]
         public MultiAdStatus? MultiAdStatus { get; set; }
 
         /// <summary> LDAP Configuration for the account. </summary>
-        [WirePath("ldapConfiguration")]
         public LdapConfigurationPatch LdapConfiguration { get; set; }
     }
 }

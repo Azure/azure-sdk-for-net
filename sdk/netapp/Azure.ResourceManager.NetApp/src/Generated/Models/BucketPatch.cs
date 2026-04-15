@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -38,11 +37,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Bucket properties. </summary>
-        [WirePath("properties")]
         internal BucketPatchProperties Properties { get; set; }
 
         /// <summary> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </summary>
-        [WirePath("properties.fileSystemUser")]
         public FileSystemUser FileSystemUser
         {
             get
@@ -60,7 +57,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
         public NetAppProvisioningState? ProvisioningState
         {
             get
@@ -70,7 +66,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Properties of the server managing the lifecycle of volume buckets. </summary>
-        [WirePath("properties.server")]
         public BucketServerPatchProperties Server
         {
             get
@@ -88,7 +83,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Access permissions for the bucket. Either ReadOnly or ReadWrite. </summary>
-        [WirePath("properties.permissions")]
         public BucketPatchPermissions? Permissions
         {
             get
@@ -112,7 +106,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// Notes:
         /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
         /// </summary>
-        [WirePath("properties.akvDetails")]
         public AzureKeyVaultDetails AkvDetails
         {
             get

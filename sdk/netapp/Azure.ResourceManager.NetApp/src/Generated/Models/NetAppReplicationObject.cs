@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="externalReplicationSetupInfo"> Contains human-readable instructions on what the next step is to finish the external replication setup. </param>
         /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
         /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, NetAppExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, VolumeReplicationRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, ExternalReplicationSetupStatus? externalReplicationSetupStatus, string externalReplicationSetupInfo, NetAppMirrorState? mirrorState, VolumeReplicationRelationshipStatus? relationshipStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -50,42 +50,39 @@ namespace Azure.ResourceManager.NetApp.Models
             ExternalReplicationSetupInfo = externalReplicationSetupInfo;
             MirrorState = mirrorState;
             RelationshipStatus = relationshipStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id. </summary>
-        [WirePath("replicationId")]
         public string ReplicationId { get; }
 
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        [WirePath("endpointType")]
         public NetAppEndpointType? EndpointType { get; }
 
         /// <summary> Schedule. </summary>
-        [WirePath("replicationSchedule")]
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
 
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
-        [WirePath("remoteVolumeResourceId")]
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
 
         /// <summary> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </summary>
-        [WirePath("remotePath")]
         public RemotePath RemotePath { get; set; }
 
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
-        [WirePath("remoteVolumeRegion")]
         public string RemoteVolumeRegion { get; set; }
 
         /// <summary> A list of destination replications. </summary>
-        [WirePath("destinationReplications")]
         public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
+
         /// <summary> Property that only applies to external replications. Provides a machine-readable value for the status of the external replication setup. </summary>
-        public NetAppExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get; }
+        public ExternalReplicationSetupStatus? ExternalReplicationSetupStatus { get; }
+
         /// <summary> Contains human-readable instructions on what the next step is to finish the external replication setup. </summary>
         public string ExternalReplicationSetupInfo { get; }
+
         /// <summary> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </summary>
         public NetAppMirrorState? MirrorState { get; }
+
         /// <summary> The status of the Volume Replication. </summary>
         public VolumeReplicationRelationshipStatus? RelationshipStatus { get; }
     }

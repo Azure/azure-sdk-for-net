@@ -42,23 +42,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Name of the LDAP configuration domain. </summary>
-        [WirePath("domain")]
         public string Domain { get; set; }
 
         /// <summary> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </summary>
-        [WirePath("ldapServers")]
         public IList<IPAddress> LdapServers { get; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        [WirePath("ldapOverTLS")]
         public bool? LdapOverTLS { get; set; }
 
         /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
-        [WirePath("serverCACertificate")]
         public string ServerCACertificate { get; set; }
 
         /// <summary> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </summary>
-        [WirePath("certificateCNHost")]
         public string CertificateCNHost { get; set; }
     }
 }

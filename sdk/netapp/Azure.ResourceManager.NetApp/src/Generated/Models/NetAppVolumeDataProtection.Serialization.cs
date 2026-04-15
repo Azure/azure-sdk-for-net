@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            NetAppVolumeBackupConfiguration backup = default;
+            VolumeBackupProperties backup = default;
             NetAppReplicationObject replication = default;
             VolumeSnapshotProperties snapshot = default;
             NetAppVolumeRelocationProperties volumeRelocation = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(prop.Value, options);
+                    backup = VolumeBackupProperties.DeserializeVolumeBackupProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("replication"u8))

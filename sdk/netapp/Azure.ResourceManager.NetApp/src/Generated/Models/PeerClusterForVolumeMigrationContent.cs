@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </summary>
-        [WirePath("peerIpAddresses")]
         public IList<string> PeerIpAddresses { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
         /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, string kdcIP, string adName, string serverRootCACertificate, bool? aesEncryption, bool? ldapSigning, IList<string> securityOperators, bool? ldapOverTLS, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? aesEncryption, bool? ldapSigning, IList<string> securityOperators, bool? ldapOverTLS, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -79,95 +80,72 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Id of the Active Directory. </summary>
-        [WirePath("activeDirectoryId")]
         public string ActiveDirectoryId { get; set; }
 
         /// <summary> A domain user account with permission to create machine accounts. </summary>
-        [WirePath("username")]
         public string Username { get; set; }
 
         /// <summary> Plain text password of Active Directory domain administrator, value is masked in the response. </summary>
-        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> Name of the Active Directory domain. </summary>
-        [WirePath("domain")]
         public string Domain { get; set; }
 
         /// <summary> Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain. </summary>
-        [WirePath("dns")]
         public string Dns { get; set; }
 
         /// <summary> Status of the Active Directory. </summary>
-        [WirePath("status")]
         public NetAppAccountActiveDirectoryStatus? Status { get; }
 
         /// <summary> Any details in regards to the Status of the Active Directory. </summary>
-        [WirePath("statusDetails")]
         public string StatusDetails { get; }
 
         /// <summary> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </summary>
-        [WirePath("smbServerName")]
         public string SmbServerName { get; set; }
 
         /// <summary> The Organizational Unit (OU) within the Windows Active Directory. </summary>
-        [WirePath("organizationalUnit")]
         public string OrganizationalUnit { get; set; }
 
         /// <summary> The Active Directory site the service will limit Domain Controller discovery to. </summary>
-        [WirePath("site")]
         public string Site { get; set; }
 
         /// <summary> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </summary>
-        [WirePath("backupOperators")]
         public IList<string> BackupOperators { get; }
 
         /// <summary> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </summary>
-        [WirePath("administrators")]
         public IList<string> Administrators { get; }
 
         /// <summary> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
-        [WirePath("kdcIP")]
-        public string KdcIP { get; set; }
+        public IPAddress KdcIP { get; set; }
 
         /// <summary> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </summary>
-        [WirePath("adName")]
         public string AdName { get; set; }
 
         /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </summary>
-        [WirePath("serverRootCACertificate")]
         public string ServerRootCACertificate { get; set; }
 
         /// <summary> If enabled, AES encryption will be enabled for SMB communication. </summary>
-        [WirePath("aesEncryption")]
         public bool? AesEncryption { get; set; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be signed. </summary>
-        [WirePath("ldapSigning")]
         public bool? LdapSigning { get; set; }
 
         /// <summary> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </summary>
-        [WirePath("securityOperators")]
         public IList<string> SecurityOperators { get; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        [WirePath("ldapOverTLS")]
         public bool? LdapOverTLS { get; set; }
 
         /// <summary> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </summary>
-        [WirePath("allowLocalNfsUsersWithLdap")]
         public bool? AllowLocalNfsUsersWithLdap { get; set; }
 
         /// <summary> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </summary>
-        [WirePath("encryptDCConnections")]
         public bool? EncryptDCConnections { get; set; }
 
         /// <summary> LDAP Search scope options. </summary>
-        [WirePath("ldapSearchScope")]
         public NetAppLdapSearchScopeConfiguration LdapSearchScope { get; set; }
 
         /// <summary> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </summary>
-        [WirePath("preferredServersForLdapClient")]
         public string PreferredServersForLdapClient { get; set; }
     }
 }

@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticSnapshotPolicy. </summary>
     public partial class ElasticSnapshotPolicyUpdateProperties
@@ -41,23 +39,18 @@ namespace Azure.ResourceManager.Foundations.Models
         }
 
         /// <summary> Schedule for hourly snapshots. </summary>
-        [WirePath("hourlySchedule")]
         public ElasticSnapshotPolicyHourlySchedule HourlySchedule { get; set; }
 
         /// <summary> Schedule for daily snapshots. </summary>
-        [WirePath("dailySchedule")]
         public ElasticSnapshotPolicyDailySchedule DailySchedule { get; set; }
 
         /// <summary> Schedule for weekly snapshots. </summary>
-        [WirePath("weeklySchedule")]
         public ElasticSnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
 
         /// <summary> Schedule for monthly snapshots. </summary>
-        [WirePath("monthlySchedule")]
         public ElasticSnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
 
         /// <summary> Configures if the snapshot policy is enabled on the volumes connected to the policy. </summary>
-        [WirePath("policyStatus")]
         public PolicyStatus? PolicyStatus { get; set; }
     }
 }

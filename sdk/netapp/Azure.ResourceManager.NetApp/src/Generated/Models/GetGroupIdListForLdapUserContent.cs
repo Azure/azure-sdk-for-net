@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> username is required to fetch the group to which user is part of. </summary>
-        [WirePath("username")]
         public string Username { get; }
     }
 }

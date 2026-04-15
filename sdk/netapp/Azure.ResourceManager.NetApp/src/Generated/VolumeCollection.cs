@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != CapacityPoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CapacityPoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CapacityPoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -308,7 +307,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new VolumeResource(Client, data));
+                context,
+                "VolumeCollection.GetAll"), data => new VolumeResource(Client, data));
         }
 
         /// <summary>
@@ -342,7 +342,8 @@ namespace Azure.ResourceManager.NetApp
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new VolumeResource(Client, data));
+                context,
+                "VolumeCollection.GetAll"), data => new VolumeResource(Client, data));
         }
 
         /// <summary>

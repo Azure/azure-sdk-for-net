@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The type used for update operations of the ActiveDirectoryConfig. </summary>
     public partial class ActiveDirectoryConfigPatch : IJsonModel<ActiveDirectoryConfigPatch>
@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Foundations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(activeDirectoryConfigPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(activeDirectoryConfigPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.Foundations.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -169,7 +167,7 @@ namespace Azure.ResourceManager.Foundations.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

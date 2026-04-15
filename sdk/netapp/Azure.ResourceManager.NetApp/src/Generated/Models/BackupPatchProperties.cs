@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -32,7 +31,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Label for backup. </summary>
-        [WirePath("label")]
         public string Label { get; set; }
     }
 }

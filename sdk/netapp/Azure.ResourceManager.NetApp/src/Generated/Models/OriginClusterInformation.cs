@@ -53,19 +53,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> ONTAP cluster name of external cluster hosting the origin volume. </summary>
-        [WirePath("peerClusterName")]
         public string PeerClusterName { get; set; }
 
         /// <summary> ONTAP Intercluster LIF IP addresses. One IP address per cluster node is required. </summary>
-        [WirePath("peerAddresses")]
         public IList<string> PeerAddresses { get; }
 
         /// <summary> External Vserver (SVM) name  name of the SVM hosting the origin volume. </summary>
-        [WirePath("peerVserverName")]
         public string PeerVserverName { get; set; }
 
         /// <summary> External origin volume name associated to this cache. </summary>
-        [WirePath("peerVolumeName")]
         public string PeerVolumeName { get; set; }
     }
 }

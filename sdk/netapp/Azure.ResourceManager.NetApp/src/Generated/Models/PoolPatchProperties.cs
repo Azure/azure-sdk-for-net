@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -38,19 +37,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
-        [WirePath("size")]
         public long? Size { get; set; }
 
         /// <summary> The qos type of the pool. </summary>
-        [WirePath("qosType")]
         public CapacityPoolQosType? QosType { get; set; }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        [WirePath("coolAccess")]
         public bool? CoolAccess { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        [WirePath("customThroughputMibps")]
         public int? CustomThroughputMibpsInt { get; set; }
     }
 }

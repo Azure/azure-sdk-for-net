@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -44,19 +43,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The cluster peering command. </summary>
-        [WirePath("clusterPeeringCommand")]
         public string ClusterPeeringCommand { get; }
 
         /// <summary> The cluster peering passphrase. </summary>
-        [WirePath("clusterPeeringPassphrase")]
         public string ClusterPeeringPassphrase { get; }
 
         /// <summary> The vserver peering command. </summary>
-        [WirePath("vserverPeeringCommand")]
         public string VserverPeeringCommand { get; }
 
         /// <summary> Warnings that are critical for the cluster peering and vserver peering processes. </summary>
-        [WirePath("criticalWarning")]
         public string CriticalWarning { get; }
     }
 }

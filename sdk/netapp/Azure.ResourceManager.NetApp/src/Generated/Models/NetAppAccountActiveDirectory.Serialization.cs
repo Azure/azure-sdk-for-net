@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KdcIP))
             {
                 writer.WritePropertyName("kdcIP"u8);
-                writer.WriteStringValue(KdcIP);
+                writer.WriteStringValue(KdcIP.ToString());
             }
             if (Optional.IsDefined(AdName))
             {
@@ -273,7 +274,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string site = default;
             IList<string> backupOperators = default;
             IList<string> administrators = default;
-            string kdcIP = default;
+            IPAddress kdcIP = default;
             string adName = default;
             string serverRootCACertificate = default;
             bool? aesEncryption = default;
@@ -390,7 +391,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("kdcIP"u8))
                 {
-                    kdcIP = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kdcIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("adName"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -20,8 +19,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="RansomwareReportProperties"/>. </summary>
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportProperties"/>. </summary>
         /// <param name="eventOn"> The creation date and time of the report. </param>
@@ -45,31 +42,24 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The creation date and time of the report. </summary>
-        [WirePath("eventTime")]
         public DateTimeOffset? EventOn { get; }
 
         /// <summary> State of the Advanced Ransomware Protection (ARP) report. </summary>
-        [WirePath("state")]
         public RansomwareReportState? State { get; }
 
         /// <summary> Severity of the Advanced Ransomware Protection (ARP) report. </summary>
-        [WirePath("severity")]
         public RansomwareReportSeverity? Severity { get; }
 
         /// <summary> The number of cleared suspects identified by the ARP report. </summary>
-        [WirePath("clearedCount")]
         public int? ClearedCount { get; }
 
         /// <summary> The number of suspects identified by the ARP report. </summary>
-        [WirePath("reportedCount")]
         public int? ReportedCount { get; }
 
         /// <summary> Suspects identified in an ARP report. </summary>
-        [WirePath("suspects")]
         public IReadOnlyList<RansomwareSuspects> Suspects { get; }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

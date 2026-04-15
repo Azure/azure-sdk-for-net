@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -38,23 +37,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource Id. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Resource name. </summary>
-        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type. </summary>
-        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> It represents the minimal properties of the subvolume. </summary>
-        [WirePath("properties")]
         internal SubvolumeModelProperties Properties { get; }
 
         /// <summary> Path to the subvolume. </summary>
-        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -64,7 +58,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Path to the parent subvolume. </summary>
-        [WirePath("properties.parentPath")]
         public string ParentPath
         {
             get
@@ -74,7 +67,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Size of subvolume. </summary>
-        [WirePath("properties.size")]
         public long? Size
         {
             get
@@ -84,7 +76,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Bytes used. </summary>
-        [WirePath("properties.bytesUsed")]
         public long? BytesUsed
         {
             get
@@ -94,7 +85,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Permissions of the subvolume. </summary>
-        [WirePath("properties.permissions")]
         public string Permissions
         {
             get
@@ -104,7 +94,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Creation time and date. </summary>
-        [WirePath("properties.creationTimeStamp")]
         public DateTimeOffset? CreationTimeStamp
         {
             get
@@ -114,7 +103,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Most recent access time and date. </summary>
-        [WirePath("properties.accessedTimeStamp")]
         public DateTimeOffset? AccessedTimeStamp
         {
             get
@@ -124,7 +112,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Most recent modification time and date. </summary>
-        [WirePath("properties.modifiedTimeStamp")]
         public DateTimeOffset? ModifiedTimeStamp
         {
             get
@@ -134,7 +121,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Most recent change time and date. </summary>
-        [WirePath("properties.changedTimeStamp")]
         public DateTimeOffset? ChangedTimeStamp
         {
             get
@@ -144,7 +130,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

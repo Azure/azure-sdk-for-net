@@ -16,7 +16,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.NetApp
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetByResourceGroupAsyncCollectionResultOfT(_elasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticAccountResource(Client, data));
+            return new AsyncPageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetByResourceGroupAsyncCollectionResultOfT(_elasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticAccountCollection.GetAll"), data => new ElasticAccountResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetByResourceGroupCollectionResultOfT(_elasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticAccountResource(Client, data));
+            return new PageableWrapper<ElasticAccountData, ElasticAccountResource>(new ElasticAccountsGetByResourceGroupCollectionResultOfT(_elasticAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticAccountCollection.GetAll"), data => new ElasticAccountResource(Client, data));
         }
 
         /// <summary>

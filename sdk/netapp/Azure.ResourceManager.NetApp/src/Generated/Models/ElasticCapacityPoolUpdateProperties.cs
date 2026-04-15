@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticCapacityPool. </summary>
     public partial class ElasticCapacityPoolUpdateProperties
@@ -38,15 +36,12 @@ namespace Azure.ResourceManager.Foundations.Models
         }
 
         /// <summary> Provisioned size of the pool (in bytes). For zoneRedundant service level pool, value must be in the range 1TiB to 16TiB or 1TiB to 128TiB for supported region. Values expressed in bytes as multiples of 1TiB till 16TiB and in multiples of 8TiB from 24TiB to 128TiB. Pool size can't be shrunk once it is created. </summary>
-        [WirePath("size")]
         public long? Size { get; set; }
 
         /// <summary> Encryption settings. </summary>
-        [WirePath("encryption")]
         public ElasticEncryptionConfiguration Encryption { get; set; }
 
         /// <summary> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </summary>
-        [WirePath("activeDirectoryConfigResourceId")]
         public ResourceIdentifier ActiveDirectoryConfigResourceId { get; set; }
     }
 }

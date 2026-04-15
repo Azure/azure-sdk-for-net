@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            AzureLocation? location = default;
+            string location = default;
             string id = default;
             string name = default;
             string @type = default;
@@ -152,11 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

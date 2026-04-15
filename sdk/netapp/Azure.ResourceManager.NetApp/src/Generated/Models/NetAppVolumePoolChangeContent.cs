@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
-        public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
+        public NetAppVolumePoolChangeContent(string newPoolResourceId)
         {
             Argument.AssertNotNull(newPoolResourceId, nameof(newPoolResourceId));
 
@@ -31,14 +30,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumePoolChangeContent(string newPoolResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NewPoolResourceId = newPoolResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id of the pool to move volume to. </summary>
-        [WirePath("newPoolResourceId")]
-        public ResourceIdentifier NewPoolResourceId { get; }
+        public string NewPoolResourceId { get; }
     }
 }

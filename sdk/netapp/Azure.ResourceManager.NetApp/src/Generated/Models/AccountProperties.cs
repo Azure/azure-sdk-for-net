@@ -29,53 +29,45 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <param name="nfsV4IDDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
             EntraIdConfig = entraIdConfig;
             Encryption = encryption;
             DisableShowmount = disableShowmount;
-            NfsV4IDDomain = nfsV4IDDomain;
+            NfsV4IdDomain = nfsV4IdDomain;
             MultiAdStatus = multiAdStatus;
             LdapConfiguration = ldapConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Active Directories. </summary>
-        [WirePath("activeDirectories")]
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectory>();
 
         /// <summary> Entra ID configuration for the account. </summary>
-        [WirePath("entraIdConfig")]
         public EntraIdConfig EntraIdConfig { get; set; }
 
         /// <summary> Encryption settings. </summary>
-        [WirePath("encryption")]
         public NetAppAccountEncryption Encryption { get; set; }
 
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        [WirePath("disableShowmount")]
         public bool? DisableShowmount { get; }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
-        [WirePath("nfsV4IDDomain")]
-        public string NfsV4IDDomain { get; set; }
+        public string NfsV4IdDomain { get; set; }
 
         /// <summary> MultiAD Status for the account. </summary>
-        [WirePath("multiAdStatus")]
         public MultiAdStatus? MultiAdStatus { get; }
 
         /// <summary> LDAP Configuration for the account. </summary>
-        [WirePath("ldapConfiguration")]
         public LdapConfiguration LdapConfiguration { get; set; }
     }
 }

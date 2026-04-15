@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageToNetworkProximity = storageToNetworkProximity;
             AvailabilityZoneMappings = availabilityZoneMappings;
@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
-        [WirePath("storageToNetworkProximity")]
         public RegionStorageToNetworkProximity? StorageToNetworkProximity { get; }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        [WirePath("availabilityZoneMappings")]
-        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings { get; } = new ChangeTrackingList<AvailabilityZoneMapping>();
+        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings { get; } = new ChangeTrackingList<AvailabilityZoneMapping>();
     }
 }

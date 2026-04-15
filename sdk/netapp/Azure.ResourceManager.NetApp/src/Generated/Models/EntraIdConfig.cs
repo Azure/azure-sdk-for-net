@@ -49,19 +49,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> ApplicationId of the app created by customer to provide authentication and required API permissions for Microsoft Graph endpoint. </summary>
-        [WirePath("applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary> Domain of the Active directory synced to Entra ID for hybrid identities. </summary>
-        [WirePath("domain")]
         public string Domain { get; set; }
 
         /// <summary> Using ServerNamePrefix, FQDN (Fully Qualified Domain Name) will be generated for SMB share, using this FQDN, SMB Share will be mounted on Entra Joined VM. </summary>
-        [WirePath("serverNamePrefix")]
         public string ServerNamePrefix { get; set; }
 
         /// <summary> Using AKV config, certificate will be fetched, which will contain private key &amp; public certificate, that correspond to the public certificate which is uploaded on the application created by customer. This will be used further for authentication. </summary>
-        [WirePath("entraIdAkvConfig")]
         public EntraIdAkvConfig EntraIdAkvConfig { get; set; }
     }
 }

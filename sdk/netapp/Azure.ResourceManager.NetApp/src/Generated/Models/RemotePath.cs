@@ -47,15 +47,12 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Path to a ONTAP Host. </summary>
-        [WirePath("externalHostName")]
         public string ExternalHostName { get; set; }
 
         /// <summary> The name of a server on the ONTAP Host. </summary>
-        [WirePath("serverName")]
         public string ServerName { get; set; }
 
         /// <summary> The name of a volume on the server. </summary>
-        [WirePath("volumeName")]
         public string VolumeName { get; set; }
     }
 }

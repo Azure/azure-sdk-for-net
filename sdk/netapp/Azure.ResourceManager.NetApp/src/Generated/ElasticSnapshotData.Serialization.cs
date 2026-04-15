@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticSnapshotData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticSnapshotData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticSnapshotData"/> from. </param>

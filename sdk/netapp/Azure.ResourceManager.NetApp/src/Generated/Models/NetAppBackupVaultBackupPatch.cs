@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -32,11 +31,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Patch Properties. </summary>
-        [WirePath("properties")]
         internal BackupPatchProperties Properties { get; set; }
 
         /// <summary> Label for backup. </summary>
-        [WirePath("properties.label")]
         public string Label
         {
             get

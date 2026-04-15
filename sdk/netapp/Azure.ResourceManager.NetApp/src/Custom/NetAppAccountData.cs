@@ -17,8 +17,13 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string NfsV4IdDomain
         {
-            get => NfsV4IDDomain;
-            set => NfsV4IDDomain = value;
+            get => Properties?.NfsV4IdDomain;
+            set
+            {
+                if (Properties is null)
+                    Properties = new Models.AccountProperties();
+                Properties.NfsV4IdDomain = value;
+            }
         }
     }
 }

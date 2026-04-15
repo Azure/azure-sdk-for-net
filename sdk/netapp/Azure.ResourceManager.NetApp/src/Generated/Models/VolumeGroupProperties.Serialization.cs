@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string provisioningState = default;
-            VolumeGroupMetaData groupMetaData = default;
+            NetAppVolumeGroupMetadata groupMetaData = default;
             IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    groupMetaData = VolumeGroupMetaData.DeserializeVolumeGroupMetaData(prop.Value, options);
+                    groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("volumes"u8))

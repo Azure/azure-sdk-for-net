@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             RegionStorageToNetworkProximity? storageToNetworkProximity = default;
-            IList<AvailabilityZoneMapping> availabilityZoneMappings = default;
+            IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

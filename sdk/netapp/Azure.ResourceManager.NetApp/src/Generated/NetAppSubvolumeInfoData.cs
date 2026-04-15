@@ -38,11 +38,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Subvolume Properties. </summary>
-        [WirePath("properties")]
         internal SubvolumeProperties Properties { get; set; }
 
         /// <summary> Path to the subvolume. </summary>
-        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -60,7 +58,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
-        [WirePath("properties.size")]
         public long? Size
         {
             get
@@ -78,7 +75,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> parent path to the subvolume. </summary>
-        [WirePath("properties.parentPath")]
         public string ParentPath
         {
             get
@@ -96,7 +92,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Azure lifecycle management. </summary>
-        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

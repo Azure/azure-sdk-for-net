@@ -43,31 +43,24 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource location. </summary>
-        [WirePath("location")]
         public string Location { get; set; }
 
         /// <summary> Resource Id. </summary>
-        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Resource name. </summary>
-        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type. </summary>
-        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Patchable volume properties. </summary>
-        [WirePath("properties")]
         internal VolumePatchProperties Properties { get; set; }
 
         /// <summary> The service level of the file system. </summary>
-        [WirePath("properties.serviceLevel")]
         public NetAppFileServiceLevel? ServiceLevel
         {
             get
@@ -89,7 +82,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </summary>
-        [WirePath("properties.usageThreshold")]
         public long? UsageThreshold
         {
             get
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
-        [WirePath("properties.protocolTypes")]
         public IList<string> ProtocolTypes
         {
             get
@@ -121,7 +112,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
-        [WirePath("properties.throughputMibps")]
         public float? ThroughputMibps
         {
             get
@@ -139,7 +129,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
-        [WirePath("properties.dataProtection")]
         public NetAppVolumePatchDataProtection DataProtection
         {
             get
@@ -157,7 +146,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
-        [WirePath("properties.isDefaultQuotaEnabled")]
         public bool? IsDefaultQuotaEnabled
         {
             get
@@ -175,7 +163,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
-        [WirePath("properties.defaultUserQuotaInKiBs")]
         public long? DefaultUserQuotaInKiBs
         {
             get
@@ -193,7 +180,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </summary>
-        [WirePath("properties.defaultGroupQuotaInKiBs")]
         public long? DefaultGroupQuotaInKiBs
         {
             get
@@ -211,7 +197,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
-        [WirePath("properties.unixPermissions")]
         public string UnixPermissions
         {
             get
@@ -229,7 +214,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        [WirePath("properties.coolAccess")]
         public bool? CoolAccess
         {
             get
@@ -247,7 +231,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
-        [WirePath("properties.coolnessPeriod")]
         public int? CoolnessPeriod
         {
             get
@@ -270,7 +253,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         /// Never - No client-driven data is pulled from cool tier to standard storage.
         /// </summary>
-        [WirePath("properties.coolAccessRetrievalPolicy")]
         public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy
         {
             get
@@ -288,7 +270,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </summary>
-        [WirePath("properties.coolAccessTieringPolicy")]
         public CoolAccessTieringPolicy? CoolAccessTieringPolicy
         {
             get
@@ -306,7 +287,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
-        [WirePath("properties.snapshotDirectoryVisible")]
         public bool? SnapshotDirectoryVisible
         {
             get
@@ -324,7 +304,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("properties.smbAccessBasedEnumeration")]
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration
         {
             get
@@ -342,7 +321,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
-        [WirePath("properties.smbNonBrowsable")]
         public SmbNonBrowsable? SmbNonBrowsable
         {
             get
@@ -360,7 +338,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Export policy rule. </summary>
-        [WirePath("properties.exportPolicy.rules")]
         public IList<ExportPolicyRule> ExportRules
         {
             get

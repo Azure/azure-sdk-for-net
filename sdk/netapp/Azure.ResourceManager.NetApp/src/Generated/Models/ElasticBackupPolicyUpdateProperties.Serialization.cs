@@ -10,9 +10,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticBackupPolicy. </summary>
     public partial class ElasticBackupPolicyUpdateProperties : IJsonModel<ElasticBackupPolicyUpdateProperties>
