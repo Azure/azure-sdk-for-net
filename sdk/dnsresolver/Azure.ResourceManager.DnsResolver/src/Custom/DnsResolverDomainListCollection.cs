@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable CS1591
+
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -13,14 +15,12 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsResolverDomainListCollection
     {
         // Backward-compat: old CreateOrUpdate took string ifMatch + string ifNoneMatch, new takes MatchConditions.
-        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsResolverDomainListResource> CreateOrUpdate(WaitUntil waitUntil, string dnsResolverDomainListName, DnsResolverDomainListData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             return CreateOrUpdate(waitUntil, dnsResolverDomainListName, data, default(MatchConditions), cancellationToken);
         }
 
-        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsResolverDomainListResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsResolverDomainListName, DnsResolverDomainListData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
@@ -28,3 +28,5 @@ namespace Azure.ResourceManager.DnsResolver
         }
     }
 }
+
+#pragma warning restore CS1591
