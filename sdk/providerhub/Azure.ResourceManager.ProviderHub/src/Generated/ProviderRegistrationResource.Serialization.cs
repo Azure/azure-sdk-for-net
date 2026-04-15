@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class ProviderRegistrationResource : IJsonModel<ProviderRegistrationData>
     {
-        private static ProviderRegistrationData s_dataDeserializationInstance;
-        private static ProviderRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProviderRegistrationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProviderRegistrationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProviderRegistrationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)Data).Write(writer, options);
 
-        ProviderRegistrationData IJsonModel<ProviderRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProviderRegistrationData IJsonModel<ProviderRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProviderRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProviderRegistrationData IPersistableModel<ProviderRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ProviderRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProviderRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

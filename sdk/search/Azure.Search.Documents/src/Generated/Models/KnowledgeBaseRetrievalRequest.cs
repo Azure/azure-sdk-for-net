@@ -20,36 +20,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
         public KnowledgeBaseRetrievalRequest()
         {
-            Messages = new ChangeTrackingList<KnowledgeBaseMessage>();
             Intents = new ChangeTrackingList<KnowledgeRetrievalIntent>();
             KnowledgeSourceParams = new ChangeTrackingList<KnowledgeSourceParams>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalRequest"/>. </summary>
-        /// <param name="messages"> A list of chat message style input. </param>
         /// <param name="intents"> A list of intended queries to execute without model query planning. </param>
         /// <param name="maxRuntimeInSeconds"> The maximum runtime in seconds. </param>
-        /// <param name="maxOutputSize"> Limits the maximum size of the content in the output. </param>
-        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <param name="maxOutputSizeInTokens"> Limits the maximum size of the content in the output. </param>
         /// <param name="includeActivity"> Indicates retrieval results should include activity information. </param>
-        /// <param name="outputMode"> The output configuration for this retrieval. </param>
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeBaseMessage> messages, IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, bool? includeActivity, KnowledgeRetrievalOutputMode? outputMode, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseRetrievalRequest(IList<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSizeInTokens, bool? includeActivity, IList<KnowledgeSourceParams> knowledgeSourceParams, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Messages = messages;
             Intents = intents;
             MaxRuntimeInSeconds = maxRuntimeInSeconds;
-            MaxOutputSize = maxOutputSize;
-            RetrievalReasoningEffort = retrievalReasoningEffort;
+            MaxOutputSizeInTokens = maxOutputSizeInTokens;
             IncludeActivity = includeActivity;
-            OutputMode = outputMode;
             KnowledgeSourceParams = knowledgeSourceParams;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> A list of chat message style input. </summary>
-        public IList<KnowledgeBaseMessage> Messages { get; }
 
         /// <summary> A list of intended queries to execute without model query planning. </summary>
         public IList<KnowledgeRetrievalIntent> Intents { get; }
@@ -58,16 +48,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public int? MaxRuntimeInSeconds { get; set; }
 
         /// <summary> Limits the maximum size of the content in the output. </summary>
-        public int? MaxOutputSize { get; set; }
-
-        /// <summary> The retrieval reasoning effort configuration. </summary>
-        public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; set; }
+        public int? MaxOutputSizeInTokens { get; set; }
 
         /// <summary> Indicates retrieval results should include activity information. </summary>
         public bool? IncludeActivity { get; set; }
-
-        /// <summary> The output configuration for this retrieval. </summary>
-        public KnowledgeRetrievalOutputMode? OutputMode { get; set; }
 
         /// <summary> A list of runtime parameters for the knowledge sources. </summary>
         public IList<KnowledgeSourceParams> KnowledgeSourceParams { get; }
