@@ -32,10 +32,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public static partial class ArmDataBoxEdgeModelFactory
     {
-        // ──────────────────────────────────────────────────────────────────────────
-        // GROUP 1: Type-shim backward-compat methods (Obsolete + EBNever)
-        // ──────────────────────────────────────────────────────────────────────────
-
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeDeviceCapacityInfo"/>. </summary>
         [Obsolete("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceCapacityInfoData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -53,18 +49,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeDeviceUpdateSummary DataBoxEdgeDeviceUpdateSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string deviceVersionNumber = default, string friendlyDeviceVersionName = default, DateTimeOffset? deviceLastScannedOn = default, DateTimeOffset? lastCompletedScanJobOn = default, DateTimeOffset? lastSuccessfulScanJobOn = default, DateTimeOffset? lastCompletedDownloadJobOn = default, ResourceIdentifier lastCompletedDownloadJobId = default, DataBoxEdgeJobStatus? lastDownloadJobStatus = default, DateTimeOffset? lastSuccessfulInstallJobOn = default, DateTimeOffset? lastCompletedInstallJobOn = default, ResourceIdentifier lastCompletedInstallJobId = default, DataBoxEdgeJobStatus? lastInstallJobStatus = default, int? totalNumberOfUpdatesAvailable = default, int? totalNumberOfUpdatesPendingDownload = default, int? totalNumberOfUpdatesPendingInstall = default, InstallRebootBehavior? rebootBehavior = default, DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default, ResourceIdentifier inProgressDownloadJobId = default, ResourceIdentifier inProgressInstallJobId = default, DateTimeOffset? inProgressDownloadJobStartedOn = default, DateTimeOffset? inProgressInstallJobStartedOn = default, IEnumerable<string> updateTitles = default, IEnumerable<DataBoxEdgeUpdateDetails> updates = default, double? totalUpdateSizeInBytes = default, int? totalTimeInMinutes = default)
             => throw new NotSupportedException("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceUpdateSummaryData instead.");
-
-        // ──────────────────────────────────────────────────────────────────────────
-        // GROUP 2a: Nullable factory methods — own the implementation that the
-        //           generator would produce but is suppressed by our presence here.
-        //
-        // MAINTENANCE NOTE: Because these methods call internal constructors directly,
-        // they will NOT automatically pick up new properties added in future TypeSpec
-        // updates. When properties are added to any of the underlying data types,
-        // these methods must be manually updated to include the new parameters.
-        // Track: https://github.com/Azure/autorest.csharp/issues/XXXX (generator issue
-        // to support partial overload suppression by signature, not just by name).
-        // ──────────────────────────────────────────────────────────────────────────
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.BandwidthScheduleData"/>. </summary>
         public static BandwidthScheduleData BandwidthScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TimeSpan? startOn = default, TimeSpan? stopOn = default, int? rateInMbps = default, IEnumerable<DataBoxEdgeDayOfWeek> days = default)
@@ -198,11 +182,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     provisioningState,
                     null));
         }
-
-        // ──────────────────────────────────────────────────────────────────────────
-        // GROUP 2b: Non-nullable backward-compat overloads (EBNever)
-        //           Restore the baseline ApiCompat surface; delegate to 2a above.
-        // ──────────────────────────────────────────────────────────────────────────
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.BandwidthScheduleData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
