@@ -9261,6 +9261,56 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests using Session authentication")]
+        public async Task DownloadToAsync_Parallel_Sessions()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.SingleContainer,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+                ContainerName = containerName
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange — upload a blob large enough to force multiple parallel range GETs
+            var data = GetRandomBuffer(10 * Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act — parallel download with small chunk sizes to force many concurrent GET requests
+            countingPolicy.Start();
+            using var resultStream = new MemoryStream();
+            await blob.DownloadToAsync(
+                resultStream,
+                new BlobDownloadToOptions
+                {
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        InitialTransferLength = Constants.KB,
+                        MaximumTransferLength = Constants.KB,
+                        MaximumConcurrency = 4
+                    }
+                });
+
+            // Assert — verify data was downloaded correctly
+            Assert.AreEqual(data.Length, resultStream.Length);
+            TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+
+            // Assert — verify that Create Session was called and all parallel GET requests used Session auth
+            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.IsTrue(countingPolicy.GetSessionAuthCount > 1, "Expected multiple parallel download requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests using Session authentication")]
         public async Task DownloadStreamingAsync_Sessions()
         {
             var containerName = GetNewContainerName();

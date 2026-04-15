@@ -323,6 +323,11 @@ namespace Azure.Storage.Tests
                 // Gate the acquire so it blocks until we're sure all tasks are queued.
                 var requestMre = new ManualResetEventSlim(false);
                 var responseMre = new ManualResetEventSlim(false);
+                // Two-phase barrier: ensures all 100 threads are alive and
+                // waiting before any of them calls GetValueAsync.
+                var ready = new CountdownEvent(100);
+                var startGate = new ManualResetEventSlim(false);
+
                 var cache = new AutoRefreshingCache<TestValue>(
                     acquire: (async, ct) =>
                     {
@@ -336,14 +341,28 @@ namespace Azure.Storage.Tests
                 var tasks = new Task<TestValue>[100];
                 for (int i = 0; i < tasks.Length; i++)
                 {
-                    tasks[i] = Task.Run(async () => await GetValueAsync(cache));
+                    tasks[i] = Task.Run(async () =>
+                    {
+                        ready.Signal();       // "I'm on a thread-pool thread"
+                        startGate.Wait();     // wait for all threads to be ready
+                        return await GetValueAsync(cache);
+                    });
                 }
+
+                // Phase 1: Wait until all 100 threads are alive and at the gate.
+                ready.Wait();
+
+                // Phase 2: Release all threads simultaneously.
+                startGate.Set();
 
                 // Wait for the first task to enter the acquire delegate.
                 requestMre.Wait();
 
-                // Give the thread pool time to schedule remaining tasks so they
-                // join the same TCS. The acquire is blocked, so this is reliable.
+                // All 100 threads are already executing. Give them time to pass
+                // through EvaluateState (just a lock acquisition each) and start
+                // awaiting the shared TCS. This is much more reliable than the
+                // original Thread.Sleep(500) because all threads are already
+                // scheduled — we're only waiting for ~99 lock acquisitions.
                 Thread.Sleep(500);
 
                 // Let the acquire throw — all 100 tasks observe the same faulted TCS.
