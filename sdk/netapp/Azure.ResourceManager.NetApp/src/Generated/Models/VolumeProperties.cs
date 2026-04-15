@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public VolumeProperties(string creationToken, long usageThreshold, string subnetId)
+        public VolumeProperties(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="language"> Language supported for volume. </param>
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(string fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicyRule exportPolicy, IList<string> protocolTypes, string provisioningState, ResourceIdentifier snapshotId, bool? deleteBaseSnapshot, ResourceIdentifier backupId, string baremetalTenantId, string subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, string networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? snapshotDirectoryVisible, bool? kerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? smbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, string keyVaultPrivateEndpointResourceId, bool? ldapEnabled, LdapServerType? ldapServerType, bool? coolAccess, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<string> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, string capacityPoolResourceId, string proximityPlacementGroup, string t2Network, string volumeSpecName, bool? encrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, string originatingResourceId, long? inheritedSizeInBytes, VolumeLanguage? language, BreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeProperties(string fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicyRule exportPolicy, IList<string> protocolTypes, string provisioningState, ResourceIdentifier snapshotId, bool? deleteBaseSnapshot, ResourceIdentifier backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, string networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? snapshotDirectoryVisible, bool? kerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? smbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? ldapEnabled, LdapServerType? ldapServerType, bool? coolAccess, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<string> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, string capacityPoolResourceId, ResourceIdentifier proximityPlacementGroup, string t2Network, string volumeSpecName, bool? encrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, VolumeLanguage? language, BreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string BaremetalTenantId { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> The original value of the network features type available to the volume at the time it was created. </summary>
         public NetAppNetworkFeature? NetworkFeatures { get; set; }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppEncryptionKeySource? EncryptionKeySource { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
-        public string KeyVaultPrivateEndpointResourceId { get; set; }
+        public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
         public bool? LdapEnabled { get; set; }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string CapacityPoolResourceId { get; set; }
 
         /// <summary> Proximity placement group associated with the volume. </summary>
-        public string ProximityPlacementGroup { get; set; }
+        public ResourceIdentifier ProximityPlacementGroup { get; set; }
 
         /// <summary> T2 network information. </summary>
         public string T2Network { get; }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public LargeVolumeType? LargeVolumeType { get; set; }
 
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
-        public string OriginatingResourceId { get; }
+        public ResourceIdentifier OriginatingResourceId { get; }
 
         /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
         public long? InheritedSizeInBytes { get; }

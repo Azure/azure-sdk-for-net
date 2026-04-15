@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="enabled"> The property to decide policy is enabled or not. </param>
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPolicyProperties(string backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPolicyProperties(ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupPolicyId = backupPolicyId;
             ProvisioningState = provisioningState;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Policy GUID ID. </summary>
-        public string BackupPolicyId { get; }
+        public ResourceIdentifier BackupPolicyId { get; }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }

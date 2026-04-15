@@ -132,13 +132,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string remoteVolumeResourceId = default;
+            ResourceIdentifier remoteVolumeResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("remoteVolumeResourceId"u8))
                 {
-                    remoteVolumeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteVolumeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

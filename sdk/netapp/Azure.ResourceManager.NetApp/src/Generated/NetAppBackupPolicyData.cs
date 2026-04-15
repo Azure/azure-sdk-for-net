@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
         public string ETag { get; }
 
         /// <summary> Backup Policy GUID ID. </summary>
-        public string BackupPolicyId
+        public ResourceIdentifier BackupPolicyId
         {
             get
             {

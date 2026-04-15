@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Optional.IsDefined(KeyVaultResourceId))
+            if (Optional.IsDefined(KeyVaultArmResourceId))
             {
                 writer.WritePropertyName("keyVaultResourceId"u8);
-                writer.WriteStringValue(KeyVaultResourceId);
+                writer.WriteStringValue(KeyVaultArmResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;
-            ResourceIdentifier keyVaultResourceId = default;
+            ResourceIdentifier keyVaultArmResourceId = default;
             NetAppKeyVaultStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    keyVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    keyVaultArmResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 keyVaultId,
                 keyVaultUri,
                 keyName,
-                keyVaultResourceId,
+                keyVaultArmResourceId,
                 status,
                 additionalBinaryDataProperties);
         }

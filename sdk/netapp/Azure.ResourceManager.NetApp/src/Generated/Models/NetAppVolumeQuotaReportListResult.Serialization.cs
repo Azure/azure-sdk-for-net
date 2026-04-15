@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("quotaReportRecords"u8);
                 writer.WriteStartArray();
-                foreach (QuotaReport item in QuotaReportRecords)
+                foreach (NetAppVolumeQuotaReport item in QuotaReportRecords)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<QuotaReport> quotaReportRecords = default;
+            IList<NetAppVolumeQuotaReport> quotaReportRecords = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<QuotaReport> array = new List<QuotaReport>();
+                    List<NetAppVolumeQuotaReport> array = new List<NetAppVolumeQuotaReport>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuotaReport.DeserializeQuotaReport(item, options));
+                        array.Add(NetAppVolumeQuotaReport.DeserializeNetAppVolumeQuotaReport(item, options));
                     }
                     quotaReportRecords = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppVolumeQuotaReportListResult(quotaReportRecords ?? new ChangeTrackingList<QuotaReport>(), additionalBinaryDataProperties);
+            return new NetAppVolumeQuotaReportListResult(quotaReportRecords ?? new ChangeTrackingList<NetAppVolumeQuotaReport>(), additionalBinaryDataProperties);
         }
     }
 }

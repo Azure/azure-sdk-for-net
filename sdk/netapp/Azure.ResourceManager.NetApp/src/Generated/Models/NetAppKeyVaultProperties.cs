@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
+        /// <param name="keyVaultArmResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, NetAppKeyVaultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultArmResourceId, NetAppKeyVaultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
-            KeyVaultResourceId = keyVaultResourceId;
+            KeyVaultArmResourceId = keyVaultArmResourceId;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string KeyName { get; set; }
 
         /// <summary> The resource ID of KeyVault. </summary>
-        public ResourceIdentifier KeyVaultResourceId { get; set; }
+        public ResourceIdentifier KeyVaultArmResourceId { get; set; }
 
         /// <summary> Status of the KeyVault connection. </summary>
         public NetAppKeyVaultStatus? Status { get; }

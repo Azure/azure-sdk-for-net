@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="fileList"> List of files to be restored. </param>
         /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileList"/> or <paramref name="destinationVolumeId"/> is null. </exception>
-        public NetAppVolumeBackupBackupRestoreFilesContent(IEnumerable<string> fileList, string destinationVolumeId)
+        public NetAppVolumeBackupBackupRestoreFilesContent(IEnumerable<string> fileList, ResourceIdentifier destinationVolumeId)
         {
             Argument.AssertNotNull(fileList, nameof(fileList));
             Argument.AssertNotNull(destinationVolumeId, nameof(destinationVolumeId));
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="restoreFilePath"> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </param>
         /// <param name="destinationVolumeId"> Resource Id of the destination volume on which the files need to be restored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupBackupRestoreFilesContent(IList<string> fileList, string restoreFilePath, string destinationVolumeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBackupBackupRestoreFilesContent(IList<string> fileList, string restoreFilePath, ResourceIdentifier destinationVolumeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileList = fileList;
             RestoreFilePath = restoreFilePath;
@@ -51,6 +52,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string RestoreFilePath { get; set; }
 
         /// <summary> Resource Id of the destination volume on which the files need to be restored. </summary>
-        public string DestinationVolumeId { get; }
+        public ResourceIdentifier DestinationVolumeId { get; }
     }
 }

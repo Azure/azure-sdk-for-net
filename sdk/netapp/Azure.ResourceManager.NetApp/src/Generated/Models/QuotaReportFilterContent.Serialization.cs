@@ -15,61 +15,61 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Quota report filters. When filtering by quotaType or quotaTarget, both properties must be supplied together. This constraint is enforced by the service/API at runtime, and requests violating this rule will return a validation error. The usageThresholdPercentage filter is independent and can be used alone or in combination with quotaType and quotaTarget to further refine results. </summary>
-    public partial class QuotaReportFilterRequest : IJsonModel<QuotaReportFilterRequest>
+    public partial class QuotaReportFilterContent : IJsonModel<QuotaReportFilterContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuotaReportFilterRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual QuotaReportFilterContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQuotaReportFilterRequest(document.RootElement, options);
+                        return DeserializeQuotaReportFilterContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaReportFilterRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaReportFilterContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaReportFilterRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaReportFilterContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuotaReportFilterRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QuotaReportFilterContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaReportFilterRequest IPersistableModel<QuotaReportFilterRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QuotaReportFilterContent IPersistableModel<QuotaReportFilterContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuotaReportFilterRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaReportFilterContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="quotaReportFilterRequest"> The <see cref="QuotaReportFilterRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(QuotaReportFilterRequest quotaReportFilterRequest)
+        /// <param name="quotaReportFilterContent"> The <see cref="QuotaReportFilterContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(QuotaReportFilterContent quotaReportFilterContent)
         {
-            if (quotaReportFilterRequest == null)
+            if (quotaReportFilterContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(quotaReportFilterRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(quotaReportFilterContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuotaReportFilterRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaReportFilterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaReportFilterRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaReportFilterContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(QuotaType))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaReportFilterRequest IJsonModel<QuotaReportFilterRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QuotaReportFilterContent IJsonModel<QuotaReportFilterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuotaReportFilterRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual QuotaReportFilterContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaReportFilterContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaReportFilterRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaReportFilterContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaReportFilterRequest(document.RootElement, options);
+            return DeserializeQuotaReportFilterContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QuotaReportFilterRequest DeserializeQuotaReportFilterRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuotaReportFilterContent DeserializeQuotaReportFilterContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuotaReportFilterRequest(quotaType, quotaTarget, usageThresholdPercentage, additionalBinaryDataProperties);
+            return new QuotaReportFilterContent(quotaType, quotaTarget, usageThresholdPercentage, additionalBinaryDataProperties);
         }
     }
 }

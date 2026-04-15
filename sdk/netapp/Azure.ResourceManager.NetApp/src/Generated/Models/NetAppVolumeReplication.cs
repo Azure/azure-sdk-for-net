@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replicationCreationOn"> Replication creation time. </param>
         /// <param name="replicationDeletionOn"> Replication deletion time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, string remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreationOn, DateTimeOffset? replicationDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeReplication(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, ReplicationMirrorState? mirrorState, DateTimeOffset? replicationCreationOn, DateTimeOffset? replicationDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppReplicationSchedule? ReplicationSchedule { get; }
 
         /// <summary> The resource ID of the remote volume. </summary>
-        public string RemoteVolumeResourceId { get; }
+        public ResourceIdentifier RemoteVolumeResourceId { get; }
 
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; }

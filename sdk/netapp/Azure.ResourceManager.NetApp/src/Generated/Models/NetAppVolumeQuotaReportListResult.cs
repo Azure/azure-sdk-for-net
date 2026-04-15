@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
         internal NetAppVolumeQuotaReportListResult()
         {
-            QuotaReportRecords = new ChangeTrackingList<QuotaReport>();
+            QuotaReportRecords = new ChangeTrackingList<NetAppVolumeQuotaReport>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
         /// <param name="quotaReportRecords"> List of quota reports. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeQuotaReportListResult(IList<QuotaReport> quotaReportRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeQuotaReportListResult(IList<NetAppVolumeQuotaReport> quotaReportRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuotaReportRecords = quotaReportRecords;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of quota reports. </summary>
-        public IList<QuotaReport> QuotaReportRecords { get; }
+        public IList<NetAppVolumeQuotaReport> QuotaReportRecords { get; }
     }
 }

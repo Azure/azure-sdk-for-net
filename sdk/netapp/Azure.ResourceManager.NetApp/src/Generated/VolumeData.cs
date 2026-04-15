@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp
         /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public VolumeData(AzureLocation location, string creationToken, long usageThreshold, string subnetId) : base(location)
+        public VolumeData(AzureLocation location, string creationToken, long usageThreshold, ResourceIdentifier subnetId) : base(location)
         {
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
-        public string KeyVaultPrivateEndpointResourceId
+        public ResourceIdentifier KeyVaultPrivateEndpointResourceId
         {
             get
             {
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Proximity placement group associated with the volume. </summary>
-        public string ProximityPlacementGroup
+        public ResourceIdentifier ProximityPlacementGroup
         {
             get
             {
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
-        public string OriginatingResourceId
+        public ResourceIdentifier OriginatingResourceId
         {
             get
             {

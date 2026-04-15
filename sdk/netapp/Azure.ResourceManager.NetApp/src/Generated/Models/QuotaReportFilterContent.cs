@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Quota report filters. When filtering by quotaType or quotaTarget, both properties must be supplied together. This constraint is enforced by the service/API at runtime, and requests violating this rule will return a validation error. The usageThresholdPercentage filter is independent and can be used alone or in combination with quotaType and quotaTarget to further refine results. </summary>
-    public partial class QuotaReportFilterRequest
+    public partial class QuotaReportFilterContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaReportFilterRequest"/>. </summary>
-        public QuotaReportFilterRequest()
+        /// <summary> Initializes a new instance of <see cref="QuotaReportFilterContent"/>. </summary>
+        public QuotaReportFilterContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaReportFilterRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaReportFilterContent"/>. </summary>
         /// <param name="quotaType"> Type of quota. If provided, quotaTarget must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota type, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running 'id' or 'getent' command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. If provided, quotaType must also be specified. The quotaType and quotaTarget properties are optional, but when filtering by quota target, quotaType and quotaTarget must be supplied together. Service/API will return an error if only one is provided. </param>
         /// <param name="usageThresholdPercentage"> The usageThresholdPercentage filter takes the usage threshold percentage and returns records where the usage is greater than or equal to the input value. This is an optional property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaReportFilterRequest(NetAppVolumeQuotaType? quotaType, string quotaTarget, int? usageThresholdPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaReportFilterContent(NetAppVolumeQuotaType? quotaType, string quotaTarget, int? usageThresholdPercentage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;

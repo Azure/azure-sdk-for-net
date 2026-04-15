@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
         /// <param name="sourceVolumeId"> Resource id of the source volume for the replication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeReestablishReplicationContent(string sourceVolumeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeReestablishReplicationContent(ResourceIdentifier sourceVolumeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVolumeId = sourceVolumeId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id of the source volume for the replication. </summary>
-        public string SourceVolumeId { get; set; }
+        public ResourceIdentifier SourceVolumeId { get; set; }
     }
 }

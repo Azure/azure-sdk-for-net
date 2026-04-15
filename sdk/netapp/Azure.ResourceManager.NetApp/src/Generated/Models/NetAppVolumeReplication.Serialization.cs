@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string replicationId = default;
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
-            string remoteVolumeResourceId = default;
+            ResourceIdentifier remoteVolumeResourceId = default;
             string remoteVolumeRegion = default;
             ReplicationMirrorState? mirrorState = default;
             DateTimeOffset? replicationCreationOn = default;
@@ -192,7 +193,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("remoteVolumeResourceId"u8))
                 {
-                    remoteVolumeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteVolumeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("remoteVolumeRegion"u8))

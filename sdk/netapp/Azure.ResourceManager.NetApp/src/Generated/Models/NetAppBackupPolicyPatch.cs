@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal BackupPolicyProperties Properties { get; set; }
 
         /// <summary> Backup Policy GUID ID. </summary>
-        public string BackupPolicyId
+        public ResourceIdentifier BackupPolicyId
         {
             get
             {

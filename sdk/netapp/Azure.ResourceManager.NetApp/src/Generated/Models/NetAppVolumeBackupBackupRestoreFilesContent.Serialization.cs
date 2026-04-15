@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             IList<string> fileList = default;
             string restoreFilePath = default;
-            string destinationVolumeId = default;
+            ResourceIdentifier destinationVolumeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("destinationVolumeId"u8))
                 {
-                    destinationVolumeId = prop.Value.GetString();
+                    destinationVolumeId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

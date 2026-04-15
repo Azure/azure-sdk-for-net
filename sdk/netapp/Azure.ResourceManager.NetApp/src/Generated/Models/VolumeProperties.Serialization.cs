@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? deleteBaseSnapshot = default;
             ResourceIdentifier backupId = default;
             string baremetalTenantId = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
             NetAppNetworkFeature? effectiveNetworkFeatures = default;
             string networkSiblingSetId = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.NetApp.Models
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource? encryptionKeySource = default;
-            string keyVaultPrivateEndpointResourceId = default;
+            ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             bool? ldapEnabled = default;
             LdapServerType? ldapServerType = default;
             bool? coolAccess = default;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? maximumNumberOfFiles = default;
             string volumeGroupName = default;
             string capacityPoolResourceId = default;
-            string proximityPlacementGroup = default;
+            ResourceIdentifier proximityPlacementGroup = default;
             string t2Network = default;
             string volumeSpecName = default;
             bool? encrypted = default;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             LargeVolumeType? largeVolumeType = default;
-            string originatingResourceId = default;
+            ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
             VolumeLanguage? language = default;
             BreakthroughMode? breakthroughMode = default;
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkFeatures"u8))
@@ -788,7 +788,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))
                 {
-                    keyVaultPrivateEndpointResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ldapEnabled"u8))
@@ -952,7 +956,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("proximityPlacementGroup"u8))
                 {
-                    proximityPlacementGroup = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proximityPlacementGroup = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("t2Network"u8))
@@ -1029,10 +1037,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        originatingResourceId = null;
                         continue;
                     }
-                    originatingResourceId = prop.Value.GetString();
+                    originatingResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inheritedSizeInBytes"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
-        public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, string subnetId)
+        public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
         {
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="zones"> Availability Zone. </param>
         /// <param name="properties"> Volume properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeGroupVolume(string id, string name, string @type, IDictionary<string, string> tags, IList<string> zones, VolumeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeGroupVolume(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, IList<string> zones, VolumeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Resource name. </summary>
         public string Name { get; set; }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
-        public string KeyVaultPrivateEndpointResourceId
+        public ResourceIdentifier KeyVaultPrivateEndpointResourceId
         {
             get
             {
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Proximity placement group associated with the volume. </summary>
-        public string ProximityPlacementGroup
+        public ResourceIdentifier ProximityPlacementGroup
         {
             get
             {
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
-        public string OriginatingResourceId
+        public ResourceIdentifier OriginatingResourceId
         {
             get
             {

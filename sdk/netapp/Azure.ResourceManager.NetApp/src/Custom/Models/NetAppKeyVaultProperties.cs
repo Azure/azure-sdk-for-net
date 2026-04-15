@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
-            KeyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
+            KeyVaultArmResourceId = new ResourceIdentifier(keyVaultResourceId);
         }
     }
 }
