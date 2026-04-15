@@ -57,6 +57,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         // ──────────────────────────────────────────────────────────────────────────
         // GROUP 2a: Nullable factory methods — own the implementation that the
         //           generator would produce but is suppressed by our presence here.
+        //
+        // MAINTENANCE NOTE: Because these methods call internal constructors directly,
+        // they will NOT automatically pick up new properties added in future TypeSpec
+        // updates. When properties are added to any of the underlying data types,
+        // these methods must be manually updated to include the new parameters.
+        // Track: https://github.com/Azure/autorest.csharp/issues/XXXX (generator issue
+        // to support partial overload suppression by signature, not just by name).
         // ──────────────────────────────────────────────────────────────────────────
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.BandwidthScheduleData"/>. </summary>

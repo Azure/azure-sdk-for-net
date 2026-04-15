@@ -1665,7 +1665,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeEncryptionAlgorithm(string value) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm Aes256 { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V15 { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V1_5 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -2420,12 +2419,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePHigh { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePRBase { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EdgePRBaseUps { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP21281T4Mx1W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2128Gpu1Mx1W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP22562T4W { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2256Gpu2Mx1 { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2641VpuW { get { throw null; } }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP264Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_128Gpu1Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_128_1T4Mx1W { get { throw null; } }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName EP2_256Gpu2Mx1 { get { throw null; } }

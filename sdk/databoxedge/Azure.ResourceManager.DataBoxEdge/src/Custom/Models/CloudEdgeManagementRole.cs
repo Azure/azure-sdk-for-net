@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             get => Properties?.RoleStatus;
             set
             {
+                if (!value.HasValue) return;
                 if (Properties is null)
                     Properties = new CloudEdgeManagementRoleProperties();
-                if (value.HasValue)
-                    Properties.RoleStatus = value.Value;
+                Properties.RoleStatus = value.Value;
             }
         }
     }

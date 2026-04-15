@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             get => Properties?.RoleStatus;
             set
             {
+                if (!value.HasValue) return;
                 if (Properties is null)
                     Properties = new IoTRoleProperties();
-                if (value.HasValue)
-                    Properties.RoleStatus = value.Value;
+                Properties.RoleStatus = value.Value;
             }
         }
 
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             get => Properties?.HostPlatform;
             set
             {
+                if (!value.HasValue) return;
                 if (Properties is null)
                     Properties = new IoTRoleProperties();
-                if (value.HasValue)
-                    Properties.HostPlatform = value.Value;
+                Properties.HostPlatform = value.Value;
             }
         }
     }

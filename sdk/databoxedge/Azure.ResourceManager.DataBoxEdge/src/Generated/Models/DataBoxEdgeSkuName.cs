@@ -106,15 +106,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Gets the EdgePRBaseUps. </summary>
         public static DataBoxEdgeSkuName EdgePRBaseUps { get; } = new DataBoxEdgeSkuName(EdgePRBaseUpsValue);
 
-        /// <summary> Gets the EP2641VpuW. </summary>
-        public static DataBoxEdgeSkuName EP2641VpuW { get; } = new DataBoxEdgeSkuName(EP2641VpuWValue);
-
-        /// <summary> Gets the EP21281T4Mx1W. </summary>
-        public static DataBoxEdgeSkuName EP21281T4Mx1W { get; } = new DataBoxEdgeSkuName(EP21281T4Mx1WValue);
-
-        /// <summary> Gets the EP22562T4W. </summary>
-        public static DataBoxEdgeSkuName EP22562T4W { get; } = new DataBoxEdgeSkuName(EP22562T4WValue);
-
         /// <summary> Gets the EdgeMRMini. </summary>
         public static DataBoxEdgeSkuName EdgeMRMini { get; } = new DataBoxEdgeSkuName(EdgeMRMiniValue);
 
@@ -129,15 +120,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Gets the Management. </summary>
         public static DataBoxEdgeSkuName Management { get; } = new DataBoxEdgeSkuName(ManagementValue);
-
-        /// <summary> Gets the EP264Mx1W. </summary>
-        public static DataBoxEdgeSkuName EP264Mx1W { get; } = new DataBoxEdgeSkuName(EP264Mx1WValue);
-
-        /// <summary> Gets the EP2128Gpu1Mx1W. </summary>
-        public static DataBoxEdgeSkuName EP2128Gpu1Mx1W { get; } = new DataBoxEdgeSkuName(EP2128Gpu1Mx1WValue);
-
-        /// <summary> Gets the EP2256Gpu2Mx1. </summary>
-        public static DataBoxEdgeSkuName EP2256Gpu2Mx1 { get; } = new DataBoxEdgeSkuName(EP2256Gpu2Mx1Value);
 
         /// <summary> Gets the EdgeMRTcp. </summary>
         public static DataBoxEdgeSkuName EdgeMRTcp { get; } = new DataBoxEdgeSkuName(EdgeMRTcpValue);
