@@ -191,7 +191,7 @@
    -->
   <PropertyGroup>
     <!-- Targets used by the current generation of the Azure SDK libraries. -->
-    <LtsTargetFramework>net10.0</LtsTargetFramework>
+    <LtsTargetFramework>net8.0</LtsTargetFramework>
     <RequiredRunnableTargetFrameworks>$(LtsTargetFramework);net8.0</RequiredRunnableTargetFrameworks>
 
     <!-- The set of all runnable modern target frameworks that have not yet reached end-of-life. -->
