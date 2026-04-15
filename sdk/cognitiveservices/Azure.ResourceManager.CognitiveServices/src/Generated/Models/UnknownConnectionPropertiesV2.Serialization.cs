@@ -14,10 +14,10 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    internal partial class UnknownCognitiveServicesConnectionProperties : CognitiveServicesConnectionProperties, IJsonModel<CognitiveServicesConnectionProperties>
+    internal partial class UnknownConnectionPropertiesV2 : CognitiveServicesConnectionProperties, IJsonModel<CognitiveServicesConnectionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownCognitiveServicesConnectionProperties"/> for deserialization. </summary>
-        internal UnknownCognitiveServicesConnectionProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectionPropertiesV2"/> for deserialization. </summary>
+        internal UnknownConnectionPropertiesV2()
         {
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCognitiveServicesConnectionProperties DeserializeUnknownCognitiveServicesConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownConnectionPropertiesV2 DeserializeUnknownConnectionPropertiesV2(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownCognitiveServicesConnectionProperties(
+            return new UnknownConnectionPropertiesV2(
                 authType,
                 category,
                 createdByWorkspaceArmId,

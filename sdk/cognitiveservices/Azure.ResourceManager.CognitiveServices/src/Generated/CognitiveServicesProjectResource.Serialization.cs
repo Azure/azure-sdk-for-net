@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary></summary>
-    public partial class CognitiveServicesProjectResource : IJsonModel<CognitiveServicesProjectData>
+    public partial class CognitiveServicesProjectResource : ArmResource, IJsonModel<CognitiveServicesProjectData>
     {
         private static IJsonModel<CognitiveServicesProjectData> s_dataDeserializationInstance;
 

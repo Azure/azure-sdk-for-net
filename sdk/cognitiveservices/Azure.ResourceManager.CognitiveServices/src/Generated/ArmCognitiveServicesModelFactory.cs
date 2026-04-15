@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             metadata ??= new ChangeTrackingDictionary<string, string>();
             sharedUserList ??= new ChangeTrackingList<string>();
 
-            return new UnknownCognitiveServicesConnectionProperties(
+            return new UnknownConnectionPropertiesV2(
                 new ConnectionAuthType(authType),
                 category,
                 createdByWorkspaceArmId,

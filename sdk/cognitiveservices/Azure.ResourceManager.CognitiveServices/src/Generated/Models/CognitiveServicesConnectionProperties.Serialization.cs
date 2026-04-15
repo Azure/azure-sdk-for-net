@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// Connection property base schema.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PatAuthTypeConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, and <see cref="AadAuthTypeConnectionProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownCognitiveServicesConnectionProperties))]
+    [PersistableModelProxy(typeof(UnknownConnectionPropertiesV2))]
     public abstract partial class CognitiveServicesConnectionProperties : IJsonModel<CognitiveServicesConnectionProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return AadAuthTypeConnectionProperties.DeserializeAadAuthTypeConnectionProperties(element, options);
                 }
             }
-            return UnknownCognitiveServicesConnectionProperties.DeserializeUnknownCognitiveServicesConnectionProperties(element, options);
+            return UnknownConnectionPropertiesV2.DeserializeUnknownConnectionPropertiesV2(element, options);
         }
     }
 }
