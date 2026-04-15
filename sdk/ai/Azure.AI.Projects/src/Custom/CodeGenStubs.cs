@@ -18,7 +18,6 @@ namespace Azure.AI.Projects;
 [CodeGenType("EmptyModelParam")] internal partial class InternalEmptyModelParam { }
 [CodeGenType("AutoCodeInterpreterToolParam")] internal partial class InternalAutoCodeInterpreterToolParam { }
 [CodeGenType("ContainerNetworkPolicyParam")] internal partial class InternalContainerNetworkPolicyParam { }
-[CodeGenType("ContainerNetworkPolicyDisabledParame")] internal partial class InternalContainerNetworkPolicyDisabledParame { }
 [CodeGenType("ContainerNetworkPolicyAllowlistParam")] internal partial class InternalContainerNetworkPolicyAllowlistParam { }
 [CodeGenType("ContainerNetworkPolicyDomainSecretParam")] internal partial class InternalContainerNetworkPolicyDomainSecretParam { }
 [CodeGenType("MCPToolFilter")] internal partial class InternalMCPToolFilter { }
