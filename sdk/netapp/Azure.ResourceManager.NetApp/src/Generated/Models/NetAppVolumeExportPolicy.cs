@@ -12,21 +12,21 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Set of export policy rules. </summary>
-    internal partial class NetAppCachePropertiesExportPolicy
+    internal partial class NetAppVolumeExportPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetAppCachePropertiesExportPolicy"/>. </summary>
-        public NetAppCachePropertiesExportPolicy()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicy"/>. </summary>
+        public NetAppVolumeExportPolicy()
         {
             Rules = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppCachePropertiesExportPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeExportPolicy"/>. </summary>
         /// <param name="rules"> Export policy rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppCachePropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeExportPolicy(IList<NetAppVolumeExportPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (ExportPolicyRule item in Rules)
+                foreach (NetAppVolumeExportPolicyRule item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IList<ExportPolicyRule> rules = default;
+            IList<NetAppVolumeExportPolicyRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<ExportPolicyRule> array = new List<ExportPolicyRule>();
+                    List<NetAppVolumeExportPolicyRule> array = new List<NetAppVolumeExportPolicyRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExportPolicyRule.DeserializeExportPolicyRule(item, options));
+                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppCachePropertiesExportPolicy(rules ?? new ChangeTrackingList<ExportPolicyRule>(), additionalBinaryDataProperties);
+            return new NetAppCachePropertiesExportPolicy(rules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>(), additionalBinaryDataProperties);
         }
     }
 }

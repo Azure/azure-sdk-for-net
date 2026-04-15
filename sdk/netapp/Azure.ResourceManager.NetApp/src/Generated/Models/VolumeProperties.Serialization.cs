@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string creationToken = default;
             NetAppFileServiceLevel? serviceLevel = default;
             long usageThreshold = default;
-            NetAppVolumeExportPolicyRule exportPolicy = default;
+            NetAppVolumeExportPolicy exportPolicy = default;
             IList<string> protocolTypes = default;
             string provisioningState = default;
             ResourceIdentifier snapshotId = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    exportPolicy = NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(prop.Value, options);
+                    exportPolicy = NetAppVolumeExportPolicy.DeserializeNetAppVolumeExportPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protocolTypes"u8))

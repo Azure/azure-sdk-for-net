@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
 
         /// <summary> Export policy rule. </summary>
-        public IList<ExportPolicyRule> ExportRules
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
             {

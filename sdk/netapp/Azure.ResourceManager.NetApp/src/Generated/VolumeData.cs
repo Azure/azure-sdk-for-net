@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Export policy rule. </summary>
-        public IList<ExportPolicyRule> ExportRules
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
             {

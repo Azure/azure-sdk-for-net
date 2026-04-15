@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Export policy rule. </summary>
-        public IList<ExportPolicyRule> ExportRules
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
             {

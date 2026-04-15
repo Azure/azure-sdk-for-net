@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="VolumePatchPropertiesExportPolicy"/>. </summary>
         public VolumePatchPropertiesExportPolicy()
         {
-            Rules = new ChangeTrackingList<ExportPolicyRule>();
+            Rules = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumePatchPropertiesExportPolicy"/>. </summary>
         /// <param name="rules"> Export policy rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumePatchPropertiesExportPolicy(IList<ExportPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumePatchPropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Export policy rule. </summary>
-        public IList<ExportPolicyRule> Rules { get; }
+        public IList<NetAppVolumeExportPolicyRule> Rules { get; }
     }
 }

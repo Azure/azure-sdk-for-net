@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public EnableWriteBackState? WriteBack { get; set; }
 
         /// <summary> Export policy rule. </summary>
-        public IList<ExportPolicyRule> ExportRules
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
             {

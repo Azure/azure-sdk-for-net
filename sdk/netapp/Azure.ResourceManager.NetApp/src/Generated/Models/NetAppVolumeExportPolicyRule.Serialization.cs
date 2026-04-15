@@ -7,12 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Set of export policy rules. </summary>
+    /// <summary> Volume Export Policy Rule. </summary>
     public partial class NetAppVolumeExportPolicyRule : IJsonModel<NetAppVolumeExportPolicyRule>
     {
         /// <param name="data"> The data to parse. </param>
@@ -45,6 +46,25 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppVolumeExportPolicyRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeExportPolicyRule IPersistableModel<NetAppVolumeExportPolicyRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeExportPolicyRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<NetAppVolumeExportPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -54,15 +74,80 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Optional.IsDefined(RuleIndex))
             {
-                writer.WritePropertyName("rules"u8);
-                writer.WriteStartArray();
-                foreach (ExportPolicyRule item in Rules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("ruleIndex"u8);
+                writer.WriteNumberValue(RuleIndex.Value);
+            }
+            if (Optional.IsDefined(IsUnixReadOnly))
+            {
+                writer.WritePropertyName("unixReadOnly"u8);
+                writer.WriteBooleanValue(IsUnixReadOnly.Value);
+            }
+            if (Optional.IsDefined(IsUnixReadWrite))
+            {
+                writer.WritePropertyName("unixReadWrite"u8);
+                writer.WriteBooleanValue(IsUnixReadWrite.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5ReadOnly))
+            {
+                writer.WritePropertyName("kerberos5ReadOnly"u8);
+                writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5ReadWrite))
+            {
+                writer.WritePropertyName("kerberos5ReadWrite"u8);
+                writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5iReadOnly))
+            {
+                writer.WritePropertyName("kerberos5iReadOnly"u8);
+                writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5iReadWrite))
+            {
+                writer.WritePropertyName("kerberos5iReadWrite"u8);
+                writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5pReadOnly))
+            {
+                writer.WritePropertyName("kerberos5pReadOnly"u8);
+                writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
+            }
+            if (Optional.IsDefined(IsKerberos5pReadWrite))
+            {
+                writer.WritePropertyName("kerberos5pReadWrite"u8);
+                writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
+            }
+            if (Optional.IsDefined(AllowCifsProtocol))
+            {
+                writer.WritePropertyName("cifs"u8);
+                writer.WriteBooleanValue(AllowCifsProtocol.Value);
+            }
+            if (Optional.IsDefined(AllowNfsV3Protocol))
+            {
+                writer.WritePropertyName("nfsv3"u8);
+                writer.WriteBooleanValue(AllowNfsV3Protocol.Value);
+            }
+            if (Optional.IsDefined(AllowNfsV41Protocol))
+            {
+                writer.WritePropertyName("nfsv41"u8);
+                writer.WriteBooleanValue(AllowNfsV41Protocol.Value);
+            }
+            if (Optional.IsDefined(AllowedClients))
+            {
+                writer.WritePropertyName("allowedClients"u8);
+                writer.WriteStringValue(AllowedClients);
+            }
+            if (Optional.IsDefined(HasRootAccess))
+            {
+                writer.WritePropertyName("hasRootAccess"u8);
+                writer.WriteBooleanValue(HasRootAccess.Value);
+            }
+            if (Optional.IsDefined(ChownMode))
+            {
+                writer.WritePropertyName("chownMode"u8);
+                writer.WriteStringValue(ChownMode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -83,6 +168,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeExportPolicyRule IJsonModel<NetAppVolumeExportPolicyRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetAppVolumeExportPolicyRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -92,6 +181,187 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetAppVolumeExportPolicyRule(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetAppVolumeExportPolicyRule DeserializeNetAppVolumeExportPolicyRule(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? ruleIndex = default;
+            bool? isUnixReadOnly = default;
+            bool? isUnixReadWrite = default;
+            bool? isKerberos5ReadOnly = default;
+            bool? isKerberos5ReadWrite = default;
+            bool? isKerberos5iReadOnly = default;
+            bool? isKerberos5iReadWrite = default;
+            bool? isKerberos5pReadOnly = default;
+            bool? isKerberos5pReadWrite = default;
+            bool? allowCifsProtocol = default;
+            bool? allowNfsV3Protocol = default;
+            bool? allowNfsV41Protocol = default;
+            string allowedClients = default;
+            bool? hasRootAccess = default;
+            NetAppChownMode? chownMode = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("ruleIndex"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ruleIndex = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("unixReadOnly"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isUnixReadOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("unixReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isUnixReadWrite = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5ReadOnly"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5ReadOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5ReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5ReadWrite = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5iReadOnly"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5iReadOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5iReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5iReadWrite = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5pReadOnly"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5pReadOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("kerberos5pReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isKerberos5pReadWrite = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("cifs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowCifsProtocol = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("nfsv3"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowNfsV3Protocol = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("nfsv41"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowNfsV41Protocol = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowedClients"u8))
+                {
+                    allowedClients = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("hasRootAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hasRootAccess = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("chownMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    chownMode = new NetAppChownMode(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new NetAppVolumeExportPolicyRule(
+                ruleIndex,
+                isUnixReadOnly,
+                isUnixReadWrite,
+                isKerberos5ReadOnly,
+                isKerberos5ReadWrite,
+                isKerberos5iReadOnly,
+                isKerberos5iReadWrite,
+                isKerberos5pReadOnly,
+                isKerberos5pReadWrite,
+                allowCifsProtocol,
+                allowNfsV3Protocol,
+                allowNfsV41Protocol,
+                allowedClients,
+                hasRootAccess,
+                chownMode,
+                additionalBinaryDataProperties);
         }
     }
 }
