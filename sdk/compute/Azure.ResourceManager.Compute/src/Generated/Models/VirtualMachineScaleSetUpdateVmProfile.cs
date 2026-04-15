@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityPostureReferenceUpdate securityPostureReference, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityPostureReference = securityPostureReference;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine scale set OS profile. </summary>
-        public VirtualMachineScaleSetUpdateOSProfile OsProfile { get; set; }
+        public VirtualMachineScaleSetUpdateOSProfile OSProfile { get; set; }
 
         /// <summary> The virtual machine scale set storage profile. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get; set; }

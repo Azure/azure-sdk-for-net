@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             DiagnosticsProfile = diagnosticsProfile;
             LicenseType = licenseType;
             VmId = vmId;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RestorePointSourceVmStorageProfile StorageProfile { get; set; }
 
         /// <summary> Gets the OS profile. </summary>
-        public VirtualMachineOSProfile OsProfile { get; }
+        public VirtualMachineOSProfile OSProfile { get; }
 
         /// <summary> Gets the diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; }

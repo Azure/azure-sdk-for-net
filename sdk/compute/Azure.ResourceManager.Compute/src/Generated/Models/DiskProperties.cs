@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal DiskProperties(DateTimeOffset? timeCreated, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
-            OsType = osType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? TimeCreated { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }

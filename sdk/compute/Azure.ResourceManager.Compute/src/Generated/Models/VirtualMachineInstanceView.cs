@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Compute.Models
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
             ComputerName = computerName;
-            OsName = osName;
-            OsVersion = osVersion;
+            OSName = osName;
+            OSVersion = osVersion;
             HyperVGeneration = hyperVGeneration;
             RdpThumbPrint = rdpThumbPrint;
             VmAgent = vmAgent;
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Compute.Models
         public string ComputerName { get; }
 
         /// <summary> The Operating System running on the virtual machine. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
 
         /// <summary> The version of Operating System running on the virtual machine. </summary>
-        public string OsVersion { get; }
+        public string OSVersion { get; }
 
         /// <summary> Specifies the HyperVGeneration Type associated with a resource. </summary>
         public HyperVGenerationType? HyperVGeneration { get; }

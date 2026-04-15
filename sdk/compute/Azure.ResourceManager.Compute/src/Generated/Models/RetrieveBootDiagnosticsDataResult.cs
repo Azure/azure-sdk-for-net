@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. </param>
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RetrieveBootDiagnosticsDataResult(string consoleScreenshotBlobUri, string serialConsoleLogBlobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RetrieveBootDiagnosticsDataResult(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The console screenshot blob URI. </summary>
-        public string ConsoleScreenshotBlobUri { get; }
+        public Uri ConsoleScreenshotBlobUri { get; }
 
         /// <summary> The serial console log blob URI. </summary>
-        public string SerialConsoleLogBlobUri { get; }
+        public Uri SerialConsoleLogBlobUri { get; }
     }
 }

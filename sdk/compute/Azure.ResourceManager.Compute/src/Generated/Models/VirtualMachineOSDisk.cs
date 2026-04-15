@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineOSDisk(OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, CachingType? caching, bool? writeAcceleratorEnabled, DiffDiskSettings diffDiskSettings, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
 
         /// <summary> Specifies the encryption settings for the OS Disk. Minimum api-version: 2015-06-15. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; set; }

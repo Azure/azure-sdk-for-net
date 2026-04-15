@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsProfile))
+            if (options.Format != "W" && Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
             {

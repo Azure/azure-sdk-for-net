@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("osState"u8);
-            writer.WriteStringValue(OsState.ToSerialString());
+            writer.WriteStringValue(OSState.ToSerialString());
         }
 
         /// <param name="reader"> The JSON reader. </param>

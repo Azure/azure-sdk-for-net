@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineStorageProfile(ImageReference imageReference, VirtualMachineOSDisk osDisk, IList<VirtualMachineDataDisk> dataDisks, DiskControllerType? diskControllerType, bool? alignRegionalDisksToVMZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             AlignRegionalDisksToVMZone = alignRegionalDisksToVMZone;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageReference ImageReference { get; set; }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public VirtualMachineOSDisk OsDisk { get; set; }
+        public VirtualMachineOSDisk OSDisk { get; set; }
 
         /// <summary> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<VirtualMachineDataDisk> DataDisks { get; }

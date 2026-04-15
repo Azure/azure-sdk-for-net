@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
             writer.WritePropertyName("description"u8);

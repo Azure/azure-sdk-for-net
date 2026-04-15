@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineImageProperties(PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureType? architecture, ImageDeprecationStatus imageDeprecationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Plan = plan;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             AutomaticOSUpgradeProperties = automaticOSUpgradeProperties;
             HyperVGeneration = hyperVGeneration;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
         public PurchasePlan Plan { get; }
 
         /// <summary> Contains the os disk image information. </summary>
-        internal OSDiskImage OsDiskImage { get; }
+        internal OSDiskImage OSDiskImage { get; }
 
         /// <summary> The list of data disk images information. </summary>
         public IList<DataDiskImage> DataDiskImages { get; } = new ChangeTrackingList<DataDiskImage>();
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageDeprecationStatus ImageDeprecationStatus { get; }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemType? OsDiskImageOperatingSystem
+        public OperatingSystemType? OSDiskImageOperatingSystem
         {
             get
             {
-                return OsDiskImage.OperatingSystem;
+                return OSDiskImage.OperatingSystem;
             }
         }
 

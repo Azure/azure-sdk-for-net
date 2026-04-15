@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ConsoleScreenshotBlobUri))
             {
                 writer.WritePropertyName("consoleScreenshotBlobUri"u8);
-                writer.WriteStringValue(ConsoleScreenshotBlobUri);
+                writer.WriteStringValue(ConsoleScreenshotBlobUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(SerialConsoleLogBlobUri))
             {
                 writer.WritePropertyName("serialConsoleLogBlobUri"u8);
-                writer.WriteStringValue(SerialConsoleLogBlobUri);
+                writer.WriteStringValue(SerialConsoleLogBlobUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,19 +134,27 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string consoleScreenshotBlobUri = default;
-            string serialConsoleLogBlobUri = default;
+            Uri consoleScreenshotBlobUri = default;
+            Uri serialConsoleLogBlobUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("consoleScreenshotBlobUri"u8))
                 {
-                    consoleScreenshotBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consoleScreenshotBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("serialConsoleLogBlobUri"u8))
                 {
-                    serialConsoleLogBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serialConsoleLogBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

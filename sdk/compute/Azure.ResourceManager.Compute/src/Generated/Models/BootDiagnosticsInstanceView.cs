@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serialConsoleLogBlobUri"> The serial console log blob Uri. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </param>
         /// <param name="status"> The boot diagnostics status information for the VM. <b>Note:</b> It will be set only if there are errors encountered in enabling boot diagnostics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnosticsInstanceView(string consoleScreenshotBlobUri, string serialConsoleLogBlobUri, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootDiagnosticsInstanceView(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The console screenshot blob URI. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public string ConsoleScreenshotBlobUri { get; }
+        public Uri ConsoleScreenshotBlobUri { get; }
 
         /// <summary> The serial console log blob Uri. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public string SerialConsoleLogBlobUri { get; }
+        public Uri SerialConsoleLogBlobUri { get; }
 
         /// <summary> The boot diagnostics status information for the VM. <b>Note:</b> It will be set only if there are errors encountered in enabling boot diagnostics. </summary>
         public InstanceViewStatus Status { get; }

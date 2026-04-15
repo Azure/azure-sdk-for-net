@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToSerialString());
+                writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             if (Optional.IsDefined(HyperVGeneration))
             {

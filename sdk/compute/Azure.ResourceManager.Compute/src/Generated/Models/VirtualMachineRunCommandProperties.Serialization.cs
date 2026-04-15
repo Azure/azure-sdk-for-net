@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
-                writer.WriteStringValue(OutputBlobUri);
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
-                writer.WriteStringValue(ErrorBlobUri);
+                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.Compute.Models
             string runAsUser = default;
             string runAsPassword = default;
             int? timeoutInSeconds = default;
-            string outputBlobUri = default;
-            string errorBlobUri = default;
+            Uri outputBlobUri = default;
+            Uri errorBlobUri = default;
             RunCommandManagedIdentity outputBlobManagedIdentity = default;
             RunCommandManagedIdentity errorBlobManagedIdentity = default;
             string provisioningState = default;
@@ -280,12 +280,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("outputBlobUri"u8))
                 {
-                    outputBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("errorBlobUri"u8))
                 {
-                    errorBlobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorBlobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("outputBlobManagedIdentity"u8))

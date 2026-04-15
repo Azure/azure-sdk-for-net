@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(RestorePointSourceVmOSDisk)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(OsType))
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(EncryptionSettings))
             {

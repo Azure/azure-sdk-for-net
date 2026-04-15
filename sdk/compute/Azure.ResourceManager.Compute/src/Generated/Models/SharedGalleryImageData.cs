@@ -39,20 +39,20 @@ namespace Azure.ResourceManager.Compute
         public string ParentName { get; }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType OsType
+        public OperatingSystemType OSType
         {
             get
             {
-                return Properties.OsType;
+                return Properties.OSType;
             }
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType OsState
+        public OperatingSystemStateType OSState
         {
             get
             {
-                return Properties.OsState;
+                return Properties.OSState;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Privacy statement uri for the current community gallery image. </summary>
-        public string PrivacyStatementUri
+        public Uri PrivacyStatementUri
         {
             get
             {

@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Compute.Models
         public SnapshotSku Sku { get; set; }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemType? OsType
+        public OperatingSystemType? OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.OsType = value.Value;
+                Properties.OSType = value.Value;
             }
         }
 

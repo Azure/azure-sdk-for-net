@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal SnapshotProperties(DateTimeOffset? timeCreated, OperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsGroup encryptionSettingsCollection, string provisioningState, bool? incremental, string incrementalSnapshotFamilyId, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, float? completionPercent, CopyCompletionError copyCompletionError, DataAccessAuthMode? dataAccessAuthMode, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeCreated = timeCreated;
-            OsType = osType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? TimeCreated { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; set; }

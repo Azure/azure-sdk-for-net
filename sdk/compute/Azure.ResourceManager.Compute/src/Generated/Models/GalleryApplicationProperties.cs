@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationProperties(string description, string eula, string privacyStatementUri, string releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemType supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryApplicationProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemType supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Compute.Models
         public string Eula { get; set; }
 
         /// <summary> The privacy statement uri. </summary>
-        public string PrivacyStatementUri { get; set; }
+        public Uri PrivacyStatementUri { get; set; }
 
         /// <summary> The release note uri. </summary>
-        public string ReleaseNoteUri { get; set; }
+        public Uri ReleaseNoteUri { get; set; }
 
         /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; set; }

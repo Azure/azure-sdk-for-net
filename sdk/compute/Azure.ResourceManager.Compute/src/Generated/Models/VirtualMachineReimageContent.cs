@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             TempDisk = tempDisk;
             ExactVersion = exactVersion;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string ExactVersion { get; set; }
 
         /// <summary> Specifies information required for reimaging the non-ephemeral OS disk. </summary>
-        public OSProfileProvisioningData OsProfile { get; set; }
+        public OSProfileProvisioningData OSProfile { get; set; }
     }
 }

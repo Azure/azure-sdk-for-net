@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(SharedGalleryImageProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("osState"u8);
-            writer.WriteStringValue(OsState.ToSerialString());
+            writer.WriteStringValue(OSState.ToSerialString());
             if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Eula))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<GalleryImageFeature> features = default;
             ImagePurchasePlan purchasePlan = default;
             Architecture? architecture = default;
-            string privacyStatementUri = default;
+            Uri privacyStatementUri = default;
             string eula = default;
             IDictionary<string, string> artifactTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -294,7 +294,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("privacyStatementUri"u8))
                 {
-                    privacyStatementUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privacyStatementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("eula"u8))

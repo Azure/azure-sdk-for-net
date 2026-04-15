@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
-        public VirtualMachineOSProfile OsProfile
+        public VirtualMachineOSProfile OSProfile
         {
             get
             {
-                return Properties is null ? default : Properties.OsProfile;
+                return Properties is null ? default : Properties.OSProfile;
             }
             set
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.OsProfile = value;
+                Properties.OSProfile = value;
             }
         }
 

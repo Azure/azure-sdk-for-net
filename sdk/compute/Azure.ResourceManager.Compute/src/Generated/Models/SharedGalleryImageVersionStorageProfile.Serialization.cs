@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(SharedGalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OsDiskImage))
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OsDiskImage, options);
+                writer.WriteObjectValue(OSDiskImage, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {

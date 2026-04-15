@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
             CreateOption = createOption;
             DiffDiskSettings = diffDiskSettings;
             DiskSizeGB = diskSizeGB;
-            OsType = osType;
+            OSType = osType;
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
 
         /// <summary> Specifies information about the unmanaged user image to base the scale set on. </summary>
         internal VirtualHardDisk Image { get; set; }

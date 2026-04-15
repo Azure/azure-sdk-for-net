@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="applicableHostEndpoint"> This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'. </param>
         public GalleryInVmAccessControlProfileProperties(OperatingSystemType osType, ComputeGalleryEndpointType applicableHostEndpoint)
         {
-            OsType = osType;
+            OSType = osType;
             ApplicableHostEndpoint = applicableHostEndpoint;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal GalleryInVmAccessControlProfileProperties(GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, OperatingSystemType osType, ComputeGalleryEndpointType applicableHostEndpoint) : base(provisioningState, additionalBinaryDataProperties)
         {
             Description = description;
-            OsType = osType;
+            OSType = osType;
             ApplicableHostEndpoint = applicableHostEndpoint;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Description { get; set; }
 
         /// <summary> This property allows you to specify the OS type of the VMs/VMSS for which this profile can be used against. Possible values are: 'Windows' or 'Linux'. </summary>
-        public OperatingSystemType OsType { get; set; }
+        public OperatingSystemType OSType { get; set; }
 
         /// <summary> This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'. </summary>
         public ComputeGalleryEndpointType ApplicableHostEndpoint { get; set; }

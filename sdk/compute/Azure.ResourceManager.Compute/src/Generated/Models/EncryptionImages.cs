@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EncryptionImages(OSDiskImageEncryption osDiskImage, IList<DataDiskImageEncryption> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contains encryption settings for an OS disk image. </summary>
-        public OSDiskImageEncryption OsDiskImage { get; set; }
+        public OSDiskImageEncryption OSDiskImage { get; set; }
 
         /// <summary> A list of encryption specifications for data disk images. </summary>
         public IList<DataDiskImageEncryption> DataDiskImages { get; }

@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("osState"u8);
-            writer.WriteStringValue(OsState.ToSerialString());
+            writer.WriteStringValue(OSState.ToSerialString());
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string description = default;
             string eula = default;
-            string privacyStatementUri = default;
-            string releaseNoteUri = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
             OperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             HyperVGeneration? hyperVGeneration = default;
@@ -228,12 +228,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("privacyStatementUri"u8))
                 {
-                    privacyStatementUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privacyStatementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("releaseNoteUri"u8))
                 {
-                    releaseNoteUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    releaseNoteUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))

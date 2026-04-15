@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineScaleSetStorageProfile(ImageReference imageReference, VirtualMachineScaleSetOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageReference ImageReference { get; set; }
 
         /// <summary> Specifies information about the operating system disk used by the virtual machines in the scale set. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
-        public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
+        public VirtualMachineScaleSetOSDisk OSDisk { get; set; }
 
         /// <summary> Specifies the parameters that are used to add data disks to the virtual machines in the scale set. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </summary>
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; }

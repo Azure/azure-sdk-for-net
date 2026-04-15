@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             TimeCreated = timeCreated;
             SourceResourceId = sourceResourceId;
-            OsType = osType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceIdentifier SourceResourceId { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType? OsType { get; }
+        public OperatingSystemType? OSType { get; }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
         public HyperVGeneration? HyperVGeneration { get; }

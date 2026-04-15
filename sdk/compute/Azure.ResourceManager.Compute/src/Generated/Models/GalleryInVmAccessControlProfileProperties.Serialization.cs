@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToSerialString());
+            writer.WriteStringValue(OSType.ToSerialString());
             writer.WritePropertyName("applicableHostEndpoint"u8);
             writer.WriteStringValue(ApplicableHostEndpoint.ToSerialString());
         }

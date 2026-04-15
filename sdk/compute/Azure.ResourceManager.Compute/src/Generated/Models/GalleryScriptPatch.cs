@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The privacy statement uri. </summary>
-        public string PrivacyStatementUri
+        public Uri PrivacyStatementUri
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The release note uri. </summary>
-        public string ReleaseNoteUri
+        public Uri ReleaseNoteUri
         {
             get
             {

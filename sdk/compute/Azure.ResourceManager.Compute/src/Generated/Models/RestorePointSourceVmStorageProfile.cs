@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IReadOnlyList<RestorePointSourceVmDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceVmOSDisk OsDisk { get; set; }
+        public RestorePointSourceVmOSDisk OSDisk { get; set; }
 
         /// <summary> Gets the data disks of the VM captured at the time of the restore point creation. </summary>
         public IReadOnlyList<RestorePointSourceVmDataDisk> DataDisks { get; }

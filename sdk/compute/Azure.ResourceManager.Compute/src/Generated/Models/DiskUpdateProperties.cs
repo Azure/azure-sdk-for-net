@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DiskUpdateProperties(OperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, int? maxShares, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, string tier, bool? burstingEnabled, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? optimizedForFrequentAttach, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             DiskSizeGB = diskSizeGB;
             EncryptionSettingsCollection = encryptionSettingsCollection;
             DiskIOPSReadWrite = diskIOPSReadWrite;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> the Operating System type. </summary>
-        public OperatingSystemType? OsType { get; set; }
+        public OperatingSystemType? OSType { get; set; }
 
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
         public int? DiskSizeGB { get; set; }

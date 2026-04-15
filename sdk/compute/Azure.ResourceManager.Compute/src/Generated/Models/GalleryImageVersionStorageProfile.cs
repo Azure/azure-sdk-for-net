@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryArtifactVersionFullSource Source { get; set; }
 
         /// <summary> This is the OS disk image. </summary>
-        public GalleryOSDiskImage OsDiskImage { get; set; }
+        public GalleryOSDiskImage OSDiskImage { get; set; }
 
         /// <summary> A list of data disk images. </summary>
         public IList<GalleryDataDiskImage> DataDiskImages { get; }

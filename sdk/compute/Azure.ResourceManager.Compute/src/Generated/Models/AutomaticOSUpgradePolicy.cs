@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableAutomaticOSUpgrade = enableAutomaticOSUpgrade;
             DisableAutomaticRollback = disableAutomaticRollback;
             UseRollingUpgradePolicy = useRollingUpgradePolicy;
-            OsRollingUpgradeDeferral = osRollingUpgradeDeferral;
+            OSRollingUpgradeDeferral = osRollingUpgradeDeferral;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? UseRollingUpgradePolicy { get; set; }
 
         /// <summary> Indicates whether Auto OS Upgrade should undergo deferral. Deferred OS upgrades will send advanced notifications on a per-VM basis that an OS upgrade from rolling upgrades is incoming, via the IMDS tag 'Platform.PendingOSUpgrade'. The upgrade then defers until the upgrade is approved via an ApproveRollingUpgrade call. </summary>
-        public bool? OsRollingUpgradeDeferral { get; set; }
+        public bool? OSRollingUpgradeDeferral { get; set; }
     }
 }

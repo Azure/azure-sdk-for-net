@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The privacy statement uri. </summary>
-        public string PrivacyStatementUri
+        public Uri PrivacyStatementUri
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The release note uri. </summary>
-        public string ReleaseNoteUri
+        public Uri ReleaseNoteUri
         {
             get
             {
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType OsType
+        public OperatingSystemType OSType
         {
             get
             {
-                return Properties is null ? default : Properties.OsType;
+                return Properties is null ? default : Properties.OSType;
             }
             set
             {
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.OsType = value;
+                Properties.OSType = value;
             }
         }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType OsState
+        public OperatingSystemStateType OSState
         {
             get
             {
-                return Properties is null ? default : Properties.OsState;
+                return Properties is null ? default : Properties.OSState;
             }
             set
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new GalleryImageProperties();
                 }
-                Properties.OsState = value;
+                Properties.OSState = value;
             }
         }
 

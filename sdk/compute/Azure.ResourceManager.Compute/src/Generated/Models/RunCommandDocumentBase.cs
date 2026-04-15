@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Schema = schema;
             Id = id;
-            OsType = osType;
+            OSType = osType;
             Label = label;
             Description = description;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Schema = schema;
             Id = id;
-            OsType = osType;
+            OSType = osType;
             Label = label;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get; }
 
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemType OsType { get; }
+        public OperatingSystemType OSType { get; }
 
         /// <summary> The VM run command label. </summary>
         public string Label { get; }

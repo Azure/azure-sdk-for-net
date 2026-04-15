@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
-                writer.WriteStringValue(PrivacyStatementUri);
+                writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
-                writer.WriteStringValue(ReleaseNoteUri);
+                writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string description = default;
             string eula = default;
-            string privacyStatementUri = default;
-            string releaseNoteUri = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
             DateTimeOffset? endOfLifeOn = default;
             OperatingSystemType supportedOSType = default;
             IList<GalleryApplicationCustomAction> customActions = default;
@@ -180,12 +180,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("privacyStatementUri"u8))
                 {
-                    privacyStatementUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privacyStatementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("releaseNoteUri"u8))
                 {
-                    releaseNoteUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    releaseNoteUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("endOfLifeDate"u8))

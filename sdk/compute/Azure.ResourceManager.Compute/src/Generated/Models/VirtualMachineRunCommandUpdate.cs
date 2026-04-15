@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </summary>
-        public string OutputBlobUri
+        public Uri OutputBlobUri
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </summary>
-        public string ErrorBlobUri
+        public Uri ErrorBlobUri
         {
             get
             {

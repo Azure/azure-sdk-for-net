@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(RestorePointSourceVmStorageProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OsDisk))
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {

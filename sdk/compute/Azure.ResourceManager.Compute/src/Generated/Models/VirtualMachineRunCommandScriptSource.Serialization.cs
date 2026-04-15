@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUri"u8);
-                writer.WriteStringValue(ScriptUri);
+                writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CommandId))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string script = default;
-            string scriptUri = default;
+            Uri scriptUri = default;
             string commandId = default;
             RunCommandManagedIdentity scriptUriManagedIdentity = default;
             ScriptShellType? scriptShell = default;
@@ -162,7 +162,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("scriptUri"u8))
                 {
-                    scriptUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("commandId"u8))

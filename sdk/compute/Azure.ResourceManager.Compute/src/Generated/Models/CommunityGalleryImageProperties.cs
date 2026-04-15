@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="imageIdentifier"> This is the community gallery image definition identifier. </param>
         internal CommunityGalleryImageProperties(OperatingSystemType osType, OperatingSystemStateType osState, CommunityGalleryImageIdentifier imageIdentifier)
         {
-            OsType = osType;
-            OsState = osState;
+            OSType = osType;
+            OSState = osState;
             ImageIdentifier = imageIdentifier;
             Features = new ChangeTrackingList<GalleryImageFeature>();
             ArtifactTags = new ChangeTrackingDictionary<string, string>();
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryImageProperties(OperatingSystemType osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, Architecture? architecture, string privacyStatementUri, string eula, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityGalleryImageProperties(OperatingSystemType osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, Architecture? architecture, Uri privacyStatementUri, string eula, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
-            OsState = osState;
+            OSType = osType;
+            OSState = osState;
             EndOfLifeOn = endOfLifeOn;
             ImageIdentifier = imageIdentifier;
             Recommended = recommended;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemType OsType { get; }
+        public OperatingSystemType OSType { get; }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType OsState { get; }
+        public OperatingSystemStateType OSState { get; }
 
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Architecture? Architecture { get; }
 
         /// <summary> Privacy statement URI for the current community gallery image. </summary>
-        public string PrivacyStatementUri { get; }
+        public Uri PrivacyStatementUri { get; }
 
         /// <summary> The end-user license agreement for the current community gallery image. </summary>
         public string Eula { get; }

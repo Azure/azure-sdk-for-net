@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
+            OSDisk = osDisk;
             DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageReference ImageReference { get; set; }
 
         /// <summary> The OS disk. </summary>
-        public VirtualMachineScaleSetUpdateOSDisk OsDisk { get; set; }
+        public VirtualMachineScaleSetUpdateOSDisk OSDisk { get; set; }
 
         /// <summary> The data disks. </summary>
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; }

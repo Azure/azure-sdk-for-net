@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachineScaleSetVmProfile(VirtualMachineScaleSetOSProfile osProfile, VirtualMachineScaleSetStorageProfile storageProfile, VirtualMachineScaleSetNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, CapacityReservationProfile capacityReservation, ApplicationProfile applicationProfile, VirtualMachineScaleSetHardwareProfile hardwareProfile, ServiceArtifactReference serviceArtifactReference, ComputeSecurityPostureReference securityPostureReference, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             SecurityProfile = securityProfile;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the operating system settings for the virtual machines in the scale set. </summary>
-        public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
+        public VirtualMachineScaleSetOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
         public VirtualMachineScaleSetStorageProfile StorageProfile { get; set; }

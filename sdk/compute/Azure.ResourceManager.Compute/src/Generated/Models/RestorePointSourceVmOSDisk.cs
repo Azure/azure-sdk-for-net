@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Caching = caching;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Gets the Operating System type. </summary>
-        public SupportedOperatingSystemType? OsType { get; }
+        public SupportedOperatingSystemType? OSType { get; }
 
         /// <summary> Gets the disk encryption settings. </summary>
         public DiskEncryptionSettings EncryptionSettings { get; }

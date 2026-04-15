@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResilientVMDeletionStatus = resilientVMDeletionStatus;
             StorageProfile = storageProfile;
             AdditionalCapabilities = additionalCapabilities;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             SecurityProfile = securityProfile;
             NetworkProfile = networkProfile;
             NetworkProfileConfiguration = networkProfileConfiguration;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary> Specifies the operating system settings for the virtual machine. </summary>
-        public VirtualMachineOSProfile OsProfile { get; set; }
+        public VirtualMachineOSProfile OSProfile { get; set; }
 
         /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
         public SecurityProfile SecurityProfile { get; set; }

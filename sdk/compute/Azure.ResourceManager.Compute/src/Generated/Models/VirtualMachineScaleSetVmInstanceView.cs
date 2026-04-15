@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Compute.Models
             AssignedHost = assignedHost;
             PlacementGroupId = placementGroupId;
             ComputerName = computerName;
-            OsName = osName;
-            OsVersion = osVersion;
+            OSName = osName;
+            OSVersion = osVersion;
             HyperVGeneration = hyperVGeneration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.Compute.Models
         public string ComputerName { get; }
 
         /// <summary> The Operating System running on the hybrid machine. </summary>
-        public string OsName { get; }
+        public string OSName { get; }
 
         /// <summary> The version of Operating System running on the hybrid machine. </summary>
-        public string OsVersion { get; }
+        public string OSVersion { get; }
 
         /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
         public HyperVGeneration? HyperVGeneration { get; }

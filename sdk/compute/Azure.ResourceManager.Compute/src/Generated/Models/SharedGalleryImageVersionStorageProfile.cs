@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsDiskImage = osDiskImage;
+            OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This is the OS disk image. </summary>
-        public SharedGalleryOSDiskImage OsDiskImage { get; }
+        public SharedGalleryOSDiskImage OSDiskImage { get; }
 
         /// <summary> A list of data disk images. </summary>
         public IReadOnlyList<SharedGalleryDataDiskImage> DataDiskImages { get; }
