@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroups _containerGroupsRestClient;
         private ClientDiagnostics _nGroupsClientDiagnostics;
         private NGroups _nGroupsRestClient;
-        private ClientDiagnostics _containerGroupProfilesClientDiagnostics;
-        private ContainerGroupProfiles _containerGroupProfilesRestClient;
+        private ClientDiagnostics _cgProfilesClientDiagnostics;
+        private CGProfiles _cgProfilesRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private Location _locationRestClient;
         private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private NGroups NGroupsRestClient => _nGroupsRestClient ??= new NGroups(NGroupsClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        private ClientDiagnostics ContainerGroupProfilesClientDiagnostics => _containerGroupProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CGProfilesClientDiagnostics => _cgProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerGroupProfiles ContainerGroupProfilesRestClient => _containerGroupProfilesRestClient ??= new ContainerGroupProfiles(ContainerGroupProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private CGProfiles CGProfilesRestClient => _cgProfilesRestClient ??= new CGProfiles(CGProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetBySubscriptionAsyncCollectionResultOfT(ContainerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionAsyncCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetBySubscriptionCollectionResultOfT(ContainerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetBySubscriptionCollectionResultOfT(CGProfilesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>

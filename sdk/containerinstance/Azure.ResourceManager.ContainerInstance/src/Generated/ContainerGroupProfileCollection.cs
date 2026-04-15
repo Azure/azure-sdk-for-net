@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class ContainerGroupProfileCollection : ArmCollection, IEnumerable<ContainerGroupProfileResource>, IAsyncEnumerable<ContainerGroupProfileResource>
     {
-        private readonly ClientDiagnostics _containerGroupProfilesClientDiagnostics;
-        private readonly ContainerGroupProfiles _containerGroupProfilesRestClient;
+        private readonly ClientDiagnostics _cgProfileClientDiagnostics;
+        private readonly CGProfile _cgProfileRestClient;
+        private readonly ClientDiagnostics _cgProfilesClientDiagnostics;
+        private readonly CGProfiles _cgProfilesRestClient;
 
         /// <summary> Initializes a new instance of ContainerGroupProfileCollection for mocking. </summary>
         protected ContainerGroupProfileCollection()
@@ -40,8 +42,10 @@ namespace Azure.ResourceManager.ContainerInstance
         internal ContainerGroupProfileCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerGroupProfileResource.ResourceType, out string containerGroupProfileApiVersion);
-            _containerGroupProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
-            _containerGroupProfilesRestClient = new ContainerGroupProfiles(_containerGroupProfilesClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
+            _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
+            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
+            _cgProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
+            _cgProfilesRestClient = new CGProfiles(_cgProfilesClientDiagnostics, Pipeline, Endpoint, containerGroupProfileApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -83,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
+                HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -138,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
+                HttpMessage message = _cgProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, ContainerGroupProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Get");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Get");
             scope.Start();
             try
             {
@@ -198,7 +202,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Get");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Get");
             scope.Start();
             try
             {
@@ -247,7 +251,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +292,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetByResourceGroupAsyncCollectionResultOfT(_containerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupAsyncCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +320,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new ContainerGroupProfilesGetByResourceGroupCollectionResultOfT(_containerGroupProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +348,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Exists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -352,7 +356,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -401,7 +405,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Exists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.Exists");
             scope.Start();
             try
             {
@@ -409,7 +413,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -458,7 +462,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -466,7 +470,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;
@@ -519,7 +523,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNullOrEmpty(containerGroupProfileName, nameof(containerGroupProfileName));
 
-            using DiagnosticScope scope = _containerGroupProfilesClientDiagnostics.CreateScope("ContainerGroupProfileCollection.GetIfExists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -527,7 +531,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerGroupProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
+                HttpMessage message = _cgProfileRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerGroupProfileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerGroupProfileData> response = default;

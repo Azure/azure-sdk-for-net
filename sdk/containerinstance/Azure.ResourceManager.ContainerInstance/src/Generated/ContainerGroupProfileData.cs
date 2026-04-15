@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> A container group profile object. </summary>
-    public partial class ContainerGroupProfileData : ResourceData
+    public partial class ContainerGroupProfileData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
-        public ContainerGroupProfileData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ContainerGroupProfileData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -32,27 +32,19 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The container group profile properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, string location, IList<string> zones) : base(id, name, resourceType, systemData)
+        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Zones = zones;
         }
 
         /// <summary> The container group profile properties. </summary>
         internal ContainerGroupProfileProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }

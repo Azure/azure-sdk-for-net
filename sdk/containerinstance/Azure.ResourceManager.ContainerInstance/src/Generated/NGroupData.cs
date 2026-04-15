@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     /// <summary> Describes the NGroups resource. </summary>
-    public partial class NGroupData : ResourceData
+    public partial class NGroupData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NGroupData"/>. </summary>
-        public NGroupData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public NGroupData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -32,29 +32,21 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of the NGroups resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
-        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NGroupProperties properties, IDictionary<string, string> tags, string location, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, NGroupProperties properties, IDictionary<string, string> tags, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Zones = zones;
             Identity = identity;
         }
 
         /// <summary> Describes the properties of the NGroups resource. </summary>
         internal NGroupProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
