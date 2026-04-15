@@ -54,5 +54,16 @@ namespace Azure.AI.VoiceLive
         /// Additional headers to include on the initial connection.
         /// </summary>
         public IDictionary<string, string> Headers { get; }
+
+        /// <summary>
+        /// Controls whether message content is captured in telemetry spans.
+        /// <list type="bullet">
+        ///   <item><description><c>true</c> — always capture content (session instructions, response text, tool arguments).</description></item>
+        ///   <item><description><c>false</c> — never capture content regardless of environment variables.</description></item>
+        ///   <item><description><c>null</c> (default) — read from <c>OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT</c>
+        ///   or the legacy <c>AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED</c> environment variable.</description></item>
+        /// </list>
+        /// </summary>
+        public bool? EnableContentRecording { get; set; }
     }
 }

@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.VoiceLive.Telemetry;
 using Azure.Core;
 
 namespace Azure.AI.VoiceLive
@@ -27,6 +29,8 @@ namespace Azure.AI.VoiceLive
 
             var clientWebSocket = new ClientWebSocket();
 
+            // Start the root connect span before the WebSocket handshake begins
+            Activity connectActivity = _tracer?.StartConnectActivity();
             try
             {
                 foreach (var kvp in headers)
@@ -73,6 +77,9 @@ namespace Azure.AI.VoiceLive
             catch (Exception ex)
             {
                 _contentLogger.LogError(_connectionId, ex);
+                // Record the connect error on the span and end it — the session is unusable
+                _tracer?.EndConnectActivity(ex);
+                connectActivity = null; // prevent double-stop in finally
                 clientWebSocket?.Dispose();
                 throw;
             }
@@ -108,6 +115,9 @@ namespace Azure.AI.VoiceLive
                     _contentLogger.LogError(_connectionId, $"WebSocket close error: {ex.Message}");
                 }
             }
+
+            // End the root connect span, recording all session-level counters
+            _tracer?.EndConnectActivity();
         }
 
         /// <summary>

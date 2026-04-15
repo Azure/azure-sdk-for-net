@@ -4,11 +4,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.VoiceLive.Telemetry;
 using Azure.Core;
 
 namespace Azure.AI.VoiceLive
@@ -121,12 +123,92 @@ namespace Azure.AI.VoiceLive
             using JsonDocument document = JsonDocument.Parse(message);
             JsonElement root = document.RootElement;
 
+            // Extract the event type string before deserialization for telemetry routing.
+            string eventType = null;
+            if (root.TryGetProperty("type", out var typeEl) && typeEl.ValueKind == JsonValueKind.String)
+                eventType = typeEl.GetString();
+
+            // Instrument the recv span synchronously. The span starts and stops before yielding
+            // so it only covers message parsing/enrichment, not the caller's processing time.
+            InstrumentRecvEvent(eventType, root);
+
             // Deserialize as a server event
             sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
 
             if (sessionUpdate != null)
             {
                 yield return sessionUpdate;
+            }
+        }
+
+        /// <summary>
+        /// Creates a short-lived recv span for the given event type, enriches it with typed attributes,
+        /// and stops it synchronously. Telemetry errors are swallowed to never break message processing.
+        /// </summary>
+        private void InstrumentRecvEvent(string eventType, JsonElement root)
+        {
+            if (_tracer == null || !_tracer.IsEnabled || string.IsNullOrEmpty(eventType))
+                return;
+
+            // Skip high-frequency delta events that would dominate traces without adding value.
+            if (eventType == "response.text.delta" || eventType == "response.audio_transcript.delta")
+                return;
+
+            Activity activity = null;
+            try
+            {
+                activity = _tracer.StartRecvActivity(eventType);
+
+                switch (eventType)
+                {
+                    case "session.created":
+                    case "session.updated":
+                        _tracer.EnrichRecvSessionEvent(activity, root);
+                        break;
+
+                    case "response.done":
+                        _tracer.EnrichRecvResponseDone(activity, root);
+                        break;
+
+                    case "response.audio.delta":
+                        // First audio delta → record first-token latency
+                        double? latencyMs = _tracer.TryRecordFirstTokenLatency();
+                        if (latencyMs.HasValue && activity?.IsAllDataRequested == true)
+                            activity.SetTag(VoiceLiveTelemetryAttributeKeys.GenAiVoiceFirstTokenLatencyMs, latencyMs.Value);
+                        _tracer.OnRecvAudioDelta(root);
+                        break;
+
+                    case "input_audio_buffer.speech_started":
+                        _tracer.OnRecvSpeechStarted();
+                        break;
+
+                    case "mcp_list_tools.completed":
+                    case "mcp_list_tools.failed":
+                        _tracer.OnRecvMcpListToolsDone();
+                        _tracer.EnrichRecvMcpEvent(activity, root);
+                        break;
+
+                    case "response.mcp_call.completed":
+                    case "response.mcp_call.failed":
+                        _tracer.OnRecvMcpCallDone();
+                        _tracer.EnrichRecvMcpEvent(activity, root);
+                        break;
+
+                    case "conversation.item.created":
+                    case "conversation.item.retrieved":
+                    case "response.output_item.added":
+                    case "response.output_item.done":
+                        _tracer.EnrichWithItemIds(activity, root);
+                        break;
+                }
+            }
+            catch
+            {
+                // Telemetry errors must never disrupt message processing
+            }
+            finally
+            {
+                activity?.Stop();
             }
         }
     }

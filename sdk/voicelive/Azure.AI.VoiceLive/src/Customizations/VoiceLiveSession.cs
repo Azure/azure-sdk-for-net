@@ -5,12 +5,15 @@ using System;
 using System.Buffers;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.VoiceLive.Diagnostics;
+using Azure.AI.VoiceLive.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -44,6 +47,9 @@ namespace Azure.AI.VoiceLive
         // WebSocket content logging
         private readonly VoiceLiveWebSocketContentLogger _contentLogger;
         private readonly string _connectionId;
+
+        // OpenTelemetry tracing (null when no ActivityListener is registered)
+        internal readonly VoiceLiveTracer _tracer;
 
         /// <summary>
         /// Gets or sets a value indicating whether turn response data should be buffered.
@@ -93,6 +99,10 @@ namespace Azure.AI.VoiceLive
             // Initialize content logging
             _connectionId = Guid.NewGuid().ToString("N").Substring(0, 8); // Short connection ID
             _contentLogger = new VoiceLiveWebSocketContentLogger(parentClient.Options.Diagnostics);
+
+            // Initialize OpenTelemetry tracer; the tracer is cheap to construct and guards itself
+            // with ActivitySource.HasListeners() so there is zero overhead when OTel is not configured.
+            _tracer = new VoiceLiveTracer(endpoint, parentClient.Options.EnableContentRecording);
         }
 
         /// <summary>
@@ -162,7 +172,54 @@ namespace Azure.AI.VoiceLive
             ThrowIfDisposed();
 
             var data = ((IPersistableModel<ClientEvent>)command).Write(ModelReaderWriterOptions.Json);
-            await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
+
+            string eventType = command.Type.ToString();
+            bool isAudioAppend = command.Type == ClientEventType.InputAudioBufferAppend
+                              || command.Type == ClientEventType.InputAudioTurnAppend;
+
+            // Track audio bytes without creating a span (too high-frequency for per-message spans)
+            if (isAudioAppend)
+            {
+                _tracer?.OnSendAudioData(data.ToMemory().Length);
+                await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            // Notify tracer of lifecycle-relevant events before creating the span
+            if (command.Type == ClientEventType.ResponseCreate)
+                _tracer?.OnSendResponseCreate();
+            else if (command.Type == ClientEventType.ResponseCancel)
+                _tracer?.OnSendResponseCancel();
+
+            Activity sendActivity = _tracer?.StartSendActivity(eventType);
+            try
+            {
+                if (sendActivity != null)
+                {
+                    if (command.Type == ClientEventType.SessionUpdate)
+                    {
+                        try
+                        {
+                            using JsonDocument doc = JsonDocument.Parse(data);
+                            _tracer.EnrichSendSessionUpdate(sendActivity, doc.RootElement);
+                        }
+                        catch { /* Never let telemetry parsing break the send path */ }
+                    }
+
+                    _tracer.AddSendContentEvent(sendActivity, eventType, data.ToString());
+                }
+
+                await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                VoiceLiveTracer.RecordError(sendActivity, ex);
+                throw;
+            }
+            finally
+            {
+                sendActivity?.Stop();
+            }
         }
 
         /// <summary>
@@ -303,6 +360,9 @@ namespace Azure.AI.VoiceLive
                 {
                     // Ignore disposal exceptions
                 }
+
+                // End any open connect span (e.g. if CloseAsync was not called explicitly)
+                _tracer?.EndConnectActivity();
 
                 WebSocket?.Dispose();
                 _audioSendSemaphore?.Dispose();
