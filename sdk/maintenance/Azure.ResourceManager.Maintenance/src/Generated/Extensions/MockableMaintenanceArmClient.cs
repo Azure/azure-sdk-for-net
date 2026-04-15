@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
-        /// <summary> Gets an object representing a <see cref="ConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationAssignmentResource"/> object. </returns>
-        public virtual ConfigurationAssignmentResource GetConfigurationAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceConfigurationAssignmentResource GetMaintenanceConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            ConfigurationAssignmentResource.ValidateResourceId(id);
-            return new ConfigurationAssignmentResource(Client, id);
+            MaintenanceConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceConfigurationAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="MaintenanceConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ConfigurationAssignmentResource"/> objects. </returns>
-        public virtual ConfigurationAssignmentCollection GetConfigurationAssignments(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="MaintenanceConfigurationAssignmentResource"/> objects. </returns>
+        public virtual MaintenanceConfigurationAssignmentCollection GetConfigurationAssignments(ResourceIdentifier scope)
         {
-            return new ConfigurationAssignmentCollection(Client, scope);
+            return new MaintenanceConfigurationAssignmentCollection(Client, scope);
         }
 
         /// <summary> Get configuration assignment for resource. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfigurationAssignmentResource> GetConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 

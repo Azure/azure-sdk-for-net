@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary></summary>
-    public partial class ConfigurationAssignmentResource : IJsonModel<MaintenanceConfigurationAssignmentData>
+    public partial class MaintenanceConfigurationAssignmentResource : IJsonModel<MaintenanceConfigurationAssignmentData>
     {
         private static IJsonModel<MaintenanceConfigurationAssignmentData> s_dataDeserializationInstance;
 

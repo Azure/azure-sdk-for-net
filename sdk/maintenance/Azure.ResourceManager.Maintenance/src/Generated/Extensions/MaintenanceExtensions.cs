@@ -39,25 +39,25 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MaintenanceConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetConfigurationAssignmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetMaintenanceConfigurationAssignmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConfigurationAssignmentResource"/> object. </returns>
-        public static ConfigurationAssignmentResource GetConfigurationAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentResource"/> object. </returns>
+        public static MaintenanceConfigurationAssignmentResource GetMaintenanceConfigurationAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMaintenanceArmClient(client).GetConfigurationAssignmentResource(id);
+            return GetMockableMaintenanceArmClient(client).GetMaintenanceConfigurationAssignmentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ConfigurationAssignmentCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="MaintenanceConfigurationAssignmentCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetConfigurationAssignments(ResourceIdentifier)"/> instead. </description>
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ConfigurationAssignmentResource"/> objects. </returns>
-        public static ConfigurationAssignmentCollection GetConfigurationAssignments(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="MaintenanceConfigurationAssignmentResource"/> objects. </returns>
+        public static MaintenanceConfigurationAssignmentCollection GetConfigurationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ConfigurationAssignmentResource> GetConfigurationAssignment(this ArmClient client, ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignment(this ArmClient client, ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceConfigurationAssignmentResource>> GetConfigurationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -431,8 +431,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -449,8 +449,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationAssignmentResource> GetConfigurationAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

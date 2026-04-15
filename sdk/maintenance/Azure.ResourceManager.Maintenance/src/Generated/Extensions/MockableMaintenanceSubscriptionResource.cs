@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maintenance;
-using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -69,14 +68,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, ConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionAsyncCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new ConfigurationAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionAsyncCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -97,14 +96,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationAssignmentResource> GetConfigurationAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignments(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, ConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new ConfigurationAssignmentResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>

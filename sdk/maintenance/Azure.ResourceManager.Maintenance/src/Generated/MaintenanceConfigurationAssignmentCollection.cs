@@ -12,16 +12,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfigurationAssignmentResource"/> and their operations.
-    /// Each <see cref="ConfigurationAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ConfigurationAssignmentCollection"/> instance call the GetConfigurationAssignments method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="MaintenanceConfigurationAssignmentResource"/> and their operations.
+    /// Each <see cref="MaintenanceConfigurationAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="MaintenanceConfigurationAssignmentCollection"/> instance call the GetConfigurationAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class ConfigurationAssignmentCollection : ArmCollection
+    public partial class MaintenanceConfigurationAssignmentCollection : ArmCollection
     {
         private readonly ClientDiagnostics _configurationAssignmentsClientDiagnostics;
         private readonly ConfigurationAssignments _configurationAssignmentsRestClient;
@@ -32,24 +31,24 @@ namespace Azure.ResourceManager.Maintenance
         private readonly ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
         private readonly ConfigurationAssignmentsWithinSubscription _configurationAssignmentsWithinSubscriptionRestClient;
 
-        /// <summary> Initializes a new instance of ConfigurationAssignmentCollection for mocking. </summary>
-        protected ConfigurationAssignmentCollection()
+        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentCollection for mocking. </summary>
+        protected MaintenanceConfigurationAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfigurationAssignmentResource.ResourceType, out string configurationAssignmentApiVersion);
-            _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MaintenanceConfigurationAssignmentResource.ResourceType, out string configurationAssignmentApiVersion);
+            _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
-            _configurationAssignmentsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
-            _configurationAssignmentsForSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsForSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsForSubscriptionsRestClient = new ConfigurationAssignmentsForSubscriptions(_configurationAssignmentsForSubscriptionsClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
-            _configurationAssignmentsWithinSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsWithinSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsWithinSubscriptionRestClient = new ConfigurationAssignmentsWithinSubscription(_configurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
         }
 
@@ -76,12 +75,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<ConfigurationAssignmentResource> operation = new MaintenanceArmOperation<ConfigurationAssignmentResource>(Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -131,12 +130,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<ConfigurationAssignmentResource> operation = new MaintenanceArmOperation<ConfigurationAssignmentResource>(Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -184,11 +183,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConfigurationAssignmentResource>> GetAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentResource>> GetAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,11 +232,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConfigurationAssignmentResource> Get(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentResource> Get(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,8 +284,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationAssignmentResource> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentResource> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, ConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,
@@ -305,7 +304,7 @@ namespace Azure.ResourceManager.Maintenance
                 resourceType,
                 resourceName,
                 context,
-                "ConfigurationAssignmentCollection.GetAll"), data => new ConfigurationAssignmentResource(Client, data));
+                "MaintenanceConfigurationAssignmentCollection.GetAll"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -332,8 +331,8 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationAssignmentResource> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentResource> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, ConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllCollectionResultOfT(
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.Maintenance
                 resourceType,
                 resourceName,
                 context,
-                "ConfigurationAssignmentCollection.GetAll"), data => new ConfigurationAssignmentResource(Client, data));
+                "MaintenanceConfigurationAssignmentCollection.GetAll"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -490,11 +489,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConfigurationAssignmentResource>> GetIfExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MaintenanceConfigurationAssignmentResource>> GetIfExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -519,9 +518,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConfigurationAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceConfigurationAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -551,11 +550,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConfigurationAssignmentResource> GetIfExists(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MaintenanceConfigurationAssignmentResource> GetIfExists(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -580,9 +579,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConfigurationAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceConfigurationAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
