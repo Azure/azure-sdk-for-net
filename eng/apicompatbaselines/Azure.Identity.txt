@@ -29,3 +29,12 @@ CannotRemoveAttribute : Attribute 'Microsoft.Cci.DummyTypeReference' exists on '
 CannotRemoveAttribute : Attribute 'Microsoft.Cci.DummyTypeReference' exists on 'Azure.Identity.VisualStudioCodeCredential.GetTokenAsync(Azure.Core.TokenRequestContext, System.Threading.CancellationToken)' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Microsoft.Cci.DummyTypeReference' exists on 'Azure.Identity.VisualStudioCredential.GetTokenAsync(Azure.Core.TokenRequestContext, System.Threading.CancellationToken)' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Microsoft.Cci.DummyTypeReference' exists on 'Azure.Identity.WorkloadIdentityCredential.GetTokenAsync(Azure.Core.TokenRequestContext, System.Threading.CancellationToken)' in the contract but not the implementation.
+# Baselining these as we are intentionally reintroducing these obsolete types and properties.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.ExcludeVisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.ExcludeVisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.VisualStudioCodeTenantId' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.VisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.VisualStudioCodeCredential' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.VisualStudioCodeCredentialOptions' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.Identity.VisualStudioCodeCredentialOptions' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Identity.DefaultAzureCredentialOptions.VisualStudioCodeTenantId' in the contract but not the implementation.
