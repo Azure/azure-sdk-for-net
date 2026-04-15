@@ -2,6 +2,9 @@ parameters:
   - name: ArtifactPath
     type: string
     default: $(Build.ArtifactStagingDirectory)/PackageInfo
+  - name: Repo
+    type: string
+    default: $(Build.Repository.Name)
 
 steps:
   - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
@@ -17,4 +20,4 @@ steps:
       arguments: >-
         -AzsdkPath '$(AZSDK)'
         -ArtifactPath '${{ parameters.ArtifactPath }}'
-        -Repo '$(Build.Repository.Name)'
+        -Repo '${{ parameters.Repo }}'
