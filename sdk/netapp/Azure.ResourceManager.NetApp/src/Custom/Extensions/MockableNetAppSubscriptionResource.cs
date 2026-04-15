@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
 {
     public partial class MockableNetAppSubscriptionResource
     {
+        // ---- Quota Limit methods (delegating to generated methods) ----
+
         /// <summary>
         /// Gets the default and current quota limit for a subscription and location.
         /// </summary>
@@ -69,16 +71,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<NetAppResourceQuotaLimitResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
+        public virtual Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
         {
-            Response<NetAppResourceQuotaLimitResource> response = await GetNetAppResourceQuotaLimitAsync(location, quotaLimitName, default).ConfigureAwait(false);
-            return response.Value;
+            throw new NotSupportedException("GetNetAppQuotaLimitAsync returning NetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimitAsync instead.");
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<NetAppResourceQuotaLimitResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
+        public virtual AsyncPageable<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
         {
-            return GetNetAppResourceQuotaLimits(location).GetAllAsync();
+            throw new NotSupportedException("GetNetAppQuotaLimitsAsync returning NetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimits instead.");
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -96,6 +97,130 @@ namespace Azure.ResourceManager.NetApp.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimits(location, cancellationToken);
+
+        // ---- Check Availability methods (old AzureLocation overloads) ----
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return await CheckFilePathAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return CheckFilePathAvailability(location.ToString(), content, cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return await CheckNameAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return CheckNameAvailability(location.ToString(), content, cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return await CheckQuotaAvailabilityAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return CheckQuotaAvailability(location.ToString(), content, cancellationToken);
+        }
+
+        // ---- Region Info methods (old AzureLocation overloads) ----
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return await QueryRegionInfoAsync(location.ToString(), cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return QueryRegionInfo(location.ToString(), cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual RegionInfoResourceCollection GetRegionInfoResources(AzureLocation location)
+        {
+            throw new NotSupportedException("GetRegionInfoResources is not supported. Use GetRegionInfoResource instead.");
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<RegionInfoResource>> GetRegionInfoResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("GetRegionInfoResourceAsync with AzureLocation is not supported. Use GetRegionInfoResource() instead.");
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<RegionInfoResource> GetRegionInfoResource(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("GetRegionInfoResource with AzureLocation is not supported. Use GetRegionInfoResource() instead.");
+        }
+
+        // ---- Network Sibling Set methods (old AzureLocation overloads) ----
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            return await QueryNetworkSiblingSetAsync(location.ToString(), content, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            return QueryNetworkSiblingSet(location.ToString(), content, cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            return await UpdateNetworkSiblingSetAsync(waitUntil, location.ToString(), content, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            return UpdateNetworkSiblingSet(waitUntil, location.ToString(), content, cancellationToken);
+        }
+
+        // ---- Resource Usage methods (old named overloads) ----
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppUsageResult> GetNetAppResourceUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(location.ToString(), cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppUsageResult> GetNetAppResourceUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetAll(location.ToString(), cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppUsageResult>> GetNetAppResourceUsageAsync(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync(location, usageType, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppUsageResult> GetNetAppResourceUsage(AzureLocation location, string usageType, CancellationToken cancellationToken = default)
+        {
+            return Get(location, usageType, cancellationToken);
+        }
+
+        // ---- Helper types ----
 
         private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData data)
         {

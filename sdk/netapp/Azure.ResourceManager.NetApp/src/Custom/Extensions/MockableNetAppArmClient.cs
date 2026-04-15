@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -38,6 +39,16 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual NetAppVolumeResource GetNetAppVolumeResource(ResourceIdentifier id)
         {
             return new NetAppVolumeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// This type has been replaced by <see cref="NetAppResourceQuotaLimitResource" />.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NetAppSubscriptionQuotaItemResource GetNetAppSubscriptionQuotaItemResource(ResourceIdentifier id)
+        {
+            throw new NotSupportedException("GetNetAppSubscriptionQuotaItemResource is not supported. Use GetNetAppResourceQuotaLimitResource instead.");
         }
     }
 }
