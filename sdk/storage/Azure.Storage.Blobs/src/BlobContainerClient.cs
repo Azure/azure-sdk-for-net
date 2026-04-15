@@ -2495,7 +2495,7 @@ namespace Azure.Storage.Blobs
 
         #region CreateSession
         /// <summary>
-        /// The <see cref="CreateSessionAsync"/> operation
+        /// The <see cref="CreateSession"/> operation
         /// enables users to create a session scoped to a container.
         /// </summary>
         /// <param name="options">

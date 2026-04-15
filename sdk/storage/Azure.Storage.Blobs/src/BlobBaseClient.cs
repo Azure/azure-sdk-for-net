@@ -337,8 +337,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
         {
-            Errors.VerifyHttpsTokenAuth(blobUri);
             Argument.AssertNotNull(blobUri, nameof(blobUri));
+            Errors.VerifyHttpsTokenAuth(blobUri);
             options ??= new BlobClientOptions();
             _uri = blobUri;
             if (!string.IsNullOrEmpty(blobUri.Query))
