@@ -21,13 +21,14 @@
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
 
 .PARAMETER LocalSpecRepoPath
-    Path to the root of a local azure-rest-api-specs repo. When specified, reads spec
-    files from this local directory instead of fetching from GitHub. Useful for fast
-    iteration when making spec changes alongside generator changes.
+    Path to the local TypeSpec service folder (e.g., the folder containing main.tsp
+    and client.tsp). When specified, reads spec files from this local directory instead
+    of fetching from GitHub. Useful for fast iteration when making spec changes
+    alongside generator changes.
     
-    IMPORTANT: Point this at the repo root (e.g., C:\src\azure-rest-api-specs), NOT
-    at the service folder. The script automatically appends the 'directory' value from
-    each SDK's tsp-location.yaml to resolve the service-specific path.
+    The script first tries joining this path with the 'directory' value from
+    tsp-location.yaml. If that doesn't exist, it uses the path directly as the
+    service folder.
 
 .PARAMETER SaveInputs
     When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
@@ -49,7 +50,7 @@
     .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
+    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs\specification\keyvault\Security.KeyVault.Management"
 #>
 
 param(
