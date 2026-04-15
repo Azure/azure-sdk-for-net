@@ -162,5 +162,51 @@ namespace RandomNamespace
                 .WithSources(AzureCorePipelineTaskExtensions)
                 .RunAsync();
         }
+
+#if !NETFRAMEWORK // IAsyncEnumerable test compilation requires netstandard2.0+ support (net472+)
+        [Test]
+        public async Task AZC0101ErrorOnAsyncEnumerableConfigureAwaitTrue()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await foreach (var x in GetValuesAsync().{|AZC0101:ConfigureAwait(true)|}) { }
+        }
+
+        private static async IAsyncEnumerable<int> GetValuesAsync() { yield break; }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0101NoErrorOnAsyncEnumerableConfigureAwaitFalse()
+        {
+            const string code = @"
+namespace RandomNamespace
+{
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    public class MyClass
+    {
+        public static async Task Foo()
+        {
+            await foreach (var x in GetValuesAsync().ConfigureAwait(false)) { }
+        }
+
+        private static async IAsyncEnumerable<int> GetValuesAsync() { yield break; }
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+#endif
     }
 }
