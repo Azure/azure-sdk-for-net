@@ -35,9 +35,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Gets the Aes256. </summary>
         public static DataBoxEdgeEncryptionAlgorithm Aes256 { get; } = new DataBoxEdgeEncryptionAlgorithm(Aes256Value);
 
-        /// <summary> Gets the RsaesPkcs1V15. </summary>
-        public static DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V15 { get; } = new DataBoxEdgeEncryptionAlgorithm(RsaesPkcs1V15Value);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeEncryptionAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
