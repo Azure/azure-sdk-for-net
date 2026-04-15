@@ -1,6 +1,6 @@
 ---
 name: mpg-migration-simplified
-description: Simplified workflow for Azure SDK management-plane migration from AutoRest/Swagger to TypeSpec. Clear phase-by-phase flow.
+description: "Migrate Azure SDK for .NET management-plane libraries from AutoRest/Swagger to TypeSpec-based generation. Covers setup, code generation, build-fix cycle, breaking change mitigation, and PR creation. Use when asked to migrate a management SDK, do an MPG migration, or move from Swagger to TypeSpec."
 ---
 
 # MPG Migration Workflow
@@ -21,9 +21,11 @@ Migrate an Azure SDK for .NET management library from AutoRest/Swagger to TypeSp
 4. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
 5. Build — expect errors, proceed to Phase 2.
 
-## Phase 2 — Fix Build Errors
+## Phase 2 — Build-Fix Loop
 
 Fix errors **spec-side** (decorators in `client.tsp` with `"csharp"` scope) or **SDK-side** (custom code in `src/Customization/`). Always verify zero swagger diff after spec changes.
+
+After each fix: regenerate if spec changed → rebuild → check remaining errors → repeat until clean.
 
 ### Spec-side decorator table
 
