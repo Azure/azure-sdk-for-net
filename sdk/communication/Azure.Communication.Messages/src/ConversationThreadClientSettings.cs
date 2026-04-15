@@ -10,7 +10,6 @@ namespace Azure.Communication.Messages
 {
     [CodeGenSuppress("BindCore", typeof(IConfigurationSection))]
     [CodeGenSuppress("CommunicationTokenCredential")]
-    [CodeGenSuppress("CommunicationTokenCredential")]
     public partial class ConversationThreadClientSettings
     {
         /// <summary> Gets or sets the CommunicationTokenCredential token string. </summary>
