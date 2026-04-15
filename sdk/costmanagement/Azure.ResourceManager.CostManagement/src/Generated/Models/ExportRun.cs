@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The ExportRun. </summary>
+    /// <summary> An export run. </summary>
     public partial class ExportRun : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The CostManagementDimension. </summary>
+    /// <summary> List of Dimension. </summary>
     public partial class CostManagementDimension : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

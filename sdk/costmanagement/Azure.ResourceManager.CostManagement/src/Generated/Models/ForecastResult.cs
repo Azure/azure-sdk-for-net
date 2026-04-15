@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The ForecastResult. </summary>
+    /// <summary> Result of forecast. It contains all columns listed under groupings and aggregation. </summary>
     public partial class ForecastResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

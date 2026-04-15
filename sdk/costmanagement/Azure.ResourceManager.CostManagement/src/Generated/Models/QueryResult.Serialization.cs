@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The QueryResult. </summary>
+    /// <summary> Result of query. It contains all columns listed under groupings and aggregation. </summary>
     public partial class QueryResult : ResourceData, IJsonModel<QueryResult>
     {
         /// <param name="data"> The data to parse. </param>

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The CostManagementDimension. </summary>
+    /// <summary> List of Dimension. </summary>
     public partial class CostManagementDimension : ResourceData, IJsonModel<CostManagementDimension>
     {
         /// <param name="data"> The data to parse. </param>

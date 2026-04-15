@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The ExportRun. </summary>
+    /// <summary> An export run. </summary>
     public partial class ExportRun : ResourceData, IJsonModel<ExportRun>
     {
         /// <param name="data"> The data to parse. </param>

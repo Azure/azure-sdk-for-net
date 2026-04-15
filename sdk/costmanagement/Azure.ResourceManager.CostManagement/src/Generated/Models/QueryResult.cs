@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The QueryResult. </summary>
+    /// <summary> Result of query. It contains all columns listed under groupings and aggregation. </summary>
     public partial class QueryResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

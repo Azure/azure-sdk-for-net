@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The ForecastResult. </summary>
+    /// <summary> Result of forecast. It contains all columns listed under groupings and aggregation. </summary>
     public partial class ForecastResult : ResourceData, IJsonModel<ForecastResult>
     {
         /// <param name="data"> The data to parse. </param>
