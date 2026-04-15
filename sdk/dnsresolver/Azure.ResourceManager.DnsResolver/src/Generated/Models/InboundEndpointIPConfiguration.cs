@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.Core;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -16,6 +18,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
+        /// <param name="subnetId"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
+        public InboundEndpointIPConfiguration(ResourceIdentifier subnetId)
+        {
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
+
+            Subnet = new SubResource(subnetId);
+        }
 
         /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
@@ -38,5 +50,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Private IP address allocation method. </summary>
         public InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                Subnet = new SubResource(value);
+            }
+        }
     }
 }
