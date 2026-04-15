@@ -1445,12 +1445,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> compare deployment versions response. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
-        /// <returns> A new <see cref="Models.CompareDeploymentVersionsResponse"/> instance for mocking. </returns>
-        public static CompareDeploymentVersionsResponse CompareDeploymentVersionsResponse(IEnumerable<DeploymentVersionChange> value = default)
+        /// <returns> A new <see cref="Models.CompareDeploymentVersionsResult"/> instance for mocking. </returns>
+        public static CompareDeploymentVersionsResult CompareDeploymentVersionsResult(IEnumerable<DeploymentVersionChange> value = default)
         {
             value ??= new ChangeTrackingList<DeploymentVersionChange>();
 
-            return new CompareDeploymentVersionsResponse(value.ToList(), additionalBinaryDataProperties: null);
+            return new CompareDeploymentVersionsResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>

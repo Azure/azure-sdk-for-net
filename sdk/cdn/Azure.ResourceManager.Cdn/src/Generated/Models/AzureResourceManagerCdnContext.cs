@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(ClientCertificateValidatedIfPresentedAdvancedSettings))]
     [ModelReaderWriterBuildable(typeof(ClientPortMatchCondition))]
     [ModelReaderWriterBuildable(typeof(CompareDeploymentVersionsParameter))]
-    [ModelReaderWriterBuildable(typeof(CompareDeploymentVersionsResponse))]
+    [ModelReaderWriterBuildable(typeof(CompareDeploymentVersionsResult))]
     [ModelReaderWriterBuildable(typeof(CompleteMtlsPassthroughToOriginAdvancedSettings))]
     [ModelReaderWriterBuildable(typeof(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems))]
     [ModelReaderWriterBuildable(typeof(Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems))]

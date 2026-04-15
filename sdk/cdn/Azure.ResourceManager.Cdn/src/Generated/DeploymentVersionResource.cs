@@ -411,12 +411,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="compareDeploymentVersionsParameter"> The deployment version to be compared to. </param>
+        /// <param name="compareDeploymentVersionsContent"> The deployment version to be compared to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compareDeploymentVersionsParameter"/> is null. </exception>
-        public virtual async Task<Response<CompareDeploymentVersionsResponse>> CompareAsync(CompareDeploymentVersionsParameter compareDeploymentVersionsParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="compareDeploymentVersionsContent"/> is null. </exception>
+        public virtual async Task<Response<CompareDeploymentVersionsResult>> CompareAsync(CompareDeploymentVersionsParameter compareDeploymentVersionsContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(compareDeploymentVersionsParameter, nameof(compareDeploymentVersionsParameter));
+            Argument.AssertNotNull(compareDeploymentVersionsContent, nameof(compareDeploymentVersionsContent));
 
             using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Compare");
             scope.Start();
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentVersionsRestClient.CreateCompareRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompareDeploymentVersionsParameter.ToRequestContent(compareDeploymentVersionsParameter), context);
+                HttpMessage message = _deploymentVersionsRestClient.CreateCompareRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompareDeploymentVersionsParameter.ToRequestContent(compareDeploymentVersionsContent), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CompareDeploymentVersionsResponse> response = Response.FromValue(CompareDeploymentVersionsResponse.FromResponse(result), result);
+                Response<CompareDeploymentVersionsResult> response = Response.FromValue(CompareDeploymentVersionsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -463,12 +463,12 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="compareDeploymentVersionsParameter"> The deployment version to be compared to. </param>
+        /// <param name="compareDeploymentVersionsContent"> The deployment version to be compared to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compareDeploymentVersionsParameter"/> is null. </exception>
-        public virtual Response<CompareDeploymentVersionsResponse> Compare(CompareDeploymentVersionsParameter compareDeploymentVersionsParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="compareDeploymentVersionsContent"/> is null. </exception>
+        public virtual Response<CompareDeploymentVersionsResult> Compare(CompareDeploymentVersionsParameter compareDeploymentVersionsContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(compareDeploymentVersionsParameter, nameof(compareDeploymentVersionsParameter));
+            Argument.AssertNotNull(compareDeploymentVersionsContent, nameof(compareDeploymentVersionsContent));
 
             using DiagnosticScope scope = _deploymentVersionsClientDiagnostics.CreateScope("DeploymentVersionResource.Compare");
             scope.Start();
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deploymentVersionsRestClient.CreateCompareRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompareDeploymentVersionsParameter.ToRequestContent(compareDeploymentVersionsParameter), context);
+                HttpMessage message = _deploymentVersionsRestClient.CreateCompareRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CompareDeploymentVersionsParameter.ToRequestContent(compareDeploymentVersionsContent), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CompareDeploymentVersionsResponse> response = Response.FromValue(CompareDeploymentVersionsResponse.FromResponse(result), result);
+                Response<CompareDeploymentVersionsResult> response = Response.FromValue(CompareDeploymentVersionsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
