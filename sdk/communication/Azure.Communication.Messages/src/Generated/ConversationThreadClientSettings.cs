@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Communication;
 
 namespace Azure.Communication.Messages
 {
@@ -18,9 +17,6 @@ namespace Azure.Communication.Messages
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
-
-        /// <summary> Gets or sets the CommunicationTokenCredential. </summary>
-        public CommunicationTokenCredential CommunicationTokenCredential { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
         public CommunicationMessagesClientOptions Options { get; set; }

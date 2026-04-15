@@ -4,14 +4,17 @@
 global using Microsoft.Extensions.Configuration;
 
 using System;
-using Azure.Communication;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     [CodeGenSuppress("BindCore", typeof(IConfigurationSection))]
+    [CodeGenSuppress("CommunicationTokenCredential")]
     public partial class ConversationThreadClientSettings
     {
+        /// <summary> Gets or sets the CommunicationTokenCredential token string. </summary>
+        public string CommunicationTokenCredential { get; set; }
+
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
@@ -27,7 +30,7 @@ namespace Azure.Communication.Messages
                 string token = communicationTokenCredentialSection.Value;
                 if (!string.IsNullOrEmpty(token))
                 {
-                    CommunicationTokenCredential = new CommunicationTokenCredential(token);
+                    CommunicationTokenCredential = token;
                 }
             }
 

@@ -14,6 +14,9 @@ namespace Azure.Communication.Messages
     /// The Azure Communication Services Conversation Thread client.
     /// </summary>
     [CodeGenSuppress("ConversationThreadClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+#pragma warning disable SCME0002 // ConversationThreadClientSettings is experimental
+    [CodeGenSuppress("ConversationThreadClient", typeof(ConversationThreadClientSettings))]
+#pragma warning restore SCME0002
     public partial class ConversationThreadClient
     {
         #region public constructors
