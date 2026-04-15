@@ -5,27 +5,25 @@
 - Phase 2: Build-fix loop — 0 compilation errors
   - Spec-side: 70+ @@clientName decorators, 25+ @@alternateType entries in client.tsp
   - SDK-side: Multiple Custom code fixes for property delegation and type alignment
-- Phase 3 (in progress): Reduced from ~950 to 175 unique API compat violations
+- Phase 3 (in progress): Reduced from ~950 to 79 unique API compat violations
   - Backward-compat wrapper properties: NetAppVolumeData (47), NetAppVolumePatch (16)
-  - Deprecated operation stubs: NetAppVolumeResource (80+), NetAppVolumeCollection (10)
-  - Backward-compat constructors: Patch types, BackupsMigrationContent
+  - Deprecated operation stubs: NetAppVolumeResource (80+), NetAppVolumeCollection (10),
+    NetAppAccountResource, SnapshotPolicyResource, extension/mocking methods
+  - Backward-compat constructors: Patch types, BackupsMigrationContent, various content types
   - Fixed ExportPolicyRule naming, added extensible enum members
   - Created stub types: NetAppSubscriptionQuotaItemResource/Collection, RegionInfoResourceCollection
   - Fixed RegenSdkLocal.ps1 to accept service folder path
 
-### Remaining (~175 unique API compat violations)
+### Remaining (~79 unique API compat violations)
 
 **Cannot fix (structural ~25):**
-- Enum → extensible enum: NetAppProvisioningState (11)
-- CannotRemoveBaseTypeOrInterface: Patch types (TrackedResourceData), enum (System.Enum),
-  models (ResourceData), Volume types (IJsonModel/IEnumerable)
+- Enum → extensible enum: NetAppProvisioningState (12 incl. value__ and base type)
+- CannotRemoveBaseTypeOrInterface (~13): Patch types lost TrackedResourceData,
+  models lost ResourceData, Volume types lost IJsonModel/IEnumerable interfaces
 
-**Remaining fixable (~150):**
-- NetAppExtensions (18): deprecated extension method stubs
-- Mocking (12): deprecated mock method stubs
-- NetAppVolumeGroupVolume (9): property type mismatches
-- NetAppAccountResource (7): operation stubs
-- NetAppVolumeResource (6): remaining operation stubs
-- Constructor parameter type changes (~30)
-- Scattered property/method mismatches (~50)
-- New stub type members (~20)
+**Remaining fixable (~54):**
+- NetAppVolumeGroupVolume (8): property type mismatches (ResourceIdentifier vs string, Guid vs string)
+- Constructor parameter type changes (~15): various content/data types
+- NetAppAccountResource (4): remaining operation stubs
+- NetAppVolumeResource (3): remaining operation stubs
+- Scattered individual property/method mismatches (~24)
