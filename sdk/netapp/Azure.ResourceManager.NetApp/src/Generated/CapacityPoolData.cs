@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
         public string ETag { get; }
 
         /// <summary> UUID v4 used to identify the Pool. </summary>
-        public string PoolId
+        public Guid? PoolId
         {
             get
             {

@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeReplicationStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeReplicationRelationshipStatus?)null,
+                relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : null,
                 mirrorState,
                 totalProgress,
                 errorMessage,
@@ -230,23 +230,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return ArmNetAppModelFactory.CapacityPoolData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                poolId: poolId?.ToString(),
-                size: size,
-                serviceLevel: serviceLevel,
-                provisioningState: provisioningState,
-                totalThroughputMibps: totalThroughputMibps,
-                utilizedThroughputMibps: utilizedThroughputMibps,
-                customThroughputMibps: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
-                qosType: qosType,
-                isCoolAccessEnabled: isCoolAccessEnabled,
-                encryptionType: encryptionType);
+            return new CapacityPoolData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), tags, location,
+                poolId is null && size == 0 && serviceLevel == default && provisioningState is null && totalThroughputMibps is null && utilizedThroughputMibps is null && customThroughputMibps is null && qosType is null && isCoolAccessEnabled is null && encryptionType is null ? default : new PoolProperties(
+                    poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null, qosType, isCoolAccessEnabled, encryptionType, null),
+                etag?.ToString());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
@@ -293,7 +280,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeBackupStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null,
+                relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : null,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
@@ -332,7 +319,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppRestoreStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null,
+                relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : null,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,

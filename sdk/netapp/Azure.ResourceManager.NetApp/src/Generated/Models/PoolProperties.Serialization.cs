@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(PoolId))
             {
                 writer.WritePropertyName("poolId"u8);
-                writer.WriteStringValue(PoolId);
+                writer.WriteStringValue(PoolId.Value);
             }
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string poolId = default;
+            Guid? poolId = default;
             long size = default;
             NetAppFileServiceLevel serviceLevel = default;
             string provisioningState = default;
@@ -180,7 +180,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("poolId"u8))
                 {
-                    poolId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    poolId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
