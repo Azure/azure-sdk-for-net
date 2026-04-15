@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-04-14)
 
 ### Features Added
 
-- Initial release of Azure.AI.AgentServer.Responses.
+- Initial release of the Azure.AI.AgentServer.Responses library.
 - ASP.NET Core server library implementing the Azure AI Responses API.
 - `ResponseHandler` abstract class for custom response handling with `CreateAsync` returning `IAsyncEnumerable<ResponseStreamEvent>`.
 - `TextResponse` convenience class for simple text-only responses with a single delegate.
