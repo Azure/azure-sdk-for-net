@@ -27,6 +27,12 @@ namespace Azure.Identity.Tests
         {
         }
 
+        [SetUp]
+        public void Setup()
+        {
+            ApplicationBase.ResetStateForTest();
+        }
+
         private const string ExpectedToken = "mock-msi-access-token";
 
         [NonParallelizable]
@@ -520,7 +526,7 @@ namespace Azure.Identity.Tests
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
                 new ManagedIdentityClient(
-                    new ManagedIdentityClientOptions() { ManagedIdentityId = clientId is null ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = pipeline, IsForceRefreshEnabled = true, Options = options })
+                    new ManagedIdentityClientOptions() { ManagedIdentityId = clientId is null ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = pipeline, IsForceRefreshEnabled = true, PreserveTransport = true, Options = options })
             ));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
@@ -548,7 +554,9 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
             var response = CreateMockResponse(200, ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => {
+                return response;
+            });
             var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
@@ -558,6 +566,7 @@ namespace Azure.Identity.Tests
                         Pipeline = CredentialPipeline.GetInstance(options),
                         ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
                         IsForceRefreshEnabled = true,
+                        PreserveTransport = true,
                         Options = options
                     })
             ));
@@ -568,7 +577,7 @@ namespace Azure.Identity.Tests
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
+            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath), $"Unexpected Uri: {request.Uri}");
 
             string query = request.Uri.Query;
 

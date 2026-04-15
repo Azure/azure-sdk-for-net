@@ -1,5 +1,11 @@
 # Release History
 
+## 1.17.2 (Unreleased)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.83.1.
+
 ## 1.17.1 (2025-11-18)
 
 ### Other Changes
