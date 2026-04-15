@@ -350,7 +350,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Read,
             operationPath: new RequestPath(readOp.path),
             operationScope: operationScopeKind,
-            resourceScopeIdPattern: calculateResourceScopePath(
+            resourceScopeIdPattern: findResourceScopeIdPattern(
               readOp.path,
               resolvedResource
             )
@@ -375,7 +375,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Create,
             operationPath: new RequestPath(createOp.path),
             operationScope: operationScopeKind,
-            resourceScopeIdPattern: calculateResourceScopePath(
+            resourceScopeIdPattern: findResourceScopeIdPattern(
               createOp.path,
               resolvedResource
             )
@@ -396,7 +396,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Update,
             operationPath: new RequestPath(updateOp.path),
             operationScope: operationScopeKind,
-            resourceScopeIdPattern: calculateResourceScopePath(
+            resourceScopeIdPattern: findResourceScopeIdPattern(
               updateOp.path,
               resolvedResource
             )
@@ -417,7 +417,7 @@ function convertResolvedResourceToMetadata(
             kind: ResourceOperationKind.Delete,
             operationPath: new RequestPath(deleteOp.path),
             operationScope: operationScopeKind,
-            resourceScopeIdPattern: calculateResourceScopePath(
+            resourceScopeIdPattern: findResourceScopeIdPattern(
               deleteOp.path,
               resolvedResource
             )
@@ -448,7 +448,7 @@ function convertResolvedResourceToMetadata(
             : ResourceOperationKind.Action,
           operationPath: new RequestPath(actionOp.path),
           operationScope: operationScopeKind,
-          resourceScopeIdPattern: calculateResourceScopePath(
+          resourceScopeIdPattern: findResourceScopeIdPattern(
             actionOp.path,
             resolvedResource
           )
@@ -577,7 +577,7 @@ function formatResourceType(resourceType: ResourceType): string {
   return `${resourceType.provider}/${resourceType.types.join("/")}`;
 }
 
-function calculateResourceScopePath(
+function findResourceScopeIdPattern(
   operationPath: string,
   resolvedResource: ResolvedResource
 ): RequestPath | undefined {

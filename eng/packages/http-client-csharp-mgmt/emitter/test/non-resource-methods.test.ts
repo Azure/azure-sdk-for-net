@@ -20,7 +20,7 @@ import type {
   ArmResourceSchema,
   NonResourceMethod
 } from "../src/resource-metadata.js";
-import { RequestPath } from "../src/utils.js";
+import { RequestPath } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;

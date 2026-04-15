@@ -310,11 +310,11 @@ export function buildArmProviderSchema(
       }
     } else {
       // we treat this method as a non-resource method when it does not have a kind or an associated resource model
-      const nrPath = new RequestPath(method.operation.path);
+      const operationPath = new RequestPath(method.operation.path);
       nonResourceMethods.set(method.crossLanguageDefinitionId, {
         methodId: method.crossLanguageDefinitionId,
-        operationPath: nrPath,
-        operationScope: nrPath.operationScope
+        operationPath: operationPath,
+        operationScope: operationPath.operationScope
       });
     }
   };
