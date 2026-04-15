@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateDetails"/>. </summary>
-        internal DataBoxEdgeUpdateDetails()
+        public DataBoxEdgeUpdateDetails()
         {
         }
 
@@ -47,30 +47,30 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Title of the Update. </summary>
-        public string UpdateTitle { get; }
+        public string UpdateTitle { get; set; }
 
         /// <summary> Size of the update(In Bytes). </summary>
-        public double? UpdateSizeInBytes { get; }
+        public double? UpdateSizeInBytes { get; set; }
 
         /// <summary> Type of the Update. </summary>
-        public DataBoxEdgeUpdateType? UpdateType { get; }
+        public DataBoxEdgeUpdateType? UpdateType { get; set; }
 
         /// <summary> Target Version number. </summary>
-        public string TargetVersion { get; }
+        public string TargetVersion { get; set; }
 
         /// <summary> Friendly Version Number. </summary>
-        public string FriendlyVersionNumber { get; }
+        public string FriendlyVersionNumber { get; set; }
 
         /// <summary> Estimated Install Time for the update. </summary>
-        public int? EstimatedInstallTimeInMins { get; }
+        public int? EstimatedInstallTimeInMins { get; set; }
 
         /// <summary> Indicates if updates are available and at least one of the updates needs a reboot. </summary>
-        public InstallRebootBehavior? RebootBehavior { get; }
+        public InstallRebootBehavior? RebootBehavior { get; set; }
 
         /// <summary> Impact of Installing an updateType. </summary>
-        public InstallationImpact? InstallationImpact { get; }
+        public InstallationImpact? InstallationImpact { get; set; }
 
         /// <summary> Status of the update. </summary>
-        public DataBoxEdgeUpdateStatus? Status { get; }
+        public DataBoxEdgeUpdateStatus? Status { get; set; }
     }
 }

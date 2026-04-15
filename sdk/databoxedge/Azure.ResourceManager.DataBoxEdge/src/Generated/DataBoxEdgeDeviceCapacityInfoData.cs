@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfoData"/>. </summary>
-        internal DataBoxEdgeDeviceCapacityInfoData()
+        public DataBoxEdgeDeviceCapacityInfoData()
         {
         }
 
@@ -38,14 +38,22 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> The device capacity properties. </summary>
-        internal DeviceCapacityInfoProperties Properties { get; }
+        internal DeviceCapacityInfoProperties Properties { get; set; }
 
         /// <summary> Timestamp of request in UTC. </summary>
         public DateTimeOffset? TimeStamp
         {
             get
             {
-                return Properties.TimeStamp;
+                return Properties is null ? default : Properties.TimeStamp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceCapacityInfoProperties();
+                }
+                Properties.TimeStamp = value.Value;
             }
         }
 
@@ -54,7 +62,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.ClusterStorageCapacityInfo;
+                return Properties is null ? default : Properties.ClusterStorageCapacityInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceCapacityInfoProperties();
+                }
+                Properties.ClusterStorageCapacityInfo = value;
             }
         }
 
@@ -63,7 +79,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.ClusterComputeCapacityInfo;
+                return Properties is null ? default : Properties.ClusterComputeCapacityInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DeviceCapacityInfoProperties();
+                }
+                Properties.ClusterComputeCapacityInfo = value;
             }
         }
 
@@ -72,6 +96,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new DeviceCapacityInfoProperties();
+                }
                 return Properties.NodeCapacityInfos;
             }
         }

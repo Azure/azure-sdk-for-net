@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceUpdateSummaryData"/>. </summary>
-        internal DataBoxEdgeDeviceUpdateSummaryData()
+        public DataBoxEdgeDeviceUpdateSummaryData()
         {
         }
 
@@ -38,14 +38,22 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> The device update information summary. </summary>
-        internal UpdateSummaryProperties Properties { get; }
+        internal UpdateSummaryProperties Properties { get; set; }
 
         /// <summary> The current version of the device in format: 1.2.17312.13.",. </summary>
         public string DeviceVersionNumber
         {
             get
             {
-                return Properties.DeviceVersionNumber;
+                return Properties is null ? default : Properties.DeviceVersionNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.DeviceVersionNumber = value;
             }
         }
 
@@ -54,7 +62,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.FriendlyDeviceVersionName;
+                return Properties is null ? default : Properties.FriendlyDeviceVersionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.FriendlyDeviceVersionName = value;
             }
         }
 
@@ -63,7 +79,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.DeviceLastScannedOn;
+                return Properties is null ? default : Properties.DeviceLastScannedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.DeviceLastScannedOn = value.Value;
             }
         }
 
@@ -72,7 +96,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastCompletedScanJobOn;
+                return Properties is null ? default : Properties.LastCompletedScanJobOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.LastCompletedScanJobOn = value.Value;
             }
         }
 
@@ -81,7 +113,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastSuccessfulScanJobOn;
+                return Properties is null ? default : Properties.LastSuccessfulScanJobOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.LastSuccessfulScanJobOn = value.Value;
             }
         }
 
@@ -90,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastCompletedDownloadJobOn;
+                return Properties is null ? default : Properties.LastCompletedDownloadJobOn;
             }
         }
 
@@ -99,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastCompletedDownloadJobId;
+                return Properties is null ? default : Properties.LastCompletedDownloadJobId;
             }
         }
 
@@ -108,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastDownloadJobStatus;
+                return Properties is null ? default : Properties.LastDownloadJobStatus;
             }
         }
 
@@ -117,7 +157,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastSuccessfulInstallJobOn;
+                return Properties is null ? default : Properties.LastSuccessfulInstallJobOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
+                Properties.LastSuccessfulInstallJobOn = value.Value;
             }
         }
 
@@ -126,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastCompletedInstallJobOn;
+                return Properties is null ? default : Properties.LastCompletedInstallJobOn;
             }
         }
 
@@ -135,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastCompletedInstallJobId;
+                return Properties is null ? default : Properties.LastCompletedInstallJobId;
             }
         }
 
@@ -144,7 +192,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.LastInstallJobStatus;
+                return Properties is null ? default : Properties.LastInstallJobStatus;
             }
         }
 
@@ -153,7 +201,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalNumberOfUpdatesAvailable;
+                return Properties is null ? default : Properties.TotalNumberOfUpdatesAvailable;
             }
         }
 
@@ -162,7 +210,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalNumberOfUpdatesPendingDownload;
+                return Properties is null ? default : Properties.TotalNumberOfUpdatesPendingDownload;
             }
         }
 
@@ -171,7 +219,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalNumberOfUpdatesPendingInstall;
+                return Properties is null ? default : Properties.TotalNumberOfUpdatesPendingInstall;
             }
         }
 
@@ -180,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.RebootBehavior;
+                return Properties is null ? default : Properties.RebootBehavior;
             }
         }
 
@@ -189,7 +237,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.OngoingUpdateOperation;
+                return Properties is null ? default : Properties.OngoingUpdateOperation;
             }
         }
 
@@ -198,7 +246,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.InProgressDownloadJobId;
+                return Properties is null ? default : Properties.InProgressDownloadJobId;
             }
         }
 
@@ -207,7 +255,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.InProgressInstallJobId;
+                return Properties is null ? default : Properties.InProgressInstallJobId;
             }
         }
 
@@ -216,7 +264,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.InProgressDownloadJobStartedOn;
+                return Properties is null ? default : Properties.InProgressDownloadJobStartedOn;
             }
         }
 
@@ -225,7 +273,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.InProgressInstallJobStartedOn;
+                return Properties is null ? default : Properties.InProgressInstallJobStartedOn;
             }
         }
 
@@ -234,6 +282,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
                 return Properties.UpdateTitles;
             }
         }
@@ -243,6 +295,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new UpdateSummaryProperties();
+                }
                 return Properties.Updates;
             }
         }
@@ -252,7 +308,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalUpdateSizeInBytes;
+                return Properties is null ? default : Properties.TotalUpdateSizeInBytes;
             }
         }
 
@@ -261,7 +317,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalTimeInMinutes;
+                return Properties is null ? default : Properties.TotalTimeInMinutes;
             }
         }
     }

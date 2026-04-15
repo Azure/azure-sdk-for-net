@@ -412,32 +412,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     null));
         }
 
-        /// <summary> Update Specific attributes. </summary>
-        /// <param name="updateTitle"> Title of the Update. </param>
-        /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
-        /// <param name="updateType"> Type of the Update. </param>
-        /// <param name="targetVersion"> Target Version number. </param>
-        /// <param name="friendlyVersionNumber"> Friendly Version Number. </param>
-        /// <param name="estimatedInstallTimeInMins"> Estimated Install Time for the update. </param>
-        /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
-        /// <param name="installationImpact"> Impact of Installing an updateType. </param>
-        /// <param name="status"> Status of the update. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeUpdateDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle = default, double? updateSizeInBytes = default, DataBoxEdgeUpdateType? updateType = default, string targetVersion = default, string friendlyVersionNumber = default, int? estimatedInstallTimeInMins = default, InstallRebootBehavior? rebootBehavior = default, InstallationImpact? installationImpact = default, DataBoxEdgeUpdateStatus? status = default)
-        {
-            return new DataBoxEdgeUpdateDetails(
-                updateTitle,
-                updateSizeInBytes,
-                updateType,
-                targetVersion,
-                friendlyVersionNumber,
-                estimatedInstallTimeInMins,
-                rebootBehavior,
-                installationImpact,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1281,6 +1255,33 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 default,
                 kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeUpdateDetails"/>. </summary>
+        /// <param name="updateTitle"> Title of the Update. </param>
+        /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
+        /// <param name="updateType"> Type of the Update. </param>
+        /// <param name="targetVersion"> Target Version number. </param>
+        /// <param name="friendlyVersionNumber"> Friendly Version Number. </param>
+        /// <param name="estimatedInstallTimeInMins"> Estimated Install Time for the update. </param>
+        /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
+        /// <param name="installationImpact"> Impact of Installing an updateType. </param>
+        /// <param name="status"> Status of the update. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeUpdateDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle, double? updateSizeInBytes, DataBoxEdgeUpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, InstallRebootBehavior? rebootBehavior, InstallationImpact? installationImpact, DataBoxEdgeUpdateStatus? status)
+        {
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSizeInBytes,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UploadCertificateContent"/>. </summary>
