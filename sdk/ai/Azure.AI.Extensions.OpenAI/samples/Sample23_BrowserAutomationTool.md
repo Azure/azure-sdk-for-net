@@ -23,8 +23,8 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 1. Begin by creating the Agent client and reading the required environment variables. Please note that the Browser automation operations may take longer than usual and requiring request timeout to be at least 5 minutes.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
 AIProjectClientOptions options = new()
 {
@@ -39,18 +39,18 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
 AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolParameters(
+    new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
     Tools = { playwrightTool }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -59,18 +59,18 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolParameters(
+    new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -103,7 +103,7 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -126,7 +126,7 @@ foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamin
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -151,10 +151,10 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

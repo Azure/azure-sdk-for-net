@@ -8,15 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Data protection configuration option for updating the volume, including snapshot policies and backup. </summary>
     public partial class ElasticVolumeDataProtectionPatchProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeDataProtectionPatchProperties"/>. </summary>
         public ElasticVolumeDataProtectionPatchProperties()
@@ -26,38 +54,29 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeDataProtectionPatchProperties"/>. </summary>
         /// <param name="snapshot"> Used to apply a snapshot policy to a volume. </param>
         /// <param name="backup"> Used to configure backups on an elastic volume. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeDataProtectionPatchProperties(ElasticVolumeSnapshotProperties snapshot, ElasticVolumeBackupProperties backup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticVolumeDataProtectionPatchProperties(ElasticVolumeSnapshotProperties snapshot, ElasticVolumeBackupProperties backup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Snapshot = snapshot;
             Backup = backup;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used to apply a snapshot policy to a volume. </summary>
-        [WirePath("snapshot")]
         internal ElasticVolumeSnapshotProperties Snapshot { get; set; }
-
-        /// <summary> Used to configure backups on an elastic volume. </summary>
-        [WirePath("backup")]
-        public ElasticVolumeBackupProperties Backup { get; set; }
-
         /// <summary> Snapshot Policy ResourceId. </summary>
-        [WirePath("snapshot.snapshotPolicyResourceId")]
         public ResourceIdentifier SnapshotPolicyResourceId
         {
-            get
-            {
-                return Snapshot is null ? default : Snapshot.SnapshotPolicyResourceId;
-            }
+            get => Snapshot is null ? default : Snapshot.SnapshotPolicyResourceId;
             set
             {
                 if (Snapshot is null)
-                {
                     Snapshot = new ElasticVolumeSnapshotProperties();
-                }
                 Snapshot.SnapshotPolicyResourceId = value;
             }
         }
+
+        /// <summary> Used to configure backups on an elastic volume. </summary>
+        public ElasticVolumeBackupProperties Backup { get; set; }
     }
 }

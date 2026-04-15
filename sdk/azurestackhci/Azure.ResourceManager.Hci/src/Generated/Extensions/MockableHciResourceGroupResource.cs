@@ -8,33 +8,40 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHciResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHciResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _ownershipVouchersClientDiagnostics;
+        private OwnershipVouchers _ownershipVouchersRestClient;
+
+        /// <summary> Initializes a new instance of MockableHciResourceGroupResource for mocking. </summary>
         protected MockableHciResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHciResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHciResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics OwnershipVouchersClientDiagnostics => _ownershipVouchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of HciClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
+        private OwnershipVouchers OwnershipVouchersRestClient => _ownershipVouchersRestClient ??= new OwnershipVouchers(OwnershipVouchersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+
+        /// <summary> Gets a collection of HciClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of HciClusters and their operations over a HciClusterResource. </returns>
         public virtual HciClusterCollection GetHciClusters()
         {
             return GetCachedClient(client => new HciClusterCollection(client, Id));
@@ -44,20 +51,16 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// Get HCI cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +71,8 @@ namespace Azure.ResourceManager.Hci.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HciClusterResource>> GetHciClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +80,16 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// Get HCI cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +100,237 @@ namespace Azure.ResourceManager.Hci.Mocking
         [ForwardsClientCalls]
         public virtual Response<HciClusterResource> GetHciCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetHciClusters().Get(clusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EdgeMachines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeMachines and their operations over a EdgeMachineResource. </returns>
+        public virtual EdgeMachineCollection GetEdgeMachines()
+        {
+            return GetCachedClient(client => new EdgeMachineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an edge machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="edgeMachineName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeMachineResource>> GetEdgeMachineAsync(string edgeMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeMachineName, nameof(edgeMachineName));
+
+            return await GetEdgeMachines().GetAsync(edgeMachineName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an edge machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/edgeMachines/{edgeMachineName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="edgeMachineName"> Name of Device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeMachineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="edgeMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeMachineResource> GetEdgeMachine(string edgeMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(edgeMachineName, nameof(edgeMachineName));
+
+            return GetEdgeMachines().Get(edgeMachineName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevicePools in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevicePools and their operations over a DevicePoolResource. </returns>
+        public virtual DevicePoolCollection GetDevicePools()
+        {
+            return GetCachedClient(client => new DevicePoolCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DevicePool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/devicePools/{devicePoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevicePools_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devicePoolName"> The name of the DevicePool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevicePoolResource>> GetDevicePoolAsync(string devicePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devicePoolName, nameof(devicePoolName));
+
+            return await GetDevicePools().GetAsync(devicePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DevicePool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/devicePools/{devicePoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevicePools_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devicePoolName"> The name of the DevicePool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devicePoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devicePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevicePoolResource> GetDevicePool(string devicePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devicePoolName, nameof(devicePoolName));
+
+            return GetDevicePools().Get(devicePoolName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Validates ownership vouchers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/locations/{location}/validateOwnershipVouchers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OwnershipVouchers_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Ownership vouchers to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ValidateOwnershipVouchersResult>> ValidateAsync(AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OwnershipVouchersClientDiagnostics.CreateScope("MockableHciResourceGroupResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates ownership vouchers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/locations/{location}/validateOwnershipVouchers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OwnershipVouchers_Validate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> Ownership vouchers to be validated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ValidateOwnershipVouchersResult> Validate(AzureLocation location, ValidateOwnershipVouchersContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = OwnershipVouchersClientDiagnostics.CreateScope("MockableHciResourceGroupResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OwnershipVouchersRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, ValidateOwnershipVouchersContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ValidateOwnershipVouchersResult> response = Response.FromValue(ValidateOwnershipVouchersResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

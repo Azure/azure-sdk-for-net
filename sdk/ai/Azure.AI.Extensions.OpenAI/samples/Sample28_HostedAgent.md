@@ -6,7 +6,7 @@
 #pragma warning disable AAIP001
 ```
 
-Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `ImageBasedHostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Extensions.OpenAI`.
+Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `HostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Extensions.OpenAI`.
 
 ## Hosted Agent Deployment prerequisites
 
@@ -14,7 +14,7 @@ In this example we will use agent capable of doing product release defined [here
 As a prerequisite this sample will require [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli).
 
 ## Run the sample
-Azure.AI.Projects can be used only to create an `AgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API and in this case `AgentVersion` serves as an agent blueprint and the attempt to get the response from it will result in error. To use the Agent, it needs to be deployed using Azure CLI commands. Removal of the deployed agent also will result in an error as the deployment needs to be removed before the Agent.
+Azure.AI.Projects can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API and in this case `ProjectsAgentVersion` serves as an agent blueprint and the attempt to get the response from it will result in error. To use the Agent, it needs to be deployed using Azure CLI commands. Removal of the deployed agent also will result in an error as the deployment needs to be removed before the Agent.
 
 1. Create Azure Container registry in the same resource group and region as Microsoft Foundry project. Find the docker login at Settings>Access keys section at the left panel of created container registry in the Azure portal. Check the box "Admin user" to generate the password for the default user account marked as `<DOCKER_USERNAME>` below.
 2. Assign the `AcrPull` role to the project's Managed Identity for the Azure Container Registry.
@@ -56,8 +56,8 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 1. Read the environment variables, which will be used in the next steps and get the clean endpoint URL. Parse the project endpoint for future use.
 
 ```C# Snippet:Sample_CreateAgentClient_HostedAgent
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 Uri uriEndpoint = new(projectEndpoint);
@@ -70,10 +70,10 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 2. For brevity we will create the method, returning the `ImageBasedHostedAgentDefinition` object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
         cpu: "1",
         memory: "2Gi"
     )
@@ -102,7 +102,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
     applicationInsightConnectionString: projectName,
     projectEndpoint: projectEndpoint
 );
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myHostedAgent",
     options: new(agentDefinition));
 ```
@@ -116,7 +116,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
     applicationInsightConnectionString: projectName,
     projectEndpoint: projectEndpoint
 );
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myHostedAgent",
     options: new(agentDefinition));
 ```
@@ -141,13 +141,13 @@ az cognitiveservices agent start --account-name ACCOUNTNAME --project-name PROJE
 
 Synchronous sample:
 ```C# Snippet:Sample_GetAgent_HostedAgent_Sync
-AgentVersion agentVersion = projectClient.Agents.GetAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(
     agentName: "myHostedAgent", agentVersion: "1");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetAgent_HostedAgent_Async
-AgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(
     agentName: "myHostedAgent", agentVersion: "1");
 ```
 
@@ -155,13 +155,13 @@ AgentVersion agentVersion = await projectClient.Agents.GetAgentVersionAsync(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_HostedAgent_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseResult response = responseClient.CreateResponse("Describe the of Contoso VR glasses release process.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_HostedAgent_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Describe the of Contoso VR glasses release process.");
 ```
 

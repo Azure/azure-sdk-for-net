@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Create. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,8 +357,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> VolumeGroups_Create. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

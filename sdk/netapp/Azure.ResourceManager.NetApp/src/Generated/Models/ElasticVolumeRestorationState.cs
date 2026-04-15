@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticVolumeRestorationState : IEquatable<ElasticVolumeRestorationState>
     {
         private readonly string _value;
-        /// <summary> Value indicating that the volume is currently restoring. </summary>
-        private const string RestoringValue = "Restoring";
-        /// <summary> Value indicating that the volume is restored. </summary>
-        private const string RestoredValue = "Restored";
-        /// <summary> Value indicating that the volume restore has failed. </summary>
-        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeRestorationState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticVolumeRestorationState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RestoringValue = "Restoring";
+        private const string RestoredValue = "Restored";
+        private const string FailedValue = "Failed";
 
         /// <summary> Value indicating that the volume is currently restoring. </summary>
         public static ElasticVolumeRestorationState Restoring { get; } = new ElasticVolumeRestorationState(RestoringValue);
-
         /// <summary> Value indicating that the volume is restored. </summary>
         public static ElasticVolumeRestorationState Restored { get; } = new ElasticVolumeRestorationState(RestoredValue);
-
         /// <summary> Value indicating that the volume restore has failed. </summary>
         public static ElasticVolumeRestorationState Failed { get; } = new ElasticVolumeRestorationState(FailedValue);
-
         /// <summary> Determines if two <see cref="ElasticVolumeRestorationState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticVolumeRestorationState left, ElasticVolumeRestorationState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ElasticVolumeRestorationState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticVolumeRestorationState left, ElasticVolumeRestorationState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ElasticVolumeRestorationState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticVolumeRestorationState"/>. </summary>
         public static implicit operator ElasticVolumeRestorationState(string value) => new ElasticVolumeRestorationState(value);
 
-        /// <summary> Converts a string to a <see cref="ElasticVolumeRestorationState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ElasticVolumeRestorationState?(string value) => value == null ? null : new ElasticVolumeRestorationState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticVolumeRestorationState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ElasticVolumeRestorationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

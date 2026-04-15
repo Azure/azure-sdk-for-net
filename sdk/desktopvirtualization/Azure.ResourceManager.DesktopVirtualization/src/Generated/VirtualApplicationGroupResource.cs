@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationGroupResource>> UpdateAsync(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The AppGroup properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationGroupResource> Update(VirtualApplicationGroupPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupResource.Update");
             scope.Start();
@@ -433,7 +433,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary>
@@ -476,7 +477,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualApplicationGroupResource.GetStartMenuItems");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

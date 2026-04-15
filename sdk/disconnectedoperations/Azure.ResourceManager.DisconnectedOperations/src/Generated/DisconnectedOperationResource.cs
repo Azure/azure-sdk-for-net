@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(ResourceType, out string disconnectedOperationApiVersion);
             _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", ResourceType.Namespace, Diagnostics);
-            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2025-06-01-preview");
+            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -792,6 +792,39 @@ namespace Azure.ResourceManager.DisconnectedOperations
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             return GetDisconnectedOperationsImages().Get(imageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DisconnectedOperationsHardwareSettings in the <see cref="DisconnectedOperationResource"/>. </summary>
+        /// <returns> An object representing collection of DisconnectedOperationsHardwareSettings and their operations over a DisconnectedOperationsHardwareSettingResource. </returns>
+        public virtual DisconnectedOperationsHardwareSettingCollection GetDisconnectedOperationsHardwareSettings()
+        {
+            return GetCachedClient(client => new DisconnectedOperationsHardwareSettingCollection(client, Id));
+        }
+
+        /// <summary> Get the hardware settings resource. </summary>
+        /// <param name="hardwareSettingName"> The name of the HardwareSetting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hardwareSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hardwareSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DisconnectedOperationsHardwareSettingResource>> GetDisconnectedOperationsHardwareSettingAsync(string hardwareSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hardwareSettingName, nameof(hardwareSettingName));
+
+            return await GetDisconnectedOperationsHardwareSettings().GetAsync(hardwareSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the hardware settings resource. </summary>
+        /// <param name="hardwareSettingName"> The name of the HardwareSetting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hardwareSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hardwareSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DisconnectedOperationsHardwareSettingResource> GetDisconnectedOperationsHardwareSetting(string hardwareSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hardwareSettingName, nameof(hardwareSettingName));
+
+            return GetDisconnectedOperationsHardwareSettings().Get(hardwareSettingName, cancellationToken);
         }
     }
 }

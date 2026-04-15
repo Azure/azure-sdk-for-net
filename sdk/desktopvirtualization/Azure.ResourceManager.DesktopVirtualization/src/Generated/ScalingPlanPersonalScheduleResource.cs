@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> UpdateAsync(ScalingPlanPersonalSchedulePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> UpdateAsync(ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scalingPlanPersonalSchedulesClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleResource.Update");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScalingPlanPersonalScheduleResource> Update(ScalingPlanPersonalSchedulePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<ScalingPlanPersonalScheduleResource> Update(ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _scalingPlanPersonalSchedulesClientDiagnostics.CreateScope("ScalingPlanPersonalScheduleResource.Update");
             scope.Start();

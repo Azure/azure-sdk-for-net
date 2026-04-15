@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Elastic Volume Export Policy Rule. </summary>
     public partial class ElasticExportPolicyRule
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticExportPolicyRule"/>. </summary>
         public ElasticExportPolicyRule()
@@ -30,8 +58,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="nfsv4"> Allows clients to access the volume with at least NFSv4.1 protocol. </param>
         /// <param name="allowedClients"> Client ingress specification for the export policy as list of IPv4 CIDRs, IPv4 host addresses and host names. </param>
         /// <param name="rootAccess"> Indicates whether root access to the volume is granted to clients affected by this rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticExportPolicyRule(int? ruleIndex, ElasticUnixAccessRule? unixAccessRule, ElasticNfsv3Access? nfsv3, ElasticNfsv4Access? nfsv4, IList<string> allowedClients, ElasticRootAccess? rootAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticExportPolicyRule(int? ruleIndex, ElasticUnixAccessRule? unixAccessRule, ElasticNfsv3Access? nfsv3, ElasticNfsv4Access? nfsv4, IList<string> allowedClients, ElasticRootAccess? rootAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleIndex = ruleIndex;
             UnixAccessRule = unixAccessRule;
@@ -39,31 +67,20 @@ namespace Azure.ResourceManager.NetApp.Models
             Nfsv4 = nfsv4;
             AllowedClients = allowedClients;
             RootAccess = rootAccess;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Controls the priority of the export policy rule. When connecting to the volume the rule with the lowest index that applies to the connecting client is used. </summary>
-        [WirePath("ruleIndex")]
         public int? RuleIndex { get; set; }
-
         /// <summary> Specifies the Unix file access level for the volume. It encompasses both read-only and read-write permissions. Additionally, NoAccess can be set to block all access to the volume. </summary>
-        [WirePath("unixAccessRule")]
         public ElasticUnixAccessRule? UnixAccessRule { get; set; }
-
         /// <summary> Allows clients to access the volume with the NFSv3 protocol. Enable only for NFSv3 type volumes. </summary>
-        [WirePath("nfsv3")]
         public ElasticNfsv3Access? Nfsv3 { get; set; }
-
         /// <summary> Allows clients to access the volume with at least NFSv4.1 protocol. </summary>
-        [WirePath("nfsv4")]
         public ElasticNfsv4Access? Nfsv4 { get; set; }
-
         /// <summary> Client ingress specification for the export policy as list of IPv4 CIDRs, IPv4 host addresses and host names. </summary>
-        [WirePath("allowedClients")]
         public IList<string> AllowedClients { get; }
-
         /// <summary> Indicates whether root access to the volume is granted to clients affected by this rule. </summary>
-        [WirePath("rootAccess")]
         public ElasticRootAccess? RootAccess { get; set; }
     }
 }

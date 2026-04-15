@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Code-based evaluator definition using python code. </summary>
     public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition
@@ -24,11 +24,13 @@ namespace Azure.AI.Projects
         /// <param name="codeText"> Inline code text for the evaluator. </param>
         /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
         /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
-        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string codeText, string entryPoint, string imageTag) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
+        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string codeText, string entryPoint, string imageTag, Uri blobUri) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
             CodeText = codeText;
             EntryPoint = entryPoint;
             ImageTag = imageTag;
+            BlobUri = blobUri;
         }
 
         /// <summary> Inline code text for the evaluator. </summary>
@@ -39,5 +41,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The container image tag to use for evaluator code execution. </summary>
         public string ImageTag { get; set; }
+
+        /// <summary> The blob URI for the evaluator storage. </summary>
+        public Uri BlobUri { get; set; }
     }
 }

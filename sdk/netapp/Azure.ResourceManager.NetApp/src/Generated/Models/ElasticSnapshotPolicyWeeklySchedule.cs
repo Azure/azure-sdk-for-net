@@ -7,20 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Weekly Schedule properties used to create NetApp snapshot policy. </summary>
     public partial class ElasticSnapshotPolicyWeeklySchedule
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
         public ElasticSnapshotPolicyWeeklySchedule()
         {
-            Days = new ChangeTrackingList<DayOfWeek>();
+            Days = new ChangeTrackingList<NetAppDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyWeeklySchedule"/>. </summary>
@@ -28,30 +56,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="days"> Indicates which weekday(s) snapshot(s) should be taken, accepts a list of week day names in english. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep, IList<DayOfWeek> days, int? hour, int? minute, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep, IList<NetAppDayOfWeek> days, int? hour, int? minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Days = days;
             Hour = hour;
             Minute = minute;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Weekly snapshot count to keep. </summary>
-        [WirePath("snapshotsToKeep")]
         public int? SnapshotsToKeep { get; set; }
-
         /// <summary> Indicates which weekday(s) snapshot(s) should be taken, accepts a list of week day names in english. </summary>
-        [WirePath("days")]
-        public IList<DayOfWeek> Days { get; }
-
+        public IList<NetAppDayOfWeek> Days { get; }
         /// <summary> Indicates which hour in UTC timezone a snapshot should be taken. </summary>
-        [WirePath("hour")]
         public int? Hour { get; set; }
-
         /// <summary> Indicates which minute snapshot should be taken. </summary>
-        [WirePath("minute")]
         public int? Minute { get; set; }
     }
 }

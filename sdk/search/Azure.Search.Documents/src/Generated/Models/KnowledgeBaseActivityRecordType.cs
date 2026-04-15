@@ -19,18 +19,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         private const string SearchIndexValue = "searchIndex";
         /// <summary> Azure Blob retrieval activity. </summary>
         private const string AzureBlobValue = "azureBlob";
-        /// <summary> Indexed SharePoint retrieval activity. </summary>
-        private const string IndexedSharePointValue = "indexedSharePoint";
         /// <summary> Indexed OneLake retrieval activity. </summary>
         private const string IndexedOneLakeValue = "indexedOneLake";
         /// <summary> Web retrieval activity. </summary>
         private const string WebValue = "web";
-        /// <summary> Remote SharePoint retrieval activity. </summary>
-        private const string RemoteSharePointValue = "remoteSharePoint";
-        /// <summary> LLM query planning activity. </summary>
-        private const string ModelQueryPlanningValue = "modelQueryPlanning";
-        /// <summary> LLM answer synthesis activity. </summary>
-        private const string ModelAnswerSynthesisValue = "modelAnswerSynthesis";
         /// <summary> Agentic reasoning activity. </summary>
         private const string AgenticReasoningValue = "agenticReasoning";
 
@@ -50,23 +42,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Azure Blob retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType AzureBlob { get; } = new KnowledgeBaseActivityRecordType(AzureBlobValue);
 
-        /// <summary> Indexed SharePoint retrieval activity. </summary>
-        public static KnowledgeBaseActivityRecordType IndexedSharePoint { get; } = new KnowledgeBaseActivityRecordType(IndexedSharePointValue);
-
         /// <summary> Indexed OneLake retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType IndexedOneLake { get; } = new KnowledgeBaseActivityRecordType(IndexedOneLakeValue);
 
         /// <summary> Web retrieval activity. </summary>
         public static KnowledgeBaseActivityRecordType Web { get; } = new KnowledgeBaseActivityRecordType(WebValue);
-
-        /// <summary> Remote SharePoint retrieval activity. </summary>
-        public static KnowledgeBaseActivityRecordType RemoteSharePoint { get; } = new KnowledgeBaseActivityRecordType(RemoteSharePointValue);
-
-        /// <summary> LLM query planning activity. </summary>
-        public static KnowledgeBaseActivityRecordType ModelQueryPlanning { get; } = new KnowledgeBaseActivityRecordType(ModelQueryPlanningValue);
-
-        /// <summary> LLM answer synthesis activity. </summary>
-        public static KnowledgeBaseActivityRecordType ModelAnswerSynthesis { get; } = new KnowledgeBaseActivityRecordType(ModelAnswerSynthesisValue);
 
         /// <summary> Agentic reasoning activity. </summary>
         public static KnowledgeBaseActivityRecordType AgenticReasoning { get; } = new KnowledgeBaseActivityRecordType(AgenticReasoningValue);

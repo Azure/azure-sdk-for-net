@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_Delete. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -397,7 +397,98 @@ namespace Azure.ResourceManager.NetApp
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create the specified snapshot within the given volume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeSnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Snapshot object supplied in the body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<NetAppVolumeSnapshotResource>> UpdateAsync(WaitUntil waitUntil, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _netAppVolumeSnapshotSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppVolumeSnapshotResource>(new NetAppVolumeSnapshotOperationSource(Client), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create the specified snapshot within the given volume
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeSnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Snapshot object supplied in the body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<NetAppVolumeSnapshotResource> Update(WaitUntil waitUntil, NetAppVolumeSnapshotData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _netAppVolumeSnapshotSnapshotsClientDiagnostics.CreateScope("NetAppVolumeSnapshotResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _netAppVolumeSnapshotSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppVolumeSnapshotResource>(new NetAppVolumeSnapshotOperationSource(Client), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, _netAppVolumeSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -419,8 +510,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_RestoreFiles. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -472,8 +563,8 @@ namespace Azure.ResourceManager.NetApp
         /// <description> Snapshots_RestoreFiles. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

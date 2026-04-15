@@ -7,16 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.Foundations.Models
+namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the ElasticAccount. </summary>
     internal partial class ElasticAccountUpdateProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticAccountUpdateProperties"/>. </summary>
         public ElasticAccountUpdateProperties()
@@ -25,15 +52,14 @@ namespace Azure.ResourceManager.Foundations.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticAccountUpdateProperties"/>. </summary>
         /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticAccountUpdateProperties(ElasticEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticAccountUpdateProperties(NetAppElasticEncryption encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Encryption = encryption;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Encryption settings. </summary>
-        [WirePath("encryption")]
-        public ElasticEncryption Encryption { get; set; }
+        public NetAppElasticEncryption Encryption { get; set; }
     }
 }

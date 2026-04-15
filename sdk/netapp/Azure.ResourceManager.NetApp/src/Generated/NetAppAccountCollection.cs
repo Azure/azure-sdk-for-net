@@ -76,8 +76,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,8 +138,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +200,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,8 +253,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,8 +306,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,8 +338,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,8 +370,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,8 +431,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,8 +492,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,8 +557,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

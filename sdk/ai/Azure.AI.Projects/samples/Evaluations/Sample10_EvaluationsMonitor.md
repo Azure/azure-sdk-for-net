@@ -17,14 +17,14 @@ for trace analysis and monitors the evaluation run until it completes.
 `/subscriptions/<your_subscription_id>/resourceGroups/<your_resource_group_id>/providers/microsoft.insights/components/<your_application_insights_name>`. If the ID is incorrect the error will be as follows: "Failed to resolve table or column expression named 'dependencies'".
 
 ```C# Snippet:Sample_CreateClients_EvaluationsMonitor
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var applicationInsightsResourceId = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_RESOURCE_ID");
-var agentId = System.Environment.GetEnvironmentVariable("AGENT_ID");
+var agentId = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
 var lookbackHours = int.Parse(System.Environment.GetEnvironmentVariable("TRACE_LOOKBACK_HOURS"));
 DateTimeOffset endTime = DateTimeOffset.Now;
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
 ```
 
 2. To get the traces IDs for the Agent we will create and run the query our Application Insights.

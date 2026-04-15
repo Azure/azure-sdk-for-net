@@ -7,65 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Root access. </summary>
+    /// <summary> Indicates whether root access to the volume is granted to clients affected by this rule. </summary>
     public readonly partial struct ElasticRootAccess : IEquatable<ElasticRootAccess>
     {
         private readonly string _value;
-        /// <summary> Root user access is enabled for clients affected by this rule. </summary>
-        private const string EnabledValue = "Enabled";
-        /// <summary> Root user access is disabled for clients affected by this rule. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ElasticRootAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticRootAccess(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Root user access is enabled for clients affected by this rule. </summary>
         public static ElasticRootAccess Enabled { get; } = new ElasticRootAccess(EnabledValue);
-
         /// <summary> Root user access is disabled for clients affected by this rule. </summary>
         public static ElasticRootAccess Disabled { get; } = new ElasticRootAccess(DisabledValue);
-
         /// <summary> Determines if two <see cref="ElasticRootAccess"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticRootAccess left, ElasticRootAccess right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ElasticRootAccess"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticRootAccess left, ElasticRootAccess right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ElasticRootAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticRootAccess"/>. </summary>
         public static implicit operator ElasticRootAccess(string value) => new ElasticRootAccess(value);
 
-        /// <summary> Converts a string to a <see cref="ElasticRootAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ElasticRootAccess?(string value) => value == null ? null : new ElasticRootAccess(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticRootAccess other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ElasticRootAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

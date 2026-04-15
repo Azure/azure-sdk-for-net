@@ -118,16 +118,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Optional.IsDefined(PermissionFilter))
-            {
-                writer.WritePropertyName("permissionFilter"u8);
-                writer.WriteStringValue(PermissionFilter.Value.ToString());
-            }
-            if (Optional.IsDefined(SensitivityLabel))
-            {
-                writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteBooleanValue(SensitivityLabel.Value);
-            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
@@ -239,8 +229,6 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isFilterable = default;
             bool? isSortable = default;
             bool? isFacetable = default;
-            PermissionFilter? permissionFilter = default;
-            bool? sensitivityLabel = default;
             LexicalAnalyzerName? analyzerName = default;
             LexicalAnalyzerName? searchAnalyzerName = default;
             LexicalAnalyzerName? indexAnalyzerName = default;
@@ -324,26 +312,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     isFacetable = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("permissionFilter"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilter = null;
-                        continue;
-                    }
-                    permissionFilter = new PermissionFilter(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sensitivityLabel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        sensitivityLabel = null;
-                        continue;
-                    }
-                    sensitivityLabel = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("analyzer"u8))
@@ -465,8 +433,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 isFilterable,
                 isSortable,
                 isFacetable,
-                permissionFilter,
-                sensitivityLabel,
                 analyzerName,
                 searchAnalyzerName,
                 indexAnalyzerName,

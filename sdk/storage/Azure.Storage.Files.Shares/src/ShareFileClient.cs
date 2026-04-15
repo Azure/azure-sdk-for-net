@@ -506,7 +506,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        #region internal static accessors for Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// Get a <see cref="ShareFileClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
@@ -536,11 +536,55 @@ namespace Azure.Storage.Files.Shares
             }
             return default;
         }
-        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
+
+        /// <summary>
+        /// Get the Uri with SAS appended if the <see cref="ShareFileClient"/> has an <see cref="AzureSasCredential"/>,
+        /// for use as the source URI when performing service to service copy
+        /// where the client was initialized with an <see cref="AzureSasCredential"/>.
+        ///
+        /// To retrieve, please utilize the <see cref="ShareUriBuilder"/>.
+        /// To inspect the SAS token (after parsed) utilize the <see cref="SasQueryParameters"/> or <see cref="ShareSasQueryParameters"/>.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client from which to retrieve the URI and SAS credential.
+        /// </param>
+        /// <returns>
+        /// The URI with SAS appended if the client has an <see cref="AzureSasCredential"/>;
+        /// otherwise, the original URI.
+        /// </returns>
+        protected static Uri GetUriWithSas(ShareFileClient client)
+        {
+            if (client.ClientConfiguration.SasCredential != null)
+            {
+                ShareUriBuilder uriBuilder = new ShareUriBuilder(client.Uri);
+                // Only append SAS if the URI doesn't already contain one
+                if (uriBuilder.Sas == null)
+                {
+                    string signature = client.ClientConfiguration.SasCredential.Signature;
+                    // Strip leading '?' if present to avoid malformed query
+                    if (signature.StartsWith("?", StringComparison.Ordinal))
+                    {
+                        signature = signature.Substring(1);
+                    }
+                    // Use '&' if there's already a query string, otherwise start fresh
+                    if (string.IsNullOrEmpty(uriBuilder.Query))
+                    {
+                        uriBuilder.Query = signature;
+                    }
+                    else
+                    {
+                        uriBuilder.Query += "&" + signature;
+                    }
+                }
+                return uriBuilder.ToUri();
+            }
+            return client.Uri;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Files.Shares
 
         #region Create
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -587,17 +631,17 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: options?.PropertySemantics,
-                //content: options?.Content,
-                //transferValidationOverride: options?.TransferValidation,
-                //progressHandler: options?.ProgressHandler,
+                filePropertySemantics: options?.PropertySemantics,
+                content: options?.Content,
+                transferValidationOverride: options?.TransferValidation,
+                progressHandler: options?.ProgressHandler,
                 conditions,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -644,10 +688,10 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
-                //filePropertySemantics: options?.PropertySemantics,
-                //content: options?.Content,
-                //transferValidationOverride: options?.TransferValidation,
-                //progressHandler: options?.ProgressHandler,
+                filePropertySemantics: options?.PropertySemantics,
+                content: options?.Content,
+                transferValidationOverride: options?.TransferValidation,
+                progressHandler: options?.ProgressHandler,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -716,10 +760,10 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
-                //filePropertySemantics: default,
-                //content: default,
-                //transferValidationOverride: default,
-                //progressHandler: default,
+                filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -783,10 +827,10 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
-                //filePropertySemantics: default,
-                //content: default,
-                //transferValidationOverride: default,
-                //progressHandler: default,
+                filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -855,10 +899,10 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
-                //filePropertySemantics: default,
-                //content: default,
-                //transferValidationOverride: default,
-                //progressHandler: default,
+                filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -922,17 +966,17 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
-                //filePropertySemantics: default,
-                //content: default,
-                //transferValidationOverride: default,
-                //progressHandler: default,
+                filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Creates a new file or replaces an existing file.
+        /// Creates a new file or replaces an existing file. Can also initialize the file with content.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-file">
@@ -962,6 +1006,19 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="posixProperties">
         /// Optional NFS properties.
+        /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for transfer validation on upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for upload operation.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -995,17 +1052,17 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
-            //FilePropertySemantics? filePropertySemantics,
-            //Stream content,
-            //UploadTransferValidationOptions transferValidationOverride,
-            //IProgress<long> progressHandler,
+            FilePropertySemantics? filePropertySemantics,
+            Stream content,
+            UploadTransferValidationOptions transferValidationOverride,
+            IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
         {
-            //UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
-            //ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -1022,24 +1079,44 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+                    Errors.VerifyStreamPosition(content, nameof(content));
 
-                    //Errors.VerifyStreamPosition(content, nameof(content));
+                    ContentHasher.GetHashResult hashResult = null;
+                    long originalContentLength = (content?.Length - content?.Position) ?? 0;
+                    long? structuredContentLength = default;
+                    string structuredBodyType = null;
 
-                    //// compute hash BEFORE attaching progress handler
-                    //ContentHasher.GetHashResult hashResult = null;
-                    //if (content != null)
-                    //{
-                    //    hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                    //        content,
-                    //        validationOptions,
-                    //        async,
-                    //        cancellationToken).ConfigureAwait(false);
-                    //}
-
-                    //content = content?.WithNoDispose().WithProgress(progressHandler);
+                    if (content != null)
+                    {
+                        if (validationOptions != null &&
+                            validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
+                        {
+                            // report progress in terms of caller bytes, not encoded bytes
+                            structuredContentLength = originalContentLength;
+                            structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                            content = content.WithNoDispose().WithProgress(progressHandler);
+                            content = validationOptions.PrecalculatedChecksum.IsEmpty
+                                ? new StructuredMessageEncodingStream(
+                                    content,
+                                    Constants.StructuredMessage.DefaultSegmentContentLength,
+                                    StructuredMessage.Flags.StorageCrc64)
+                                : new StructuredMessagePrecalculatedCrcWrapperStream(
+                                    content,
+                                    validationOptions.PrecalculatedChecksum.Span);
+                        }
+                        else
+                        {
+                            // compute hash BEFORE attaching progress handler
+                            hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                                content,
+                                validationOptions,
+                                async,
+                                cancellationToken).ConfigureAwait(false);
+                            content = content.WithNoDispose().WithProgress(progressHandler);
+                        }
+                    }
 
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
-
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
                     ResponseWithHeaders<FileCreateHeaders> response;
@@ -1048,7 +1125,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.CreateAsync(
                             fileContentLength: maxSize,
-                            //contentLength: (content?.Length - content?.Position),
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1057,9 +1134,11 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
-                            //contentMD5: hashResult?.MD5AsArray,
-                            //filePropertySemantics: filePropertySemantics,
-                            //optionalbody: content,
+                            contentMD5: hashResult?.MD5AsArray,
+                            filePropertySemantics: filePropertySemantics,
+                            optionalbody: content,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1073,7 +1152,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.Create(
                             fileContentLength: maxSize,
-                            //contentLength: (content?.Length - content?.Position),
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1082,9 +1161,11 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
-                            //contentMD5: hashResult?.MD5AsArray,
-                            //filePropertySemantics: filePropertySemantics,
-                            //optionalbody: content,
+                            contentMD5: hashResult?.MD5AsArray,
+                            filePropertySemantics: filePropertySemantics,
+                            optionalbody: content,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -7616,10 +7697,10 @@ namespace Azure.Storage.Files.Shares
                         filePermission: default,
                         filePermissionFormat: default,
                         posixProperties: default,
-                        //filePropertySemantics: default,
-                        //content: default,
-                        //transferValidationOverride: default,
-                        //progressHandler: default,
+                        filePropertySemantics: default,
+                        content: default,
+                        transferValidationOverride: default,
+                        progressHandler: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -7651,10 +7732,10 @@ namespace Azure.Storage.Files.Shares
                             filePermission: default,
                             filePermissionFormat: default,
                             posixProperties: default,
-                            //filePropertySemantics: default,
-                            //content: default,
-                            //transferValidationOverride: default,
-                            //progressHandler: default,
+                            filePropertySemantics: default,
+                            content: default,
+                            transferValidationOverride: default,
+                            progressHandler: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)

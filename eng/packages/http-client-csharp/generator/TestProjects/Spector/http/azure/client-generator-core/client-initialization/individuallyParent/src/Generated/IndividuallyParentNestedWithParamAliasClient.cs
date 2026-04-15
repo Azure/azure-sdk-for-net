@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,9 +18,18 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._IndividuallyPar
     {
         protected IndividuallyParentNestedWithParamAliasClient() => throw null;
 
-        public IndividuallyParentNestedWithParamAliasClient(string blobName, string blob) : this(new Uri("http://localhost:3000"), blobName, blob, new IndividuallyParentClientOptions()) => throw null;
+        internal IndividuallyParentNestedWithParamAliasClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string blobName) => throw null;
 
-        public IndividuallyParentNestedWithParamAliasClient(Uri endpoint, string blobName, string blob, IndividuallyParentClientOptions options) => throw null;
+        public IndividuallyParentNestedWithParamAliasClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyParentClientOptions()) => throw null;
+
+        public IndividuallyParentNestedWithParamAliasClient(string blobName, IndividuallyParentClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+
+        internal IndividuallyParentNestedWithParamAliasClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyParentClientOptions options) => throw null;
+
+        public IndividuallyParentNestedWithParamAliasClient(Uri endpoint, string blobName, IndividuallyParentClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyParentNestedWithParamAliasClient(IndividuallyParentNestedWithParamAliasClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

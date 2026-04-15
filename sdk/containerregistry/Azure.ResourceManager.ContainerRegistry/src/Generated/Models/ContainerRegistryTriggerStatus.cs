@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The current status of trigger. </summary>
+    /// <summary> The current status of the source trigger. </summary>
     public readonly partial struct ContainerRegistryTriggerStatus : IEquatable<ContainerRegistryTriggerStatus>
     {
         private readonly string _value;
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTriggerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryTriggerStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-
-        /// <summary> Disabled. </summary>
-        public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> Gets the Enabled. </summary>
         public static ContainerRegistryTriggerStatus Enabled { get; } = new ContainerRegistryTriggerStatus(EnabledValue);
+
+        /// <summary> Gets the Disabled. </summary>
+        public static ContainerRegistryTriggerStatus Disabled { get; } = new ContainerRegistryTriggerStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryTriggerStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryTriggerStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryTriggerStatus left, ContainerRegistryTriggerStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryTriggerStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryTriggerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryTriggerStatus(string value) => new ContainerRegistryTriggerStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryTriggerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryTriggerStatus?(string value) => value == null ? null : new ContainerRegistryTriggerStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryTriggerStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryTriggerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

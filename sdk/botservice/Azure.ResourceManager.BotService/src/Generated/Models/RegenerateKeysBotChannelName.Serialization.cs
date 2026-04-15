@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal static partial class RegenerateKeysBotChannelNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RegenerateKeysBotChannelName value) => value switch
         {
             RegenerateKeysBotChannelName.WebChatChannel => "WebChatChannel",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.BotService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RegenerateKeysBotChannelName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RegenerateKeysBotChannelName ToRegenerateKeysBotChannelName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebChatChannel")) return RegenerateKeysBotChannelName.WebChatChannel;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DirectLineChannel")) return RegenerateKeysBotChannelName.DirectLineChannel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WebChatChannel"))
+            {
+                return RegenerateKeysBotChannelName.WebChatChannel;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DirectLineChannel"))
+            {
+                return RegenerateKeysBotChannelName.DirectLineChannel;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RegenerateKeysBotChannelName value.");
         }
     }

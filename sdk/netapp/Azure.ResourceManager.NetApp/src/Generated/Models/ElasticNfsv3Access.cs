@@ -7,65 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NFSv3 access. </summary>
+    /// <summary> Allows clients to access the volume with the NFSv3 protocol. Enable only for NFSv3 type volumes. </summary>
     public readonly partial struct ElasticNfsv3Access : IEquatable<ElasticNfsv3Access>
     {
         private readonly string _value;
-        /// <summary> Clients can connect to the volume using the NFSv3 protocol. </summary>
-        private const string EnabledValue = "Enabled";
-        /// <summary> Clients can't connect to the volume using the NFSv3 protocol. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ElasticNfsv3Access"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticNfsv3Access(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Clients can connect to the volume using the NFSv3 protocol. </summary>
         public static ElasticNfsv3Access Enabled { get; } = new ElasticNfsv3Access(EnabledValue);
-
         /// <summary> Clients can't connect to the volume using the NFSv3 protocol. </summary>
         public static ElasticNfsv3Access Disabled { get; } = new ElasticNfsv3Access(DisabledValue);
-
         /// <summary> Determines if two <see cref="ElasticNfsv3Access"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticNfsv3Access left, ElasticNfsv3Access right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ElasticNfsv3Access"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticNfsv3Access left, ElasticNfsv3Access right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ElasticNfsv3Access"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticNfsv3Access"/>. </summary>
         public static implicit operator ElasticNfsv3Access(string value) => new ElasticNfsv3Access(value);
 
-        /// <summary> Converts a string to a <see cref="ElasticNfsv3Access"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ElasticNfsv3Access?(string value) => value == null ? null : new ElasticNfsv3Access(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticNfsv3Access other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ElasticNfsv3Access other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

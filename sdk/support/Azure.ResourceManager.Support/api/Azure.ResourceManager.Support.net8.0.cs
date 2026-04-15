@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.Support
         public ChatTranscriptDetailData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> Messages { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.ChatTranscriptDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.ChatTranscriptDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -23,7 +26,10 @@ namespace Azure.ResourceManager.Support
         public FileWorkspaceDetailData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.FileWorkspaceDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.FileWorkspaceDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -51,7 +57,10 @@ namespace Azure.ResourceManager.Support
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabled { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabledInfo { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,7 +177,10 @@ namespace Azure.ResourceManager.Support
         public System.Collections.Generic.IList<string> ArmResourceTypes { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -181,6 +193,8 @@ namespace Azure.ResourceManager.Support
         protected SupportAzureServiceResource() { }
         public virtual Azure.ResourceManager.Support.SupportAzureServiceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput> ClassifyProblems(Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>> ClassifyProblemsAsync(Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string serviceName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -199,6 +213,12 @@ namespace Azure.ResourceManager.Support
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput> ClassifyProblems(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string problemServiceName, Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>> ClassifyProblemsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string problemServiceName, Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput> ClassifyServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput> ClassifyServices(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>> ClassifyServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>> ClassifyServicesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Support.ProblemClassificationResource GetProblemClassificationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -226,6 +246,8 @@ namespace Azure.ResourceManager.Support
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetTenantSupportTicketAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Support.TenantSupportTicketResource GetTenantSupportTicketResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Support.TenantSupportTicketCollection GetTenantSupportTickets(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult> LookUpResourceId(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>> LookUpResourceIdAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SupportFileDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>
     {
@@ -234,7 +256,10 @@ namespace Azure.ResourceManager.Support
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? FileSize { get { throw null; } set { } }
         public int? NumberOfChunks { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.SupportFileDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportFileDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -297,7 +322,10 @@ namespace Azure.ResourceManager.Support
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Sender { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.SupportTicketCommunicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportTicketCommunicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -325,9 +353,11 @@ namespace Azure.ResourceManager.Support
     {
         public SupportTicketData(string description, string problemClassificationId, Azure.ResourceManager.Support.Models.SupportSeverityLevel severity, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent advancedDiagnosticConsent, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails, string title, string serviceId) { }
         public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent AdvancedDiagnosticConsent { get { throw null; } set { } }
+        public string CommunityForumPost { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportContactProfile ContactDetails { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation DirectConnectEscalation { get { throw null; } set { } }
         public string EnrollmentId { get { throw null; } set { } }
         public string FileWorkspaceName { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.IsTemporaryTicket? IsTemporaryTicket { get { throw null; } }
@@ -351,7 +381,10 @@ namespace Azure.ResourceManager.Support
         public string SupportTicketId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TechnicalTicketDetailsResourceId { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.SupportTicketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.SupportTicketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -592,6 +625,10 @@ namespace Azure.ResourceManager.Support.Mocking
         protected MockableSupportSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput> ClassifyProblems(string problemServiceName, Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>> ClassifyProblemsAsync(string problemServiceName, Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput> ClassifyServices(Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>> ClassifyServicesAsync(Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(string fileWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Support.SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces() { throw null; }
@@ -604,6 +641,8 @@ namespace Azure.ResourceManager.Support.Mocking
         protected MockableSupportTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput> ClassifyServices(Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>> ClassifyServicesAsync(Azure.ResourceManager.Support.Models.SupportServiceClassificationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource> GetSupportAzureService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource>> GetSupportAzureServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Support.SupportAzureServiceCollection GetSupportAzureServices() { throw null; }
@@ -613,6 +652,8 @@ namespace Azure.ResourceManager.Support.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource> GetTenantSupportTicket(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetTenantSupportTicketAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Support.TenantSupportTicketCollection GetTenantSupportTickets() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult> LookUpResourceId(Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>> LookUpResourceIdAsync(Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Support.Models
@@ -630,22 +671,38 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent left, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent left, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class ArmSupportModelFactory
     {
         public static Azure.ResourceManager.Support.ChatTranscriptDetailData ChatTranscriptDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> messages = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType = default(Azure.ResourceManager.Support.Models.TranscriptContentType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(Azure.ResourceManager.Support.Models.TranscriptContentType? contentType, Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection, string sender, string body, System.DateTimeOffset? createdOn) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties ChatTranscriptMessageProperties(string transcriptContentType = null, Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.FileWorkspaceDetailData FileWorkspaceDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.ProblemClassificationData ProblemClassificationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> secondaryConsentEnabledInfo = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput ProblemClassificationsClassificationInput(string issueSummary = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput ProblemClassificationsClassificationOutput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult> problemClassificationResults = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult ProblemClassificationsClassificationResult(string problemId = null, string title = null, string description = null, string serviceId = null, string problemClassificationId = null, Azure.ResourceManager.Support.Models.SupportClassificationService relatedService = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.QuotaTicketDetails QuotaTicketDetails(string quotaChangeRequestSubType = null, string quotaChangeRequestVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent> quotaChangeRequests = null) { throw null; }
         public static Azure.ResourceManager.Support.Models.SecondaryConsentEnabled SecondaryConsentEnabled(string description, string secondaryConsentEnabledType) { throw null; }
         public static Azure.ResourceManager.Support.SupportAzureServiceData SupportAzureServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> armResourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportClassificationService SupportClassificationService(Azure.Core.ResourceIdentifier serviceId = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportContactProfile SupportContactProfile(string firstName = null, string lastName = null, Azure.ResourceManager.Support.Models.PreferredContactMethod preferredContactMethod = default(Azure.ResourceManager.Support.Models.PreferredContactMethod), string primaryEmailAddress = null, System.Collections.Generic.IEnumerable<string> additionalEmailAddresses = null, string phoneNumber = null, string preferredTimeZone = null, string country = null, string preferredSupportLanguage = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportContactProfileContent SupportContactProfileContent(string firstName = null, string lastName = null, Azure.ResourceManager.Support.Models.PreferredContactMethod? preferredContactMethod = default(Azure.ResourceManager.Support.Models.PreferredContactMethod?), string primaryEmailAddress = null, System.Collections.Generic.IEnumerable<string> additionalEmailAddresses = null, string phoneNumber = null, string preferredTimeZone = null, string country = null, string preferredSupportLanguage = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation SupportDirectConnectEscalation(Azure.ResourceManager.Support.Models.SupportEscalationStatus? azureEEStatus = default(Azure.ResourceManager.Support.Models.SupportEscalationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SupportSeverityLevel> allowedSeverities = null, string reasonForEscalation = null) { throw null; }
         public static Azure.ResourceManager.Support.SupportFileDetailData SupportFileDetailData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), int? chunkSize = default(int?), int? fileSize = default(int?), int? numberOfChunks = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult SupportLookUpResourceIdResult(Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent SupportNameAvailabilityContent(string name = null, Azure.ResourceManager.Support.Models.SupportResourceType resourceType = Azure.ResourceManager.Support.Models.SupportResourceType.MicrosoftSupportSupportTickets) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer SupportServiceClassificationAnswer(Azure.Core.ResourceIdentifier serviceId = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> resourceTypes = null, Azure.ResourceManager.Support.Models.SupportClassificationService childService = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput SupportServiceClassificationOutput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer> serviceClassificationResults = null) { throw null; }
         public static Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement SupportServiceLevelAgreement(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), int? slaInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.Support.SupportTicketCommunicationData SupportTicketCommunicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType? communicationType = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string subject = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, Azure.ResourceManager.Support.Models.SupportSeverityLevel severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel), string enrollmentId = null, bool? require24X7Response = default(bool?), Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent), string problemScopingQuestions = null, string supportPlanId = null, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails = null, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, System.DateTimeOffset? problemStartOn = default(System.DateTimeOffset?), string serviceId = null, string serviceDisplayName = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string fileWorkspaceName = null, Azure.ResourceManager.Support.Models.IsTemporaryTicket? isTemporaryTicket = default(Azure.ResourceManager.Support.Models.IsTemporaryTicket?), Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId = null, Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null) { throw null; }
+        public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, Azure.ResourceManager.Support.Models.SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement, string supportEngineerEmailAddress, string supportPlanType, string supportPlanDisplayName, string title, System.DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, System.DateTimeOffset? createdOn, System.DateTimeOffset? modifiedOn, string fileWorkspaceName, Azure.ResourceManager.Support.Models.IsTemporaryTicket? isTemporaryTicket, Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId, Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent) { throw null; }
+        public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, Azure.ResourceManager.Support.Models.SupportSeverityLevel? severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel?), string enrollmentId = null, bool? require24X7Response = default(bool?), Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent?), string problemScopingQuestions = null, string supportPlanId = null, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails = null, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, System.DateTimeOffset? problemStartOn = default(System.DateTimeOffset?), string serviceId = null, string serviceDisplayName = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string fileWorkspaceName = null, Azure.ResourceManager.Support.Models.IsTemporaryTicket? isTemporaryTicket = default(Azure.ResourceManager.Support.Models.IsTemporaryTicket?), Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null, Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation directConnectEscalation = null, string communityForumPost = null, string supportEngineerEmailAddress = null, Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Support.Models.UpdateSupportTicket UpdateSupportTicket(Azure.ResourceManager.Support.Models.SupportSeverityLevel? severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel?), Azure.ResourceManager.Support.Models.SupportTicketStatus? status = default(Azure.ResourceManager.Support.Models.SupportTicketStatus?), Azure.ResourceManager.Support.Models.SupportContactProfileContent contactDetails = null, Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null, Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation directConnectEscalation = null) { throw null; }
     }
     public partial class ChatTranscriptMessageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>
     {
@@ -655,7 +712,11 @@ namespace Azure.ResourceManager.Support.Models
         public Azure.ResourceManager.Support.Models.TranscriptContentType? ContentType { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Sender { get { throw null; } set { } }
+        public string TranscriptContentType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -675,6 +736,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.IsTemporaryTicket left, Azure.ResourceManager.Support.Models.IsTemporaryTicket right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.IsTemporaryTicket (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.IsTemporaryTicket? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.IsTemporaryTicket left, Azure.ResourceManager.Support.Models.IsTemporaryTicket right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -691,8 +753,57 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.PreferredContactMethod left, Azure.ResourceManager.Support.Models.PreferredContactMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.PreferredContactMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.PreferredContactMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.PreferredContactMethod left, Azure.ResourceManager.Support.Models.PreferredContactMethod right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ProblemClassificationsClassificationInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>
+    {
+        public ProblemClassificationsClassificationInput(string issueSummary) { }
+        public string IssueSummary { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProblemClassificationsClassificationOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>
+    {
+        internal ProblemClassificationsClassificationOutput() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult> ProblemClassificationResults { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProblemClassificationsClassificationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>
+    {
+        internal ProblemClassificationsClassificationResult() { }
+        public string Description { get { throw null; } }
+        public string ProblemClassificationId { get { throw null; } }
+        public string ProblemId { get { throw null; } }
+        public Azure.ResourceManager.Support.Models.SupportClassificationService RelatedService { get { throw null; } }
+        public string ServiceId { get { throw null; } }
+        public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ProblemClassificationsClassificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class QuotaTicketDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>
     {
@@ -700,7 +811,10 @@ namespace Azure.ResourceManager.Support.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent> QuotaChangeRequests { get { throw null; } }
         public string QuotaChangeRequestSubType { get { throw null; } set { } }
         public string QuotaChangeRequestVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.QuotaTicketDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.QuotaTicketDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.QuotaTicketDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.QuotaTicketDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -712,7 +826,10 @@ namespace Azure.ResourceManager.Support.Models
         public SecondaryConsent() { }
         public string SecondaryConsentType { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.UserConsent? UserConsent { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SecondaryConsent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SecondaryConsent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SecondaryConsent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SecondaryConsent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -724,12 +841,31 @@ namespace Azure.ResourceManager.Support.Models
         public SecondaryConsentEnabled() { }
         public string Description { get { throw null; } set { } }
         public string SecondaryConsentEnabledType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SecondaryConsentEnabled JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SecondaryConsentEnabled PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SupportClassificationService : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportClassificationService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportClassificationService>
+    {
+        internal SupportClassificationService() { }
+        public string DisplayName { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceType> ResourceTypes { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ServiceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportClassificationService JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportClassificationService PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportClassificationService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportClassificationService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportClassificationService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportClassificationService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportClassificationService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportClassificationService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportClassificationService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupportContactProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>
     {
@@ -743,7 +879,10 @@ namespace Azure.ResourceManager.Support.Models
         public string PreferredSupportLanguage { get { throw null; } set { } }
         public string PreferredTimeZone { get { throw null; } set { } }
         public string PrimaryEmailAddress { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportContactProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportContactProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportContactProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportContactProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -762,19 +901,106 @@ namespace Azure.ResourceManager.Support.Models
         public string PreferredSupportLanguage { get { throw null; } set { } }
         public string PreferredTimeZone { get { throw null; } set { } }
         public string PrimaryEmailAddress { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportContactProfileContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportContactProfileContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportContactProfileContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportContactProfileContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SupportDirectConnectEscalation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>
+    {
+        public SupportDirectConnectEscalation() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SupportSeverityLevel> AllowedSeverities { get { throw null; } }
+        public Azure.ResourceManager.Support.Models.SupportEscalationStatus? AzureEEStatus { get { throw null; } set { } }
+        public string ReasonForEscalation { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SupportEscalationStatus : System.IEquatable<Azure.ResourceManager.Support.Models.SupportEscalationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SupportEscalationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportEscalationStatus EscalationAvailable { get { throw null; } }
+        public static Azure.ResourceManager.Support.Models.SupportEscalationStatus EscalationInitiated { get { throw null; } }
+        public static Azure.ResourceManager.Support.Models.SupportEscalationStatus EscalationProcessed { get { throw null; } }
+        public static Azure.ResourceManager.Support.Models.SupportEscalationStatus EscalationUnavailable { get { throw null; } }
+        public static Azure.ResourceManager.Support.Models.SupportEscalationStatus EscalationUnsupported { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Support.Models.SupportEscalationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Support.Models.SupportEscalationStatus left, Azure.ResourceManager.Support.Models.SupportEscalationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportEscalationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportEscalationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Support.Models.SupportEscalationStatus left, Azure.ResourceManager.Support.Models.SupportEscalationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SupportLookUpResourceIdContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>
+    {
+        public SupportLookUpResourceIdContent() { }
+        public Azure.Core.ResourceIdentifier Identifier { get { throw null; } set { } }
+        public Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType? Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SupportLookUpResourceIdContentType : System.IEquatable<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SupportLookUpResourceIdContentType(string value) { throw null; }
+        public static Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType MicrosoftSupportSupportTickets { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType left, Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType left, Azure.ResourceManager.Support.Models.SupportLookUpResourceIdContentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SupportLookUpResourceIdResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>
+    {
+        internal SupportLookUpResourceIdResult() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportLookUpResourceIdResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SupportNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>
     {
         public SupportNameAvailabilityContent(string name, Azure.ResourceManager.Support.Models.SupportResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Support.Models.SupportResourceType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -787,7 +1013,10 @@ namespace Azure.ResourceManager.Support.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -799,7 +1028,10 @@ namespace Azure.ResourceManager.Support.Models
         public SupportQuotaChangeContent() { }
         public string Payload { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportQuotaChangeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportQuotaChangeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportQuotaChangeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportQuotaChangeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -811,13 +1043,60 @@ namespace Azure.ResourceManager.Support.Models
         MicrosoftSupportSupportTickets = 0,
         MicrosoftSupportCommunications = 1,
     }
+    public partial class SupportServiceClassificationAnswer : Azure.ResourceManager.Support.Models.SupportClassificationService, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>
+    {
+        internal SupportServiceClassificationAnswer() { }
+        public Azure.ResourceManager.Support.Models.SupportClassificationService ChildService { get { throw null; } }
+        protected override Azure.ResourceManager.Support.Models.SupportClassificationService JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Support.Models.SupportClassificationService PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SupportServiceClassificationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>
+    {
+        public SupportServiceClassificationContent() { }
+        public string AdditionalContext { get { throw null; } set { } }
+        public string IssueSummary { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceClassificationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceClassificationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SupportServiceClassificationOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>
+    {
+        internal SupportServiceClassificationOutput() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SupportServiceClassificationAnswer> ServiceClassificationResults { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceClassificationOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SupportServiceLevelAgreement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>
     {
         public SupportServiceLevelAgreement() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public int? SlaInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -839,6 +1118,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportSeverityLevel left, Azure.ResourceManager.Support.Models.SupportSeverityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportSeverityLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportSeverityLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.SupportSeverityLevel left, Azure.ResourceManager.Support.Models.SupportSeverityLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -855,6 +1135,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -871,6 +1152,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketCommunicationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType left, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -887,6 +1169,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.SupportTicketStatus left, Azure.ResourceManager.Support.Models.SupportTicketStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.SupportTicketStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.SupportTicketStatus left, Azure.ResourceManager.Support.Models.SupportTicketStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -901,6 +1184,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.TranscriptContentType left, Azure.ResourceManager.Support.Models.TranscriptContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.TranscriptContentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.TranscriptContentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.TranscriptContentType left, Azure.ResourceManager.Support.Models.TranscriptContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -909,10 +1193,14 @@ namespace Azure.ResourceManager.Support.Models
         public UpdateSupportTicket() { }
         public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportContactProfileContent ContactDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.Support.Models.SupportDirectConnectEscalation DirectConnectEscalation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsent> SecondaryConsent { get { throw null; } }
         public Azure.ResourceManager.Support.Models.SupportSeverityLevel? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportTicketStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.UpdateSupportTicket JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.UpdateSupportTicket PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.UpdateSupportTicket System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.UpdateSupportTicket System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -924,7 +1212,10 @@ namespace Azure.ResourceManager.Support.Models
         public UploadFileContent() { }
         public int? ChunkIndex { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Support.Models.UploadFileContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Support.Models.UploadFileContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Support.Models.UploadFileContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Support.Models.UploadFileContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -944,6 +1235,7 @@ namespace Azure.ResourceManager.Support.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Support.Models.UserConsent left, Azure.ResourceManager.Support.Models.UserConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Support.Models.UserConsent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Support.Models.UserConsent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Support.Models.UserConsent left, Azure.ResourceManager.Support.Models.UserConsent right) { throw null; }
         public override string ToString() { throw null; }
     }

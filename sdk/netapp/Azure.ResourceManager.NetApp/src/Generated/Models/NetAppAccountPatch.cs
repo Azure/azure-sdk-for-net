@@ -35,11 +35,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> NetApp Account properties. </param>
         /// <param name="identity"> The identity used for the resource. </param>
-        internal NetAppAccountPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, string name, IDictionary<string, string> tags, AccountPropertiesPatch properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
+        /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
+        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppEntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, NetAppLdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            ActiveDirectories = activeDirectories;
+            EntraIdConfig = entraIdConfig;
+            Encryption = encryption;
+            NfsV4IdDomain = nfsV4IdDomain;
+            MultiAdStatus = multiAdStatus;
+            LdapConfiguration = ldapConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NetApp Account properties. </summary>
@@ -49,57 +63,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The identity used for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-
         /// <summary> Active Directories. </summary>
-        [WirePath("properties.activeDirectories")]
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                return Properties.ActiveDirectories;
-            }
-        }
-
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Entra ID configuration for the account. </summary>
-        [WirePath("properties.entraIdConfig")]
-        public EntraIdConfigPatch EntraIdConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraIdConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.EntraIdConfig = value;
-            }
-        }
-
+        public NetAppEntraIdConfigPatch EntraIdConfig { get; set; }
         /// <summary> Encryption settings. </summary>
-        [WirePath("properties.encryption")]
-        public NetAppAccountEncryption Encryption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Encryption;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.Encryption = value;
-            }
-        }
-
+        public NetAppAccountEncryption Encryption { get; set; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         [WirePath("properties.nfsV4IDDomain")]
         public string NfsV4IDDomain
@@ -119,39 +88,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> MultiAD Status for the account. </summary>
-        [WirePath("properties.multiAdStatus")]
-        public MultiAdStatus? MultiAdStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MultiAdStatus;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.MultiAdStatus = value.Value;
-            }
-        }
-
+        public MultiAdStatus? MultiAdStatus { get; set; }
         /// <summary> LDAP Configuration for the account. </summary>
-        [WirePath("properties.ldapConfiguration")]
-        public LdapConfigurationPatch LdapConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountPropertiesPatch();
-                }
-                Properties.LdapConfiguration = value;
-            }
-        }
+        public NetAppLdapConfigurationPatch LdapConfiguration { get; set; }
     }
 }

@@ -63,7 +63,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 10
+        PRJobBatchSize: 5
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
@@ -140,6 +140,10 @@ jobs:
         image: $(WINDOWSVMIMAGE)
         os: windows
       steps:
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
           inputs:
@@ -164,6 +168,11 @@ jobs:
           parameters:
             SourceDirectory: $(Build.SourcesDirectory)
 
+        - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+          parameters:
+            Sections:
+              - 'Client Libraries'
+
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
@@ -181,7 +190,7 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 20
+          PRJobBatchSize: 10
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'

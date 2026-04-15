@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The NIC Detail of a device. </summary>
     public partial class HciNicDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciNicDetail"/>. </summary>
-        internal HciNicDetail()
+        public HciNicDetail()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
@@ -56,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="interfaceDescription"> Interface Description of NIC. </param>
         /// <param name="componentId"> Component Id of NIC. </param>
         /// <param name="driverVersion"> Driver Version of NIC. </param>
-        /// <param name="ipv4Address"> Subnet Mask of NIC. </param>
+        /// <param name="iPv4Address"> Subnet Mask of NIC. </param>
         /// <param name="subnetMask"> Subnet Mask of NIC. </param>
         /// <param name="defaultGateway"> Default Gateway of NIC. </param>
         /// <param name="dnsServers"> DNS Servers for NIC. </param>
@@ -67,14 +39,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
         /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string iPv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, RdmaCapability? rdmaCapability, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterName = adapterName;
             InterfaceDescription = interfaceDescription;
             ComponentId = componentId;
             DriverVersion = driverVersion;
-            IPv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             SubnetMask = subnetMask;
             DefaultGateway = defaultGateway;
             DnsServers = dnsServers;
@@ -85,53 +58,72 @@ namespace Azure.ResourceManager.Hci.Models
             NicType = nicType;
             VlanId = vlanId;
             NicStatus = nicStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            RdmaCapability = rdmaCapability;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Adapter Name of NIC. </summary>
         [WirePath("adapterName")]
         public string AdapterName { get; }
+
         /// <summary> Interface Description of NIC. </summary>
         [WirePath("interfaceDescription")]
         public string InterfaceDescription { get; }
+
         /// <summary> Component Id of NIC. </summary>
         [WirePath("componentId")]
         public string ComponentId { get; }
+
         /// <summary> Driver Version of NIC. </summary>
         [WirePath("driverVersion")]
         public string DriverVersion { get; }
+
         /// <summary> Subnet Mask of NIC. </summary>
         [WirePath("ip4Address")]
         public string IPv4Address { get; }
+
         /// <summary> Subnet Mask of NIC. </summary>
         [WirePath("subnetMask")]
         public string SubnetMask { get; }
+
         /// <summary> Default Gateway of NIC. </summary>
         [WirePath("defaultGateway")]
         public string DefaultGateway { get; }
+
         /// <summary> DNS Servers for NIC. </summary>
         [WirePath("dnsServers")]
         public IReadOnlyList<string> DnsServers { get; }
+
         /// <summary> Default Isolation of Management NIC. </summary>
         [WirePath("defaultIsolationId")]
         public string DefaultIsolationId { get; }
+
         /// <summary> MAC address information of NIC. </summary>
         [WirePath("macAddress")]
         public string MacAddress { get; }
+
         /// <summary> The slot attached to the NIC. </summary>
         [WirePath("slot")]
         public string Slot { get; }
+
         /// <summary> The switch attached to the NIC, if any. </summary>
         [WirePath("switchName")]
         public string SwitchName { get; }
+
         /// <summary> The type of NIC, physical, virtual, management. </summary>
         [WirePath("nicType")]
         public string NicType { get; }
+
         /// <summary> The VLAN ID of the physical NIC. </summary>
         [WirePath("vlanId")]
         public string VlanId { get; }
+
         /// <summary> The status of NIC, up, disconnected. </summary>
         [WirePath("nicStatus")]
         public string NicStatus { get; }
+
+        /// <summary> Describes the RDMA capability of the network adapter. </summary>
+        [WirePath("rdmaCapability")]
+        public RdmaCapability? RdmaCapability { get; }
     }
 }

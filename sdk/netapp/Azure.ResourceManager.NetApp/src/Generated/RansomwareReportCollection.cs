@@ -69,8 +69,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,8 +124,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,8 +180,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,8 +222,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,8 +261,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,8 +322,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,8 +383,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,8 +448,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> RansomwareReports_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RansomwareReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

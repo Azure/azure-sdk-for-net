@@ -19,12 +19,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class EventGridSenderClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Authorization";
         private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
         private readonly string _apiVersion;
 

@@ -8,3 +8,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.WebPubSub
       safeName: AzureResourceManagerWebPubSub
+    - name: Azure.Provisioning.WebPubSub
+      safeName: AzureProvisioningWebPubSub

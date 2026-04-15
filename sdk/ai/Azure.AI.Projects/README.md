@@ -2,7 +2,7 @@
 The AI Projects client library is part of the Azure AI Foundry SDK and provides easy access to resources in your Azure AI Foundry Project. Use it to:
 
 * **Create and run Classic Agents** using the `GetPersistentAgentsClient` method on the client.
-* **Create Agents** using `Agents` property.
+* **Create Agents** using `AgentAdministrationClient` property.
 * **Enumerate AI Models** deployed to your Foundry Project using the `Deployments` operations.
 * **Enumerate connected Azure resources** in your Foundry project using the `Connections` operations.
 * **Upload documents and create Datasets** to reference them using the `Datasets` operations.
@@ -24,7 +24,6 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
 - [Key concepts](#key-concepts)
   - [Create and authenticate the client](#create-and-authenticate-the-client)
 - [Examples](#examples)
-  - [Performing Classic Agent operations](#performing-classic-agent-operations)
   - [Performing Agent operations](#performing-agent-operations)
   - [Get an authenticated AzureOpenAI client](#get-an-authenticated-azureopenai-client)
   - [Get an authenticated ChatCompletionsClient](#get-an-authenticated-chatcompletionsclient)
@@ -45,10 +44,13 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
     - [Evaluating responses](#evaluating-responses)
     - [Evaluation rules](#evaluation-rules)
   - [Red teams](#red-teams)
+  - [Schedules](#schedules)
+  - [Toolboxes](#toolboxes)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
     - [Enabling content recording](#enabling-content-recording)
+- [Performing Classic Agent operations](#performing-classic-agent-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -82,7 +84,7 @@ dotnet add package Azure.Identity
 To interact with Azure AI Projects, you’ll need to create an instance of `AIProjectClient`. Use the appropriate credential type from the Azure Identity library. For example, [DefaultAzureCredential][azure_identity_dac]:
 
 ```C# Snippet:AI_Projects_OverviewCreateClient
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
@@ -92,81 +94,6 @@ Once the `AIProjectClient` is created, you can use properties such as `.Datasets
 
 ## Examples
 
-### Performing Classic Agent operations
-
-The `GetPersistentAgentsClient` method on the `AIProjectsClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
-
-The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
-```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
-
-// Step 1: Create an agent
-PersistentAgent agent = agentsClient.Administration.CreateAgent(
-    model: modelDeploymentName,
-    name: "Math Tutor",
-    instructions: "You are a personal math tutor. Write and run code to answer math questions."
-);
-
-// Step 2: Create a thread
-PersistentAgentThread thread = agentsClient.Threads.CreateThread();
-
-// Step 3: Add a message to a thread
-PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
-    thread.Id,
-    MessageRole.User,
-    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
-
-// Intermission: message is now correlated with thread
-// Intermission: listing messages will retrieve the message just added
-
-List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
-Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
-
-// Step 4: Run the agent
-ThreadRun run = agentsClient.Runs.CreateRun(
-    thread.Id,
-    agent.Id,
-    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
-do
-{
-    Thread.Sleep(TimeSpan.FromMilliseconds(500));
-    run = agentsClient.Runs.GetRun(thread.Id, run.Id);
-}
-while (run.Status == RunStatus.Queued
-    || run.Status == RunStatus.InProgress);
-Assert.That(
-    RunStatus.Completed,
-    Is.EqualTo(run.Status),
-    run.LastError?.Message);
-
-Pageable<PersistentThreadMessage> messages
-    = agentsClient.Messages.GetMessages(
-        threadId: thread.Id, order: ListSortOrder.Ascending);
-
-foreach (PersistentThreadMessage threadMessage in messages)
-{
-    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-    foreach (MessageContent contentItem in threadMessage.ContentItems)
-    {
-        if (contentItem is MessageTextContent textItem)
-        {
-            Console.Write(textItem.Text);
-        }
-        else if (contentItem is MessageImageFileContent imageFileItem)
-        {
-            Console.Write($"<image from ID: {imageFileItem.FileId}");
-        }
-        Console.WriteLine();
-    }
-}
-
-agentsClient.Threads.DeleteThread(threadId: thread.Id);
-agentsClient.Administration.DeleteAgent(agentId: agent.Id);
-```
-
 ### Performing Agent operations
 
 Azure.AI.Projects can be used to create, update and delete Agents.
@@ -175,15 +102,15 @@ Create Agent
 
 Synchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -191,15 +118,15 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Asynchronous call:
 ```C# Snippet:Sample_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -209,13 +136,13 @@ Get Agent
 
 Synchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Sync
-AgentRecord result = projectClient.Agents.GetAgent(agentVersion1.Name);
+ProjectsAgentRecord result = projectClient.AgentAdministrationClient.GetAgent(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_GetAgentCRUD_Async
-AgentRecord result = await projectClient.Agents.GetAgentAsync(agentVersion1.Name);
+ProjectsAgentRecord result = await projectClient.AgentAdministrationClient.GetAgentAsync(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
@@ -223,7 +150,7 @@ List Agents
 
 Synchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Sync
-foreach (AgentRecord agent in projectClient.Agents.GetAgents())
+foreach (ProjectsAgentRecord agent in projectClient.AgentAdministrationClient.GetAgents())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -231,7 +158,7 @@ foreach (AgentRecord agent in projectClient.Agents.GetAgents())
 
 Asynchronous call:
 ```C# Snippet:Sample_ListAgentsCRUD_Async
-await foreach (AgentRecord agent in projectClient.Agents.GetAgentsAsync())
+await foreach (ProjectsAgentRecord agent in projectClient.AgentAdministrationClient.GetAgentsAsync())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -241,17 +168,17 @@ Delete Agent
 
 Synchronous call:
 ```C# Snippet:Sample_DeleteAgentCRUD_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
 Asynchronous call:
 ```C# Snippet:Sample_DeleteAgentCRUD_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion1.Name, agentVersion: agentVersion1.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion2.Name, agentVersion: agentVersion2.Version);
 Console.WriteLine($"Agent deleted (name: {agentVersion2.Name}, version: {agentVersion2.Version})");
 ```
 
@@ -264,8 +191,8 @@ The code below assumes `modelDeploymentName` (a string) is defined. It's the dep
 You can update the `connectionName` with one of the connections in your Foundry project, and you can update the `apiVersion` value with one found in the "Data plane - inference" row [in this table](https://learn.microsoft.com/azure/ai-services/openai/reference#api-specs).
 
 ```C# Snippet:AI_Projects_AzureOpenAIChatSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI chat client");
 var credential = new DefaultAzureCredential();
@@ -292,8 +219,8 @@ Console.WriteLine(result.Content[0].Text);
 The code below shows some Deployments operations, which allow you to enumerate the AI models deployed to your AI Foundry Projects. These models can be seen in the "Models + endpoints" tab in your AI Foundry Project. Full samples can be found under the "Deployment" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -320,7 +247,7 @@ Console.WriteLine(deploymentDetails);
 The code below shows some Connection operations, which allow you to enumerate the Azure Resources connected to your AI Foundry Projects. These connections can be seen in the "Management Center", in the "Connected resources" tab in your AI Foundry Project. Full samples can be found under the "Connections" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_ConnectionsExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
@@ -359,7 +286,7 @@ Console.WriteLine(defaultConnectionCredentials);
 The code below shows some Dataset operations. Full samples can be found under the "Datasets" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_DatasetsExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
@@ -420,7 +347,7 @@ projectClient.Datasets.Delete(datasetName, datasetVersion2);
 The code below shows some Indexes operations. Full samples can be found under the "Indexes" folder in the [package samples][samples].
 
 ```C# Snippet:AI_Projects_IndexesExampleSync
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
@@ -468,9 +395,9 @@ The code below shows some Files operations, which allow you to manage files thro
 The first step working with OpenAI files is to authenticate to Azure through `AIProjectClient` and get the `OpenAIFileClient`.
 ```C# Snippet:AI_Projects_Files_CreateClients
 string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 ```
 
@@ -508,10 +435,10 @@ The code below shows how to create a supervised fine-tuning job using the OpenAI
 ```C# Snippet:AI_Projects_FineTuning_CreateClients
 string trainingFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
 string validationFilePath = Environment.GetEnvironmentVariable("VALIDATION_FILE_PATH") ?? "data/sft_validation_set.jsonl";
-var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+ProjectOpenAIClient oaiClient = projectClient.ProjectOpenAIClient;
 OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
 FineTuningClient fineTuningClient = oaiClient.GetFineTuningClient();
 ```
@@ -575,7 +502,7 @@ MemoryStoreDefaultDefinition memoryStoreDefinition = new(
     chatModel: modelDeploymentName,
     embeddingModel: embeddingDeploymentName
 );
-memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+memoryStoreDefinition.Options = new(isUserProfileEnabled: true, isChatSummaryEnabled: true);
 MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
     name: "testMemoryStore",
     definition: memoryStoreDefinition,
@@ -633,7 +560,7 @@ MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
-foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+foreach (MemorySearchItem item in resp.Memories)
 {
     Console.WriteLine(item.MemoryItem.Content);
 }
@@ -644,7 +571,7 @@ Remove the scope we have created from `MemoryStore`.
 
 ```C# Snippet:Sample_DeleteScope_MemoryStore_Sync
 MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
-string status = deleteScopeResponse.Deleted ? "" : " not";
+string status = deleteScopeResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
 ```
 
@@ -652,7 +579,7 @@ Finally, delete `MemoryStore`.
 
 ```C# Snippet:Sample_Cleanup_MemoryStore_Sync
 DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
-status = deleteResponse.Deleted ? "" : " not";
+status = deleteResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```
 
@@ -1239,6 +1166,244 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 );
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
+
+### Red teams
+**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
+```C#
+#pragma warning disable AAIP001
+```
+Red teams allow to check how models behave in response to attack attempts.
+To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
+
+```C# Snippet:Sample_CreateRedTeam_RedTeam
+AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);
+RedTeam redTeam = new(target: config)
+{
+    AttackStrategies = { AttackStrategy.Base64 },
+    RiskCategories = { RiskCategory.Violence },
+    DisplayName = "redteamtest1"
+};
+```
+
+Start the Red Teaming task.
+
+```C# Snippet:Sample_RunScan_RedTeam_Async
+RequestOptions options = new();
+options.AddHeader("model-endpoint", modelEndpoint);
+options.AddHeader("model-api-key", modelApiKey);
+redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
+Console.WriteLine($"Red Team scan created with scan name: {redTeam.Name}");
+```
+
+Get Red Teaming task and output its status.
+
+```C# Snippet:Sample_GetScanDetails_RedTeam_Async
+redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
+Console.WriteLine($"Red Team scan status: {redTeam.Status}");
+```
+
+To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
+
+## Schedules
+
+The `ProjectsSchedule` class may be used to schedule an evaluation run. To schedule the evaluation run, create a JSON object that points
+to the existing evaluation and dataset.
+
+```C# Snippet:Sample_CreateRunObject_ScheduledEvaluations
+private static BinaryData CreateRunObject(string evaluationId, string evaluationName, string fileDatasetId)
+{
+    return BinaryData.FromObjectAsJson(new
+    {
+        eval_id = evaluationId,
+        name = evaluationName,
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "dataset-id-v1"
+        },
+        data_source = new
+        {
+            type = "jsonl",
+            source = new
+            {
+                id = fileDatasetId,
+                type = "file_id",
+            }
+        }
+    });
+}
+```
+
+ Create the `RecurrenceTrigger`, which will start the task at 9 AM every day. Provide the evaluation ID and configuration to the `EvaluationScheduleTask` object and use it to create the `ProjectsSchedule`. `RecurrenceTrigger` has a `TimeZone` property, defining which time zone will be used. By default, it is UTC.
+ Finally, create the schedule in the Azure and wait while the provisioning will get to the final state.
+
+ ```C# Snippet:Sample_ScheduleEvaluation_ScheduledEvaluations_Async
+RecurrenceTrigger trigger = new(interval: 1, new DailyRecurrenceSchedule(hours: [9]));
+EvaluationScheduleTask scheduleTask = new(evalId: evaluationId, evalRun: CreateRunObject(evaluationId, evaluationName, fileDataset.Id));
+ProjectsSchedule schedule = new(enabled: true, trigger: trigger, task: scheduleTask)
+{
+    DisplayName = "Dataset Evaluation Eval Run Schedule"
+};
+ProjectsSchedule scheduleResponse = await projectClient.Schedules.CreateOrUpdateAsync(id: "dataset-eval-run-schedule-9am", resource: schedule);
+while (scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Failed && scheduleResponse.ProvisioningStatus != ScheduleProvisioningStatus.Succeeded)
+{
+    await Task.Delay(TimeSpan.FromSeconds(1));
+    scheduleResponse = await projectClient.Schedules.GetAsync(scheduleResponse.Id);
+}
+if (scheduleResponse.ProvisioningStatus == ScheduleProvisioningStatus.Failed)
+{
+    throw new InvalidOperationException($"Failed to create a schedule.");
+}
+Console.WriteLine($"Schedule created for dataset evaluation: {scheduleResponse.Id}");
+```
+
+Schedules may also be used for red teaming purposes. In this case we need to use appropriate evaluators with the
+evaluation taxonomy.
+
+First we need to create `AzureAIAgentTarget` or `AzureAIModelTarget` to test Agent or model respectively.
+
+```C# Snippet:Sample_GetAITarget_ScheduledEvaluations
+private static AzureAIAgentTarget GetAgentTarget(ProjectsAgentVersion agentVersion)
+{
+    AzureAIAgentTarget target = new(name: agentVersion.Name)
+    {
+        Version = agentVersion.Version,
+    };
+    if (agentVersion.Definition is DeclarativeAgentDefinition agentDefinition)
+    {
+        foreach (ResponseTool agentTool in agentDefinition.Tools)
+        {
+            ToolDescription tool = new();
+            ProjectsAgentTool projectTool = agentTool.AsAgentTool();
+            if (projectTool is OpenAPITool openAPITool)
+            {
+                tool.Name = openAPITool.FunctionDefinition.Name;
+                tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;
+            }
+            else
+            {
+                tool.Name = $"Tool of type {projectTool.GetType()}";
+                tool.Description = "No description provided";
+            }
+            target.ToolDescriptions.Add(tool);
+        }
+    }
+    if (target.ToolDescriptions.Count == 0)
+    {
+        target.ToolDescriptions.Add(new()
+        {
+            Name = "No Tools",
+            Description = "This agent does not use any tools."
+        });
+    }
+    return target;
+}
+```
+
+Then we need to create a taxonomy, which will provide prompts from different categories to test Agent or model
+over evaluators set up in the evaluation.
+
+```C# Snippet:Sample_AgentTaxonomy_ScheduledEvaluations_Async
+AzureAIAgentTarget agentTarget = GetAgentTarget(agentVersion);
+AgentTaxonomyInput agentTaxonomyInput = new(target: agentTarget, riskCategories: [RiskCategory.ProhibitedActions]);
+EvaluationTaxonomy evalTaxonomyInput = new(agentTaxonomyInput)
+{
+    Description = "Taxonomy for red teaming evaluation"
+};
+EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, body: evalTaxonomyInput);
+DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
+string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
+BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);
+File.WriteAllBytes(taxonomyPath, taxonomyJson.ToArray());
+Console.WriteLine($"RedTeaming Taxonomy created for agent: {agentVersion.Name}. Taxonomy written to {taxonomyPath}");
+```
+
+ For Red teaming JSON object should contain data source pointing to the red team taxonomy.
+
+ ```C# Snippet:Sample_CreateRedTeamRunObject_ScheduledEvaluations
+private static BinaryData CreateRedTeamRunObject(string evaluationId, string evaluationName, EvaluationTaxonomy taxonomy)
+{
+    return BinaryData.FromObjectAsJson(new
+    {
+        eval_id = evaluationId,
+        name = evaluationName,
+        metadata = new
+        {
+            team = "eval-exp",
+            scenario = "dataset-id-v1"
+        },
+        data_source = new
+        {
+            type = "azure_ai_red_team",
+            item_generation_params = new
+            {
+                type = "red_team_taxonomy",
+                attack_strategies = new[] { "Flip", "Base64" },
+                num_turns = 5,
+                source = new
+                {
+                    type = "file_id",
+                    id = taxonomy.Id,
+                    attack_strategies = new[] { "Flip", "Base64" },
+                }
+            }
+        }
+    });
+}
+```
+
+## Toolboxes
+
+Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents. To use this feature please disable
+the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
+In the example below we create two versions of MCP tool and save it to Azure.
+```C# Snippet:Sample_CreateToolbox_ToolboxesCRUD_Async
+ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
+    serverLabel: "api-specs",
+    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+));
+ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Example toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Engineers"}
+    }
+);
+ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+    toolboxName: toolboxName,
+    tools: [tool],
+    description: "Another toolbox created by the azure-ai-projects sample.",
+    metadata: new Dictionary<string, string> {
+        {"team", "Data scientists"}
+    }
+);
+string status = "unknown status";
+toolBox1.Metadata?.TryGetValue("team", out status);
+Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tools: {toolBox1.Tools.Count}) (team: {status}).");
+```
+
+There are two objects which help to work with the Toolboxes: `ToolboxRecord` and `ToolboxVersion`. `ToolboxRecord` can be retrieved by
+name, it contains the default version of the Toolbox.
+
+```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
+```
+
+The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
+
+```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
+ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+```
+
 ## Tracing
 
 **Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
@@ -1311,42 +1476,84 @@ If neither the environment variable nor the `AppContext` switch is set, content 
 
 > **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
 
-### Red teams
-**Note:** Red teams is an experimental feature, to use it, please disable the `AAIP001` warning.
-```C#
-#pragma warning disable AAIP001
-```
-Red teams allow to check how models behave in response to attack attempts.
-To test the model using Base64-encoded strings, with the prompts asking it to generate violent content, we can use the next code.
 
-```C# Snippet:Sample_CreateRedTeam_RedTeam
-AzureOpenAIModelConfiguration config = new(modelDeploymentName: modelDeploymentName);
-RedTeam redTeam = new(target: config)
+## Performing Classic Agent operations
+
+The `Azure.AI.Agents.Persistent` package provides the legacy way to create and use Agents (Classic Agents).
+Please consider upgrading the codebase to use Agents as described  in "[Performing Agent operations](#performing-agent-operations)" section. 
+
+The `GetPersistentAgentsClient` method on the `AIProjectClient` gives you access to an authenticated `PersistentAgentsClient` from the `Azure.AI.Agents.Persistent` package. Below we show how to create an Agent and delete it. To see what you can do with the agent you created, see the [many samples](https://aka.ms/azsdk/Azure.AI.Agents.Persistent/net/samples) associated with the `Azure.AI.Agents.Persistent` package.
+
+The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, as shown in the "Models + endpoints" tab, under the "Name" column.
+```C# Snippet:AI_Projects_ExtensionsAgentsBasicsSync
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+
+// Step 1: Create an agent
+PersistentAgent agent = agentsClient.Administration.CreateAgent(
+    model: modelDeploymentName,
+    name: "Math Tutor",
+    instructions: "You are a personal math tutor. Write and run code to answer math questions."
+);
+
+// Step 2: Create a thread
+PersistentAgentThread thread = agentsClient.Threads.CreateThread();
+
+// Step 3: Add a message to a thread
+PersistentThreadMessage message = agentsClient.Messages.CreateMessage(
+    thread.Id,
+    MessageRole.User,
+    "I need to solve the equation `3x + 11 = 14`. Can you help me?");
+
+// Intermission: message is now correlated with thread
+// Intermission: listing messages will retrieve the message just added
+
+List<PersistentThreadMessage> messagesList = [.. agentsClient.Messages.GetMessages(thread.Id)];
+Assert.That(message.Id, Is.EqualTo(messagesList[0].Id));
+
+// Step 4: Run the agent
+ThreadRun run = agentsClient.Runs.CreateRun(
+    thread.Id,
+    agent.Id,
+    additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+do
 {
-    AttackStrategies = { AttackStrategy.Base64 },
-    RiskCategories = { RiskCategory.Violence },
-    DisplayName = "redteamtest1"
-};
+    Thread.Sleep(TimeSpan.FromMilliseconds(500));
+    run = agentsClient.Runs.GetRun(thread.Id, run.Id);
+}
+while (run.Status == RunStatus.Queued
+    || run.Status == RunStatus.InProgress);
+Assert.That(
+    RunStatus.Completed,
+    Is.EqualTo(run.Status),
+    run.LastError?.Message);
+
+Pageable<PersistentThreadMessage> messages
+    = agentsClient.Messages.GetMessages(
+        threadId: thread.Id, order: ListSortOrder.Ascending);
+
+foreach (PersistentThreadMessage threadMessage in messages)
+{
+    Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
+    foreach (MessageContent contentItem in threadMessage.ContentItems)
+    {
+        if (contentItem is MessageTextContent textItem)
+        {
+            Console.Write(textItem.Text);
+        }
+        else if (contentItem is MessageImageFileContent imageFileItem)
+        {
+            Console.Write($"<image from ID: {imageFileItem.FileId}");
+        }
+        Console.WriteLine();
+    }
+}
+
+agentsClient.Threads.DeleteThread(threadId: thread.Id);
+agentsClient.Administration.DeleteAgent(agentId: agent.Id);
 ```
-
-Start the Read-Teaming task.
-
-```C# Snippet:Sample_RunScan_RedTeam_Async
-RequestOptions options = new();
-options.AddHeader("model-endpoint", modelEndpoint);
-options.AddHeader("model-api-key", modelApiKey);
-redTeam = await projectClient.RedTeams.CreateAsync(redTeam: redTeam, options: options);
-Console.WriteLine($"Red Team scan created with scan name: {redTeam.Name}");
-```
-
-Get Read-Teaming task and output its status.
-
-```C# Snippet:Sample_GetScanDetails_RedTeam_Async
-redTeam = await projectClient.RedTeams.GetAsync(name: redTeam.Name);
-Console.WriteLine($"Red Team scan status: {redTeam.Status}");
-```
-
-To get the results of the red teaming experiment, open Microsoft Foundry used for the experiments, on the left panel select **Evaluation** and choose **AI red teaming** tab.
 
 ## Troubleshooting
 

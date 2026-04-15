@@ -105,6 +105,51 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(ActiveDirectories))
+            {
+                writer.WritePropertyName("activeDirectories"u8);
+                writer.WriteStartArray();
+                foreach (var item in ActiveDirectories)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(NfsV4IdDomain))
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain");
+                }
+            }
+            if (Optional.IsDefined(MultiAdStatus))
+            {
+                writer.WritePropertyName("multiAdStatus"u8);
+                writer.WriteStringValue(MultiAdStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(LdapConfiguration))
+            {
+                writer.WritePropertyName("ldapConfiguration"u8);
+                writer.WriteObjectValue(LdapConfiguration, options);
+            }
+            writer.WriteEndObject();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -135,13 +180,15 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation location = default;
-            string name = default;
-            IDictionary<string, string> tags = default;
-            AccountPropertiesPatch properties = default;
-            ManagedServiceIdentity identity = default;
-            foreach (var prop in element.EnumerateObject())
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            NetAppEntraIdConfigPatch entraIdConfig = default;
+            NetAppAccountEncryption encryption = default;
+            string nfsV4IdDomain = default;
+            MultiAdStatus? multiAdStatus = default;
+            NetAppLdapConfigurationPatch ldapConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
@@ -216,7 +263,69 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("activeDirectories"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
+                            }
+                            activeDirectories = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("entraIdConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            entraIdConfig = NetAppEntraIdConfigPatch.DeserializeNetAppEntraIdConfigPatch(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nfsV4IDDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                nfsV4IdDomain = null;
+                                continue;
+                            }
+                            nfsV4IdDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("multiAdStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            multiAdStatus = new MultiAdStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ldapConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ldapConfiguration = NetAppLdapConfigurationPatch.DeserializeNetAppLdapConfigurationPatch(property0.Value, options);
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,10 +339,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 additionalBinaryDataProperties,
                 location,
-                name,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties,
-                identity);
+                identity,
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                entraIdConfig,
+                encryption,
+                nfsV4IdDomain,
+                multiAdStatus,
+                ldapConfiguration,
+                serializedAdditionalRawData);
         }
     }
 }

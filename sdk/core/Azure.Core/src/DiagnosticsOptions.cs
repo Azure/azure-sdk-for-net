@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 
@@ -50,31 +49,31 @@ namespace Azure.Core
             {
                 IsTelemetryEnabled = !EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? true;
             }
-            IConfigurationSection loggedHeaderSection = section.GetSection("LoggedHeaderNames");
+            IConfigurationSection loggedHeaderSection = section.GetSection("AdditionalLoggedHeaderNames");
+            LoggedHeaderNames = GetDefaultLoggedHeaders();
             if (loggedHeaderSection.Exists())
             {
-                LoggedHeaderNames = loggedHeaderSection
-                    .GetChildren()
-                    .Where(c => c.Value is not null)
-                    .Select(c => c.Value!)
-                    .ToList();
+                HashSet<string> existing = new(LoggedHeaderNames, StringComparer.OrdinalIgnoreCase);
+                foreach (IConfigurationSection child in loggedHeaderSection.GetChildren())
+                {
+                    if (child.Value is not null && existing.Add(child.Value))
+                    {
+                        LoggedHeaderNames.Add(child.Value);
+                    }
+                }
             }
-            else
-            {
-                LoggedHeaderNames = GetDefaultLoggedHeaders();
-            }
-            IConfigurationSection loggedQueryParametersSection = section.GetSection("LoggedQueryParameters");
+            IConfigurationSection loggedQueryParametersSection = section.GetSection("AdditionalLoggedQueryParameters");
+            LoggedQueryParameters = new List<string> { "api-version" };
             if (loggedQueryParametersSection.Exists())
             {
-                LoggedQueryParameters = loggedQueryParametersSection
-                    .GetChildren()
-                    .Where(c => c.Value is not null)
-                    .Select(c => c.Value!)
-                    .ToList();
-            }
-            else
-            {
-                LoggedQueryParameters = new List<string> { "api-version" };
+                HashSet<string> existing = new(LoggedQueryParameters, StringComparer.OrdinalIgnoreCase);
+                foreach (IConfigurationSection child in loggedQueryParametersSection.GetChildren())
+                {
+                    if (child.Value is not null && existing.Add(child.Value))
+                    {
+                        LoggedQueryParameters.Add(child.Value);
+                    }
+                }
             }
             if (int.TryParse(section["LoggedContentSizeLimit"], out var loggedContentSizeLimit))
             {

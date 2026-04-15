@@ -64,7 +64,8 @@ public static class ReflectionExtensions
         if (parameters.Length != 1 || parameters[0].ParameterType != typeof(string)) { return false; }
 
         // Has implicit conversion from string
-        MethodInfo? conv = type.GetMethod("op_Implicit", [typeof(string)]);
+        MethodInfo? conv = type.GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .FirstOrDefault(m => m.Name == "op_Implicit" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType == typeof(string));
         if (conv is null) { return false; }
 
         // Has static readonly properties of its own type

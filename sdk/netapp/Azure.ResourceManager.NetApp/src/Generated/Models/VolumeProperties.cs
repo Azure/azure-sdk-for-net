@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in volume. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
         /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
-        /// <param name="ldapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
+        /// <param name="isLdapEnabled"> Specifies whether LDAP is enabled or not for a given NFS volume. </param>
         /// <param name="ldapServerType"> Specifies the type of LDAP server for a given NFS volume. </param>
-        /// <param name="coolAccess"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="language"> Language supported for volume. </param>
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(string fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, NetAppVolumeExportPolicyRule exportPolicy, IList<string> protocolTypes, string provisioningState, ResourceIdentifier snapshotId, bool? deleteBaseSnapshot, ResourceIdentifier backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, string networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? snapshotDirectoryVisible, bool? kerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? smbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? ldapEnabled, LdapServerType? ldapServerType, bool? coolAccess, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroup, string t2Network, string volumeSpecName, bool? encrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, LargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, VolumeLanguage? language, BreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, VolumePropertiesExportPolicy exportPolicy, IList<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, NetAppLdapServerType? ldapServerType, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IReadOnlyList<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IList<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, NetAppLargeVolumeType? largeVolumeType, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes, NetAppVolumeLanguage? language, NetAppBreakthroughMode? breakthroughMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             FileSystemId = fileSystemId;
             CreationToken = creationToken;
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.NetApp.Models
             ActualThroughputMibps = actualThroughputMibps;
             EncryptionKeySource = encryptionKeySource;
             KeyVaultPrivateEndpointResourceId = keyVaultPrivateEndpointResourceId;
-            LdapEnabled = ldapEnabled;
+            IsLdapEnabled = isLdapEnabled;
             LdapServerType = ldapServerType;
-            CoolAccess = coolAccess;
+            IsCoolAccessEnabled = isCoolAccessEnabled;
             CoolnessPeriod = coolnessPeriod;
             CoolAccessRetrievalPolicy = coolAccessRetrievalPolicy;
             CoolAccessTieringPolicy = coolAccessTieringPolicy;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp.Models
             InheritedSizeInBytes = inheritedSizeInBytes;
             Language = language;
             BreakthroughMode = breakthroughMode;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique FileSystem Identifier. </summary>
@@ -196,13 +196,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The service level of the file system. </summary>
         [WirePath("serviceLevel")]
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-
         /// <summary>
         /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
         /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
         /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
         /// </summary>
-        [WirePath("usageThreshold")]
         public long UsageThreshold { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
@@ -318,13 +316,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
-        [WirePath("ldapEnabled")]
-        public bool? LdapEnabled { get; set; }
-
+        public bool? IsLdapEnabled { get; set; }
         /// <summary> Specifies the type of LDAP server for a given NFS volume. </summary>
-        [WirePath("ldapServerType")]
-        public LdapServerType? LdapServerType { get; set; }
-
+        public NetAppLdapServerType? LdapServerType { get; set; }
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         [WirePath("coolAccess")]
         public bool? CoolAccess { get; set; }
@@ -421,15 +415,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
         [WirePath("isLargeVolume")]
         public bool? IsLargeVolume { get; set; }
-
         /// <summary>
         /// Specifies the type of the Large Volume. When set to 'LargeVolume', the large volume is created with standard configuration.
         /// If it is set to 'ExtraLargeVolume7Dot2PiB', the extra large volume is created with higher capacity limit 7.2PiB with cool access enabled,
         /// delivering higher capacity limit with lower costs.
         /// </summary>
-        [WirePath("largeVolumeType")]
-        public LargeVolumeType? LargeVolumeType { get; set; }
-
+        public NetAppLargeVolumeType? LargeVolumeType { get; set; }
         /// <summary> Id of the snapshot or backup that the volume is restored from. </summary>
         [WirePath("originatingResourceId")]
         public ResourceIdentifier OriginatingResourceId { get; }
@@ -437,27 +428,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Space shared by short term clone volume with parent volume in bytes. </summary>
         [WirePath("inheritedSizeInBytes")]
         public long? InheritedSizeInBytes { get; }
-
         /// <summary> Language supported for volume. </summary>
-        [WirePath("language")]
-        public VolumeLanguage? Language { get; set; }
-
+        public NetAppVolumeLanguage? Language { get; set; }
         /// <summary> Specifies whether the volume operates in Breakthrough Mode. </summary>
-        [WirePath("breakthroughMode")]
-        public BreakthroughMode? BreakthroughMode { get; set; }
-
-        /// <summary> Export policy rule. </summary>
-        [WirePath("exportPolicy.rules")]
-        public IList<ExportPolicyRule> ExportRules
-        {
-            get
-            {
-                if (ExportPolicy is null)
-                {
-                    ExportPolicy = new NetAppVolumeExportPolicyRule();
-                }
-                return ExportPolicy.Rules;
-            }
-        }
+        public NetAppBreakthroughMode? BreakthroughMode { get; set; }
     }
 }

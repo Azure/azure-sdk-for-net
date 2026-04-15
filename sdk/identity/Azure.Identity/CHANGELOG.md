@@ -1,16 +1,40 @@
 # Release History
 
-## 1.19.0-beta.1 (Unreleased)
+## 1.22.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added support in `ClientCertificateCredential` to specify a path in the form of `cert:/StoreLocation/StoreName/Thumbprint` to refer to a certificate in the platform certificate store - such as the Windows Certificate Store on Windows, and the KeyChain on MacOS - instead of a file on disk. For example to load a certificate from the "My" store in the "CurrentUser" location use the path `cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870`. 
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.21.0 (2026-04-10)
+
+### Other Changes
+
+- All `Azure.Identity` types have been moved to `Azure.Core` and are now available through `TypeForwardedTo` attributes. This is a non-breaking change — existing code continues to work transparently. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/b1dfb1ec786d4013cff05fd10436c069ecb37304/sdk/identity/Azure.Identity/MigrationGuide.md) for details.
+
+## 1.20.0 (2026-03-30)
+
+### Features Added
+
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for Azure.Identity credential configuration in `appsettings.json`.
+
+### Breaking Changes
+
+- `AddAzureClient`, `AddKeyedAzureClient`, and `WithAzureCredential` return type changed from `IHostApplicationBuilder` to `IClientBuilder` to align with the `IClientBuilder` composition change in System.ClientModel.
+
+## 1.19.0 (2026-03-11)
+
+### Features Added
+
+- Added support in `ClientCertificateCredential` to specify a path in the form of `cert:/StoreLocation/StoreName/Thumbprint` to refer to a certificate in the platform certificate store - such as the Windows Certificate Store on Windows, and the KeyChain on MacOS - instead of a file on disk. For example to load a certificate from the "My" store in the "CurrentUser" location use the path `cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870` (A community contribution, courtesy of _[fowl2](https://github.com/fowl2)_). 
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.83.1.
 
 ## 1.18.0 (2026-02-25)
 

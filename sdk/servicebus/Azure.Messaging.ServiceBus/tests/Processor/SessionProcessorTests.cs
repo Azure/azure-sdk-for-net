@@ -473,10 +473,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 p => p.InnerProcessor).Returns(mockProcessor.Object);
             mockProcessor.Setup(
                 p => p.IsProcessing).Returns(true);
+            // A fresh CTS token is distinguishable from CancellationToken.None without
+            // needing CancelAfter, which can cause flaky failures under CI load.
             var cts = new CancellationTokenSource();
-
-            // mutate the cancellation token to distinguish it from CancellationToken.None
-            cts.CancelAfter(500);
 
             await mockSessionProcessor.Object.CloseAsync(cts.Token);
             mockProcessor.Verify(p => p.StopProcessingAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));

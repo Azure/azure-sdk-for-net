@@ -67,8 +67,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,8 +129,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,8 +191,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,8 +244,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,8 +297,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,8 +329,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_List. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,8 +361,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,8 +422,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,8 +483,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,8 +548,12 @@ namespace Azure.ResourceManager.NetApp
         /// <description> BackupPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -37,12 +37,30 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="properties"> NetApp Account properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="activeDirectories"> Active Directories. </param>
+        /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
+        /// <param name="encryption"> Encryption settings. </param>
+        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
+        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
+        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
+        /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppEntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, NetAppLdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Identity = identity;
+            ProvisioningState = provisioningState;
+            ActiveDirectories = activeDirectories;
+            EntraIdConfig = entraIdConfig;
+            Encryption = encryption;
+            DisableShowmount = disableShowmount;
+            NfsV4IdDomain = nfsV4IdDomain;
+            MultiAdStatus = multiAdStatus;
+            LdapConfiguration = ldapConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> NetApp Account properties. </summary>
@@ -68,37 +86,9 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Active Directories. </summary>
-        [WirePath("properties.activeDirectories")]
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountProperties();
-                }
-                return Properties.ActiveDirectories;
-            }
-        }
-
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Entra ID configuration for the account. </summary>
-        [WirePath("properties.entraIdConfig")]
-        public EntraIdConfig EntraIdConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraIdConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountProperties();
-                }
-                Properties.EntraIdConfig = value;
-            }
-        }
-
+        public NetAppEntraIdConfig EntraIdConfig { get; set; }
         /// <summary> Encryption settings. </summary>
         [WirePath("properties.encryption")]
         public NetAppAccountEncryption Encryption
@@ -146,31 +136,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> MultiAD Status for the account. </summary>
-        [WirePath("properties.multiAdStatus")]
-        public MultiAdStatus? MultiAdStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MultiAdStatus;
-            }
-        }
-
+        public MultiAdStatus? MultiAdStatus { get; }
         /// <summary> LDAP Configuration for the account. </summary>
-        [WirePath("properties.ldapConfiguration")]
-        public LdapConfiguration LdapConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LdapConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AccountProperties();
-                }
-                Properties.LdapConfiguration = value;
-            }
-        }
+        public NetAppLdapConfiguration LdapConfiguration { get; set; }
     }
 }

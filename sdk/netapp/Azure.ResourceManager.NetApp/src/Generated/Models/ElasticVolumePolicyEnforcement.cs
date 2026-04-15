@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticVolumePolicyEnforcement : IEquatable<ElasticVolumePolicyEnforcement>
     {
         private readonly string _value;
-        /// <summary> Value indicating the policy is enforced on the volume. </summary>
-        private const string EnforcedValue = "Enforced";
-        /// <summary> Value indicating the policy is not enforced on the volume. </summary>
-        private const string NotEnforcedValue = "NotEnforced";
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumePolicyEnforcement"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticVolumePolicyEnforcement(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnforcedValue = "Enforced";
+        private const string NotEnforcedValue = "NotEnforced";
 
         /// <summary> Value indicating the policy is enforced on the volume. </summary>
         public static ElasticVolumePolicyEnforcement Enforced { get; } = new ElasticVolumePolicyEnforcement(EnforcedValue);
-
         /// <summary> Value indicating the policy is not enforced on the volume. </summary>
         public static ElasticVolumePolicyEnforcement NotEnforced { get; } = new ElasticVolumePolicyEnforcement(NotEnforcedValue);
-
         /// <summary> Determines if two <see cref="ElasticVolumePolicyEnforcement"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticVolumePolicyEnforcement left, ElasticVolumePolicyEnforcement right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ElasticVolumePolicyEnforcement"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticVolumePolicyEnforcement left, ElasticVolumePolicyEnforcement right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ElasticVolumePolicyEnforcement"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticVolumePolicyEnforcement"/>. </summary>
         public static implicit operator ElasticVolumePolicyEnforcement(string value) => new ElasticVolumePolicyEnforcement(value);
 
-        /// <summary> Converts a string to a <see cref="ElasticVolumePolicyEnforcement"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ElasticVolumePolicyEnforcement?(string value) => value == null ? null : new ElasticVolumePolicyEnforcement(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticVolumePolicyEnforcement other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ElasticVolumePolicyEnforcement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }
