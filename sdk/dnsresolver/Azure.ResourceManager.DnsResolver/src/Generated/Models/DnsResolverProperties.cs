@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="DnsResolverProperties"/>. </summary>
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
-        public DnsResolverProperties(string virtualNetworkId)
+        public DnsResolverProperties(ResourceIdentifier virtualNetworkId)
         {
             Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
 
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public Guid? ResourceGuid { get; }
 
         /// <summary> Resource ID. </summary>
-        public string VirtualNetworkId
+        public ResourceIdentifier VirtualNetworkId
         {
             get
             {

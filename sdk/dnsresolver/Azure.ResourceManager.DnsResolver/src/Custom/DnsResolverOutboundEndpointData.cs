@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subnetId"> The reference to the subnet. </param>
         public DnsResolverOutboundEndpointData(AzureLocation location, ResourceIdentifier subnetId) : base(location)
         {
-            Properties = new Models.OutboundEndpointProperties(subnetId?.ToString());
+            Properties = new Models.OutboundEndpointProperties(subnetId);
         }
 
         /// <inheritdoc />
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The reference to the subnet. </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Properties?.SubnetId != null ? new ResourceIdentifier(Properties.SubnetId) : null;
+            get => Properties?.SubnetId;
             set
             {
                 if (Properties is null) Properties = new Models.OutboundEndpointProperties();
-                Properties.SubnetId = value?.ToString();
+                Properties.SubnetId = value;
             }
         }
     }

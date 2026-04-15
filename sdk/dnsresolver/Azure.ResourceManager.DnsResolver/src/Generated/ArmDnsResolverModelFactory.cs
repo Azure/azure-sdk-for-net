@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
-        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, string virtualNetworkId = default, ETag? etag = default)
+        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, string subnetId = default, ETag? etag = default)
+        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier subnetId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
         /// <param name="virtualNetworkLinkId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
-        public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = default, string virtualNetworkLinkId = default)
+        public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = default, ResourceIdentifier virtualNetworkLinkId = default)
         {
             return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId is null ? default : new VirtualNetworkLinkSubResourceProperties(new SubResource(virtualNetworkLinkId, null), null), additionalBinaryDataProperties: null);
         }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, string virtualNetworkId = default, ETag? etag = default)
+        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             return new DnsForwardingRulesetVirtualNetworkLinkData(
                 id,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, string virtualNetworkId = default, ETag? etag = default)
+        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

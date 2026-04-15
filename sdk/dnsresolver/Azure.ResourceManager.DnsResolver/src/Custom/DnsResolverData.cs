@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkId"> The reference to the virtual network. </param>
         public DnsResolverData(AzureLocation location, ResourceIdentifier virtualNetworkId) : base(location)
         {
-            Properties = new Models.DnsResolverProperties(virtualNetworkId?.ToString());
+            Properties = new Models.DnsResolverProperties(virtualNetworkId);
         }
 
         /// <inheritdoc />
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> The reference to the virtual network. </summary>
         public ResourceIdentifier VirtualNetworkId
         {
-            get => Properties?.VirtualNetworkId != null ? new ResourceIdentifier(Properties.VirtualNetworkId) : null;
+            get => Properties?.VirtualNetworkId;
             set
             {
                 if (Properties is null) Properties = new Models.DnsResolverProperties();
-                Properties.VirtualNetworkId = value?.ToString();
+                Properties.VirtualNetworkId = value;
             }
         }
     }

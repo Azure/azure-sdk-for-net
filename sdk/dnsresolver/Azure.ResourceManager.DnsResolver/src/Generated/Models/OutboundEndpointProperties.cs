@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="OutboundEndpointProperties"/>. </summary>
         /// <param name="subnetId"> Resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public OutboundEndpointProperties(string subnetId)
+        public OutboundEndpointProperties(ResourceIdentifier subnetId)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public Guid? ResourceGuid { get; }
 
         /// <summary> Resource ID. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

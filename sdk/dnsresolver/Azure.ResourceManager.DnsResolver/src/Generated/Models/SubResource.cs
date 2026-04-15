@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public SubResource(string id)
+        public SubResource(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         internal SubResource VirtualNetworkLink { get; }
 
         /// <summary> Resource ID. </summary>
-        public string VirtualNetworkLinkId
+        public ResourceIdentifier VirtualNetworkLinkId
         {
             get
             {
