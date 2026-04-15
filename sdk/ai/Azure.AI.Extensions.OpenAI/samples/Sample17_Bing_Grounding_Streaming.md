@@ -9,13 +9,13 @@ To enable your Agent to use Bing search API, we need to use `BingGroundingAgentT
 
 1. First, we need to read the environment variables, which will be used in the next steps.
 ```C# Snippet:Sample_CreateAgentClient_BingGroundingStreaming
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("BING_CONNECTION_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `PromptAgentDefinition` object.
+2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `DeclarativeAgentDefinition` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGroundingStreaming_Sync
@@ -24,12 +24,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -41,12 +41,12 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
     searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
     )
 );
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful agent.",
     Tools = { bingGroundingAgentTool }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -77,7 +77,7 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 Synchronous sample:
 ```C# Snippet:Sample_StreamResponse_BingGroundingStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -112,7 +112,7 @@ Console.WriteLine($"{text}{annotation}");
 
 Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_BingGroundingStreaming_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -150,10 +150,10 @@ Console.WriteLine($"{text}{annotation}");
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BingGroundingStreaming_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BingGroundingStreaming_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

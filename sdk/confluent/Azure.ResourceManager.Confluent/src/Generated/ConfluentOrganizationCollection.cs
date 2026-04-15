@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConfluentOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConfluentOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ConfluentOrganizationResource(Client, data));
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>

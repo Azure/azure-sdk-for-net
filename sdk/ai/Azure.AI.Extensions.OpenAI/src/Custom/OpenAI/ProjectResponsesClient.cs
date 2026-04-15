@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI.Telemetry;
 using OpenAI;
 using OpenAI.Responses;
-using Azure.AI.Extensions.OpenAI.Telemetry;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -303,7 +303,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
-            Model=model,
+            Model = model,
         };
         ApplyClientDefaults(options);
         return CreateResponseStreaming(options, cancellationToken);

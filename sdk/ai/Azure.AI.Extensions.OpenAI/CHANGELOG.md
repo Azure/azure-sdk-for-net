@@ -1,5 +1,24 @@
 # Release History
 
+## 2.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0 (2026-03-31)
+
+### Breaking Changes
+- The `StructuredInputs` property was removed from `CreateResponseOptions`.
+- `Conversations` property was replaced by `GetProjectConversationsClient()` method.
+- `Responses` property was replaced by `GetProjectResponsesClient()` method.
+- `Files` property was replaced by `GetProjectFilesClient()` method.
+- `VectorStores` property was replaced by `GetProjectVectorStoresClient()` method.
+
 ## 2.0.0-beta.1 (2026-03-12)
 
 ### Features Added

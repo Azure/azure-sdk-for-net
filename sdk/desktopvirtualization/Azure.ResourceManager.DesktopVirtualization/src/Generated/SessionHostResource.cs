@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch = default, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostResource>> UpdateAsync(SessionHostPatch patch, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="force"> Force flag to update assign, unassign or reassign personal desktop. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SessionHostResource> Update(SessionHostPatch patch = default, bool? force = default, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostResource> Update(SessionHostPatch patch, bool? force = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.Update");
             scope.Start();
@@ -413,13 +413,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
@@ -431,8 +431,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                ScopedRegistrationTokenContent.ToRequestContent(content),
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>
@@ -456,13 +457,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
@@ -474,8 +475,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                ScopedRegistrationTokenProperties.ToRequestContent(body),
-                context);
+                ScopedRegistrationTokenContent.ToRequestContent(content),
+                context,
+                "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
 
         /// <summary>

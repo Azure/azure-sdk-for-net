@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs
+    - name: Azure.Provisioning.EventHubs
+      safeName: AzureProvisioningEventHubs

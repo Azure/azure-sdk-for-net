@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsAppliedScopeType : IEquatable<BillingBenefitsAppliedScopeType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BillingBenefitsAppliedScopeType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SingleValue = "Single";
         private const string SharedValue = "Shared";
         private const string ManagementGroupValue = "ManagementGroup";
 
-        /// <summary> Single. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BillingBenefitsAppliedScopeType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Single. </summary>
         public static BillingBenefitsAppliedScopeType Single { get; } = new BillingBenefitsAppliedScopeType(SingleValue);
-        /// <summary> Shared. </summary>
+
+        /// <summary> Gets the Shared. </summary>
         public static BillingBenefitsAppliedScopeType Shared { get; } = new BillingBenefitsAppliedScopeType(SharedValue);
-        /// <summary> ManagementGroup. </summary>
+
+        /// <summary> Gets the ManagementGroup. </summary>
         public static BillingBenefitsAppliedScopeType ManagementGroup { get; } = new BillingBenefitsAppliedScopeType(ManagementGroupValue);
+
         /// <summary> Determines if two <see cref="BillingBenefitsAppliedScopeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsAppliedScopeType left, BillingBenefitsAppliedScopeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingBenefitsAppliedScopeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsAppliedScopeType left, BillingBenefitsAppliedScopeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingBenefitsAppliedScopeType(string value) => new BillingBenefitsAppliedScopeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingBenefitsAppliedScopeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingBenefitsAppliedScopeType?(string value) => value == null ? null : new BillingBenefitsAppliedScopeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsAppliedScopeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingBenefitsAppliedScopeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

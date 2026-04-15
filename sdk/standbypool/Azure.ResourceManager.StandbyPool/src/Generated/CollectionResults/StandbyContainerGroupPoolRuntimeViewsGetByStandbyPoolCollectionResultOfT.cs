@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.StandbyPool
         private readonly string _resourceGroupName;
         private readonly string _standbyContainerGroupPoolName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StandbyContainerGroupPoolRuntimeViews client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="standbyContainerGroupPoolName"> Name of the standby container group pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(StandbyContainerGroupPoolRuntimeViews client, Guid subscriptionId, string resourceGroupName, string standbyContainerGroupPoolName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(StandbyContainerGroupPoolRuntimeViews client, Guid subscriptionId, string resourceGroupName, string standbyContainerGroupPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _standbyContainerGroupPoolName = standbyContainerGroupPoolName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.StandbyPool
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByStandbyPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _standbyContainerGroupPoolName, _context) : _client.CreateGetByStandbyPoolRequest(_subscriptionId, _resourceGroupName, _standbyContainerGroupPoolName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

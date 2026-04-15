@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterToClient
@@ -18,7 +19,12 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameterTo
 
         public MoveMethodParameterToClient(string storageAccount, MoveMethodParameterToClientOptions options) : this(new Uri("http://localhost:3000"), storageAccount, options) => throw null;
 
-        public MoveMethodParameterToClient(Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) => throw null;
+        internal MoveMethodParameterToClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) => throw null;
+
+        public MoveMethodParameterToClient(Uri endpoint, string storageAccount, MoveMethodParameterToClientOptions options) : this(null, endpoint, storageAccount, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MoveMethodParameterToClient(MoveMethodParameterToClientSettings settings) : this(null, settings?.Endpoint, settings?.StorageAccount, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

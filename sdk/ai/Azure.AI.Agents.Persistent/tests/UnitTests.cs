@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Net.ServerSentEvents;
 using System.Text;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 new MCPApprovalPerTool(
                     always: new MCPToolList(["foo", "bar"]),
                     never: new MCPToolList(["baz"]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 )
             );
             Assert.False(approval.AlwaysRequireApproval);
@@ -69,7 +70,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             var mcp = new MCPApproval(perToolApproval: new MCPApprovalPerTool(
                     always: isAlwaysEmpty ? new MCPToolList([]) : new MCPToolList(["foo", "bar"]),
                     never: isAlwaysEmpty ? new MCPToolList(["foo", "bar"]) : new MCPToolList([]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 )
             );
             if (isAlwaysEmpty)
@@ -123,7 +124,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 RequireApproval = new MCPApproval(new MCPApprovalPerTool(
                     always: new MCPToolList(["foo", "bar"]),
                     never: new MCPToolList(["baz"]),
-                    serializedAdditionalRawData: null
+                    additionalBinaryDataProperties: null
                 ))
             };
             MCPApproval returned = mcpRes.RequireApproval;
@@ -144,6 +145,45 @@ namespace Azure.AI.Agents.Persistent.Tests
             bool shouldBeEqual = string.Equals(name1, name2);
             Assert.AreEqual(shouldBeEqual, func1.Equals(func2));
             Assert.AreEqual(shouldBeEqual, func1.GetHashCode() == func2.GetHashCode());
+        }
+
+        [Test]
+        [TestCase("Mock error", "MockEvent")]
+        [TestCase("Mock error", "")]
+        [TestCase("Mock error", null)]
+        [TestCase("long", "MockEvent")]
+        public void TestSseError(string errorText, string eventType)
+        {
+            string expectedError = errorText;
+            string expectedEvent = string.IsNullOrEmpty(eventType) ? "<Unknown>" : eventType;
+            if (eventType == null)
+            {
+                expectedEvent = SseParser.EventTypeDefault;
+            }
+            if (string.Equals(errorText, "long"))
+            {
+                StringBuilder sb = new();
+                for (int i = 0; i < 500; i++)
+                {
+                    sb.Append("Really long string ");
+                }
+                errorText = sb.ToString();
+                sb.Remove(500, sb.Length - 500);
+                sb.Append("...");
+                expectedError = sb.ToString();
+            }
+            SseItem<byte[]> badItem = new(Encoding.UTF8.GetBytes(errorText), eventType);
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => StreamingUpdate.FromEvent(badItem));
+            Assert.That(exception.Message.StartsWith($"The stream returned invalid JSON: \"{expectedError}\" for event of type {expectedEvent}. Original error:"), Is.True, exception.Message);
+        }
+
+        [Test]
+        public void TestSseKeepalive()
+        {
+            SseItem<byte[]> keepaliveItem = new(new byte[] { }, "keepalive");
+            List<StreamingUpdate> updates = [.. StreamingUpdate.FromEvent(keepaliveItem)];
+            Assert.That(updates.Count, Is.EqualTo(1));
+            Assert.That(updates[0], Is.InstanceOf<KeepAliveUpdate>());
         }
 
         #region helpers

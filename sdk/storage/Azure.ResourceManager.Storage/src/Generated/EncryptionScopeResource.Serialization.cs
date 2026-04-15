@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Storage
 {
+    /// <summary></summary>
     public partial class EncryptionScopeResource : IJsonModel<EncryptionScopeData>
     {
-        private static EncryptionScopeData s_dataDeserializationInstance;
-        private static EncryptionScopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EncryptionScopeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EncryptionScopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EncryptionScopeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EncryptionScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionScopeData>)Data).Write(writer, options);
 
-        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionScopeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EncryptionScopeData IJsonModel<EncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EncryptionScopeData>(Data, options, AzureResourceManagerStorageContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EncryptionScopeData IPersistableModel<EncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionScopeData>(data, options, AzureResourceManagerStorageContext.Default);
 
-        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionScopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

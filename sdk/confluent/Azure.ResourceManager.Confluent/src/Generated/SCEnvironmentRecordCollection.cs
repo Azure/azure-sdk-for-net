@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != ConfluentOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentOrganizationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentOrganizationResource.ResourceType), nameof(id));
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SCEnvironmentRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SCEnvironmentRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SCEnvironmentRecordResource> CreateOrUpdate(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SCEnvironmentRecordResource> CreateOrUpdate(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
@@ -298,7 +298,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
+                context,
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
+                context,
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -22,31 +24,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupProtectionContainerCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _backupProtectionContainerProtectionContainersClientDiagnostics;
-        private readonly ProtectionContainersRestOperations _backupProtectionContainerProtectionContainersRestClient;
+        private readonly ClientDiagnostics _protectionContainersClientDiagnostics;
+        private readonly ProtectionContainers _protectionContainersRestClient;
+        private readonly ClientDiagnostics _backupWorkloadItemsClientDiagnostics;
+        private readonly BackupWorkloadItems _backupWorkloadItemsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BackupProtectionContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BackupProtectionContainerCollection for mocking. </summary>
         protected BackupProtectionContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BackupProtectionContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BackupProtectionContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupProtectionContainerProtectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BackupProtectionContainerResource.ResourceType, out string backupProtectionContainerProtectionContainersApiVersion);
-            _backupProtectionContainerProtectionContainersRestClient = new ProtectionContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionContainerProtectionContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BackupProtectionContainerResource.ResourceType, out string backupProtectionContainerApiVersion);
+            _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
+            _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
@@ -55,20 +63,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// the operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Register</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Register. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,8 +82,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BackupProtectionContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -87,14 +91,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _backupProtectionContainerProtectionContainersRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
+                    _protectionContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -110,20 +127,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// the operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Register</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Register. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,8 +146,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BackupProtectionContainerResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string containerName, BackupProtectionContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -142,14 +155,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _backupProtectionContainerProtectionContainersRestClient.Register(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data, cancellationToken);
-                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(new BackupProtectionContainerOperationSource(Client), _backupProtectionContainerProtectionContainersClientDiagnostics, Pipeline, _backupProtectionContainerProtectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateRegisterRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, BackupProtectionContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesBackupArmOperation<BackupProtectionContainerResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionContainerResource>(
+                    new BackupProtectionContainerOperationSource(Client),
+                    _protectionContainersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -163,20 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Gets details of the specific container registered to your Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,21 +206,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BackupProtectionContainerResource>> GetAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _backupProtectionContainerProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,20 +242,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Gets details of the specific container registered to your Recovery Services Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,21 +259,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BackupProtectionContainerResource> Get(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _backupProtectionContainerProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BackupProtectionContainerData> response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,20 +295,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,19 +312,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _backupProtectionContainerProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BackupProtectionContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupProtectionContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,20 +356,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,19 +373,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _backupProtectionContainerProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BackupProtectionContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupProtectionContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,20 +417,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,21 +434,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BackupProtectionContainerResource>> GetIfExistsAsync(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _backupProtectionContainerProtectionContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BackupProtectionContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupProtectionContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,20 +482,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProtectionContainers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,21 +499,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BackupProtectionContainerResource> GetIfExists(string vaultName, string fabricName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _backupProtectionContainerProtectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _protectionContainersClientDiagnostics.CreateScope("BackupProtectionContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _backupProtectionContainerProtectionContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _protectionContainersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BackupProtectionContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BackupProtectionContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BackupProtectionContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BackupProtectionContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BackupProtectionContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

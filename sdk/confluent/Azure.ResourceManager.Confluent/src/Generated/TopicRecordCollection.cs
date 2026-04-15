@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != SCClusterRecordResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCClusterRecordResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCClusterRecordResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TopicRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicName, TopicRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TopicRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicName, TopicRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TopicRecordResource> CreateOrUpdate(WaitUntil waitUntil, string topicName, TopicRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TopicRecordResource> CreateOrUpdate(WaitUntil waitUntil, string topicName, TopicRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
@@ -296,7 +296,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new TopicRecordResource(Client, data));
+                context,
+                "TopicRecordCollection.GetAll"), data => new TopicRecordResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +336,8 @@ namespace Azure.ResourceManager.Confluent
                 Id.Name,
                 pageSize,
                 pageToken,
-                context), data => new TopicRecordResource(Client, data));
+                context,
+                "TopicRecordCollection.GetAll"), data => new TopicRecordResource(Client, data));
         }
 
         /// <summary>

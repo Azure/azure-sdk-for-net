@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,7 +22,12 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
 
         public IndividuallyNestedWithQueryClient(string blobName, IndividuallyNestedWithQueryClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        public IndividuallyNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyNestedWithQueryClientOptions options) => throw null;
+        internal IndividuallyNestedWithQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, IndividuallyNestedWithQueryClientOptions options) => throw null;
+
+        public IndividuallyNestedWithQueryClient(Uri endpoint, string blobName, IndividuallyNestedWithQueryClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyNestedWithQueryClient(IndividuallyNestedWithQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

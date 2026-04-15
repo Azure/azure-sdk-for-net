@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedHsmsClientDiagnostics => _managedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics VaultsOperationGroupClientDiagnostics => _vaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VaultsOperationGroup VaultsOperationGroupRestClient => _vaultsOperationGroupRestClient ??= new VaultsOperationGroup(VaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private VaultsOperationGroup VaultsOperationGroupRestClient => _vaultsOperationGroupRestClient ??= new VaultsOperationGroup(VaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedHsmsOperationGroupClientDiagnostics => _managedHsmsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedHsmsOperationGroup ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroup(ManagedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+        private ManagedHsmsOperationGroup ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroup(ManagedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
 
         /// <summary> Gets a collection of DeletedKeyVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedKeyVaults and their operations over a DeletedKeyVaultResource. </returns>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionAsyncCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new KeyVaultResource(Client, data));
+            return new AsyncPageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionAsyncCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new KeyVaultResource(Client, data));
+            return new PageableWrapper<KeyVaultData, KeyVaultResource>(new VaultsGetBySubscriptionCollectionResultOfT(VaultsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetKeyVaults"), data => new KeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionAsyncCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new ManagedHsmResource(Client, data));
+            return new AsyncPageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionAsyncCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context), data => new ManagedHsmResource(Client, data));
+            return new PageableWrapper<ManagedHsmData, ManagedHsmResource>(new ManagedHsmsGetBySubscriptionCollectionResultOfT(ManagedHsmsRestClient, Guid.Parse(Id.SubscriptionId), top, context, "MockableKeyVaultSubscriptionResource.GetManagedHsms"), data => new ManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsAsyncCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedKeyVaultResource(Client, data));
+            return new AsyncPageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsAsyncCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedKeyVaultResource(Client, data));
+            return new PageableWrapper<DeletedKeyVaultData, DeletedKeyVaultResource>(new VaultsOperationGroupGetDeletedKeyVaultsCollectionResultOfT(VaultsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults"), data => new DeletedKeyVaultResource(Client, data));
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsAsyncCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedManagedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsAsyncCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedManagedHsmResource(Client, data));
+            return new PageableWrapper<DeletedManagedHsmData, DeletedManagedHsmResource>(new ManagedHsmsOperationGroupGetDeletedManagedHsmsCollectionResultOfT(ManagedHsmsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms"), data => new DeletedManagedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

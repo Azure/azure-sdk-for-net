@@ -1,17 +1,33 @@
 # Release History
 
-## 1.52.0-beta.1 (Unreleased)
+## 1.54.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.53.0 (2026-04-09)
+
+### Other Changes
+
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
+
+## 1.52.0 (2026-03-23)
 
 ### Features Added
 
 - Added `IndonesiaCentral`, `NewZealandNorth`, and `MalaysiaWest` locations to `AzureLocation` struct.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `AzureClients` configuration in `appsettings.json`, including `Retry` and `Diagnostics` options.
 
 ### Bugs Fixed
 
 - Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
 - Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
-
-### Other Changes
+- Fixed `HttpClientTransport` to correctly set the `Host` header on outgoing requests when explicitly specified, rather than falling through to `TryAddWithoutValidation`.
 
 ### Breaking Changes
 

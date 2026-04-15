@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Elastic
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ElasticMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, ElasticMonitorData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, ElasticMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ElasticMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, ElasticMonitorData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, ElasticMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticMonitorResource(Client, data));
+            return new AsyncPageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupAsyncCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ElasticMonitorResource(Client, data));
+            return new PageableWrapper<ElasticMonitorData, ElasticMonitorResource>(new ElasticMonitorResourcesGetByResourceGroupCollectionResultOfT(_elasticMonitorResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ElasticMonitorCollection.GetAll"), data => new ElasticMonitorResource(Client, data));
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 omitted_paths:
   - archive/*
   - common/Perf/*
-  - common/SmokeTests/*
   - common/Stress/*
   - doc/ApiDocGeneration/*
   - Documentation/*
@@ -146,9 +145,11 @@ known_content_issues:
   - ['sdk/provisioning/Azure.Provisioning.Kubernetes/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/provisioning/Azure.Provisioning.Deployment/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
 
-  - ['sdk/agentserver/Azure.AI.AgentServer.AgentFramework/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
-  - ['sdk/agentserver/Azure.AI.AgentServer.Contracts/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  # Server-side hosting libraries: titles use 'library for .NET' (not 'client library'),
+  # and have no 'Authenticate the Client' section since there is no client to authenticate.
   - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Responses/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
+  - ['sdk/agentserver/Azure.AI.AgentServer.Invocations/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
   - ['eng/centralpackagemanagement/README.md','Not a package - internal tooling']

@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.Confluent
     /// <summary> Details of connector record. </summary>
     public partial class ConfluentConnectorData : ResourceData, IJsonModel<ConfluentConnectorData>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfluentConnectorData"/> for deserialization. </summary>
-        internal ConfluentConnectorData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -72,9 +67,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(confluentConnectorData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(confluentConnectorData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfluentConnectorData"/> from. </param>

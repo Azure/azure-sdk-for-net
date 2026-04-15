@@ -12,5 +12,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary> Client options for <see cref="ConfigurationClient"/>. </summary>
     public partial class ConfigurationClientOptions : ClientOptions
     {
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
     }
 }

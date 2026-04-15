@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.Naming.EnumConflict
 {
     public partial class EnumConflictClientOptions : ClientOptions
     {
+        public EnumConflictClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal EnumConflictClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

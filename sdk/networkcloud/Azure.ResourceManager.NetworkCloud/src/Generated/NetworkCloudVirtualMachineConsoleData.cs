@@ -7,130 +7,153 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudVirtualMachineConsole data model.
-    /// Console represents the console of an on-premises Network Cloud virtual machine.
-    /// </summary>
+    /// <summary> Console represents the console of an on-premises Network Cloud virtual machine. </summary>
     public partial class NetworkCloudVirtualMachineConsoleData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster this virtual machine is created on. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
-        /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="sshPublicKey"/> is null. </exception>
-        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ExtendedLocation extendedLocation, ConsoleEnabled enabled, NetworkCloudSshPublicKey sshPublicKey) : base(location)
+        /// <param name="keyData"> The SSH public key data. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled enabled, string keyData, ExtendedLocation extendedLocation) : base(location)
         {
+            Argument.AssertNotNull(keyData, nameof(keyData));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(sshPublicKey, nameof(sshPublicKey));
 
+            Properties = new ConsoleProperties(enabled, keyData);
             ExtendedLocation = extendedLocation;
-            Enabled = enabled;
-            SshPublicKey = sshPublicKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster this virtual machine is created on. </param>
-        /// <param name="detailedStatus"> The more detailed status of the console. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
-        /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
-        /// <param name="privateLinkServiceId"> The resource ID of the private link service that is used to provide virtual machine console access. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual machine console. </param>
-        /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
-        /// <param name="virtualMachineAccessId"> The unique identifier for the virtual machine that is used to access the console. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachineConsoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ConsoleDetailedStatus? detailedStatus, string detailedStatusMessage, ConsoleEnabled enabled, DateTimeOffset? expireOn, ResourceIdentifier privateLinkServiceId, ConsoleProvisioningState? provisioningState, NetworkCloudSshPublicKey sshPublicKey, Guid? virtualMachineAccessId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudVirtualMachineConsoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConsoleProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            Enabled = enabled;
-            ExpireOn = expireOn;
-            PrivateLinkServiceId = privateLinkServiceId;
-            ProvisioningState = provisioningState;
-            SshPublicKey = sshPublicKey;
-            VirtualMachineAccessId = virtualMachineAccessId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsoleData"/> for deserialization. </summary>
-        internal NetworkCloudVirtualMachineConsoleData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal ConsoleProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster manager associated with the cluster this virtual machine is created on. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The more detailed status of the console. </summary>
-        public ConsoleDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
+
         /// <summary> The indicator of whether the console access is enabled. </summary>
-        public ConsoleEnabled Enabled { get; set; }
-        /// <summary> The date and time after which the key will be disallowed access. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> The resource ID of the private link service that is used to provide virtual machine console access. </summary>
-        public ResourceIdentifier PrivateLinkServiceId { get; }
-        /// <summary> The provisioning state of the virtual machine console. </summary>
-        public ConsoleProvisioningState? ProvisioningState { get; }
-        /// <summary> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </summary>
-        internal NetworkCloudSshPublicKey SshPublicKey { get; set; }
-        /// <summary> The SSH public key data. </summary>
-        public string KeyData
+        public ConsoleEnabled Enabled
         {
-            get => SshPublicKey is null ? default : SshPublicKey.KeyData;
-            set => SshPublicKey = new NetworkCloudSshPublicKey(value);
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsoleProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
+        /// <summary> The date and time after which the key will be disallowed access. </summary>
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsoleProperties();
+                }
+                Properties.ExpireOn = value.Value;
+            }
+        }
+
+        /// <summary> The more detailed status of the console. </summary>
+        public ConsoleDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The resource ID of the private link service that is used to provide virtual machine console access. </summary>
+        public ResourceIdentifier PrivateLinkServiceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceId;
+            }
         }
 
         /// <summary> The unique identifier for the virtual machine that is used to access the console. </summary>
-        public Guid? VirtualMachineAccessId { get; }
+        public Guid? VirtualMachineAccessId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineAccessId;
+            }
+        }
+
+        /// <summary> The provisioning state of the virtual machine console. </summary>
+        public ConsoleProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The SSH public key data. </summary>
+        public string KeyData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConsoleProperties();
+                }
+                Properties.KeyData = value;
+            }
+        }
     }
 }

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Confluent
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="patch"> Updated Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfluentOrganizationResource>> UpdateAsync(ConfluentOrganizationPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentOrganizationResource>> UpdateAsync(ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.Update");
             scope.Start();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Confluent
         /// </summary>
         /// <param name="patch"> Updated Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfluentOrganizationResource> Update(ConfluentOrganizationPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentOrganizationResource> Update(ConfluentOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.Update");
             scope.Start();

@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereImageResource(Client, data));
+                context,
+                "SphereImageCollection.GetAll"), data => new SphereImageResource(Client, data));
         }
 
         /// <summary> List Image resources by Catalog. </summary>
@@ -62,7 +63,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereImageResource(Client, data));
+                context,
+                "SphereImageCollection.GetAll"), data => new SphereImageResource(Client, data));
         }
     }
 }

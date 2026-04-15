@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Scale units will contains list of deployment data. </summary>
     public partial class DeploymentSettingScaleUnits
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/>. </summary>
         /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
@@ -58,22 +30,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/>. </summary>
         /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
         /// <param name="sbePartnerInfo"> Solution builder extension (SBE) partner properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingScaleUnits(HciClusterDeploymentInfo deploymentData, SbePartnerInfo sbePartnerInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentSettingScaleUnits(HciClusterDeploymentInfo deploymentData, SbePartnerInfo sbePartnerInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentData = deploymentData;
             SbePartnerInfo = sbePartnerInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/> for deserialization. </summary>
-        internal DeploymentSettingScaleUnits()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deployment Data to deploy AzureStackHCI Cluster. </summary>
         [WirePath("deploymentData")]
         public HciClusterDeploymentInfo DeploymentData { get; set; }
+
         /// <summary> Solution builder extension (SBE) partner properties. </summary>
         [WirePath("sbePartnerInfo")]
         public SbePartnerInfo SbePartnerInfo { get; set; }

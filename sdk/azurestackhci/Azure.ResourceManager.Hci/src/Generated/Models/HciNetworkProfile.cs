@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The network profile of a device. </summary>
     public partial class HciNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        public HciNetworkProfile()
         {
             NicDetails = new ChangeTrackingList<HciNicDetail>();
             SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
@@ -56,23 +28,31 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicDetails"> List of NIC Details of device. </param>
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sdnProperties"> oftware Defined Networking Properties of the cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, SdnProperties sdnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicDetails = nicDetails;
             SwitchDetails = switchDetails;
             HostNetwork = hostNetwork;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SdnProperties = sdnProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of NIC Details of device. </summary>
         [WirePath("nicDetails")]
         public IReadOnlyList<HciNicDetail> NicDetails { get; }
+
         /// <summary> List of switch details for edge device. </summary>
         [WirePath("switchDetails")]
         public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
+
         /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("hostNetwork")]
         public HciEdgeDeviceHostNetwork HostNetwork { get; }
+
+        /// <summary> oftware Defined Networking Properties of the cluster. </summary>
+        [WirePath("sdnProperties")]
+        public SdnProperties SdnProperties { get; }
     }
 }
