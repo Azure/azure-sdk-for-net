@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="kdcIP"> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
         /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
         /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
-        /// <param name="aesEncryption"> If enabled, AES encryption will be enabled for SMB communication. </param>
-        /// <param name="ldapSigning"> Specifies whether or not the LDAP traffic needs to be signed. </param>
+        /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
+        /// <param name="isLdapSigningEnabled"> Specifies whether or not the LDAP traffic needs to be signed. </param>
         /// <param name="securityOperators"> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
-        /// <param name="ldapOverTLS"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
         /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </param>
         /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
         /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
         /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? aesEncryption, bool? ldapSigning, IList<string> securityOperators, bool? ldapOverTLS, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? isAesEncryptionEnabled, bool? isLdapSigningEnabled, IList<string> securityOperators, bool? isLdapOverTlsEnabled, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.NetApp.Models
             KdcIP = kdcIP;
             AdName = adName;
             ServerRootCACertificate = serverRootCACertificate;
-            AesEncryption = aesEncryption;
-            LdapSigning = ldapSigning;
+            IsAesEncryptionEnabled = isAesEncryptionEnabled;
+            IsLdapSigningEnabled = isLdapSigningEnabled;
             SecurityOperators = securityOperators;
-            LdapOverTLS = ldapOverTLS;
+            IsLdapOverTlsEnabled = isLdapOverTlsEnabled;
             AllowLocalNfsUsersWithLdap = allowLocalNfsUsersWithLdap;
             EncryptDCConnections = encryptDCConnections;
             LdapSearchScope = ldapSearchScope;
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.NetApp.Models
         public string ServerRootCACertificate { get; set; }
 
         /// <summary> If enabled, AES encryption will be enabled for SMB communication. </summary>
-        public bool? AesEncryption { get; set; }
+        public bool? IsAesEncryptionEnabled { get; set; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be signed. </summary>
-        public bool? LdapSigning { get; set; }
+        public bool? IsLdapSigningEnabled { get; set; }
 
         /// <summary> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </summary>
         public IList<string> SecurityOperators { get; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
-        public bool? LdapOverTLS { get; set; }
+        public bool? IsLdapOverTlsEnabled { get; set; }
 
         /// <summary> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </summary>
         public bool? AllowLocalNfsUsersWithLdap { get; set; }

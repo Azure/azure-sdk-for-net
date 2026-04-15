@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="ransomwareProtection"> Advanced Ransomware Protection updatable settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumePatchDataProtection(VolumeBackupProperties backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Backup = backup;
             Snapshot = snapshot;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Properties. </summary>
-        public VolumeBackupProperties Backup { get; set; }
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
 
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }

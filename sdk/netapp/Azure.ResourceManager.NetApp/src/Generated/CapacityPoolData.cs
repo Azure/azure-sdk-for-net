@@ -139,23 +139,6 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CoolAccess;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PoolProperties();
-                }
-                Properties.CoolAccess = value.Value;
-            }
-        }
-
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
         public CapacityPoolEncryptionType? EncryptionType
         {

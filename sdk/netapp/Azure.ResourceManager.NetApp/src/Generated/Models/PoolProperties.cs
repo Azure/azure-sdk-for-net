@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
         /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
         /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="coolAccess"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolProperties(string poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? coolAccess, CapacityPoolEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolProperties(string poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             Size = size;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
             UtilizedThroughputMibps = utilizedThroughputMibps;
             CustomThroughputMibps = customThroughputMibps;
             QosType = qosType;
-            CoolAccess = coolAccess;
+            IsCoolAccessEnabled = isCoolAccessEnabled;
             EncryptionType = encryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public CapacityPoolQosType? QosType { get; set; }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess { get; set; }
+        public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
         public CapacityPoolEncryptionType? EncryptionType { get; set; }

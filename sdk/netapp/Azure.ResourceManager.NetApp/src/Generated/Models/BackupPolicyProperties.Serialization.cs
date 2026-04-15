@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("volumesAssigned"u8);
                 writer.WriteNumberValue(VolumesAssigned.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(VolumeBackups))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
             int? weeklyBackupsToKeep = default;
             int? monthlyBackupsToKeep = default;
             int? volumesAssigned = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("volumeBackups"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 weeklyBackupsToKeep,
                 monthlyBackupsToKeep,
                 volumesAssigned,
-                enabled,
+                isEnabled,
                 volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
                 additionalBinaryDataProperties);
         }

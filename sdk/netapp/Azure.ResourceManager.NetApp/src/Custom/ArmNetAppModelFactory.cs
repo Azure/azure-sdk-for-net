@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 utilizedThroughputMibps: utilizedThroughputMibps,
                 customThroughputMibps: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
                 qosType: qosType,
-                coolAccess: isCoolAccessEnabled,
+                isCoolAccessEnabled: isCoolAccessEnabled,
                 encryptionType: encryptionType);
         }
 

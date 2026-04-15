@@ -89,35 +89,35 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("unixReadWrite"u8);
                 writer.WriteBooleanValue(UnixReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5ReadOnly))
+            if (Optional.IsDefined(IsKerberos5ReadOnly))
             {
                 writer.WritePropertyName("kerberos5ReadOnly"u8);
-                writer.WriteBooleanValue(Kerberos5ReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5ReadWrite))
+            if (Optional.IsDefined(IsKerberos5ReadWrite))
             {
                 writer.WritePropertyName("kerberos5ReadWrite"u8);
-                writer.WriteBooleanValue(Kerberos5ReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5IReadOnly))
+            if (Optional.IsDefined(IsKerberos5iReadOnly))
             {
                 writer.WritePropertyName("kerberos5iReadOnly"u8);
-                writer.WriteBooleanValue(Kerberos5IReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5IReadWrite))
+            if (Optional.IsDefined(IsKerberos5iReadWrite))
             {
                 writer.WritePropertyName("kerberos5iReadWrite"u8);
-                writer.WriteBooleanValue(Kerberos5IReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
             }
-            if (Optional.IsDefined(Kerberos5PReadOnly))
+            if (Optional.IsDefined(IsKerberos5pReadOnly))
             {
                 writer.WritePropertyName("kerberos5pReadOnly"u8);
-                writer.WriteBooleanValue(Kerberos5PReadOnly.Value);
+                writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
             }
-            if (Optional.IsDefined(Kerberos5PReadWrite))
+            if (Optional.IsDefined(IsKerberos5pReadWrite))
             {
                 writer.WritePropertyName("kerberos5pReadWrite"u8);
-                writer.WriteBooleanValue(Kerberos5PReadWrite.Value);
+                writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
             }
             if (Optional.IsDefined(Cifs))
             {
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.NetApp.Models
             int? ruleIndex = default;
             bool? unixReadOnly = default;
             bool? unixReadWrite = default;
-            bool? kerberos5ReadOnly = default;
-            bool? kerberos5ReadWrite = default;
-            bool? kerberos5IReadOnly = default;
-            bool? kerberos5IReadWrite = default;
-            bool? kerberos5PReadOnly = default;
-            bool? kerberos5PReadWrite = default;
+            bool? isKerberos5ReadOnly = default;
+            bool? isKerberos5ReadWrite = default;
+            bool? isKerberos5iReadOnly = default;
+            bool? isKerberos5iReadWrite = default;
+            bool? isKerberos5pReadOnly = default;
+            bool? isKerberos5pReadWrite = default;
             bool? cifs = default;
             bool? nfsv3 = default;
             bool? nfsv41 = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5ReadOnly = prop.Value.GetBoolean();
+                    isKerberos5ReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberos5ReadWrite"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5ReadWrite = prop.Value.GetBoolean();
+                    isKerberos5ReadWrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberos5iReadOnly"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5IReadOnly = prop.Value.GetBoolean();
+                    isKerberos5iReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberos5iReadWrite"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5IReadWrite = prop.Value.GetBoolean();
+                    isKerberos5iReadWrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberos5pReadOnly"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5PReadOnly = prop.Value.GetBoolean();
+                    isKerberos5pReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberos5pReadWrite"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberos5PReadWrite = prop.Value.GetBoolean();
+                    isKerberos5pReadWrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("cifs"u8))
@@ -349,12 +349,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 ruleIndex,
                 unixReadOnly,
                 unixReadWrite,
-                kerberos5ReadOnly,
-                kerberos5ReadWrite,
-                kerberos5IReadOnly,
-                kerberos5IReadWrite,
-                kerberos5PReadOnly,
-                kerberos5PReadWrite,
+                isKerberos5ReadOnly,
+                isKerberos5ReadWrite,
+                isKerberos5iReadOnly,
+                isKerberos5iReadWrite,
+                isKerberos5pReadOnly,
+                isKerberos5pReadWrite,
                 cifs,
                 nfsv3,
                 nfsv41,

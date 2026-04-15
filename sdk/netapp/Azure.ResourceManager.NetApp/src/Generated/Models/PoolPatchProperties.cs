@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="PoolPatchProperties"/>. </summary>
         /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="coolAccess"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolPatchProperties(long? size, CapacityPoolQosType? qosType, bool? coolAccess, int? customThroughputMibpsInt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolPatchProperties(long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, int? customThroughputMibpsInt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             QosType = qosType;
-            CoolAccess = coolAccess;
+            IsCoolAccessEnabled = isCoolAccessEnabled;
             CustomThroughputMibpsInt = customThroughputMibpsInt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public CapacityPoolQosType? QosType { get; set; }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess { get; set; }
+        public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
         public int? CustomThroughputMibpsInt { get; set; }

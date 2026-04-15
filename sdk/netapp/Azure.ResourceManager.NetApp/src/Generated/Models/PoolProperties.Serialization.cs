@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(EncryptionType))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp.Models
             float? utilizedThroughputMibps = default;
             int? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
-            bool? coolAccess = default;
+            bool? isCoolAccessEnabled = default;
             CapacityPoolEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    coolAccess = prop.Value.GetBoolean();
+                    isCoolAccessEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("encryptionType"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 utilizedThroughputMibps,
                 customThroughputMibps,
                 qosType,
-                coolAccess,
+                isCoolAccessEnabled,
                 encryptionType,
                 additionalBinaryDataProperties);
         }

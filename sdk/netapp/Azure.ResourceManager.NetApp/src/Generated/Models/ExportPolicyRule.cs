@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ruleIndex"> Order index. </param>
         /// <param name="unixReadOnly"> Read only access. </param>
         /// <param name="unixReadWrite"> Read and write access. </param>
-        /// <param name="kerberos5ReadOnly"> Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="kerberos5ReadWrite"> Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="kerberos5IReadOnly"> Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="kerberos5IReadWrite"> Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="kerberos5PReadOnly"> Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later. </param>
-        /// <param name="kerberos5PReadWrite"> Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5ReadOnly"> Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5ReadWrite"> Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5iReadOnly"> Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5iReadWrite"> Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5pReadOnly"> Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later. </param>
+        /// <param name="isKerberos5pReadWrite"> Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later. </param>
         /// <param name="cifs"> Allows CIFS protocol. </param>
         /// <param name="nfsv3"> Allows NFSv3 protocol. Enable only for NFSv3 type volumes. </param>
         /// <param name="nfsv41"> Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes. </param>
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="hasRootAccess"> Has root access to volume. </param>
         /// <param name="chownMode"> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExportPolicyRule(int? ruleIndex, bool? unixReadOnly, bool? unixReadWrite, bool? kerberos5ReadOnly, bool? kerberos5ReadWrite, bool? kerberos5IReadOnly, bool? kerberos5IReadWrite, bool? kerberos5PReadOnly, bool? kerberos5PReadWrite, bool? cifs, bool? nfsv3, bool? nfsv41, string allowedClients, bool? hasRootAccess, NetAppChownMode? chownMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExportPolicyRule(int? ruleIndex, bool? unixReadOnly, bool? unixReadWrite, bool? isKerberos5ReadOnly, bool? isKerberos5ReadWrite, bool? isKerberos5iReadOnly, bool? isKerberos5iReadWrite, bool? isKerberos5pReadOnly, bool? isKerberos5pReadWrite, bool? cifs, bool? nfsv3, bool? nfsv41, string allowedClients, bool? hasRootAccess, NetAppChownMode? chownMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleIndex = ruleIndex;
             UnixReadOnly = unixReadOnly;
             UnixReadWrite = unixReadWrite;
-            Kerberos5ReadOnly = kerberos5ReadOnly;
-            Kerberos5ReadWrite = kerberos5ReadWrite;
-            Kerberos5IReadOnly = kerberos5IReadOnly;
-            Kerberos5IReadWrite = kerberos5IReadWrite;
-            Kerberos5PReadOnly = kerberos5PReadOnly;
-            Kerberos5PReadWrite = kerberos5PReadWrite;
+            IsKerberos5ReadOnly = isKerberos5ReadOnly;
+            IsKerberos5ReadWrite = isKerberos5ReadWrite;
+            IsKerberos5iReadOnly = isKerberos5iReadOnly;
+            IsKerberos5iReadWrite = isKerberos5iReadWrite;
+            IsKerberos5pReadOnly = isKerberos5pReadOnly;
+            IsKerberos5pReadWrite = isKerberos5pReadWrite;
             Cifs = cifs;
             Nfsv3 = nfsv3;
             Nfsv41 = nfsv41;
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? UnixReadWrite { get; set; }
 
         /// <summary> Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5ReadOnly { get; set; }
+        public bool? IsKerberos5ReadOnly { get; set; }
 
         /// <summary> Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5ReadWrite { get; set; }
+        public bool? IsKerberos5ReadWrite { get; set; }
 
         /// <summary> Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5IReadOnly { get; set; }
+        public bool? IsKerberos5iReadOnly { get; set; }
 
         /// <summary> Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5IReadWrite { get; set; }
+        public bool? IsKerberos5iReadWrite { get; set; }
 
         /// <summary> Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5PReadOnly { get; set; }
+        public bool? IsKerberos5pReadOnly { get; set; }
 
         /// <summary> Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? Kerberos5PReadWrite { get; set; }
+        public bool? IsKerberos5pReadWrite { get; set; }
 
         /// <summary> Allows CIFS protocol. </summary>
         public bool? Cifs { get; set; }

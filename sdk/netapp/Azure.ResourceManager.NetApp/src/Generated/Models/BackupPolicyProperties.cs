@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
         /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
         /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
-        /// <param name="enabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPolicyProperties(ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPolicyProperties(ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupPolicyId = backupPolicyId;
             ProvisioningState = provisioningState;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
             WeeklyBackupsToKeep = weeklyBackupsToKeep;
             MonthlyBackupsToKeep = monthlyBackupsToKeep;
             VolumesAssigned = volumesAssigned;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             VolumeBackups = volumeBackups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public int? VolumesAssigned { get; }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> A list of volumes assigned to this policy. </summary>
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; } = new ChangeTrackingList<NetAppVolumeBackupDetail>();

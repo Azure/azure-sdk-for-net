@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
-        public bool? CoolAccess
+        public bool? IsCoolAccessEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.CoolAccess;
+                return Properties is null ? default : Properties.IsCoolAccessEnabled;
             }
             set
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new PoolPatchProperties();
                 }
-                Properties.CoolAccess = value.Value;
+                Properties.IsCoolAccessEnabled = value.Value;
             }
         }
 

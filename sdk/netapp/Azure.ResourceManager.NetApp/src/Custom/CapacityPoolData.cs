@@ -50,8 +50,13 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsCoolAccessEnabled
         {
-            get => CoolAccess;
-            set => CoolAccess = value;
+            get => Properties?.IsCoolAccessEnabled;
+            set
+            {
+                if (Properties is null)
+                    Properties = new PoolProperties();
+                Properties.IsCoolAccessEnabled = value;
+            }
         }
     }
 }

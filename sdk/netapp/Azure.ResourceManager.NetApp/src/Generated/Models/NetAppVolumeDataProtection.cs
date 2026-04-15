@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
         /// <param name="ransomwareProtection"> Advanced Ransomware Protection settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeDataProtection(VolumeBackupProperties backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, RansomwareProtectionSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, RansomwareProtectionSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Backup = backup;
             Replication = replication;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Properties. </summary>
-        public VolumeBackupProperties Backup { get; set; }
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
 
         /// <summary> Replication properties. </summary>
         public NetAppReplicationObject Replication { get; set; }

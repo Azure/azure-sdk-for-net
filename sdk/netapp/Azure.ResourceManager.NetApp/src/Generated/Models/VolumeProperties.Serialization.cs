@@ -191,25 +191,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isRestoring"u8);
                 writer.WriteBooleanValue(IsRestoring.Value);
             }
-            if (Optional.IsDefined(SnapshotDirectoryVisible))
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
-                writer.WriteBooleanValue(SnapshotDirectoryVisible.Value);
+                writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Optional.IsDefined(KerberosEnabled))
+            if (Optional.IsDefined(IsKerberosEnabled))
             {
                 writer.WritePropertyName("kerberosEnabled"u8);
-                writer.WriteBooleanValue(KerberosEnabled.Value);
+                writer.WriteBooleanValue(IsKerberosEnabled.Value);
             }
             if (Optional.IsDefined(SecurityStyle))
             {
                 writer.WritePropertyName("securityStyle"u8);
                 writer.WriteStringValue(SecurityStyle.Value.ToString());
             }
-            if (Optional.IsDefined(SmbEncryption))
+            if (Optional.IsDefined(IsSmbEncryptionEnabled))
             {
                 writer.WritePropertyName("smbEncryption"u8);
-                writer.WriteBooleanValue(SmbEncryption.Value);
+                writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(SmbAccessBasedEnumeration))
             {
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
-            if (Optional.IsDefined(SmbContinuouslyAvailable))
+            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
             {
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
-                writer.WriteBooleanValue(SmbContinuouslyAvailable.Value);
+                writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
@@ -246,20 +246,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("keyVaultPrivateEndpointResourceId"u8);
                 writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
             }
-            if (Optional.IsDefined(LdapEnabled))
+            if (Optional.IsDefined(IsLdapEnabled))
             {
                 writer.WritePropertyName("ldapEnabled"u8);
-                writer.WriteBooleanValue(LdapEnabled.Value);
+                writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
             if (Optional.IsDefined(LdapServerType))
             {
                 writer.WritePropertyName("ldapServerType"u8);
                 writer.WriteStringValue(LdapServerType.Value.ToString());
             }
-            if (Optional.IsDefined(CoolAccess))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
-                writer.WriteBooleanValue(CoolAccess.Value);
+                writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
             if (Optional.IsDefined(CoolnessPeriod))
             {
@@ -356,10 +356,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("volumeSpecName"u8);
                 writer.WriteStringValue(VolumeSpecName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Encrypted))
+            if (options.Format != "W" && Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("encrypted"u8);
-                writer.WriteBooleanValue(Encrypted.Value);
+                writer.WriteBooleanValue(IsEncrypted.Value);
             }
             if (Optional.IsCollectionDefined(PlacementRules))
             {
@@ -474,20 +474,20 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppVolumeDataProtection dataProtection = default;
             AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
             bool? isRestoring = default;
-            bool? snapshotDirectoryVisible = default;
-            bool? kerberosEnabled = default;
+            bool? isSnapshotDirectoryVisible = default;
+            bool? isKerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
-            bool? smbEncryption = default;
+            bool? isSmbEncryptionEnabled = default;
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
-            bool? smbContinuouslyAvailable = default;
+            bool? isSmbContinuouslyAvailable = default;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource? encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
-            bool? ldapEnabled = default;
+            bool? isLdapEnabled = default;
             LdapServerType? ldapServerType = default;
-            bool? coolAccess = default;
+            bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
             CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier proximityPlacementGroup = default;
             string t2Network = default;
             string volumeSpecName = default;
-            bool? encrypted = default;
+            bool? isEncrypted = default;
             IList<NetAppVolumePlacementRule> placementRules = default;
             EnableNetAppSubvolume? enableSubvolumes = default;
             string provisionedAvailabilityZone = default;
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    snapshotDirectoryVisible = prop.Value.GetBoolean();
+                    isSnapshotDirectoryVisible = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("kerberosEnabled"u8))
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    kerberosEnabled = prop.Value.GetBoolean();
+                    isKerberosEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("securityStyle"u8))
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    smbEncryption = prop.Value.GetBoolean();
+                    isSmbEncryptionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("smbAccessBasedEnumeration"u8))
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    smbContinuouslyAvailable = prop.Value.GetBoolean();
+                    isSmbContinuouslyAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("throughputMibps"u8))
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    ldapEnabled = prop.Value.GetBoolean();
+                    isLdapEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ldapServerType"u8))
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    coolAccess = prop.Value.GetBoolean();
+                    isCoolAccessEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("coolnessPeriod"u8))
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    encrypted = prop.Value.GetBoolean();
+                    isEncrypted = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("placementRules"u8))
@@ -1097,20 +1097,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 dataProtection,
                 acceptGrowCapacityPoolForShortTermCloneSplit,
                 isRestoring,
-                snapshotDirectoryVisible,
-                kerberosEnabled,
+                isSnapshotDirectoryVisible,
+                isKerberosEnabled,
                 securityStyle,
-                smbEncryption,
+                isSmbEncryptionEnabled,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
-                smbContinuouslyAvailable,
+                isSmbContinuouslyAvailable,
                 throughputMibps,
                 actualThroughputMibps,
                 encryptionKeySource,
                 keyVaultPrivateEndpointResourceId,
-                ldapEnabled,
+                isLdapEnabled,
                 ldapServerType,
-                coolAccess,
+                isCoolAccessEnabled,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
                 coolAccessTieringPolicy,
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 proximityPlacementGroup,
                 t2Network,
                 volumeSpecName,
-                encrypted,
+                isEncrypted,
                 placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
                 enableSubvolumes,
                 provisionedAvailabilityZone,

@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
-        public bool? SnapshotDirectoryVisible
+        public bool? IsSnapshotDirectoryVisible
         {
             get
             {
-                return Properties is null ? default : Properties.SnapshotDirectoryVisible;
+                return Properties is null ? default : Properties.IsSnapshotDirectoryVisible;
             }
             set
             {
@@ -367,16 +367,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SnapshotDirectoryVisible = value.Value;
+                Properties.IsSnapshotDirectoryVisible = value.Value;
             }
         }
 
         /// <summary> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </summary>
-        public bool? KerberosEnabled
+        public bool? IsKerberosEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.KerberosEnabled;
+                return Properties is null ? default : Properties.IsKerberosEnabled;
             }
             set
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.KerberosEnabled = value.Value;
+                Properties.IsKerberosEnabled = value.Value;
             }
         }
 
@@ -406,11 +406,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol volume. To be used with swagger version 2020-08-01 or later. </summary>
-        public bool? SmbEncryption
+        public bool? IsSmbEncryptionEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.SmbEncryption;
+                return Properties is null ? default : Properties.IsSmbEncryptionEnabled;
             }
             set
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SmbEncryption = value.Value;
+                Properties.IsSmbEncryptionEnabled = value.Value;
             }
         }
 
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Enables continuously available share property for smb volume. Only applicable for SMB volume. </summary>
-        public bool? SmbContinuouslyAvailable
+        public bool? IsSmbContinuouslyAvailable
         {
             get
             {
-                return Properties is null ? default : Properties.SmbContinuouslyAvailable;
+                return Properties is null ? default : Properties.IsSmbContinuouslyAvailable;
             }
             set
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SmbContinuouslyAvailable = value.Value;
+                Properties.IsSmbContinuouslyAvailable = value.Value;
             }
         }
 
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies whether LDAP is enabled or not for a given NFS volume. </summary>
-        public bool? LdapEnabled
+        public bool? IsLdapEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.LdapEnabled;
+                return Properties is null ? default : Properties.IsLdapEnabled;
             }
             set
             {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.LdapEnabled = value.Value;
+                Properties.IsLdapEnabled = value.Value;
             }
         }
 
@@ -568,11 +568,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
-        public bool? CoolAccess
+        public bool? IsCoolAccessEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.CoolAccess;
+                return Properties is null ? default : Properties.IsCoolAccessEnabled;
             }
             set
             {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.CoolAccess = value.Value;
+                Properties.IsCoolAccessEnabled = value.Value;
             }
         }
 
@@ -835,11 +835,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Specifies if the volume is encrypted or not. Only available on volumes created or updated after 2022-01-01. </summary>
-        public bool? Encrypted
+        public bool? IsEncrypted
         {
             get
             {
-                return Properties is null ? default : Properties.Encrypted;
+                return Properties is null ? default : Properties.IsEncrypted;
             }
         }
 

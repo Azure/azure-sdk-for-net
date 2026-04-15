@@ -12,25 +12,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume Backup Properties. </summary>
-    public partial class VolumeBackupProperties
+    public partial class NetAppVolumeBackupConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeBackupProperties"/>. </summary>
-        public VolumeBackupProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
+        public NetAppVolumeBackupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeBackupProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupConfiguration"/>. </summary>
         /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
-        /// <param name="policyEnforced"> Policy Enforced. </param>
+        /// <param name="isPolicyEnforced"> Policy Enforced. </param>
         /// <param name="backupVaultId"> Backup Vault Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeBackupProperties(ResourceIdentifier backupPolicyId, bool? policyEnforced, ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBackupConfiguration(ResourceIdentifier backupPolicyId, bool? isPolicyEnforced, ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupPolicyId = backupPolicyId;
-            PolicyEnforced = policyEnforced;
+            IsPolicyEnforced = isPolicyEnforced;
             BackupVaultId = backupVaultId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public ResourceIdentifier BackupPolicyId { get; set; }
 
         /// <summary> Policy Enforced. </summary>
-        public bool? PolicyEnforced { get; set; }
+        public bool? IsPolicyEnforced { get; set; }
 
         /// <summary> Backup Vault Resource ID. </summary>
         public ResourceIdentifier BackupVaultId { get; set; }
