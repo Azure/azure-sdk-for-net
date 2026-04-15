@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         protected DataStoreSettings(DataStoreType dataStoreType)    // This constructor is intentionally retained for backward compatibility.
         {
-             DataStoreType = dataStoreType;
+            DataStoreType = dataStoreType;
         }
     }
 }

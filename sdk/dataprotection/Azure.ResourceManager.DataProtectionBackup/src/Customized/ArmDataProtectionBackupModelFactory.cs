@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRestoreContent BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails)
-            => BackupRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId , null, identityDetails);
+            => BackupRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, null, identityDetails);
     }
 }

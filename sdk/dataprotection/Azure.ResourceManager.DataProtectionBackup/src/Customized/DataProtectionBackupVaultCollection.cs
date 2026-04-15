@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DataProtectionBackupVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, DataProtectionBackupVaultData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, vaultName, data, null, null,cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, vaultName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Creates or updates a BackupVault resource belonging to a resource group.
