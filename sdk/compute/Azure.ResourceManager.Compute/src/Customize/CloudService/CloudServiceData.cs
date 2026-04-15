@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> List of availability zones. </summary>
-        public IList<string> Zones { get; set; }
+        public IList<string> Zones { get; }
 
         /// <summary> The package URL. </summary>
         public Uri PackageUri { get; set; }
@@ -50,22 +50,26 @@ namespace Azure.ResourceManager.Compute
         public CloudServiceUpgradeMode? UpgradeMode { get; set; }
 
         /// <summary> The role profile properties. </summary>
-        public IList<CloudServiceRoleProfileProperties> Roles { get; set; }
+        public IList<CloudServiceRoleProfileProperties> Roles { get; }
 
         /// <summary> The OS secrets. </summary>
-        public IList<CloudServiceVaultSecretGroup> OSSecrets { get; set; }
+        public IList<CloudServiceVaultSecretGroup> OSSecrets { get; }
 
         /// <summary> The network profile. </summary>
         public CloudServiceNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> The extensions. </summary>
-        public IList<CloudServiceExtension> Extensions { get; set; }
+        public IList<CloudServiceExtension> Extensions { get; }
 
         /// <summary> The provisioning state. </summary>
         public string ProvisioningState { get; }
 
         /// <summary> The unique identifier. </summary>
         public string UniqueId { get; }
+
+        /// <inheritdoc />
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
 
         CloudServiceData IJsonModel<CloudServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");

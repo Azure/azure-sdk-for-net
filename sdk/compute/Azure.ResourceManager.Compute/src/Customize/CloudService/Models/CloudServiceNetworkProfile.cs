@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The load balancer configurations. </summary>
-        public IList<CloudServiceLoadBalancerConfiguration> LoadBalancerConfigurations { get; set; }
+        public IList<CloudServiceLoadBalancerConfiguration> LoadBalancerConfigurations { get; }
 
         /// <summary> The swappable cloud service ID. </summary>
         public ResourceIdentifier SwappableCloudServiceId { get; set; }

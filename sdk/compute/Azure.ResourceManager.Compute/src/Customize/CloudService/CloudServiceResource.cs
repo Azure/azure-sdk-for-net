@@ -110,35 +110,35 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Rebuild(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual ArmOperation Rebuild(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> RebuildAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Task<ArmOperation> RebuildAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Reimage(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual ArmOperation Reimage(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation Restart(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual ArmOperation Restart(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> RestartAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Task<ArmOperation> RestartAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual ArmOperation DeleteInstances(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, RoleInstances parameters = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Task<ArmOperation> DeleteInstancesAsync(WaitUntil waitUntil, RoleInstances roleInstances = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

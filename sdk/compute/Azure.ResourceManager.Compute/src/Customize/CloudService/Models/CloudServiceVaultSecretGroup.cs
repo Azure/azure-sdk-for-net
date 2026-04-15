@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceIdentifier SourceVaultId { get; set; }
 
         /// <summary> The vault certificates. </summary>
-        public IList<CloudServiceVaultCertificate> VaultCertificates { get; set; }
+        public IList<CloudServiceVaultCertificate> VaultCertificates { get; }
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
