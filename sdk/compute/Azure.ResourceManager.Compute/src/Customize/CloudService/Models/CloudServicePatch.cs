@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The tags. </summary>
         public IDictionary<string, string> Tags { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServicePatch IJsonModel<CloudServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The tier. </summary>
         public string Tier { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         InstanceSku IJsonModel<InstanceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

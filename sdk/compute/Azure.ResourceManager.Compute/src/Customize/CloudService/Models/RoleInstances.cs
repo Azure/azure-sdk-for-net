@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The role instances. </summary>
         public IList<string> RoleInstancesValue { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         RoleInstances IJsonModel<RoleInstances>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

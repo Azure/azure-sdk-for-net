@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name. </summary>
         public string Name { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         UpdateDomainIdentifier IJsonModel<UpdateDomainIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

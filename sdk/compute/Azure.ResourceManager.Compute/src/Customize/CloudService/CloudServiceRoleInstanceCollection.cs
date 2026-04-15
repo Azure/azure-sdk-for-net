@@ -45,6 +45,16 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<CloudServiceRoleInstanceResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<CloudServiceRoleInstanceResource> GetAll(InstanceViewType? expand, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+
+        /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<CloudServiceRoleInstanceResource> GetAllAsync(InstanceViewType? expand, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+
+        /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 

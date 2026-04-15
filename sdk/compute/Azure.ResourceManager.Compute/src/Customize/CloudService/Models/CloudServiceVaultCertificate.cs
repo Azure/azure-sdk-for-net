@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether this is a bootstrap certificate. </summary>
         public bool? IsBootstrapCertificate { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServiceVaultCertificate IJsonModel<CloudServiceVaultCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

@@ -31,6 +31,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The statuses. </summary>
         public IReadOnlyList<ResourceInstanceViewStatus> Statuses { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         RoleInstanceView IJsonModel<RoleInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

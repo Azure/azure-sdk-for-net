@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? AutoUpgradeMinorVersion { get; set; }
 
         /// <summary> The settings. </summary>
-        public string Settings { get; set; }
+        public BinaryData Settings { get; set; }
 
         /// <summary> The protected settings. </summary>
-        public string ProtectedSettings { get; set; }
+        public BinaryData ProtectedSettings { get; set; }
 
         /// <summary> The protected settings from key vault. </summary>
         public CloudServiceVaultAndSecretReference ProtectedSettingsFromKeyVault { get; set; }
@@ -51,6 +51,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The roles applied to. </summary>
         public IList<string> RolesAppliedTo { get; set; }
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
 
         CloudServiceExtension IJsonModel<CloudServiceExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");

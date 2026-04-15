@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<System.BinaryData> GetRemoteDesktopFile(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Response<System.IO.Stream> GetRemoteDesktopFile(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<System.BinaryData>> GetRemoteDesktopFileAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
+        public virtual Task<Response<System.IO.Stream>> GetRemoteDesktopFileAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

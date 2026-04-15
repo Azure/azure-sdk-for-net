@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether this version is active. </summary>
         public bool? IsActive { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         OSVersionPropertiesBase IJsonModel<OSVersionPropertiesBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

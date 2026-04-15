@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The capacity. </summary>
         public long? Capacity { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServiceRoleSku IJsonModel<CloudServiceRoleSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

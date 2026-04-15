@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The secret URI. </summary>
         public Uri SecretUri { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServiceVaultAndSecretReference IJsonModel<CloudServiceVaultAndSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

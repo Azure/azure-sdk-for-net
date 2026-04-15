@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The time. </summary>
         public DateTimeOffset? Time { get; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         ResourceInstanceViewStatus IJsonModel<ResourceInstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

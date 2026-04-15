@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.Compute
         public RoleInstanceView InstanceView { get; }
 
         /// <summary> The network interfaces. </summary>
-        public IReadOnlyList<SubResource> NetworkInterfaces { get; }
+        public IReadOnlyList<WritableSubResource> NetworkInterfaces { get; } = new List<WritableSubResource>();
+
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
 
         CloudServiceRoleInstanceData IJsonModel<CloudServiceRoleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");

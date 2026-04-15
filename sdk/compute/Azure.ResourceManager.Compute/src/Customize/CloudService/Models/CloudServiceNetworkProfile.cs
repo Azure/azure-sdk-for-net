@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The slot type. </summary>
         public CloudServiceSlotType? SlotType { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServiceNetworkProfile IJsonModel<CloudServiceNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 

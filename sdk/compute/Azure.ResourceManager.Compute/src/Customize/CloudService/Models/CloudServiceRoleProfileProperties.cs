@@ -24,6 +24,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The SKU. </summary>
         public CloudServiceRoleSku Sku { get; set; }
 
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => throw new NotSupportedException("CloudService operations are no longer supported.");
+
         CloudServiceRoleProfileProperties IJsonModel<CloudServiceRoleProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             => throw new NotSupportedException("CloudService operations are no longer supported.");
 
