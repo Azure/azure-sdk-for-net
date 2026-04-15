@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettingsData"/>. </summary>
-        internal DataBoxEdgeDeviceNetworkSettingsData()
+        public DataBoxEdgeDeviceNetworkSettingsData()
         {
         }
 

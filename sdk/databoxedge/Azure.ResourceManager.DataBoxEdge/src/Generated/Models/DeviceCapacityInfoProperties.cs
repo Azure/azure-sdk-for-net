@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceCapacityInfoProperties"/>. </summary>
-        internal DeviceCapacityInfoProperties()
+        public DeviceCapacityInfoProperties()
         {
             NodeCapacityInfos = new ChangeTrackingDictionary<string, HostCapacity>();
         }
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Timestamp of request in UTC. </summary>
-        public DateTimeOffset? TimeStamp { get; }
+        public DateTimeOffset? TimeStamp { get; set; }
 
         /// <summary> Cluster capacity data for storage resources (CSV). </summary>
-        public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get; }
+        public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get; set; }
 
         /// <summary> Cluster capacity data for compute resources (Memory and GPU). </summary>
-        public EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get; }
+        public EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get; set; }
 
         /// <summary> The dictionary of individual node names and node capacities in the cluster. </summary>
         public IDictionary<string, HostCapacity> NodeCapacityInfos { get; } = new ChangeTrackingDictionary<string, HostCapacity>();

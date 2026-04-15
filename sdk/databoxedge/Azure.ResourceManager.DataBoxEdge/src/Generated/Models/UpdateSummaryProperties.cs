@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummaryProperties"/>. </summary>
-        internal UpdateSummaryProperties()
+        public UpdateSummaryProperties()
         {
             UpdateTitles = new ChangeTrackingList<string>();
             Updates = new ChangeTrackingList<DataBoxEdgeUpdateDetails>();
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The current version of the device in format: 1.2.17312.13.",. </summary>
-        public string DeviceVersionNumber { get; }
+        public string DeviceVersionNumber { get; set; }
 
         /// <summary> The current version of the device in text format. </summary>
-        public string FriendlyDeviceVersionName { get; }
+        public string FriendlyDeviceVersionName { get; set; }
 
         /// <summary> The last time when a scan was done on the device. </summary>
-        public DateTimeOffset? DeviceLastScannedOn { get; }
+        public DateTimeOffset? DeviceLastScannedOn { get; set; }
 
         /// <summary> The time when the last scan job was completed (success/cancelled/failed) on the appliance. </summary>
-        public DateTimeOffset? LastCompletedScanJobOn { get; }
+        public DateTimeOffset? LastCompletedScanJobOn { get; set; }
 
         /// <summary> Time when the last scan job is successfully completed. </summary>
-        public DateTimeOffset? LastSuccessfulScanJobOn { get; }
+        public DateTimeOffset? LastSuccessfulScanJobOn { get; set; }
 
         /// <summary> The time when the last Download job was completed (success/cancelled/failed) on the appliance. </summary>
         public DateTimeOffset? LastCompletedDownloadJobOn { get; }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeJobStatus? LastDownloadJobStatus { get; }
 
         /// <summary> The time when the Last Install job was completed successfully on the appliance. </summary>
-        public DateTimeOffset? LastSuccessfulInstallJobOn { get; }
+        public DateTimeOffset? LastSuccessfulInstallJobOn { get; set; }
 
         /// <summary> The time when the last Install job was completed (success/cancelled/failed) on the appliance. </summary>
         public DateTimeOffset? LastCompletedInstallJobOn { get; }
