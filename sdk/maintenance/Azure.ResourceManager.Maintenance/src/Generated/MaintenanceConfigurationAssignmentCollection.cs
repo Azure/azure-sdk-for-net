@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenanceConfigurationAssignmentCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _maintenanceConfigurationAssignmentClientDiagnostics;
-        private readonly MaintenanceConfigurationAssignment _maintenanceConfigurationAssignmentRestClient;
+        private readonly ClientDiagnostics _configurationAssignmentsClientDiagnostics;
+        private readonly ConfigurationAssignments _configurationAssignmentsRestClient;
         private readonly ClientDiagnostics _configurationAssignmentsForResourceGroupClientDiagnostics;
         private readonly ConfigurationAssignmentsForResourceGroup _configurationAssignmentsForResourceGroupRestClient;
         private readonly ClientDiagnostics _configurationAssignmentsForSubscriptionsClientDiagnostics;
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Maintenance
         internal MaintenanceConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(MaintenanceConfigurationAssignmentResource.ResourceType, out string configurationAssignmentApiVersion);
-            _maintenanceConfigurationAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationAssignmentRestClient = new MaintenanceConfigurationAssignment(_maintenanceConfigurationAssignmentClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
+            _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
             _configurationAssignmentsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
             _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, configurationAssignmentApiVersion ?? "2023-10-01-preview");
             _configurationAssignmentsForSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
@@ -297,8 +297,8 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentGetAllAsyncCollectionResultOfT(
-                _maintenanceConfigurationAssignmentRestClient,
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
+                _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,
                 providerName,
@@ -344,8 +344,8 @@ namespace Azure.ResourceManager.Maintenance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new MaintenanceConfigurationAssignmentGetAllCollectionResultOfT(
-                _maintenanceConfigurationAssignmentRestClient,
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllCollectionResultOfT(
+                _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 resourceGroupName,
                 providerName,

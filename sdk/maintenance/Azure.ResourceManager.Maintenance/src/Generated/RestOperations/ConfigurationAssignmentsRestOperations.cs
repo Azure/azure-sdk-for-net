@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    internal partial class MaintenanceConfigurationAssignment
+    internal partial class ConfigurationAssignments
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignment for mocking. </summary>
-        protected MaintenanceConfigurationAssignment()
+        /// <summary> Initializes a new instance of ConfigurationAssignments for mocking. </summary>
+        protected ConfigurationAssignments()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignment. </summary>
+        /// <summary> Initializes a new instance of ConfigurationAssignments. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal MaintenanceConfigurationAssignment(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ConfigurationAssignments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
