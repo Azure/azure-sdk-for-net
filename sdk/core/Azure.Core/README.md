@@ -240,7 +240,7 @@ More on mocking in [Unit testing and mocking with the Azure SDK for .NET](https:
 Starting with Azure.Core 1.53.0, all credential types previously in `Azure.Identity` are available directly from the Azure service client libraries, which all take a dependency on `Azure.Core`:
 
 ```C# Snippet:AzureCoreDefaultCredential
-// No Azure.Identity package reference required for client SDKs that depend on Azure.Core 1.53.0+
+// No Azure.Identity package reference required for client libraries that depend on Azure.Core 1.53.0+
 var credential = new DefaultAzureCredential();
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
