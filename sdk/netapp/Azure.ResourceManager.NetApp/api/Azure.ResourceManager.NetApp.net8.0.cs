@@ -1338,6 +1338,7 @@ namespace Azure.ResourceManager.NetApp
         public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) { }
         public Azure.ResourceManager.NetApp.Models.AcceptGrowCapacityPoolForShortTermCloneSplit? AcceptGrowCapacityPoolForShortTermCloneSplit { get { throw null; } set { } }
         public float? ActualThroughputMibps { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? AvsDataStore { get { throw null; } set { } }
         public string BackupId { get { throw null; } set { } }
         public string BaremetalTenantId { get { throw null; } }
         public Azure.Core.ResourceIdentifier CapacityPoolResourceId { get { throw null; } set { } }
@@ -1346,10 +1347,56 @@ namespace Azure.ResourceManager.NetApp
         public Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? CoolAccessTieringPolicy { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
         public string CreationToken { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppVolumeDataProtection DataProtection { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> DataStoreResourceId { get { throw null; } }
+        public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
+        public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
+        public bool? DeleteBaseSnapshot { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? EffectiveNetworkFeatures { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume? EnableSubvolumes { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource? EncryptionKeySource { get { throw null; } set { } }
+        public string ETag { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppFileAccessLog? FileAccessLogs { get { throw null; } }
+        public string FileSystemId { get { throw null; } }
+        public long? InheritedSizeInBytes { get { throw null; } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
+        public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
+        public bool? IsEncrypted { get { throw null; } }
+        public bool? IsKerberosEnabled { get { throw null; } set { } }
+        public bool? IsLargeVolume { get { throw null; } set { } }
+        public bool? IsLdapEnabled { get { throw null; } set { } }
         public bool? IsRestoring { get { throw null; } set { } }
+        public bool? IsSmbContinuouslyAvailable { get { throw null; } set { } }
+        public bool? IsSmbEncryptionEnabled { get { throw null; } set { } }
+        public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultPrivateEndpointResourceId { get { throw null; } set { } }
+        public long? MaximumNumberOfFiles { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppVolumeMountTarget> MountTargets { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? NetAppAvsDataStore { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppNetworkFeature? NetworkFeatures { get { throw null; } set { } }
+        public string NetworkSiblingSetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier OriginatingResourceId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumePlacementRule> PlacementRules { get { throw null; } }
+        public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
+        public string ProvisionedAvailabilityZone { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppVolumeSecurityStyle? SecurityStyle { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? SmbNonBrowsable { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SnapshotId { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
         public string SubnetId { get { throw null; } set { } }
+        public string T2Network { get { throw null; } }
+        public float? ThroughputMibps { get { throw null; } set { } }
+        public string UnixPermissions { get { throw null; } set { } }
         public long UsageThreshold { get { throw null; } set { } }
+        public string VolumeGroupName { get { throw null; } }
+        public string VolumeSpecName { get { throw null; } set { } }
+        public string VolumeType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         Azure.ResourceManager.NetApp.NetAppVolumeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppVolumeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.NetAppVolumeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetApp.NetAppVolumeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.NetAppVolumeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5123,8 +5170,24 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
         public NetAppVolumePatch() { }
+        public Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? CoolAccessTieringPolicy { get { throw null; } set { } }
+        public int? CoolnessPeriod { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection DataProtection { get { throw null; } set { } }
+        public long? DefaultGroupQuotaInKiBs { get { throw null; } set { } }
+        public long? DefaultUserQuotaInKiBs { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule> ExportRules { get { throw null; } }
+        public bool? IsCoolAccessEnabled { get { throw null; } set { } }
+        public bool? IsDefaultQuotaEnabled { get { throw null; } set { } }
+        public bool? IsSnapshotDirectoryVisible { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? SmbNonBrowsable { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SnapshotPolicyId { get { throw null; } set { } }
+        public float? ThroughputMibps { get { throw null; } set { } }
+        public string UnixPermissions { get { throw null; } set { } }
+        public long? UsageThreshold { get { throw null; } set { } }
     }
     public partial class NetAppVolumePatchDataProtection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppVolumePatchDataProtection>
     {
