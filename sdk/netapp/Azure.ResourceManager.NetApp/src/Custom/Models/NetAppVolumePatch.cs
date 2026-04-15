@@ -12,6 +12,11 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume patch resource. </summary>
     public partial class NetAppVolumePatch : TrackedResourceData
     {
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatch"/>. </summary>
+        /// <param name="location"> The location. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppVolumePatch(AzureLocation location) : base(location) { }
+
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetAppVolumePatchDataProtection DataProtection { get; set; }

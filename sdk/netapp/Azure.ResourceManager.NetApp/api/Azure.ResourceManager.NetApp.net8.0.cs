@@ -2374,6 +2374,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class BackupsMigrationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BackupsMigrationContent>
     {
         public BackupsMigrationContent(Azure.Core.ResourceIdentifier backupVaultId) { }
+        public BackupsMigrationContent(string backupVaultId) { }
         public Azure.Core.ResourceIdentifier BackupVaultId { get { throw null; } }
         protected virtual Azure.ResourceManager.NetApp.Models.BackupsMigrationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2669,6 +2670,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class CapacityPoolPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.CapacityPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.CapacityPoolPatch>
     {
         public CapacityPoolPatch() { }
+        public CapacityPoolPatch(Azure.Core.AzureLocation location) { }
         public float? CustomThroughputMibps { get { throw null; } set { } }
         public int? CustomThroughputMibpsInt { get { throw null; } set { } }
         public string Id { get { throw null; } }
@@ -4187,6 +4189,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppBackupPolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.NetAppBackupPolicyPatch>
     {
         public NetAppBackupPolicyPatch() { }
+        public NetAppBackupPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
         public string Id { get { throw null; } }
@@ -5254,7 +5257,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppVolumePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppVolumePatch() { }
+        public NetAppVolumePatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.CoolAccessTieringPolicy? CoolAccessTieringPolicy { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
@@ -6117,6 +6120,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class SnapshotPolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.SnapshotPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.SnapshotPolicyPatch>
     {
         public SnapshotPolicyPatch() { }
+        public SnapshotPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
         public string Id { get { throw null; } }
