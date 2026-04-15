@@ -207,30 +207,31 @@ export class RequestPath {
    * Determines the operation scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension)
    * from the path structure by examining the scope path (portion before the last /providers/ segment).
    */
-  get operationScope(): ResourceScope {
+  get operationScope(): ResourceScopeKind {
     const scope = this.scopePath;
 
     // No scope (no /providers/ segment) — tenant scope
-    if (scope.length === 0) return ResourceScope.Tenant;
+    if (scope.length === 0) return ResourceScopeKind.Tenant;
 
     // Check the immediate scope against well-known patterns.
     // If the scope doesn't match any known pattern (e.g., it contains another /providers/
     // segment like nested extension resources), it's an Extension.
-    if (scope.equals(ResourceGroupScope)) return ResourceScope.ResourceGroup;
-    if (scope.equals(SubscriptionScope)) return ResourceScope.Subscription;
+    if (scope.equals(ResourceGroupScope))
+      return ResourceScopeKind.ResourceGroup;
+    if (scope.equals(SubscriptionScope)) return ResourceScopeKind.Subscription;
     if (scope.equals(ManagementGroupScope))
-      return ResourceScope.ManagementGroup;
+      return ResourceScopeKind.ManagementGroup;
 
     // Everything else is an extension resource
-    return ResourceScope.Extension;
+    return ResourceScopeKind.Extension;
   }
 
   /**
-   * Returns a new RequestPath with the last segment removed (the "parent" or "collection" path).
+   * Returns a new RequestPath with the last segment removed.
    * E.g., for ".../virtualMachines/{vmName}", returns ".../virtualMachines".
-   * Returns undefined if the path has no segments.
+   * Returns undefined if the path has fewer than 2 segments.
    */
-  get parentPath(): RequestPath | undefined {
+  get trimLastSegment(): RequestPath | undefined {
     if (this.length <= 1) return undefined;
     return RequestPath.fromSegments(this.segments.slice(0, -1));
   }
@@ -269,19 +270,22 @@ export function findLongestPrefixMatch<T>(
   for (const candidate of candidates) {
     const candidatePath = getPath(candidate);
     if (!candidatePath) continue;
+    // Check if candidate is a prefix of the target path
     if (!candidatePath.isPrefixOf(targetPath)) continue;
+    // If properPrefix is set, skip candidates that are equal to the target (require strictly shorter)
     if (properPrefix && targetPath.isPrefixOf(candidatePath)) continue;
 
-    const segmentCount = candidatePath.getSharedSegmentCount(targetPath);
-    if (segmentCount > bestSegmentCount) {
-      bestSegmentCount = segmentCount;
+    // Since candidatePath is confirmed to be a prefix of targetPath,
+    // all of its segments match — so candidatePath.length is the shared count.
+    if (candidatePath.length > bestSegmentCount) {
+      bestSegmentCount = candidatePath.length;
       bestMatch = candidate;
     }
   }
   return bestMatch;
 }
 
-export enum ResourceScope {
+export enum ResourceScopeKind {
   Tenant = "Tenant",
   Subscription = "Subscription",
   ResourceGroup = "ResourceGroup",
@@ -316,7 +320,7 @@ export interface RbacRole {
  */
 export interface ResourceScopeInfo {
   /** The kind of scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension) */
-  kind: ResourceScope;
+  kind: ResourceScopeKind;
   /** The scope's ID pattern path */
   scopeIdPattern: RequestPath;
 }
@@ -383,7 +387,7 @@ export function extractRbacRoles(model: DecoratedType | undefined): RbacRole[] {
 export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;
-  operationScope: ResourceScope;
+  operationScope: ResourceScopeKind;
   /** The cross-language definition ID of the resource model this method originally belonged to */
   resourceModelId?: string;
 }
@@ -414,9 +418,9 @@ export interface ResourceMethod {
    */
   operationPath: RequestPath;
   /**
-   * the scope of this resource method, it could be tenant/resource group/subscription/management group
+   * the scope of this resource method
    */
-  operationScope: ResourceScope;
+  operationScope: ResourceScopeKind;
   /**
    * The resource ID pattern of the resource that scopes this operation.
    * For CRUD operations, this is typically the resource's own ID pattern.
@@ -512,13 +516,21 @@ export interface ArmResourceSchema {
 }
 
 /**
+ * An ArmResourceSchema that has been validated to have a resourceIdPattern.
+ * After post-processing, all resources in the final schema are guaranteed to have this.
+ */
+export type ValidArmResourceSchema = ArmResourceSchema & {
+  metadata: ResourceMetadata & { resourceIdPattern: RequestPath };
+};
+
+/**
  * Represents the complete ARM provider schema containing all resources and non-resource methods.
  */
 export interface ArmProviderSchema {
   /**
    * All resources in the ARM provider
    */
-  resources: ArmResourceSchema[];
+  resources: ValidArmResourceSchema[];
   /**
    * All non-resource methods in the ARM provider
    */
@@ -591,10 +603,11 @@ export function postProcessArmResources(
   nonResourceMethods: NonResourceMethod[],
   parentLookup: ParentResourceLookupContext,
   methodResponseModelIdMap?: Map<string, string>
-): ArmResourceSchema[] {
+): ValidArmResourceSchema[] {
   // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
   const validResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern !== undefined
+    (r): r is ValidArmResourceSchema =>
+      r.metadata.resourceIdPattern !== undefined
   );
   const incompleteResources = resources.filter(
     (r) => r.metadata.resourceIdPattern === undefined
@@ -719,7 +732,7 @@ export function postProcessArmResources(
       }
     }
 
-    // Take the longest matching path as the resourceScope
+    // Take the longest matching path as the ResourceScopeKind
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
       listOp.resourceScopeIdPattern = validCandidates[0];
@@ -735,7 +748,7 @@ export function postProcessArmResources(
 
   // Step 7: Filter out resources without Get/Read operations (non-singleton resources only)
   // Singleton resources can exist without Get operations
-  const filteredResources: ArmResourceSchema[] = [];
+  const filteredResources: ValidArmResourceSchema[] = [];
   for (const resource of validResources) {
     const hasReadOperation = resource.metadata.methods.some(
       (m) => m.kind === ResourceOperationKind.Read
@@ -789,14 +802,10 @@ export function postProcessArmResources(
   }
 
   // Step 8: Update scope.scopeIdPattern from resource ID patterns
+  // At this point all resources in filteredResources have a valid resourceIdPattern
   for (const resource of filteredResources) {
-    const pattern = resource.metadata.resourceIdPattern;
-    if (pattern) {
-      resource.metadata.scope = {
-        kind: resource.metadata.scope.kind,
-        scopeIdPattern: pattern.scopePath
-      };
-    }
+    resource.metadata.scope.scopeIdPattern =
+      resource.metadata.resourceIdPattern.scopePath;
   }
 
   return filteredResources;

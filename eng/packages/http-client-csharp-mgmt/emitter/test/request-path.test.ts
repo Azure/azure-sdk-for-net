@@ -1,7 +1,7 @@
 import { describe, it } from "vitest";
 import { strictEqual, deepStrictEqual, ok, throws } from "assert";
 import { RequestPath, isVariableSegment } from "../src/utils.js";
-import { ResourceScope } from "../src/resource-metadata.js";
+import { ResourceScopeKind } from "../src/resource-metadata.js";
 
 describe("RequestPath", () => {
   describe("parse and segments", () => {
@@ -258,47 +258,47 @@ describe("RequestPath", () => {
       const rp = new RequestPath(
         "/{resourceUri}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.Extension);
+      strictEqual(rp.operationScope, ResourceScopeKind.Extension);
     });
 
     it("should detect ResourceGroup scope", () => {
       const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.ResourceGroup);
+      strictEqual(rp.operationScope, ResourceScopeKind.ResourceGroup);
     });
 
     it("should detect Subscription scope", () => {
       const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.Subscription);
+      strictEqual(rp.operationScope, ResourceScopeKind.Subscription);
     });
 
     it("should detect ManagementGroup scope", () => {
       const rp = new RequestPath(
         "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.ManagementGroup);
+      strictEqual(rp.operationScope, ResourceScopeKind.ManagementGroup);
     });
 
     it("should detect Tenant scope for single provider path", () => {
       const rp = new RequestPath("/providers/Microsoft.Edge/sites/{siteName}");
-      strictEqual(rp.operationScope, ResourceScope.Tenant);
+      strictEqual(rp.operationScope, ResourceScopeKind.Tenant);
     });
 
     it("should detect Extension scope from multiple providers", () => {
       const rp = new RequestPath(
         "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.Extension);
+      strictEqual(rp.operationScope, ResourceScopeKind.Extension);
     });
 
     it("should detect Extension for nested extension resources under ResourceGroup", () => {
       const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}"
       );
-      strictEqual(rp.operationScope, ResourceScope.Extension);
+      strictEqual(rp.operationScope, ResourceScopeKind.Extension);
     });
   });
 });

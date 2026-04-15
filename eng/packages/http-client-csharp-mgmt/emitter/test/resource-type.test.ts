@@ -3,7 +3,7 @@ import {
   RequestPath,
   resolveResourceApiVersions,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScopeKind
 } from "../src/resource-metadata.js";
 import { strictEqual, deepStrictEqual } from "assert";
 
@@ -87,61 +87,61 @@ describe("Operation Scope Detection", () => {
   it("extension scope from {resourceUri} prefix", async () => {
     const path = "/{resourceUri}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Extension);
+    strictEqual(scope, ResourceScopeKind.Extension);
   });
 
   it("extension scope from {scope} prefix", async () => {
     const path = "/{scope}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Extension);
+    strictEqual(scope, ResourceScopeKind.Extension);
   });
 
   it("resource group scope", async () => {
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.ResourceGroup);
+    strictEqual(scope, ResourceScopeKind.ResourceGroup);
   });
 
   it("subscription scope", async () => {
     const path =
       "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Subscription);
+    strictEqual(scope, ResourceScopeKind.Subscription);
   });
 
   it("management group scope", async () => {
     const path =
       "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.ManagementGroup);
+    strictEqual(scope, ResourceScopeKind.ManagementGroup);
   });
 
   it("tenant scope for single provider path", async () => {
     const path = "/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Tenant);
+    strictEqual(scope, ResourceScopeKind.Tenant);
   });
 
   it("extension scope for multiple provider segments (serviceGroups)", async () => {
     const path =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Extension);
+    strictEqual(scope, ResourceScopeKind.Extension);
   });
 
   it("extension scope from generic variable prefix with {resourceId}", async () => {
     const path =
       "/{resourceId}/providers/Microsoft.DataProtection/backupInstances";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Extension);
+    strictEqual(scope, ResourceScopeKind.Extension);
   });
 
   it("extension scope for resources extending a specific ARM resource within a resource group", async () => {
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
     const scope = new RequestPath(path).operationScope;
-    strictEqual(scope, ResourceScope.Extension);
+    strictEqual(scope, ResourceScopeKind.Extension);
   });
 });
 
@@ -159,7 +159,7 @@ describe("Resolve Resource API Versions", () => {
       methodId,
       kind,
       operationPath: "/fake/path",
-      operationScope: ResourceScope.ResourceGroup
+      operationScope: ResourceScopeKind.ResourceGroup
     };
   }
 

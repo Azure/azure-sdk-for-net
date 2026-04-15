@@ -12,7 +12,7 @@ import {
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope,
+  ResourceScopeKind,
   ArmProviderSchema,
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
@@ -194,7 +194,7 @@ export function buildArmProviderSchema(
         const bestPrefixMatch = findLongestPrefixMatch(
           new RequestPath(operationPath),
           existingPathsForModel,
-          (path) => new RequestPath(path).parentPath
+          (path) => new RequestPath(path).trimLastSegment
         );
 
         // Selection strategy:
@@ -280,7 +280,7 @@ export function buildArmProviderSchema(
             model?.decorators?.find((d) => d.name == singleton)
           ),
           scope: {
-            kind: ResourceScope.Tenant,
+            kind: ResourceScopeKind.Tenant,
             scopeIdPattern: RequestPath.empty
           }, // temporary default, will be properly set later
           methods: [],
@@ -468,7 +468,9 @@ export function buildArmProviderSchema(
   );
 
   // Emit diagnostics for resources that were filtered out (non-singleton resources without Read operations)
-  const resourcesAfterFiltering = new Set(filteredResources);
+  const resourcesAfterFiltering: Set<ArmResourceSchema> = new Set(
+    filteredResources
+  );
   for (const resource of resourcesBeforeFiltering) {
     if (!resourcesAfterFiltering.has(resource)) {
       const model = resourceModelMap.get(resource.resourceModelId);
@@ -1035,7 +1037,7 @@ function getSingletonResource(
     | undefined;
   return singletonResource ?? "default";
 }
-function getResourceScope(methods?: ResourceMethod[]): ResourceScope {
+function getResourceScope(methods?: ResourceMethod[]): ResourceScopeKind {
   // Determine scope from the Read method's operation path, which is the source of truth.
   // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
   // model types like ProxyResource and may not reflect the actual scope for extension
@@ -1052,7 +1054,7 @@ function getResourceScope(methods?: ResourceMethod[]): ResourceScope {
   }
 
   // Final fallback to ResourceGroup
-  return ResourceScope.ResourceGroup;
+  return ResourceScopeKind.ResourceGroup;
 }
 
 /**

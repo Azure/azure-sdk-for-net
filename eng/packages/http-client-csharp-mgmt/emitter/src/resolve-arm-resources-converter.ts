@@ -46,7 +46,7 @@ import {
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope,
+  ResourceScopeKind,
   postProcessArmResources,
   ParentResourceLookupContext,
   assignNonResourceMethodsToResources,
@@ -332,7 +332,9 @@ function convertResolvedResourceToMetadata(
   resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
-  const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
+  const operationScopeKind = convertScopeToResourceScope(
+    resolvedResource.scope
+  );
   let resourceIdPattern = "";
 
   // Convert lifecycle operations
@@ -347,8 +349,8 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Read,
             operationPath: new RequestPath(readOp.path),
-            operationScope: resourceScope,
-            resourceScopeIdPattern: calculateResourceScope(
+            operationScope: operationScopeKind,
+            resourceScopeIdPattern: calculateResourceScopePath(
               readOp.path,
               resolvedResource
             )
@@ -372,8 +374,8 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Create,
             operationPath: new RequestPath(createOp.path),
-            operationScope: resourceScope,
-            resourceScopeIdPattern: calculateResourceScope(
+            operationScope: operationScopeKind,
+            resourceScopeIdPattern: calculateResourceScopePath(
               createOp.path,
               resolvedResource
             )
@@ -393,8 +395,8 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Update,
             operationPath: new RequestPath(updateOp.path),
-            operationScope: resourceScope,
-            resourceScopeIdPattern: calculateResourceScope(
+            operationScope: operationScopeKind,
+            resourceScopeIdPattern: calculateResourceScopePath(
               updateOp.path,
               resolvedResource
             )
@@ -414,8 +416,8 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Delete,
             operationPath: new RequestPath(deleteOp.path),
-            operationScope: resourceScope,
-            resourceScopeIdPattern: calculateResourceScope(
+            operationScope: operationScopeKind,
+            resourceScopeIdPattern: calculateResourceScopePath(
               deleteOp.path,
               resolvedResource
             )
@@ -445,8 +447,8 @@ function convertResolvedResourceToMetadata(
             ? ResourceOperationKind.List
             : ResourceOperationKind.Action,
           operationPath: new RequestPath(actionOp.path),
-          operationScope: resourceScope,
-          resourceScopeIdPattern: calculateResourceScope(
+          operationScope: operationScopeKind,
+          resourceScopeIdPattern: calculateResourceScopePath(
             actionOp.path,
             resolvedResource
           )
@@ -534,38 +536,38 @@ function getMethodIdFromOperation(
 }
 
 /**
- * Convert scope string/object to ResourceScope enum
+ * Convert scope string/object to ResourceScopeKind enum
  */
 function convertScopeToResourceScope(
   scope: string | ResolvedResource | undefined
-): ResourceScope {
+): ResourceScopeKind {
   if (!scope) {
     // TODO: does it make sense that we have something without scope??
-    return ResourceScope.ResourceGroup; // Default
+    return ResourceScopeKind.ResourceGroup; // Default
   }
 
   if (typeof scope === "string") {
     switch (scope) {
       case "Tenant":
-        return ResourceScope.Tenant;
+        return ResourceScopeKind.Tenant;
       case "Subscription":
-        return ResourceScope.Subscription;
+        return ResourceScopeKind.Subscription;
       case "ResourceGroup":
-        return ResourceScope.ResourceGroup;
+        return ResourceScopeKind.ResourceGroup;
       case "ManagementGroup":
-        return ResourceScope.ManagementGroup;
+        return ResourceScopeKind.ManagementGroup;
       case "Scope":
       case "ExternalResource":
-        return ResourceScope.Extension;
+        return ResourceScopeKind.Extension;
       default:
-        return ResourceScope.ResourceGroup;
+        return ResourceScopeKind.ResourceGroup;
     }
   }
 
   // TODO: Schema update needed - when scope is a ResolvedResource (extension resource),
   // our schema needs to support representing the specific parent resource, not just "Extension"
   // If scope is a ResolvedResource, it's an extension resource
-  return ResourceScope.Extension;
+  return ResourceScopeKind.Extension;
 }
 
 /**
@@ -575,7 +577,7 @@ function formatResourceType(resourceType: ResourceType): string {
   return `${resourceType.provider}/${resourceType.types.join("/")}`;
 }
 
-function calculateResourceScope(
+function calculateResourceScopePath(
   operationPath: string,
   resolvedResource: ResolvedResource
 ): RequestPath | undefined {
@@ -702,13 +704,7 @@ function assignListOperationsToResources(
         targetResource = findLongestPrefixMatch(
           new RequestPath(listOp.path),
           resourcesForModel,
-          (r) => {
-            const pattern = r.metadata.resourceIdPattern;
-            if (pattern === undefined) return undefined;
-            // Strip the last segment (the key variable like {resourceName})
-            // so we compare against the collection/type segment
-            return pattern.parentPath;
-          }
+          (r) => r.metadata.resourceIdPattern?.trimLastSegment
         );
 
         // Fall back to resource type matching if prefix matching didn't find a match
