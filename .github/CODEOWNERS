@@ -80,10 +80,10 @@
 ####################
 
 # PRLabel: %AI Agents
-/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp @ericsuh
+/sdk/agentserver/    @ankitbko @RaviPidaparthi
 
 # ServiceLabel: %AI Agents
-# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp @ericsuh
+# ServiceOwners: @ankitbko @RaviPidaparthi
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
