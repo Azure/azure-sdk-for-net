@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     // PatchProxyResource is replaced with TrackedResource for C# (via @@alternateType),
@@ -10,7 +8,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public partial class ServiceFabricApplicationPatch
     {
         /// <summary> Azure resource etag. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public ETag? ETag { get; }
     }
 }

@@ -10,8 +10,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     // ServiceResourceUpdate.properties is polymorphic (StatefulServiceUpdateProperties /
     // StatelessServiceUpdateProperties), so @@flattenProperty cannot be used in the TypeSpec.
     // These shim properties delegate to the generated Properties bag.
+    //
+    // PatchProxyResource is replaced with TrackedResource for C# (via @@alternateType),
+    // which loses the etag property. Adding it back for backward compatibility.
     public partial class ServiceFabricServicePatch
     {
+        /// <summary> Azure resource etag. </summary>
+        public ETag? ETag { get; }
+
         /// <summary> A list that describes the correlation of the service with other services. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<ServiceCorrelationDescription> CorrelationScheme => Properties?.CorrelationScheme;
