@@ -5,29 +5,27 @@
 - Phase 2: Build-fix loop — 0 compilation errors
   - Spec-side: 70+ @@clientName decorators, 25+ @@alternateType entries in client.tsp
   - SDK-side: Multiple Custom code fixes for property delegation and type alignment
-  - Added CodeGenType stubs for 8 patch property renames
-- Phase 3 (in progress): Reduced from ~950 to 165 unique API compat violations
-  - Added backward-compat wrapper properties: NetAppVolumeData (47), NetAppVolumePatch (16)
-  - Added deprecated operation stubs: NetAppVolumeResource (70+ methods)
-  - Added backward-compat constructors: Patch types (AzureLocation), BackupsMigrationContent (string)
-  - Fixed ExportPolicyRule naming (container vs individual rule)
-  - Added extensible enum members: NetAppVolumeQuotaRuleProvisioningState (8)
+- Phase 3 (in progress): Reduced from ~950 to 175 unique API compat violations
+  - Backward-compat wrapper properties: NetAppVolumeData (47), NetAppVolumePatch (16)
+  - Deprecated operation stubs: NetAppVolumeResource (80+), NetAppVolumeCollection (10)
+  - Backward-compat constructors: Patch types, BackupsMigrationContent
+  - Fixed ExportPolicyRule naming, added extensible enum members
+  - Created stub types: NetAppSubscriptionQuotaItemResource/Collection, RegionInfoResourceCollection
+  - Fixed RegenSdkLocal.ps1 to accept service folder path
 
-### Remaining (~165 unique API compat violations)
+### Remaining (~175 unique API compat violations)
 
-**Cannot fix (structural changes ~25):**
-- Enum → extensible enum: NetAppProvisioningState (11), including value__ field
-- CannotRemoveBaseTypeOrInterface: CapacityPoolPatch, NetAppBackupPolicyPatch, SnapshotPolicyPatch (TrackedResourceData),
-  NetAppProvisioningState (System.Enum), NetAppSubvolumeMetadata/NetAppVolumeGroupResult (ResourceData),
-  NetAppVolumePatch/NetAppVolumeResource/NetAppVolumeCollection/NetAppBackupVaultBackupResource (IJsonModel/IEnumerable)
-- TypesMustExist: NetAppSubscriptionQuotaItemCollection/Resource, RegionInfoResourceCollection
+**Cannot fix (structural ~25):**
+- Enum → extensible enum: NetAppProvisioningState (11)
+- CannotRemoveBaseTypeOrInterface: Patch types (TrackedResourceData), enum (System.Enum),
+  models (ResourceData), Volume types (IJsonModel/IEnumerable)
 
-**Remaining fixable (~140):**
-- NetAppExtensions (18): deprecated extension method stubs needed
-- Mocking (12): deprecated mock method stubs needed
-- NetAppVolumeGroupVolume (9): property type mismatches (ResourceIdentifier, Guid)
-- NetAppVolumeCollection (8): operation stubs needed
-- NetAppAccountResource (7): operation stubs needed
+**Remaining fixable (~150):**
+- NetAppExtensions (18): deprecated extension method stubs
+- Mocking (12): deprecated mock method stubs
+- NetAppVolumeGroupVolume (9): property type mismatches
+- NetAppAccountResource (7): operation stubs
 - NetAppVolumeResource (6): remaining operation stubs
-- Various constructor parameter type changes (~30)
-- Scattered property/method mismatches across models (~50)
+- Constructor parameter type changes (~30)
+- Scattered property/method mismatches (~50)
+- New stub type members (~20)
