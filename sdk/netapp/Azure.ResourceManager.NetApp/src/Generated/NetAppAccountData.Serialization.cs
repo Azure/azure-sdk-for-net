@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && Optional.IsDefined(ETagValue))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETagValue);
             }
             if (Optional.IsDefined(Identity))
             {

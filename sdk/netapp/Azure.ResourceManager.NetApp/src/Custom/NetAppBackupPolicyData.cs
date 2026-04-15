@@ -22,5 +22,9 @@ namespace Azure.ResourceManager.NetApp
         //     get => Enabled;
         //     set => Enabled = value;
         // }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ETag? ETag => ETagValue is string etag ? new ETag(etag) : null;
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeGroupResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Location))
+            if (Optional.IsDefined(LocationString))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(LocationString);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {

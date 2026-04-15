@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteObjectValue(Properties, options);
             }
             writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
+            writer.WriteStringValue(LocationString);
         }
 
         /// <param name="reader"> The JSON reader. </param>

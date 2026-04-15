@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp
         NetAppBackupVaultBackupData IJsonModel<NetAppBackupVaultBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppBackupVaultBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupVaultBackupData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<NetAppBackupVaultBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupVaultBackupData>(BackupVaultBackupData, options, AzureResourceManagerNetAppContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

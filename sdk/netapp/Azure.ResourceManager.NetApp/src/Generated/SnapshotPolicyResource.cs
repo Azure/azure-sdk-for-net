@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SnapshotPolicyVolumeList>> GetVolumesAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SnapshotPolicyVolumeList>> GetSnapshotPolicyVolumesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _snapshotPoliciesClientDiagnostics.CreateScope("SnapshotPolicyResource.GetVolumes");
             scope.Start();
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SnapshotPolicyVolumeList> GetVolumes(CancellationToken cancellationToken = default)
+        internal virtual Response<SnapshotPolicyVolumeList> GetSnapshotPolicyVolumes(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _snapshotPoliciesClientDiagnostics.CreateScope("SnapshotPolicyResource.GetVolumes");
             scope.Start();

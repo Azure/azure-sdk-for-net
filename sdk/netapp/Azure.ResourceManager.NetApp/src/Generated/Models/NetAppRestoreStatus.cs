@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         internal NetAppRestoreStatus(bool? healthy, VolumeRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Healthy = healthy;
-            RelationshipStatus = relationshipStatus;
+            RelationshipStatusValue = relationshipStatus;
             MirrorState = mirrorState;
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? Healthy { get; }
 
         /// <summary> Status of the restore SnapMirror relationship. </summary>
-        public VolumeRestoreRelationshipStatus? RelationshipStatus { get; }
+        internal VolumeRestoreRelationshipStatus? RelationshipStatusValue { get; }
 
         /// <summary> The status of the restore. </summary>
         public NetAppMirrorState? MirrorState { get; }

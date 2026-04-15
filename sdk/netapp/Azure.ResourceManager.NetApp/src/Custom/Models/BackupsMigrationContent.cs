@@ -15,5 +15,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupVaultId"> The resource ID of the backup vault. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BackupsMigrationContent(string backupVaultId) : this(new ResourceIdentifier(backupVaultId)) { }
+
+        /// <summary> The resource ID of the backup vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string BackupVaultId => BackupVaultIdValue;
     }
 }

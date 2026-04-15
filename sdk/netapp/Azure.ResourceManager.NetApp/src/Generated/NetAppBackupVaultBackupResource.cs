@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NetAppBackupVaultBackupData Data
+        internal virtual NetAppBackupVaultBackupData BackupVaultBackupData
         {
             get
             {

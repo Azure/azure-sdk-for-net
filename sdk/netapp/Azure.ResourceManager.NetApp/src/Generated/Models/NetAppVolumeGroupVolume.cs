@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource identifier used to identify the Snapshot. </summary>
-        public ResourceIdentifier SnapshotId
+        internal ResourceIdentifier SnapshotResourceId
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource identifier used to identify the Backup. </summary>
-        public ResourceIdentifier BackupId
+        internal ResourceIdentifier BackupResourceId
         {
             get
             {
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Data store resource unique identifier. </summary>
-        public IReadOnlyList<string> DataStoreResourceId
+        internal IReadOnlyList<string> DataStoreResourceIdStrings
         {
             get
             {
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Pool Resource Id used in case of creating a volume through volume group. </summary>
-        public string CapacityPoolResourceId
+        internal string CapacityPoolResourceIdString
         {
             get
             {

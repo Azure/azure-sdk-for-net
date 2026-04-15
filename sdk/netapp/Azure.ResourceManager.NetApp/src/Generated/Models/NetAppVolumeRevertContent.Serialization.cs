@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppVolumeRevertContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SnapshotId))
+            if (Optional.IsDefined(SnapshotResourceId))
             {
                 writer.WritePropertyName("snapshotId"u8);
-                writer.WriteStringValue(SnapshotId);
+                writer.WriteStringValue(SnapshotResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

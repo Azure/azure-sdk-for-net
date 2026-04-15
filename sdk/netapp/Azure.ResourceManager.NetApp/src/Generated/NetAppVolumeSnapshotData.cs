@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            Location = location;
+            LocationString = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.NetApp
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Location = location;
+            LocationString = location;
         }
 
         /// <summary> Snapshot Properties. </summary>
         internal SnapshotProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; set; }
+        internal string LocationString { get; set; }
 
         /// <summary> UUID v4 used to identify the Snapshot. </summary>
         public string SnapshotId

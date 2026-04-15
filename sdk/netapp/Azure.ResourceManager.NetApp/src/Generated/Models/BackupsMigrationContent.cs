@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             Argument.AssertNotNull(backupVaultId, nameof(backupVaultId));
 
-            BackupVaultId = backupVaultId;
+            BackupVaultIdValue = backupVaultId;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BackupsMigrationContent(ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BackupVaultId = backupVaultId;
+            BackupVaultIdValue = backupVaultId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ResourceId of the Backup Vault. </summary>
-        public ResourceIdentifier BackupVaultId { get; }
+        internal string BackupVaultIdValue { get; }
     }
 }

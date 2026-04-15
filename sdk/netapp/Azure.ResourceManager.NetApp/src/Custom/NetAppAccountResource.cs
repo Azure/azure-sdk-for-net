@@ -204,5 +204,22 @@ namespace Azure.ResourceManager.NetApp
         {
             throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitsAccounts() instead.");
         }
+
+        /// <summary> Get the default, current and usages account quota limit. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccount(string quotaLimitName, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitsAccountResource() instead.");
+        }
+
+        /// <summary> Get the default, current and usages account quota limit. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+            throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimitsAccountResourceAsync() instead.");
+        }
     }
 }

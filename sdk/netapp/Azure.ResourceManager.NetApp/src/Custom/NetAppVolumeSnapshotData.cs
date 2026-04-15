@@ -17,5 +17,13 @@ namespace Azure.ResourceManager.NetApp
         public NetAppVolumeSnapshotData(AzureLocation location) : this(location.ToString())
         {
         }
+
+        /// <summary> Resource location. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureLocation Location
+        {
+            get => new AzureLocation(LocationString ?? string.Empty);
+            set => LocationString = value.ToString();
+        }
     }
 }

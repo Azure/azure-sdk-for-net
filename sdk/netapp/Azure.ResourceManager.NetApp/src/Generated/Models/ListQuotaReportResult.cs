@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         internal NetAppVolumeQuotaReportListResult Properties { get; }
 
         /// <summary> List of quota reports. </summary>
-        public IList<NetAppVolumeQuotaReport> QuotaReportRecords
+        public IReadOnlyList<NetAppVolumeQuotaReport> QuotaReportRecords
         {
             get
             {
-                return Properties.QuotaReportRecords;
+                return (IReadOnlyList<NetAppVolumeQuotaReport>)Properties.QuotaReportRecords;
             }
         }
     }

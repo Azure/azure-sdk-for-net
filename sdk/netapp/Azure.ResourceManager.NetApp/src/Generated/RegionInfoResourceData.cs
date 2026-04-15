@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings
+        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings
         {
             get
             {
-                return Properties.AvailabilityZoneMappings;
+                return (IList<AvailabilityZoneMapping>)Properties.AvailabilityZoneMappings;
             }
         }
     }

@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The status of the backup relationship. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public VolumeBackupRelationshipStatus? VolumeBackupRelationshipStatus => RelationshipStatus;
+        public VolumeBackupRelationshipStatus? VolumeBackupRelationshipStatus => RelationshipStatusValue;
+
+        /// <summary> The status of the backup relationship (old API type). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppRelationshipStatus? RelationshipStatus =>
+            RelationshipStatusValue.HasValue ? new NetAppRelationshipStatus(RelationshipStatusValue.Value.ToString()) : null;
     }
 }

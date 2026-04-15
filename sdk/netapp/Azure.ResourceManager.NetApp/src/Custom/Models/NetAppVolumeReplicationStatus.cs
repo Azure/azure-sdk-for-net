@@ -7,9 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication status
-    /// </summary>
+    /// <summary> Replication status. </summary>
     public partial class NetAppVolumeReplicationStatus
     {
         /// <summary> Replication health check. </summary>
@@ -18,6 +16,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The status of the replication relationship. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public VolumeReplicationRelationshipStatus? VolumeReplicationRelationshipStatus => RelationshipStatus;
+        public VolumeReplicationRelationshipStatus? VolumeReplicationRelationshipStatus => RelationshipStatusValue;
+
+        /// <summary> The status of the replication relationship (old API type). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppRelationshipStatus? RelationshipStatus =>
+            RelationshipStatusValue.HasValue ? new NetAppRelationshipStatus(RelationshipStatusValue.Value.ToString()) : null;
     }
 }
