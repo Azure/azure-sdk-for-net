@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Cannot re-record: Azure CDN classic (StandardMicrosoft) no longer supports new profile creation")]
         public async Task CheckNameAvailability()
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Cannot re-record: Azure CDN classic (StandardMicrosoft) no longer supports new profile creation")]
         public async Task CheckNameAvailabilityWithSub()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
