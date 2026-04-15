@@ -1572,10 +1572,10 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppVolumeResource : Azure.ResourceManager.ArmResource
     {
+        public static readonly Azure.Core.ResourceType ResourceType;
         protected NetAppVolumeResource() { }
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceType ResourceType { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppVolumeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetApp.Models.SvmPeerCommandResult> AuthorizeExternalReplication(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

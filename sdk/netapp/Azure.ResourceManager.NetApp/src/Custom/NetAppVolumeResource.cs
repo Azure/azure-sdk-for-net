@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Gets the resource type for the operations. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceType ResourceType => VolumeResource.ResourceType;
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
 
         // ---- Instance property ----
 
