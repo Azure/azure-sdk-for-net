@@ -176,6 +176,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported. Use GetNetAppResourceQuotaLimit() instead.");
@@ -183,6 +184,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Gets a NetAppSubscriptionQuotaItem. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask.ConfigureAwait(false);

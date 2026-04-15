@@ -890,6 +890,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Get a ransomware report. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<RansomwareReportResource> GetRansomwareReport(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
@@ -897,6 +898,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Get a ransomware report. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual async Task<Response<RansomwareReportResource>> GetRansomwareReportAsync(string ransomwareReportName, CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask.ConfigureAwait(false);
