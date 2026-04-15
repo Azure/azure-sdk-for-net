@@ -13,7 +13,9 @@ namespace Azure.SdkAnalyzers
             "Use ConfigureAwait(false) instead of ConfigureAwait(true).",
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
-            true);
+            true,
+            "Calls to ConfigureAwait should use false rather than true to avoid unnecessarily capturing the synchronization context.",
+            "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0101.md");
 
         public static readonly DiagnosticDescriptor AZC0012 = new(
             nameof(AZC0012),
