@@ -451,7 +451,6 @@ namespace Azure.Communication.Messages
     public partial class ConversationThreadClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public ConversationThreadClientSettings() { }
-        public string CommunicationTokenCredential { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Communication.Messages.CommunicationMessagesClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

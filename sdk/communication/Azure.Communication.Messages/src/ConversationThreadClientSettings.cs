@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages
             {
                 Endpoint = endpoint;
             }
-            
+
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
