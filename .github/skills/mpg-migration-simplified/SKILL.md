@@ -60,7 +60,7 @@ Every file needs a justification comment.
 
 ## Phase 4 — Self-Review
 
-Review changes against the `mpg-migration-pr-review` skill rules locally — check customization quality (Phase 4 rules) and decorator preference (Phase 5 rules). Fix issues before proceeding.
+Review changes against the `mpg-migration-pr-review` skill rules locally — check customization quality rules and decorator preference rules. Fix issues before proceeding.
 
 ## Phase 5 — Create PRs
 
