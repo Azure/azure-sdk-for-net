@@ -738,5 +738,64 @@ namespace Azure.Storage.Tests
             Assert.AreEqual("original", third.Token);
             Assert.GreaterOrEqual(acquireCount, 2);
         }
+
+        [Test]
+        public async Task BackgroundAcquireTimeout_KeepsCurrentValueAndRetriesImmediately()
+        {
+            var backgroundTimeout = TimeSpan.FromSeconds(1);
+            int acquireCount = 0;
+            var responseMre = new ManualResetEventSlim(true);
+
+            var cache = new AutoRefreshingCache<TestValue>(
+                acquire: async (isAsync, ct) =>
+                {
+                    int count = Interlocked.Increment(ref acquireCount);
+                    if (count == 1)
+                    {
+                        // First call: return a value whose refreshOn = now so the
+                        // next GetAsync triggers a background refresh.
+                        return MakeValue("original",
+                            expiresOn: DateTimeOffset.UtcNow.AddMinutes(10),
+                            refreshOn: DateTimeOffset.UtcNow);
+                    }
+                    if (count == 2)
+                    {
+                        // Second call (background): block until the timeout fires.
+                        // The CTS created by AcquireInBackgroundAsync will cancel
+                        // after backgroundAcquireTimeout, triggering the timeout path.
+                        await Task.Delay(Timeout.InfiniteTimeSpan, ct);
+                    }
+                    // Third call (retry after timeout): succeed with a new value.
+                    responseMre.Wait(ct);
+                    return MakeValue("refreshed", TimeSpan.FromMinutes(30));
+                },
+                backgroundAcquireTimeout: backgroundTimeout);
+
+            // Phase 1: Foreground acquire returns "original" with refreshOn = now.
+            TestValue first = await GetValueAsync(cache);
+            Assert.AreEqual("original", first.Token);
+
+            // Phase 2: Triggers background refresh (which will block and timeout).
+            // Returns "original" immediately since the value is still valid.
+            TestValue second = await GetValueAsync(cache);
+            Assert.AreEqual("original", second.Token);
+
+            // Phase 3: Wait for the background timeout to fire and the background
+            // TCS to be completed with the current value (refreshOn = now).
+            await Task.Delay(backgroundTimeout + TimeSpan.FromSeconds(1));
+
+            // Phase 4: The timed-out background result was promoted with refreshOn = now,
+            // so this call triggers another background refresh — which succeeds this time.
+            TestValue third = await GetValueAsync(cache);
+            Assert.AreEqual("original", third.Token);
+
+            // Wait for the successful background refresh to complete.
+            await Task.Delay(1_000);
+
+            // Phase 5: The refreshed value is now promoted.
+            TestValue fourth = await GetValueAsync(cache);
+            Assert.AreEqual("refreshed", fourth.Token);
+            Assert.AreEqual(3, acquireCount);
+        }
     }
 }

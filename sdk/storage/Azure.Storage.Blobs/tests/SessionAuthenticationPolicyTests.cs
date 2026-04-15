@@ -174,6 +174,7 @@ namespace Azure.Storage.Blobs.Tests
         private static SessionOptions SingleContainerOptions => new SessionOptions
         {
             SessionMode = SessionMode.SingleContainer,
+            AccountName = AccountName,
             ContainerName = ContainerName
         };
 
@@ -224,6 +225,37 @@ namespace Azure.Storage.Blobs.Tests
                 sessionOptions: new SessionOptions
                 {
                     SessionMode = SessionMode.SingleContainer,
+                    AccountName = AccountName,
+                    ContainerName = null
+                }));
+        }
+
+        [Test]
+        public void Ctor_SingleContainerMode_EmptyAccountName_Throws()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            Assert.Throws<ArgumentException>(() => new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => CreateMockServiceClient(),
+                sessionOptions: new SessionOptions
+                {
+                    SessionMode = SessionMode.SingleContainer,
+                    AccountName = null,
+                    ContainerName = ContainerName
+                }));
+        }
+
+        [Test]
+        public void Ctor_SingleContainerMode_BothAccountNameAndContainerNameEmpty_Throws()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            Assert.Throws<ArgumentException>(() => new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => CreateMockServiceClient(),
+                sessionOptions: new SessionOptions
+                {
+                    SessionMode = SessionMode.SingleContainer,
+                    AccountName = null,
                     ContainerName = null
                 }));
         }

@@ -54,6 +54,7 @@ namespace Azure.Storage.Blobs
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Request100ContinueOptions Request100ContinueOptions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionOptions SessionOptions { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { get { throw null; } }
@@ -117,6 +118,8 @@ namespace Azure.Storage.Blobs
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateIfNotExists(Azure.Storage.Blobs.Models.PublicAccessType publicAccessType, System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType publicAccessType = Azure.Storage.Blobs.Models.PublicAccessType.None, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Blobs.Models.BlobContainerEncryptionScopeOptions encryptionScopeOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo>> CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType publicAccessType, System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.CreateSessionResponse> CreateSession(Azure.Storage.Blobs.Models.CreateSessionConfiguration options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.CreateSessionResponse>> CreateSessionAsync(Azure.Storage.Blobs.Models.CreateSessionConfiguration options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteBlob(string blobName, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -331,6 +334,21 @@ namespace Azure.Storage.Blobs.Models
         RehydratePendingToCool = 1,
         RehydratePendingToCold = 2,
         RehydratePendingToSmart = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AuthenticationType : System.IEquatable<Azure.Storage.Blobs.Models.AuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AuthenticationType(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.AuthenticationType Hmac { get { throw null; } }
+        public bool Equals(Azure.Storage.Blobs.Models.AuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.AuthenticationType left, Azure.Storage.Blobs.Models.AuthenticationType right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.AuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.AuthenticationType left, Azure.Storage.Blobs.Models.AuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BlobAccessPolicy
     {
@@ -1089,6 +1107,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlockInfo BlockInfo(byte[] contentHash, byte[] contentCrc64, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.BlockInfo BlockInfo(byte[] contentHash, byte[] contentCrc64, string encryptionKeySha256, string encryptionScope) { throw null; }
         public static Azure.Storage.Blobs.Models.BlockList BlockList(System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = null, System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = null) { throw null; }
+        public static Azure.Storage.Blobs.Models.CreateSessionResponse CreateSessionResponse(string id = null, System.DateTimeOffset? expiration = default(System.DateTimeOffset?), Azure.Storage.Blobs.Models.AuthenticationType? authenticationType = default(Azure.Storage.Blobs.Models.AuthenticationType?), Azure.Storage.Blobs.Models.SessionCredentials credentials = null) { throw null; }
         public static Azure.Storage.Blobs.Models.GetBlobTagResult GetBlobTagResult(System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
         public static Azure.Storage.Blobs.Models.ObjectReplicationPolicy ObjectReplicationPolicy(string policyId, System.Collections.Generic.IList<Azure.Storage.Blobs.Models.ObjectReplicationRule> rules) { throw null; }
         public static Azure.Storage.Blobs.Models.ObjectReplicationRule ObjectReplicationRule(string ruleId, Azure.Storage.Blobs.Models.ObjectReplicationStatus replicationStatus) { throw null; }
@@ -1096,6 +1115,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.PageInfo PageInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, long blobSequenceNumber, string encryptionKeySha256) { throw null; }
         public static Azure.Storage.Blobs.Models.PageInfo PageInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, byte[] contentCrc64, long blobSequenceNumber, string encryptionKeySha256, string encryptionScope) { throw null; }
         public static Azure.Storage.Blobs.Models.PageRangesInfo PageRangesInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long blobContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> pageRanges, System.Collections.Generic.IEnumerable<Azure.HttpRange> clearRanges) { throw null; }
+        public static Azure.Storage.Blobs.Models.SessionCredentials SessionCredentials(string sessionToken = null, string sessionKey = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null) { throw null; }
         public static Azure.Storage.Blobs.Models.TaggedBlobItem TaggedBlobItem(string blobName = null, string blobContainerName = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.Storage.Blobs.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStartsOn, System.DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value) { throw null; }
@@ -1252,6 +1272,19 @@ namespace Azure.Storage.Blobs.Models
         Success = 1,
         Aborted = 2,
         Failed = 3,
+    }
+    public partial class CreateSessionConfiguration
+    {
+        public CreateSessionConfiguration(Azure.Storage.Blobs.Models.AuthenticationType authenticationType) { }
+        public Azure.Storage.Blobs.Models.AuthenticationType AuthenticationType { get { throw null; } }
+    }
+    public partial class CreateSessionResponse
+    {
+        internal CreateSessionResponse() { }
+        public Azure.Storage.Blobs.Models.AuthenticationType? AuthenticationType { get { throw null; } }
+        public Azure.Storage.Blobs.Models.SessionCredentials Credentials { get { throw null; } }
+        public System.DateTimeOffset? Expiration { get { throw null; } }
+        public string Id { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomerProvidedKey : System.IEquatable<Azure.Storage.Blobs.Models.CustomerProvidedKey>
@@ -1501,6 +1534,25 @@ namespace Azure.Storage.Blobs.Models
         Max = 0,
         Update = 1,
         Increment = 2,
+    }
+    public partial class SessionCredentials
+    {
+        internal SessionCredentials() { }
+        public string SessionKey { get { throw null; } }
+        public string SessionToken { get { throw null; } }
+    }
+    public enum SessionMode
+    {
+        Auto = 0,
+        None = 0,
+        SingleContainer = 1,
+    }
+    public partial class SessionOptions
+    {
+        public SessionOptions() { }
+        public string AccountName { get { throw null; } set { } }
+        public string ContainerName { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionMode SessionMode { get { throw null; } set { } }
     }
     public enum SkuName
     {

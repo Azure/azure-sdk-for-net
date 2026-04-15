@@ -60,6 +60,14 @@ namespace Azure.Storage.Blobs
                 backgroundAcquireTimeout: BackgroundAcquireTimeout);
 
             if (_sessionOptions.SessionMode == SessionMode.SingleContainer
+                && string.IsNullOrEmpty(_sessionOptions.AccountName))
+            {
+                throw new ArgumentException(
+                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleContainer)}.",
+                    nameof(sessionOptions));
+            }
+
+            if (_sessionOptions.SessionMode == SessionMode.SingleContainer
                 && string.IsNullOrEmpty(_sessionOptions.ContainerName))
             {
                 throw new ArgumentException(
@@ -291,10 +299,9 @@ namespace Azure.Storage.Blobs
         /// <see cref="StorageSharedKeyPipelinePolicy"/>, then sets the
         /// Authorization header with the Session scheme.
         /// </summary>
-        private static void SignRequestAndSetAuthHeader(HttpMessage message, SessionTokenInfo sessionInfo)
+        private void SignRequestAndSetAuthHeader(HttpMessage message, SessionTokenInfo sessionInfo)
         {
-            Uri uri = message.Request.Uri.ToUri();
-            string accountName = new BlobUriBuilder(uri).AccountName;
+            string accountName = _sessionOptions.AccountName;
             var credential = new StorageSharedKeyCredential(accountName, sessionInfo.SessionKey);
             var sharedKeyPolicy = new StorageSharedKeyPipelinePolicy(credential);
 

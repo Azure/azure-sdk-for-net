@@ -16,6 +16,12 @@ namespace Azure.Storage.Blobs.Models
         public SessionMode SessionMode { get; set; } = SessionMode.Auto;
 
         /// <summary>
+        /// The Account name to use for signing the session key.
+        /// Must be set if <see cref="Models.SessionMode"/> is not <see cref="SessionMode.None"/>.
+        /// </summary>
+        public string AccountName { get; set; }
+
+        /// <summary>
         /// The container name to cache for Session Authentication.
         /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.SingleContainer"/>.
         /// </summary>
