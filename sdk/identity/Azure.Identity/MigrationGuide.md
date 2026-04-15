@@ -89,7 +89,7 @@ Update `Azure.Identity.Broker` to 1.6.0 or later:
 
 ```diff
  <ItemGroup>
--  <PackageReference Include="Azure.Identity.Broker" Version="1.4.0" />
+-  <PackageReference Include="Azure.Identity.Broker" Version="1.5.0" />
 +  <PackageReference Include="Azure.Identity.Broker" Version="1.6.0" />
  </ItemGroup>
 ```
