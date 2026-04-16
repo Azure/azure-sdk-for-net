@@ -16,7 +16,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Capacity pool patch resource. </summary>
+    /// <summary> The CapacityPoolPatch. </summary>
     public partial class CapacityPoolPatch : TrackedResourceData, IJsonModel<CapacityPoolPatch>
     {
         /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/> for deserialization. </summary>
@@ -125,16 +125,30 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             PoolPatchProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -151,25 +165,6 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -193,6 +188,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new CapacityPoolPatch(
+                id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                location,
-                id,
-                name,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties);
         }
     }
