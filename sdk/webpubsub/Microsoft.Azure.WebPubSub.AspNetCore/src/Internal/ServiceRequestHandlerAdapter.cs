@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -30,13 +31,13 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void RegisterHub<THub>() where THub : WebPubSubHub
+        public void RegisterHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>() where THub : WebPubSubHub
         {
             var hub = Create<THub>();
             RegisterHub(hub.GetType().Name, hub);
         }
 
-        public void RegisterHub<THub>(string hubName) where THub : WebPubSubHub
+        public void RegisterHub<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>(string hubName) where THub : WebPubSubHub
         {
             var hub = Create<THub>();
             RegisterHub(hubName, hub);
@@ -263,7 +264,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         private static string SerializeMqttConnectErrorResponse(MqttConnectEventErrorResponse response) =>
             JsonSerializer.Serialize(response, WebPubSubCommonJsonSerializerContext.Default.MqttConnectEventErrorResponse);
 
-        private THub Create<THub>() where THub : WebPubSubHub
+        private THub Create<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THub>() where THub : WebPubSubHub
         {
             var hub = _provider.GetService<THub>() ?? ActivatorUtilities.CreateInstance<THub>(_provider);
 
