@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
-                writer.WriteStringValue(SourceUri);
+                writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityDataUri))
             {
                 writer.WritePropertyName("securityDataUri"u8);
-                writer.WriteStringValue(SecurityDataUri);
+                writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SecurityMetadataUri))
             {
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier storageAccountId = default;
             ImageDiskReference imageReference = default;
             ImageDiskReference galleryImageReference = default;
-            string sourceUri = default;
+            Uri sourceUri = default;
             ResourceIdentifier sourceResourceId = default;
             string sourceUniqueId = default;
             long? uploadSizeBytes = default;
             int? logicalSectorSize = default;
-            string securityDataUri = default;
+            Uri securityDataUri = default;
             Uri securityMetadataUri = default;
             bool? performancePlus = default;
             ResourceIdentifier elasticSanResourceId = default;
@@ -246,7 +246,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sourceUri"u8))
                 {
-                    sourceUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -283,7 +287,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("securityDataUri"u8))
                 {
-                    securityDataUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityDataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("securityMetadataUri"u8))

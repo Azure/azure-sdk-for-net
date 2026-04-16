@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfigurationProperties"/>. </summary>
         public VirtualMachineScaleSetUpdateIPConfigurationProperties()
         {
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<SubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<SubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<SubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<SubResource>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfigurationProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<SubResource> applicationGatewayBackendAddressPools, IList<SubResource> applicationSecurityGroups, IList<SubResource> loadBalancerBackendAddressPools, IList<SubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Compute.Models
         public IPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups { get; } = new ChangeTrackingList<SubResource>();
+        public IList<WritableSubResource> ApplicationSecurityGroups { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<SubResource>();
+        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
         public ResourceIdentifier SubnetId

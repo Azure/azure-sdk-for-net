@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="toTime"> To time of the query. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public RequestRateByIntervalContent(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime)
+        public RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime)
         {
             Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
-        internal RequestRateByIntervalContent(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, additionalBinaryDataProperties)
+        internal RequestRateByIntervalContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IntervalInMins intervalLength) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, additionalBinaryDataProperties)
         {
             IntervalLength = intervalLength;
         }

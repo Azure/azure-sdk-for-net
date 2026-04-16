@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
+        public LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
             Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogAnalyticsInputBase(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </summary>
-        public string BlobContainerSasUri { get; }
+        public Uri BlobContainerSasUri { get; }
 
         /// <summary> From time of the query. </summary>
         public DateTimeOffset FromTime { get; }

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             ComputeSubResourceData snapshot = default;
             ComputeSubResourceData managedDisk = default;
-            string blobUri = default;
+            Uri blobUri = default;
             CachingType? caching = default;
             int? diskSizeGB = default;
             StorageAccountType? storageAccountType = default;
@@ -143,7 +143,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("blobUri"u8))
                 {
-                    blobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("caching"u8))

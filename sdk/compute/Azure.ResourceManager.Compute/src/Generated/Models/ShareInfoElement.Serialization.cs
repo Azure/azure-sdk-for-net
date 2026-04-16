@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(VmUri))
             {
                 writer.WritePropertyName("vmUri"u8);
-                writer.WriteStringValue(VmUri);
+                writer.WriteStringValue(VmUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string vmUri = default;
+            Uri vmUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmUri"u8))
                 {
-                    vmUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

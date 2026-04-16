@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
-        public KeyVaultKeyReference(string keyUri)
+        public KeyVaultKeyReference(Uri keyUri)
         {
             Argument.AssertNotNull(keyUri, nameof(keyUri));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyReference(string keyUri, ComputeSubResourceData sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultKeyReference(Uri keyUri, ComputeSubResourceData sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             SourceVault = sourceVault;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The URL referencing a key encryption key in Key Vault. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
 
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
         internal ComputeSubResourceData SourceVault { get; set; }

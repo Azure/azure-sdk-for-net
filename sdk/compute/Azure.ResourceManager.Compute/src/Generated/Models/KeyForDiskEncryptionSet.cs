@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="KeyForDiskEncryptionSet"/>. </summary>
         /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
-        public KeyForDiskEncryptionSet(string keyUri)
+        public KeyForDiskEncryptionSet(Uri keyUri)
         {
             Argument.AssertNotNull(keyUri, nameof(keyUri));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </param>
         /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyForDiskEncryptionSet(SourceVault sourceVault, string keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyForDiskEncryptionSet(SourceVault sourceVault, Uri keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVault = sourceVault;
             KeyUri = keyUri;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal SourceVault SourceVault { get; set; }
 
         /// <summary> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier SourceVaultId

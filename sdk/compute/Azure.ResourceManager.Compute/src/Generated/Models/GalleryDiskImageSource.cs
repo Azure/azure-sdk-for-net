@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, ResourceIdentifier storageAccountId) : base(id, additionalBinaryDataProperties)
+        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, ResourceIdentifier storageAccountId) : base(id, additionalBinaryDataProperties)
         {
             Uri = uri;
             StorageAccountId = storageAccountId;
         }
 
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }

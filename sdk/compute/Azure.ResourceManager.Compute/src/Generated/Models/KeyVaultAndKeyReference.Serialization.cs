@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("sourceVault"u8);
             writer.WriteObjectValue(SourceVault, options);
             writer.WritePropertyName("keyUrl"u8);
-            writer.WriteStringValue(KeyUri);
+            writer.WriteStringValue(KeyUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SourceVault sourceVault = default;
-            string keyUri = default;
+            Uri keyUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("keyUrl"u8))
                 {
-                    keyUri = prop.Value.GetString();
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

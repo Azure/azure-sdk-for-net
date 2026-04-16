@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<SubResource> ApplicationSecurityGroups
+        public IList<WritableSubResource> ApplicationSecurityGroups
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<SubResource> LoadBalancerBackendAddressPools
+        public IList<WritableSubResource> LoadBalancerBackendAddressPools
         {
             get
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<SubResource> LoadBalancerInboundNatPools
+        public IList<WritableSubResource> LoadBalancerInboundNatPools
         {
             get
             {

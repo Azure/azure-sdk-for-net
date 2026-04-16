@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
         /// <param name="instantAccessDurationMinutes"> For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, string sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, string securityDataUri, Uri securityMetadataUri, bool? performancePlus, ResourceIdentifier elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, long? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, Uri securityMetadataUri, bool? performancePlus, ResourceIdentifier elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, long? instantAccessDurationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
         public ImageDiskReference GalleryImageReference { get; set; }
 
         /// <summary> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </summary>
-        public string SourceUri { get; set; }
+        public Uri SourceUri { get; set; }
 
         /// <summary> If createOption is Copy, this is the ARM id of the source snapshot or disk. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? LogicalSectorSize { get; set; }
 
         /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </summary>
-        public string SecurityDataUri { get; set; }
+        public Uri SecurityDataUri { get; set; }
 
         /// <summary> If createOption is ImportSecure, this is the URI of a blob to be imported into VM metadata for Confidential VM. </summary>
         public Uri SecurityMetadataUri { get; set; }

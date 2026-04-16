@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
-                writer.WriteStringValue(CertificateUri);
+                writer.WriteStringValue(CertificateUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             WinRMListenerProtocolType? protocol = default;
-            string certificateUri = default;
+            Uri certificateUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("certificateUrl"u8))
                 {
-                    certificateUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

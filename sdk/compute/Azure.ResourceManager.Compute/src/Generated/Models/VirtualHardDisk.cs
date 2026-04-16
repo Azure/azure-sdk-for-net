@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualHardDisk"/>. </summary>
         /// <param name="uri"> Specifies the virtual hard disk's uri. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHardDisk(string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualHardDisk(Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

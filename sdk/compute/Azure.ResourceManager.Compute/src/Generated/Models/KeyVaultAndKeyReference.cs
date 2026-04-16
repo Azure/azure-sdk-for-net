@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultAndKeyReference"/>. </summary>
         /// <param name="keyUri"> Url pointing to a key or secret in KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
-        public KeyVaultAndKeyReference(string keyUri)
+        public KeyVaultAndKeyReference(Uri keyUri)
         {
             Argument.AssertNotNull(keyUri, nameof(keyUri));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. </param>
         /// <param name="keyUri"> Url pointing to a key or secret in KeyVault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultAndKeyReference(SourceVault sourceVault, string keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultAndKeyReference(SourceVault sourceVault, Uri keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVault = sourceVault;
             KeyUri = keyUri;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal SourceVault SourceVault { get; set; }
 
         /// <summary> Url pointing to a key or secret in KeyVault. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier SourceVaultId

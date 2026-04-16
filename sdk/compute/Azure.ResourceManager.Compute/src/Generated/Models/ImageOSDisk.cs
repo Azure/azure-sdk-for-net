@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from a custom image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="osState"> The OS State. For managed images, use Generalized. </param>
-        internal ImageOSDisk(ComputeSubResourceData snapshot, ComputeSubResourceData managedDisk, string blobUri, CachingType? caching, int? diskSizeGB, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperatingSystemTypes osType, OperatingSystemStateType osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
+        internal ImageOSDisk(ComputeSubResourceData snapshot, ComputeSubResourceData managedDisk, Uri blobUri, CachingType? caching, int? diskSizeGB, StorageAccountType? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties, OperatingSystemTypes osType, OperatingSystemStateType osState) : base(snapshot, managedDisk, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSet, additionalBinaryDataProperties)
         {
             OSType = osType;
             OSState = osState;

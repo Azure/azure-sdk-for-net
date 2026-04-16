@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskDeleteOptionType? DeleteOption { get; set; }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string VhdUri
+        public Uri VhdUri
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the virtual hard disk's uri. </summary>
-        public string ImageUri
+        public Uri ImageUri
         {
             get
             {

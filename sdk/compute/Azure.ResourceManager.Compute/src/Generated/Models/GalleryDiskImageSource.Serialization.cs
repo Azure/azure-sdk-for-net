@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(StorageAccountId))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string uri = default;
+            Uri uri = default;
             ResourceIdentifier storageAccountId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("storageAccountId"u8))

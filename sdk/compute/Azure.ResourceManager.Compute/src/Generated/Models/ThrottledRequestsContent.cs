@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
-        public ThrottledRequestsContent(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime) : base(blobContainerSasUri, fromTime, toTime)
+        public ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime) : base(blobContainerSasUri, fromTime, toTime)
         {
             Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThrottledRequestsContent(string blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, additionalBinaryDataProperties)
+        internal ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, additionalBinaryDataProperties)
         {
         }
     }

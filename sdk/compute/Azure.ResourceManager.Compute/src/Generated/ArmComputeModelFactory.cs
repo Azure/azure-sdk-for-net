@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetOSDisk VirtualMachineScaleSetOSDisk(string name = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, OperatingSystemTypes? osType = default, string imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineScaleSetOSDisk VirtualMachineScaleSetOSDisk(string name = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, OperatingSystemTypes? osType = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
             vhdContainers ??= new ChangeTrackingList<string>();
 
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateOSDisk VirtualMachineScaleSetUpdateOSDisk(CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, string imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineScaleSetUpdateOSDisk VirtualMachineScaleSetUpdateOSDisk(CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
             vhdContainers ??= new ChangeTrackingList<string>();
 
@@ -2625,7 +2625,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <param name="intervalLength"> Interval value in minutes used to create LogAnalytics call rate logs. </param>
         /// <returns> A new <see cref="Models.RequestRateByIntervalContent"/> instance for mocking. </returns>
-        public static RequestRateByIntervalContent RequestRateByIntervalContent(string blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default, IntervalInMins intervalLength = default)
+        public static RequestRateByIntervalContent RequestRateByIntervalContent(Uri blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default, IntervalInMins intervalLength = default)
         {
             return new RequestRateByIntervalContent(
                 blobContainerSasUri,
@@ -2650,7 +2650,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsInputBase"/> instance for mocking. </returns>
-        public static LogAnalyticsInputBase LogAnalyticsInputBase(string blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default)
+        public static LogAnalyticsInputBase LogAnalyticsInputBase(Uri blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default)
         {
             return new LogAnalyticsInputBase(
                 blobContainerSasUri,
@@ -2681,7 +2681,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
         /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
         /// <returns> A new <see cref="Models.ThrottledRequestsContent"/> instance for mocking. </returns>
-        public static ThrottledRequestsContent ThrottledRequestsContent(string blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default)
+        public static ThrottledRequestsContent ThrottledRequestsContent(Uri blobContainerSasUri = default, DateTimeOffset fromTime = default, DateTimeOffset toTime = default, bool? groupByThrottlePolicy = default, bool? groupByOperationName = default, bool? groupByResourceName = default, bool? groupByClientApplicationId = default, bool? groupByUserAgent = default)
         {
             return new ThrottledRequestsContent(
                 blobContainerSasUri,
@@ -2866,7 +2866,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
         /// <param name="instantAccessDurationMinutes"> For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. </param>
         /// <returns> A new <see cref="Models.DiskCreationData"/> instance for mocking. </returns>
-        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, ResourceIdentifier storageAccountId = default, ImageDiskReference imageReference = default, ImageDiskReference galleryImageReference = default, string sourceUri = default, ResourceIdentifier sourceResourceId = default, string sourceUniqueId = default, long? uploadSizeBytes = default, int? logicalSectorSize = default, string securityDataUri = default, Uri securityMetadataUri = default, bool? performancePlus = default, ResourceIdentifier elasticSanResourceId = default, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default, long? instantAccessDurationMinutes = default)
+        public static DiskCreationData DiskCreationData(DiskCreateOption createOption = default, ResourceIdentifier storageAccountId = default, ImageDiskReference imageReference = default, ImageDiskReference galleryImageReference = default, Uri sourceUri = default, ResourceIdentifier sourceResourceId = default, string sourceUniqueId = default, long? uploadSizeBytes = default, int? logicalSectorSize = default, Uri securityDataUri = default, Uri securityMetadataUri = default, bool? performancePlus = default, ResourceIdentifier elasticSanResourceId = default, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default, long? instantAccessDurationMinutes = default)
         {
             return new DiskCreationData(
                 createOption,
@@ -2902,7 +2902,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The ShareInfoElement. </summary>
         /// <param name="vmUri"> A relative URI containing the ID of the VM that has the disk attached. </param>
         /// <returns> A new <see cref="Models.ShareInfoElement"/> instance for mocking. </returns>
-        public static ShareInfoElement ShareInfoElement(string vmUri = default)
+        public static ShareInfoElement ShareInfoElement(Uri vmUri = default)
         {
             return new ShareInfoElement(vmUri, additionalBinaryDataProperties: null);
         }
@@ -3285,7 +3285,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
         /// <returns> A new <see cref="Models.CommunityGalleryInfo"/> instance for mocking. </returns>
-        public static CommunityGalleryInfo CommunityGalleryInfo(string publisherUri = default, string publisherContact = default, string eula = default, string publicNamePrefix = default, bool? communityGalleryEnabled = default, IEnumerable<string> publicNames = default)
+        public static CommunityGalleryInfo CommunityGalleryInfo(Uri publisherUri = default, string publisherContact = default, string eula = default, string publicNamePrefix = default, bool? communityGalleryEnabled = default, IEnumerable<string> publicNames = default)
         {
             publicNames ??= new ChangeTrackingList<string>();
 
@@ -6293,45 +6293,6 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiskCreationData"/>. </summary>
-        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
-        /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
-        /// <param name="imageReference"> Disk source information for PIR or user images. </param>
-        /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
-        /// <param name="sourceUri"> If createOption is Import, this is the URI of a blob to be imported into a managed disk. </param>
-        /// <param name="sourceResourceId"> If createOption is Copy, this is the ARM id of the source snapshot or disk. </param>
-        /// <param name="sourceUniqueId"> If this field is set, this is the unique id identifying the source of this resource. </param>
-        /// <param name="uploadSizeBytes"> If createOption is Upload, this is the size of the contents of the upload including the VHD footer. This value should be between 20972032 (20 MiB + 512 bytes for the VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the VHD footer). </param>
-        /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
-        /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
-        /// <param name="securityMetadataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM metadata for Confidential VM. </param>
-        /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
-        /// <param name="elasticSanResourceId"> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </param>
-        /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
-        /// <param name="instantAccessDurationMinutes"> For snapshots created from Premium SSD v2 or Ultra disk, this property determines the time in minutes the snapshot is retained for instant access to enable faster restore. </param>
-        /// <returns> A new <see cref="Models.DiskCreationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskCreationData DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, Uri securityMetadataUri, bool? isPerformancePlusEnabled, ResourceIdentifier elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, long? instantAccessDurationMinutes)
-        {
-            return new DiskCreationData(
-                createOption,
-                storageAccountId,
-                imageReference,
-                galleryImageReference,
-                sourceUri,
-                sourceResourceId,
-                sourceUniqueId,
-                uploadSizeBytes,
-                logicalSectorSize,
-                securityDataUri,
-                securityMetadataUri,
-                default,
-                elasticSanResourceId,
-                provisionedBandwidthCopySpeed,
-                instantAccessDurationMinutes,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Compute.SnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -6512,6 +6473,29 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 default,
                 identity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CommunityGalleryInfo"/>. </summary>
+        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
+        /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
+        /// <param name="eula"> End-user license agreement for community gallery image. </param>
+        /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
+        /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
+        /// <param name="publicNames"> Community gallery public name list. </param>
+        /// <returns> A new <see cref="Models.CommunityGalleryInfo"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryInfo CommunityGalleryInfo(string publisherUriString, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IEnumerable<string> publicNames)
+        {
+            publicNames ??= new ChangeTrackingList<string>();
+
+            return new CommunityGalleryInfo(
+                default,
+                publisherContact,
+                eula,
+                publicNamePrefix,
+                communityGalleryEnabled,
+                publicNames.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>

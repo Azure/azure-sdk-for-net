@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string blobContainerSasUri = default;
+            Uri blobContainerSasUri = default;
             DateTimeOffset fromTime = default;
             DateTimeOffset toTime = default;
             bool? groupByThrottlePolicy = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("blobContainerSasUri"u8))
                 {
-                    blobContainerSasUri = prop.Value.GetString();
+                    blobContainerSasUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("fromTime"u8))
