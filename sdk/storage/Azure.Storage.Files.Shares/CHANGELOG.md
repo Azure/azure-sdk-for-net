@@ -3,7 +3,7 @@
 ## 12.27.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `ShareFileClient.GetRangeListPageable()`, `GetRangeListPageableAsync()`, `GetRangeListDiffPageable()`, and `GetRangeListDiffPageableAsync()`.
+- Added `ShareFileClient.GetAllRangeList()`, `GetAllRangeListAsync()`, `GetAllRangeListDiff()`, and `GetAllRangeListDiffAsync()`.
 
 ### Breaking Changes
 

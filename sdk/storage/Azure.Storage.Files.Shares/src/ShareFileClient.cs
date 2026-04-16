@@ -6409,7 +6409,7 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
         #endregion GetRangeListDiff
 
-        #region GetRangeListPageable
+        #region GetAllRangeList
         /// <summary>
         /// Returns the list of valid ranges for a file as a paginated sequence.
         ///
@@ -6433,7 +6433,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<ShareFileRange> GetRangeListPageable(
+        public virtual Pageable<ShareFileRange> GetAllRangeList(
             ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetShareFileRangeListAsyncCollection(
@@ -6444,7 +6444,7 @@ namespace Azure.Storage.Files.Shares
                 previousSnapshot: null,
                 supportRename: null,
                 conditions: options?.Conditions,
-                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListPageable)}")
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}")
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -6470,7 +6470,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<ShareFileRange> GetRangeListPageableAsync(
+        public virtual AsyncPageable<ShareFileRange> GetAllRangeListAsync(
             ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetShareFileRangeListAsyncCollection(
@@ -6481,11 +6481,11 @@ namespace Azure.Storage.Files.Shares
                 previousSnapshot: null,
                 supportRename: null,
                 conditions: options?.Conditions,
-                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListPageable)}")
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}")
             .ToAsyncCollection(cancellationToken);
-        #endregion GetRangeListPageable
+        #endregion GetAllRangeList
 
-        #region GetRangeListDiffPageable
+        #region GetAllRangeListDiff
         /// <summary>
         /// Returns the list of ranges that have changed in the file since
         /// <see cref="ShareFileGetRangeListDiffOptions.PreviousSnapshot"/> was taken,
@@ -6511,7 +6511,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<ShareFileRange> GetRangeListDiffPageable(
+        public virtual Pageable<ShareFileRange> GetAllRangeListDiff(
             ShareFileGetRangeListDiffOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetShareFileRangeListAsyncCollection(
@@ -6522,7 +6522,7 @@ namespace Azure.Storage.Files.Shares
                 previousSnapshot: options?.PreviousSnapshot,
                 supportRename: options?.IncludeRenames,
                 conditions: options?.Conditions,
-                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiffPageable)}")
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeListDiff)}")
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -6550,7 +6550,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<ShareFileRange> GetRangeListDiffPageableAsync(
+        public virtual AsyncPageable<ShareFileRange> GetAllRangeListDiffAsync(
             ShareFileGetRangeListDiffOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetShareFileRangeListAsyncCollection(
@@ -6561,10 +6561,10 @@ namespace Azure.Storage.Files.Shares
                 previousSnapshot: options?.PreviousSnapshot,
                 supportRename: options?.IncludeRenames,
                 conditions: options?.Conditions,
-                operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeListDiffPageable)}")
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeListDiff)}")
             .ToAsyncCollection(cancellationToken);
 
-        internal async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListPageableInternal(
+        internal async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetAllRangeListInternal(
             string marker,
             int? pageSizeHint,
             HttpRange? range,
@@ -6585,7 +6585,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(pageSizeHint)}: {pageSizeHint}");
 
-                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetRangeListPageable)}";
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 try
@@ -6634,7 +6634,7 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-        #endregion GetRangeListDiffPageable
+        #endregion GetAllRangeListDiff
 
         #region GetHandles
         /// <summary>

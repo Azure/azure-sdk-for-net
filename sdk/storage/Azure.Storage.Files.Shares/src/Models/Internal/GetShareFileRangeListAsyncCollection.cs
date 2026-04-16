@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response = await _client.GetRangeListPageableInternal(
+            ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response = await _client.GetAllRangeListInternal(
                 marker: continuationToken,
                 pageSizeHint: pageSizeHint ?? Constants.File.DefaultGetRangeListPageSize,
                 range: _range,
@@ -59,40 +59,10 @@ namespace Azure.Storage.Files.Shares.Models
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
-            IReadOnlyList<FileRange> ranges = response.Value.Ranges;
-            IReadOnlyList<ClearRange> clearRanges = response.Value.ClearRanges;
-
-            List<ShareFileRange> merged = new List<ShareFileRange>(ranges.Count + clearRanges.Count);
-            int rangeIndex = 0;
-            int clearIndex = 0;
-            while (rangeIndex < ranges.Count || clearIndex < clearRanges.Count)
-            {
-                if (rangeIndex < ranges.Count
-                    && (clearIndex >= clearRanges.Count
-                        || ranges[rangeIndex].Start <= clearRanges[clearIndex].Start))
-                {
-                    merged.Add(new ShareFileRange
-                    {
-                        IsClear = false,
-                        Range = ranges[rangeIndex].ToHttpRange()
-                    });
-                    rangeIndex++;
-                }
-                else
-                {
-                    merged.Add(new ShareFileRange
-                    {
-                        IsClear = true,
-                        Range = clearRanges[clearIndex].ToHttpRange()
-                    });
-                    clearIndex++;
-                }
-            }
-
             return Page<ShareFileRange>.FromValues(
-                merged.ToArray(),
-                response.Value.NextMarker,
-                response.GetRawResponse());
+                values: response.ToShareFileRanges(),
+                continuationToken: response.Value.NextMarker,
+                response: response.GetRawResponse());
         }
     }
 }

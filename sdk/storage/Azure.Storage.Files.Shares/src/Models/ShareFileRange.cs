@@ -7,7 +7,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// Represents a range of bytes returned by
-    /// <see cref="ShareFileClient.GetRangeListPageableAsync(ShareFileGetRangeListOptions, System.Threading.CancellationToken)"/>.
+    /// <see cref="ShareFileClient.GetAllRangeListAsync(ShareFileGetRangeListOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class ShareFileRange
     {

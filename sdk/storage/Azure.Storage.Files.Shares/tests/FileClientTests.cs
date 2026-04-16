@@ -4018,7 +4018,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListPageableAsync()
+        public async Task GetAllRangeListAsync()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4039,7 +4039,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             List<ShareFileRange> ranges = new List<ShareFileRange>();
-            await foreach (ShareFileRange item in file.GetRangeListPageableAsync(options))
+            await foreach (ShareFileRange item in file.GetAllRangeListAsync(options))
             {
                 ranges.Add(item);
             }
@@ -4052,7 +4052,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListPageableAsync_AccessConditions()
+        public async Task GetAllRangeListAsync_AccessConditions()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4070,7 +4070,7 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            IList<Page<ShareFileRange>> pages = await file.GetRangeListPageableAsync(options).AsPages().ToListAsync();
+            IList<Page<ShareFileRange>> pages = await file.GetAllRangeListAsync(options).AsPages().ToListAsync();
 
             // Assert
             Assert.IsTrue(pages.Count >= 1);
@@ -4078,7 +4078,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListPageableAsync_AccessConditionsFail()
+        public async Task GetAllRangeListAsync_AccessConditionsFail()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4095,7 +4095,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                EnumerateAsync(file.GetRangeListPageableAsync(options)),
+                EnumerateAsync(file.GetAllRangeListAsync(options)),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
 
             static async Task EnumerateAsync(AsyncPageable<ShareFileRange> pageable)
@@ -4108,7 +4108,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListPageableAsync_ByPage()
+        public async Task GetAllRangeListAsync_ByPage()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4134,7 +4134,7 @@ namespace Azure.Storage.Files.Shares.Tests
             }
 
             // Act
-            IList<Page<ShareFileRange>> pages = await file.GetRangeListPageableAsync().AsPages(pageSizeHint: 1).ToListAsync();
+            IList<Page<ShareFileRange>> pages = await file.GetAllRangeListAsync().AsPages(pageSizeHint: 1).ToListAsync();
 
             // Assert
             Assert.AreEqual(2, pages.Count);
@@ -4146,7 +4146,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListDiffPageableAsync()
+        public async Task GetAllRangeListDiffAsync()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4180,7 +4180,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             List<ShareFileRange> ranges = new List<ShareFileRange>();
-            await foreach (ShareFileRange item in file.GetRangeListDiffPageableAsync(options))
+            await foreach (ShareFileRange item in file.GetAllRangeListDiffAsync(options))
             {
                 ranges.Add(item);
             }
@@ -4196,7 +4196,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListDiffPageableAsync_AccessConditions()
+        public async Task GetAllRangeListDiffAsync_AccessConditions()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4214,7 +4214,7 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            IList<Page<ShareFileRange>> pages = await file.GetRangeListDiffPageableAsync(options).AsPages().ToListAsync();
+            IList<Page<ShareFileRange>> pages = await file.GetAllRangeListDiffAsync(options).AsPages().ToListAsync();
 
             // Assert
             Assert.IsTrue(pages.Count >= 1);
@@ -4222,7 +4222,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListDiffPageableAsync_AccessConditionsFail()
+        public async Task GetAllRangeListDiffAsync_AccessConditionsFail()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4239,7 +4239,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                EnumerateAsync(file.GetRangeListDiffPageableAsync(options)),
+                EnumerateAsync(file.GetAllRangeListDiffAsync(options)),
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
 
             static async Task EnumerateAsync(AsyncPageable<ShareFileRange> pageable)
@@ -4252,7 +4252,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_10_06)]
-        public async Task GetRangeListDiffPageableAsync_ByPage()
+        public async Task GetAllRangeListDiffAsync_ByPage()
         {
             // Arrange
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
@@ -4285,7 +4285,7 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            IList<Page<ShareFileRange>> pages = await file.GetRangeListDiffPageableAsync(options).AsPages(pageSizeHint: 1).ToListAsync();
+            IList<Page<ShareFileRange>> pages = await file.GetAllRangeListDiffAsync(options).AsPages(pageSizeHint: 1).ToListAsync();
 
             // Assert
             Assert.IsTrue(pages.Count >= 1);
