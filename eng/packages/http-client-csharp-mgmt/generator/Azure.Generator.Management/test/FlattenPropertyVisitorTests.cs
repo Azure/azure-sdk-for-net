@@ -159,9 +159,9 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             var rendered = new TypeProviderWriter(model!).Write().Content;
-            StringAssert.Contains("this.Data is null", rendered);
+            Assert.That(rendered, Does.Match(@"(?:this\.)?Data is null"));
             StringAssert.Contains("Data.Errors", rendered);
-            StringAssert.DoesNotContain("return Data.Errors;", rendered);
+            Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
         }
 
         /// <summary>
