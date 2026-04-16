@@ -91,6 +91,17 @@ internal sealed class SseReplayResult : IResult
             _logger.LogInformation(
                 "SSE replay completed for response {ResponseId}", _responseId);
         }
+        catch (BadRequestException ex)
+        {
+            // Stream provider signalled that no event stream is available for this
+            // response (e.g., non-streaming background response, or stream TTL expired).
+            // Since SSE headers have not been flushed yet, we can still write a JSON error.
+            _logger.LogWarning(ex, "SSE replay unavailable for response {ResponseId}", _responseId);
+            httpContext.Response.Headers.Remove("Cache-Control");
+            httpContext.Response.Headers.Remove("Connection");
+            httpContext.Response.Headers.Remove("X-Accel-Buffering");
+            await ApiErrorFactory.InvalidRequest(ex.Message).ExecuteAsync(httpContext);
+        }
         catch (OperationCanceledException)
         {
             _logger.LogInformation(

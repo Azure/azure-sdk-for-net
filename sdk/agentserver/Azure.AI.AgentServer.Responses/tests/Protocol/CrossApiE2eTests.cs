@@ -61,10 +61,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
-    // E32/E35: store=false + Cancel → 400 (non-bg cancel rejected with "synchronous" error, B1, B14)
+    // E32/E35: store=false + Cancel → 404 (response evicted from tracker and never persisted)
     [TestCase(false)]  // E32: C5 → Cancel
     [TestCase(true)]   // E35: C6 → Cancel
-    public async Task Ephemeral_StoreFalse_Cancel_Returns400(bool stream)
+    public async Task Ephemeral_StoreFalse_Cancel_Returns404(bool stream)
     {
         // Validates: B1, B14 — store=false response not bg, cancel rejected
         Handler.EventFactory = stream
@@ -87,9 +87,9 @@ public class CrossApiE2eTests : ProtocolTestBase
             responseId = doc.RootElement.GetProperty("id").GetString()!;
         }
 
-        // Cancel on a non-bg response → 400 (checked before store lookup)
+        // Cancel on a store=false response after completion → 404 (evicted, never persisted)
         var result = await CancelResponseAsync(responseId);
-        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ════════════════════════════════════════════════════════════

@@ -50,12 +50,12 @@ public class CancelAsyncTests : IDisposable
     }
 
     [Test]
-    public async Task NonBackground_Completed_ThrowsBadRequestException()
+    public async Task NonBackground_Completed_FallsToProvider_ThrowsBadRequest()
     {
-        // B1: non-background completed responses return 400 "Cannot cancel a synchronous response."
-        var execution = _tracker.Create("resp_cancel_nbc", isBackground: false, isStreaming: false, store: true);
-        execution.Response = new Models.ResponseObject("resp_cancel_nbc", "test") { Status = ResponseStatus.Completed };
-        _tracker.MarkCompleted("resp_cancel_nbc");
+        // After eviction, non-bg completed responses hit the provider path.
+        var response = new Models.ResponseObject("resp_cancel_nbc", "test") { Status = ResponseStatus.Completed };
+        await _provider.CreateResponseAsync(
+            new Responses.CreateResponseRequest(response, null, null), IsolationContext.Empty);
 
         Assert.ThrowsAsync<BadRequestException>(
             () => _orchestrator.CancelAsync("resp_cancel_nbc", IsolationContext.Empty));

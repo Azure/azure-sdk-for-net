@@ -143,11 +143,10 @@ internal sealed class ResponseOrchestrator
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // Non-background responses are only visible after completion with a non-cancelled terminal state
-            if (!execution.IsBackground
-                && (execution.Response is null
-                    || execution.CompletedAt is null
-                    || execution.Response.Status == ResponseStatus.Cancelled))
+            // B16: non-background in-flight responses are not findable via GET.
+            // With eager eviction, all tracked executions are in-flight — completed
+            // ones are evicted by FinalizeExecutionAsync and served from the provider.
+            if (!execution.IsBackground)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
@@ -179,6 +178,13 @@ internal sealed class ResponseOrchestrator
             // If it doesn't exist, provider throws ResourceNotFoundException.
             var persisted = await _provider.GetResponseAsync(responseId, isolation);
 
+            // B1: background check comes first — non-bg responses always get the
+            // "synchronous" message regardless of terminal status (spec line 485).
+            if (persisted.Background != true)
+            {
+                throw new BadRequestException("Cannot cancel a synchronous response.");
+            }
+
             // Already completed / failed / cancelled / incomplete — not cancellable.
             return persisted.Status switch
             {
@@ -190,17 +196,12 @@ internal sealed class ResponseOrchestrator
             };
         }
 
-        // B1/B16: non-background responses cannot be cancelled via this endpoint.
-        // If still in-flight, return 404 (non-background in-flight not findable per B16).
-        // If finished, return 400 (background check takes priority per contract matrix).
+        // B1/B16: non-background in-flight responses are not findable via Cancel.
+        // With eager eviction, all tracked executions are in-flight — completed
+        // non-bg responses are evicted and handled by the provider fallback above.
         if (!execution.IsBackground)
         {
-            if (execution.CompletedAt is null)
-            {
-                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-            }
-
-            throw new BadRequestException("Cannot cancel a synchronous response.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         // B12: terminal statuses are rejected
@@ -727,10 +728,11 @@ internal sealed class ResponseOrchestrator
     /// <summary>
     /// Shared finally-block logic: completes the publisher, conditionally
     /// persists the response (Create or Update depending on background mode),
-    /// and marks the execution as completed in the tracker.
+    /// and evicts the execution from the tracker so that subsequent API calls
+    /// fall through to the durable <see cref="ResponsesProvider"/>.
     /// </summary>
     /// <remarks>
-    /// Every path through this method must reach <see cref="ResponseExecutionTracker.MarkCompleted"/>
+    /// Every path through this method must reach <see cref="ResponseExecutionTracker.TryEvict"/>
     /// and must attempt <see cref="TaskCompletionSource{T}.TrySetException(Exception)"/> when
     /// <c>execution.Response</c> is null. Failures in the publisher or provider
     /// are logged and swallowed — they must never prevent the signal from being
@@ -794,12 +796,14 @@ internal sealed class ResponseOrchestrator
                 "Provider persistence failed for response {ResponseId}", execution.ResponseId);
         }
 
-        // 5. Always mark completed — prevents orphaned executions in the tracker.
-        // Note: event streams are only created for bg+streaming responses (the only
-        // mode eligible for SSE replay per B2). Those streams are cleaned up by
-        // TTL-based eviction in the stream provider or by explicit DELETE calls.
-        // Non-replay modes use NullPublisher and never allocate a stream.
-        _tracker.MarkCompleted(execution.ResponseId);
+        // 5. Evict from tracker — subsequent GET / DELETE / Cancel calls will
+        // fall through to the durable ResponsesProvider instead of returning a
+        // stale in-memory snapshot. Without eviction, completed executions
+        // accumulate in the tracker for the lifetime of the process.
+        // TryEvict (not TryRemove) intentionally does NOT dispose the execution:
+        // CancelAsync may still hold a reference and read Response.Snapshot()
+        // after FinalizedSignal fires in step 6 below.
+        _tracker.TryEvict(execution.ResponseId);
 
         // 6. Signal FinalizedSignal — CancelAsync and StopAsync await this to know
         // that the response is in its final state and has been persisted.

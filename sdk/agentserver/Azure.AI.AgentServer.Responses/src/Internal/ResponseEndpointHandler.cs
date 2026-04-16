@@ -316,18 +316,19 @@ internal sealed class ResponseEndpointHandler
             }
             else
             {
-                // Not in-flight: verify the response exists in the provider before
-                // attempting replay. Provider throws ResourceNotFoundException (404)
-                // for unknown IDs and BadRequestException (400) for deleted responses.
+                // Not in-flight (evicted or never tracked): verify the response exists
+                // in the provider and check B2 mode flags from the persisted response.
+                // Provider throws ResourceNotFoundException (404) for unknown IDs.
                 // This also covers store=false (never persisted → 404).
-                await _provider.GetResponseAsync(responseId, isolation);
+                var persisted = await _provider.GetResponseAsync(responseId, isolation);
 
-                // B2: non-bg and non-streaming responses had their event stream
-                // deleted in FinalizeExecutionAsync (see ResponseOrchestrator).
-                // SubscribeToEventsAsync below will throw for missing streams,
-                // which maps to 400 for the caller. For custom stream providers
-                // backed by persistent storage, the provider must enforce B2
-                // mode-flag checks independently.
+                // B2: SSE replay requires background mode. Non-bg responses never
+                // have event streams (they use NullPublisher).
+                if (persisted.Background != true)
+                {
+                    throw new BadRequestException(
+                        "SSE replay is only available for background streaming responses.");
+                }
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
@@ -370,7 +371,9 @@ internal sealed class ResponseEndpointHandler
     {
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
-        // Guard: if response is in-flight, check for store=false and in-progress guards
+        // Guard: if response is in-flight, reject deletion.
+        // With eager eviction, all tracked executions are in-flight — completed
+        // responses are evicted by FinalizeExecutionAsync and served from the provider.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
             if (!execution.Store)
@@ -379,19 +382,14 @@ internal sealed class ResponseEndpointHandler
             }
 
             // B16: non-background in-flight responses are not findable
-            if (!execution.IsBackground && execution.CompletedAt is null)
+            if (!execution.IsBackground)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // In-flight guard: background response with no terminal state cannot be deleted
-            if (execution.CompletedAt is null)
-            {
-                throw new BadRequestException(
-                    "Response is currently in progress and cannot be deleted.");
-            }
-
-            _tracker.TryRemove(responseId);
+            // Background execution is still in progress — cannot delete
+            throw new BadRequestException(
+                "Response is currently in progress and cannot be deleted.");
         }
 
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).

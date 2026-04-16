@@ -454,7 +454,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     {
         if (!_subjects.TryGetValue(responseId, out var subject))
         {
-            throw new InvalidOperationException($"No event stream found for response '{responseId}'.");
+            throw new BadRequestException($"Event stream is not available for response '{responseId}'.");
         }
 
         // Wrap the caller's observer in an adapter that unwraps the (SeqNo, Event) tuple

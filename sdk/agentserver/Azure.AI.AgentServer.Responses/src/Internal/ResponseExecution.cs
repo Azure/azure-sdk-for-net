@@ -116,11 +116,6 @@ internal sealed class ResponseExecution : IDisposable
     public ResponseContext? Context { get; set; }
 
     /// <summary>
-    /// Gets or sets the completion timestamp. Null when in-flight; set on completion for TTL eviction.
-    /// </summary>
-    public DateTimeOffset? CompletedAt { get; set; }
-
-    /// <summary>
     /// Signal that completes when the handler yields <c>response.created</c> (with the
     /// handler-provided <see cref="Response"/>), or faults if the handler fails before
     /// emitting it. Used by the background non-streaming path to wait for the handler's
