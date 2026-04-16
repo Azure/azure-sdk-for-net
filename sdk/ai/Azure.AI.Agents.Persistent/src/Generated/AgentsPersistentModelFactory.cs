@@ -14,6 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class AgentsPersistentModelFactory
     {
+
         /// <summary>
         /// An abstract representation of an input tool definition that an agent can use.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Persistent.CodeInterpreterToolDefinition"/>, <see cref="Persistent.FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="Persistent.BingGroundingToolDefinition"/>, <see cref="Persistent.MicrosoftFabricToolDefinition"/>, <see cref="Persistent.SharepointToolDefinition"/>, <see cref="Persistent.AzureAISearchToolDefinition"/>, <see cref="Persistent.OpenApiToolDefinition"/>, <see cref="Persistent.BingCustomSearchToolDefinition"/>, <see cref="Persistent.ConnectedAgentToolDefinition"/>, <see cref="Persistent.DeepResearchToolDefinition"/>, <see cref="Persistent.MCPToolDefinition"/>, <see cref="Persistent.ComputerUseToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, and <see cref="Persistent.BrowserAutomationToolDefinition"/>.

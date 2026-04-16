@@ -989,7 +989,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
-            return ProjectsAgentVersion(metadata, id, name, version, description, createdAt, definition, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
+            return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
         }
 
         /// <summary> A tool for capturing structured outputs. </summary>
@@ -998,7 +998,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition)
         {
-            return CaptureStructuredOutputsTool(name: default, description: default, outputDefinition);
+            return CaptureStructuredOutputsTool(name: default, description: default, outputDefinition: outputDefinition);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -1016,7 +1016,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
         {
-            return HostedAgentDefinition(contentFilterConfiguration, tools, versions, cpu, memory, environmentVariables, image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default);
+            return HostedAgentDefinition(contentFilterConfiguration: contentFilterConfiguration, tools: tools, versions: versions, cpu: cpu, memory: memory, environmentVariables: environmentVariables, image: image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
@@ -1033,7 +1033,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
         {
-            return ProjectsAgentVersionCreationOptions(metadata, description, definition, blueprintReference: default);
+            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default);
         }
     }
 }
