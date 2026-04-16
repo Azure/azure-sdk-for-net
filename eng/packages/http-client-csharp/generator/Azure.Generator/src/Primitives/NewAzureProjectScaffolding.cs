@@ -204,8 +204,11 @@ namespace Azure.Generator.Primitives
         }
 
         /// <summary>
-        /// Writes additional scaffolding files (README.md, CHANGELOG.md, Directory.Build.props)
-        /// to the output directory when the output is under the sdk/ directory.
+        /// Writes additional scaffolding files to the output directory.
+        /// README.md is always generated as it is useful for any project.
+        /// CHANGELOG.md and Directory.Build.props are only generated when the output is under
+        /// the sdk/ directory, as they have a stronger dependency on the azure-sdk-for-net
+        /// directory structure and release workflow.
         /// Files are only written if they don't already exist, preventing
         /// overwriting of customized content.
         /// </summary>
@@ -214,18 +217,17 @@ namespace Azure.Generator.Primitives
             await base.WriteAdditionalFiles();
 
             string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
-
-            // Only generate scaffolding files for real SDK packages under the sdk/ directory
-            if (!IsUnderSdkDirectory(outputDir))
-            {
-                return;
-            }
-
             string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
 
+            // Always generate README
             WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
-            WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
+
+            // Only generate CHANGELOG and Directory.Build.props for SDK packages under the sdk/ directory
+            if (IsUnderSdkDirectory(outputDir))
+            {
+                WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
+                WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
+            }
         }
 
         private static void WriteFileIfNotExists(string filePath, string packageName, Func<string, string> contentFactory)

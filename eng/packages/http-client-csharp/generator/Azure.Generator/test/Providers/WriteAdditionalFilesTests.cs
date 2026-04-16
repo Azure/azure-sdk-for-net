@@ -60,7 +60,7 @@ namespace Azure.Generator.Tests.Providers
         [Test]
         public async Task WriteAdditionalFilesSkipsNonSdkDirectory()
         {
-            // The test output directory is under eng/, not sdk/, so files should NOT be created
+            // The test output directory is under eng/, not sdk/, so only README should be created
             string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
             string readmePath = Path.Combine(outputDir, "README.md");
             string changelogPath = Path.Combine(outputDir, "CHANGELOG.md");
@@ -76,8 +76,9 @@ namespace Azure.Generator.Tests.Providers
                 var scaffolding = new TestableNewAzureProjectScaffolding();
                 await scaffolding.TestWriteAdditionalFiles();
 
-                // Files should NOT be created since output is not under sdk/
-                Assert.IsFalse(File.Exists(readmePath));
+                // README should be created regardless of directory
+                Assert.IsTrue(File.Exists(readmePath));
+                // CHANGELOG and Directory.Build.props should NOT be created since output is not under sdk/
                 Assert.IsFalse(File.Exists(changelogPath));
                 Assert.IsFalse(File.Exists(propsPath));
             }
