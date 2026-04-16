@@ -147,6 +147,10 @@ namespace OpenAI
                         return ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
                     case "code_interpreter":
                         return ToolChoiceCodeInterpreter.DeserializeToolChoiceCodeInterpreter(element, options);
+                    case "computer":
+                        return ToolChoiceComputer.DeserializeToolChoiceComputer(element, options);
+                    case "computer_use":
+                        return ToolChoiceComputerUse.DeserializeToolChoiceComputerUse(element, options);
                 }
             }
             return UnknownInternalToolChoiceParam.DeserializeUnknownInternalToolChoiceParam(element, options);
