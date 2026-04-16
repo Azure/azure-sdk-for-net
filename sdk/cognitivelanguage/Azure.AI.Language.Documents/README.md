@@ -2,7 +2,7 @@
 
 The Azure AI Language Documents client library enables asynchronous document analysis for files stored in Azure Blob Storage. You can submit one or more documents as a long-running job, track job status, and retrieve analysis results. The current SDK surface includes document analysis scenarios such as PII entity recognition and abstractive summarization.
 
-[Source code][languagedocuments_client_src] | [Package (NuGet)][languagedocuments_nuget_package] | [API reference documentation][languagedocuments_refdocs] | [Samples][languagedocuments_samples] | [Product documentation][languagedocuments_docs] | [REST API documentation][languagedocuments_rest_docs]
+[Source code][languagedocuments_client_src] <!-- | [Package (NuGet)][languagedocuments_nuget_package] | [API reference documentation][languagedocuments_refdocs] | [Samples][languagedocuments_samples] --> | [Product documentation][languagedocuments_docs] | [REST API documentation][languagedocuments_rest_docs]
 
 ## Getting started
 
@@ -270,7 +270,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [languagedocuments_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/src/Generated/AnalyzeDocumentsClient.cs
 [languagedocuments_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/src/
 [languagedocuments_docs]: https://learn.microsoft.com/azure/cognitive-services/language-service/overview
-[languagedocuments_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Documents/
-[languagedocuments_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.Documents/
+<!-- [languagedocuments_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Documents/ -->
+<!-- [languagedocuments_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.Documents/ -->
 [languagedocuments_rest_docs]: https://learn.microsoft.com/rest/api/language/
-[languagedocuments_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/samples/README.md
+<!-- [languagedocuments_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/samples/README.md -->
