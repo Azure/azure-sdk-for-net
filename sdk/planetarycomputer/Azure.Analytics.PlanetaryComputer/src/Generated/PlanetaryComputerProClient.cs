@@ -7,7 +7,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,11 +17,6 @@ namespace Azure.Analytics.PlanetaryComputer
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://geocatalog.spatio.azure.com/.default" };
-        private readonly string _apiVersion;
-        private IngestionClient _cachedIngestionClient;
-        private StacClient _cachedStacClient;
-        private DataClient _cachedDataClient;
-        private ManagedStorageSharedAccessSignatureClient _cachedManagedStorageSharedAccessSignatureClient;
 
         /// <summary> Initializes a new instance of PlanetaryComputerProClient for mocking. </summary>
         protected PlanetaryComputerProClient()
@@ -56,7 +50,6 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
-            _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
@@ -81,29 +74,5 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of IngestionClient. </summary>
-        public virtual IngestionClient GetIngestionClient()
-        {
-            return Volatile.Read(ref _cachedIngestionClient) ?? Interlocked.CompareExchange(ref _cachedIngestionClient, new IngestionClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedIngestionClient;
-        }
-
-        /// <summary> Initializes a new instance of StacClient. </summary>
-        public virtual StacClient GetStacClient()
-        {
-            return Volatile.Read(ref _cachedStacClient) ?? Interlocked.CompareExchange(ref _cachedStacClient, new StacClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedStacClient;
-        }
-
-        /// <summary> Initializes a new instance of DataClient. </summary>
-        public virtual DataClient GetDataClient()
-        {
-            return Volatile.Read(ref _cachedDataClient) ?? Interlocked.CompareExchange(ref _cachedDataClient, new DataClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataClient;
-        }
-
-        /// <summary> Initializes a new instance of ManagedStorageSharedAccessSignatureClient. </summary>
-        public virtual ManagedStorageSharedAccessSignatureClient GetManagedStorageSharedAccessSignatureClient()
-        {
-            return Volatile.Read(ref _cachedManagedStorageSharedAccessSignatureClient) ?? Interlocked.CompareExchange(ref _cachedManagedStorageSharedAccessSignatureClient, new ManagedStorageSharedAccessSignatureClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedManagedStorageSharedAccessSignatureClient;
-        }
     }
 }

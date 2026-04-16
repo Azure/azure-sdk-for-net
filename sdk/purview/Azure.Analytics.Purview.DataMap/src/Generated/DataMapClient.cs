@@ -7,7 +7,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -18,13 +17,6 @@ namespace Azure.Analytics.Purview.DataMap
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
-        private readonly string _apiVersion;
-        private Entity _cachedEntity;
-        private Glossary _cachedGlossary;
-        private Discovery _cachedDiscovery;
-        private Lineage _cachedLineage;
-        private Relationship _cachedRelationship;
-        private TypeDefinition _cachedTypeDefinition;
 
         /// <summary> Initializes a new instance of DataMapClient for mocking. </summary>
         protected DataMapClient()
@@ -58,7 +50,6 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
-            _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
@@ -83,41 +74,5 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> Initializes a new instance of Entity. </summary>
-        public virtual Entity GetEntityClient()
-        {
-            return Volatile.Read(ref _cachedEntity) ?? Interlocked.CompareExchange(ref _cachedEntity, new Entity(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEntity;
-        }
-
-        /// <summary> Initializes a new instance of Glossary. </summary>
-        public virtual Glossary GetGlossaryClient()
-        {
-            return Volatile.Read(ref _cachedGlossary) ?? Interlocked.CompareExchange(ref _cachedGlossary, new Glossary(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedGlossary;
-        }
-
-        /// <summary> Initializes a new instance of Discovery. </summary>
-        public virtual Discovery GetDiscoveryClient()
-        {
-            return Volatile.Read(ref _cachedDiscovery) ?? Interlocked.CompareExchange(ref _cachedDiscovery, new Discovery(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDiscovery;
-        }
-
-        /// <summary> Initializes a new instance of Lineage. </summary>
-        public virtual Lineage GetLineageClient()
-        {
-            return Volatile.Read(ref _cachedLineage) ?? Interlocked.CompareExchange(ref _cachedLineage, new Lineage(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedLineage;
-        }
-
-        /// <summary> Initializes a new instance of Relationship. </summary>
-        public virtual Relationship GetRelationshipClient()
-        {
-            return Volatile.Read(ref _cachedRelationship) ?? Interlocked.CompareExchange(ref _cachedRelationship, new Relationship(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedRelationship;
-        }
-
-        /// <summary> Initializes a new instance of TypeDefinition. </summary>
-        public virtual TypeDefinition GetTypeDefinitionClient()
-        {
-            return Volatile.Read(ref _cachedTypeDefinition) ?? Interlocked.CompareExchange(ref _cachedTypeDefinition, new TypeDefinition(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTypeDefinition;
-        }
     }
 }
