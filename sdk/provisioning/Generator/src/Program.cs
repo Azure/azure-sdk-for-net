@@ -59,6 +59,7 @@ internal static class Program
             //new PrivateDnsSpecification(), // the Dns's mgmt SDK is majority hand-crafted, therefore here we just use this to generate a scaffold, and then hand-craft the rest.
             new RedisSpecification(),
             new RedisEnterpriseSpecification(),
+            new ResourceGraphSpecification(),
             new SearchSpecification(),
             new SecurityCenterSpecification(),
             new ServiceBusSpecification(),

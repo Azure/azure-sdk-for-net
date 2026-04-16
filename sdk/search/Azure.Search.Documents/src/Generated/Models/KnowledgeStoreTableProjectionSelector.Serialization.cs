@@ -80,8 +80,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(KnowledgeStoreTableProjectionSelector)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("generatedKeyName"u8);
-            writer.WriteStringValue(GeneratedKeyName);
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
         }
@@ -112,17 +110,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string referenceKeyName = default;
+            string generatedKeyName = default;
             string source = default;
             string sourceContext = default;
             IList<InputFieldMappingEntry> inputs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string generatedKeyName = default;
             string tableName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("referenceKeyName"u8))
                 {
                     referenceKeyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("generatedKeyName"u8))
+                {
+                    generatedKeyName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -149,11 +152,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     inputs = array;
                     continue;
                 }
-                if (prop.NameEquals("generatedKeyName"u8))
-                {
-                    generatedKeyName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("tableName"u8))
                 {
                     tableName = prop.Value.GetString();
@@ -166,11 +164,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new KnowledgeStoreTableProjectionSelector(
                 referenceKeyName,
+                generatedKeyName,
                 source,
                 sourceContext,
                 inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
                 additionalBinaryDataProperties,
-                generatedKeyName,
                 tableName);
         }
     }
