@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -16,7 +17,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(Uri), typeof(string), typeof(TokenCredential), typeof(KnowledgeBaseRetrievalClientOptions))]
     [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(Uri), typeof(string), typeof(AzureKeyCredential), typeof(KnowledgeBaseRetrievalClientOptions))]
 #pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(KnowledgeBaseRetrievalClientSettings))]
+    [CodeGenSuppress(nameof(KnowledgeBaseRetrievalClient), typeof(InternalKnowledgeBaseRetrievalClientSettings))] //     //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
 #pragma warning restore SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public partial class KnowledgeBaseRetrievalClient
     {
@@ -30,6 +31,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// Gets the name of the knowledge base.
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="InternalKnowledgeBaseRetrievalClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
+        [Experimental("SCME0002")]
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this((HttpPipelinePolicy)null, settings?.Endpoint, settings?.KnowledgeBaseName, settings?.Options)
+        {
+        }
 
         //TODO: Remove ctors and suppresions once emitter fixes issue with generating client with KnowledgeBaseRetrievalClientOptions instead of SearchClientOptions
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
