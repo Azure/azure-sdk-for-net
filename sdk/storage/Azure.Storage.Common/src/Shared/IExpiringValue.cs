@@ -22,7 +22,7 @@ namespace Azure.Storage
         DateTimeOffset RefreshOn { get; }
 
         /// <summary>
-        /// Returns a copy of this value with the specified <paramref name="refreshOn"/> time.
+        /// Returns a new copy of this value with the specified <paramref name="refreshOn"/> time.
         /// Used by the cache to modify the refresh time while keeping everything else the same.
         /// </summary>
         IExpiringValue WithRefreshOn(DateTimeOffset refreshOn);
