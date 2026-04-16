@@ -67,20 +67,30 @@ if (-not $sessionId -and $inputData.PSObject.Properties['session_id'])
     $clientType = "vscode"
 }
 
-# === STEP 32: Publish event ===
-# Build MCP command arguments
-$cliArgs = @(
-    "ingest-telemetry",
-    "--client-type", $clientType,
-    "--event-type", $eventType,
-    "--session-id", $sessionId,
-    "--body", "'$prompt'"
-)
+# === STEP 2: Publish event ===
+# Build MCP command arguments without passing the full prompt on the command line.
+$processStartInfo = [System.Diagnostics.ProcessStartInfo]::new()
+$processStartInfo.FileName = $cliPath
+$processStartInfo.UseShellExecute = $false
+$processStartInfo.CreateNoWindow = $true
+$processStartInfo.RedirectStandardInput = $true
+$processStartInfo.ArgumentList.Add("ingest-telemetry")
+$processStartInfo.ArgumentList.Add("--client-type")
+$processStartInfo.ArgumentList.Add([string]$clientType)
+$processStartInfo.ArgumentList.Add("--event-type")
+$processStartInfo.ArgumentList.Add([string]$eventType)
+$processStartInfo.ArgumentList.Add("--session-id")
+$processStartInfo.ArgumentList.Add([string]$sessionId)
    
-# run azsdk cli to ingest telemetry (non-blocking)
+# run azsdk cli to ingest telemetry (non-blocking) and pass the prompt via stdin
 try
 {
-    Start-Process -FilePath $cliPath -ArgumentList $cliArgs -NoNewWindow
+    $process = [System.Diagnostics.Process]::Start($processStartInfo)
+    if ($null -ne $process)
+    {
+        $process.StandardInput.Write($prompt)
+        $process.StandardInput.Close()
+    }
 }
 catch
 {
