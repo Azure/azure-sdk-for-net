@@ -304,6 +304,7 @@ namespace Azure.Storage
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
+            public const int DefaultGetRangeListPageSize = 10000;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
 

@@ -277,6 +277,10 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeListDiff(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListDiffAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetRangeListDiffPageable(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetRangeListDiffPageableAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListDiffOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetRangeListPageable(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.Models.ShareFileRange> GetRangeListPageableAsync(Azure.Storage.Files.Shares.Models.ShareFileGetRangeListOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileSymbolicLinkInfo> GetSymbolicLink(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileSymbolicLinkInfo>> GetSymbolicLinkAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected static System.Uri GetUriWithSas(Azure.Storage.Files.Shares.ShareFileClient client) { throw null; }
@@ -1006,6 +1010,12 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.Storage.Files.Shares.Models.FilePosixProperties PosixProperties { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { get { throw null; } set { } }
     }
+    public partial class ShareFileRange
+    {
+        internal ShareFileRange() { }
+        public bool IsClear { get { throw null; } }
+        public Azure.HttpRange Range { get { throw null; } }
+    }
     public partial class ShareFileRangeInfo
     {
         internal ShareFileRangeInfo() { }
@@ -1155,6 +1165,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string clientName, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?), Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights? accessRights = default(Azure.Storage.Files.Shares.Models.ShareFileHandleAccessRights?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileItemProperties ShareFileItemProperties(System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastAccessedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastWrittenOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileLease ShareFileLease(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareFileRange ShareFileRange(Azure.HttpRange range, bool isClear) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileRangeInfo ShareFileRangeInfo(System.DateTimeOffset lastModified, Azure.ETag eTag, long fileContentLength, System.Collections.Generic.IEnumerable<Azure.HttpRange> ranges) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileUploadInfo ShareFileUploadInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, bool isServerEncrypted) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }

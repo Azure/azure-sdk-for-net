@@ -4017,6 +4017,265 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task GetRangeListPageableAsync()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                writeType: ShareFileRangeWriteType.Update,
+                range: range,
+                content: stream);
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Range = new HttpRange(0, Constants.MB)
+            };
+
+            // Act
+            List<ShareFileRange> ranges = new List<ShareFileRange>();
+            await foreach (ShareFileRange item in file.GetRangeListPageableAsync(options))
+            {
+                ranges.Add(item);
+            }
+
+            // Assert
+            Assert.AreEqual(1, ranges.Count);
+            Assert.IsFalse(ranges[0].IsClear);
+            Assert.AreEqual(range, ranges[0].Range);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetRangeListPageableAsync_AccessConditions()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = fileLease.LeaseId
+                }
+            };
+
+            // Act
+            IList<Page<ShareFileRange>> pages = await file.GetRangeListPageableAsync(options).AsPages().ToListAsync();
+
+            // Assert
+            Assert.IsTrue(pages.Count >= 1);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetRangeListPageableAsync_AccessConditionsFail()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileGetRangeListOptions options = new ShareFileGetRangeListOptions
+            {
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = Recording.Random.NewGuid().ToString()
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                EnumerateAsync(file.GetRangeListPageableAsync(options)),
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+
+            static async Task EnumerateAsync(AsyncPageable<ShareFileRange> pageable)
+            {
+                await foreach (ShareFileRange _ in pageable)
+                {
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetRangeListPageableAsync_ByPage()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                writeType: ShareFileRangeWriteType.Update,
+                range: range,
+                content: stream);
+
+            // Act
+            IList<Page<ShareFileRange>> pages = await file.GetRangeListPageableAsync().AsPages(pageSizeHint: 1).ToListAsync();
+
+            // Assert
+            Assert.IsTrue(pages.Count >= 1);
+            Assert.IsTrue(pages[0].Values.Count >= 1);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListDiffPageableAsync()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                range: range,
+                content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse0 = await test.Share.CreateSnapshotAsync();
+
+            stream.Position = 0;
+            HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                range: range2,
+                content: stream);
+
+            HttpRange range3 = new HttpRange(0, 512);
+            await file.ClearRangeAsync(range3);
+
+            Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Snapshot = snapshotResponse1.Value.Snapshot,
+                PreviousSnapshot = snapshotResponse0.Value.Snapshot
+            };
+
+            // Act
+            List<ShareFileRange> ranges = new List<ShareFileRange>();
+            await foreach (ShareFileRange item in file.GetRangeListDiffPageableAsync(options))
+            {
+                ranges.Add(item);
+            }
+
+            // Assert
+            List<ShareFileRange> populated = ranges.Where(r => !r.IsClear).ToList();
+            List<ShareFileRange> cleared = ranges.Where(r => r.IsClear).ToList();
+            Assert.AreEqual(1, populated.Count);
+            Assert.AreEqual(range2, populated[0].Range);
+            Assert.AreEqual(1, cleared.Count);
+            Assert.AreEqual(range3, cleared[0].Range);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListDiffPageableAsync_AccessConditions()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = fileLease.LeaseId
+                }
+            };
+
+            // Act
+            IList<Page<ShareFileRange>> pages = await file.GetRangeListDiffPageableAsync(options).AsPages().ToListAsync();
+
+            // Assert
+            Assert.IsTrue(pages.Count >= 1);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListDiffPageableAsync_AccessConditionsFail()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Range = new HttpRange(0, Constants.MB),
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = Recording.Random.NewGuid().ToString()
+                }
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                EnumerateAsync(file.GetRangeListDiffPageableAsync(options)),
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
+
+            static async Task EnumerateAsync(AsyncPageable<ShareFileRange> pageable)
+            {
+                await foreach (ShareFileRange _ in pageable)
+                {
+                }
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
+        public async Task GetRangeListDiffPageableAsync_ByPage()
+        {
+            // Arrange
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                range: range,
+                content: stream);
+
+            Response<ShareSnapshotInfo> snapshotResponse0 = await test.Share.CreateSnapshotAsync();
+
+            stream.Position = 0;
+            HttpRange range2 = new HttpRange(3 * Constants.KB, Constants.KB);
+            await file.UploadRangeAsync(
+                range: range2,
+                content: stream);
+
+            HttpRange range3 = new HttpRange(0, 512);
+            await file.ClearRangeAsync(range3);
+
+            Response<ShareSnapshotInfo> snapshotResponse1 = await test.Share.CreateSnapshotAsync();
+
+            ShareFileGetRangeListDiffOptions options = new ShareFileGetRangeListDiffOptions
+            {
+                Snapshot = snapshotResponse1.Value.Snapshot,
+                PreviousSnapshot = snapshotResponse0.Value.Snapshot
+            };
+
+            // Act
+            IList<Page<ShareFileRange>> pages = await file.GetRangeListDiffPageableAsync(options).AsPages(pageSizeHint: 1).ToListAsync();
+
+            // Assert
+            Assert.IsTrue(pages.Count >= 1);
+        }
+
+        [RecordedTest]
         public async Task UploadRangeAsync()
         {
             var data = GetRandomBuffer(Constants.KB);

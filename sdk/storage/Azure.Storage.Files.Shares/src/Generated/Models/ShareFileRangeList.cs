@@ -23,15 +23,19 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
         /// <param name="ranges"></param>
         /// <param name="clearRanges"></param>
-        internal ShareFileRangeList(IReadOnlyList<FileRange> ranges, IReadOnlyList<ClearRange> clearRanges)
+        /// <param name="nextMarker"></param>
+        internal ShareFileRangeList(IReadOnlyList<FileRange> ranges, IReadOnlyList<ClearRange> clearRanges, string nextMarker)
         {
             Ranges = ranges;
             ClearRanges = clearRanges;
+            NextMarker = nextMarker;
         }
 
         /// <summary> Gets the ranges. </summary>
         public IReadOnlyList<FileRange> Ranges { get; }
         /// <summary> Gets the clear ranges. </summary>
         public IReadOnlyList<ClearRange> ClearRanges { get; }
+        /// <summary> Gets the next marker. </summary>
+        public string NextMarker { get; }
     }
 }
