@@ -1,16 +1,16 @@
 ---
-name: sdk-migration
-description: Migration logic for Azure SDK for .NET libraries migrating from AutoRest/Swagger to TypeSpec-based generation. Uses MCP tools from the generator-agent server for automated deterministic fixes.
+name: dpg-migration
+description: Migration logic for Azure SDK for .NET data-plane libraries migrating from AutoRest/Swagger to TypeSpec-based generation. Uses MCP tools from the generator-agent server for automated deterministic fixes.
 ---
-# SDK Migration Workflow
+# DPG Migration Workflow
 
-Unified migration workflow for Azure SDK for .NET libraries. This file is the single source of truth for both data-plane (DPG) and management-plane (MPG) migrations. Sections marked **[MPG only]** or **[DPG only]** apply to one plane; everything else is shared.
+Data-plane migration workflow for Azure SDK for .NET libraries.
 
 The workflow uses **MCP tools** from the `generator-agent` server to automate all deterministic, rule-based fixes (field renames, missing usings, type pattern replacements, nullable annotations, etc.) so the LLM only reasons about non-deterministic errors.
 
 ## When Invoked
 
-Trigger phrases: "migrate service X", "help with mgmt migration", "mpg migration", "mgmt sdk migration", "data-plane migration", "dpg migration", "migrate to TypeSpec", "swagger to TypeSpec migration", "upgrade generator", "generator migration help", "migrate with MCP tools", "use generator-agent tools", "tool-assisted migration", "MCP migration", "automated build fix".
+Trigger phrases: "migrate service X", "data-plane migration", "dpg migration", "migrate to TypeSpec", "swagger to TypeSpec migration", "upgrade generator", "generator migration help", "migrate with MCP tools", "use generator-agent tools", "tool-assisted migration", "MCP migration", "automated build fix".
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ This skill requires the SDK repository and the spec repo:
 
 | Path | Purpose | Required? |
 |------|---------|----------|
-| Current repository (`azure-sdk-for-net`) | Azure SDK for .NET mono-repo. SDK packages live under `sdk/<service>/Azure.ResourceManager.<Service>/`. | Always |
+| Current repository (`azure-sdk-for-net`) | Azure SDK for .NET mono-repo. Data-plane SDK packages typically live under `sdk/<service>/<package>/`. | Always |
 | Sibling spec folder (`../azure-rest-api-specs`) | Full or sparse-checkout of the [Azure REST API Specs](https://github.com/Azure/azure-rest-api-specs) repo. Used for spec-side changes (`client.tsp`, `tspconfig.yaml` edits) and as the local spec path for code generation after any spec modification. | Always |
 | Sibling TypeSpec folder (`../typespec`) | Clone of the [microsoft/typespec](https://github.com/microsoft/typespec) repo. | Only for diagnosing generator bugs |
 
@@ -42,7 +42,7 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 
 | Tool | When to Use | What It Does |
 |------|-------------|--------------|
-| `discover_project` | First step of any migration — call before all other tools | Returns comprehensive project context: plane (dpg/mpg), package name, service name, emitter config, tsp-location.yaml fields, custom code folder, API surface files, and `specsRepoPath` (auto-detected at `../azure-rest-api-specs` sibling of SDK repo root, `null` if not found — ask the user for the path when `null`). |
+| `discover_project` | First step of any migration — call before all other tools | Returns comprehensive project context: detected plane, package name, service name, emitter config, tsp-location.yaml fields, custom code folder, API surface files, and `specsRepoPath` (auto-detected at `../azure-rest-api-specs` sibling of SDK repo root, `null` if not found — ask the user for the path when `null`). |
 | `build_and_classify` | First step of every build-fix iteration | Runs `dotnet build`, parses output, classifies each error as deterministic or requires-reasoning |
 | `batch_fix` | After `build_and_classify` returns deterministic errors | Applies multiple deterministic fixes in one call |
 | `regex_replacement` | Field renames, type pattern replacements | Regex find/replace in a file |
@@ -64,10 +64,9 @@ The MCP server provides deterministic fix tools for the build-fix cycle. Configu
 
 ## Inputs
 
-The `discover_project` tool auto-resolves most variables below — it is called in Phase 0 as the first step of any migration.
+The `discover_project` tool auto-resolves most variables below — it is called in Phase 0 as the first step of any migration. This skill applies only when `Plane = dpg`.
 
-Determine if the library is data-plane or management-plane - management-plane libraries will be named like Azure.ResourceManager.*. Data-plane libraries will have service-specific names without "ResourceManager".
-For the purposes of diagnosing generator bugs, the management-plane emitter is located in this repo under `eng/packages/http-client-csharp-mgmt/`, while the data-plane emitter is in this repo under `eng/packages/http-client-csharp/`. The base emitter is in the microsoft/typespec repo under `packages/http-client-csharp/`.
+For the purposes of diagnosing generator bugs, the data-plane emitter is located in this repo under `eng/packages/http-client-csharp/`. The base emitter is in the microsoft/typespec repo under `packages/http-client-csharp/`.
 
 | Variable | Example | `discover_project` field | Description |
 |----------|---------|--------------------------|-------------|
@@ -75,19 +74,18 @@ For the purposes of diagnosing generator bugs, the management-plane emitter is l
 | `PACKAGE_NAME` | `Azure.Communication.Messages` | `PackageName` | Full NuGet package / directory name |
 | `SERVICE_NAME` | `communication` | `ServiceName` | The folder name immediately after `sdk/` |
 | `EMITTER_PACKAGE_JSON_PATH` | see below | `EmitterPackageJsonPath` | Path to the emitter package.json |
-| Plane (dpg/mpg) | `mpg` | `Plane` | Detected from package name and emitter config |
+| Plane | `dpg` | `Plane` | Should resolve to `dpg` for this skill |
 | `SPECS_REPO_PATH` | `../azure-rest-api-specs` | `SpecsRepoPath` | Absolute path to local spec clone (null if not found — ask user) |
 
 | Plane | `EMITTER_PACKAGE_JSON_PATH` | Target emitter in `tspconfig.yaml` |
 |-------|----------------------------|------------------------------------|
 | **DPG** | `eng/azure-typespec-http-client-csharp-emitter-package.json` | `azure-typespec/http-client-csharp` |
-| **MPG** | `eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json` | `azure-typespec/http-client-csharp-mgmt` |
 
 The following variables come from `tsp-location.yaml` (returned in `discover_project`'s `TspLocationFields` when the file exists):
 
 | Variable | Example | `TspLocationFields` key | Description |
 |----------|---------|------------------------|-------------|
-| `SPEC_DIR` | `specification/chaos/resource-manager/Microsoft.Chaos/Chaos` | `directory` | TypeSpec directory in azure-rest-api-specs |
+| `SPEC_DIR` | `specification/<service>/<data-plane-spec-dir>` | `directory` | TypeSpec directory in azure-rest-api-specs |
 | `SPEC_COMMIT` | `37052dfa3f...` | `commit` | Commit SHA from the spec repo |
 
 The following variable is **not** auto-resolved by `discover_project` — determine it from the spec:
@@ -108,7 +106,7 @@ Migrations often span multiple sessions and machines. To enable seamless pickup,
 {LIBRARY_PATH}/migration-status.md
 ```
 
-Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status.md`
+Example: `sdk/communication/Azure.Communication.Messages/migration-status.md`
 
 ### Template
 
@@ -146,13 +144,12 @@ Example: `sdk/apimanagement/Azure.ResourceManager.ApiManagement/migration-status
 | Phase 4 — Update Custom Code | {status} | |
 | Phase 5 — Code Generation | {status} | |
 | Phase 6 — Build-Fix Cycle | {status} | |
-| Phase 7 — CI & Changelog | {status} | |
+| Phase 7 — Changelog | {status} | |
 | Phase 8 — Test Project Build | {status} | |
 | Phase 9 — Test Execution | {status} | |
 | Phase 10 — Finalization | {status} | |
 | Phase 11 — Create Pull Requests | {status} | |
 | Phase 12 — Verify and Summarize | {status} | |
-| Phase 13 — Retrospective [MPG only] | {status} | |
 
 ## ApiCompat Baseline Summary
 
@@ -199,7 +196,7 @@ Remove `migration-status.md` from the branch when the migration is complete (Pha
 Before any migration work:
 
 ### Discover Project
-Call `discover_project` with the absolute path to the SDK package directory. This returns plane (dpg/mpg), package name, service name, emitter config, tsp-location.yaml fields, custom code folder, API surface files, and `SpecsRepoPath` — all in one call. If `SpecsRepoPath` is null, ask the user for the path to their local `azure-rest-api-specs` clone.
+Call `discover_project` with the absolute path to the SDK package directory. This returns the detected plane, package name, service name, emitter config, tsp-location.yaml fields, custom code folder, API surface files, and `SpecsRepoPath` — all in one call. If `SpecsRepoPath` is null, ask the user for the path to their local `azure-rest-api-specs` clone.
 
 ### Resume Check
 1. Check if `{LIBRARY_PATH}/migration-status.md` exists on the current branch.
@@ -224,7 +221,6 @@ Use **explore** agents in parallel:
 4. **Snapshot old API surface**: Read `api/<PACKAGE_NAME>.net*.cs` (listed in `discover_project`'s `ApiSurfaceFiles`) — extract all public type names for later rename resolution.
 5. **Extract autorest rename mappings**: From `src/autorest.md`, extract `rename-mapping` and `prepend-rp-prefix` entries.
 6. **Identify custom code folder convention**: `Custom/`, `Customization/`, or `Customized/` (returned in `discover_project`'s `CustomCodeFolder`).
-7. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill [MPG only].
 
 **If `tsp-location.yaml` exists with a `commit` and `directory`**: Proceed directly to Phase 2 — the `commit_iteration` tool will validate the spec remotely. Do NOT check the local spec repo or read local `tspconfig.yaml`.
 
@@ -244,11 +240,11 @@ After confirmation, update `migration-status.md` to mark Phase 1 as ✅ and save
    - **If it exists** (already TypeSpec-based): Read and parse `repo`, `directory`, and `commit` fields. Skip to step 3.
    - **If it does not exist** (migrating from swagger): Create `tsp-location.yaml` with the following fields:
      ```yaml
-     directory: specification/<service>/resource-manager/Microsoft.<Provider>/<ServiceName>
+     directory: specification/<service>/<data-plane-spec-dir>
      commit: <latest commit SHA from azure-rest-api-specs main>
      repo: Azure/azure-rest-api-specs
      cleanup: true
-     emitterPackageJsonPath: <plane-specific value from discover_project's EmitterPackageJsonPath>
+     emitterPackageJsonPath: <value from discover_project's EmitterPackageJsonPath>
      ```
      Find the correct `directory` by searching `../azure-rest-api-specs/specification/<service>/` for a TypeSpec project (`main.tsp` + `tspconfig.yaml`) that targets the same service.
 2. **Always** verify `emitterPackageJsonPath` is set to the correct plane-specific value (from `discover_project`'s `EmitterPackageJsonPath`). Update it if missing or incorrect — this field is required for code generation to use the right emitter.
@@ -277,51 +273,13 @@ Additional `tsp-location.yaml` fields:
 
 1. Call `pregen_cleanup` with the project path — removes `<IncludeAutorestDependency>true</IncludeAutorestDependency>` from `.csproj` files.
 
-### Handle `autorest.md` [MPG only]
+### Handle legacy AutoRest configuration
 
 If `src/autorest.md` exists:
-1. Extract key config: `namespace`, `title`, `azure-arm: true`, `require` URL, `output-folder`, directives.
-2. **Thoroughly analyze rename mappings** before deleting:
-   - Extract ALL `rename-mapping` entries and `prepend-rp-prefix` entries from `autorest.md`.
-   - The mgmt emitter auto-handles these naming transforms (anything **not** in this list still needs `@@clientName`):
-     - **Model/property suffixes**: `Url`→`Uri`, `Etag`→`ETag`
-     - **DateTimeOffset property suffixes**: `Time`→`On`, `Date`→`On`, `DateTime`→`On`, `At`→`On` (e.g. `CreatedAt`→`CreatedOn`). Also transforms word stems: `Creation`→`Created`, `Deletion`→`Deleted`, `Expiration`→`Expire`, `Modification`→`Modified`. Excludes properties starting with `From`/`To` or ending with `PointInTime`.
-     - **RP prefix prepending**: Automatically prepends the resource provider name to: `Sku`, `SkuName`, `SkuTier`, `SkuFamily`, `SkuInformation`, `Plan`, `Usage`, `Kind`, `PrivateEndpointConnection`, `PrivateLinkResource`, `PrivateLinkServiceConnectionState`, `PrivateEndpointServiceConnectionStatus`, `PrivateEndpointConnectionProvisioningState`, `PrivateLinkResourceProperties`, `PrivateLinkServiceConnectionStateProperty`, `PrivateEndpointConnectionListResult`, `PrivateLinkResourceListResult`.
-     - **Resource update models**: Models using the `ResourceUpdateModel` base type are auto-renamed — `{Resource}Patch` if used only in PATCH, or `{Resource}CreateOrUpdateContent` if used in both CREATE and UPDATE.
-   - Most other renames from `autorest.md` will still need `@@clientName` decorators.
-   - Do NOT blindly add all renames — check what `@clientName("...", "csharp")` decorators already exist in the spec `.tsp` files (e.g., `back-compatible.tsp`). These are already applied and must not be duplicated.
-   - After initial code generation, **compare old vs new public type names** to find which renames are missing. Only add `@@clientName` decorators for types that actually cause build errors.
-3. Delete `autorest.md` — git history preserves it.
+1. Extract any still-relevant config for reference: `namespace`, `title`, `require` URL, `output-folder`, and rename directives.
+2. Preserve only the information that still matters to the TypeSpec-based package shape.
+3. Delete `autorest.md` after the TypeSpec generation path is working — git history preserves it.
 4. Do NOT create a `client.tsp` in the SDK repo. The TypeSpec source lives in the spec repo.
-5. Map remaining AutoRest directives to TypeSpec customization approach:
-   - Model/property renames → `@@clientName(SpecNamespace.SpecTypeName, "SdkName", "csharp")` in spec repo `client.tsp`
-   - Accessibility overrides → `@@access(SpecNamespace.TypeName, Access.public, "csharp")` in spec repo `client.tsp` (for types generated as `internal` that need to be `public`)
-   - Type mapping overrides → `@@alternateType(SpecNamespace.Model.property, "Azure.ResourceManager.CommonTypes.ResourceIdentifier", "csharp")` for properties that should use SDK types instead of raw strings (e.g., resource IDs)
-   - Suppressions → `#suppress` decorators in spec `.tsp` files
-   - Format overrides → TypeSpec `@format` / `@encode` decorators
-
-### SDK Package Structure [MPG only]
-
-Ensure the package directory matches this layout:
-
-```
-sdk/<service>/<PACKAGE_NAME>/
-├── tsp-location.yaml              # Created in Phase 2
-├── src/
-│   ├── <PACKAGE_NAME>.csproj      # Inherits from Directory.Build.props
-│   ├── Properties/AssemblyInfo.cs
-│   ├── Customization/             # Hand-written partial classes (if needed)
-│   │   └── <ModelName>.cs         # Override generated behavior
-│   └── Generated/                 # Auto-generated (do NOT edit)
-├── tests/
-├── api/                           # API surface snapshots
-├── CHANGELOG.md
-├── README.md
-├── Directory.Build.props
-├── assets.json                    # Test recording assets reference
-├── ci.mgmt.yml                    # CI pipeline definition
-└── <PACKAGE_NAME>.sln
-```
 
 ---
 
@@ -334,7 +292,7 @@ In all non-Generated `.cs` files under `{LIBRARY_PATH}/src/`:
 2. `regex_replacement` — Replace `CodeGenClient` → `CodeGenType`
 3. `regex_replacement` — Replace `CodeGenModel` → `CodeGenType`
 
-### DPG code transformations [DPG only]
+### Data-plane code transformations
 
 These are also handled by MCP tools during build-fix, but can be applied before code generation:
 - `regex_replacement` — `_pipeline` → `Pipeline` (field → property)
@@ -403,17 +361,6 @@ After generation:
 
 Build errors, ApiCompat, tests, and API export are handled in their dedicated phases (Phase 6, 8, 9, 10).
 
-### Using `RegenSdkLocal.ps1` [MPG only]
-
-When local generator changes exist under `eng/packages/http-client-csharp-mgmt/`:
-```powershell
-pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME>
-# With local spec repo:
-pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME> -LocalSpecRepoPath <path>
-```
-
----
-
 ## Phase 6 — Build-Fix Cycle
 
 **Goal**: Get the library to compile successfully through iterative error fixing.
@@ -440,7 +387,7 @@ LOOP:
   7. Regenerate based on what changed:
      - Spec changes (client.tsp edits) → [GENERATE]
      - Generator attribute changes → [GENERATE]
-     - Generator code changes [MPG only] → RegenSdkLocal.ps1
+     - Generator code changes → rebuild the data-plane emitter, then [GENERATE]
      - Customization-only changes → no regeneration needed
      - Stale custom file (e.g., custom `FooResource.cs` exists but
        `Generated/FooResource.cs` was renamed to `BarResource.cs` or removed) →
@@ -591,53 +538,13 @@ Given: error in file F with message M
 
 2. IF F is under custom code:
    a. Renamed/missing type → update custom code or add rename
-   b. Internal type → use accessibility fix (@@access [MPG] or CodeGenType)
+   b. Internal type → use an accessibility fix in the spec or CodeGenType
 
 3. IF error is structural in Generated/ with correct spec → generator bug
       → STOP: Do NOT suppress. Report to user with full details (see Generator Bug Reporting).
 ```
 
-### MPG Error Classification Detail [MPG only]
-
-For each build error, classify it **without asking the user**:
-
-```
-Given: error in file F with message M
-
-1. IF F is under `src/Generated/`:
-   a. IF M mentions a type that exists in old API (`api/*.cs`) but with different name:
-      → ROOT CAUSE: spec (missing @@clientName)
-   b. IF M says type is "inaccessible due to protection level" (CS0051/CS0122):
-      → ROOT CAUSE: spec (missing @@access) or customization ([CodeGenType])
-   c. IF M is about wrong constructor args, type mismatch in return types:
-      → ROOT CAUSE: spec (wrong template usage, or missing @@alternateType) or generator bug
-      Check if old API used a different type (e.g., ResourceIdentifier vs string).
-      If so, try @@alternateType in client.tsp first.
-      If the error is in Generated/ code and no spec/customization fix resolves it → generator bug.
-      STOP and report to user with full details (see Generator Bug Reporting).
-   d. IF M is AZC0030/AZC0032 (forbidden suffix):
-      → ROOT CAUSE: spec (needs @@clientName rename)
-   e. IF the generated code looks structurally wrong (missing serialization,
-      wrong inheritance, wrong type mapping) and the spec is correct:
-      → ROOT CAUSE: generator bug
-      STOP and report to user with full details (see Generator Bug Reporting). Do NOT suppress.
-
-2. IF F is under `src/Custom/` or `src/Customization/` or `src/Customized/`:
-   a. IF M references a type that was renamed or no longer exists:
-      → ROOT CAUSE: spec (add @@clientName to preserve old name) OR
-                     customization (update custom code to use new name)
-   b. IF M references a type that became internal:
-      → ROOT CAUSE: spec (@@access) or customization ([CodeGenType])
-
-3. IF error is from ApiCompat:
-   a. IF rule is `TypesMustExist` AND the "missing" type matches a renamed type
-      whose behavior/shape is otherwise unchanged:
-      → ROOT CAUSE: spec (add @@clientName in client.tsp to restore previous public name)
-   b. OTHERWISE (e.g., `MembersMustExist`, shape/behavior changes, or truly removed API):
-      → ROOT CAUSE: customization (need backward-compat shim)
-```
-
-### DPG-Specific Error Patterns [DPG only]
+### Data-plane error patterns
 
 These patterns are specific to data-plane migrations. Apply them during the shared skill's "Build-Fix Cycle" phase, in addition to the common customization patterns.
 
@@ -676,37 +583,6 @@ These patterns are specific to data-plane migrations. Apply them during the shar
 - Use explicit cast from `Response` to the model type instead.
 - Example: `var model = ModelType.FromResponse(response);` → `var model = (ModelType)response;`
 
-### MPG-Specific Error Patterns [MPG only]
-
-| Error | Root Cause | Fix |
-|-------|-----------|-----|
-| CS0234/CS0246 (type not found) | Type renamed by new generator | `@@clientName` in `client.tsp`, or update custom code |
-| CS0051/CS0122 (inaccessible) | Type generated as `internal` | Try `@@access` first; fall back to `[CodeGenType]` |
-| CS1729/CS0029/CS1503 (type mismatch) | Wrong type (e.g., `string` vs `ResourceIdentifier`) | `@@alternateType` in `client.tsp` |
-| AZC0030 (forbidden suffix) | Naming analyzer rejects name | `@@clientName` to old name |
-| AZC0032 (forbidden 'Data' suffix) | Doesn't inherit `ResourceData` | `@@clientName` to old name |
-| ApiCompat MembersMustExist | Changed return type / missing member | `[CodeGenSuppress]` + custom shim (never use ApiCompatBaseline.txt) |
-| ApiCompat CannotRemoveAttribute (WirePathAttribute) | Old SDK had `WirePathAttribute` but new generation doesn't | See `mitigate-breaking-changes` skill |
-| ApiCompat TypesMustExist | Missing type | `@@clientName` to restore old name |
-
-### MPG Fix Decision Tree [MPG only]
-
-```
-PREFER spec-side fix (@@clientName, @@access, @@alternateType) when:
-  - Simple rename, accessibility change, or type mapping override
-  - Multiple errors resolved by one decorator
-
-PREFER SDK custom code when:
-  - @@access doesn't work (nested/wrapper types)
-  - Backward-compat methods/properties needed
-  - One-off workaround for generator limitation
-
-PREFER generator fix when:
-  - Same bug affects ALL management SDKs
-  - Generated code is structurally wrong despite correct spec
-  - CAUTION: Run Generate.ps1 to verify no regressions
-```
-
 ### Priority Order
 
 1. Missing/renamed types (CS0234, CS0246)
@@ -714,39 +590,6 @@ PREFER generator fix when:
 3. Signature mismatches (CS1729, CS0029, CS1503)
 4. Duplicate definitions (CS0111)
 5. Other errors — investigate individually
-
-### Autonomous Rename Resolution Strategy [MPG only]
-
-When migrating from autorest, many types get renamed. Resolve renames autonomously:
-
-```
-1. EXTRACT old names:
-   a. Read api/<PACKAGE_NAME>.net*.cs for all public type names
-   b. Read src/autorest.md rename-mapping entries (before deleting it)
-   c. Store both in a lookup table
-
-2. AFTER code generation, COMPARE:
-   a. Get all new public type names from src/Generated/
-   b. For each type referenced in custom code or old API surface:
-      - IF type exists with same name → no action needed
-      - IF type exists with different name → add @@clientName to preserve old name
-      - IF type no longer exists → check if flattened/merged/removed
-
-3. For ALL name mismatches that cause build errors, add @@clientName in client.tsp.
-   PREFER @@clientName over updating custom code — it preserves backward compat
-   and minimizes SDK-side changes.
-
-4. For missing/moved operations (method not found, wrong resource type):
-   a. Check the operation's HTTP path in the spec
-   b. Compare with the old autorest-generated REST client
-   c. IF the operation path changed in the spec → the spec was updated,
-      add backward-compat wrapper in custom code if needed
-   d. IF the operation path is the same but mapped to a different resource
-      or extension scope → likely a generator bug in resource/scope assignment.
-      Check the resource's resourceType and resourceIdPattern in generated code.
-   e. IF the operation moved from one interface to another in the spec →
-      check if it should be an extension resource operation (different scope)
-```
 
 ### Customization Patterns
 
@@ -763,22 +606,9 @@ When migrating from autorest, many types get renamed. Resolve renames autonomous
 
 ---
 
-## Phase 7 — CI & Changelog [MPG only]
+## Phase 7 — Changelog
 
 **Do NOT hand-edit `metadata.json`** — it is auto-generated.
-
-### ci.mgmt.yml
-```yaml
-trigger: none
-extends:
-  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
-  parameters:
-    ServiceDirectory: <service>
-    LimitForPullRequest: true
-    Artifacts:
-    - name: <PACKAGE_NAME>
-      safeName: <PackageNameNoDotsNoDashes>
-```
 
 ### CHANGELOG.md
 ```markdown
@@ -844,12 +674,12 @@ During the iteration loop, changes fall into three categories. Identify which on
 4. Note the **final commit SHA** from the pushed branch.
 5. PR title: `Add csharp client customizations for <Service> migration`
 
-### Step 3 — Create Generator PR (if applicable) [MPG only]
+### Step 3 — Create Generator PR (if applicable)
 
-1. In the SDK repo, create a branch containing **only** the generator changes under `eng/packages/http-client-csharp-mgmt/`.
+1. In the SDK repo, create a branch containing **only** the generator changes under `eng/packages/http-client-csharp/`.
 2. Push and create a PR against `Azure/azure-sdk-for-net`.
-3. PR title: `[Mgmt Generator] Fix <description> for <Service> migration`
-4. Include test project regeneration if the fix affects other SDKs (run `eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1`).
+3. PR title: `[Generator] Fix <description> for <Service> migration`
+4. Include test project regeneration if the fix affects other SDKs (run `eng/packages/http-client-csharp/eng/scripts/Generate.ps1`).
 
 ### Step 4 — Create SDK Migration PR
 
@@ -863,9 +693,8 @@ During the iteration loop, changes fall into three categories. Identify which on
 3. Verify `dotnet build` still passes.
 4. Run pre-commit checks (Export-API, Update-Snippets, dotnet format).
 5. Commit all SDK changes and create a PR against `Azure/azure-sdk-for-net`.
-6. PR title: `[Mgmt] <PACKAGE_NAME>: Migrate to TypeSpec (API version <API_VERSION>)` **[MPG only]**
-7. PR title: `<PACKAGE_NAME>: Migrate to TypeSpec (API version <API_VERSION>)` **[DPG only]**
-8. In the PR description, link to the spec PR and generator PR (if any) as dependencies.
+6. PR title: `<PACKAGE_NAME>: Migrate to TypeSpec (API version <API_VERSION>)`
+7. In the PR description, link to the spec PR and generator PR (if any) as dependencies.
 
 ### Step 5 — Report Summary
 
@@ -893,15 +722,6 @@ After all PRs are created, report:
 
 ---
 
-## Phase 13 — Retrospective [MPG only]
-
-After migration, update skill files with:
-1. New error patterns → [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/error-reference.md)
-2. New decorators/TypeSpec patterns → `mitigate-breaking-changes` skill
-3. New workarounds/pitfalls → [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/sdk-migration/error-reference.md)
-
----
-
 ## Generator Bug Diagnosis
 
 Before reporting a generator bug, ALWAYS:
@@ -926,19 +746,20 @@ When a generator bug is confirmed, you **MUST stop and report the bug to the use
 8. **Root cause hypothesis** — Your best assessment of why the generator produces incorrect code.
 
 After presenting the bug details, **ask the user how they want to proceed**:
-- **Option A**: Fix the generator (provide the emitter path: `eng/packages/http-client-csharp/` for DPG, `eng/packages/http-client-csharp-mgmt/` for MPG)
+- **Option A**: Fix the data-plane generator (emitter path: `eng/packages/http-client-csharp/`)
 - **Option B**: File an issue and apply a `[CodeGenSuppress]` workaround **only with the user's explicit approval**
 - **Option C**: Pause the migration and wait for a generator fix
 
-### Generator Fix Workflow [MPG only]
+### Generator Fix Workflow
 
 ```
 1. CONFIRM it's a generator bug (zero custom files, clean regeneration, same errors)
 2. REPORT the bug to the user with full details (see Generator Bug Reporting above)
 3. WAIT for user decision before proceeding
 4. IF user chooses to fix generator:
-   - Edit under eng/packages/http-client-csharp-mgmt/
-   - Regenerate with RegenSdkLocal.ps1
+   - Edit under eng/packages/http-client-csharp/
+   - Rebuild the emitter (`npm run build`)
+   - Regenerate the affected SDK with `dotnet build /t:GenerateCode`
    - Clean up stale custom workarounds
    - Run Generate.ps1 to verify no regressions
 5. IF user explicitly approves workaround:
@@ -978,7 +799,7 @@ During the build-fix loop, Copilot operates autonomously. These actions are **pe
 3. **Deleting `autorest.md`** after extracting directives — git history preserves it.
 4. **Updating custom code** to reference new generated type names.
 5. **Removing or commenting out a problematic custom file** that is causing errors in generated code — regenerate immediately after. Git history preserves the old version, and needed customizations can be re-introduced incrementally.
-6. **Regenerating code** using `dotnet build /t:GenerateCode` or **[MPG only]** `RegenSdkLocal.ps1`. **Always regenerate after modifying custom files that contain generator attributes.**
+6. **Regenerating code** using `dotnet build /t:GenerateCode`. **Always regenerate after modifying custom files that contain generator attributes.**
 7. **Updating CHANGELOG.md** and other metadata files.
 
 ### Actions Requiring User Confirmation
@@ -1011,22 +832,20 @@ Proceed **without asking the user** except when:
 ### Parallel Phase (explore agents)
 - **Agent 1**: Find spec location and determine spec type
 - **Agent 2**: Analyze existing SDK package structure
-- **Agent 3**: Read naming guidelines from `azure-sdk-mgmt-pr-review` skill [MPG only]
 
 ### Sequential Phase (task/general-purpose agents)
 1. Create/update `tsp-location.yaml`
 2. Delete `autorest.md` if needed
-3. Create `ci.mgmt.yml` if missing
-4. Run code generation (initial_wait: 120+)
-5. Apply customizations (general-purpose agent for naming rules)
-6. Build error triage loop
-7. Final build and validate
+3. Run code generation (initial_wait: 120+)
+4. Apply customizations
+5. Build error triage loop
+6. Final build and validate
 
 ### Sub-Agent Strategy
 1. **task agent** — Run `dotnet build`, collect errors, populate SQL table.
 2. **Batch spec fixes**: explore → general-purpose → task (regenerate + rebuild).
 3. **Batch custom code fixes**: explore → general-purpose → task (rebuild).
-4. **Generator fixes** (one at a time): explore → general-purpose → task (RegenSdkLocal + rebuild) → general-purpose (clean up stale workarounds) → task (rebuild).
+4. **Generator fixes** (one at a time): explore → general-purpose → task (rebuild emitter + regenerate + rebuild) → general-purpose (clean up stale workarounds) → task (rebuild).
 
 ## Quick Reference — Do's and Don'ts
 
