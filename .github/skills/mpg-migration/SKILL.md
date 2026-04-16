@@ -1,6 +1,6 @@
 ---
 name: mpg-migration
-description: Migrate Azure SDK for .NET management-plane libraries from AutoRest/Swagger to TypeSpec. Use when asked to do an MPG migration or move from Swagger to TypeSpec.
+description: Handles Azure SDK for .NET management-plane migrations from AutoRest/Swagger to TypeSpec; use for MPG, mgmt migration, or Azure.ResourceManager.* migration requests.
 ---
 
 # MPG Migration Workflow
@@ -16,6 +16,11 @@ Typical triggers:
 - "mgmt migration"
 - "migrate Azure.ResourceManager.<Service> to TypeSpec"
 
+## Required Input
+
+- SDK package path under `sdk/<service>/Azure.ResourceManager.<Service>/`
+- Local `azure-rest-api-specs` repo path if it is not present at `../azure-rest-api-specs`
+
 ## Prerequisites
 
 - **SDK repo**: Package at `sdk/<service>/Azure.ResourceManager.<Service>/`
@@ -28,6 +33,13 @@ Typical triggers:
 2. **Never add `ApiCompatBaseline.txt` entries or disable ApiCompat/package validation.**
 3. **Prefer spec-side decorators first**: `@@clientName`, `@@access`, `@@alternateType`, `@@markAsPageable`.
 4. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
+
+## Default Autonomy
+
+Proceed autonomously through the normal generate/build/fix loop. Ask the user only when:
+- the spec repo path is missing or ambiguous
+- the fix requires changes beyond `client.tsp`
+- the issue is a generator bug with no safe workaround
 
 ## Phase 1 — Setup & First Generation
 
@@ -89,6 +101,10 @@ Before opening the SDK PR:
 3. Update `tsp-location.yaml` to point to fork commit.
 4. Push SDK to fork → draft PR against `Azure/azure-sdk-for-net`.
 
+Use concise PR titles:
+- Spec PR: `Add csharp customizations for <Service> migration`
+- SDK PR: `[Mgmt] <PackageName>: Migrate to TypeSpec`
+
 ## Generator Bugs
 
 1. If the generated code is structurally wrong after removing stale customizations, stop and report it as a generator bug.
@@ -107,3 +123,10 @@ Remaining breaks: ApplicationPatch base type change, model factory signatures
 ```
 
 Keep it minimal — just current phase, blockers, and unfinished work. On resume, read this file first. Delete when migration merges.
+
+## Done When
+
+- `dotnet build` is clean
+- ApiCompat issues are mitigated without baselines
+- required review/validation steps are complete
+- `tsp-location.yaml` points to the final spec commit used by the PR
