@@ -11,11 +11,13 @@ namespace Azure.Generator.Management.Models;
 /// </summary>
 /// <param name="Kind"> The kind of scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension). </param>
 /// <param name="ScopeIdPattern"> The scope's ID pattern as a parsed request path. </param>
-public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeIdPattern)
+/// <param name="ScopeResourceType"> The ARM resource type of the scope (e.g., "Microsoft.Compute/virtualMachines"). Null when the scope is empty (tenant scope), or when the resource type contains variable segments. </param>
+public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeIdPattern, string? ScopeResourceType)
 {
     internal static ArmResourceScopeInfo Deserialize(JsonElement element)
     {
         ResourceScope? kind = null;
+        string? resourceType = null;
 
         if (element.TryGetProperty("kind", out var kindElement))
         {
@@ -32,8 +34,14 @@ public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeI
         }
         var scopeIdPattern = scopeIdPatternElement.GetString();
 
+        if (element.TryGetProperty("scopeResourceType", out var resourceTypeElement))
+        {
+            resourceType = resourceTypeElement.GetString();
+        }
+
         return new(
             kind ?? throw new JsonException("Required JSON property 'kind' is missing or invalid."),
-            new RequestPathPattern(scopeIdPattern ?? throw new JsonException("Required JSON property 'scopeIdPattern' cannot be null.")));
+            new RequestPathPattern(scopeIdPattern ?? throw new JsonException("Required JSON property 'scopeIdPattern' cannot be null.")),
+            resourceType);
     }
 }

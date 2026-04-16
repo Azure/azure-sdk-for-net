@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -277,7 +277,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             // skip resource Id validation for extension resource without parent resource type, since we don't have enough information to validate the resource Id. For example, for an extension resource with resource scope of extension and no parent resource type specified, the resource Id pattern could be something like /{scope}/providers/Microsoft.ABC/def/{defName}, in this case we don't know what the {scope} is, it could be subscription, resource group, or even a management group, so we can't validate the resource Id.
-            if (_resourceMetadata.Scope.Kind != ResourceScope.Extension || _resourceMetadata.Scope.ScopeIdPattern.ResourceType is { IsConstant: true })
+            if (_resourceMetadata.Scope.Kind != ResourceScope.Extension || _resourceMetadata.Scope.ScopeResourceType is not null)
             {
                 bodyStatements.Add(Static(Type).As<ArmCollection>().ValidateResourceId(idParameter).Terminate());
             }
@@ -323,9 +323,9 @@ namespace Azure.Generator.Management.Providers
                 methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this,Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
             }
             // For extension resource with known parent resource type, we can also generate a ValidateResourceId method
-            else if (_resourceMetadata.Scope.ScopeIdPattern.ResourceType is { IsConstant: true } parentResourceType)
+            else if (_resourceMetadata.Scope.ScopeResourceType is { } parentResourceType)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Literal(parentResourceType.ToString())));
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Literal(parentResourceType)));
             }
 
             methods.AddRange(BuildCreateOrUpdateMethods());

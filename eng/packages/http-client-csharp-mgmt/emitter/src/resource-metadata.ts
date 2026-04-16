@@ -325,6 +325,12 @@ export interface ResourceScopeInfo {
   kind: ResourceScopeKind;
   /** The scope's ID pattern path */
   scopeIdPattern: RequestPath;
+  /**
+   * The ARM resource type of the scope (e.g., "Microsoft.Compute/virtualMachines").
+   * Undefined when the scope is empty (tenant scope),
+   * or when the resource type contains variable segments (e.g., "{parentProviderNamespace}/{parentResourceType}").
+   */
+  scopeResourceType?: string;
 }
 
 export interface ResourceMetadata {
@@ -359,7 +365,8 @@ export function convertResourceMetadataToArguments(
     })),
     scope: {
       kind: metadata.scope.kind,
-      scopeIdPattern: metadata.scope.scopeIdPattern.path
+      scopeIdPattern: metadata.scope.scopeIdPattern.path,
+      scopeResourceType: metadata.scope.scopeResourceType
     },
     parentResourceId: metadata.parentResourceId?.path,
     singletonResourceName: metadata.singletonResourceName,
@@ -559,7 +566,8 @@ export function convertArmProviderSchemaToArguments(
       })),
       scope: {
         kind: r.metadata.scope.kind,
-        scopeIdPattern: r.metadata.scope.scopeIdPattern.path
+        scopeIdPattern: r.metadata.scope.scopeIdPattern.path,
+        scopeResourceType: r.metadata.scope.scopeResourceType
       },
       parentResourceId: r.metadata.parentResourceId?.path,
       singletonResourceName: r.metadata.singletonResourceName,
@@ -803,11 +811,18 @@ export function postProcessArmResources(
     sortResourceMethods(resource.metadata.methods);
   }
 
-  // Step 8: Update scope.scopeIdPattern from resource ID patterns
+  // Step 8: Update scope from resource ID patterns
   // At this point all resources in filteredResources have a valid resourceIdPattern
   for (const resource of filteredResources) {
-    resource.metadata.scope.scopeIdPattern =
-      resource.metadata.resourceIdPattern.scopePath;
+    const scopePath = resource.metadata.resourceIdPattern.scopePath;
+    resource.metadata.scope.scopeIdPattern = scopePath;
+    // Include the scope's resource type when it's fully constant (no variable segments)
+    if (scopePath.length > 0) {
+      const rt = scopePath.resourceType;
+      if (!rt.includes("{")) {
+        resource.metadata.scope.scopeResourceType = rt;
+      }
+    }
   }
 
   return filteredResources;
