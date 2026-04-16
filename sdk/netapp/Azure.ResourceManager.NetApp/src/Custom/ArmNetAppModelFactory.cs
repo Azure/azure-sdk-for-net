@@ -16,6 +16,10 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Model factory for models. </summary>
+    // TODO: Remove [CodeGenSuppress] and the replacement method below after microsoft/typespec#10397 is fixed.
+    // The generator emits a backward-compat ModelFactory overload with wrong argument order
+    // when @@hierarchyBuilding changes the internal constructor parameter ordering.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CapacityPoolPatch", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(long?), typeof(CapacityPoolQosType?), typeof(bool?))]
     public static partial class ArmNetAppModelFactory
     {
         /// <summary> Initializes a new instance of NetAppBackupData. </summary>
@@ -410,6 +414,15 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
         {
             return new NetAppVolumeData(location, creationToken, usageThreshold, subnetId);
+        }
+
+        // TODO: Remove after microsoft/typespec#10397 is fixed and regenerated.
+        // Correct replacement for the suppressed backward-compat overload whose generated
+        // version had arguments in wrong order due to @@hierarchyBuilding.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled)
+        {
+            return CapacityPoolPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, size: size, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, customThroughputMibpsInt: default);
         }
     }
 }
