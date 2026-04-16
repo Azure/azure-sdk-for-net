@@ -28,5 +28,5 @@ steps:
       arguments: >-
         -AzsdkPath '$(AZSDK)'
         -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
-        -SdkTypes '${{ join(',', parameters.SdkTypes) }}'
+        -SdkTypes ${{ join(',', parameters.SdkTypes) }}
         -Repo '${{ parameters.Repo }}'
