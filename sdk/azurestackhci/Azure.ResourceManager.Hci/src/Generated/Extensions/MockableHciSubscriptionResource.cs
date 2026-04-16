@@ -5,88 +5,373 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Hci;
+using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableHciSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _hciClusterClustersClientDiagnostics;
-        private ClustersRestOperations _hciClusterClustersRestClient;
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
+        private ClientDiagnostics _edgeMachinesClientDiagnostics;
+        private EdgeMachines _edgeMachinesRestClient;
+        private ClientDiagnostics _devicePoolsClientDiagnostics;
+        private DevicePools _devicePoolsRestClient;
+        private ClientDiagnostics _kubernetesVersionsClientDiagnostics;
+        private KubernetesVersions _kubernetesVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHciSubscriptionResource for mocking. </summary>
         protected MockableHciSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHciSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHciSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHciSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics HciClusterClustersClientDiagnostics => _hciClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciClusterResource.ResourceType));
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+
+        private ClientDiagnostics EdgeMachinesClientDiagnostics => _edgeMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EdgeMachines EdgeMachinesRestClient => _edgeMachinesRestClient ??= new EdgeMachines(EdgeMachinesClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+
+        private ClientDiagnostics DevicePoolsClientDiagnostics => _devicePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DevicePools DevicePoolsRestClient => _devicePoolsRestClient ??= new DevicePools(DevicePoolsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+
+        private ClientDiagnostics KubernetesVersionsClientDiagnostics => _kubernetesVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+
+        /// <summary> Gets a collection of PlatformUpdates in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of PlatformUpdates and their operations over a PlatformUpdateResource. </returns>
+        public virtual PlatformUpdateCollection GetPlatformUpdates(AzureLocation location)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new PlatformUpdateCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a platform update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/platformUpdates/{platformUpdateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlatformUpdates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="platformUpdateName"> The name of the PlatformUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="platformUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="platformUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PlatformUpdateResource>> GetPlatformUpdateAsync(AzureLocation location, string platformUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(platformUpdateName, nameof(platformUpdateName));
+
+            return await GetPlatformUpdates(location).GetAsync(platformUpdateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a platform update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/platformUpdates/{platformUpdateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlatformUpdates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="platformUpdateName"> The name of the PlatformUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="platformUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="platformUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PlatformUpdateResource> GetPlatformUpdate(AzureLocation location, string platformUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(platformUpdateName, nameof(platformUpdateName));
+
+            return GetPlatformUpdates(location).Get(platformUpdateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OsImages in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of OsImages and their operations over a OsImageResource. </returns>
+        public virtual OsImageCollection GetOsImages(AzureLocation location)
+        {
+            return GetCachedClient(client => new OsImageCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OsImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OsImageResource>> GetOsImageAsync(AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
+
+            return await GetOsImages(location).GetAsync(osImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a os image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/osImages/{osImageName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OsImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="osImageName"> The name of the OsImage. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="osImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OsImageResource> GetOsImage(AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
+
+            return GetOsImages(location).Get(osImageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of UpdateContents in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of UpdateContents and their operations over a UpdateContentResource. </returns>
+        public virtual UpdateContentCollection GetUpdateContents(AzureLocation location)
+        {
+            return GetCachedClient(client => new UpdateContentCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets content for an update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/updateContents/{updateContentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateContents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="updateContentName"> The name of the UpdateContent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateContentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<UpdateContentResource>> GetUpdateContentAsync(AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(updateContentName, nameof(updateContentName));
+
+            return await GetUpdateContents(location).GetAsync(updateContentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets content for an update.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/updateContents/{updateContentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UpdateContents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="updateContentName"> The name of the UpdateContent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateContentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<UpdateContentResource> GetUpdateContent(AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(updateContentName, nameof(updateContentName));
+
+            return GetUpdateContents(location).Get(updateContentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ValidatedSolutionRecipes in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of ValidatedSolutionRecipes and their operations over a ValidatedSolutionRecipeResource. </returns>
+        public virtual ValidatedSolutionRecipeCollection GetValidatedSolutionRecipes(AzureLocation location)
+        {
+            return GetCachedClient(client => new ValidatedSolutionRecipeCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a validated solution recipe.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/validatedSolutionRecipes/{validatedSolutionRecipeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ValidatedSolutionRecipes_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="validatedSolutionRecipeName"> The name of the ValidatedSolutionRecipe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validatedSolutionRecipeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ValidatedSolutionRecipeResource>> GetValidatedSolutionRecipeAsync(AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(validatedSolutionRecipeName, nameof(validatedSolutionRecipeName));
+
+            return await GetValidatedSolutionRecipes(location).GetAsync(validatedSolutionRecipeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a validated solution recipe.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/validatedSolutionRecipes/{validatedSolutionRecipeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ValidatedSolutionRecipes_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="validatedSolutionRecipeName"> The name of the ValidatedSolutionRecipe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validatedSolutionRecipeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ValidatedSolutionRecipeResource> GetValidatedSolutionRecipe(AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(validatedSolutionRecipeName, nameof(validatedSolutionRecipeName));
+
+            return GetValidatedSolutionRecipes(location).Get(validatedSolutionRecipeName, cancellationToken);
         }
 
         /// <summary>
         /// List all HCI clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciClusterResource> GetHciClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "MockableHciSubscriptionResource.GetHciClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
         }
 
         /// <summary>
         /// List all HCI clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HciClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +379,181 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> A collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciClusterResource> GetHciClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HciClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HciClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), HciClusterClustersClientDiagnostics, Pipeline, "MockableHciSubscriptionResource.GetHciClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciClusterData, HciClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetHciClusters"), data => new HciClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all edge machines in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/edgeMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EdgeMachineResource> GetEdgeMachinesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionAsyncCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all edge machines in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/edgeMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeMachines_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EdgeMachineResource> GetEdgeMachines(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeMachineData, EdgeMachineResource>(new EdgeMachinesGetBySubscriptionCollectionResultOfT(EdgeMachinesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetEdgeMachines"), data => new EdgeMachineResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all device pools in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/devicePools. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevicePools_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevicePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevicePoolResource> GetDevicePoolsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionAsyncCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetDevicePools"), data => new DevicePoolResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all device pools in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/devicePools. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DevicePools_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevicePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevicePoolResource> GetDevicePools(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevicePoolData, DevicePoolResource>(new DevicePoolsGetBySubscriptionCollectionResultOfT(DevicePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHciSubscriptionResource.GetDevicePools"), data => new DevicePoolResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all kubernetes versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/kubernetesVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesVersions_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciKubernetesVersion> GetBySubscriptionLocationResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new KubernetesVersionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableHciSubscriptionResource.GetBySubscriptionLocationResource");
+        }
+
+        /// <summary>
+        /// List all kubernetes versions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/locations/{location}/kubernetesVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KubernetesVersions_ListBySubscriptionLocationResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciKubernetesVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciKubernetesVersion> GetBySubscriptionLocationResource(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new KubernetesVersionsGetBySubscriptionLocationResourceCollectionResultOfT(KubernetesVersionsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableHciSubscriptionResource.GetBySubscriptionLocationResource");
         }
     }
 }

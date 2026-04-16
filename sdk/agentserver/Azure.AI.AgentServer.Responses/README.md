@@ -96,14 +96,20 @@ public class EchoHandlerConvenience : ResponseHandler
 }
 ```
 
-Available convenience generators:
+Available convenience generators (commonly used):
 
 | Method | Description |
 |--------|-------------|
 | `OutputItemMessage(string)` | Emits a complete text message output item |
+| `OutputItemMessage(string, IEnumerable<Annotation>)` | Emits a text message with file annotations |
 | `OutputItemMessage(IAsyncEnumerable<string>, CancellationToken)` | Streams tokens as `response.output_text.delta` events |
 | `OutputItemFunctionCall(name, callId, arguments)` | Emits a complete function call output item |
+| `OutputItemFunctionCallOutput(callId, output)` | Emits a function call output (no deltas) |
 | `OutputItemReasoningItem(...)` | Emits a reasoning output item |
+| `OutputItemImageGenCall(resultBase64)` | Emits an image generation result with status transitions |
+| `OutputItemStructuredOutputs(output)` | Emits an arbitrary structured JSON output item |
+
+Additional convenience generators are available for computer calls, local shell calls, function shell calls, apply-patch calls, custom tool call outputs, MCP approval requests/responses, and compaction. Each follows the same pattern — accepts domain parameters and yields the complete `output_item.added` → `output_item.done` event pair.
 
 See [Sample 3 — Full control ResponseStream](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample3_FullControlResponseStream.md) and [Sample 4 — Function calling](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample4_FunctionCalling.md) for more examples.
 
@@ -130,14 +136,31 @@ public class EchoHandlerFullControl : ResponseHandler
         var text = message.AddTextContent();
         yield return text.EmitAdded();
         yield return text.EmitDelta("Hello, world!");
-        yield return text.EmitDone("Hello, world!");
+        yield return text.EmitTextDone("Hello, world!");
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
         yield return stream.EmitCompleted();
     }
 }
 ```
+
+### ResponseContext
+
+Injected into every `CreateAsync` call, `ResponseContext` provides access to the client's input, conversation history, and request metadata:
+
+- **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
+- **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
+- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
+- **`ClientHeaders`** — forwarded HTTP headers from the original client request.
+- **`QueryParameters`** — query parameters from the original request.
+- **`RawBody`** — the raw request body as `BinaryData` for advanced scenarios.
+- **`Isolation`** — isolation context (tenant/session) extracted from request headers.
+
+For collections of `Item` objects, the `GetInputText()` extension method (on `IEnumerable<Item>`) extracts and joins text content without needing a `ResponseContext`.
+
+See the [handler implementation guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/docs/handler-implementation-guide.md#responsecontext) for the full `ResponseContext` API reference.
 
 ### ResponseEventStream
 

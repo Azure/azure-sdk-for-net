@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Intents of a cluster. </summary>
     public partial class DeploymentSettingIntents
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingIntents"/>. </summary>
         public DeploymentSettingIntents()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
         /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingIntents(string name, IList<string> trafficType, IList<string> adapter, bool? overrideVirtualSwitchConfiguration, DeploymentSettingVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, DeploymentSettingAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentSettingIntents(string name, IList<string> trafficType, IList<string> adapter, bool? overrideVirtualSwitchConfiguration, DeploymentSettingVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides, bool? overrideQosPolicy, DeploymentSettingQosPolicyOverrides qosPolicyOverrides, bool? overrideAdapterProperty, DeploymentSettingAdapterPropertyOverrides adapterPropertyOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TrafficType = trafficType;
@@ -74,33 +46,41 @@ namespace Azure.ResourceManager.Hci.Models
             QosPolicyOverrides = qosPolicyOverrides;
             OverrideAdapterProperty = overrideAdapterProperty;
             AdapterPropertyOverrides = adapterPropertyOverrides;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the network intent you wish to create. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> List of network traffic types. Only allowed values are 'Compute', 'Storage', 'Management'. </summary>
         [WirePath("trafficType")]
         public IList<string> TrafficType { get; }
+
         /// <summary> Array of network interfaces used for the network intent. </summary>
         [WirePath("adapter")]
         public IList<string> Adapter { get; }
+
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideVirtualSwitchConfiguration")]
         public bool? OverrideVirtualSwitchConfiguration { get; set; }
+
         /// <summary> Set virtualSwitch ConfigurationOverrides for cluster. </summary>
         [WirePath("virtualSwitchConfigurationOverrides")]
         public DeploymentSettingVirtualSwitchConfigurationOverrides VirtualSwitchConfigurationOverrides { get; set; }
+
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideQosPolicy")]
         public bool? OverrideQosPolicy { get; set; }
+
         /// <summary> Set QoS PolicyOverrides for cluster. </summary>
         [WirePath("qosPolicyOverrides")]
         public DeploymentSettingQosPolicyOverrides QosPolicyOverrides { get; set; }
+
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("overrideAdapterProperty")]
         public bool? OverrideAdapterProperty { get; set; }
+
         /// <summary> Set Adapter PropertyOverrides for cluster. </summary>
         [WirePath("adapterPropertyOverrides")]
         public DeploymentSettingAdapterPropertyOverrides AdapterPropertyOverrides { get; set; }

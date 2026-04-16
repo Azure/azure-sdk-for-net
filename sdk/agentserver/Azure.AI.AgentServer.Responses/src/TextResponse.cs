@@ -114,7 +114,7 @@ public class TextResponse : IAsyncEnumerable<ResponseStreamEvent>
             // Complete-text mode: one delta with the full text.
             var result = await _createText(cancellationToken).ConfigureAwait(false);
             yield return text.EmitDelta(result);
-            yield return text.EmitDone(result);
+            yield return text.EmitTextDone(result);
         }
         else
         {
@@ -125,10 +125,10 @@ public class TextResponse : IAsyncEnumerable<ResponseStreamEvent>
                 sb.Append(chunk);
                 yield return text.EmitDelta(chunk);
             }
-            yield return text.EmitDone(sb.ToString());
+            yield return text.EmitTextDone(sb.ToString());
         }
 
-        yield return message.EmitContentDone(text);
+        yield return text.EmitDone();
         yield return message.EmitDone();
 
         yield return stream.EmitCompleted();
