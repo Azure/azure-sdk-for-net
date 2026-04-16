@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-10 07:17:14 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-14 18:06:17 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -18,13 +18,13 @@
 
 - Total libraries: 399
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 100
-  - New Emitter (TypeSpec): 132
+  - Autorest/Swagger: 98
+  - New Emitter (TypeSpec): 134
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
-  - New Emitter (TypeSpec): 42
-  - Old TypeSpec: 1
+  - New Emitter (TypeSpec): 43
+  - Old TypeSpec: 0
 - Provisioning: 39
   - Reflection-based generator: 34
   - TypeSpec-based generator: 3
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 42 / 43 (97.7%)
+**Migration Status**: 43 / 43 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -55,7 +55,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
-| communication | Azure.Communication.Messages |  |  |
+| communication | Azure.Communication.Messages | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 132 / 132 (100%)
+**Migration Status**: 134 / 134 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -150,6 +150,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | attestation | Azure.ResourceManager.Attestation | ✅ |
 | avs | Azure.ResourceManager.Avs | ✅ |
 | azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
+| azurestackhci | Azure.ResourceManager.Hci | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | batch | Azure.ResourceManager.Batch | ✅ |
 | billingbenefits | Azure.ResourceManager.BillingBenefits | ✅ |
@@ -230,6 +231,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | powerbidedicated | Azure.ResourceManager.PowerBIDedicated | ✅ |
+| providerhub | Azure.ResourceManager.ProviderHub | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
 | purview | Azure.ResourceManager.Purview | ✅ |
 | quantum | Azure.ResourceManager.Quantum | ✅ |
@@ -274,7 +276,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 100
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 98
 
 | Service | Library |
 | ------- | ------- |
@@ -287,7 +289,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | automation | Azure.ResourceManager.Automation |
-| azurestackhci | Azure.ResourceManager.Hci |
 | billing | Azure.ResourceManager.Billing |
 | blueprint | Azure.ResourceManager.Blueprint |
 | cdn | Azure.ResourceManager.Cdn |
@@ -351,7 +352,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 10
 | policyinsights | Azure.ResourceManager.PolicyInsights |
 | postgresql | Azure.ResourceManager.PostgreSql |
 | privatedns | Azure.ResourceManager.PrivateDns |
-| providerhub | Azure.ResourceManager.ProviderHub |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis |
 | reservations | Azure.ResourceManager.Reservations |
