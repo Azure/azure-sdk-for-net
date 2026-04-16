@@ -61,26 +61,32 @@ namespace Azure.ResourceManager.Compute
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<CloudServiceRoleInstanceResource> AddTag(string key, string value, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceRoleInstanceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<CloudServiceRoleInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceRoleInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<CloudServiceRoleInstanceResource> RemoveTag(string key, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [Obsolete("CloudService operations are no longer supported.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceRoleInstanceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
