@@ -8935,6 +8935,9 @@
           "name": "Resource"
         }
       },
+      "baseModel": {
+        "$ref": "218"
+      },
       "properties": [
         {
           "$id": "636",

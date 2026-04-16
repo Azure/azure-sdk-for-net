@@ -7,56 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerInstance;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The Resource model definition. </summary>
-    public partial class ContainerGroupPatch
+    public partial class ContainerGroupPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        public ContainerGroupPatch()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public ContainerGroupPatch(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupPatch"/>. </summary>
-        /// <param name="id"> The resource id. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupPatch(string id, string name, string @type, string location, IDictionary<string, string> tags, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerGroupPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, string name, IDictionary<string, string> tags, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Location = location;
-            Tags = tags;
-            Zones = zones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Zones = zones;
         }
-
-        /// <summary> The resource id. </summary>
-        public string Id { get; }
-
-        /// <summary> The resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> The resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> The resource location. </summary>
-        public string Location { get; set; }
-
-        /// <summary> The resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }

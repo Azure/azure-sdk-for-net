@@ -283,29 +283,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupIdentityAccessControlLevels(defaultAccess, acls.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The Resource model definition. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
-        public static ContainerGroupPatch ContainerGroupPatch(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ContainerGroupPatch(
-                id,
-                name,
-                @type,
-                location,
-                tags,
-                zones.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Application Gateway the CG profile will use to interact with CGs in a backend pool. </summary>
         /// <param name="resource"> The Application Gateway ARM resource Id. </param>
         /// <param name="backendAddressPools"> List of Application Gateway Backend Address Pools. </param>
@@ -562,20 +539,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones)
+        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
             return new ContainerGroupPatch(
                 id,
-                name,
-                default,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 location,
+                name,
                 tags,
-                zones.ToList(),
-                additionalBinaryDataProperties: null);
+                zones.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
