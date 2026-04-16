@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
     {
         private ClientDiagnostics _accountsClientDiagnostics;
         private Accounts _accountsRestClient;
+        private ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private DeletedAccounts _deletedAccountsRestClient;
         private ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
         private CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
         private ClientDiagnostics _cognitiveServicesClientClientDiagnostics;
         private CognitiveServicesClient _cognitiveServicesClientRestClient;
-        private ClientDiagnostics _deletedAccountsOperationGroupClientDiagnostics;
-        private DeletedAccountsOperationGroup _deletedAccountsOperationGroupRestClient;
         private ClientDiagnostics _resourceSkusOperationGroupClientDiagnostics;
         private ResourceSkusOperationGroup _resourceSkusOperationGroupRestClient;
         private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
+        private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
+
         private ClientDiagnostics CommitmentPlanOperationGroupClientDiagnostics => _commitmentPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
@@ -65,10 +69,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
-
-        private ClientDiagnostics DeletedAccountsOperationGroupClientDiagnostics => _deletedAccountsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DeletedAccountsOperationGroup DeletedAccountsOperationGroupRestClient => _deletedAccountsOperationGroupRestClient ??= new DeletedAccountsOperationGroup(DeletedAccountsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics ResourceSkusOperationGroupClientDiagnostics => _resourceSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -361,62 +361,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             Argument.AssertNotNullOrEmpty(@default, nameof(@default));
 
             return GetCognitiveServicesQuotaTiers().Get(@default, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CognitiveServicesAccountData, CognitiveServicesAccountResource>(new AccountsGetCognitiveServicesAccountsCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts"), data => new CognitiveServicesAccountResource(Client, data));
         }
 
         /// <summary>
@@ -743,62 +687,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServicesAccountData> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new DeletedAccountsOperationGroupGetDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts");
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServicesAccountData> GetDeletedAccounts(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new DeletedAccountsOperationGroupGetDeletedAccountsCollectionResultOfT(DeletedAccountsOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts");
         }
 
         /// <summary>

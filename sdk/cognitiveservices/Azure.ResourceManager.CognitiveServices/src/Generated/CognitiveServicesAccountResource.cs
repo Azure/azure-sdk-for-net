@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
         private readonly CognitiveServicesAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-03-01");
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

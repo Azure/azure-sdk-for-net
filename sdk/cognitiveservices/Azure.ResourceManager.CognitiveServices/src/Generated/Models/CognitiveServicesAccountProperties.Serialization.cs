@@ -265,10 +265,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("raiMonitorConfig"u8);
                 writer.WriteObjectValue(RaiMonitorConfig, options);
             }
-            if (Optional.IsDefined(NetworkInjections))
+            if (Optional.IsCollectionDefined(AIFoundryNetworkInjections))
             {
                 writer.WritePropertyName("networkInjections"u8);
-                writer.WriteObjectValue(NetworkInjections, options);
+                writer.WriteStartArray();
+                foreach (AIFoundryNetworkInjection item in AIFoundryNetworkInjections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AllowProjectManagement))
             {
@@ -367,7 +372,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
-            AIFoundryNetworkInjection networkInjections = default;
+            IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
@@ -678,7 +683,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    networkInjections = AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(prop.Value, options);
+                    List<AIFoundryNetworkInjection> array = new List<AIFoundryNetworkInjection>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(item, options));
+                    }
+                    aiFoundryNetworkInjections = array;
                     continue;
                 }
                 if (prop.NameEquals("allowProjectManagement"u8))
@@ -752,7 +762,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
                 abusePenalty,
                 raiMonitorConfig,
-                networkInjections,
+                aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
