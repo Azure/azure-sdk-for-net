@@ -554,114 +554,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task SuccessResponse_SessionExpiring_SchedulesRefresh()
-        {
-            string refreshedToken = "refreshed-token";
-            var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(),
-                CreateSessionMockResponse(sessionToken: refreshedToken));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: SingleContainerOptions);
-
-            // Request 1: session_expiring → ScheduleRefresh() marks RefreshOn = now.
-            var (message1, outerTransport1) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200, authInfoHeader: "session_expiring"));
-
-            Assert.AreEqual(200, message1.Response.Status);
-            Assert.IsTrue(
-                outerTransport1.Requests[0].Headers.TryGetValue("Authorization", out string auth1));
-            Assert.IsTrue(
-                auth1.StartsWith($"Session {SessionToken}:"),
-                $"Request 1 should use original token, got: {auth1}");
-
-            // Request 2: GetAsync sees NeedsBackgroundRefresh, starts Task.Run,
-            // but returns the current (old) token immediately.
-            var (message2, outerTransport2) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200));
-
-            Assert.AreEqual(200, message2.Response.Status);
-            Assert.IsTrue(
-                outerTransport2.Requests[0].Headers.TryGetValue("Authorization", out string auth2));
-            Assert.IsTrue(
-                auth2.StartsWith($"Session {SessionToken}:"),
-                $"Request 2 should still use original token (background in-flight), got: {auth2}");
-
-            // Give the background Task.Run time to complete.
-            await Task.Delay(2_000);
-
-            // Request 3: EvaluateState promotes the completed background value to current.
-            var (message3, outerTransport3) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200));
-
-            Assert.AreEqual(200, message3.Response.Status);
-            Assert.IsTrue(
-                outerTransport3.Requests[0].Headers.TryGetValue("Authorization", out string auth3));
-            Assert.IsTrue(
-                auth3.StartsWith($"Session {refreshedToken}:"),
-                $"Request 3 should use refreshed token after background promotion, got: {auth3}");
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
-
-        [Test]
-        public async Task SuccessResponse_SessionRevoking_InvalidatesCache()
-        {
-            string originalToken = "original-token";
-            string newToken = "new-token";
-            var mockBearer = CreateMockBearerPolicy();
-            var serviceClient = CreateMockServiceClient(
-                CreateSessionMockResponse(sessionToken: originalToken),
-                CreateSessionMockResponse(sessionToken: newToken));
-
-            var policy = new SessionAuthenticationPolicy(
-                bearerTokenPolicy: mockBearer.Object,
-                blobServiceClientFactory: () => serviceClient,
-                sessionOptions: SingleContainerOptions);
-
-            // Request 1: uses original-token, response has session_revoking → Invalidate().
-            var (message1, outerTransport1) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200, authInfoHeader: "session_revoking"));
-
-            Assert.AreEqual(200, message1.Response.Status);
-            Assert.IsTrue(
-                outerTransport1.Requests[0].Headers.TryGetValue("Authorization", out string auth1));
-            Assert.IsTrue(
-                auth1.StartsWith($"Session {originalToken}:"),
-                $"Request 1 should use {originalToken}, got: {auth1}");
-
-            // Request 2: cache was invalidated, so a fresh CreateSession call yields new-token.
-            var (message2, outerTransport2) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200));
-
-            Assert.AreEqual(200, message2.Response.Status);
-            Assert.IsTrue(
-                outerTransport2.Requests[0].Headers.TryGetValue("Authorization", out string auth2));
-            Assert.IsTrue(
-                auth2.StartsWith($"Session {newToken}:"),
-                $"Request 2 should use {newToken} after invalidation, got: {auth2}");
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
-
-        [Test]
-        public async Task Response401_SessionExpired_InvalidatesAndRetries()
+        public async Task Response401_CreateNewSession_InvalidatesAndRetries()
         {
             string expiredToken = "expired-token";
             string freshToken = "fresh-token";
@@ -680,7 +573,7 @@ namespace Azure.Storage.Blobs.Tests
             var responseIndex = 0;
             MockResponse[] outerResponses = new[]
             {
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"session_expired\""),
+                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""),
                 CreateBlobGetResponse(200)
             };
 
@@ -707,7 +600,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task Response401_SessionExpired_ReacquireFails_FallsBackToBearer()
+        public async Task Response401_CreateNewSession_ReacquireFails_FallsBackToBearer()
         {
             var mockBearer = CreateMockBearerPolicy();
             var serviceClient = CreateMockServiceClient(
@@ -723,7 +616,7 @@ namespace Azure.Storage.Blobs.Tests
                 policy,
                 BlobUri,
                 RequestMethod.Get,
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"session_expired\""));
+                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""));
 
             // Only 1 outer request — the 500 was on the inner CreateSession transport.
             Assert.AreEqual(1, outerTransport.Requests.Count);
@@ -733,7 +626,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void Response401_SessionExpired_ReacquireFails_NonFallbackError_Propagates()
+        public void Response401_CreateNewSession_ReacquireFails_NonFallbackError_Propagates()
         {
             var mockBearer = CreateMockBearerPolicy();
             var serviceClient = CreateMockServiceClient(
@@ -750,7 +643,7 @@ namespace Azure.Storage.Blobs.Tests
                 policy,
                 BlobUri,
                 RequestMethod.Get,
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"session_expired\"")));
+                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\"")));
 
             // Bearer was never invoked — the error propagated before reaching fallback.
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());

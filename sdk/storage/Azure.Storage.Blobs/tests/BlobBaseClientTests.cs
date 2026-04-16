@@ -8896,6 +8896,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         #region Session Authentication
+
         [RecordedTest]
         [LiveOnly(Reason = "Cannot record tests using Session authentication")]
         public async Task DownloadAsync_Sessions()

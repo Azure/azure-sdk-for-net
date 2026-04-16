@@ -39,10 +39,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private static readonly TimeSpan BackgroundAcquireTimeout = TimeSpan.FromSeconds(30);
 
-        private const string AuthInfoHeader = "x-ms-auth-info";
-        private const string SessionExpiring = "session_expiring";
-        private const string SessionRevoking = "session_revoking";
-        private const string SessionExpired = "session_expired";
+        private const string CreateNewSession = "Please create a new session";
         private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
         private const string FeatureNotEnabled = "FeatureNotEnabled";
 
@@ -217,30 +214,13 @@ namespace Azure.Storage.Blobs
         {
             int statusCode = message.Response.Status;
 
-            // --- Success path: check x-ms-auth-info ---
-            if (statusCode >= 200 && statusCode < 300)
-            {
-                if (message.Response.Headers.TryGetValue(AuthInfoHeader, out string authInfo))
-                {
-                    if (authInfo.IndexOf(SessionRevoking, StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        _sessionCache.Invalidate();
-                    }
-                    else if (authInfo.IndexOf(SessionExpiring, StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        _sessionCache.ScheduleRefresh();
-                    }
-                }
-                return;
-            }
-
-            // --- 401 Unauthorized ---
+            // --- 401 Unauthorized (Please create a new session) ---
             if (statusCode == (int)HttpStatusCode.Unauthorized
                 && message.Response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string wwwAuth))
             {
-                if (wwwAuth.IndexOf(SessionExpired, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (wwwAuth.IndexOf(CreateNewSession, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    // Session expired — invalidate cache and retry
+                    // Invalidate cache and retry
                     _sessionCache.Invalidate();
                     await TryGetSessionAndSendAsync(message, pipeline, async).ConfigureAwait(false);
                 }
@@ -248,7 +228,6 @@ namespace Azure.Storage.Blobs
             }
 
             // --- 503 SessionOperationsTemporarilyUnavailable ---
-            // Only fall back to bearer token for the specific session-unavailable error.
             if (statusCode == (int)HttpStatusCode.ServiceUnavailable
                 && message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode)
                 && string.Equals(errorCode, SessionsUnavailable, StringComparison.OrdinalIgnoreCase))
