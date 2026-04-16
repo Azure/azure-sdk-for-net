@@ -125,6 +125,45 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsTrue(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod));
         }
 
+        [Test]
+        public void TestFlattenedGetterAddsNullGuardForOptionalReadOnlyParent()
+        {
+            var errorsProperty = InputFactory.Property("errors", InputFactory.Array(InputPrimitiveType.String), isRequired: false, serializedName: "errors");
+            var dataModel = InputFactory.Model(
+                "AnalysisData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [errorsProperty]);
+
+            var dataProperty = InputFactory.Property("data", dataModel, isRequired: false, serializedName: "data");
+            ApplyFlattenDecorator(dataProperty);
+
+            var resultModel = InputFactory.Model(
+                "AnalysisResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [dataProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resultModel, dataModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(resultModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var rendered = new TypeProviderWriter(model!).Write().Content;
+            StringAssert.Contains("this.Data is null", rendered);
+            StringAssert.Contains("Data.Errors", rendered);
+            StringAssert.DoesNotContain("return Data.Errors;", rendered);
+        }
+
         /// <summary>
         /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
