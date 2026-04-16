@@ -9,11 +9,9 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    [CodeGenSuppress("OSType")]
     public partial class ContainerGroupProfileData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
@@ -31,21 +29,6 @@ namespace Azure.ResourceManager.ContainerInstance
                 Containers.Add(container);
             }
             OSType = osType;
-        }
-
-        /// <summary> The operating system type required by the containers in the container group. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerInstanceOperatingSystemType? OSType
-        {
-            get => Properties is null ? default : Properties.OSType;
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupProfileProperties();
-                }
-                Properties.OSType = value ?? default;
-            }
         }
     }
 }
