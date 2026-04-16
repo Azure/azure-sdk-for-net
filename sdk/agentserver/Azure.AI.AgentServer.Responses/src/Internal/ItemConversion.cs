@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -184,6 +185,29 @@ internal static class ItemConversion
             {
                 yield return output;
             }
+        }
+    }
+
+    /// <summary>
+    /// Converts an <see cref="OutputItem"/> to its corresponding <see cref="Item"/> representation
+    /// using JSON round-trip serialization. Both hierarchies share the same <c>"type"</c>
+    /// discriminator values, so serializing an <see cref="OutputItem"/> and deserializing as
+    /// <see cref="Item"/> produces the correct concrete subtype (e.g., <see cref="OutputItemMessage"/>
+    /// → <see cref="ItemMessage"/>). Returns <c>null</c> if the output item has a type that does not
+    /// map to any <see cref="Item"/> subtype.
+    /// </summary>
+    /// <param name="outputItem">The output item to convert.</param>
+    /// <returns>The corresponding input item, or <c>null</c> if conversion is not possible.</returns>
+    internal static Item? ToItem(OutputItem outputItem)
+    {
+        try
+        {
+            var json = ModelReaderWriter.Write(outputItem, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+            return ModelReaderWriter.Read<Item>(json, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        }
+        catch
+        {
+            return null;
         }
     }
 

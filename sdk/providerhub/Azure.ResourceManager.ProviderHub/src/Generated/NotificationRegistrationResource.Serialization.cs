@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class NotificationRegistrationResource : IJsonModel<NotificationRegistrationData>
     {
-        private static NotificationRegistrationData s_dataDeserializationInstance;
-        private static NotificationRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NotificationRegistrationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NotificationRegistrationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NotificationRegistrationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationRegistrationData>)Data).Write(writer, options);
 
-        NotificationRegistrationData IJsonModel<NotificationRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationRegistrationData IJsonModel<NotificationRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NotificationRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NotificationRegistrationData IPersistableModel<NotificationRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<NotificationRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

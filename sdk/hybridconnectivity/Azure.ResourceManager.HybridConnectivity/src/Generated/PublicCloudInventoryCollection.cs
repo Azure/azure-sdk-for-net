@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A class representing a collection of <see cref="PublicCloudInventoryResource"/> and their operations.
-    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
+    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
     /// </summary>
     public partial class PublicCloudInventoryCollection : ArmCollection, IEnumerable<PublicCloudInventoryResource>, IAsyncEnumerable<PublicCloudInventoryResource>
     {

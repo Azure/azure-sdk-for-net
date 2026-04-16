@@ -49,7 +49,7 @@ public class NonStreamingUpstreamHandler : ResponseHandler
         // Translate every input item with full fidelity.
         // Both model stacks share the same JSON wire contract, so
         // .Translate().To<T>() round-trips through JSON to convert.
-        foreach (Item item in request.GetInputExpanded())
+        foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
         {
             options.InputItems.Add(item.Translate().To<ResponseItem>());
         }

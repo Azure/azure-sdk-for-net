@@ -115,7 +115,7 @@ public static class CreateResponseExtensions
     /// <exception cref="FormatException">
     /// The input data could not be parsed (propagated from <see cref="GetInputExpanded"/>).
     /// </exception>
-    public static string GetInputText(this CreateResponse request)
+    internal static string GetInputText(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
 
