@@ -107,10 +107,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <description> ProjectCapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="CognitiveServicesProjectCapabilityHostResource"/>. </description>
         /// </item>
@@ -155,10 +151,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <description> ProjectCapabilityHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="CognitiveServicesProjectCapabilityHostResource"/>. </description>
         /// </item>
@@ -201,10 +193,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectCapabilityHosts_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,10 +240,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <description>ProjectCapabilityHosts_Delete</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="CognitiveServicesProjectCapabilityHostResource"/></description>
         /// </item>
@@ -299,10 +283,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectCapabilityHosts_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,10 +338,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectCapabilityHosts_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

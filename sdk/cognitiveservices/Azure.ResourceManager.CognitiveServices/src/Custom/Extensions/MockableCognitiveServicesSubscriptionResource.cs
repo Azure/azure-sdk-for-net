@@ -24,10 +24,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term> Operation Id. </term>
         /// <description> Accounts_List. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -52,10 +48,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,10 +74,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term> Operation Id. </term>
         /// <description> DeletedAccounts_ListDeletedAccounts. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,10 +98,6 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DeletedAccounts_ListDeletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
