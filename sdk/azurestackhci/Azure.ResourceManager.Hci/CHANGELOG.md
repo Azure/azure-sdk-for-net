@@ -1,10 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2026-04-12)
 
 ### Features Added
 
-- Upgraded API version to `2026-04-01-preview`
+- Upgraded API version to `2026-02-01` (stable)
 - Migrated from Swagger/AutoRest to TypeSpec-based generation
 - Added support for new resource types and operations from the latest API version
 
