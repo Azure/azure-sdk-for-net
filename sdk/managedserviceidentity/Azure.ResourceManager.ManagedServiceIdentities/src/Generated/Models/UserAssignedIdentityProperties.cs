@@ -12,7 +12,7 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> User Assigned Identity properties. </summary>
-    public partial class UserAssignedIdentityProperties
+    internal partial class UserAssignedIdentityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -19,41 +19,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     public static partial class ArmManagedServiceIdentitiesModelFactory
     {
 
-        /// <summary> Describes a system assigned identity resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties associated with the identity. </param>
-        /// <param name="location"></param>
-        /// <param name="tags"></param>
-        /// <returns> A new <see cref="ManagedServiceIdentities.SystemAssignedIdentityData"/> instance for mocking. </returns>
-        public static SystemAssignedIdentityData SystemAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SystemAssignedIdentityProperties properties = default, string location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SystemAssignedIdentityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                location,
-                tags);
-        }
-
-        /// <summary> System Assigned Identity properties. </summary>
-        /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
-        /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
-        /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
-        /// <param name="clientSecretUri"> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedIdentityProperties"/> instance for mocking. </returns>
-        public static SystemAssignedIdentityProperties SystemAssignedIdentityProperties(Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, string clientSecretUri = default)
-        {
-            return new SystemAssignedIdentityProperties(tenantId, principalId, clientId, clientSecretUri, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -74,16 +39,19 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 issuerUri is null && subject is null && audiences is null && claimsMatchingExpression is null ? default : new FederatedIdentityCredentialProperties(issuerUri, subject, (audiences ?? new ChangeTrackingList<string>()).ToList(), claimsMatchingExpression, null));
         }
 
-        /// <summary> Describes an identity resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties associated with the identity. </param>
+        /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
+        /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
+        /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
+        /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
+        /// <param name="assignmentRestrictionsProviders"> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/> instance for mocking. </returns>
-        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, UserAssignedIdentityProperties properties = default)
+        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -95,24 +63,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
-        }
-
-        /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
-        /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
-        /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
-        /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
-        /// <param name="assignmentRestrictionsProviders"> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentityProperties"/> instance for mocking. </returns>
-        public static UserAssignedIdentityProperties UserAssignedIdentityProperties(Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
-        {
-            return new UserAssignedIdentityProperties(
-                tenantId,
-                principalId,
-                clientId,
-                isolationScope,
-                assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), null),
-                additionalBinaryDataProperties: null);
+                tenantId is null && principalId is null && clientId is null && isolationScope is null && assignmentRestrictionsProviders is null ? default : new UserAssignedIdentityProperties(
+                    tenantId,
+                    principalId,
+                    clientId,
+                    isolationScope,
+                    new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), null),
+                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -127,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <param name="assignmentRestrictionsProviders"> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </param>
         /// <returns> A new <see cref="Models.UserAssignedIdentityPatch"/> instance for mocking. </returns>
-        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, IDictionary<string, string> tags = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
+        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IDictionary<string, string> tags = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -160,8 +117,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
         /// <param name="clientSecretUri"> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.SystemAssignedIdentityData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SystemAssignedIdentityData SystemAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, Uri clientSecretUri)
+        public static SystemAssignedIdentityData SystemAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, Uri clientSecretUri = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -171,8 +127,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default,
                 location,
+                default,
                 tags);
         }
 
@@ -191,17 +147,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UserAssignedIdentityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default);
+            return UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, isolationScope, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
@@ -219,17 +165,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UserAssignedIdentityPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                default);
+            return UserAssignedIdentityPatch(id, name, resourceType, systemData, location, tags, tenantId, principalId, clientId, isolationScope, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/>. </summary>
@@ -261,17 +197,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UserAssignedIdentityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default);
+            return UserAssignedIdentityData(id, name, resourceType, systemData, tags, location, tenantId, principalId, clientId, isolationScope: default, assignmentRestrictionsProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
@@ -288,17 +214,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UserAssignedIdentityPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                tags,
-                default);
+            return UserAssignedIdentityPatch(id, name, resourceType, systemData, location, tags, tenantId, principalId, clientId, isolationScope: default, assignmentRestrictionsProviders: default);
         }
     }
 }

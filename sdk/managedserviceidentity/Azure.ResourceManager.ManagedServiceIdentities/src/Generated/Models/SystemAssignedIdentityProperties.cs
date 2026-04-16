@@ -12,13 +12,13 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> System Assigned Identity properties. </summary>
-    public partial class SystemAssignedIdentityProperties
+    internal partial class SystemAssignedIdentityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityProperties"/>. </summary>
-        internal SystemAssignedIdentityProperties()
+        public SystemAssignedIdentityProperties()
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
         /// <param name="clientSecretUri"> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemAssignedIdentityProperties(Guid? tenantId, Guid? principalId, Guid? clientId, string clientSecretUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SystemAssignedIdentityProperties(Guid? tenantId, Guid? principalId, Guid? clientId, Uri clientSecretUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             PrincipalId = principalId;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         /// <summary> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </summary>
         [WirePath("clientSecretUrl")]
-        public string ClientSecretUri { get; }
+        public Uri ClientSecretUri { get; }
     }
 }

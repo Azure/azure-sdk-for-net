@@ -14,17 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary> Describes a system assigned identity resource. </summary>
-    public partial class SystemAssignedIdentityData : ResourceData
+    public partial class SystemAssignedIdentityData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
-        /// <param name="location"></param>
-        internal SystemAssignedIdentityData(string location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public SystemAssignedIdentityData(AzureLocation location) : base(location)
         {
-            Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/>. </summary>
@@ -33,27 +31,57 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties associated with the identity. </param>
-        /// <param name="location"></param>
         /// <param name="tags"></param>
-        internal SystemAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SystemAssignedIdentityProperties properties, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal SystemAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, SystemAssignedIdentityProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary> The properties associated with the identity. </summary>
         [WirePath("properties")]
-        public SystemAssignedIdentityProperties Properties { get; }
+        internal SystemAssignedIdentityProperties Properties { get; }
 
-        /// <summary> Gets the Location. </summary>
-        [WirePath("location")]
-        public string Location { get; }
+        /// <summary> The id of the tenant which the identity belongs to. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties.TenantId;
+            }
+        }
 
-        /// <summary> Gets the Tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The id of the service principal object associated with the created identity. </summary>
+        [WirePath("properties.principalId")]
+        public Guid? PrincipalId
+        {
+            get
+            {
+                return Properties.PrincipalId;
+            }
+        }
+
+        /// <summary> The id of the app associated with the identity. This is a random generated UUID by MSI. </summary>
+        [WirePath("properties.clientId")]
+        public Guid? ClientId
+        {
+            get
+            {
+                return Properties.ClientId;
+            }
+        }
+
+        /// <summary> The ManagedServiceIdentity DataPlane URL that can be queried to obtain the identity credentials. </summary>
+        [WirePath("properties.clientSecretUrl")]
+        public Uri ClientSecretUri
+        {
+            get
+            {
+                return Properties.ClientSecretUri;
+            }
+        }
     }
 }
