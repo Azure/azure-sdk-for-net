@@ -16,7 +16,6 @@ public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeI
     internal static ArmResourceScopeInfo Deserialize(JsonElement element)
     {
         ResourceScope? kind = null;
-        string? scopeIdPattern = null;
 
         if (element.TryGetProperty("kind", out var kindElement))
         {
@@ -26,13 +25,15 @@ public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeI
                 kind = scope;
             }
         }
-        if (element.TryGetProperty("scopeIdPattern", out var scopeIdPatternElement))
+
+        if (!element.TryGetProperty("scopeIdPattern", out var scopeIdPatternElement))
         {
-            scopeIdPattern = scopeIdPatternElement.GetString();
+            throw new JsonException("Required JSON property 'scopeIdPattern' was not found.");
         }
+        var scopeIdPattern = scopeIdPatternElement.GetString();
 
         return new(
-            kind ?? throw new InvalidOperationException("scope.kind cannot be null"),
-            new RequestPathPattern(scopeIdPattern ?? string.Empty));
+            kind ?? throw new JsonException("Required JSON property 'kind' is missing or invalid."),
+            new RequestPathPattern(scopeIdPattern ?? throw new JsonException("Required JSON property 'scopeIdPattern' cannot be null.")));
     }
 }

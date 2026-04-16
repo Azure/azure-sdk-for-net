@@ -31,7 +31,9 @@ export class RequestPath {
 
   /** Creates a RequestPath from pre-computed segments */
   static fromSegments(segments: readonly string[]): RequestPath {
-    return new RequestPath("/" + segments.join("/"));
+    return segments.length === 0
+      ? RequestPath.empty
+      : new RequestPath("/" + segments.join("/"));
   }
 
   /** The non-empty path segments (e.g., ["subscriptions", "{subscriptionId}", "providers", ...]) */
@@ -174,7 +176,7 @@ export class RequestPath {
     if (lastProvidersIndex === -1) {
       // No providers segment — check well-known scope patterns
       if (
-        this.segments.length >= 2 &&
+        this.segments.length >= 3 &&
         this.segments[0] === "subscriptions" &&
         this.segments[2] === "resourceGroups"
       ) {
@@ -187,7 +189,7 @@ export class RequestPath {
       } else if (this.segments.length >= 1 && this.segments[0] === "tenants") {
         return "Microsoft.Resources/tenants";
       }
-      throw `Path ${this.path} doesn't have resource type`;
+      throw new Error(`Path ${this.path} doesn't have resource type`);
     }
 
     // Segments after "providers": [namespace, type1, {name1}, type2, {name2}, ...]
