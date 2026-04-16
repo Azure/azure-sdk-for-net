@@ -18,13 +18,6 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
-        public void GetCiFileNameReturnsCiYml()
-        {
-            var scaffolding = new TestableNewAzureProjectScaffolding();
-            Assert.AreEqual("ci.yml", scaffolding.TestGetCiFileName());
-        }
-
-        [Test]
         public void GetReadmeContentContainsPackageName()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
@@ -55,18 +48,6 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
-        public void GetCiYamlContentContainsPackageInfo()
-        {
-            var scaffolding = new TestableNewAzureProjectScaffolding();
-            string content = scaffolding.TestGetCiYamlContent("Azure.Test.Package", "testservice");
-            Assert.IsTrue(content.Contains("Azure.Test.Package"));
-            Assert.IsTrue(content.Contains("AzureTestPackage"));
-            Assert.IsTrue(content.Contains("testservice"));
-            Assert.IsTrue(content.Contains("SDKType: client"));
-            Assert.IsTrue(content.Contains("trigger:"));
-        }
-
-        [Test]
         public void GetDirectoryBuildPropsContentContainsMSBuildImport()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
@@ -77,80 +58,34 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
-        public void GetCiYamlContentSafeNameRemovesDots()
+        public async Task WriteAdditionalFilesSkipsNonSdkDirectory()
         {
-            var scaffolding = new TestableNewAzureProjectScaffolding();
-            string content = scaffolding.TestGetCiYamlContent("Azure.Storage.Blobs", "storage");
-            Assert.IsTrue(content.Contains("safeName: AzureStorageBlobs"));
-        }
-
-        [Test]
-        public async Task WriteAdditionalFilesCreatesExpectedFiles()
-        {
+            // The test output directory is under eng/, not sdk/, so files should NOT be created
             string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
-            string[] filesToClean = [
-                Path.Combine(outputDir, "README.md"),
-                Path.Combine(outputDir, "CHANGELOG.md"),
-                Path.Combine(outputDir, "Directory.Build.props")
-            ];
-            // Also clean ci.yml from parent directory
-            string? parentDir = Path.GetDirectoryName(outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
-            string? ciFile = parentDir != null ? Path.Combine(parentDir, "ci.yml") : null;
+            string readmePath = Path.Combine(outputDir, "README.md");
+            string changelogPath = Path.Combine(outputDir, "CHANGELOG.md");
+            string propsPath = Path.Combine(outputDir, "Directory.Build.props");
 
             try
             {
                 // Clean any pre-existing files
-                foreach (var f in filesToClean) if (File.Exists(f)) File.Delete(f);
-                if (ciFile != null && File.Exists(ciFile)) File.Delete(ciFile);
+                if (File.Exists(readmePath)) File.Delete(readmePath);
+                if (File.Exists(changelogPath)) File.Delete(changelogPath);
+                if (File.Exists(propsPath)) File.Delete(propsPath);
 
                 var scaffolding = new TestableNewAzureProjectScaffolding();
                 await scaffolding.TestWriteAdditionalFiles();
 
-                Assert.IsTrue(File.Exists(Path.Combine(outputDir, "README.md")));
-                Assert.IsTrue(File.Exists(Path.Combine(outputDir, "CHANGELOG.md")));
-                Assert.IsTrue(File.Exists(Path.Combine(outputDir, "Directory.Build.props")));
-
-                // ci.yml should be in the parent directory
-                if (ciFile != null)
-                {
-                    Assert.IsTrue(File.Exists(ciFile));
-                }
-            }
-            finally
-            {
-                foreach (var f in filesToClean) if (File.Exists(f)) File.Delete(f);
-                if (ciFile != null && File.Exists(ciFile)) File.Delete(ciFile);
-            }
-        }
-
-        [Test]
-        public async Task WriteAdditionalFilesDoesNotOverwriteExisting()
-        {
-            string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
-            string readmePath = Path.Combine(outputDir, "README.md");
-            string? existingContent = null;
-
-            try
-            {
-                existingContent = "# My Custom README";
-                File.WriteAllText(readmePath, existingContent);
-
-                var scaffolding = new TestableNewAzureProjectScaffolding();
-                await scaffolding.TestWriteAdditionalFiles();
-
-                Assert.AreEqual(existingContent, File.ReadAllText(readmePath));
+                // Files should NOT be created since output is not under sdk/
+                Assert.IsFalse(File.Exists(readmePath));
+                Assert.IsFalse(File.Exists(changelogPath));
+                Assert.IsFalse(File.Exists(propsPath));
             }
             finally
             {
                 if (File.Exists(readmePath)) File.Delete(readmePath);
-                // Clean other files too
-                string changelogPath = Path.Combine(outputDir, "CHANGELOG.md");
-                string propsPath = Path.Combine(outputDir, "Directory.Build.props");
                 if (File.Exists(changelogPath)) File.Delete(changelogPath);
                 if (File.Exists(propsPath)) File.Delete(propsPath);
-                string? parentDir = Path.GetDirectoryName(outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
-                string? ciFile = parentDir != null ? Path.Combine(parentDir, "ci.yml") : null;
-                if (ciFile != null && File.Exists(ciFile)) File.Delete(ciFile);
             }
         }
 
@@ -159,10 +94,8 @@ namespace Azure.Generator.Tests.Providers
         /// </summary>
         private class TestableNewAzureProjectScaffolding : NewAzureProjectScaffolding
         {
-            public string TestGetCiFileName() => GetCiFileName();
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
-            public string TestGetCiYamlContent(string packageName, string serviceDirectoryName) => GetCiYamlContent(packageName, serviceDirectoryName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
         }

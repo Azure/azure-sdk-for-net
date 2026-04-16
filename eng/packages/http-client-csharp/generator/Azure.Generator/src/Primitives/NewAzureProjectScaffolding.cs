@@ -204,8 +204,9 @@ namespace Azure.Generator.Primitives
         }
 
         /// <summary>
-        /// Writes additional scaffolding files (README.md, CHANGELOG.md, ci.yml, Directory.Build.props)
-        /// to the output directory. Files are only written if they don't already exist, preventing
+        /// Writes additional scaffolding files (README.md, CHANGELOG.md, Directory.Build.props)
+        /// to the output directory when the output is under the sdk/ directory.
+        /// Files are only written if they don't already exist, preventing
         /// overwriting of customized content.
         /// </summary>
         protected override async Task WriteAdditionalFiles()
@@ -213,24 +214,18 @@ namespace Azure.Generator.Primitives
             await base.WriteAdditionalFiles();
 
             string outputDir = AzureClientGenerator.Instance.Configuration.OutputDirectory;
+
+            // Only generate scaffolding files for real SDK packages under the sdk/ directory
+            if (!IsUnderSdkDirectory(outputDir))
+            {
+                return;
+            }
+
             string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
 
             WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
-
-            // ci.yml goes to the service directory (parent of the package directory)
-            string normalizedOutputDir = outputDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            string? serviceDirectory = Path.GetDirectoryName(normalizedOutputDir);
-            if (!string.IsNullOrEmpty(serviceDirectory))
-            {
-                string ciFilePath = Path.Combine(serviceDirectory, GetCiFileName());
-                if (!File.Exists(ciFilePath))
-                {
-                    string serviceDirectoryName = Path.GetFileName(serviceDirectory);
-                    WriteFileIfNotExists(ciFilePath, packageName, name => GetCiYamlContent(name, serviceDirectoryName));
-                }
-            }
         }
 
         private static void WriteFileIfNotExists(string filePath, string packageName, Func<string, string> contentFactory)
@@ -250,10 +245,15 @@ namespace Azure.Generator.Primitives
         }
 
         /// <summary>
-        /// Gets the file name for the CI YAML file.
+        /// Determines whether the output directory is under the sdk/ directory.
         /// </summary>
-        /// <returns>The CI YAML file name. Default is "ci.yml" for data plane packages.</returns>
-        protected virtual string GetCiFileName() => "ci.yml";
+        /// <param name="outputDir">The output directory path.</param>
+        /// <returns><c>true</c> if the output directory is under the sdk/ directory; otherwise, <c>false</c>.</returns>
+        private static bool IsUnderSdkDirectory(string outputDir)
+        {
+            string normalized = outputDir.Replace('\\', '/');
+            return normalized.Contains("/sdk/");
+        }
 
         /// <summary>
         /// Gets the content for the README.md file.
@@ -318,42 +318,6 @@ namespace Azure.Generator.Primitives
                 ### Bugs Fixed
 
                 ### Other Changes
-                """;
-        }
-
-        /// <summary>
-        /// Gets the content for the ci.yml file.
-        /// </summary>
-        /// <param name="packageName">The name of the package.</param>
-        /// <param name="serviceDirectoryName">The service directory name.</param>
-        /// <returns>The CI YAML content.</returns>
-        protected virtual string GetCiYamlContent(string packageName, string serviceDirectoryName)
-        {
-            string safeName = packageName.Replace(".", "");
-            return $"""
-                # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-
-                trigger:
-                  branches:
-                    include:
-                    - main
-                    - hotfix/*
-                    - release/*
-                  paths:
-                    include:
-                    - sdk/{serviceDirectoryName}/ci.yml
-                    - sdk/{serviceDirectoryName}/{packageName}/
-                    - sdk/{serviceDirectoryName}/service.projects
-
-                extends:
-                  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
-                  parameters:
-                    SDKType: client
-                    ServiceDirectory: {serviceDirectoryName}
-                    ArtifactName: packages
-                    Artifacts:
-                    - name: {packageName}
-                      safeName: {safeName}
                 """;
         }
 
