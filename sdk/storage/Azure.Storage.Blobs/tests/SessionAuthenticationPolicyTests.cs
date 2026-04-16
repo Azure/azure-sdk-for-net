@@ -650,6 +650,50 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
+        public async Task Response401_CreateNewSession_RetryAlso401_DoesNotLoopInfinitely()
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var serviceClient = CreateMockServiceClient(
+                CreateSessionMockResponse(sessionToken: "token1"),
+                CreateSessionMockResponse(sessionToken: "token2"));
+
+            var policy = new SessionAuthenticationPolicy(
+                bearerTokenPolicy: mockBearer.Object,
+                blobServiceClientFactory: () => serviceClient,
+                sessionOptions: SingleContainerOptions);
+
+            var capturedAuthHeaders = new System.Collections.Generic.List<string>();
+            var responseIndex = 0;
+            // Both the original and retry return 401 "Please create a new session"
+            MockResponse[] outerResponses = new[]
+            {
+                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""),
+                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\"")
+            };
+
+            var outerTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                msg.Request.Headers.TryGetValue("Authorization", out string auth);
+                capturedAuthHeaders.Add(auth);
+                return outerResponses[responseIndex++];
+            });
+
+            var pipeline = new HttpPipeline(outerTransport, new HttpPipelinePolicy[] { policy });
+            var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Get;
+            message.Request.Uri.Reset(BlobUri);
+
+            await SendAsync(pipeline, message);
+
+            // Exactly 2 attempts: original + one retry. No infinite loop.
+            Assert.AreEqual(2, capturedAuthHeaders.Count);
+            // Final response is still 401 — not retried further.
+            Assert.AreEqual(401, message.Response.Status);
+            // Bearer was never invoked — second 401 doesn't trigger fallback.
+            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+        }
+
+        [Test]
         public async Task Response401_OtherError_NoRetry()
         {
             var mockBearer = CreateMockBearerPolicy();
