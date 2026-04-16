@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Advanced Ransomware Protection reports Properties. </summary>
-        public RansomwareReportProperties Properties { get; }
+        public RansomwareReportProperties Properties { get; set; }
     }
 }

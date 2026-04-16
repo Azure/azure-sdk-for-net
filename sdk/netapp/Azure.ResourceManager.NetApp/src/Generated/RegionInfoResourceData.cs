@@ -33,14 +33,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> regionInfo properties. </summary>
-        internal NetAppRegionInfo Properties { get; }
+        internal NetAppRegionInfo Properties { get; set; }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
         public RegionStorageToNetworkProximity? StorageToNetworkProximity
         {
             get
             {
-                return Properties.StorageToNetworkProximity;
+                return Properties is null ? default : Properties.StorageToNetworkProximity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetAppRegionInfo();
+                }
+                Properties.StorageToNetworkProximity = value.Value;
             }
         }
 
@@ -49,6 +57,10 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new NetAppRegionInfo();
+                }
                 return Properties.AvailabilityZoneMappings;
             }
         }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SnapshotProperties properties = default;
-            string location = default;
+            AzureLocation location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -283,17 +283,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Destination replication properties. </summary>
-        /// <param name="resourceId"> The resource ID of the remote volume. </param>
-        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
-        /// <param name="region"> The remote region for the destination volume. </param>
-        /// <param name="zone"> The remote zone for the destination volume. </param>
-        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
-        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId = default, NetAppReplicationType? replicationType = default, string region = default, string zone = default)
-        {
-            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Volume relocation properties. </summary>
         /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
         /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
@@ -754,27 +743,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="snapshotId"> UUID v4 used to identify the Snapshot. </param>
-        /// <param name="created"> The creation date of the snapshot. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <returns> A new <see cref="NetApp.NetAppVolumeSnapshotData"/> instance for mocking. </returns>
-        public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string snapshotId = default, DateTimeOffset? created = default, string provisioningState = default, string location = default)
-        {
-            return new NetAppVolumeSnapshotData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                snapshotId is null && created is null && provisioningState is null ? default : new SnapshotProperties(snapshotId, created, provisioningState, null),
-                location);
-        }
-
         /// <summary> Restore payload for Single File Snapshot Restore. </summary>
         /// <param name="filePaths"> List of files to be restored. </param>
         /// <param name="destinationPath"> Destination folder where the files will be restored. </param>
@@ -784,84 +752,6 @@ namespace Azure.ResourceManager.NetApp.Models
             filePaths ??= new ChangeTrackingList<string>();
 
             return new NetAppVolumeSnapshotRestoreFilesContent(filePaths.ToList(), destinationPath, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
-        /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
-        /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
-        /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
-        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SnapshotPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
-                    hourlySchedule,
-                    dailySchedule,
-                    weeklySchedule,
-                    monthlySchedule,
-                    isEnabled,
-                    provisioningState,
-                    null),
-                etag);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="backupPolicyId"> Backup Policy GUID ID. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
-        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
-        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
-        /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
-        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
-        /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="NetApp.NetAppBackupPolicyData"/> instance for mocking. </returns>
-        public static NetAppBackupPolicyData NetAppBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier backupPolicyId = default, string provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? volumesAssigned = default, bool? isEnabled = default, IEnumerable<NetAppVolumeBackupDetail> volumeBackups = default, string etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppBackupPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                backupPolicyId is null && provisioningState is null && dailyBackupsToKeep is null && weeklyBackupsToKeep is null && monthlyBackupsToKeep is null && volumesAssigned is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
-                    backupPolicyId,
-                    provisioningState,
-                    dailyBackupsToKeep,
-                    weeklyBackupsToKeep,
-                    monthlyBackupsToKeep,
-                    volumesAssigned,
-                    isEnabled,
-                    (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
-                    null),
-                etag);
         }
 
         /// <summary> Volume details using the backup policy. </summary>
@@ -1969,7 +1859,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppAccountData"/> instance for mocking. </returns>
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, EntraIdConfig entraIdConfig = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfiguration ldapConfiguration = default, string etag = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, EntraIdConfig entraIdConfig = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IdDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfiguration ldapConfiguration = default, ETag? etag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2216,7 +2106,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? poolId = default, long? size = default, NetAppFileServiceLevel? serviceLevel = default, string provisioningState = default, float? totalThroughputMibps = default, float? utilizedThroughputMibps = default, int? customThroughputMibps = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, CapacityPoolEncryptionType? encryptionType = default, string etag = default)
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? poolId = default, long? size = default, NetAppFileServiceLevel? serviceLevel = default, string provisioningState = default, float? totalThroughputMibps = default, float? utilizedThroughputMibps = default, int? customThroughputMibps = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, CapacityPoolEncryptionType? encryptionType = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2407,18 +2297,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default);
+            return CapacityPoolData(id, name, resourceType, systemData, tags, location, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps: default, qosType, isCoolAccessEnabled, encryptionType, etag);
         }
 
         /// <param name="id"></param>
@@ -2465,20 +2344,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            activeDirectories ??= new ChangeTrackingList<NetAppAccountActiveDirectory>();
-
-            return new NetAppAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default,
-                identity);
+            return NetAppAccountData(id, name, resourceType, systemData, tags, location, provisioningState, activeDirectories, entraIdConfig: default, encryption, disableShowmount, nfsV4IdDomain, multiAdStatus, ldapConfiguration: default, etag, identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupPolicyData"/>. </summary>
@@ -2498,8 +2364,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <returns> A new <see cref="NetApp.NetAppBackupPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBackupPolicyData NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IEnumerable<NetAppVolumeBackupDetail> volumeBackups)
+        public static NetAppBackupPolicyData NetAppBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, ResourceIdentifier backupPolicyId = default, string provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? volumesAssigned = default, bool? isEnabled = default, IEnumerable<NetAppVolumeBackupDetail> volumeBackups = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             volumeBackups ??= new ChangeTrackingList<NetAppVolumeBackupDetail>();
@@ -2563,6 +2428,18 @@ namespace Azure.ResourceManager.NetApp.Models
             return NetAppReplicationObject(replicationId, endpointType, replicationSchedule, remoteVolumeResourceId, remotePath, remoteVolumeRegion, destinationReplications, externalReplicationSetupStatus: default, externalReplicationSetupInfo: default, mirrorState: default, relationshipStatus: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppDestinationReplication"/>. </summary>
+        /// <param name="resourceId"> The resource ID of the remote volume. </param>
+        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
+        /// <param name="region"> The remote region for the destination volume. </param>
+        /// <param name="zone"> The remote zone for the destination volume. </param>
+        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId, NetAppReplicationType? replicationType, string region, string zone)
+        {
+            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2573,8 +2450,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="created"> The creation date of the snapshot. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeSnapshotData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string snapshotId, DateTimeOffset? created, string provisioningState)
+        public static NetAppVolumeSnapshotData NetAppVolumeSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string snapshotId = default, DateTimeOffset? created = default, string provisioningState = default)
         {
             return new NetAppVolumeSnapshotData(
                 id,
@@ -2671,8 +2547,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState)
+        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2973,20 +2848,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            activeDirectories ??= new ChangeTrackingList<NetAppAccountActiveDirectory>();
-
-            return new NetAppAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default,
-                identity);
+            return NetAppAccountData(id, name, resourceType, systemData, tags, location, provisioningState, activeDirectories, entraIdConfig: default, encryption, disableShowmount, nfsV4IdDomain: default, multiAdStatus: default, ldapConfiguration: default, etag, identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppEncryptionIdentity"/>. </summary>

@@ -21,11 +21,8 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public NetAppVolumeSnapshotData(string location)
+        public NetAppVolumeSnapshotData(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Location = location;
         }
 
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Snapshot Properties. </param>
         /// <param name="location"> Resource location. </param>
-        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties, AzureLocation location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.NetApp
         internal SnapshotProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> UUID v4 used to identify the Snapshot. </summary>
         public string SnapshotId

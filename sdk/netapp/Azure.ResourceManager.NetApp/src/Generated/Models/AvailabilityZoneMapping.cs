@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Logical availability zone. </summary>
-        public string AvailabilityZone { get; }
+        public string AvailabilityZone { get; set; }
 
         /// <summary> Available availability zone. </summary>
-        public bool? IsAvailable { get; }
+        public bool? IsAvailable { get; set; }
     }
 }

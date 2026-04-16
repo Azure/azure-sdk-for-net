@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppDestinationReplication"/>. </summary>
-        internal NetAppDestinationReplication()
+        public NetAppDestinationReplication()
         {
         }
 
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The resource ID of the remote volume. </summary>
-        public ResourceIdentifier ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
-        public NetAppReplicationType? ReplicationType { get; }
+        public NetAppReplicationType? ReplicationType { get; set; }
 
         /// <summary> The remote region for the destination volume. </summary>
-        public string Region { get; }
+        public string Region { get; set; }
 
         /// <summary> The remote zone for the destination volume. </summary>
-        public string Zone { get; }
+        public string Zone { get; set; }
     }
 }

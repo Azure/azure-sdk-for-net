@@ -11,7 +11,7 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
+    /// <summary></summary>
     public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
     {
         private readonly string _value;

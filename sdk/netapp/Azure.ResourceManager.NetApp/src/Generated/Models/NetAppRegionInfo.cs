@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
-        internal NetAppRegionInfo()
+        public NetAppRegionInfo()
         {
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
-        public RegionStorageToNetworkProximity? StorageToNetworkProximity { get; }
+        public RegionStorageToNetworkProximity? StorageToNetworkProximity { get; set; }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
         public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings { get; } = new ChangeTrackingList<AvailabilityZoneMapping>();
