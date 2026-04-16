@@ -3,11 +3,8 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    [CodeGenSuppress("OSType")]
     internal partial class ContainerGroupProfileProperties
     {
         /// <summary> The operating system type required by the containers in the container group. </summary>
