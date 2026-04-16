@@ -23,7 +23,7 @@ namespace Azure.Generator.Management.Visitors
         protected override PropertyProvider? VisitProperty(PropertyProvider property)
         {
             if (property.EnclosingType is not ModelProvider || // we only add wire path in models
-                property.WireInfo is null) // we skip those properties without a wire info
+                (property.WireInfo is null && !property.IsAdditionalProperties)) // we skip those properties without a wire info, unless it's an AdditionalProperties property
             {
                 return base.VisitProperty(property);
             }
@@ -45,6 +45,12 @@ namespace Azure.Generator.Management.Visitors
 
         private static string GetWirePath(PropertyProvider property)
         {
+            // if the property is an additional properties, return its name as the wire path
+            if (property.IsAdditionalProperties)
+            {
+                return property.Name;
+            }
+
             // if the property is not flattened, return its serialized name
             if (property is not FlattenedPropertyProvider)
             {
