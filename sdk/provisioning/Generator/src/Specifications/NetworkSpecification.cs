@@ -23,6 +23,15 @@ public class NetworkSpecification() :
         CustomizeResource<ProbeResource>(r => r.Name = "ProbeResource");
         RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
+        // Remove properties that do not exist in the Bicep reference (phantom/readonly)
+        RemoveProperty<IPAllocationResource>("SubnetId");
+        RemoveProperty<IPAllocationResource>("VirtualNetworkId");
+        RemoveProperty<IpamPoolProperties>("ProvisioningState");
+        RemoveProperty<StaticCidrProperties>("ProvisioningState");
+        RemoveProperty<NetworkVerifierWorkspaceProperties>("ProvisioningState");
+        RemoveProperty<ReachabilityAnalysisIntentProperties>("ProvisioningState");
+        RemoveProperty<ReachabilityAnalysisRunProperties>("ProvisioningState");
+
         // BaseAdminRule polymorphic types (discriminator: "kind")
         CustomizeResource<NetworkAdminRule>(r =>
         {

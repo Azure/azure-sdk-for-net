@@ -26,16 +26,6 @@ public partial class NetworkVerifierWorkspaceProperties : ProvisionableConstruct
     private BicepValue<string>? _description;
 
     /// <summary>
-    /// Provisioning states of a resource.
-    /// </summary>
-    public BicepValue<NetworkProvisioningState> ProvisioningState 
-    {
-        get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
-    }
-    private BicepValue<NetworkProvisioningState>? _provisioningState;
-
-    /// <summary>
     /// Creates a new NetworkVerifierWorkspaceProperties.
     /// </summary>
     public NetworkVerifierWorkspaceProperties()
@@ -50,6 +40,5 @@ public partial class NetworkVerifierWorkspaceProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _description = DefineProperty<string>("Description", ["description"]);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
     }
 }

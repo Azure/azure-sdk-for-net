@@ -18,16 +18,6 @@ namespace Azure.Provisioning.Network;
 public partial class ReachabilityAnalysisIntentProperties : ProvisionableConstruct
 {
     /// <summary>
-    /// Provisioning states of a resource.
-    /// </summary>
-    public BicepValue<NetworkProvisioningState> ProvisioningState 
-    {
-        get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
-    }
-    private BicepValue<NetworkProvisioningState>? _provisioningState;
-
-    /// <summary>
     /// Gets or sets the description.
     /// </summary>
     public BicepValue<string> Description 
@@ -81,7 +71,6 @@ public partial class ReachabilityAnalysisIntentProperties : ProvisionableConstru
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
         _description = DefineProperty<string>("Description", ["description"]);
         _sourceResourceId = DefineProperty<ResourceIdentifier>("SourceResourceId", ["sourceResourceId"]);
         _destinationResourceId = DefineProperty<ResourceIdentifier>("DestinationResourceId", ["destinationResourceId"]);

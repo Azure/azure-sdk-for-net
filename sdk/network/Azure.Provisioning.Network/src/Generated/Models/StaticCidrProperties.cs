@@ -57,16 +57,6 @@ public partial class StaticCidrProperties : ProvisionableConstruct
     private BicepValue<string>? _totalNumberOfIPAddresses;
 
     /// <summary>
-    /// Provisioning states of a resource.
-    /// </summary>
-    public BicepValue<NetworkProvisioningState> ProvisioningState 
-    {
-        get { Initialize(); return _provisioningState!; }
-        set { Initialize(); _provisioningState!.Assign(value); }
-    }
-    private BicepValue<NetworkProvisioningState>? _provisioningState;
-
-    /// <summary>
     /// Creates a new StaticCidrProperties.
     /// </summary>
     public StaticCidrProperties()
@@ -83,6 +73,5 @@ public partial class StaticCidrProperties : ProvisionableConstruct
         _numberOfIPAddressesToAllocate = DefineProperty<string>("NumberOfIPAddressesToAllocate", ["numberOfIPAddressesToAllocate"]);
         _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["addressPrefixes"]);
         _totalNumberOfIPAddresses = DefineProperty<string>("TotalNumberOfIPAddresses", ["totalNumberOfIPAddresses"], isOutput: true);
-        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"]);
     }
 }
