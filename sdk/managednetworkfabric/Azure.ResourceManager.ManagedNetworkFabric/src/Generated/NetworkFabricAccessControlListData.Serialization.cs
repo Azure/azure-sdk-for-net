@@ -45,8 +45,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            if (ConfigurationType != null)
+            {
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("configurationType");
+            }
             if (Optional.IsDefined(AclsUri))
             {
                 writer.WritePropertyName("aclsUrl"u8);
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             SystemData systemData = default;
             string annotation = default;
-            NetworkFabricConfigurationType configurationType = default;
+            NetworkFabricConfigurationType? configurationType = default;
             Uri aclsUrl = default;
             CommunityActionType? defaultAction = default;
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
@@ -250,6 +257,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("configurationType"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationType = null;
+                                continue;
+                            }
                             configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
                             continue;
                         }

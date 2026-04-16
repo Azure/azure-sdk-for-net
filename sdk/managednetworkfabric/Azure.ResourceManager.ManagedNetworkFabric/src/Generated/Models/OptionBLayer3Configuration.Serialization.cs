@@ -35,10 +35,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerAsn);
-            writer.WritePropertyName("vlanId"u8);
-            writer.WriteNumberValue(VlanId);
+            if (PeerAsn != null)
+            {
+                writer.WritePropertyName("peerASN"u8);
+                writer.WriteNumberValue(PeerAsn.Value);
+            }
+            else
+            {
+                writer.WriteNull("peerASN");
+            }
+            if (VlanId != null)
+            {
+                writer.WritePropertyName("vlanId"u8);
+                writer.WriteNumberValue(VlanId.Value);
+            }
+            else
+            {
+                writer.WriteNull("vlanId");
+            }
             if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
@@ -91,8 +105,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            long peerAsn = default;
-            int vlanId = default;
+            long? peerAsn = default;
+            int? vlanId = default;
             long? fabricAsn = default;
             IList<string> peLoopbackIPAddress = default;
             NniBmpProperties bmpConfiguration = default;
@@ -107,11 +121,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("peerASN"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        peerAsn = null;
+                        continue;
+                    }
                     peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("vlanId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vlanId = null;
+                        continue;
+                    }
                     vlanId = property.Value.GetInt32();
                     continue;
                 }

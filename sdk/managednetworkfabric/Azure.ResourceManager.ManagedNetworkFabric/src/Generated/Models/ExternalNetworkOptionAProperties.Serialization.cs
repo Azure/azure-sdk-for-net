@@ -59,15 +59,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            writer.WritePropertyName("vlanId"u8);
-            writer.WriteNumberValue(VlanId);
+            if (VlanId != null)
+            {
+                writer.WritePropertyName("vlanId"u8);
+                writer.WriteNumberValue(VlanId.Value);
+            }
+            else
+            {
+                writer.WriteNull("vlanId");
+            }
             if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerAsn);
+            if (PeerAsn != null)
+            {
+                writer.WritePropertyName("peerASN"u8);
+                writer.WriteNumberValue(PeerAsn.Value);
+            }
+            else
+            {
+                writer.WriteNull("peerASN");
+            }
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
@@ -150,9 +164,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
             int? mtu = default;
-            int vlanId = default;
+            int? vlanId = default;
             long? fabricAsn = default;
-            long peerAsn = default;
+            long? peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
             ResourceIdentifier ingressAclId = default;
             ExternalNetworkBmpProperties bmpConfiguration = default;
@@ -196,6 +210,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("vlanId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vlanId = null;
+                        continue;
+                    }
                     vlanId = property.Value.GetInt32();
                     continue;
                 }
@@ -210,6 +229,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("peerASN"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        peerAsn = null;
+                        continue;
+                    }
                     peerAsn = property.Value.GetInt64();
                     continue;
                 }

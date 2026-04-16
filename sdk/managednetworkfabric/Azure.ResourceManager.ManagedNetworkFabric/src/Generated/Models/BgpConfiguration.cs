@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        public BgpConfiguration(long peerAsn)
+        public BgpConfiguration(long? peerAsn)
         {
             PeerAsn = peerAsn;
             IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
         /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
         /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
-        internal BgpConfiguration(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress, InternalNetworkBmpProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, serializedAdditionalRawData)
+        internal BgpConfiguration(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress, InternalNetworkBmpProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, serializedAdditionalRawData)
         {
             BfdConfiguration = bfdConfiguration;
             DefaultRouteOriginate = defaultRouteOriginate;
@@ -72,8 +72,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AllowASOverride? AllowASOverride { get; set; }
         /// <summary> ASN of Network Fabric. Example: 65048. </summary>
         public long? FabricAsn { get; }
-        /// <summary> Peer ASN. Example: 65047. </summary>
-        public long PeerAsn { get; set; }
         /// <summary> List of BGP IPv4 Listen Range prefixes. </summary>
         public IList<string> IPv4ListenRangePrefixes { get; }
         /// <summary> List of BGP IPv6 Listen Ranges prefixes. </summary>

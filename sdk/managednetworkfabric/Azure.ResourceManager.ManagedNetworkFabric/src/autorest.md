@@ -175,6 +175,41 @@ directive:
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create
+  # Rename action operations whose return types changed from generic (StateUpdateCommonPostActionResult/DeviceUpdateCommonPostActionResult)
+  # to specific result types. Old method signatures are preserved via customization code for backward compatibility.
+  - from: swagger-document
+    where: $.paths.*.*
+    transform: >
+      const renames = {
+        "NetworkInterfaces_UpdateAdministrativeState": "NetworkInterfaces_UpdateAdministrativeStateWithTypedResult",
+        "NetworkDevices_UpdateAdministrativeState": "NetworkDevices_UpdateAdministrativeStateWithTypedResult",
+        "NetworkDevices_Reboot": "NetworkDevices_RebootWithTypedResult",
+        "NetworkDevices_RefreshConfiguration": "NetworkDevices_RefreshConfigurationWithTypedResult",
+        "AccessControlLists_UpdateAdministrativeState": "AccessControlLists_UpdateAdministrativeStateWithTypedResult",
+        "ExternalNetworks_UpdateAdministrativeState": "ExternalNetworks_UpdateAdministrativeStateWithTypedResult",
+        "ExternalNetworks_UpdateStaticRouteBfdAdministrativeState": "ExternalNetworks_UpdateStaticRouteBfdAdministrativeStateWithTypedResult",
+        "InternalNetworks_UpdateAdministrativeState": "InternalNetworks_UpdateAdministrativeStateWithTypedResult",
+        "InternalNetworks_UpdateBgpAdministrativeState": "InternalNetworks_UpdateBgpAdministrativeStateWithTypedResult",
+        "InternalNetworks_UpdateStaticRouteBfdAdministrativeState": "InternalNetworks_UpdateStaticRouteBfdAdministrativeStateWithTypedResult",
+        "L2IsolationDomains_UpdateAdministrativeState": "L2IsolationDomains_UpdateAdministrativeStateWithTypedResult",
+        "L3IsolationDomains_UpdateAdministrativeState": "L3IsolationDomains_UpdateAdministrativeStateWithTypedResult",
+        "NetworkFabrics_CommitConfiguration": "NetworkFabrics_CommitConfigurationWithTypedResult",
+        "NetworkFabrics_Deprovision": "NetworkFabrics_DeprovisionWithTypedResult",
+        "NetworkFabrics_Provision": "NetworkFabrics_ProvisionWithTypedResult",
+        "NetworkFabrics_RefreshConfiguration": "NetworkFabrics_RefreshConfigurationWithTypedResult",
+        "NetworkFabrics_UpdateInfraManagementBfdConfiguration": "NetworkFabrics_UpdateInfraManagementBfdConfigurationWithTypedResult",
+        "NetworkFabrics_UpdateWorkloadManagementBfdConfiguration": "NetworkFabrics_UpdateWorkloadManagementBfdConfigurationWithTypedResult",
+        "RoutePolicies_UpdateAdministrativeState": "RoutePolicies_UpdateAdministrativeStateWithTypedResult",
+        "NetworkTaps_Resync": "NetworkTaps_ResyncWithTypedResult",
+        "NetworkTaps_UpdateAdministrativeState": "NetworkTaps_UpdateAdministrativeStateWithTypedResult",
+        "NetworkTapRules_Resync": "NetworkTapRules_ResyncWithTypedResult",
+        "NetworkToNetworkInterconnects_UpdateAdministrativeState": "NetworkToNetworkInterconnects_UpdateAdministrativeStateWithTypedResult",
+        "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState": "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeStateWithTypedResult",
+        "NetworkFabrics_GetTopology": "NetworkFabrics_GetTopologyWithTypedResult"
+      };
+      if ($.operationId && renames[$.operationId]) {
+        $.operationId = renames[$.operationId];
+      }
   # Rename exportRoutePolicy on StaticRouteRoutePolicy to avoid name collision with ConnectedSubnetRoutePolicy.exportRoutePolicy after flattening
   - from: managednetworkfabric.json
     where: $.definitions.StaticRouteRoutePolicy.properties

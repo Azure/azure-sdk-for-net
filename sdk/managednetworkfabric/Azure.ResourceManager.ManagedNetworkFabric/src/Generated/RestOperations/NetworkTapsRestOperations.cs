@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateResyncRequestUri(string subscriptionId, string resourceGroupName, string networkTapName)
+        internal RequestUriBuilder CreateResyncWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkTapName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateResyncRequest(string subscriptionId, string resourceGroupName, string networkTapName)
+        internal HttpMessage CreateResyncWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkTapName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -607,13 +607,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResyncAsync(string subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        public async Task<Response> ResyncWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var message = CreateResyncRequest(subscriptionId, resourceGroupName, networkTapName);
+            using var message = CreateResyncWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -632,13 +632,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Resync(string subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
+        public Response ResyncWithTypedResult(string subscriptionId, string resourceGroupName, string networkTapName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
 
-            using var message = CreateResyncRequest(subscriptionId, resourceGroupName, networkTapName);
+            using var message = CreateResyncWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateUpdateAdministrativeStateWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateUpdateAdministrativeStateWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,14 +698,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAdministrativeStateWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkTapName, content);
+            using var message = CreateUpdateAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -725,14 +725,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkTapName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response UpdateAdministrativeStateWithTypedResult(string subscriptionId, string resourceGroupName, string networkTapName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapName, nameof(networkTapName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkTapName, content);
+            using var message = CreateUpdateAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
