@@ -32,7 +32,8 @@ Typical triggers:
 1. **Never edit `src/Generated/` or `metadata.json` by hand.**
 2. **Never add `ApiCompatBaseline.txt` entries or disable ApiCompat/package validation.**
 3. **Prefer spec-side decorators first**: `@@clientName`, `@@access`, `@@alternateType`, `@@markAsPageable`.
-4. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
+4. **Use MCP tools first for deterministic custom-code edits**; hand-edit only the remaining shim logic.
+5. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
 
 ## Default Autonomy
 
@@ -54,6 +55,15 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 Fix errors **spec-side** (decorators in `client.tsp` with `"csharp"` scope) or **SDK-side** (custom code in `src/Customization/`). Always verify zero swagger diff after spec changes.
 
 After each fix: regenerate if spec changed → rebuild → check remaining errors → repeat until clean.
+
+For **SDK-side custom code**, prefer MCP tools for deterministic edits:
+- `add_using_directive` / `remove_using_directive`
+- `regex_replacement`
+- `nullable_annotation_fix`
+- `rename_codegen_type`
+- `add_codegen_suppress`
+
+Use them in a loop: **build/classify → batch MCP fixes → regenerate if `CodeGen*` attributes changed → hand-write only the remaining compatibility logic**.
 
 ### Spec-side decorator table
 
