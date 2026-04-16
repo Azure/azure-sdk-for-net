@@ -2832,7 +2832,8 @@
                 "scope": {
                   "$id": "215",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Foo",
                 "nameConstraints": {
@@ -2883,7 +2884,8 @@
                 "scope": {
                   "$id": "220",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Bar",
                 "nameConstraints": {

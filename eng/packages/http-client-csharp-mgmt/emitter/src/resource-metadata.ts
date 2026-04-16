@@ -814,10 +814,17 @@ export function postProcessArmResources(
   for (const resource of filteredResources) {
     const scopePath = resource.metadata.resourceIdPattern.scopePath;
     resource.metadata.scope.scopeIdPattern = scopePath;
-    // Include the scope's resource type when it's fully constant (no variable segments)
-    const rt = scopePath.resourceType;
-    if (!rt.includes("{")) {
-      resource.metadata.scope.scopeResourceType = rt;
+    // Include the scope's resource type when it's fully constant (no variable segments).
+    // Skip generic scope paths (e.g., /{resourceUri}) that consist entirely of variable segments
+    // — these have no determinable resource type.
+    if (
+      scopePath.length > 0 &&
+      scopePath.segments.some((s) => !isVariableSegment(s))
+    ) {
+      const rt = scopePath.resourceType;
+      if (!rt.includes("{")) {
+        resource.metadata.scope.scopeResourceType = rt;
+      }
     }
   }
 

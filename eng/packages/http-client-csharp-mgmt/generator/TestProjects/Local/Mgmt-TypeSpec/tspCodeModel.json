@@ -23187,7 +23187,8 @@
                 "scope": {
                   "$id": "1702",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/storageSyncServices/{storageSyncServiceName}",
                 "resourceName": "PrivateEndpointConnection",
@@ -23215,7 +23216,8 @@
                 "scope": {
                   "$id": "1704",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "StorageSyncService",
                 "nameConstraints": {},
@@ -23328,7 +23330,8 @@
                 "scope": {
                   "$id": "1717",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Foo",
                 "nameConstraints": {
@@ -23394,7 +23397,8 @@
                 "scope": {
                   "$id": "1722",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "singletonResourceName": "default",
                 "resourceName": "FooSettings",
@@ -23463,7 +23467,8 @@
                 "scope": {
                   "$id": "1729",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
                 "resourceName": "Bar",
@@ -23501,7 +23506,8 @@
                 "scope": {
                   "$id": "1732",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
                 "singletonResourceName": "current",
@@ -23540,7 +23546,8 @@
                 "scope": {
                   "$id": "1735",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}",
                 "resourceName": "BarQuotaResource",
@@ -23608,7 +23615,8 @@
                 "scope": {
                   "$id": "1742",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Baz",
                 "nameConstraints": {
@@ -23691,7 +23699,8 @@
                 "scope": {
                   "$id": "1751",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Zoo",
                 "nameConstraints": {
@@ -23743,7 +23752,8 @@
                 "scope": {
                   "$id": "1756",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "IssueTestResource",
                 "nameConstraints": {
@@ -23872,7 +23882,8 @@
                 "scope": {
                   "$id": "1768",
                   "kind": "Subscription",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Resources/subscriptions"
                 },
                 "resourceName": "PlaywrightQuota",
                 "nameConstraints": {
@@ -23917,7 +23928,8 @@
                 "scope": {
                   "$id": "1772",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "JobResource",
                 "nameConstraints": {
@@ -23976,7 +23988,8 @@
                 "scope": {
                   "$id": "1776",
                   "kind": "ManagementGroup",
-                  "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}"
+                  "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+                  "scopeResourceType": "Microsoft.Management/managementGroups"
                 },
                 "resourceName": "GroupQuotaSubscriptionRequestStatus",
                 "nameConstraints": {},
@@ -24003,7 +24016,8 @@
                 "scope": {
                   "$id": "1778",
                   "kind": "Extension",
-                  "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}"
+                  "scopeIdPattern": "/providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Management/managementGroups/subscriptions"
                 },
                 "resourceName": "SubscriptionQuotaAllocationsList",
                 "nameConstraints": {},
@@ -24046,7 +24060,8 @@
                 "scope": {
                   "$id": "1782",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Joo",
                 "nameConstraints": {
@@ -24083,7 +24098,8 @@
                 "scope": {
                   "$id": "1785",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "SAPVirtualInstance",
                 "nameConstraints": {
@@ -24143,7 +24159,7 @@
                 "scope": {
                   "$id": "1791",
                   "kind": "Tenant",
-                  "scopeIdPattern": "/"
+                  "scopeIdPattern": ""
                 },
                 "resourceName": "BestPractice",
                 "nameConstraints": {},
@@ -24202,7 +24218,7 @@
                 "scope": {
                   "$id": "1797",
                   "kind": "Tenant",
-                  "scopeIdPattern": "/"
+                  "scopeIdPattern": ""
                 },
                 "parentResourceId": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                 "resourceName": "BestPracticeVersion",
@@ -24238,7 +24254,8 @@
                 "scope": {
                   "$id": "1800",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "ResourceTypeTestResource",
                 "nameConstraints": {
@@ -24290,7 +24307,8 @@
                 "scope": {
                   "$id": "1805",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "SampleData",
                 "nameConstraints": {
@@ -24342,7 +24360,8 @@
                 "scope": {
                   "$id": "1810",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "WorkloadNetworks",
                 "nameConstraints": {
@@ -24402,7 +24421,8 @@
                 "scope": {
                   "$id": "1816",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "WorkloadNetworkVmGroup",
                 "nameConstraints": {
@@ -24462,7 +24482,8 @@
                 "scope": {
                   "$id": "1822",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "WorkloadNetworkSegment",
                 "nameConstraints": {
@@ -24581,7 +24602,8 @@
                 "scope": {
                   "$id": "1834",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "Cluster",
                 "nameConstraints": {
@@ -24633,7 +24655,8 @@
                 "scope": {
                   "$id": "1839",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "DuplicatePropertyTest",
                 "nameConstraints": {
@@ -24677,7 +24700,8 @@
                 "scope": {
                   "$id": "1843",
                   "kind": "Extension",
-                  "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}"
+                  "scopeIdPattern": "/providers/Microsoft.Management/serviceGroups/{servicegroupName}",
+                  "scopeResourceType": "Microsoft.Management/serviceGroups"
                 },
                 "resourceName": "ServiceGroupSite",
                 "nameConstraints": {
@@ -24729,7 +24753,8 @@
                 "scope": {
                   "$id": "1848",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "TrafficProfile",
                 "nameConstraints": {},
@@ -24772,7 +24797,8 @@
                 "scope": {
                   "$id": "1852",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
                 "resourceName": "TrafficEndpoint",
@@ -24862,7 +24888,8 @@
                 "scope": {
                   "$id": "1859",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}",
                 "resourceName": "MultiFlattenTest",
@@ -24915,7 +24942,8 @@
                 "scope": {
                   "$id": "1864",
                   "kind": "Extension",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+                  "scopeResourceType": "Microsoft.Compute/virtualMachines"
                 },
                 "resourceName": "PolicyVmAssignment",
                 "nameConstraints": {},
@@ -24965,7 +24993,8 @@
                 "scope": {
                   "$id": "1869",
                   "kind": "Extension",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}",
+                  "scopeResourceType": "Microsoft.HybridCompute/machines"
                 },
                 "resourceName": "PolicyArcAssignment",
                 "nameConstraints": {},
@@ -25016,7 +25045,8 @@
                 "scope": {
                   "$id": "1874",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "TestCertificate",
                 "nameConstraints": {},
@@ -25050,7 +25080,8 @@
                 "scope": {
                   "$id": "1877",
                   "kind": "Subscription",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Resources/subscriptions"
                 },
                 "resourceName": "PublicSharedConfig",
                 "nameConstraints": {},
@@ -25100,7 +25131,8 @@
                 "scope": {
                   "$id": "1882",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "SharedConfig",
                 "nameConstraints": {},
@@ -25170,7 +25202,8 @@
                 "scope": {
                   "$id": "1888",
                   "kind": "ResourceGroup",
-                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "CycleTestStore",
                 "nameConstraints": {
