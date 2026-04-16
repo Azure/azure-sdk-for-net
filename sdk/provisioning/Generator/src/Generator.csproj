@@ -54,6 +54,7 @@
     <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.PrivateDns" />
     <PackageReference Include="Azure.ResourceManager.Redis" />
+    <PackageReference Include="Azure.ResourceManager.ResourceGraph" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />
     <PackageReference Include="Azure.ResourceManager.Search" />
     <PackageReference Include="Azure.ResourceManager.ServiceBus" />
