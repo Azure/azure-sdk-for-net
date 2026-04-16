@@ -105,7 +105,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
     [Test]
     public async Task Cancel_UnknownId_Returns404_WithErrorShape()
     {
-        var cancelResponse = await CancelResponseAsync("caresp_nonexistent_id");
+        var cancelResponse = await CancelResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 

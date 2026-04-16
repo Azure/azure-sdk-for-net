@@ -76,7 +76,7 @@ public class GetInputItemsProtocolTests : IDisposable
     [Test]
     public async Task Get_InputItems_NonExistent_Response_Returns_404()
     {
-        var response = await _client.GetAsync("/responses/resp_nonexistent/input_items");
+        var response = await _client.GetAsync($"/responses/{IdGenerator.NewResponseId()}/input_items");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }

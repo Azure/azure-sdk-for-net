@@ -26,7 +26,7 @@ public class CancelResponseTests : IDisposable
     [Test]
     public async Task Cancel_UnknownId_Returns404()
     {
-        var response = await _client.PostAsync("/responses/resp_unknown/cancel", null);
+        var response = await _client.PostAsync($"/responses/{IdGenerator.NewResponseId()}/cancel", null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();

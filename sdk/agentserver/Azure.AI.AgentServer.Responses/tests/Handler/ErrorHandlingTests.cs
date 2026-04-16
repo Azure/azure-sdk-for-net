@@ -56,7 +56,7 @@ public class ErrorHandlingTests : IDisposable
     [Test]
     public async Task GetUnknownId_Returns404WithApiErrorResponse()
     {
-        var response = await _client.GetAsync("/responses/resp_unknown123");
+        var response = await _client.GetAsync($"/responses/{IdGenerator.NewResponseId()}");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -66,7 +66,7 @@ public class ErrorHandlingTests : IDisposable
     [Test]
     public async Task CancelUnknownId_Returns404WithApiErrorResponse()
     {
-        var response = await _client.PostAsync("/responses/resp_unknown123/cancel", null);
+        var response = await _client.PostAsync($"/responses/{IdGenerator.NewResponseId()}/cancel", null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();

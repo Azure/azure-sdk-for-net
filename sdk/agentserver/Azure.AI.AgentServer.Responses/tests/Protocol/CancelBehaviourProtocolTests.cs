@@ -192,7 +192,7 @@ public class CancelBehaviourProtocolTests : ProtocolTestBase
     [Test]
     public async Task Cancel_UnknownId_Returns404()
     {
-        var cancelResponse = await CancelResponseAsync("resp_nonexistent");
+        var cancelResponse = await CancelResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }

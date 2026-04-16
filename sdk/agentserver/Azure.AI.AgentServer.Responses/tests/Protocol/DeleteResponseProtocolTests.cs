@@ -46,7 +46,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     [Test]
     public async Task Delete_NonExistent_Response_Returns_404()
     {
-        var deleteResponse = await Client.DeleteAsync("/responses/resp_nonexistent_delete_test");
+        var deleteResponse = await Client.DeleteAsync($"/responses/{IdGenerator.NewResponseId()}");
 
         Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 

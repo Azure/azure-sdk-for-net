@@ -60,6 +60,21 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
+    /// B40: Validates that a path-parameter response ID matches the expected <c>caresp_*</c> format.
+    /// Throws <see cref="BadRequestException"/> with <c>code: "invalid_parameters"</c> for malformed IDs.
+    /// </summary>
+    private static void ValidateResponseIdFormat(string responseId)
+    {
+        if (!IdGenerator.IsValid(responseId, out _, allowedPrefixes: ["caresp"]))
+        {
+            throw new BadRequestException(
+                "Malformed identifier.",
+                code: "invalid_parameters",
+                paramName: $"responseId{{{responseId}}}");
+        }
+    }
+
+    /// <summary>
     /// Handles POST /responses — creates a new response and handles all 4 modes.
     /// </summary>
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
@@ -292,6 +307,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         // SSE replay trigger: ?stream=true query parameter (B2)
@@ -371,6 +387,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> CancelResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         var response = await _orchestrator.CancelAsync(responseId, isolation);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
@@ -382,6 +399,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         // Guard: if response is in-flight, reject deletion.
@@ -431,6 +449,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         // Parse limit (default 20, range 1–100)
         int limit = 20;
