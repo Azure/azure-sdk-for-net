@@ -88,12 +88,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     }
 
     /// <summary>
-    /// T022: GET after DELETE returns 400 (deleted responses are distinguished from never-existed).
+    /// T022: GET after DELETE returns 404 (response not found).
     /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
-    /// GET /responses/{id} → HTTP 400 with message indicating the response has been deleted.
+    /// GET /responses/{id} → HTTP 404 (response not found).
     /// </summary>
     [Test]
-    public async Task Get_After_Delete_Returns_400()
+    public async Task Get_After_Delete_Returns_404()
     {
         // Create and then delete a response
         var responseId = await CreateDefaultResponseAsync();
@@ -101,9 +101,27 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
         Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        // GET should return 400 (deleted, not 404 = never-existed)
+        // Spec: GET after DELETE → 404 (response not found)
         var getResponse = await GetResponseAsync(responseId);
-        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+    }
+
+    /// <summary>
+    /// Post-deletion: Cancel after DELETE returns 404.
+    /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
+    /// POST /responses/{id}/cancel → HTTP 404 (response not found).
+    /// </summary>
+    [Test]
+    public async Task Cancel_After_Delete_Returns_404()
+    {
+        var responseId = await CreateDefaultResponseAsync();
+
+        var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        // Spec: Cancel after DELETE → 404
+        var cancelResponse = await CancelResponseAsync(responseId);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>

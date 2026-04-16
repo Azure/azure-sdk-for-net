@@ -150,10 +150,12 @@ public class GetInputItemsProtocolTests : IDisposable
     }
 
     /// <summary>
-    /// T033: GET /responses/{id}/input_items returns 400 for a deleted response.
+    /// T033: GET /responses/{id}/input_items returns 404 for a deleted response.
+    /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
+    /// GET /responses/{id}/input_items → HTTP 404 (response not found).
     /// </summary>
     [Test]
-    public async Task Get_InputItems_Deleted_Response_Returns_400()
+    public async Task Get_InputItems_Deleted_Response_Returns_404()
     {
         var responseId = await CreateResponseWithInputsAsync(2);
 
@@ -161,10 +163,10 @@ public class GetInputItemsProtocolTests : IDisposable
         var deleteResponse = await _client.DeleteAsync($"/responses/{responseId}");
         Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        // GET input_items on deleted response should return 400
+        // Spec: GET input_items after DELETE → 404
         var response = await _client.GetAsync($"/responses/{responseId}/input_items");
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>

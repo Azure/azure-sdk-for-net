@@ -132,7 +132,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// <inheritdoc/>
     public override Task<Models.ResponseObject> GetResponseAsync(string responseId, IsolationContext isolation, CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400 (distinguish from never-existed → 404)
+        // Deleted response → 404 (spec: post-deletion, response not found)
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -141,7 +141,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         if (!_responses.TryGetValue(responseId, out var response))
@@ -203,7 +203,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? before = null,
         CancellationToken cancellationToken = default)
     {
-        // Deleted response → 400
+        // Deleted response → 404
         bool isDeleted;
         lock (_deletedResponseIds)
         {
@@ -212,7 +212,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
         if (isDeleted)
         {
-            throw new BadRequestException($"Response '{responseId}' has been deleted.");
+            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
         }
 
         // Never existed → 404
