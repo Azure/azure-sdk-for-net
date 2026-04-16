@@ -1,6 +1,8 @@
 <Project>
   <!-- Tables.Tests needs legacy WebJobs.Extensions.Storage for T1 testing -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Update="NUnit" Version="3.14.0" />
+    <PackageVersion Update="NUnit3TestAdapter" Version="4.6.0" />
     <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.5" />
   </ItemGroup>
 </Project>
