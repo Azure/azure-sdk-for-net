@@ -41,28 +41,12 @@ public class Sample_SessionFiles : SamplesBase
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString("N");
         string sessionId = Guid.NewGuid().ToString("N");
-        AgentSession session;
-        try
-        {
-            session = await agentsClient.CreateSessionAsync(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId,
-                isolationKey: sessionKey,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue see VSO Item 5188431.
-                session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId);
-            }
-            else
-            {
-                throw;
-            }
-        }
+        AgentSession session = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId,
+            isolationKey: sessionKey,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -119,21 +103,7 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-        try
-        {
-            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
         #endregion
     }
 
@@ -152,6 +122,7 @@ public class Sample_SessionFiles : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
         #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Sync
@@ -160,28 +131,12 @@ public class Sample_SessionFiles : SamplesBase
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString();
         string sessionId = Guid.NewGuid().ToString();
-        AgentSession session;
-        try
-        {
-            session = agentsClient.CreateSession(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId,
-                isolationKey: sessionKey,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue see VSO Item 5188431.
-                session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId);
-            }
-            else
-            {
-                throw;
-            }
-        }
+        AgentSession session = agentsClient.CreateSession(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId,
+            isolationKey: sessionKey,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -216,7 +171,7 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "");
+        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
         Console.WriteLine($"The path {response.Path} contains the next files:");
         foreach (SessionDirectoryEntry entry in response.Entries)
         {
@@ -239,21 +194,7 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-        try
-        {
-            agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 200)
-            {
-                Console.WriteLine($"The session {session.AgentSessionId} was deleted, but incorrect code was returned.");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
         #endregion
     }
 

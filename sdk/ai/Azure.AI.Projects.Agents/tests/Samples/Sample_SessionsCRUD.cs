@@ -45,51 +45,20 @@ public class Sample_SessionsCRUD : SamplesBase
         string sessionKey2 = Guid.NewGuid().ToString();
         string sessionId1 = Guid.NewGuid().ToString();
         string sessionId2 = Guid.NewGuid().ToString();
-        AgentSession session1, session2;
-        try
-        {
-            session1 = await agentsClient.CreateSessionAsync(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId1,
-                isolationKey: sessionKey1,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-            Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue see VSO Item 5188431.
-                session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
-            }
-            else
-            {
-                throw;
-            }
-        }
-        try
-        {
-            session2 = await agentsClient.CreateSessionAsync(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId2,
-                isolationKey: sessionKey1,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-            Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue.
-                session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2);
-            }
-            else
-            {
-                throw;
-            }
-        }
+        AgentSession session1 = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId1,
+            isolationKey: sessionKey1,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+        AgentSession session2 = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId2,
+            isolationKey: sessionKey2,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -145,51 +114,20 @@ public class Sample_SessionsCRUD : SamplesBase
         string sessionKey2 = "sample-isolation-key2";
         string sessionId1 = Guid.NewGuid().ToString();
         string sessionId2 = Guid.NewGuid().ToString();
-        AgentSession session1, session2;
-        try
-        {
-            session1 = agentsClient.CreateSession(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId1,
-                isolationKey: sessionKey1,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-            Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue see VSO Item 5188431.
-                session1 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId1);
-            }
-            else
-            {
-                throw;
-            }
-        }
-        try
-        {
-            session2 = agentsClient.CreateSession(
-                agentName: agentVersion.Name,
-                agentSessionId: sessionId2,
-                isolationKey: sessionKey1,
-                versionIndicator: new VersionRefIndicator(agentVersion.Version)
-            );
-            Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
-        }
-        catch (ClientResultException ex)
-        {
-            if (ex.Status == 424)
-            {
-                // Known issue.
-                session2 = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: sessionId2);
-            }
-            else
-            {
-                throw;
-            }
-        }
+        AgentSession session1 = agentsClient.CreateSession(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId1,
+            isolationKey: sessionKey1,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+        AgentSession session2 = agentsClient.CreateSession(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId2,
+            isolationKey: sessionKey2,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
 
         while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
         {

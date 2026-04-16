@@ -9,13 +9,4 @@ public partial class ProjectsAgentVersion
     /// <summary> The object type, which is always 'agent.version'. </summary>
     [CodeGenMember("Object")]
     internal string Object { get; } = "agent.version";
-
-    public string GetStatus()
-    {
-        if (_additionalBinaryDataProperties.TryGetValue("status", out System.BinaryData status))
-        {
-            return status.ToString();
-        }
-        return null;
-    }
 }

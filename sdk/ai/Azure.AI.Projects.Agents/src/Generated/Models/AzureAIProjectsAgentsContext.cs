@@ -117,6 +117,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiProjectConnectionSecurityScheme))]
     [ModelReaderWriterBuildable(typeof(OpenAPITool))]
+    [ModelReaderWriterBuildable(typeof(PatchAgentOptions))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentRecord))]
     [ModelReaderWriterBuildable(typeof(ProjectsAgentTool))]

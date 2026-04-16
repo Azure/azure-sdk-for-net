@@ -26,6 +26,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
   - [Skills](#skills)
+  - [Agent endpoints](#agent-endpoints)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -207,6 +208,9 @@ az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJ
 
 ### Toolboxes
 
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
 As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
@@ -255,6 +259,9 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 ### Sessions
 
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
 Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
 sessions for the same agent version.
 
@@ -263,51 +270,20 @@ string sessionKey1 = Guid.NewGuid().ToString();
 string sessionKey2 = Guid.NewGuid().ToString();
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
-AgentSession session1, session2;
-try
-{
-    session1 = await agentsClient.CreateSessionAsync(
-        agentName: agentVersion.Name,
-        agentSessionId: sessionId1,
-        isolationKey: sessionKey1,
-        versionIndicator: new VersionRefIndicator(agentVersion.Version)
-    );
-    Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 424)
-    {
-        // Known issue see VSO Item 5188431.
-        session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1);
-    }
-    else
-    {
-        throw;
-    }
-}
-try
-{
-    session2 = await agentsClient.CreateSessionAsync(
-        agentName: agentVersion.Name,
-        agentSessionId: sessionId2,
-        isolationKey: sessionKey1,
-        versionIndicator: new VersionRefIndicator(agentVersion.Version)
-    );
-    Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
-}
-catch (ClientResultException ex)
-{
-    if (ex.Status == 424)
-    {
-        // Known issue.
-        session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2);
-    }
-    else
-    {
-        throw;
-    }
-}
+AgentSession session1 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    agentSessionId: sessionId1,
+    isolationKey: sessionKey1,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+AgentSession session2 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    agentSessionId: sessionId2,
+    isolationKey: sessionKey2,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
 while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -364,29 +340,36 @@ File.Delete(filePath);
 
 ### Skills
 
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Skills=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
 The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
 to manage skills in Microsoft foundry. Skills may be created from the folder with instructions or on-the-fly.
 
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
-AgentsSkill skillFromFile, simpleSkill;
-try
-{
-    skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-}
-catch (ClientResultException e)
-{
-    if (e.Status != 201)
-    {
-        throw;
-    }
-    skillFromFile = await skillsClient.GetSkillAsync("roll-dice");
-}
+AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-try
-{
-    simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    ```bash
+AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+To calculate the sum  run
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell
@@ -478,7 +461,67 @@ catch (ClientResultException e)
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```
 
-For more information on skills plese see the [Microsoft learning](https://learn.microsoft.com/agent-framework/agents/skills) page.
+For more information on skills please see the [Microsoft learning](https://learn.microsoft.com/agent-framework/agents/skills) page.
+
+### Agent endpoints
+
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
+The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
+because we are using three experimental features: hosted agents, skills and Agent endpoints.
+
+The hosted agent can be further configurable by using `PatchAgentObject` and `PatchAgentObjectAsync` methods.
+1. Retrieve the agent
+
+```C# Snippet:Sample_GetAgentAndCreateSession_AgentsEndpoint_Async
+ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+    agentName: hostedAgentName,
+    agentVersion: hostedAgentVersion);
+Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Version}");
+```
+
+2. Create the skill.
+
+```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
+AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+    To calculate the sum  run
+    ```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+```
+
+3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+make it aware of the skill we have created.
+
+```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
+AgentEndpoint config = new()
+{
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    Protocols = {AgentEndpointProtocol.Responses}
+};
+AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+PatchAgentOptions patchOptions = new()
+{
+    AgentEndpoint = config,
+    AgentCard = card
+};
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+    agentName: hostedAgentName,
+    patchAgentOptions: patchOptions);
+Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
+```
 
 ## Tracing
 

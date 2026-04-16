@@ -136,6 +136,7 @@ public class Sample_Skills_CRUD : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
+        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         AgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "roll-dice");

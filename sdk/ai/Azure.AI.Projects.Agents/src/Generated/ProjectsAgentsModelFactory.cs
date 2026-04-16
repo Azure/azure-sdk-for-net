@@ -1028,6 +1028,15 @@ namespace Azure.AI.Projects.Agents
             return new CreateAgentVersionFromManifestRequest(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The PatchAgentOptions. </summary>
+        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+        /// <param name="agentCard"> Optional agent card for the agent. </param>
+        /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpoint agentEndpoint = default, AgentCard agentCard = default)
+        {
+            return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The UpdateToolboxRequest. </summary>
         /// <param name="toolboxName"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>

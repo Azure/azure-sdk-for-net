@@ -26,10 +26,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
 {
     protected const string AGENT_NAME = "cs-e2e-tests-client";
     protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
+    protected const string HOSTED_AGENT = "cs-e2e-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
+    protected const string SKILL = "test-skill";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly int PAGE_SIZE = 3;
+
+    protected const string FOUNDRY_HEADER = "Foundry-Features";
+    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -135,7 +140,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 {
                     message.NetworkTimeout = TimeSpan.FromMinutes(5);
                 }
-                message.Request.Headers.Set("Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview");
+                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
         return CreateProxyFromClient(new AgentAdministrationClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
@@ -159,11 +164,11 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         HashSet<string> observedHash = [.. observed];
         if (!expectedHash.SetEquals(observedHash))
         {
-            Assert.Fail($"The members of arrays differ. Expected: {ToPritableString(expected)}, Observed: {ToPritableString(observed)}");
+            Assert.Fail($"The members of arrays differ. Expected: {ToPrintableString(expected)}, Observed: {ToPrintableString(observed)}");
         }
     }
 
-    private static string ToPritableString(IEnumerable<string> data)
+    private static string ToPrintableString(IEnumerable<string> data)
     {
         StringBuilder sb = new();
         foreach (string val in data)
@@ -399,12 +404,49 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     }
     #endregion
     #region Cleanup
+
+    private static async Task DeleteToolboxMayBe(AgentToolboxes client, string name)
+    {
+        try
+        {
+            await client.DeleteToolboxAsync(name);
+        }
+        catch (ClientResultException e)
+        {
+            if (e.Status != 404)
+            {
+                throw;
+            }
+        }
+    }
+
+    private static async Task DeleteSkillMayBe(AgentSkills client, string name)
+    {
+        try
+        {
+            await client.DeleteSkillAsync(name);
+        }
+        catch (ClientResultException e)
+        {
+            if (e.Status != 404)
+            {
+                throw;
+            }
+        }
+    }
+
     [TearDown]
     public async virtual Task Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
         AgentAdministrationClientOptions options = new();
+        options.AddPolicy(
+            new TestPipelinePolicy(message =>
+            {
+                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
+            }),
+            PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
 
         // Remove Agents.
@@ -416,33 +458,40 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-
-        foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })
-        {
-            try
-            {
-                await toolboxClient.DeleteToolboxAsync(name);
-            }
-            catch
-            {
-                // Nothing here.
-            }
-        }
         try
         {
-            List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
-            foreach (ToolboxRecord record in records)
+            await agentsClient.DeleteAgentAsync(HOSTED_AGENT);
+        }
+        catch (ClientResultException e)
+        {
+            if (e.Status != 404)
             {
-                if (record.Name.StartsWith(TOOLBOX))
-                {
-                    await toolboxClient.DeleteToolboxAsync(record.Name);
-                }
+                throw;
             }
         }
-        catch
+        AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
+        foreach (string name in new string[] { "mcp", "mcp1", "mcp2" })
         {
-            // Nothing here.
+            await DeleteToolboxMayBe(toolboxClient, name);
+        }
+        await foreach (ToolboxRecord record in toolboxClient.GetToolboxesAsync())
+        {
+            if (record.Name.StartsWith(TOOLBOX))
+            {
+                await DeleteToolboxMayBe(toolboxClient, record.Name);
+            }
+        }
+        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        //await DeleteSkillMayBe(skillsClient, SKILL);
+        //await DeleteSkillMayBe(skillsClient, $"{SKILL}_code");
+        //await DeleteSkillMayBe(skillsClient, $"{SKILL}_file");
+        // TODO: uncomment this code when the skills listing will be fixed.
+        await foreach (AgentsSkill skill in skillsClient.GetSkillsAsync())
+        {
+            if (skill.Name.StartsWith(SKILL))
+            {
+                await skillsClient.DeleteSkillAsync(skill.Name);
+            }
         }
     }
     #endregion

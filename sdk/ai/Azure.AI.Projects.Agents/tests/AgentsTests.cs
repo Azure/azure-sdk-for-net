@@ -3,6 +3,8 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
@@ -378,4 +380,415 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
+
+    [RecordedTest]
+    public async Task TestPatchHostedAgent()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        AgentEndpoint config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            Protocols = { AgentEndpointProtocol.Responses }
+        };
+        AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: SKILL, description: "Calculates the sum of two numbers.", instructions: """
+            To calculate the sum  run
+            ```bash
+            echo $((<first> + <second>))
+            ```
+            ```powershell
+            (<first> + <second>)
+            ```
+            Replace <first> and <second> by the actual summation arguments.
+            """);
+        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+            AgentCard = card,
+        };
+        ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        Assert.That(patchedRecord.AgentEndpoint.Protocols, Has.Count.EqualTo(1));
+        Assert.That(patchedRecord.AgentEndpoint.Protocols[0], Is.EqualTo(AgentEndpointProtocol.Responses));
+        Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules, Has.Count.EqualTo(1));
+        Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0], Is.InstanceOf(typeof(FixedRatioVersionSelectionRule)));
+        Assert.That(((FixedRatioVersionSelectionRule)patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0]).TrafficPercentage, Is.EqualTo(74));
+        Assert.That(patchedRecord.AgentCard.Version, Is.EqualTo("42"));
+        Assert.That(patchedRecord.AgentCard.Skills, Has.Count.EqualTo(1));
+        Assert.That(patchedRecord.AgentCard.Skills[0].Id, Is.EqualTo(simpleSkill.SkillId));
+    }
+
+    [RecordedTest]
+    [Ignore("Blocked by the ADO item 5197622")]
+    public async Task TestSessionCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        string sessionKey1 = "sample_session_key1";
+        string sessionKey2 = "sample_session_key2";
+        string sessionId1 = "session_123";
+        string sessionId2 = "session_456";
+        try
+        {
+            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1, isolationKey: sessionKey1);
+        }
+        catch { }
+        try
+        {
+            await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2, isolationKey: sessionKey2);
+        }
+        catch { }
+        // Create
+        AgentSession session1 = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId1,
+            isolationKey: sessionKey1,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
+        Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session1.AgentSessionId, Is.EqualTo(sessionId1));
+        while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        }
+        Assert.That(session1.Status, Is.EqualTo(AgentSessionStatus.Active));
+        Assert.That(session1.AgentSessionId, Is.EqualTo(sessionId1));
+        AgentSession session2 = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            agentSessionId: sessionId2,
+            isolationKey: sessionKey2,
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        Assert.That(session2.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
+        Assert.That(((VersionRefIndicator)session2.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        Assert.That(session2.AgentSessionId, Is.EqualTo(sessionId2));
+        while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
+        {
+            await Delay();
+            session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+        }
+        Assert.That(session2.Status, Is.EqualTo(AgentSessionStatus.Active));
+        Assert.That(session2.AgentSessionId, Is.EqualTo(sessionId2));
+        // Get
+        AgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        Assert.That(session.AgentSessionId, Is.EqualTo(sessionId1));
+        Assert.That(session.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
+        Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
+        // List
+        HashSet<string> sessions = [..await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
+        Assert.That(sessions, Has.Count.EqualTo(2));
+        Assert.That(sessions, Does.Contain(sessionId1));
+        Assert.That(sessions, Does.Contain(sessionId2));
+        // Delete
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: sessionId1, isolationKey: sessionKey1);
+        // Attempt to delete with bad key
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2, isolationKey: "The_wrong_key");
+        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
+        Assert.That(sessions, Has.Count.EqualTo(1));
+        Assert.That(sessions, Does.Not.Contain(sessionId1));
+        Assert.That(sessions, Does.Contain(sessionId2));
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: sessionId2, isolationKey: sessionKey2);
+        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
+        Assert.That(sessions, Has.Count.EqualTo(0));
+    }
+
+    [RecordedTest]
+    [Ignore("Blocked by ADO Item 5198347.")]
+    public async Task TestSessionPagination()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        await foreach (AgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name))
+        {
+            await agentsClient.DeleteSessionAsync(
+                agentName: agentVersion.Name,
+                sessionId: item.AgentSessionId,
+                isolationKey: "test"
+            );
+        }
+        // See ADO item 519622 (session is persisting even if it was deleted).
+        string sessionBase = IsAsync ? $"test_session_333_226" : $"test_session_444_226";
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await agentsClient.CreateSessionAsync(
+                agentName: agentVersion.Name,
+                agentSessionId: $"{sessionBase}_{i}",
+                isolationKey: $"key_{i}",
+                versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            );
+        }
+        await foreach (AgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending))
+        {
+            Console.WriteLine(item.AgentSessionId);
+        }
+        List<AgentSession> records = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<AgentSession> forward = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Ascending, after: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
+        Assert.That(forward[forward.Count - 1].AgentSessionId, Is.EqualTo(records[records.Count - 1].AgentSessionId));
+        // Two limits:
+        forward = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Ascending, after: records[0].AgentSessionId, before: records[3].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
+        Assert.That(forward[1].AgentSessionId, Is.EqualTo(records[2].AgentSessionId));
+        // Go backwards.
+        List<AgentSession> backwards = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Descending, before: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].AgentSessionId, Is.EqualTo(records[records.Count - 1].AgentSessionId));
+        Assert.That(backwards[backwards.Count - 1].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
+        // Two limits.
+        backwards = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Descending, after: records[records.Count - 1].AgentSessionId, before: records[records.Count - 4].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].AgentSessionId, Is.EqualTo(records[records.Count - 2].AgentSessionId));
+        Assert.That(backwards[1].AgentSessionId, Is.EqualTo(records[records.Count - 3].AgentSessionId));
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await agentsClient.DeleteSessionAsync(
+                agentName: agentVersion.Name,
+                sessionId: $"{sessionBase}_{i}",
+                isolationKey: $"key_{i}"
+            );
+        }
+    }
+
+    [RecordedTest]
+    [Ignore("Blocked by ADO Item 5195112.")]
+    public async Task TestSessionFilesCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        string sessionId = IsAsync ? $"test_session_222_229" : $"test_session_112_229";
+        try
+        {
+            await agentsClient.DeleteSessionAsync(
+                agentName: agentVersion.Name,
+                sessionId: sessionId,
+                isolationKey: $"key_1"
+            );
+        }
+        catch { }
+        AgentSession session = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            // See ADO item 519622
+            agentSessionId: sessionId,
+            isolationKey: "key_1",
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        string fileLocalPath = GetTestFile("weather_openapi.json");
+        string file1 = "storage/file1.json", file2 = "storage/file2.json";
+        int fileLength = File.ReadAllBytes(fileLocalPath).Length;
+        //Create
+        SessionFileWriteResponse writeResponse = await filesClient.UploadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: file1,
+            localPath: fileLocalPath
+        );
+        Assert.That(writeResponse.Path, Is.EqualTo(file1));
+        Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
+        fileLocalPath = GetTestFile("test.txt");
+        fileLength = File.ReadAllBytes(fileLocalPath).Length;
+        writeResponse = await filesClient.UploadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: file2,
+            localPath: fileLocalPath
+        );
+        Assert.That(writeResponse.Path, Is.EqualTo(file2));
+        Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
+        // List
+        SessionDirectoryListResponse response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        Assert.That(response.Entries, Has.Count.EqualTo(2));
+        Assert.That(response.Entries, Does.Contain(file1));
+        Assert.That(response.Entries, Does.Contain(file2));
+        // Download
+        string temporaryFile = Path.GetTempFileName();
+        File.Delete(temporaryFile);
+        await filesClient.DownloadSessionFileAsync(
+            agentName: agentVersion.Name,
+            sessionId: session.AgentSessionId,
+            sessionStoragePath: file2,
+            localPath: temporaryFile
+        );
+        string data = File.ReadAllText(temporaryFile);
+        Assert.That(data, Is.EqualTo("The test file\r\n"));
+        // Delete
+        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: file2);
+        response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        Assert.That(response.Entries, Has.Count.EqualTo(1));
+        Assert.That(response.Entries[0], Is.EqualTo(file1));
+        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: file1);
+        response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
+        Assert.That(response.Entries, Has.Count.EqualTo(0));
+        await agentsClient.DeleteSessionAsync(
+            agentName: agentVersion.Name,
+            sessionId: sessionId,
+            isolationKey: $"key_1"
+        );
+    }
+
+    [RecordedTest]
+    public async Task TestSkillsCRUD()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        string codeSkillName = $"{SKILL}_code", fileSkillName = $"{SKILL}_file";
+        AgentsSkill skillFromCode = await skillsClient.CreateSkillAsync(name: codeSkillName, description: "Calculates the sum of two numbers.", instructions: """
+            To calculate the sum  run
+            ```bash
+            echo $((<first> + <second>))
+            ```
+            ```powershell
+            (<first> + <second>)
+            ```
+            Replace <first> and <second> by the actual summation arguments.
+            """);
+        Assert.That(skillFromCode.Name, Is.EqualTo(codeSkillName));
+        Assert.That(skillFromCode.Description, Is.EqualTo("Calculates the sum of two numbers."));
+        AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetTestFile("roll-dice"));
+        Assert.That(skillFromFile.Name, Is.EqualTo(fileSkillName));
+        Assert.That(skillFromFile.Description, Is.EqualTo("Roll dice using a random number generator."));
+        // Download skill
+        string savePath = Path.Combine(Path.GetTempPath(), "saved_skill");
+        try
+        {
+            Directory.Delete(savePath, true);
+        }
+        catch { }
+        BinaryData data = await skillsClient.DownloadSkillAsync(skillFromFile.Name, savePath);
+        Assert.That(savePath, Does.Exist);
+        string skillMdPath = Path.Combine(savePath, "SKILL.md");
+        Assert.That(skillMdPath, Does.Exist);
+        string skillMd = File.ReadAllText(skillMdPath);
+        Assert.That(skillMd, Does.Contain(fileSkillName));
+        Assert.That(skillMd, Does.Contain("Roll dice using a random number generator."));
+        Directory.Delete(savePath, true);
+        SaveAndUnzipData(savePath, data);
+        Assert.That(savePath, Does.Exist);
+        skillMdPath = Path.Combine(savePath, "SKILL.md");
+        Assert.That(skillMdPath, Does.Exist);
+        skillMd = File.ReadAllText(skillMdPath);
+        Assert.That(skillMd, Does.Contain(fileSkillName));
+        Assert.That(skillMd, Does.Contain("Roll dice using a random number generator."));
+        Directory.Delete(savePath, true);
+        // Update
+        AgentsSkill skill = await skillsClient.UpdateSkillAsync(skillName: codeSkillName, description: "Calculates the product of two numbers.", instructions: """
+            To calculate the sum  run
+            ```bash
+            echo $((<first> * <second>))
+            ```
+            ```powershell
+            (<first> * <second>)
+            ```
+            Replace <first> and <second> by the actual summation arguments.
+            """);
+        Assert.That(skill.Name, Is.EqualTo(codeSkillName));
+        Assert.That(skill.Description, Is.EqualTo("Calculates the product of two numbers."));
+        // Get
+        skillFromCode = await skillsClient.GetSkillAsync(skillName: codeSkillName);
+        Assert.That(skillFromCode.Name, Is.EqualTo(codeSkillName));
+        Assert.That(skillFromCode.Description, Is.EqualTo("Calculates the product of two numbers."));
+        // List
+        HashSet<string> skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(skills, Does.Contain(codeSkillName));
+        Assert.That(skills, Does.Contain(fileSkillName));
+        // Delete
+        await skillsClient.DeleteSkillAsync(skillName: codeSkillName);
+        skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(skills, Does.Not.Contain(codeSkillName));
+        Assert.That(skills, Does.Contain(fileSkillName));
+        await skillsClient.DeleteSkillAsync(skillName: fileSkillName);
+        skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
+        Assert.That(skills, Does.Not.Contain(codeSkillName));
+        Assert.That(skills, Does.Not.Contain(fileSkillName));
+    }
+
+    [RecordedTest]
+    public async Task TestSkillPagination()
+    {
+        AgentAdministrationClient agentsClient = GetTestClient();
+        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await skillsClient.CreateSkillAsync(
+                name: $"{SKILL}_{i}",
+                description: "Calculates the sum of two numbers.",
+                instructions: """
+                To calculate the sum  run
+                ```bash
+                echo $((<first> + <second>))
+                ```
+                ```powershell
+                (<first> + <second>)
+                ```
+                Replace <first> and <second> by the actual summation arguments.
+                """
+            );
+        }
+        List<AgentsSkill> records = await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1 + initialCount));
+        // Go forward.
+        List<AgentsSkill> forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].SkillId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].SkillId, Is.EqualTo(records[1].SkillId));
+        Assert.That(forward[forward.Count - 1].SkillId, Is.EqualTo(records[records.Count - 1].SkillId));
+        // Two limits:
+        forward = await skillsClient.GetSkillsAsync(order: AgentListOrder.Ascending, after: records[0].SkillId, before: records[3].SkillId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].SkillId, Is.EqualTo(records[1].SkillId));
+        Assert.That(forward[1].SkillId, Is.EqualTo(records[2].SkillId));
+        // Go backwards.
+        List<AgentsSkill> backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, before: records[0].SkillId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].SkillId, Is.EqualTo(records[records.Count - 1].SkillId));
+        Assert.That(backwards[backwards.Count - 1].SkillId, Is.EqualTo(records[1].SkillId));
+        // Two limits.
+        backwards = await skillsClient.GetSkillsAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].SkillId, before: records[records.Count - 4].SkillId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].SkillId, Is.EqualTo(records[records.Count - 2].SkillId));
+        Assert.That(backwards[1].SkillId, Is.EqualTo(records[records.Count - 3].SkillId));
+    }
+
+    #region Helpers
+    private static void SaveAndUnzipData(string directoryPath, BinaryData content)
+    {
+        string temporaryFile = Path.GetTempFileName();
+        File.Delete(temporaryFile);
+        File.WriteAllBytes(temporaryFile, content.ToArray());
+        ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
+    }
+
+    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient)
+    {
+        Uri uriEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            EnvironmentVariables = {
+                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
+                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME }
+            },
+            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        return await agentsClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+    }
+    #endregion
 }

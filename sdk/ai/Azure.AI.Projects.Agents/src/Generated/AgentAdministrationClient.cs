@@ -154,15 +154,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -179,15 +174,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNull(content, nameof(content));
-
             using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }

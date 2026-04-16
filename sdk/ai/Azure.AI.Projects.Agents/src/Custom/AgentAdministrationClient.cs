@@ -600,21 +600,20 @@ public partial class AgentAdministrationClient
     /// </list>
     /// </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
-    /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
-    /// <param name="agentCard"> Optional agent card for the agent. </param>
+    /// <param name="patchAgentOptions"> The configuration for the agent. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentEndpoint"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="patchAgentOptions"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ProjectsAgentRecord> PatchAgentObject(string agentName, AgentEndpoint agentEndpoint, AgentCard agentCard, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> PatchAgentObject(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(agentEndpoint, nameof(agentEndpoint));
+        Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
 
         ClientResult result = PatchAgentObject(
             agentName: agentName,
-            content: BinaryContent.Create(((IJsonModel<AgentEndpoint>)agentEndpoint).Write(ModelReaderWriterOptions.Json)),
+            content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
             foundryFeatures: default,
             cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
@@ -629,21 +628,20 @@ public partial class AgentAdministrationClient
     /// </list>
     /// </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
-    /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
-    /// <param name="agentCard"> Optional agent card for the agent. </param>
+    /// <param name="patchAgentOptions"> The configuration for the agent. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentEndpoint"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="patchAgentOptions"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentObjectAsync(string agentName, AgentEndpoint agentEndpoint, AgentCard agentCard, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentObjectAsync(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-        Argument.AssertNotNull(agentEndpoint, nameof(agentEndpoint));
+        Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
 
         ClientResult result = await PatchAgentObjectAsync(
             agentName: agentName,
-            content: BinaryContent.Create(((IJsonModel<AgentEndpoint>)agentEndpoint).Write(ModelReaderWriterOptions.Json)),
+            content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
             foundryFeatures: default,
             cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());

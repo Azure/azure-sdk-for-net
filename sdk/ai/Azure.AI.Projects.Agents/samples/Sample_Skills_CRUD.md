@@ -53,25 +53,29 @@ protected static string GetDirectory(string fileName, [CallerFilePath] string pt
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Sync
-AgentsSkill skillFromFile, simpleSkill;
-try
-{
-    skillFromFile = skillsClient.CreateSkillFromPackage(GetDirectory("roll-dice"));
-}
-catch (ClientResultException e)
-{
-    if (e.Status != 201)
-    {
-        throw;
-    }
-    skillFromFile = skillsClient.GetSkill("roll-dice");
-}
+AgentsSkill skillFromFile = skillsClient.CreateSkillFromPackage(GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-try
-{
-    simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
     To calculate the sum  run
     ```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell
@@ -129,25 +133,29 @@ Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}"
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
-AgentsSkill skillFromFile, simpleSkill;
-try
-{
-    skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-}
-catch (ClientResultException e)
-{
-    if (e.Status != 201)
-    {
-        throw;
-    }
-    skillFromFile = await skillsClient.GetSkillAsync("roll-dice");
-}
+AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-try
-{
-    simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    ```bash
+AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+To calculate the sum  run
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell
@@ -295,6 +303,42 @@ catch (ClientResultException e)
     skill = skillsClient.GetSkill("simpleSkill");
 }
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = skillsClient.GetSkill("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = skillsClient.GetSkill("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 
 Asynchronous sample:
@@ -304,6 +348,42 @@ try
     skill = await skillsClient.UpdateSkillAsync(skillName: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
     To calculate the sum  run
     ```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
     echo $((<first> * <second>))
     ```
     ```powershell
@@ -373,12 +453,12 @@ foreach (AgentsSkill item in skills)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListSkills_SkillsCRUD_Async
-//List<AgentsSkill> skills = await skillsClient.GetSkillsAsync().ToListAsync();
-//Console.WriteLine($"Found {skills.Count} skills.");
-//foreach (AgentsSkill item in skills)
-//{
-//    Console.WriteLine($"  - {item.SkillId} ({item.Name})");
-//}
+List<AgentsSkill> skills = await skillsClient.GetSkillsAsync().ToListAsync();
+Console.WriteLine($"Found {skills.Count} skills.");
+foreach (AgentsSkill item in skills)
+{
+    Console.WriteLine($"  - {item.SkillId} ({item.Name})");
+}
 ```
 
 8. Finally, remove skills we have created.

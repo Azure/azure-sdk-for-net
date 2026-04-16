@@ -77,11 +77,6 @@ public class Sample_HostedAgent : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        try
-        {
-            agentsClient.DeleteAgent(hostedAgentName);
-        }
-        catch { }
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
             modelDeploymentName: modelDeploymentName,
@@ -94,17 +89,6 @@ public class Sample_HostedAgent : SamplesBase
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
             agentName: hostedAgentName,
             options: creationOptions);
-        string status = agentVersion.GetStatus();
-        while (!string.IsNullOrEmpty(status) && !string.Equals(status, "active") && !string.Equals(status, "failed"))
-        {
-            await Task.Delay(1000);
-            agentVersion = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-            status = agentVersion.GetStatus();
-        }
-        if (string.Equals(status, "failed"))
-        {
-            throw new InvalidOperationException("Hosted Agent deployment has failed.");
-        }
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
         // Do not do this occasionally.
         await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -145,17 +129,8 @@ public class Sample_HostedAgent : SamplesBase
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
             agentName: "myHostedAgent",
             options: creationOptions);
-        string status = agentVersion.GetStatus();
-        while (!string.IsNullOrEmpty(status) && !string.Equals(status, "active") && !string.Equals(status, "failed"))
-        {
-            Thread.Sleep(1000);
-            agentVersion = agentsClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-            status = agentVersion.GetStatus();
-        }
-        if (string.Equals(status, "failed"))
-        {
-            throw new InvalidOperationException("Hosted Agent deployment has failed.");
-        }
+        Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
+        // Do not do this occasionally.
         agentsClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
     }
 

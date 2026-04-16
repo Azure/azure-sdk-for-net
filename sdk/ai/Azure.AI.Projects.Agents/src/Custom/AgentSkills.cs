@@ -134,35 +134,37 @@ public partial class AgentSkills
             cancellationToken.ToRequestOptions());
     }
 
-    /// <summary> Downloads a skill package. </summary>
+    /// <summary> Downloads a skill package, save it to file and return as a Binary data. </summary>
     /// <param name="skillName"> The unique name of the skill. </param>
     /// <param name="path"> The path to save the skill content to. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public void DownloadSkill(string skillName, string path, CancellationToken cancellationToken = default)
+    public BinaryData DownloadSkill(string skillName, string path, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         BinaryData result = DownloadSkill(skillName, cancellationToken);
         SaveAndUnzipData(path, result);
+        return result;
     }
 
-    /// <summary> Downloads a skill package. </summary>
+    /// <summary> Downloads a skill package, save it to file and return as a Binary data. </summary>
     /// <param name="skillName"> The unique name of the skill. </param>
     /// <param name="path"> The path to save the skill content to. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task DownloadSkillAsync(string skillName, string path, CancellationToken cancellationToken = default)
+    public virtual async Task<BinaryData> DownloadSkillAsync(string skillName, string path, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         BinaryData result = await DownloadSkillAsync(skillName, cancellationToken).ConfigureAwait(false);
         SaveAndUnzipData(path, result);
+        return result;
     }
 }
