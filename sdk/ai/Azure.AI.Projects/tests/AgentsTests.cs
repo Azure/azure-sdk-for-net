@@ -1550,7 +1550,7 @@ public class AgentsTests : AgentsTestBase
                     if (annotation is UriCitationMessageAnnotation uriAnnotation)
                     {
                         isUriCitationFound = true;
-                        if (ExpectedAnnotationTitle.TryGetValue(type,out string expectedTitle))
+                        if (ExpectedAnnotationTitle.TryGetValue(type, out string expectedTitle))
                         {
                             if (uriAnnotation.Title.ToLower().Contains(expectedTitle.ToLower()))
                             {

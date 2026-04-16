@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1837,9 +1836,19 @@ public class PauseResumeTransferMockedTests
 
         // Process jobs — cancellation is already triggered, so jobs should pause
         await jobsProcessor.StepAll();
-        await Task.Delay(250);
 
-        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedJobsCount = 0;
+        DateTime pauseWaitDeadline = DateTime.UtcNow.AddSeconds(5);
+        while (DateTime.UtcNow < pauseWaitDeadline)
+        {
+            pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+            if (pausedJobsCount == items)
+            {
+                break;
+            }
+
+            await Task.Delay(50);
+        }
         Assert.That(pausedJobsCount, Is.EqualTo(items), "All jobs should be Paused");
 
         // Verify the checkpointer recorded the Paused status

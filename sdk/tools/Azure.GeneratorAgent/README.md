@@ -105,7 +105,7 @@ The agent uses a three-layer architecture:
 | `verify_generated_unchanged` | Verify that no files in `Generated/` were modified since the last snapshot. Call after the build-fix cycle. Reports violations and optionally reverts them. |
 | `migrate_test_samples` | Move test samples from `Generated/Samples/` to `Samples/` |
 | `finalize_migration` | Run `Export-API.ps1` and `Update-Snippets.ps1` after a successful migration |
-| `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns structured pass/fail results. |
+| `run_tests` | Run `dotnet test` with configurable filter (defaults to excluding live tests). Returns a structured `TestResult` with `Success`, `ExitCode`, `Passed`, `Failed`, `Skipped`, `Total`, `Failures` (list of failure details), `Error`, and `RawOutput`. |
 | `rename_codegen_type` | Fix mismatched `[CodeGenType]` attributes by matching generated counterparts |
 | `fetch_to_fromlro` | Replace legacy `Fetch(response)` calls with `ResponseModel.FromLroResponse(response)` |
 

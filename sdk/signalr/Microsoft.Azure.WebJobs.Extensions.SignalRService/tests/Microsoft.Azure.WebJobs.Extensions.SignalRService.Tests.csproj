@@ -7,6 +7,9 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
+    <!-- Pin Azure.Identity to 1.21+ facade to resolve CS0433 with transitive older versions.
+         See https://github.com/Azure/azure-sdk-for-net/issues/58129 -->
+    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
   <ItemGroup>

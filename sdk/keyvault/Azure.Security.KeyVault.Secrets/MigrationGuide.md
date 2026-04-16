@@ -285,6 +285,10 @@ if (deleteOperation.Value.RecoveryId != null)
 
 Synchronous methods are also available on `SecretClient`, though we recommend you use asynchronous methods throughout your projects when possible for better performing applications.
 
+### Managing shared access signatures
+
+Key Vault-managed storage accounts, including the ability to manage shared access signatures (SAS) via `SetStorageAccountAsync`, `GetSasDefinitionAsync`, and related methods on `KeyVaultClient`, have been **deprecated** by Azure Key Vault. This feature is not available in `Azure.Security.KeyVault.Secrets`. If your application previously relied on Key Vault to manage storage accounts or SAS tokens, you should manage those directly using the Azure Storage SDK ([`Azure.Storage.Blobs`](https://www.nuget.org/packages/Azure.Storage.Blobs), [`Azure.Storage.Queues`](https://www.nuget.org/packages/Azure.Storage.Queues), etc.) and generate SAS tokens as needed with the storage client libraries.
+
 ## Additional samples
 
 - [Key Vault secrets samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultsecrets-samples/)

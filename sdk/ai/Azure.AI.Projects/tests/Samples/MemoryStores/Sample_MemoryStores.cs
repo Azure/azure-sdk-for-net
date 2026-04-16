@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Memory;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.Memory;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;

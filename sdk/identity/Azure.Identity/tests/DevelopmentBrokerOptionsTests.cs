@@ -9,6 +9,7 @@ namespace Azure.Identity.Broker.Tests
     public class DevelopmentBrokerOptionsTests
     {
         [Test]
+        [Ignore("Broker is now available via TestFramework dependency. See https://github.com/Azure/azure-sdk-for-net/issues/58160")]
         public void TryCreateDevelopmentBrokerOptionsFailsWithoutBrokerReference()
         {
             bool success = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out var options);

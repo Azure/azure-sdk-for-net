@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
+using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
@@ -32,7 +32,7 @@ namespace Azure.Communication.Messages.Tests
         [Test]
         public void Constructor_InvalidConnectionString_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(null));
+            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient((string)null));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
             Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));

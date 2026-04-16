@@ -78,52 +78,6 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Avg))
-            {
-                writer.WritePropertyName("avg"u8);
-                writer.WriteNumberValue(Avg.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Min))
-            {
-                writer.WritePropertyName("min"u8);
-                writer.WriteNumberValue(Min.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Max))
-            {
-                writer.WritePropertyName("max"u8);
-                writer.WriteNumberValue(Max.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Sum))
-            {
-                writer.WritePropertyName("sum"u8);
-                writer.WriteNumberValue(Sum.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Cardinality))
-            {
-                writer.WritePropertyName("cardinality"u8);
-                writer.WriteNumberValue(Cardinality.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Facets))
-            {
-                writer.WritePropertyName("@search.facets"u8);
-                writer.WriteStartObject();
-                foreach (var item in Facets)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (FacetResult item0 in item.Value)
-                    {
-                        writer.WriteObjectValue(item0, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndObject();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

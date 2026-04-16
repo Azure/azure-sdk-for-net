@@ -813,24 +813,69 @@ function getExpectedParentResourceType(
     lastProvidersIndex
   );
 
-  // Only accept simple parent segments: "<namespace>/<type>/{name}"
-  // Reject complex paths (nested types, mixed scopes) to avoid false positives
   const segments = parentSegment.split("/");
-  if (segments.length !== 3) {
+
+  // Simple case: "<namespace>/<type>/{name}" — e.g., Microsoft.Compute/virtualMachines/{vmName}
+  if (segments.length === 3) {
+    const [providerNamespace, resourceType, nameSegment] = segments;
+    if (
+      providerNamespace.includes("{") ||
+      resourceType.includes("{") ||
+      !nameSegment.startsWith("{") ||
+      !nameSegment.endsWith("}")
+    ) {
+      return undefined;
+    }
+    return `${providerNamespace}/${resourceType}`;
+  }
+
+  // Complex case: parent path between providers has more segments
+  // (e.g., Microsoft.Management/managementGroups/{mgId}/subscriptions/{subId})
+  // Fall back to computing the parent scope's resource type from the resource ID pattern.
+  // Remove the leaf type/name pair, then extract the resource type from the last /providers/ segment.
+  const allSegments = resourceIdPattern.split("/").filter((s) => s !== "");
+  // Remove the last two segments (leaf type and name, e.g., "quotaAllocations" and "{location}")
+  if (allSegments.length < 2) {
+    return undefined;
+  }
+  const parentPathSegments = allSegments.slice(0, -2);
+  const parentPath = "/" + parentPathSegments.join("/");
+
+  // Find the last /providers/ in the parent path
+  const parentLastProvidersIndex = parentPath.lastIndexOf("/providers/");
+  if (parentLastProvidersIndex === -1) {
     return undefined;
   }
 
-  const [providerNamespace, resourceType, nameSegment] = segments;
+  // Extract everything after the last /providers/ in parent path
+  const afterProviders = parentPath
+    .substring(parentLastProvidersIndex + "/providers/".length)
+    .split("/");
 
-  // All three segments must be well-formed: constants for namespace/type, variable for name
-  if (
-    providerNamespace.includes("{") ||
-    resourceType.includes("{") ||
-    !nameSegment.startsWith("{") ||
-    !nameSegment.endsWith("}")
-  ) {
+  // Must have at least namespace/type/{name} (3 segments)
+  if (afterProviders.length < 3) {
     return undefined;
   }
 
-  return `${providerNamespace}/${resourceType}`;
+  const namespace = afterProviders[0];
+  // Namespace must be a constant
+  if (namespace.includes("{")) {
+    return undefined;
+  }
+
+  // Collect constant type segments (every other segment starting at index 1)
+  const typeSegments: string[] = [];
+  for (let i = 1; i < afterProviders.length; i += 2) {
+    const typeSeg = afterProviders[i];
+    if (typeSeg.includes("{")) {
+      return undefined; // variable type segment — can't determine parent type
+    }
+    typeSegments.push(typeSeg);
+  }
+
+  if (typeSegments.length === 0) {
+    return undefined;
+  }
+
+  return `${namespace}/${typeSegments.join("/")}`;
 }
