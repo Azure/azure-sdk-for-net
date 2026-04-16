@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -126,14 +127,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            string commitmentPlanId = default;
+            ResourceIdentifier commitmentPlanId = default;
             string commitmentPlanLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("commitmentPlanId"u8))
                 {
-                    commitmentPlanId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commitmentPlanId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commitmentPlanLocation"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
         /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommitmentPlanAssociation(string commitmentPlanId, string commitmentPlanLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId, string commitmentPlanLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitmentPlanId = commitmentPlanId;
             CommitmentPlanLocation = commitmentPlanLocation;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The Azure resource id of the commitment plan. </summary>
         [WirePath("commitmentPlanId")]
-        public string CommitmentPlanId { get; }
+        public ResourceIdentifier CommitmentPlanId { get; }
 
         /// <summary> The location of of the commitment plan. </summary>
         [WirePath("commitmentPlanLocation")]

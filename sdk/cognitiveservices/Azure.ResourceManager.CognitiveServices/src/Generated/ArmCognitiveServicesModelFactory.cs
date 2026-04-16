@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
         /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
         /// <returns> A new <see cref="Models.CommitmentPlanAssociation"/> instance for mocking. </returns>
-        public static CommitmentPlanAssociation CommitmentPlanAssociation(string commitmentPlanId = default, string commitmentPlanLocation = default)
+        public static CommitmentPlanAssociation CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId = default, string commitmentPlanLocation = default)
         {
             return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, additionalBinaryDataProperties: null);
         }
