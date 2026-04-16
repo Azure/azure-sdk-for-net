@@ -2183,10 +2183,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
-        /// <param name="diskRestorePointId"> Contains Disk Restore Point properties. </param>
+        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <returns> A new <see cref="Models.RestorePointSourceVmOSDisk"/> instance for mocking. </returns>
-        public static RestorePointSourceVmOSDisk RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, CachingType? caching = default, int? diskSizeGB = default, VirtualMachineManagedDisk managedDisk = default, ResourceIdentifier diskRestorePointId = default, bool? writeAcceleratorEnabled = default)
+        public static RestorePointSourceVmOSDisk RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, CachingType? caching = default, int? diskSizeGB = default, VirtualMachineManagedDisk managedDisk = default, DiskRestorePointAttributes diskRestorePoint = default, bool? writeAcceleratorEnabled = default)
         {
             return new RestorePointSourceVmOSDisk(
                 osType,
@@ -2195,9 +2195,18 @@ namespace Azure.ResourceManager.Compute.Models
                 caching,
                 diskSizeGB,
                 managedDisk,
-                diskRestorePointId,
+                diskRestorePoint,
                 writeAcceleratorEnabled,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
+        /// <param name="sourceDiskRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
+        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = default, RestorePointEncryption encryption = default, ResourceIdentifier sourceDiskRestorePointId = default)
+        {
+            return new DiskRestorePointAttributes(id, additionalBinaryDataProperties: null, encryption, sourceDiskRestorePointId is null ? default : new ApiEntityReference(sourceDiskRestorePointId, null));
         }
 
         /// <summary> Describes a data disk. </summary>
@@ -2206,10 +2215,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </param>
         /// <param name="managedDisk"> Contains the managed disk details. </param>
-        /// <param name="diskRestorePointId"> Contains Disk Restore Point properties. </param>
+        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <returns> A new <see cref="Models.RestorePointSourceVmDataDisk"/> instance for mocking. </returns>
-        public static RestorePointSourceVmDataDisk RestorePointSourceVmDataDisk(int? lun = default, string name = default, CachingType? caching = default, int? diskSizeGB = default, VirtualMachineManagedDisk managedDisk = default, ResourceIdentifier diskRestorePointId = default, bool? writeAcceleratorEnabled = default)
+        public static RestorePointSourceVmDataDisk RestorePointSourceVmDataDisk(int? lun = default, string name = default, CachingType? caching = default, int? diskSizeGB = default, VirtualMachineManagedDisk managedDisk = default, DiskRestorePointAttributes diskRestorePoint = default, bool? writeAcceleratorEnabled = default)
         {
             return new RestorePointSourceVmDataDisk(
                 lun,
@@ -2217,7 +2226,7 @@ namespace Azure.ResourceManager.Compute.Models
                 caching,
                 diskSizeGB,
                 managedDisk,
-                diskRestorePointId,
+                diskRestorePoint,
                 writeAcceleratorEnabled,
                 additionalBinaryDataProperties: null);
         }
@@ -5605,54 +5614,6 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorePointSourceVmOSDisk"/>. </summary>
-        /// <param name="osType"> Gets the Operating System type. </param>
-        /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
-        /// <param name="name"> Gets the disk name. </param>
-        /// <param name="caching"> Gets the caching type. </param>
-        /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
-        /// <param name="managedDisk"> Gets the managed disk details. </param>
-        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
-        /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
-        /// <returns> A new <see cref="Models.RestorePointSourceVmOSDisk"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorePointSourceVmOSDisk RestorePointSourceVmOSDisk(Models.OperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, Models.DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled)
-        {
-            return new RestorePointSourceVmOSDisk(
-                osType,
-                encryptionSettings,
-                name,
-                caching,
-                diskSizeGB,
-                managedDisk,
-                default,
-                writeAcceleratorEnabled,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorePointSourceVmDataDisk"/>. </summary>
-        /// <param name="lun"> Gets the logical unit number. </param>
-        /// <param name="name"> Gets the disk name. </param>
-        /// <param name="caching"> Gets the caching type. </param>
-        /// <param name="diskSizeGB"> Gets the initial disk size in GB for blank data disks, and the new desired size for existing OS and Data disks. </param>
-        /// <param name="managedDisk"> Contains the managed disk details. </param>
-        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
-        /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
-        /// <returns> A new <see cref="Models.RestorePointSourceVmDataDisk"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorePointSourceVmDataDisk RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, Models.DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled)
-        {
-            return new RestorePointSourceVmDataDisk(
-                lun,
-                name,
-                caching,
-                diskSizeGB,
-                managedDisk,
-                default,
-                writeAcceleratorEnabled,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
