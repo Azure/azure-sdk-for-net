@@ -76,7 +76,7 @@ public static class AddUsingDirectiveTool
                     insertPos++;
                 }
 
-                var newContent = content.Insert(insertPos, usingDirective + "\n");
+                var newContent = content.Insert(insertPos, usingDirective + Environment.NewLine);
                 File.WriteAllText(normalizedPath, newContent);
                 return (true, true, null);
             }
@@ -100,7 +100,7 @@ public static class AddUsingDirectiveTool
                 break;
             }
 
-            var newContent2 = content.Insert(headerEndPos, usingDirective + "\n");
+            var newContent2 = content.Insert(headerEndPos, usingDirective + Environment.NewLine);
             File.WriteAllText(normalizedPath, newContent2);
             return (true, true, null);
         }

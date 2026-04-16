@@ -5,10 +5,11 @@
 
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent;
 
-internal partial class UploadFileRequest
+internal partial class UploadFileRequest : IUtf8JsonSerializable
 {
     /*
      * CUSTOM CODE DESCRIPTION:
@@ -17,11 +18,11 @@ internal partial class UploadFileRequest
      *
      */
 
-    internal virtual MultiPartFormDataRequestContent ToMultipartRequestContent()
+    internal virtual MultipartFormDataRequestContent ToMultipartRequestContent()
     {
-        MultiPartFormDataRequestContent content = new();
+        MultipartFormDataRequestContent content = new();
         ContentDispositionHeaderValue header = new("form-data") { Name = "file" };
-        var _dataStream = new StreamContent(Data.ToStream());
+        var _dataStream = new StreamContent(Data);
         if (System.Linq.Enumerable.Any(Filename, c => c > 127))
         {
             header.FileNameStar = Filename;

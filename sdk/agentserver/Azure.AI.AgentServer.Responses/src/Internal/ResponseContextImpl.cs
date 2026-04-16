@@ -11,17 +11,15 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Enhanced implementation of <see cref="ResponseContext"/> that resolves
 /// input items and conversation history from the request, using lazy-cached async resolution.
-/// Inline items are returned as their <see cref="Item"/> subtypes;
-/// item references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>
-/// and converted back to <see cref="Item"/>.
+/// Inline items are converted via <see cref="ItemConversion"/>; item
+/// references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>.
 /// </summary>
 internal sealed class ResponseContextImpl : ResponseContext
 {
     private readonly ResponsesProvider _provider;
     private readonly CreateResponse _request;
     private readonly int _historyLimit;
-    private readonly Lazy<Task<IReadOnlyList<Item>>> _inputItemsResolved;
-    private readonly Lazy<Task<IReadOnlyList<Item>>> _inputItemsUnresolved;
+    private readonly Lazy<Task<IReadOnlyList<OutputItem>>> _inputItems;
     private readonly Lazy<Task<IReadOnlyList<string>>> _historyItemIds;
     private readonly Lazy<Task<IReadOnlyList<OutputItem>>> _history;
     private readonly BinaryData? _rawBody;
@@ -58,8 +56,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         _provider = provider;
         _request = request;
         _historyLimit = options?.Value.DefaultFetchHistoryCount ?? ResponsesServerOptions.DefaultFetchHistoryCountValue;
-        _inputItemsResolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: true));
-        _inputItemsUnresolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: false));
+        _inputItems = new Lazy<Task<IReadOnlyList<OutputItem>>>(ResolveInputItemsAsync);
         _historyItemIds = new Lazy<Task<IReadOnlyList<string>>>(ResolveHistoryItemIdsAsync);
         _history = new Lazy<Task<IReadOnlyList<OutputItem>>>(ResolveHistoryAsync);
     }
@@ -77,26 +74,12 @@ internal sealed class ResponseContextImpl : ResponseContext
     public override IReadOnlyDictionary<string, StringValues> QueryParameters => _queryParameters;
 
     /// <inheritdoc/>
-    public override Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
-        => resolveReferences ? _inputItemsResolved.Value : _inputItemsUnresolved.Value;
+    public override Task<IReadOnlyList<OutputItem>> GetInputItemsAsync(CancellationToken cancellationToken = default)
+        => _inputItems.Value;
 
     /// <inheritdoc/>
     public override Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => _history.Value;
-
-    /// <summary>
-    /// Returns the input items as <see cref="OutputItem"/> for persistence.
-    /// The orchestrator needs output items when creating the stored response.
-    /// </summary>
-    internal async Task<IReadOnlyList<OutputItem>> GetInputItemsForPersistenceAsync()
-    {
-        var items = await GetInputItemsAsync(resolveReferences: true).ConfigureAwait(false);
-        return items
-            .Select(item => ItemConversion.ToOutputItem(item, ResponseId))
-            .Where(item => item is not null)
-            .Select(item => item!)
-            .ToList();
-    }
 
     /// <summary>
     /// Gets the cached history item IDs. Used by the orchestrator to pass IDs
@@ -105,21 +88,15 @@ internal sealed class ResponseContextImpl : ResponseContext
     internal Task<IReadOnlyList<string>> GetHistoryItemIdsAsync()
         => _historyItemIds.Value;
 
-    private async Task<IReadOnlyList<Item>> ResolveInputItemsAsync(bool resolveReferences)
+    private async Task<IReadOnlyList<OutputItem>> ResolveInputItemsAsync()
     {
         var input = _request.GetInputExpanded();
         if (input.Count == 0)
         {
-            return Array.Empty<Item>();
+            return Array.Empty<OutputItem>();
         }
 
-        if (!resolveReferences)
-        {
-            // Return items as-is (including ItemReferenceParam)
-            return input;
-        }
-
-        var results = new List<Item>();
+        var results = new List<OutputItem>();
 
         // Collect item references for batch resolution
         var referenceIds = new List<string>();
@@ -136,7 +113,11 @@ internal sealed class ResponseContextImpl : ResponseContext
             }
             else
             {
-                results.Add(item);
+                var output = ItemConversion.ToOutputItem(item, ResponseId);
+                if (output is not null)
+                {
+                    results.Add(output);
+                }
             }
 
             position++;
@@ -152,11 +133,7 @@ internal sealed class ResponseContextImpl : ResponseContext
                 var pos = referencePositions[i];
                 if (i < resolved.Count && resolved[i] is not null)
                 {
-                    var converted = ItemConversion.ToItem(resolved[i]!);
-                    if (converted is not null)
-                    {
-                        results[pos] = converted;
-                    }
+                    results[pos] = resolved[i]!;
                 }
             }
 

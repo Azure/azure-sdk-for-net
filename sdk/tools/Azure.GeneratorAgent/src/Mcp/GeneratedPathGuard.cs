@@ -9,7 +9,7 @@ namespace Azure.GeneratorAgent.Mcp;
 /// </summary>
 internal static class GeneratedPathGuard
 {
-    private static readonly char[] s_separators = ['/', '\\'];
+    private static readonly char[] s_separators = [Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar];
 
     /// <summary>
     /// Checks whether <paramref name="filePath"/> resides inside a directory named "Generated".
@@ -38,7 +38,7 @@ internal static class GeneratedPathGuard
     internal static string? ValidateNotGenerated(string filePath)
     {
         return IsInGeneratedDirectory(filePath)
-            ? $"Refusing to modify file in Generated/ directory: {filePath}. " +
+            ? $"Refusing to modify file in Generated/ directory: {Path.GetFullPath(filePath)}. " +
               "Generated code must not be edited directly — fix the generator input or custom code instead."
             : null;
     }

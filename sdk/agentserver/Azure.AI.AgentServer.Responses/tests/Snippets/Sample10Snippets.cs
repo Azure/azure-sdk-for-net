@@ -71,7 +71,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Translate every input item. Both model stacks share the
                 // same JSON wire contract, so .Translate().To<T>() round-trips
                 // through JSON: our Item → JSON → OpenAI ResponseItem.
-                foreach (Item item in await context.GetInputItemsAsync(cancellationToken: cancellationToken))
+                foreach (Item item in request.GetInputExpanded())
                 {
                     options.InputItems.Add(item.Translate().To<ResponseItem>());
                 }

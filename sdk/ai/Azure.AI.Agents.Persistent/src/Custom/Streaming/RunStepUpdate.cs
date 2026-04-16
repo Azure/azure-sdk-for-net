@@ -21,7 +21,7 @@ public class RunStepUpdate : StreamingUpdate<RunStep>
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        RunStep runStep = RunStep.DeserializeRunStep(element, options ?? ModelSerializationExtensions.WireOptions);
+        RunStep runStep = RunStep.DeserializeRunStep(element, options);
         return updateKind switch
         {
             _ => new List<StreamingUpdate<RunStep>> { new RunStepUpdate(runStep, updateKind) },

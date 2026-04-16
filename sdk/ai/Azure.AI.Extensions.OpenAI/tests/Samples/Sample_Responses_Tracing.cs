@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
 using Azure.Identity;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.ClientModel.TestFramework;
@@ -12,6 +11,7 @@ using OpenAI.Responses;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

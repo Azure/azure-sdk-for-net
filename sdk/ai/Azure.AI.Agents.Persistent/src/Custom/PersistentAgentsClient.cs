@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -61,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice: options.ToolChoice,
                 responseFormat: options.ResponseFormat,
                 parallelToolCalls: options.ParallelToolCalls,
-                metadata: options.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             );
         }
@@ -84,7 +83,7 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice: options.ToolChoice,
                 responseFormat: options.ResponseFormat,
                 parallelToolCalls: options.ParallelToolCalls,
-                metadata: options.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
         }

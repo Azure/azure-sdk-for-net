@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -1606,7 +1606,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             if (includeContent)
             {
                 Assert.Greater(fileSearchCall.FileSearch.Results[0].Content.Count, 0);
-                Assert.AreEqual("text", fileSearchCall.FileSearch.Results[0].Content[0].Type.ToString());
+                Assert.AreEqual(FileSearchToolCallContentType.Text, fileSearchCall.FileSearch.Results[0].Content[0].Type);
                 Assert.False(string.IsNullOrEmpty(fileSearchCall.FileSearch.Results[0].Content[0].Text));
             }
             else
@@ -1647,8 +1647,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {
                 string content = "This is a test file";
                 stream.Write(Encoding.UTF8.GetBytes(content), 0, content.Length);
-            }
-            ;
+            };
 
             PersistentAgentsClient client = GetClient();
             PersistentAgentFileInfo fileDataSource = await client.Files.UploadFileAsync(file.FullName, PersistentAgentFilePurpose.Agents);
@@ -2294,8 +2293,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 fileAnnotation = new MessageDeltaTextFileCitationAnnotation(
                     index: 42,
                     type: "file_citation",
-                    additionalBinaryDataProperties: null,
-                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", additionalBinaryDataProperties: null),
+                    serializedAdditionalRawData: null,
+                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", serializedAdditionalRawData: null),
                     text: "test",
                     startIndex: 0,
                     endIndex: 1);

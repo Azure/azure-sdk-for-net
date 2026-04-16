@@ -1,15 +1,16 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
+
 namespace Azure.AI.Agents.Persistent
 {
     public partial class PersistentAgentsAdministrationClient
@@ -19,8 +20,6 @@ namespace Azure.AI.Agents.Persistent
             PersistentAgentsConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
-        /// <summary> The token credential used for authentication. </summary>
-        internal TokenCredential TokenCredential { get; private set; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.
         //var connectionString = TestEnvironment.PROJECT_ENDPOINT;
 
@@ -49,16 +48,16 @@ namespace Azure.AI.Agents.Persistent
             if (s_is_test_run && endpoint.Split(';').Length == 4)
             {
                 ClientDiagnostics = new ClientDiagnostics(options, true);
-                TokenCredential = credential;
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(TokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
+                _tokenCredential = credential;
+                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, ["https://management.azure.com/.default"]) }, new ResponseClassifier());
                 _endpoint = new Uri($"{ClientHelper.ParseConnectionString(endpoint, "endpoint")}/agents/v1.0/subscriptions/{ClientHelper.ParseConnectionString(endpoint, "subscriptionid")}/resourceGroups/{ClientHelper.ParseConnectionString(endpoint, "resourcegroupname")}/providers/Microsoft.MachineLearningServices/workspaces/{ClientHelper.ParseConnectionString(endpoint, "projectname")}");
                 _apiVersion = options.Version;
             }
             else
             {
                 ClientDiagnostics = new ClientDiagnostics(options, true);
-                TokenCredential = credential;
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(TokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+                _tokenCredential = credential;
+                _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
                 _endpoint = new Uri(endpoint);
                 _apiVersion = options.Version;
             }
@@ -114,49 +113,49 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of ThreadsClient. </summary>
         internal virtual Threads GetThreadsClient()
         {
-            return Volatile.Read(ref _cachedThreads) ?? Interlocked.CompareExchange(ref _cachedThreads, new Threads(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedThreads;
+            return Volatile.Read(ref _cachedThreads) ?? Interlocked.CompareExchange(ref _cachedThreads, new Threads(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreads;
         }
 
         /// <summary> Initializes a new instance of ThreadMessagesClient. </summary>
         internal virtual ThreadMessages GetThreadMessagesClient()
         {
-            return Volatile.Read(ref _cachedThreadMessages) ?? Interlocked.CompareExchange(ref _cachedThreadMessages, new ThreadMessages(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedThreadMessages;
+            return Volatile.Read(ref _cachedThreadMessages) ?? Interlocked.CompareExchange(ref _cachedThreadMessages, new ThreadMessages(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadMessages;
         }
 
         /// <summary> Initializes a new instance of RunsClient. </summary>
         internal virtual ThreadRuns GetThreadRunsClient()
         {
-            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, GetThreadRunStepsClient()), null) ?? _cachedThreadRuns;
+            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion, GetThreadRunStepsClient()), null) ?? _cachedThreadRuns;
         }
 
         /// <summary> Initializes a new instance of RunStepsClient. </summary>
         internal virtual ThreadRunSteps GetThreadRunStepsClient()
         {
-            return Volatile.Read(ref _cachedThreadRunSteps) ?? Interlocked.CompareExchange(ref _cachedThreadRunSteps, new ThreadRunSteps(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedThreadRunSteps;
+            return Volatile.Read(ref _cachedThreadRunSteps) ?? Interlocked.CompareExchange(ref _cachedThreadRunSteps, new ThreadRunSteps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRunSteps;
         }
 
         /// <summary> Initializes a new instance of FilesClient. </summary>
         internal virtual PersistentAgentsFiles GetPersistentAgentsFilesClient()
         {
-            return Volatile.Read(ref _cachedPersistentAgentsFiles) ?? Interlocked.CompareExchange(ref _cachedPersistentAgentsFiles, new PersistentAgentsFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedPersistentAgentsFiles;
+            return Volatile.Read(ref _cachedPersistentAgentsFiles) ?? Interlocked.CompareExchange(ref _cachedPersistentAgentsFiles, new PersistentAgentsFiles(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPersistentAgentsFiles;
         }
 
         /// <summary> Initializes a new instance of VectorStoresClient. </summary>
         internal virtual VectorStores GetVectorStoresClient()
         {
-            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, Pipeline, _endpoint, _apiVersion, GetVectorStoreFilesClient(), GetVectorStoreFileBatchesClient()), null) ?? _cachedVectorStores;
+            return Volatile.Read(ref _cachedVectorStores) ?? Interlocked.CompareExchange(ref _cachedVectorStores, new VectorStores(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion, GetVectorStoreFilesClient(), GetVectorStoreFileBatchesClient()), null) ?? _cachedVectorStores;
         }
 
         /// <summary> Initializes a new instance of VectorStoreFilesClient. </summary>
         internal virtual VectorStoreFiles GetVectorStoreFilesClient()
         {
-            return Volatile.Read(ref _cachedVectorStoreFiles) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFiles, new VectorStoreFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFiles;
+            return Volatile.Read(ref _cachedVectorStoreFiles) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFiles, new VectorStoreFiles(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFiles;
         }
 
         /// <summary> Initializes a new instance of VectorStoreFileBatchesClient. </summary>
         internal virtual VectorStoreFileBatches GetVectorStoreFileBatchesClient()
         {
-            return Volatile.Read(ref _cachedVectorStoreFileBatches) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatches, new VectorStoreFileBatches(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatches;
+            return Volatile.Read(ref _cachedVectorStoreFileBatches) ?? Interlocked.CompareExchange(ref _cachedVectorStoreFileBatches, new VectorStoreFileBatches(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedVectorStoreFileBatches;
         }
 
         /// <summary> Gets a list of agents that were previously created. </summary>
@@ -176,8 +175,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageableAsync<PersistentAgent>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e, new ModelReaderWriterOptions("W")),
-                pipeline: Pipeline,
+                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
+                pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -202,8 +201,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageable<PersistentAgent>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e, new ModelReaderWriterOptions("W")),
-                pipeline: Pipeline,
+                valueFactory: e => PersistentAgent.DeserializePersistentAgent(e),
+                pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -237,7 +236,8 @@ namespace Azure.AI.Agents.Persistent
         {
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
-            throw new NotSupportedException("Protocol paging is not yet supported.");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAgentsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PersistentAgentsAdministrationClient.GetAgents", "data", null, context);
         }
 
         /// <summary>
@@ -266,7 +266,8 @@ namespace Azure.AI.Agents.Persistent
         {
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
-            throw new NotSupportedException("Protocol paging is not yet supported.");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAgentsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PersistentAgentsAdministrationClient.GetAgents", "data", null, context);
         }
 
         /// <summary>
@@ -299,7 +300,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateGetAgentRequest(agentId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -338,7 +339,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateGetAgentRequest(agentId, context);
-                return Pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -357,7 +358,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgentAsync(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgentAsync(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -376,7 +377,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
-                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 otelScope?.RecordCreateAgentResponse(response);
                 return response;
             }
@@ -397,7 +398,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateAgent(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateAgent(string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -416,7 +417,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
-                var response = Pipeline.ProcessMessage(message, context);
+                var response = _pipeline.ProcessMessage(message, context);
                 otelScope?.RecordCreateAgentResponse(response);
                 return response;
             }
@@ -437,7 +438,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAgentAsync(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAgentAsync(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -460,7 +461,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -479,7 +480,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UpdateAgent(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UpdateAgent(string,string,string,string,string,IEnumerable{ToolDefinition},ToolResources,float?,float?,BinaryData,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -502,7 +503,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateUpdateAgentRequest(assistantId, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -521,7 +522,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThreadAndRunAsync(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateThreadAndRunAsync(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -539,7 +540,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
-                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 otelScope?.RecordCreateRunResponse(response);
                 return response;
             }
@@ -560,7 +561,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThreadAndRun(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateThreadAndRun(string,PersistentAgentThreadCreationOptions,string,string,IEnumerable{ToolDefinition},ToolResources,bool?,float?,float?,int?,int?,Truncation,BinaryData,BinaryData,bool?,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -578,7 +579,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
-                var response = Pipeline.ProcessMessage(message, context);
+                var response = _pipeline.ProcessMessage(message, context);
                 otelScope?.RecordCreateRunResponse(response);
                 return response;
             }

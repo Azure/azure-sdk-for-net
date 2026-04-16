@@ -823,20 +823,7 @@ internal sealed class ResponseOrchestrator
 
         try
         {
-            if (context is ResponseContextImpl impl)
-            {
-                inputItems = await impl.GetInputItemsForPersistenceAsync();
-            }
-            else
-            {
-                // Fallback: resolve items and convert to OutputItem for persistence
-                var items = await context.GetInputItemsAsync();
-                inputItems = items
-                    .Select(item => ItemConversion.ToOutputItem(item, context.ResponseId))
-                    .Where(item => item is not null)
-                    .Select(item => item!)
-                    .ToList();
-            }
+            inputItems = await context.GetInputItemsAsync();
         }
         catch
         {

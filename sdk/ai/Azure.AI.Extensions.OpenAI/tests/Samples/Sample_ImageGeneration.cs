@@ -4,14 +4,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
+using System.IO;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

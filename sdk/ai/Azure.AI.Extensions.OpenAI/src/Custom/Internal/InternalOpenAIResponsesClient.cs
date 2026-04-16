@@ -4,12 +4,13 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
+
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-internal partial class Responses { }
+internal partial class Responses {}

@@ -60,8 +60,7 @@ public static class NullableAnnotationFixTool
                 return (false, false, $"Invalid line number: {lineStr}");
             }
 
-            var content = File.ReadAllText(normalizedPath);
-            var lines = content.Split('\n');
+            var lines = File.ReadAllLines(normalizedPath);
             if (lineNum > lines.Length)
             {
                 return (false, false, $"Line {lineNum} exceeds file length {lines.Length}");
@@ -94,7 +93,7 @@ public static class NullableAnnotationFixTool
             var newLine = targetLine.Insert(insertPos, "?");
             lines[lineNum - 1] = newLine;
 
-            File.WriteAllText(normalizedPath, string.Join("\n", lines));
+            File.WriteAllLines(normalizedPath, lines);
             return (true, true, null);
         }
         catch (Exception ex)

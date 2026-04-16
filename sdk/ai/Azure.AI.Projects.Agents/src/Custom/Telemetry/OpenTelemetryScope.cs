@@ -13,8 +13,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.Core;
+using Azure.AI.Projects.Agents;
 using static Azure.AI.Projects.Agents.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Projects.Agents.Telemetry

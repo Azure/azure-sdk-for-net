@@ -52,7 +52,7 @@ public static class SampleMigrationTool
                 var relativePath = Path.GetRelativePath(generatedSamplesDir, file);
                 var targetFile = Path.Combine(targetSamplesDir, relativePath);
 
-                var targetDir = Path.GetDirectoryName(targetFile) ?? targetSamplesDir;
+                var targetDir = Path.GetDirectoryName(targetFile)!;
                 Directory.CreateDirectory(targetDir);
 
                 File.Move(file, targetFile, overwrite: true);

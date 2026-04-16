@@ -1,14 +1,15 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
+
 namespace Azure.AI.Agents.Persistent
 {
     public partial class Threads
@@ -23,7 +24,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThreadAsync(IEnumerable{ThreadMessageOptions},ToolResources,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateThreadAsync(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -41,7 +42,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateThreadRequest(content, context);
-                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 otelScope?.RecordCreateThreadResponse(response);
                 return response;
             }
@@ -62,7 +63,7 @@ namespace Azure.AI.Agents.Persistent
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateThread(IEnumerable{ThreadMessageOptions},ToolResources,IDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateThread(IEnumerable{ThreadMessageOptions},ToolResources,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -80,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
             try
             {
                 using HttpMessage message = CreateCreateThreadRequest(content, context);
-                var response = Pipeline.ProcessMessage(message, context);
+                var response = _pipeline.ProcessMessage(message, context);
                 otelScope?.RecordCreateThreadResponse(response);
                 return response;
             }
@@ -149,8 +150,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageableAsync<PersistentAgentThread>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e, new ModelReaderWriterOptions("W")),
-                pipeline: Pipeline,
+                valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),
+                pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -175,8 +176,8 @@ namespace Azure.AI.Agents.Persistent
                 context: context);
             return new ContinuationTokenPageable<PersistentAgentThread>(
                 createPageRequest: PageRequest,
-                valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e, new ModelReaderWriterOptions("W")),
-                pipeline: Pipeline,
+                valueFactory: e => PersistentAgentThread.DeserializePersistentAgentThread(e),
+                pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
@@ -210,7 +211,8 @@ namespace Azure.AI.Agents.Persistent
         {
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
-            throw new NotSupportedException("Protocol paging is not yet supported.");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetThreadsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadsClient.GetThreads", "data", null, context);
         }
 
         /// <summary>
@@ -239,7 +241,8 @@ namespace Azure.AI.Agents.Persistent
         {
             // This method is not yet supported, because it is using generated implementation of parser,
             // which is currently do not support next token.
-            throw new NotSupportedException("Protocol paging is not yet supported.");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetThreadsRequest(limit, order, after, before, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadsClient.GetThreads", "data", null, context);
         }
     }
 }

@@ -31,11 +31,12 @@ public partial class MessageTextFileCitationAnnotation
     /// Generated when the agent uses the "file_search" tool to search files.
     /// </param>
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-    internal MessageTextFileCitationAnnotation(string text, InternalMessageTextFileCitationDetails internalDetails) : base("file_citation", text)
+    internal MessageTextFileCitationAnnotation(string text, InternalMessageTextFileCitationDetails internalDetails) : base(text)
     {
         Argument.AssertNotNull(text, nameof(text));
         Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
+        Type = "file_citation";
         InternalDetails = internalDetails;
     }
 }

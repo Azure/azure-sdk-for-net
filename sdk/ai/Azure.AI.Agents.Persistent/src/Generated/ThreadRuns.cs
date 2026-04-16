@@ -10,17 +10,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
+    // Data plane generated sub-client.
     /// <summary> A collection of run operations under `/threads/{threadId}/runs`. </summary>
     public partial class ThreadRuns
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ThreadRuns for mocking. </summary>
         protected ThreadRuns()
@@ -28,24 +38,20 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of ThreadRuns. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        internal ThreadRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Creates a new run for an agent thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
@@ -70,6 +76,7 @@ namespace Azure.AI.Agents.Persistent
         /// An alternative to sampling with temperature, called nucleus sampling, where the model
         /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
         /// comprising the top 10% probability mass are considered.
+        ///
         /// We generally recommend altering this or temperature but not both.
         /// </param>
         /// <param name="maxPromptTokens">
@@ -89,205 +96,223 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="include">
         /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
         /// to fetch the file search result content.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ThreadRun> InternalCreateRun(string threadId, string assistantId, string overrideModelName = default, string overrideInstructions = default, string additionalInstructions = default, IEnumerable<ThreadMessageOptions> additionalMessages = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
-        {
-            CreateRunRequest spreadModel = new CreateRunRequest(
-                assistantId,
-                overrideModelName,
-                overrideInstructions,
-                additionalInstructions,
-                additionalMessages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
-                toolResources,
-                stream,
-                temperature,
-                topP,
-                maxPromptTokens,
-                maxCompletionTokens,
-                truncationStrategy,
-                toolChoice,
-                responseFormat,
-                parallelToolCalls,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-            Response result = InternalCreateRun(threadId, spreadModel, include, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
-        /// <summary> Creates a new run for an agent thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
-        /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
-        /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
-        /// <param name="additionalInstructions">
-        /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
-        /// on a per-run basis without overriding other instructions.
-        /// </param>
-        /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
-        /// <param name="toolResources"> The overridden enabled tool resources that the agent should use to run the thread. </param>
-        /// <param name="stream">
-        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
-        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
-        /// </param>
-        /// <param name="temperature">
-        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
-        /// more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// </param>
-        /// <param name="topP">
-        /// An alternative to sampling with temperature, called nucleus sampling, where the model
-        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
-        /// comprising the top 10% probability mass are considered.
-        /// We generally recommend altering this or temperature but not both.
-        /// </param>
-        /// <param name="maxPromptTokens">
-        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
-        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
-        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
-        /// </param>
-        /// <param name="maxCompletionTokens">
-        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort
-        /// to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of
-        /// completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
-        /// </param>
-        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
-        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
-        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
-        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="include">
-        /// A list of additional fields to include in the response.
-        /// Currently the only supported value is `step_details.tool_calls[<i>].file_search.results[</i>].content`
-        /// to fetch the file search result content.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ThreadRun>> InternalCreateRunAsync(string threadId, string assistantId, string overrideModelName = default, string overrideInstructions = default, string additionalInstructions = default, IEnumerable<ThreadMessageOptions> additionalMessages = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, IEnumerable<RunAdditionalFieldList> include = default, CancellationToken cancellationToken = default)
-        {
-            CreateRunRequest spreadModel = new CreateRunRequest(
-                assistantId,
-                overrideModelName,
-                overrideInstructions,
-                additionalInstructions,
-                additionalMessages?.ToList() as IList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
-                overrideTools?.ToList() as IList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
-                toolResources,
-                stream,
-                temperature,
-                topP,
-                maxPromptTokens,
-                maxCompletionTokens,
-                truncationStrategy,
-                toolChoice,
-                responseFormat,
-                parallelToolCalls,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-            Response result = await InternalCreateRunAsync(threadId, spreadModel, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
-        /// <summary> Gets an existing run from an existing thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<ThreadRun>> InternalCreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
-            Response result = GetRun(threadId, runId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
+            CreateRunRequest createRunRequest = new CreateRunRequest(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await InternalCreateRunAsync(threadId, createRunRequest.ToRequestContent(), include, context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a new run for an agent thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
+        /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
+        /// <param name="additionalInstructions">
+        /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
+        /// on a per-run basis without overriding other instructions.
+        /// </param>
+        /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+        /// <param name="toolResources"> The overridden enabled tool resources that the agent should use to run the thread. </param>
+        /// <param name="stream">
+        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
+        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
+        /// more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model
+        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+        /// comprising the top 10% probability mass are considered.
+        ///
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="maxPromptTokens">
+        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
+        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="maxCompletionTokens">
+        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort
+        /// to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of
+        /// completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="include">
+        /// A list of additional fields to include in the response.
+        /// Currently the only supported value is `step_details.tool_calls[*].file_search.results[*].content`
+        /// to fetch the file search result content.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<ThreadRun> InternalCreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+
+            CreateRunRequest createRunRequest = new CreateRunRequest(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = InternalCreateRun(threadId, createRunRequest.ToRequestContent(), include, context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Gets an existing run from an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            Response result = await GetRunAsync(threadId, runId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRunAsync(threadId, runId, context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Modifies an existing thread run.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets an existing run from an existing thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateRun(string threadId, string runId, RequestContent content, RequestContext context = null)
+        public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-                Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-                using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRun(threadId, runId, context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Modifies an existing thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateRunAsync(threadId, runId, updateRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Modifies an existing thread run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateRun(threadId, runId, updateRunRequest.ToRequestContent(), context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary>
         /// [Protocol Method] Modifies an existing thread run.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateRunAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -296,108 +321,41 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Modifies an existing thread run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            UpdateRunRequest spreadModel = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = UpdateRun(threadId, runId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
-        /// <summary> Modifies an existing thread run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            UpdateRunRequest spreadModel = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await UpdateRunAsync(threadId, runId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, bool? stream = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            SubmitToolOutputsToRunRequest spreadModel = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
-            Response result = SubmitToolOutputsToRun(threadId, runId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
-        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
-        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, bool? stream = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            SubmitToolOutputsToRunRequest spreadModel = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, default);
-            Response result = await SubmitToolOutputsToRunAsync(threadId, runId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
-        }
-
         /// <summary>
-        /// [Protocol Method] Cancels a run of an in‐progress thread.
+        /// [Protocol Method] Modifies an existing thread run.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateRun(string,string,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CancelRun(string threadId, string runId, RequestContext context)
+        public virtual Response UpdateRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.UpdateRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-                using HttpMessage message = CreateCancelRunRequest(threadId, runId, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -406,32 +364,111 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Submits outputs from tools as requested by tool calls in a run. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs = null, IEnumerable<ToolApproval> toolApprovals = null, bool? stream = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Cancels a run of an in‐progress thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CancelRunAsync(threadId, runId, context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        /// <summary> Cancels a run of an in‐progress thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CancelRun(threadId, runId, context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Cancels a run of an in‐progress thread.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelRunAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CancelRunAsync(string threadId, string runId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
                 using HttpMessage message = CreateCancelRunRequest(threadId, runId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -440,36 +477,187 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Cancels a run of an in‐progress thread. </summary>
+        /// <summary>
+        /// [Protocol Method] Cancels a run of an in‐progress thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CancelRun(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CancelRun(string threadId, string runId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            Response result = CancelRun(threadId, runId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ThreadRun)result, result);
+            using var scope = ClientDiagnostics.CreateScope("ThreadRuns.CancelRun");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelRunRequest(threadId, runId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Cancels a run of an in‐progress thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="runId"> Identifier of the run. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateInternalCreateRunRequest(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            Response result = await CancelRunAsync(threadId, runId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ThreadRun)result, result);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (include != null && !(include is ChangeTrackingList<RunAdditionalFieldList> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include[]", include, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
+
+        internal HttpMessage CreateGetRunsRequest(string threadId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRunRequest(string threadId, string runId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSubmitToolOutputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/submit_tool_outputs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCancelRunRequest(string threadId, string runId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

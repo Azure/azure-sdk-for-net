@@ -33,7 +33,7 @@ public class GreetingHandler : ResponseHandler
         yield return stream.EmitInProgress();
 
         // Emit a complete text message in one call.
-        var input = await context.GetInputTextAsync(cancellationToken: cancellationToken);
+        var input = request.GetInputText();
         foreach (var evt in stream.OutputItemMessage($"Hello! You said: \"{input}\""))
             yield return evt;
 
@@ -60,9 +60,8 @@ public class StreamingGreetingHandler : ResponseHandler
         yield return stream.EmitInProgress();
 
         // Stream tokens as they arrive — each chunk becomes a delta event.
-        var inputText = await context.GetInputTextAsync(cancellationToken: cancellationToken);
         await foreach (var evt in stream.OutputItemMessage(
-            GenerateTokensAsync(inputText, cancellationToken),
+            GenerateTokensAsync(request.GetInputText(), cancellationToken),
             cancellationToken))
         {
             yield return evt;
@@ -117,7 +116,7 @@ public class GreetingHandlerFullControl : ResponseHandler
         yield return text.EmitAdded();       // response.content_part.added
 
         // Emit the text body — delta first, then the final "done" with full text.
-        var input = await context.GetInputTextAsync(cancellationToken: cancellationToken);
+        var input = request.GetInputText();
         var reply = $"Hello! You said: \"{input}\"";
         yield return text.EmitDelta(reply);  // response.output_text.delta
         yield return text.EmitDone(reply);   // response.output_text.done

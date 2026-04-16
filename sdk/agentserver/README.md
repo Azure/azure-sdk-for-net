@@ -38,10 +38,10 @@ public class EchoHandler : ResponseHandler
         CancellationToken cancellationToken)
     {
         return new TextResponse(context, request,
-            createText: async ct =>
+            createText: ct =>
             {
-                var input = await context.GetInputTextAsync(cancellationToken: ct);
-                return $"Echo: {input}";
+                var input = request.GetInputText();
+                return Task.FromResult($"Echo: {input}");
             });
     }
 }

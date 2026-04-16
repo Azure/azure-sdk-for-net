@@ -22,7 +22,7 @@ public class MathSolverHandler : ResponseHandler
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(context, request);
-        var question = await context.GetInputTextAsync(cancellationToken: cancellationToken);
+        var question = request.GetInputText();
 
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();
@@ -59,7 +59,7 @@ public class MathSolverHandlerFullControl : ResponseHandler
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(context, request);
-        var question = await context.GetInputTextAsync(cancellationToken: cancellationToken);
+        var question = request.GetInputText();
 
         yield return stream.EmitCreated();
         yield return stream.EmitInProgress();

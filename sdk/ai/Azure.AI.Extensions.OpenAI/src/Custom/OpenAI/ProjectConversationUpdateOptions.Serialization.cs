@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI;
-
 public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConversationUpdateOptions>
 {
     /// <param name="writer"> The JSON writer. </param>

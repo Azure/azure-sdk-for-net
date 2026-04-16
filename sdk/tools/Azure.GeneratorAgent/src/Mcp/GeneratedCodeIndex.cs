@@ -69,7 +69,7 @@ public sealed class GeneratedCodeIndex
     private static string? FindGeneratedDirectory(string projectPath)
     {
         // If it's a .csproj file, look in its directory
-        var dir = File.Exists(projectPath) ? (Path.GetDirectoryName(projectPath) ?? projectPath) : projectPath;
+        var dir = File.Exists(projectPath) ? Path.GetDirectoryName(projectPath)! : projectPath;
 
         // Try direct Generated/
         var candidate = Path.Combine(dir, "Generated");
@@ -95,11 +95,7 @@ public sealed class GeneratedCodeIndex
         {
             content = File.ReadAllText(filePath);
         }
-        catch (IOException)
-        {
-            return;
-        }
-        catch (UnauthorizedAccessException)
+        catch
         {
             return;
         }
