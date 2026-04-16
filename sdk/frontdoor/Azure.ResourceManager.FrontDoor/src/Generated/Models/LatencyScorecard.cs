@@ -7,115 +7,123 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines the LatencyScorecard. </summary>
-    public partial class LatencyScorecard : TrackedResourceData
+    public partial class LatencyScorecard : Resource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public LatencyScorecard(AzureLocation location) : base(location)
-        {
-            LatencyMetrics = new ChangeTrackingList<LatencyMetric>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="latencyScorecardId"> The unique identifier of the Latency Scorecard. </param>
-        /// <param name="latencyScorecardName"> The name of the Latency Scorecard. </param>
-        /// <param name="description"> The description of the Latency Scorecard. </param>
-        /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
-        /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
-        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
-        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            LatencyScorecardId = latencyScorecardId;
-            LatencyScorecardName = latencyScorecardName;
-            Description = description;
-            ScorecardEndpointA = scorecardEndpointA;
-            ScorecardEndpointB = scorecardEndpointB;
-            StartOn = startOn;
-            EndOn = endOn;
-            Country = country;
-            LatencyMetrics = latencyMetrics;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/> for deserialization. </summary>
         internal LatencyScorecard()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a latency scorecard. </param>
+        internal LatencyScorecard(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, LatencyScorecardProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        {
+            Properties = properties;
+        }
+
+        /// <summary> The properties of a latency scorecard. </summary>
+        [WirePath("properties")]
+        internal LatencyScorecardProperties Properties { get; }
+
         /// <summary> The unique identifier of the Latency Scorecard. </summary>
         [WirePath("properties.id")]
-        public string LatencyScorecardId { get; }
+        public string LatencyScorecardId
+        {
+            get
+            {
+                return Properties.LatencyScorecardId;
+            }
+        }
+
         /// <summary> The name of the Latency Scorecard. </summary>
         [WirePath("properties.name")]
-        public string LatencyScorecardName { get; }
+        public string LatencyScorecardName
+        {
+            get
+            {
+                return Properties.LatencyScorecardName;
+            }
+        }
+
         /// <summary> The description of the Latency Scorecard. </summary>
         [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> The A endpoint in the scorecard. </summary>
         [WirePath("properties.endpointA")]
-        public Uri ScorecardEndpointA { get; }
+        public Uri ScorecardEndpointA
+        {
+            get
+            {
+                return Properties.ScorecardEndpointA;
+            }
+        }
+
         /// <summary> The B endpoint in the scorecard. </summary>
         [WirePath("properties.endpointB")]
-        public Uri ScorecardEndpointB { get; }
+        public Uri ScorecardEndpointB
+        {
+            get
+            {
+                return Properties.ScorecardEndpointB;
+            }
+        }
+
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
         [WirePath("properties.startDateTimeUTC")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties.StartOn;
+            }
+        }
+
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
         [WirePath("properties.endDateTimeUTC")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties.EndOn;
+            }
+        }
+
         /// <summary> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
         [WirePath("properties.country")]
-        public string Country { get; }
+        public string Country
+        {
+            get
+            {
+                return Properties.Country;
+            }
+        }
+
         /// <summary> The latency metrics of the Latency Scorecard. </summary>
         [WirePath("properties.latencyMetrics")]
-        public IList<LatencyMetric> LatencyMetrics { get; }
+        public IList<LatencyMetric> LatencyMetrics
+        {
+            get
+            {
+                return Properties.LatencyMetrics;
+            }
+        }
     }
 }

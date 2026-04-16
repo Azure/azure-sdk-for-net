@@ -7,16 +7,898 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFrontDoorModelFactory
     {
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="friendlyName"> A friendly name for the frontDoor. </param>
+        /// <param name="routingRules"> Routing rules associated with this Front Door. </param>
+        /// <param name="loadBalancingSettings"> Load balancing settings associated with this Front Door instance. </param>
+        /// <param name="healthProbeSettings"> Health probe settings associated with this Front Door instance. </param>
+        /// <param name="backendPools"> Backend pools available to routing rules. </param>
+        /// <param name="frontendEndpoints"> Frontend endpoints available to routing rules. </param>
+        /// <param name="backendPoolsSettings"> Settings for all backendPools. </param>
+        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="resourceState"> Resource status of the Front Door. </param>
+        /// <param name="provisioningState"> Provisioning state of the Front Door. </param>
+        /// <param name="cname"> The host that each frontendEndpoint must CNAME to. </param>
+        /// <param name="frontdoorId"> The Id of the frontdoor. </param>
+        /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorData"/> instance for mocking. </returns>
+        public static FrontDoorData FrontDoorData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorData(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
+                    friendlyName,
+                    (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
+                    (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
+                    (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
+                    (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
+                    (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
+                    backendPoolsSettings,
+                    enabledState,
+                    null,
+                    resourceState,
+                    provisioningState,
+                    cname,
+                    frontdoorId,
+                    (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
+                    extendedProperties));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorRulesEngineData"/> instance for mocking. </returns>
+        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(string id = default, string name = default, string @type = default, IEnumerable<RulesEngineRule> rules = default, FrontDoorResourceState? resourceState = default)
+        {
+            return new FrontDoorRulesEngineData(id, name, @type, additionalBinaryDataProperties: null, rules is null && resourceState is null ? default : new RulesEngineProperties((rules ?? new ChangeTrackingList<RulesEngineRule>()).ToList(), null, resourceState));
+        }
+
+        /// <summary> Contains a list of match conditions, and an action on how to modify the request/response. If multiple rules match, the actions from one rule that conflict with a previous rule overwrite for a singular action, or append in the case of headers manipulation. </summary>
+        /// <param name="name"> A name to refer to this specific rule. </param>
+        /// <param name="priority"> A priority assigned to this rule. </param>
+        /// <param name="action"> Actions to perform on the request and response if all of the match conditions are met. </param>
+        /// <param name="matchConditions"> A list of match conditions that must meet in order for the actions of this rule to run. Having no match conditions means the actions will always run. </param>
+        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
+        /// <returns> A new <see cref="Models.RulesEngineRule"/> instance for mocking. </returns>
+        public static RulesEngineRule RulesEngineRule(string name = default, int priority = default, RulesEngineAction action = default, IEnumerable<RulesEngineMatchCondition> matchConditions = default, MatchProcessingBehavior? matchProcessingBehavior = default)
+        {
+            matchConditions ??= new ChangeTrackingList<RulesEngineMatchCondition>();
+
+            return new RulesEngineRule(
+                name,
+                priority,
+                action,
+                matchConditions.ToList(),
+                matchProcessingBehavior,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> One or more actions that will execute, modifying the request and/or response. </summary>
+        /// <param name="requestHeaderActions"> A list of header actions to apply from the request from AFD to the origin. </param>
+        /// <param name="responseHeaderActions"> A list of header actions to apply from the response from AFD to the client. </param>
+        /// <param name="routeConfigurationOverride"> Override the route configuration. </param>
+        /// <returns> A new <see cref="Models.RulesEngineAction"/> instance for mocking. </returns>
+        public static RulesEngineAction RulesEngineAction(IEnumerable<RulesEngineHeaderAction> requestHeaderActions = default, IEnumerable<RulesEngineHeaderAction> responseHeaderActions = default, RouteConfiguration routeConfigurationOverride = default)
+        {
+            requestHeaderActions ??= new ChangeTrackingList<RulesEngineHeaderAction>();
+            responseHeaderActions ??= new ChangeTrackingList<RulesEngineHeaderAction>();
+
+            return new RulesEngineAction(requestHeaderActions.ToList(), responseHeaderActions.ToList(), routeConfigurationOverride, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Define a match condition. </summary>
+        /// <param name="rulesEngineMatchVariable"> Match Variable. </param>
+        /// <param name="selector"> Name of selector in RequestHeader or RequestBody to be matched. </param>
+        /// <param name="rulesEngineOperator"> Describes operator to apply to the match condition. </param>
+        /// <param name="isNegateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="rulesEngineMatchValue"> Match values to match against. The operator will apply to each value in here with OR semantics. If any of them match the variable with the given operator this match condition is considered a match. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        /// <returns> A new <see cref="Models.RulesEngineMatchCondition"/> instance for mocking. </returns>
+        public static RulesEngineMatchCondition RulesEngineMatchCondition(RulesEngineMatchVariable rulesEngineMatchVariable = default, string selector = default, RulesEngineOperator rulesEngineOperator = default, bool? isNegateCondition = default, IEnumerable<string> rulesEngineMatchValue = default, IEnumerable<RulesEngineMatchTransform> transforms = default)
+        {
+            rulesEngineMatchValue ??= new ChangeTrackingList<string>();
+            transforms ??= new ChangeTrackingList<RulesEngineMatchTransform>();
+
+            return new RulesEngineMatchCondition(
+                rulesEngineMatchVariable,
+                selector,
+                rulesEngineOperator,
+                isNegateCondition,
+                rulesEngineMatchValue.ToList(),
+                transforms.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Common resource representation. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.BasicResource"/> instance for mocking. </returns>
+        public static BasicResource BasicResource(string id = default, string name = default, string @type = default)
+        {
+            return new BasicResource(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
+        /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
+        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="routeConfiguration"> A reference to the routing configuration. </param>
+        /// <param name="rulesEngineId"> Resource ID. </param>
+        /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.RoutingRuleData"/> instance for mocking. </returns>
+        public static RoutingRuleData RoutingRuleData(string id = default, IEnumerable<SubResource> frontendEndpoints = default, IEnumerable<FrontDoorProtocol> acceptedProtocols = default, IEnumerable<string> patternsToMatch = default, RoutingRuleEnabledState? enabledState = default, RouteConfiguration routeConfiguration = default, string rulesEngineId = default, string webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        {
+            return new RoutingRuleData(id, additionalBinaryDataProperties: null, frontendEndpoints is null && acceptedProtocols is null && patternsToMatch is null && enabledState is null && routeConfiguration is null && rulesEngineId is null && webApplicationFirewallPolicyLinkId is null && resourceState is null ? default : new RoutingRuleProperties(
+                (frontendEndpoints ?? new ChangeTrackingList<SubResource>()).ToList(),
+                (acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>()).ToList(),
+                (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
+                enabledState,
+                routeConfiguration,
+                new SubResource(rulesEngineId, null),
+                new RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, null),
+                null,
+                resourceState), name, @type);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
+        /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
+        /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.FrontDoorLoadBalancingSettingsData"/> instance for mocking. </returns>
+        public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(string id = default, int? sampleSize = default, int? successfulSamplesRequired = default, int? additionalLatencyMilliseconds = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        {
+            return new FrontDoorLoadBalancingSettingsData(id, additionalBinaryDataProperties: null, sampleSize is null && successfulSamplesRequired is null && additionalLatencyMilliseconds is null && resourceState is null ? default : new LoadBalancingSettingsProperties(sampleSize, successfulSamplesRequired, additionalLatencyMilliseconds, null, resourceState), name, @type);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="path"> The path to use for the health probe. Default is /. </param>
+        /// <param name="protocol"> Protocol scheme to use for this probe. </param>
+        /// <param name="intervalInSeconds"> The number of seconds between health probes. </param>
+        /// <param name="healthProbeMethod"> Configures which HTTP method to use to probe the backends defined under backendPools. </param>
+        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.FrontDoorHealthProbeSettingsData"/> instance for mocking. </returns>
+        public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(string id = default, string path = default, FrontDoorProtocol? protocol = default, int? intervalInSeconds = default, FrontDoorHealthProbeMethod? healthProbeMethod = default, HealthProbeEnabled? enabledState = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        {
+            return new FrontDoorHealthProbeSettingsData(id, additionalBinaryDataProperties: null, path is null && protocol is null && intervalInSeconds is null && healthProbeMethod is null && enabledState is null && resourceState is null ? default : new HealthProbeSettingsProperties(
+                path,
+                protocol,
+                intervalInSeconds,
+                healthProbeMethod,
+                enabledState,
+                null,
+                resourceState), name, @type);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="backends"> The set of backends for this pool. </param>
+        /// <param name="loadBalancingSettingsId"> Resource ID. </param>
+        /// <param name="healthProbeSettingsId"> Resource ID. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.FrontDoorBackendPool"/> instance for mocking. </returns>
+        public static FrontDoorBackendPool FrontDoorBackendPool(string id = default, IEnumerable<FrontDoorBackend> backends = default, string loadBalancingSettingsId = default, string healthProbeSettingsId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        {
+            return new FrontDoorBackendPool(id, additionalBinaryDataProperties: null, backends is null && loadBalancingSettingsId is null && healthProbeSettingsId is null && resourceState is null ? default : new BackendPoolProperties((backends ?? new ChangeTrackingList<FrontDoorBackend>()).ToList(), new SubResource(loadBalancingSettingsId, null), new SubResource(healthProbeSettingsId, null), null, resourceState), name, @type);
+        }
+
+        /// <summary> Backend address of a frontDoor load balancer. </summary>
+        /// <param name="address"> Location of the backend (IP address or FQDN). </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
+        /// <param name="privateEndpointStatus"> The Approval status for the connection to the Private Link. </param>
+        /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
+        /// <param name="httpPort"> The HTTP TCP port number. Must be between 1 and 65535. </param>
+        /// <param name="httpsPort"> The HTTPS TCP port number. Must be between 1 and 65535. </param>
+        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="priority"> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </param>
+        /// <param name="weight"> Weight of this endpoint for load balancing purposes. </param>
+        /// <param name="backendHostHeader"> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </param>
+        /// <returns> A new <see cref="Models.FrontDoorBackend"/> instance for mocking. </returns>
+        public static FrontDoorBackend FrontDoorBackend(string address = default, string privateLinkAlias = default, ResourceIdentifier privateLinkResourceId = default, AzureLocation? privateLinkLocation = default, BackendPrivateEndpointStatus? privateEndpointStatus = default, string privateLinkApprovalMessage = default, int? httpPort = default, int? httpsPort = default, BackendEnabledState? enabledState = default, int? priority = default, int? weight = default, string backendHostHeader = default)
+        {
+            return new FrontDoorBackend(
+                address,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateEndpointStatus,
+                privateLinkApprovalMessage,
+                httpPort,
+                httpsPort,
+                enabledState,
+                priority,
+                weight,
+                backendHostHeader,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="hostName"> The host name of the frontendEndpoint. Must be a domain name. </param>
+        /// <param name="sessionAffinityEnabledState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
+        /// <param name="sessionAffinityTtlSeconds"> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </param>
+        /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
+        /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
+        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontendEndpointData"/> instance for mocking. </returns>
+        public static FrontendEndpointData FrontendEndpointData(string id = default, string name = default, string @type = default, string hostName = default, SessionAffinityEnabledState? sessionAffinityEnabledState = default, int? sessionAffinityTtlSeconds = default, string webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default, CustomHttpsConfiguration customHttpsConfiguration = default)
+        {
+            return new FrontendEndpointData(id, name, @type, additionalBinaryDataProperties: null, hostName is null && sessionAffinityEnabledState is null && sessionAffinityTtlSeconds is null && webApplicationFirewallPolicyLinkId is null && resourceState is null && customHttpsProvisioningState is null && customHttpsProvisioningSubstate is null && customHttpsConfiguration is null ? default : new FrontendEndpointProperties(
+                hostName,
+                sessionAffinityEnabledState,
+                sessionAffinityTtlSeconds,
+                new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, null),
+                null,
+                resourceState,
+                customHttpsProvisioningState,
+                customHttpsProvisioningSubstate,
+                customHttpsConfiguration));
+        }
+
+        /// <summary> Common resource representation. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.BasicResourceWithSettableIDName"/> instance for mocking. </returns>
+        public static BasicResourceWithSettableIDName BasicResourceWithSettableIDName(string id = default, string name = default, string @type = default)
+        {
+            return new BasicResourceWithSettableIDName(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Common resource representation. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new Resource(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input of the custom domain to be validated for DNS mapping. </summary>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <returns> A new <see cref="Models.FrontDoorValidateCustomDomainContent"/> instance for mocking. </returns>
+        public static FrontDoorValidateCustomDomainContent FrontDoorValidateCustomDomainContent(string hostName = default)
+        {
+            return new FrontDoorValidateCustomDomainContent(hostName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Output of custom domain validation. </summary>
+        /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
+        /// <param name="reason"> The reason why the custom domain is not valid. </param>
+        /// <param name="message"> Error message describing why the custom domain is not valid. </param>
+        /// <returns> A new <see cref="Models.FrontDoorValidateCustomDomainResult"/> instance for mocking. </returns>
+        public static FrontDoorValidateCustomDomainResult FrontDoorValidateCustomDomainResult(bool? isCustomDomainValidated = default, string reason = default, string message = default)
+        {
+            return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> The description of the details or intents of the Experiment. </param>
+        /// <param name="experimentEndpointA"> The endpoint A of an experiment. </param>
+        /// <param name="experimentEndpointB"> The endpoint B of an experiment. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="status"> The description of Experiment status from the server side. </param>
+        /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorExperimentData"/> instance for mocking. </returns>
+        public static FrontDoorExperimentData FrontDoorExperimentData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string description = default, FrontDoorExperimentEndpointProperties experimentEndpointA = default, FrontDoorExperimentEndpointProperties experimentEndpointB = default, FrontDoorExperimentState? enabledState = default, NetworkExperimentResourceState? resourceState = default, string status = default, Uri scriptFileUri = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorExperimentData(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                description is null && experimentEndpointA is null && experimentEndpointB is null && enabledState is null && resourceState is null && status is null && scriptFileUri is null ? default : new ExperimentProperties(
+                    description,
+                    experimentEndpointA,
+                    experimentEndpointB,
+                    enabledState,
+                    resourceState,
+                    status,
+                    scriptFileUri,
+                    null));
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> The description of the intent or details of the Experiment. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <returns> A new <see cref="Models.FrontDoorExperimentPatch"/> instance for mocking. </returns>
+        public static FrontDoorExperimentPatch FrontDoorExperimentPatch(IDictionary<string, string> tags = default, string description = default, FrontDoorExperimentState? enabledState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorExperimentPatch(tags, description is null && enabledState is null ? default : new ExperimentUpdateProperties(description, enabledState, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="policySettings"> Describes settings for the policy. </param>
+        /// <param name="managedRules"> Describes managed rules inside the policy. </param>
+        /// <param name="frontendEndpointLinks"> Describes Frontend Endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="routingRuleLinks"> Describes Routing Rules associated with this Web Application Firewall policy. </param>
+        /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the policy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <param name="customRuleListRules"> List of rules. </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, ManagedRuleSetList managedRules = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<RoutingRuleLink> routingRuleLinks = default, IEnumerable<SecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> customRuleListRules = default, string etag = default, FrontDoorSkuName? skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                policySettings is null && managedRules is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null && customRuleListRules is null ? default : new WebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new CustomRuleList((customRuleListRules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), null),
+                    managedRules,
+                    (frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>()).ToList(),
+                    (routingRuleLinks ?? new ChangeTrackingList<RoutingRuleLink>()).ToList(),
+                    (securityPolicyLinks ?? new ChangeTrackingList<SecurityPolicyLink>()).ToList(),
+                    provisioningState,
+                    resourceState,
+                    null),
+                etag,
+                skuName is null ? default : new FrontDoorSku(skuName, null));
+        }
+
+        /// <summary> Defines contents of a web application rule. </summary>
+        /// <param name="name"> Describes the name of the rule. </param>
+        /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
+        /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
+        /// <param name="ruleType"> Describes type of rule. </param>
+        /// <param name="rateLimitDurationInMinutes"> Time window for resetting the rate limit count. Default is 1 minute. </param>
+        /// <param name="rateLimitThreshold"> Number of allowed requests per client within the time window. </param>
+        /// <param name="groupBy"> Describes the list of variables to group the rate limit requests. </param>
+        /// <param name="matchConditions"> List of match conditions. </param>
+        /// <param name="action"> Describes what action to be applied when rule matches. </param>
+        /// <returns> A new <see cref="Models.WebApplicationCustomRule"/> instance for mocking. </returns>
+        public static WebApplicationCustomRule WebApplicationCustomRule(string name = default, int priority = default, CustomRuleEnabledState? enabledState = default, WebApplicationRuleType ruleType = default, int? rateLimitDurationInMinutes = default, int? rateLimitThreshold = default, IEnumerable<FrontDoorWebApplicationFirewallPolicyGroupByVariable> groupBy = default, IEnumerable<WebApplicationRuleMatchCondition> matchConditions = default, RuleMatchActionType action = default)
+        {
+            groupBy ??= new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyGroupByVariable>();
+            matchConditions ??= new ChangeTrackingList<WebApplicationRuleMatchCondition>();
+
+            return new WebApplicationCustomRule(
+                name,
+                priority,
+                enabledState,
+                ruleType,
+                rateLimitDurationInMinutes,
+                rateLimitThreshold,
+                groupBy.ToList(),
+                matchConditions.ToList(),
+                action,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Define a match condition. </summary>
+        /// <param name="matchVariable"> Request variable to compare with. </param>
+        /// <param name="selector"> Match against a specific key from the QueryString, PostArgs, RequestHeader or Cookies variables. Default is null. </param>
+        /// <param name="operator"> Comparison type to use for matching with the variable value. </param>
+        /// <param name="isNegateCondition"> Describes if the result of this condition should be negated. </param>
+        /// <param name="matchValue"> List of possible match values. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        /// <returns> A new <see cref="Models.WebApplicationRuleMatchCondition"/> instance for mocking. </returns>
+        public static WebApplicationRuleMatchCondition WebApplicationRuleMatchCondition(WebApplicationRuleMatchVariable matchVariable = default, string selector = default, WebApplicationRuleMatchOperator @operator = default, bool? isNegateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<WebApplicationRuleMatchTransformType> transforms = default)
+        {
+            matchValue ??= new ChangeTrackingList<string>();
+            transforms ??= new ChangeTrackingList<WebApplicationRuleMatchTransformType>();
+
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector,
+                @operator,
+                isNegateCondition,
+                matchValue.ToList(),
+                transforms.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="exceptions"> List of exceptions. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetList"/> instance for mocking. </returns>
+        public static ManagedRuleSetList ManagedRuleSetList(IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<ManagedRuleSetException> exceptions = default)
+        {
+            managedRuleSets ??= new ChangeTrackingList<ManagedRuleSet>();
+
+            return new ManagedRuleSetList(managedRuleSets.ToList(), exceptions is null ? default : new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<ManagedRuleSetException>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines a managed rule set. </summary>
+        /// <param name="ruleSetType"> Defines the rule set type to use. </param>
+        /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
+        /// <param name="ruleSetAction"> Defines the rule set action. </param>
+        /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
+        /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSet"/> instance for mocking. </returns>
+        public static ManagedRuleSet ManagedRuleSet(string ruleSetType = default, string ruleSetVersion = default, ManagedRuleSetActionType? ruleSetAction = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleGroupOverride> ruleGroupOverrides = default)
+        {
+            exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
+            ruleGroupOverrides ??= new ChangeTrackingList<ManagedRuleGroupOverride>();
+
+            return new ManagedRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                ruleSetAction,
+                exclusions.ToList(),
+                ruleGroupOverrides.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines a managed rule group override setting. </summary>
+        /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
+        /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the group. </param>
+        /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleGroupOverride"/> instance for mocking. </returns>
+        public static ManagedRuleGroupOverride ManagedRuleGroupOverride(string ruleGroupName = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleOverride> rules = default)
+        {
+            exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
+            rules ??= new ChangeTrackingList<ManagedRuleOverride>();
+
+            return new ManagedRuleGroupOverride(ruleGroupName, exclusions.ToList(), rules.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines a managed rule group override setting. </summary>
+        /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
+        /// <param name="action"> Describes the override action to be applied when rule matches. </param>
+        /// <param name="sensitivity"> Describes the override sensitivity to be applied when rule matches. </param>
+        /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleOverride"/> instance for mocking. </returns>
+        public static ManagedRuleOverride ManagedRuleOverride(string ruleId = default, ManagedRuleEnabledState? enabledState = default, RuleMatchActionType? action = default, SensitivityType? sensitivity = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
+        {
+            exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
+
+            return new ManagedRuleOverride(
+                ruleId,
+                enabledState,
+                action,
+                sensitivity,
+                exclusions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Excludes whole requests from managed rule evaluation according to match conditions. </summary>
+        /// <param name="matchVariable"> The variable to be evaluated for excluding the request. </param>
+        /// <param name="selectorMatchOperator">
+        /// Comparison operator to apply to the selector when specifying which elements
+        /// in the collection this exception applies to.
+        /// </param>
+        /// <param name="selector">
+        /// When matchVariable is a collection, operator used to specify which elements
+        /// in the collection this exception applies to.
+        /// Currently supported only for RequestHeaderNames.
+        /// </param>
+        /// <param name="valueMatchOperator"> Comparison operator to apply to the value to be matched. </param>
+        /// <param name="matchValues"> List of values to be matched with. </param>
+        /// <param name="scopes"> Scope(s) of the exception. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetException"/> instance for mocking. </returns>
+        public static ManagedRuleSetException ManagedRuleSetException(ExceptionMatchVariable matchVariable = default, ExceptionSelectorMatchOperator? selectorMatchOperator = default, string selector = default, ExceptionValueMatchOperator valueMatchOperator = default, IEnumerable<string> matchValues = default, IEnumerable<ManagedRuleSetScope> scopes = default)
+        {
+            matchValues ??= new ChangeTrackingList<string>();
+            scopes ??= new ChangeTrackingList<ManagedRuleSetScope>();
+
+            return new ManagedRuleSetException(
+                matchVariable,
+                selectorMatchOperator,
+                selector,
+                valueMatchOperator,
+                matchValues.ToList(),
+                scopes.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the scope of the managed rules. </summary>
+        /// <param name="ruleSetType">
+        /// Defines the rule set type.
+        /// Examples: DefaultRuleSet, Microsoft_DefaultRuleSet,
+        /// Microsoft_BotManagerRuleSet, Microsoft_HTTPDDoSRuleSet, BotProtection
+        /// </param>
+        /// <param name="ruleSetVersion"> Defines the version of the rule set. </param>
+        /// <param name="ruleGroupScopes"> List of rule group scopes. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetScope"/> instance for mocking. </returns>
+        public static ManagedRuleSetScope ManagedRuleSetScope(string ruleSetType = default, string ruleSetVersion = default, IEnumerable<RuleGroupScope> ruleGroupScopes = default)
+        {
+            ruleGroupScopes ??= new ChangeTrackingList<RuleGroupScope>();
+
+            return new ManagedRuleSetScope(ruleSetType, ruleSetVersion, ruleGroupScopes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the scope of the rule group. </summary>
+        /// <param name="ruleGroupName"> Defines the rule group name. </param>
+        /// <param name="ruleScopes"> List of rule scopes. </param>
+        /// <returns> A new <see cref="Models.RuleGroupScope"/> instance for mocking. </returns>
+        public static RuleGroupScope RuleGroupScope(string ruleGroupName = default, IEnumerable<RuleScope> ruleScopes = default)
+        {
+            ruleScopes ??= new ChangeTrackingList<RuleScope>();
+
+            return new RuleGroupScope(ruleGroupName, ruleScopes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the Resource ID for a Frontend Endpoint. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.FrontendEndpointLink"/> instance for mocking. </returns>
+        public static FrontendEndpointLink FrontendEndpointLink(string id = default)
+        {
+            return new FrontendEndpointLink(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the Resource ID for a Routing Rule. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.RoutingRuleLink"/> instance for mocking. </returns>
+        public static RoutingRuleLink RoutingRuleLink(string id = default)
+        {
+            return new RoutingRuleLink(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines the Resource ID for a Security Policy. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyLink"/> instance for mocking. </returns>
+        public static SecurityPolicyLink SecurityPolicyLink(string id = default)
+        {
+            return new SecurityPolicyLink(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tags object for patch operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.FrontDoorWebApplicationFirewallPolicyPatch"/> instance for mocking. </returns>
+        public static FrontDoorWebApplicationFirewallPolicyPatch FrontDoorWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorWebApplicationFirewallPolicyPatch(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Parameters required for content purge. </summary>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        /// <returns> A new <see cref="Models.FrontDoorEndpointPurgeContent"/> instance for mocking. </returns>
+        public static FrontDoorEndpointPurgeContent FrontDoorEndpointPurgeContent(IEnumerable<string> contentPaths = default)
+        {
+            contentPaths ??= new ChangeTrackingList<string>();
+
+            return new FrontDoorEndpointPurgeContent(contentPaths.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, string etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorNetworkExperimentProfileData(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, null),
+                etag);
+        }
+
+        /// <summary> Common resource representation. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ResourcewithSettableName"/> instance for mocking. </returns>
+        public static ResourcewithSettableName ResourcewithSettableName(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourcewithSettableName(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="enabledState"> The enabled state of the Profile. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.FrontDoorNetworkExperimentProfilePatch"/> instance for mocking. </returns>
+        public static FrontDoorNetworkExperimentProfilePatch FrontDoorNetworkExperimentProfilePatch(FrontDoorExperimentState? enabledState = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorNetworkExperimentProfilePatch(enabledState is null ? default : new ProfileUpdateProperties(enabledState, null), tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> The description of the endpoint. </param>
+        /// <param name="endpoint"> The endpoint that is preconfigured. </param>
+        /// <param name="endpointType"> The type of endpoint. </param>
+        /// <param name="backend"> The preconfigured endpoint backend. </param>
+        /// <returns> A new <see cref="Models.PreconfiguredEndpoint"/> instance for mocking. </returns>
+        public static PreconfiguredEndpoint PreconfiguredEndpoint(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string description = default, string endpoint = default, FrontDoorEndpointType? endpointType = default, string backend = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PreconfiguredEndpoint(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                description is null && endpoint is null && endpointType is null && backend is null ? default : new PreconfiguredEndpointProperties(description, endpoint, endpointType, backend, null));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="latencyScorecardId"> The unique identifier of the Latency Scorecard. </param>
+        /// <param name="latencyScorecardName"> The name of the Latency Scorecard. </param>
+        /// <param name="description"> The description of the Latency Scorecard. </param>
+        /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
+        /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
+        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
+        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
+        /// <returns> A new <see cref="Models.LatencyScorecard"/> instance for mocking. </returns>
+        public static LatencyScorecard LatencyScorecard(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LatencyScorecard(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startOn is null && endOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
+                    latencyScorecardId,
+                    latencyScorecardName,
+                    description,
+                    scorecardEndpointA,
+                    scorecardEndpointB,
+                    startOn,
+                    endOn,
+                    country,
+                    (latencyMetrics ?? new ChangeTrackingList<LatencyMetric>()).ToList(),
+                    null));
+        }
+
+        /// <summary> Defines the properties of a latency metric used in the latency scorecard. </summary>
+        /// <param name="name"> The name of the Latency Metric. </param>
+        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="aValue"> The metric value of the A endpoint. </param>
+        /// <param name="bValue"> The metric value of the B endpoint. </param>
+        /// <param name="delta"> The difference in value between endpoint A and B. </param>
+        /// <param name="deltaPercent"> The percent difference between endpoint A and B. </param>
+        /// <param name="acLower95CI"> The lower end of the 95% confidence interval for endpoint A. </param>
+        /// <param name="ahUpper95CI"> The upper end of the 95% confidence interval for endpoint A. </param>
+        /// <param name="bcLower95CI"> The lower end of the 95% confidence interval for endpoint B. </param>
+        /// <param name="bUpper95CI"> The upper end of the 95% confidence interval for endpoint B. </param>
+        /// <returns> A new <see cref="Models.LatencyMetric"/> instance for mocking. </returns>
+        public static LatencyMetric LatencyMetric(string name = default, string endOn = default, float? aValue = default, float? bValue = default, float? delta = default, float? deltaPercent = default, float? acLower95CI = default, float? ahUpper95CI = default, float? bcLower95CI = default, float? bUpper95CI = default)
+        {
+            return new LatencyMetric(
+                name,
+                endOn,
+                aValue,
+                bValue,
+                delta,
+                deltaPercent,
+                acLower95CI,
+                ahUpper95CI,
+                bcLower95CI,
+                bUpper95CI,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
+        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
+        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
+        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
+        /// <param name="timeseriesType"> The type of Timeseries. </param>
+        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="timeseriesData"> The set of data points for the timeseries. </param>
+        /// <returns> A new <see cref="Models.FrontDoorTimeSeriesInfo"/> instance for mocking. </returns>
+        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, Uri endpoint = default, string startOn = default, string endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeseriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeseriesData = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                endpoint is null && startOn is null && endOn is null && aggregationInterval is null && timeseriesType is null && country is null && timeseriesData is null ? default : new TimeseriesProperties(
+                    endpoint,
+                    startOn,
+                    endOn,
+                    aggregationInterval,
+                    timeseriesType,
+                    country,
+                    (timeseriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>()).ToList(),
+                    null));
+        }
+
+        /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
+        /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
+        /// <param name="value"> The Value of the Timeseries data point. </param>
+        /// <returns> A new <see cref="Models.FrontDoorTimeSeriesDataPoint"/> instance for mocking. </returns>
+        public static FrontDoorTimeSeriesDataPoint FrontDoorTimeSeriesDataPoint(string dateTimeUtc = default, float? value = default)
+        {
+            return new FrontDoorTimeSeriesDataPoint(dateTimeUtc, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
+        /// <param name="ruleSetId"> Id of the managed rule set. </param>
+        /// <param name="ruleSetType"> Type of the managed rule set. </param>
+        /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
+        /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && ruleSetId is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null ? default : new ManagedRuleSetDefinitionProperties(
+                    provisioningState,
+                    ruleSetId,
+                    ruleSetType,
+                    ruleSetVersion,
+                    (ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>()).ToList(),
+                    null));
+        }
+
+        /// <summary> Describes a managed rule group. </summary>
+        /// <param name="ruleGroupName"> Name of the managed rule group. </param>
+        /// <param name="description"> Description of the managed rule group. </param>
+        /// <param name="rules"> List of rules within the managed rule group. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleGroupDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = default, string description = default, IEnumerable<ManagedRuleDefinition> rules = default)
+        {
+            rules ??= new ChangeTrackingList<ManagedRuleDefinition>();
+
+            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a managed rule definition. </summary>
+        /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <param name="defaultState"> Describes the default state for the managed rule. </param>
+        /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
+        /// <param name="description"> Describes the functionality of the managed rule. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, SensitivityType? defaultSensitivity = default, string description = default)
+        {
+            return new ManagedRuleDefinition(
+                ruleId,
+                defaultState,
+                defaultAction,
+                defaultSensitivity,
+                description,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input of CheckNameAvailability API. </summary>
+        /// <param name="name"> The resource name to validate. </param>
+        /// <param name="type"> The type of the resource whose name is to be validated. </param>
+        /// <returns> A new <see cref="Models.FrontDoorNameAvailabilityContent"/> instance for mocking. </returns>
+        public static FrontDoorNameAvailabilityContent FrontDoorNameAvailabilityContent(string name = default, FrontDoorResourceType @type = default)
+        {
+            return new FrontDoorNameAvailabilityContent(name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Output of check name availability API. </summary>
+        /// <param name="nameAvailability"> Indicates whether the name is available. </param>
+        /// <param name="reason"> The reason why the name is not available. </param>
+        /// <param name="message"> The detailed error message describing why the name is not available. </param>
+        /// <returns> A new <see cref="Models.FrontDoorNameAvailabilityResult"/> instance for mocking. </returns>
+        public static FrontDoorNameAvailabilityResult FrontDoorNameAvailabilityResult(FrontDoorNameAvailabilityState? nameAvailability = default, string reason = default, string message = default)
+        {
+            return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -35,33 +917,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, FrontDoorSkuName? skuName = null, FrontDoorWebApplicationFirewallPolicySettings policySettings = null, IEnumerable<WebApplicationCustomRule> rules = null, IEnumerable<ManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> frontendEndpointLinks = null, IEnumerable<SubResource> routingRuleLinks = null, IEnumerable<SubResource> securityPolicyLinks = null, string provisioningState = null, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSkuName? skuName, FrontDoorWebApplicationFirewallPolicySettings policySettings, IEnumerable<WebApplicationCustomRule> rules, IEnumerable<ManagedRuleSet> managedRuleSets, IEnumerable<Resources.Models.SubResource> frontendEndpointLinks, IEnumerable<Resources.Models.SubResource> routingRuleLinks, IEnumerable<Resources.Models.SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState)
         {
-            tags ??= new Dictionary<string, string>();
-            rules ??= new List<WebApplicationCustomRule>();
-            managedRuleSets ??= new List<ManagedRuleSet>();
-            frontendEndpointLinks ??= new List<SubResource>();
-            routingRuleLinks ??= new List<SubResource>();
-            securityPolicyLinks ??= new List<SubResource>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            rules ??= new ChangeTrackingList<WebApplicationCustomRule>();
+            managedRuleSets ??= new ChangeTrackingList<ManagedRuleSet>();
+            frontendEndpointLinks ??= new ChangeTrackingList<Resources.Models.SubResource>();
+            routingRuleLinks ??= new ChangeTrackingList<Resources.Models.SubResource>();
+            securityPolicyLinks ??= new ChangeTrackingList<Resources.Models.SubResource>();
 
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                etag,
-                skuName != null ? new FrontDoorSku(skuName, serializedAdditionalRawData: null) : null,
-                policySettings,
-                rules != null ? new CustomRuleList(rules?.ToList(), serializedAdditionalRawData: null) : null,
-                managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
-                frontendEndpointLinks?.ToList(),
-                routingRuleLinks?.ToList(),
-                securityPolicyLinks?.ToList(),
-                provisioningState,
-                resourceState,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
@@ -77,36 +952,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
         /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string provisioningState = null, string ruleSetId = null, string ruleSetType = null, string ruleSetVersion = null, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IEnumerable<ManagedRuleGroupDefinition> ruleGroups)
         {
-            tags ??= new Dictionary<string, string>();
-            ruleGroups ??= new List<ManagedRuleGroupDefinition>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            ruleGroups ??= new ChangeTrackingList<ManagedRuleGroupDefinition>();
 
             return new ManagedRuleSetDefinition(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                provisioningState,
-                ruleSetId,
-                ruleSetType,
-                ruleSetVersion,
-                ruleGroups?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
-        /// <param name="ruleGroupName"> Name of the managed rule group. </param>
-        /// <param name="description"> Description of the managed rule group. </param>
-        /// <param name="rules"> List of rules within the managed rule group. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleGroupDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, IEnumerable<ManagedRuleDefinition> rules = null)
-        {
-            rules ??= new List<ManagedRuleDefinition>();
-
-            return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList(), serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -115,19 +974,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
         /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, ManagedRuleEnabledState? defaultState = null, RuleMatchActionType? defaultAction = null, string description = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
         {
-            return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailability"> Indicates whether the name is available. </param>
-        /// <param name="reason"> The reason why the name is not available. </param>
-        /// <param name="message"> The detailed error message describing why the name is not available. </param>
-        /// <returns> A new <see cref="Models.FrontDoorNameAvailabilityResult"/> instance for mocking. </returns>
-        public static FrontDoorNameAvailabilityResult FrontDoorNameAvailabilityResult(FrontDoorNameAvailabilityState? nameAvailability = null, string reason = null, string message = null)
-        {
-            return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message, serializedAdditionalRawData: null);
+            return ManagedRuleDefinition(ruleId, defaultState, defaultAction, defaultSensitivity: default, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorData"/>. </summary>
@@ -152,39 +1002,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorData"/> instance for mocking. </returns>
-        public static FrontDoorData FrontDoorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string friendlyName = null, IEnumerable<RoutingRuleData> routingRules = null, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = null, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = null, IEnumerable<FrontDoorBackendPool> backendPools = null, IEnumerable<FrontendEndpointData> frontendEndpoints = null, BackendPoolsSettings backendPoolsSettings = null, FrontDoorEnabledState? enabledState = null, FrontDoorResourceState? resourceState = null, string provisioningState = null, string cname = null, string frontdoorId = null, IEnumerable<FrontDoorRulesEngineData> rulesEngines = null, IReadOnlyDictionary<string, string> extendedProperties = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorData FrontDoorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string friendlyName, IEnumerable<RoutingRuleData> routingRules, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings, IEnumerable<FrontDoorBackendPool> backendPools, IEnumerable<FrontendEndpointData> frontendEndpoints, BackendPoolsSettings backendPoolsSettings, FrontDoorEnabledState? enabledState, FrontDoorResourceState? resourceState, string provisioningState, string cname, string frontdoorId, IEnumerable<FrontDoorRulesEngineData> rulesEngines, IReadOnlyDictionary<string, string> extendedProperties)
         {
-            tags ??= new Dictionary<string, string>();
-            routingRules ??= new List<RoutingRuleData>();
-            loadBalancingSettings ??= new List<FrontDoorLoadBalancingSettingsData>();
-            healthProbeSettings ??= new List<FrontDoorHealthProbeSettingsData>();
-            backendPools ??= new List<FrontDoorBackendPool>();
-            frontendEndpoints ??= new List<FrontendEndpointData>();
-            rulesEngines ??= new List<FrontDoorRulesEngineData>();
-            extendedProperties ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            routingRules ??= new ChangeTrackingList<RoutingRuleData>();
+            loadBalancingSettings ??= new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>();
+            healthProbeSettings ??= new ChangeTrackingList<FrontDoorHealthProbeSettingsData>();
+            backendPools ??= new ChangeTrackingList<FrontDoorBackendPool>();
+            frontendEndpoints ??= new ChangeTrackingList<FrontendEndpointData>();
+            rulesEngines ??= new ChangeTrackingList<FrontDoorRulesEngineData>();
+            extendedProperties ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                friendlyName,
-                routingRules?.ToList(),
-                loadBalancingSettings?.ToList(),
-                healthProbeSettings?.ToList(),
-                backendPools?.ToList(),
-                frontendEndpoints?.ToList(),
-                backendPoolsSettings,
-                enabledState,
-                resourceState,
-                provisioningState,
-                cname,
-                frontdoorId,
-                rulesEngines?.ToList(),
-                extendedProperties,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorRulesEngineData"/>. </summary>
@@ -195,18 +1032,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorRulesEngineData"/> instance for mocking. </returns>
-        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<RulesEngineRule> rules = null, FrontDoorResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<RulesEngineRule> rules, FrontDoorResourceState? resourceState)
         {
-            rules ??= new List<RulesEngineRule>();
+            rules ??= new ChangeTrackingList<RulesEngineRule>();
 
-            return new FrontDoorRulesEngineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                rules?.ToList(),
-                resourceState,
-                serializedAdditionalRawData: null);
+            return new FrontDoorRulesEngineData(id, name, default, additionalBinaryDataProperties: null, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoutingRuleData"/>. </summary>
@@ -219,42 +1050,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="routeConfiguration">
         /// A reference to the routing configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
         /// </param>
         /// <param name="rulesEngineId"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLinkId"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="Models.RoutingRuleData"/> instance for mocking. </returns>
-        public static RoutingRuleData RoutingRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, IEnumerable<WritableSubResource> frontendEndpoints = null, IEnumerable<FrontDoorProtocol> acceptedProtocols = null, IEnumerable<string> patternsToMatch = null, RoutingRuleEnabledState? enabledState = null, RouteConfiguration routeConfiguration = null, ResourceIdentifier rulesEngineId = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, FrontDoorResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RoutingRuleData RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IEnumerable<WritableSubResource> frontendEndpoints, IEnumerable<FrontDoorProtocol> acceptedProtocols, IEnumerable<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, ResourceIdentifier rulesEngineId, ResourceIdentifier webApplicationFirewallPolicyLinkId, FrontDoorResourceState? resourceState)
         {
-            frontendEndpoints ??= new List<WritableSubResource>();
-            acceptedProtocols ??= new List<FrontDoorProtocol>();
-            patternsToMatch ??= new List<string>();
+            frontendEndpoints ??= new ChangeTrackingList<WritableSubResource>();
+            acceptedProtocols ??= new ChangeTrackingList<FrontDoorProtocol>();
+            patternsToMatch ??= new ChangeTrackingList<string>();
 
-            return new RoutingRuleData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                frontendEndpoints?.ToList(),
-                acceptedProtocols?.ToList(),
-                patternsToMatch?.ToList(),
-                enabledState,
-                routeConfiguration,
-                rulesEngineId != null ? ResourceManagerModelFactory.WritableSubResource(rulesEngineId) : null,
-                webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null,
-                resourceState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.FrontDoorResourceData"/> instance for mocking. </returns>
-        public static FrontDoorResourceData FrontDoorResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
-        {
-            return new FrontDoorResourceData(id, name, resourceType, serializedAdditionalRawData: null);
+            return new RoutingRuleData(id, additionalBinaryDataProperties: null, default, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorLoadBalancingSettingsData"/>. </summary>
@@ -266,17 +1076,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="additionalLatencyMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="Models.FrontDoorLoadBalancingSettingsData"/> instance for mocking. </returns>
-        public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, int? sampleSize = null, int? successfulSamplesRequired = null, int? additionalLatencyMilliseconds = null, FrontDoorResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyMilliseconds, FrontDoorResourceState? resourceState)
         {
-            return new FrontDoorLoadBalancingSettingsData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                sampleSize,
-                successfulSamplesRequired,
-                additionalLatencyMilliseconds,
-                resourceState);
+            return new FrontDoorLoadBalancingSettingsData(id, additionalBinaryDataProperties: null, default, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorHealthProbeSettingsData"/>. </summary>
@@ -290,19 +1093,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="Models.FrontDoorHealthProbeSettingsData"/> instance for mocking. </returns>
-        public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string path = null, FrontDoorProtocol? protocol = null, int? intervalInSeconds = null, FrontDoorHealthProbeMethod? healthProbeMethod = null, HealthProbeEnabled? enabledState = null, FrontDoorResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(ResourceIdentifier id, string name, ResourceType? resourceType, string path, FrontDoorProtocol? protocol, int? intervalInSeconds, FrontDoorHealthProbeMethod? healthProbeMethod, HealthProbeEnabled? enabledState, FrontDoorResourceState? resourceState)
         {
-            return new FrontDoorHealthProbeSettingsData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                path,
-                protocol,
-                intervalInSeconds,
-                healthProbeMethod,
-                enabledState,
-                resourceState);
+            return new FrontDoorHealthProbeSettingsData(id, additionalBinaryDataProperties: null, default, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackendPool"/>. </summary>
@@ -314,51 +1108,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="healthProbeSettingsId"> L7 health probe settings for a backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="Models.FrontDoorBackendPool"/> instance for mocking. </returns>
-        public static FrontDoorBackendPool FrontDoorBackendPool(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, IEnumerable<FrontDoorBackend> backends = null, ResourceIdentifier loadBalancingSettingsId = null, ResourceIdentifier healthProbeSettingsId = null, FrontDoorResourceState? resourceState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorBackendPool FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IEnumerable<FrontDoorBackend> backends, ResourceIdentifier loadBalancingSettingsId, ResourceIdentifier healthProbeSettingsId, FrontDoorResourceState? resourceState)
         {
-            backends ??= new List<FrontDoorBackend>();
+            backends ??= new ChangeTrackingList<FrontDoorBackend>();
 
-            return new FrontDoorBackendPool(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                backends?.ToList(),
-                loadBalancingSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId) : null,
-                healthProbeSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId) : null,
-                resourceState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackend"/>. </summary>
-        /// <param name="address"> Location of the backend (IP address or FQDN). </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
-        /// <param name="privateEndpointStatus"> The Approval status for the connection to the Private Link. </param>
-        /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
-        /// <param name="httpPort"> The HTTP TCP port number. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The HTTPS TCP port number. Must be between 1 and 65535. </param>
-        /// <param name="enabledState"> Whether to enable use of this backend. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="priority"> Priority to use for load balancing. Higher priorities will not be used for load balancing if any lower priority backend is healthy. </param>
-        /// <param name="weight"> Weight of this endpoint for load balancing purposes. </param>
-        /// <param name="backendHostHeader"> The value to use as the host header sent to the backend. If blank or unspecified, this defaults to the incoming host. </param>
-        /// <returns> A new <see cref="Models.FrontDoorBackend"/> instance for mocking. </returns>
-        public static FrontDoorBackend FrontDoorBackend(string address = null, string privateLinkAlias = null, ResourceIdentifier privateLinkResourceId = null, AzureLocation? privateLinkLocation = null, BackendPrivateEndpointStatus? privateEndpointStatus = null, string privateLinkApprovalMessage = null, int? httpPort = null, int? httpsPort = null, BackendEnabledState? enabledState = null, int? priority = null, int? weight = null, string backendHostHeader = null)
-        {
-            return new FrontDoorBackend(
-                address,
-                privateLinkAlias,
-                privateLinkResourceId,
-                privateLinkLocation,
-                privateEndpointStatus,
-                privateLinkApprovalMessage,
-                httpPort,
-                httpsPort,
-                enabledState,
-                priority,
-                weight,
-                backendHostHeader,
-                serializedAdditionalRawData: null);
+            return new FrontDoorBackendPool(id, additionalBinaryDataProperties: null, default, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontendEndpointData"/>. </summary>
@@ -374,31 +1129,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
         /// <returns> A new <see cref="FrontDoor.FrontendEndpointData"/> instance for mocking. </returns>
-        public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string hostName = null, SessionAffinityEnabledState? sessionAffinityEnabledState = null, int? sessionAffinityTtlInSeconds = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, FrontDoorResourceState? resourceState = null, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = null, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = null, CustomHttpsConfiguration customHttpsConfiguration = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, ResourceIdentifier webApplicationFirewallPolicyLinkId, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration)
         {
-            return new FrontendEndpointData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                hostName,
-                sessionAffinityEnabledState,
-                sessionAffinityTtlInSeconds,
-                webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null,
-                resourceState,
-                customHttpsProvisioningState,
-                customHttpsProvisioningSubstate,
-                customHttpsConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorValidateCustomDomainResult"/>. </summary>
-        /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
-        /// <param name="reason"> The reason why the custom domain is not valid. </param>
-        /// <param name="message"> Error message describing why the custom domain is not valid. </param>
-        /// <returns> A new <see cref="Models.FrontDoorValidateCustomDomainResult"/> instance for mocking. </returns>
-        public static FrontDoorValidateCustomDomainResult FrontDoorValidateCustomDomainResult(bool? isCustomDomainValidated = null, string reason = null, string message = null)
-        {
-            return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message, serializedAdditionalRawData: null);
+            return new FrontendEndpointData(id, name, default, additionalBinaryDataProperties: null, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/>. </summary>
@@ -412,21 +1146,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="enabledState"> The state of the Experiment. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
-        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, NetworkExperimentResourceState? resourceState = null, FrontDoorExperimentState? enabledState = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorNetworkExperimentProfileData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                etag,
-                resourceState,
-                enabledState,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PreconfiguredEndpoint"/>. </summary>
@@ -441,22 +1174,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="endpointType"> The type of endpoint. </param>
         /// <param name="backend"> The preconfigured endpoint backend. </param>
         /// <returns> A new <see cref="Models.PreconfiguredEndpoint"/> instance for mocking. </returns>
-        public static PreconfiguredEndpoint PreconfiguredEndpoint(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, string endpoint = null, FrontDoorEndpointType? endpointType = null, string backend = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PreconfiguredEndpoint PreconfiguredEndpoint(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string endpoint, FrontDoorEndpointType? endpointType, string backend)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new PreconfiguredEndpoint(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                description,
-                endpoint,
-                endpointType,
-                backend,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorExperimentData"/>. </summary>
@@ -474,25 +1204,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="status"> The description of Experiment status from the server side. </param>
         /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorExperimentData"/> instance for mocking. </returns>
-        public static FrontDoorExperimentData FrontDoorExperimentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string description = null, FrontDoorExperimentEndpointProperties experimentEndpointA = null, FrontDoorExperimentEndpointProperties experimentEndpointB = null, FrontDoorExperimentState? enabledState = null, NetworkExperimentResourceState? resourceState = null, string status = null, Uri scriptFileUri = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorExperimentData FrontDoorExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, FrontDoorExperimentEndpointProperties experimentEndpointA, FrontDoorExperimentEndpointProperties experimentEndpointB, FrontDoorExperimentState? enabledState, NetworkExperimentResourceState? resourceState, string status, Uri scriptFileUri)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorExperimentData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                description,
-                experimentEndpointA,
-                experimentEndpointB,
-                enabledState,
-                resourceState,
-                status,
-                scriptFileUri,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LatencyScorecard"/>. </summary>
@@ -512,56 +1236,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
         /// <returns> A new <see cref="Models.LatencyScorecard"/> instance for mocking. </returns>
-        public static LatencyScorecard LatencyScorecard(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string latencyScorecardId = null, string latencyScorecardName = null, string description = null, Uri scorecardEndpointA = null, Uri scorecardEndpointB = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string country = null, IEnumerable<LatencyMetric> latencyMetrics = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LatencyScorecard LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IEnumerable<LatencyMetric> latencyMetrics)
         {
-            tags ??= new Dictionary<string, string>();
-            latencyMetrics ??= new List<LatencyMetric>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            latencyMetrics ??= new ChangeTrackingList<LatencyMetric>();
 
             return new LatencyScorecard(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                latencyScorecardId,
-                latencyScorecardName,
-                description,
-                scorecardEndpointA,
-                scorecardEndpointB,
-                startOn,
-                endOn,
-                country,
-                latencyMetrics?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LatencyMetric"/>. </summary>
-        /// <param name="name"> The name of the Latency Metric. </param>
-        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
-        /// <param name="aValue"> The metric value of the A endpoint. </param>
-        /// <param name="bValue"> The metric value of the B endpoint. </param>
-        /// <param name="delta"> The difference in value between endpoint A and B. </param>
-        /// <param name="deltaPercent"> The percent difference between endpoint A and B. </param>
-        /// <param name="acLower95CI"> The lower end of the 95% confidence interval for endpoint A. </param>
-        /// <param name="ahUpper95CI"> The upper end of the 95% confidence interval for endpoint A. </param>
-        /// <param name="bcLower95CI"> The lower end of the 95% confidence interval for endpoint B. </param>
-        /// <param name="bUpper95CI"> The upper end of the 95% confidence interval for endpoint B. </param>
-        /// <returns> A new <see cref="Models.LatencyMetric"/> instance for mocking. </returns>
-        public static LatencyMetric LatencyMetric(string name = null, DateTimeOffset? endOn = null, float? aValue = null, float? bValue = null, float? delta = null, float? deltaPercent = null, float? acLower95CI = null, float? ahUpper95CI = null, float? bcLower95CI = null, float? bUpper95CI = null)
-        {
-            return new LatencyMetric(
-                name,
-                endOn,
-                aValue,
-                bValue,
-                delta,
-                deltaPercent,
-                acLower95CI,
-                ahUpper95CI,
-                bcLower95CI,
-                bUpper95CI,
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorTimeSeriesInfo"/>. </summary>
@@ -579,26 +1267,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
         /// <returns> A new <see cref="Models.FrontDoorTimeSeriesInfo"/> instance for mocking. </returns>
-        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri endpoint = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = null, FrontDoorTimeSeriesType? timeSeriesType = null, string country = null, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData)
         {
-            tags ??= new Dictionary<string, string>();
-            timeSeriesData ??= new List<FrontDoorTimeSeriesDataPoint>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            timeSeriesData ??= new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
 
             return new FrontDoorTimeSeriesInfo(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                default,
                 location,
-                endpoint,
-                startOn,
-                endOn,
-                aggregationInterval,
-                timeSeriesType,
-                country,
-                timeSeriesData?.ToList(),
-                serializedAdditionalRawData: null);
+                tags,
+                additionalBinaryDataProperties: null,
+                default);
         }
     }
 }

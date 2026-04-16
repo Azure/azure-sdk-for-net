@@ -7,72 +7,101 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> A backend pool is a collection of backends that can be routed to. </summary>
-    public partial class FrontDoorBackendPool : FrontDoorResourceData
+    public partial class FrontDoorBackendPool : SubResource
     {
         /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         public FrontDoorBackendPool()
         {
-            Backends = new ChangeTrackingList<FrontDoorBackend>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Front Door Backend Pool. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="backends"> The set of backends for this pool. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
-        /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="type"> Resource type. </param>
+        internal FrontDoorBackendPool(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackendPoolProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
         {
-            Backends = backends;
-            LoadBalancingSettings = loadBalancingSettings;
-            HealthProbeSettings = healthProbeSettings;
-            ResourceState = resourceState;
+            Properties = properties;
+            Name = name;
+            Type = @type;
         }
+
+        /// <summary> Properties of the Front Door Backend Pool. </summary>
+        [WirePath("properties")]
+        internal BackendPoolProperties Properties { get; set; }
+
+        /// <summary> Resource name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
 
         /// <summary> The set of backends for this pool. </summary>
         [WirePath("properties.backends")]
-        public IList<FrontDoorBackend> Backends { get; }
-        /// <summary> Load balancing settings for a backend pool. </summary>
-        internal WritableSubResource LoadBalancingSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadBalancingSettings.id")]
-        public ResourceIdentifier LoadBalancingSettingsId
+        public IList<FrontDoorBackend> Backends
         {
-            get => LoadBalancingSettings is null ? default : LoadBalancingSettings.Id;
-            set
+            get
             {
-                if (LoadBalancingSettings is null)
-                    LoadBalancingSettings = new WritableSubResource();
-                LoadBalancingSettings.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                return Properties.Backends;
             }
         }
 
-        /// <summary> L7 health probe settings for a backend pool. </summary>
-        internal WritableSubResource HealthProbeSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.healthProbeSettings.id")]
-        public ResourceIdentifier HealthProbeSettingsId
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadBalancingSettings.id")]
+        public string LoadBalancingSettingsId
         {
-            get => HealthProbeSettings is null ? default : HealthProbeSettings.Id;
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancingSettingsId;
+            }
             set
             {
-                if (HealthProbeSettings is null)
-                    HealthProbeSettings = new WritableSubResource();
-                HealthProbeSettings.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                Properties.LoadBalancingSettingsId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.healthProbeSettings.id")]
+        public string HealthProbeSettingsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthProbeSettingsId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendPoolProperties();
+                }
+                Properties.HealthProbeSettingsId = value;
             }
         }
 
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorResourceState? ResourceState { get; }
+        public FrontDoorResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
     }
 }

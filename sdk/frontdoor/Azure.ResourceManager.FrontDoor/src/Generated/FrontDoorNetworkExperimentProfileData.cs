@@ -7,88 +7,67 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary>
-    /// A class representing the FrontDoorNetworkExperimentProfile data model.
-    /// Defines an Network Experiment Profile and lists of Experiments
-    /// </summary>
-    public partial class FrontDoorNetworkExperimentProfileData : TrackedResourceData
+    /// <summary> Defines an Network Experiment Profile and lists of Experiments. </summary>
+    public partial class FrontDoorNetworkExperimentProfileData : ResourcewithSettableName
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public FrontDoorNetworkExperimentProfileData(AzureLocation location) : base(location)
+        public FrontDoorNetworkExperimentProfileData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceState"> Resource status. </param>
-        /// <param name="enabledState"> The state of the Experiment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of a Profile. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        internal FrontDoorNetworkExperimentProfileData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProfileProperties properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            ResourceState = resourceState;
-            EnabledState = enabledState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/> for deserialization. </summary>
-        internal FrontDoorNetworkExperimentProfileData()
-        {
-        }
+        /// <summary> The properties of a Profile. </summary>
+        [WirePath("properties")]
+        internal ProfileProperties Properties { get; set; }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
+
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]
-        public NetworkExperimentResourceState? ResourceState { get; }
+        public NetworkExperimentResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
         /// <summary> The state of the Experiment. </summary>
         [WirePath("properties.enabledState")]
-        public FrontDoorExperimentState? EnabledState { get; set; }
+        public FrontDoorExperimentState? EnabledState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.EnabledState = value.Value;
+            }
+        }
     }
 }

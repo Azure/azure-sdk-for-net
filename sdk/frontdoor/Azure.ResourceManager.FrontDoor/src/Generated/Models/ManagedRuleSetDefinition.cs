@@ -7,95 +7,83 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes the a managed rule set definition. </summary>
-    public partial class ManagedRuleSetDefinition : TrackedResourceData
+    public partial class ManagedRuleSetDefinition : Resource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ManagedRuleSetDefinition(AzureLocation location) : base(location)
-        {
-            RuleGroups = new ChangeTrackingList<ManagedRuleGroupDefinition>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
-        /// <param name="ruleSetId"> Id of the managed rule set. </param>
-        /// <param name="ruleSetType"> Type of the managed rule set. </param>
-        /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
-        /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            ProvisioningState = provisioningState;
-            RuleSetId = ruleSetId;
-            RuleSetType = ruleSetType;
-            RuleSetVersion = ruleSetVersion;
-            RuleGroups = ruleGroups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/> for deserialization. </summary>
         internal ManagedRuleSetDefinition()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinition"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties for a managed rule set definition. </param>
+        internal ManagedRuleSetDefinition(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedRuleSetDefinitionProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        {
+            Properties = properties;
+        }
+
+        /// <summary> Properties for a managed rule set definition. </summary>
+        [WirePath("properties")]
+        internal ManagedRuleSetDefinitionProperties Properties { get; }
+
         /// <summary> Provisioning state of the managed rule set. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Id of the managed rule set. </summary>
         [WirePath("properties.ruleSetId")]
-        public string RuleSetId { get; }
+        public string RuleSetId
+        {
+            get
+            {
+                return Properties.RuleSetId;
+            }
+        }
+
         /// <summary> Type of the managed rule set. </summary>
         [WirePath("properties.ruleSetType")]
-        public string RuleSetType { get; }
+        public string RuleSetType
+        {
+            get
+            {
+                return Properties.RuleSetType;
+            }
+        }
+
         /// <summary> Version of the managed rule set type. </summary>
         [WirePath("properties.ruleSetVersion")]
-        public string RuleSetVersion { get; }
+        public string RuleSetVersion
+        {
+            get
+            {
+                return Properties.RuleSetVersion;
+            }
+        }
+
         /// <summary> Rule groups of the managed rule set. </summary>
         [WirePath("properties.ruleGroups")]
-        public IReadOnlyList<ManagedRuleGroupDefinition> RuleGroups { get; }
+        public IReadOnlyList<ManagedRuleGroupDefinition> RuleGroups
+        {
+            get
+            {
+                return Properties.RuleGroups;
+            }
+        }
     }
 }

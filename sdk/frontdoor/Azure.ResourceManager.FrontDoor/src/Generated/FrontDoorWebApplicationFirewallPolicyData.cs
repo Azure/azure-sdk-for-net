@@ -7,161 +7,175 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    /// <summary>
-    /// A class representing the FrontDoorWebApplicationFirewallPolicy data model.
-    /// Defines web application firewall policy.
-    /// </summary>
-    public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData
+    /// <summary> Defines web application firewall policy. </summary>
+    public partial class FrontDoorWebApplicationFirewallPolicyData : Resource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
+        public FrontDoorWebApplicationFirewallPolicyData()
         {
-            FrontendEndpointLinks = new ChangeTrackingList<SubResource>();
-            RoutingRuleLinks = new ChangeTrackingList<SubResource>();
-            SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the web application firewall policy. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </param>
-        /// <param name="policySettings"> Describes settings for the policy. </param>
-        /// <param name="customRuleList"> Describes custom rules inside the policy. </param>
-        /// <param name="managedRules"> Describes managed rules inside the policy. </param>
-        /// <param name="frontendEndpointLinks"> Describes Frontend Endpoints associated with this Web Application Firewall policy. </param>
-        /// <param name="routingRuleLinks"> Describes Routing Rules associated with this Web Application Firewall policy. </param>
-        /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
-        /// <param name="provisioningState"> Provisioning state of the policy. </param>
-        /// <param name="resourceState"> Resource status of the policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorWebApplicationFirewallPolicyData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, string eTag, FrontDoorSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Sku = sku;
-            PolicySettings = policySettings;
-            CustomRuleList = customRuleList;
-            ManagedRules = managedRules;
-            FrontendEndpointLinks = frontendEndpointLinks;
-            RoutingRuleLinks = routingRuleLinks;
-            SecurityPolicyLinks = securityPolicyLinks;
-            ProvisioningState = provisioningState;
-            ResourceState = resourceState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/> for deserialization. </summary>
-        internal FrontDoorWebApplicationFirewallPolicyData()
-        {
-        }
+        /// <summary> Properties of the web application firewall policy. </summary>
+        [WirePath("properties")]
+        internal WebApplicationFirewallPolicyProperties Properties { get; set; }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
+
         /// <summary> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </summary>
+        [WirePath("sku")]
         internal FrontDoorSku Sku { get; set; }
-        /// <summary> Name of the pricing tier. </summary>
-        [WirePath("sku.name")]
-        public FrontDoorSkuName? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new FrontDoorSku();
-                Sku.Name = value;
-            }
-        }
 
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("properties.policySettings")]
-        public FrontDoorWebApplicationFirewallPolicySettings PolicySettings { get; set; }
-        /// <summary> Describes custom rules inside the policy. </summary>
-        internal CustomRuleList CustomRuleList { get; set; }
-        /// <summary> List of rules. </summary>
-        [WirePath("properties.customRules.rules")]
-        public IList<WebApplicationCustomRule> Rules
+        public FrontDoorWebApplicationFirewallPolicySettings PolicySettings
         {
             get
             {
-                if (CustomRuleList is null)
-                    CustomRuleList = new CustomRuleList();
-                return CustomRuleList.Rules;
+                return Properties is null ? default : Properties.PolicySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                Properties.PolicySettings = value;
             }
         }
 
         /// <summary> Describes managed rules inside the policy. </summary>
-        internal ManagedRuleSetList ManagedRules { get; set; }
-        /// <summary> List of rule sets. </summary>
-        [WirePath("properties.managedRules.managedRuleSets")]
-        public IList<ManagedRuleSet> ManagedRuleSets
+        [WirePath("properties.managedRules")]
+        public ManagedRuleSetList ManagedRules
         {
             get
             {
-                if (ManagedRules is null)
-                    ManagedRules = new ManagedRuleSetList();
-                return ManagedRules.ManagedRuleSets;
+                return Properties is null ? default : Properties.ManagedRules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                Properties.ManagedRules = value;
             }
         }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.frontendEndpointLinks")]
-        public IReadOnlyList<SubResource> FrontendEndpointLinks { get; }
+        public IReadOnlyList<FrontendEndpointLink> FrontendEndpointLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.FrontendEndpointLinks;
+            }
+        }
+
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.routingRuleLinks")]
-        public IReadOnlyList<SubResource> RoutingRuleLinks { get; }
+        public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.RoutingRuleLinks;
+            }
+        }
+
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.securityPolicyLinks")]
-        public IReadOnlyList<SubResource> SecurityPolicyLinks { get; }
+        public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.SecurityPolicyLinks;
+            }
+        }
+
         /// <summary> Provisioning state of the policy. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Resource status of the policy. </summary>
         [WirePath("properties.resourceState")]
-        public FrontDoorWebApplicationFirewallPolicyResourceState? ResourceState { get; }
+        public FrontDoorWebApplicationFirewallPolicyResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
+        /// <summary> List of rules. </summary>
+        [WirePath("properties.customRules.rules")]
+        public IList<WebApplicationCustomRule> CustomRuleListRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebApplicationFirewallPolicyProperties();
+                }
+                return Properties.CustomRuleListRules;
+            }
+        }
+
+        /// <summary> Name of the pricing tier. </summary>
+        [WirePath("sku.name")]
+        public FrontDoorSkuName? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new FrontDoorSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }
