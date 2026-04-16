@@ -42,6 +42,68 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         /// <summary> The properties associated with the identity. </summary>
         [WirePath("properties")]
-        public UserAssignedIdentityProperties Properties { get; set; }
+        internal UserAssignedIdentityProperties Properties { get; set; }
+
+        /// <summary> The id of the tenant which the identity belongs to. </summary>
+        [WirePath("properties.tenantId")]
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+        }
+
+        /// <summary> The id of the service principal object associated with the created identity. </summary>
+        [WirePath("properties.principalId")]
+        public Guid? PrincipalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalId;
+            }
+        }
+
+        /// <summary> The id of the app associated with the identity. This is a random generated UUID by MSI. </summary>
+        [WirePath("properties.clientId")]
+        public Guid? ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+        }
+
+        /// <summary> Enum to configure regional restrictions on identity assignment, as necessary. </summary>
+        [WirePath("properties.isolationScope")]
+        public IsolationScope? IsolationScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsolationScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserAssignedIdentityProperties();
+                }
+                Properties.IsolationScope = value.Value;
+            }
+        }
+
+        /// <summary> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </summary>
+        [WirePath("properties.assignmentRestrictions.providers")]
+        public IList<string> AssignmentRestrictionsProviders
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserAssignedIdentityProperties();
+                }
+                return Properties.AssignmentRestrictionsProviders;
+            }
+        }
     }
 }

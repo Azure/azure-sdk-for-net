@@ -17,8 +17,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> Describes an identity resource. </summary>
-    public partial class UserAssignedIdentityPatch : ResourceData, IJsonModel<UserAssignedIdentityPatch>
+    public partial class UserAssignedIdentityPatch : TrackedResourceData, IJsonModel<UserAssignedIdentityPatch>
     {
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityPatch"/> for deserialization. </summary>
+        internal UserAssignedIdentityPatch()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -88,27 +93,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 throw new FormatException($"The model {nameof(UserAssignedIdentityPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -146,7 +130,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             UserAssignedIdentityProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -185,7 +169,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

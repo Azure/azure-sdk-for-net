@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedServiceIdentities;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> System Assigned Identity properties. </summary>
-    public partial class SystemAssignedIdentityProperties : IJsonModel<SystemAssignedIdentityProperties>
+    internal partial class SystemAssignedIdentityProperties : IJsonModel<SystemAssignedIdentityProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             if (options.Format != "W" && Optional.IsDefined(ClientSecretUri))
             {
                 writer.WritePropertyName("clientSecretUrl"u8);
-                writer.WriteStringValue(ClientSecretUri);
+                writer.WriteStringValue(ClientSecretUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             Guid? tenantId = default;
             Guid? principalId = default;
             Guid? clientId = default;
-            string clientSecretUri = default;
+            Uri clientSecretUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 }
                 if (prop.NameEquals("clientSecretUrl"u8))
                 {
-                    clientSecretUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

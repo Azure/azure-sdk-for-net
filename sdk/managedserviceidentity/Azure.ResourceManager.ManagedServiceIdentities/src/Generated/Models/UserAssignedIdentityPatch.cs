@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     /// <summary> Describes an identity resource. </summary>
-    public partial class UserAssignedIdentityPatch : ResourceData
+    public partial class UserAssignedIdentityPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityPatch"/>. </summary>
-        public UserAssignedIdentityPatch()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public UserAssignedIdentityPatch(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityPatch"/>. </summary>
@@ -34,21 +34,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties associated with the identity. </param>
-        internal UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, UserAssignedIdentityProperties properties) : base(id, name, resourceType, systemData)
+        internal UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, IDictionary<string, string> tags, UserAssignedIdentityProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Location = location;
-            Tags = tags;
             Properties = properties;
         }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public string Location { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties associated with the identity. </summary>
         [WirePath("properties")]

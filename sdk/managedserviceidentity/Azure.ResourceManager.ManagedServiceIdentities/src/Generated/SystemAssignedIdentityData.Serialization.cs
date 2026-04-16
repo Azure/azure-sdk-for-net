@@ -18,7 +18,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     /// <summary> Describes a system assigned identity resource. </summary>
-    public partial class SystemAssignedIdentityData : ResourceData, IJsonModel<SystemAssignedIdentityData>
+    public partial class SystemAssignedIdentityData : TrackedResourceData, IJsonModel<SystemAssignedIdentityData>
     {
         /// <summary> Initializes a new instance of <see cref="SystemAssignedIdentityData"/> for deserialization. </summary>
         internal SystemAssignedIdentityData()
@@ -96,24 +96,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -146,8 +128,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureLocation location = default;
             SystemAssignedIdentityProperties properties = default;
-            string location = default;
             IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,6 +165,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,11 +177,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         continue;
                     }
                     properties = SystemAssignedIdentityProperties.DeserializeSystemAssignedIdentityProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -229,8 +211,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
                 location,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
