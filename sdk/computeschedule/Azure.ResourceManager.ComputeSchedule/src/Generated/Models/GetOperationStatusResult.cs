@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="GetOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationStatusResult(IReadOnlyList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetOperationStatusResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of resource operations based on their operation ids. </summary>
-        public IReadOnlyList<ResourceOperationResult> Results { get; }
+        public IList<ResourceOperationResult> Results { get; }
     }
 }

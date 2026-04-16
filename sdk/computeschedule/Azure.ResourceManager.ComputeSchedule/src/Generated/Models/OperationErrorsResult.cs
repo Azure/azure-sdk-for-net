@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="requestErrorCode"> Request level error code. </param>
         /// <param name="requestErrorDetails"> Request level error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationErrorsResult(string operationId, DateTimeOffset? createdOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IReadOnlyList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationErrorsResult(string operationId, DateTimeOffset? createdOn, DateTimeOffset? activationOn, DateTimeOffset? completedOn, IList<OperationErrorDetails> operationErrors, string requestErrorCode, string requestErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             CreatedOn = createdOn;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> A list of errors associated with the operationid. </summary>
-        public IReadOnlyList<OperationErrorDetails> OperationErrors { get; }
+        public IList<OperationErrorDetails> OperationErrors { get; }
 
         /// <summary> Request level error code. </summary>
         public string RequestErrorCode { get; }

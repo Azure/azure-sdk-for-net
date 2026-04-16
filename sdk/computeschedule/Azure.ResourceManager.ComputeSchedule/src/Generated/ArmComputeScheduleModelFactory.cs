@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -1252,21 +1251,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 errorDetails,
                 scheduledActionId,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProvisionPayload"/>. </summary>
-        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
-        /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
-        /// <param name="resourceCount"> Number of VMs to be created. </param>
-        /// <param name="resourcePrefix"> if resourceOverrides doesn't contain "name", service will create name based of prefix and ResourceCount e.g. resourceprefix-0,resourceprefix-1.. </param>
-        /// <returns> A new <see cref="Models.ResourceProvisionPayload"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProvisionPayload ResourceProvisionPayload(IDictionary<string, BinaryData> baseProfile, IEnumerable<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix)
-        {
-            baseProfile ??= new ChangeTrackingDictionary<string, BinaryData>();
-            resourceOverrides ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new ResourceProvisionPayload(default, default, resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
         }
     }
 }

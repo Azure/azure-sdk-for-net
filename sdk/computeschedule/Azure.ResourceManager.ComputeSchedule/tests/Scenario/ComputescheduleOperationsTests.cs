@@ -476,89 +476,84 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var resourceConfigParameters = new ResourceProvisionFlexPayload(1, flexProperties)
             {
                 ResourcePrefix = "testflex",
-            };
-
-            // baseProfile: properties common to all VMs in the batch
-            resourceConfigParameters.BaseProfile["resourcegroupName"] = BinaryData.FromString($"\"{rgName}\"");
-            resourceConfigParameters.BaseProfile["computeApiVersion"] = BinaryData.FromString("\"2023-09-01\"");
-            resourceConfigParameters.BaseProfile["zones"] = BinaryData.FromObjectAsJson(new[] { "1", "2", "3" });
-            resourceConfigParameters.BaseProfile["properties"] = BinaryData.FromObjectAsJson(new
-            {
-                hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
-                storageProfile = new
+                VirtualMachineBaseProfile = new BulkVMConfiguration
                 {
-                    imageReference = new
+                    ResourceGroupName = rgName,
+                    ComputeApiVersion = "2023-09-01",
+                    Zones = { "1", "2", "3" },
+                    Properties = new BulkActionVMProperties
                     {
-                        publisher = "MicrosoftWindowsServer",
-                        offer = "WindowsServer",
-                        sku = "2022-datacenter-azure-edition",
-                        version = "latest"
-                    },
-                    osDisk = new
-                    {
-                        osType = "Windows",
-                        createOption = "FromImage",
-                        caching = "ReadWrite",
-                        managedDisk = new { storageAccountType = "Standard_LRS" },
-                        deleteOption = "Detach",
-                        diskSizeGB = 127
-                    },
-                    diskControllerType = "SCSI"
-                },
-                networkProfile = new
-                {
-                    networkInterfaceConfigurations = new[]
-                    {
-                        new
+                        HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                        StorageProfile = new StorageProfile
                         {
-                            name = "testflexnic",
-                            properties = new
+                            ImageReference = new ImageReference
                             {
-                                primary = true,
-                                enableIPForwarding = true,
-                                ipConfigurations = new[]
-                                {
-                                    new
-                                    {
-                                        name = "testflexnic",
-                                        properties = new
-                                        {
-                                            subnet = new { id = subnetId },
-                                            primary = true,
-                                            applicationGatewayBackendAddressPools = Array.Empty<object>(),
-                                            loadBalancerBackendAddressPools = Array.Empty<object>()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    networkApiVersion = "2022-07-01"
-                }
-            });
-
-            // resourceOverrides: per-VM properties (name, location, osProfile with credentials)
-            var vmOverride = new Dictionary<string, BinaryData>
-            {
-                ["name"] = BinaryData.FromString("\"testflexvm0\""),
-                ["location"] = BinaryData.FromString($"\"{Location}\""),
-                ["properties"] = BinaryData.FromObjectAsJson(new
-                {
-                    hardwareProfile = new { vmSize = "Standard_D2ads_v5" },
-                    osProfile = new
-                    {
-                        computerName = "testflexvm",
-                        adminUsername = "testadmin",
-                        adminPassword = "TestPassword123!",
-                        windowsConfiguration = new
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2022-datacenter-azure-edition",
+                                Version = "latest",
+                            },
+                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            {
+                                OsType = OperatingSystemTypes.Windows,
+                                Caching = CachingTypes.ReadWrite,
+                                ManagedDisk = new ComputeScheduleManagedDiskConfig { StorageAccountType = StorageAccountTypes.StandardLRS },
+                                DeleteOption = DiskDeleteOptionTypes.Detach,
+                                DiskSizeGB = 127,
+                            },
+                            DiskControllerType = DiskControllerTypes.SCSI,
+                        },
+                        NetworkProfile = new NetworkProfile
                         {
-                            provisionVmAgent = true,
-                            enableAutomaticUpdates = true
-                        }
-                    }
-                })
+                            NetworkApiVersion = new NetworkApiVersion("2022-07-01"),
+                            NetworkInterfaceConfigurations =
+                            {
+                                new VirtualMachineNetworkInterfaceConfiguration("testflexnic")
+                                {
+                                    Properties = new VirtualMachineNetworkInterfaceConfigurationProperties(
+                                        new[]
+                                        {
+                                            new VirtualMachineNetworkInterfaceIPConfiguration("testflexnic")
+                                            {
+                                                Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties
+                                                {
+                                                    SubnetId = subnetId,
+                                                    Primary = true,
+                                                },
+                                            },
+                                        })
+                                    {
+                                        Primary = true,
+                                        EnableIPForwarding = true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                VirtualMachineOverrides =
+                {
+                    new BulkVMConfiguration
+                    {
+                        Name = "testflexvm0",
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_D2ads_v5" },
+                            OsProfile = new OSProfile
+                            {
+                                ComputerName = "testflexvm",
+                                AdminUsername = "testadmin",
+                                AdminPassword = "TestPassword123!",
+                                WindowsConfiguration = new WindowsConfiguration
+                                {
+                                    ProvisionVMAgent = true,
+                                    EnableAutomaticUpdates = true,
+                                },
+                            },
+                        },
+                    },
+                },
             };
-            resourceConfigParameters.ResourceOverrides.Add(vmOverride);
 
             var executeCreateFlexRequest = new ExecuteCreateFlexContent(resourceConfigParameters, executionParameters)
             {

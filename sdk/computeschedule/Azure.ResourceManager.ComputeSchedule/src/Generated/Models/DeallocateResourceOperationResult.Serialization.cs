@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string description = default;
             string resourceType = default;
             AzureLocation location = default;
-            IReadOnlyList<ResourceOperationResult> results = default;
+            IList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

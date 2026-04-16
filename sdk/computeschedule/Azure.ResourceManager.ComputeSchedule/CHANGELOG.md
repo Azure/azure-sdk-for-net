@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Updated the ComputeSchedule RP api-version from `2026-03-01-preview` to `2026-04-15-preview`.
+
 ### Breaking Changes
+
+- `ResourceProvisionPayload.BaseProfile` property of type `IDictionary<string, BinaryData>` has been replaced by `ResourceProvisionPayload.VirtualMachineBaseProfile` of type `BulkVMConfiguration`.
+- `ResourceProvisionPayload.ResourceOverrides` property of type `IList<IDictionary<string, BinaryData>>` has been replaced by `ResourceProvisionPayload.VirtualMachineOverrides` of type `IList<BulkVMConfiguration>`.
 
 ### Bugs Fixed
 
