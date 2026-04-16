@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
     [ModelReaderWriterBuildable(typeof(EncryptionSettingsElement))]
     [ModelReaderWriterBuildable(typeof(EncryptionSettingsGroup))]
     [ModelReaderWriterBuildable(typeof(EventGridAndResourceGraph))]
-    [ModelReaderWriterBuildable(typeof(Models.ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomAction))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationCustomActionParameter))]
     [ModelReaderWriterBuildable(typeof(GalleryApplicationData))]
