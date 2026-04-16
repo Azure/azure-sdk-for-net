@@ -226,6 +226,37 @@ class AzureEngSemanticVersion : IComparable {
     $this.IncrementAndSetToPrerelease("Minor")
   }
 
+  [void] IncrementAndSetToPostRelease() {
+    if ($this.BuildNumber)
+    {
+      throw "Cannot increment releases tagged with azure pipelines build numbers"
+    }
+
+    if ($this.IsPostRelease) {
+      $this.PostReleaseNumber++
+    }
+    else {
+      $this.IsPostRelease = $true
+      $this.PostReleaseNumber = 1
+      $this.PostReleaseSeparator = ".post"
+    }
+  }
+
+  # Sets the version to a prerelease state with the specified label and number.
+  # This clears any post-release state to ensure a clean prerelease version.
+  [void] SetPrerelease([string] $Label, [int] $Number) {
+    # Clear post-release state
+    if ($this.IsPostRelease) {
+      $this.IsPostRelease = $false
+      $this.PostReleaseNumber = 0
+      $this.PostReleaseSeparator = ""
+    }
+
+    $this.PrereleaseLabel = $Label
+    $this.PrereleaseNumber = $Number
+    $this.IsPrerelease = $true
+  }
+
   [void] SetupPythonConventions()
   {
     # Python uses no separators and "b" for beta so this sets up the the object to work with those conventions
@@ -546,6 +577,22 @@ class AzureEngSemanticVersion : IComparable {
     $expected = "1.1.0b1"
     if ($expected -ne $postIncVer.ToString()) {
       Write-Host "Error: post-release increment did not produce expected result. Expected: $expected, Actual: $($postIncVer)"
+    }
+
+    # Post-release increment stays in post state
+    $postBumpVer = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0.post1")
+    $postBumpVer.IncrementAndSetToPostRelease()
+    $expected = "1.0.0.post2"
+    if ($expected -ne $postBumpVer.ToString()) {
+      Write-Host "Error: post-release bump did not produce expected result. Expected: $expected, Actual: $($postBumpVer)"
+    }
+
+    # Non-post version enters post state
+    $gaToPost = [AzureEngSemanticVersion]::ParsePythonVersionString("1.0.0")
+    $gaToPost.IncrementAndSetToPostRelease()
+    $expected = "1.0.0.post1"
+    if ($expected -ne $gaToPost.ToString()) {
+      Write-Host "Error: GA to post-release did not produce expected result. Expected: $expected, Actual: $($gaToPost)"
     }
 
     Write-Host "QuickTests done"
