@@ -34,6 +34,8 @@ extends:
   ${{ else }}:
     template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    featureFlags:
+      incrementalSDLBinaryAnalysis: false
     ${{ if eq(parameters.oneESTemplateTag, 'canary') }}:
       # Enable 1es template team to verify validation has been run on canary
       customBuildTags:
