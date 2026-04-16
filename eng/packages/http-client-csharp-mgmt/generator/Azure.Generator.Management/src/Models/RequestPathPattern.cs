@@ -50,8 +50,6 @@ namespace Azure.Generator.Management.Models
 
         private string _path;
         private IReadOnlyList<RequestPathSegment> _segments;
-        private ResourceTypePattern? _resourceType;
-        private bool _resourceTypeComputed;
 
         /// <summary> Initializes a new instance of <see cref="RequestPathPattern"/> from a raw path string. </summary>
         /// <param name="path">The raw request path string.</param>
@@ -245,25 +243,6 @@ namespace Azure.Generator.Management.Models
         public static bool operator !=(RequestPathPattern? left, RequestPathPattern? right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Extracts the ARM resource type from the path pattern.
-        /// For example, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// returns a ResourceTypePattern for "Microsoft.Compute/virtualMachines".
-        /// The result is computed once and cached.
-        /// </summary>
-        internal ResourceTypePattern? ResourceType
-        {
-            get
-            {
-                if (!_resourceTypeComputed)
-                {
-                    _resourceType = ResourceTypePattern.FromSegments(_segments);
-                    _resourceTypeComputed = true;
-                }
-                return _resourceType;
-            }
         }
 
         /// <summary> Implicitly converts a <see cref="RequestPathPattern"/> to its string representation. </summary>
