@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Front Door Load Balancer. </param>
-        internal FrontDoorData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal FrontDoorData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontDoorProperties properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Resource(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Resource(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Resource name. </summary>
         [WirePath("name")]

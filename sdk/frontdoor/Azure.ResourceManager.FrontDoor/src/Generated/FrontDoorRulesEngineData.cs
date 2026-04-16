@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Rules Engine Configuration. </param>
-        internal FrontDoorRulesEngineData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RulesEngineProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RulesEngineProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

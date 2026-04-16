@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="properties"> Properties of the web application firewall policy. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </param>
-        internal FrontDoorWebApplicationFirewallPolicyData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, string eTag, FrontDoorSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, string eTag, FrontDoorSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;

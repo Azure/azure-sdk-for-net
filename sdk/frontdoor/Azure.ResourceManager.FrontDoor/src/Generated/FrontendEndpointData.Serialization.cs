@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -124,7 +125,11 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

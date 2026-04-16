@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Frontend endpoint. </param>
-        internal FrontendEndpointData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontendEndpointProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal FrontendEndpointData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FrontendEndpointProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
