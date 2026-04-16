@@ -54,6 +54,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(body);
         Assert.That(doc.RootElement.TryGetProperty("error", out var error), Is.True);
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     /// <summary>
@@ -77,6 +78,9 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc2 = JsonDocument.Parse(body2);
         Assert.That(doc2.RootElement.TryGetProperty("error", out var error2), Is.True);
         Assert.That(error2.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error2.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        // Spec: "Cannot delete an in-flight response."
+        Assert.That(error2.GetProperty("message").GetString(), Is.EqualTo("Cannot delete an in-flight response."));
 
         // Clean up
         tcs.SetResult();

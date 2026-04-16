@@ -307,11 +307,22 @@ internal sealed class ResponseEndpointHandler
                     throw new ResourceNotFoundException($"Response '{responseId}' not found.");
                 }
 
-                // Guard: SSE replay requires background + streaming (B2)
-                if (!execution.IsBackground || !execution.IsStreaming)
+                // Guard: SSE replay requires background (B2)
+                if (!execution.IsBackground)
                 {
                     throw new BadRequestException(
-                        "SSE replay is only available for background streaming responses.");
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
+                }
+
+                // Guard: SSE replay requires streaming (B2)
+                if (!execution.IsStreaming)
+                {
+                    throw new BadRequestException(
+                        "This response cannot be streamed because it was not created with stream=true.",
+                        code: null,
+                        paramName: "stream");
                 }
             }
             else
@@ -327,7 +338,9 @@ internal sealed class ResponseEndpointHandler
                 if (persisted.Background != true)
                 {
                     throw new BadRequestException(
-                        "SSE replay is only available for background streaming responses.");
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
                 }
             }
 
@@ -389,7 +402,7 @@ internal sealed class ResponseEndpointHandler
 
             // Background execution is still in progress — cannot delete
             throw new BadRequestException(
-                "Response is currently in progress and cannot be deleted.");
+                "Cannot delete an in-flight response.");
         }
 
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).

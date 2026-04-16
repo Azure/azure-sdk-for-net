@@ -40,13 +40,17 @@ public class GetResponseProtocolTests : ProtocolTestBase
 
         var responseId = await CreateDefaultResponseAsync();
 
-        // SSE replay on non-bg response → 400 (per B14/B35)
+        // SSE replay on non-bg response → 400 (per B2)
         var getResponse = await GetResponseStreamAsync(responseId);
 
         Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(getResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        // Spec: "This response cannot be streamed because it was not created with background=true."
+        XAssert.Contains("background=true", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("stream"));
     }
 
     [Test]
@@ -90,6 +94,7 @@ public class GetResponseProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(getResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 
@@ -164,6 +169,13 @@ public class GetResponseProtocolTests : ProtocolTestBase
         var getResponse = await GetResponseStreamAsync(responseId);
 
         Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        using var doc = await ParseJsonAsync(getResponse);
+        var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        // Spec: "This response cannot be streamed because it was not created with stream=true."
+        XAssert.Contains("stream=true", error.GetProperty("message").GetString());
+        Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("stream"));
     }
 
     // ── T058: starting_after ──────────────────────────────────

@@ -98,6 +98,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
@@ -111,6 +112,7 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 

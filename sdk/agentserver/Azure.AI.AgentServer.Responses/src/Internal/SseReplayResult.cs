@@ -100,7 +100,9 @@ internal sealed class SseReplayResult : IResult
             httpContext.Response.Headers.Remove("Cache-Control");
             httpContext.Response.Headers.Remove("Connection");
             httpContext.Response.Headers.Remove("X-Accel-Buffering");
-            await ApiErrorFactory.InvalidRequest(ex.Message).ExecuteAsync(httpContext);
+            await ApiErrorFactory.InvalidRequest(
+                "This response cannot be streamed because it was not created with stream=true.",
+                param: "stream").ExecuteAsync(httpContext);
         }
         catch (OperationCanceledException)
         {

@@ -191,8 +191,8 @@ internal sealed class ResponseOrchestrator
                 ResponseStatus.Cancelled => persisted,
                 ResponseStatus.Completed => throw new BadRequestException("Cannot cancel a completed response."),
                 ResponseStatus.Failed => throw new BadRequestException("Cannot cancel a failed response."),
-                ResponseStatus.Incomplete => throw new BadRequestException("Cannot cancel an incomplete response."),
-                _ => throw new BadRequestException("Cannot cancel a response that is not in progress."),
+                ResponseStatus.Incomplete => throw new BadRequestException("Cannot cancel a response in terminal state."),
+                _ => throw new BadRequestException("Cannot cancel a response in terminal state."),
             };
         }
 
@@ -212,7 +212,7 @@ internal sealed class ResponseOrchestrator
             case ResponseStatus.Failed:
                 throw new BadRequestException("Cannot cancel a failed response.");
             case ResponseStatus.Incomplete:
-                throw new BadRequestException("Cannot cancel an incomplete response.");
+                throw new BadRequestException("Cannot cancel a response in terminal state.");
             case ResponseStatus.Cancelled:
                 // B3: idempotent — return current state
                 return execution.Response!.Snapshot();
