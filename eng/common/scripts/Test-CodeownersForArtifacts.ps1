@@ -1,7 +1,8 @@
 param(
-    $AzsdkPath,
-    $PackageInfoDirectory,
-    $Repo
+    [string] $AzsdkPath,
+    [string] $PackageInfoDirectory,
+    [array] $SdkTypes,
+    [string] $Repo
 )
 
 . "$PSScriptRoot/common.ps1"
@@ -10,6 +11,11 @@ $failedPackages = @()
 
 foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -File) {
     $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
+    if ($SdkTypes -notcontains $pkgProperties.SdkType) {
+        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because its SdkType '$($pkgProperties.SdkType)' is not in the list of SdkTypes to validate."
+        continue
+    }
+
     Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
 
     # Validate packages with a release date (intended to release)

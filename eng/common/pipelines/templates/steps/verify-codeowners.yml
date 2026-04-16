@@ -5,6 +5,14 @@ parameters:
   - name: Repo
     type: string
     default: $(Build.Repository.Name)
+  - name: SdkTypes
+    type: object
+    default:
+      - client
+      - compat
+      - data
+      - functions
+      - datamovement
 
 steps:
   - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
@@ -20,4 +28,5 @@ steps:
       arguments: >-
         -AzsdkPath '$(AZSDK)'
         -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
+        -SdkTypes '${{ join(',', parameters.SdkTypes) }}'
         -Repo '${{ parameters.Repo }}'
