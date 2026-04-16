@@ -6,8 +6,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
-    public readonly partial struct ContainerGroupProvisioningState : IEquatable<ContainerGroupProvisioningState>
+// Backward compatibility: the old SDK exposed ContainerGroupProvisioningState as a custom extensible enum.
+// The new generator inlines the union type as a plain string. This custom type preserves the old API surface.
+public readonly partial struct ContainerGroupProvisioningState : IEquatable<ContainerGroupProvisioningState>
     {
         private readonly string _value;
 

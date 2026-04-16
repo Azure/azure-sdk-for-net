@@ -12,7 +12,11 @@ using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    public partial class ContainerGroupProfileData
+    // Backward compatibility: the old SDK had a 3-param constructor taking (location, containers, osType).
+// The new generator only produces a 1-param constructor (location).
+// Also provides nullable OSType wrapper since the generated property is non-nullable
+// (osType is required in ContainerGroupProfileProperties).
+public partial class ContainerGroupProfileData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
