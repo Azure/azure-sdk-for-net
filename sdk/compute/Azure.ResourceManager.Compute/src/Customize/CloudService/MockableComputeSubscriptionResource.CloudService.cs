@@ -20,12 +20,14 @@ namespace Azure.ResourceManager.Compute.Mocking
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
@@ -38,12 +40,14 @@ namespace Azure.ResourceManager.Compute.Mocking
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)

@@ -153,10 +153,12 @@ namespace Azure.ResourceManager.Compute
         public virtual CloudServiceRoleInstanceCollection GetCloudServiceRoleInstances() => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<CloudServiceRoleInstanceResource> GetCloudServiceRoleInstance(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceRoleInstanceResource>> GetCloudServiceRoleInstanceAsync(string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
@@ -165,10 +167,12 @@ namespace Azure.ResourceManager.Compute
         public virtual CloudServiceRoleCollection GetCloudServiceRoles() => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<CloudServiceRoleResource> GetCloudServiceRole(string roleName, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<CloudServiceRoleResource>> GetCloudServiceRoleAsync(string roleName, CancellationToken cancellationToken = default) => throw new NotSupportedException(_notSupported);
 

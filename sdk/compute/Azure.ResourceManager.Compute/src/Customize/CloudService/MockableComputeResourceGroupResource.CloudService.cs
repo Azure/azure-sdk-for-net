@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Mocking
 {
@@ -19,12 +20,14 @@ namespace Azure.ResourceManager.Compute.Mocking
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Response<CloudServiceResource> GetCloudService(string cloudServiceName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException(CloudServiceNotSupported);
 
         /// <summary> Not supported. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(CloudServiceNotSupported)]
         public virtual Task<Response<CloudServiceResource>> GetCloudServiceAsync(string cloudServiceName, CancellationToken cancellationToken = default)
