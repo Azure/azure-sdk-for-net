@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages.Tests
         [Test]
         public void Constructor_InvalidConnectionString_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(null));
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient((string)null));
             Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
             Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
             Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));

@@ -193,7 +193,7 @@
           "isApiVersion": false,
           "optional": false,
           "scope": "Method",
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.getBlob.Parameter.anonymous.storageAccount",
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient..anonymous.storageAccount",
           "readOnly": false,
           "access": "public",
           "decorators": []

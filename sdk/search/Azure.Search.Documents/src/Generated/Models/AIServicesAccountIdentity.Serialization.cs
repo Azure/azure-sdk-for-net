@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("subdomainUrl"u8);
-            writer.WriteStringValue(SubdomainUrl);
+            writer.WriteStringValue(SubdomainUri.AbsoluteUri);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SearchIndexerDataIdentity identity = default;
-            string subdomainUrl = default;
+            Uri subdomainUri = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("subdomainUrl"u8))
                 {
-                    subdomainUrl = prop.Value.GetString();
+                    subdomainUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AIServicesAccountIdentity(odataType, description, additionalBinaryDataProperties, identity, subdomainUrl);
+            return new AIServicesAccountIdentity(odataType, description, additionalBinaryDataProperties, identity, subdomainUri);
         }
     }
 }
