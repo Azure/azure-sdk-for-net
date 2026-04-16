@@ -8,55 +8,30 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Capacity pool patch resource. </summary>
-    public partial class CapacityPoolPatch
+    public partial class CapacityPoolPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
-        public CapacityPoolPatch()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CapacityPoolPatch"/>. </summary>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Capacity pool properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityPoolPatch(AzureLocation? location, ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, PoolPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityPoolPatch(ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ResourceIdentifier id, string name, IDictionary<string, string> tags, PoolPatchProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Location = location;
-            Id = id;
-            Name = name;
-            Type = @type;
-            Tags = tags;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> Resource location. </summary>
-        public AzureLocation? Location { get; set; }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier Id { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Capacity pool properties. </summary>
         internal PoolPatchProperties Properties { get; set; }

@@ -2243,30 +2243,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 etag);
         }
 
-        /// <param name="location"> Resource location. </param>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
-        /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
-        public static CapacityPoolPatch CapacityPoolPatch(AzureLocation? location = default, ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, long? size = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, int? customThroughputMibpsInt = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolPatch(
-                location,
-                id,
-                name,
-                @type,
-                tags,
-                size is null && qosType is null && isCoolAccessEnabled is null && customThroughputMibpsInt is null ? default : new PoolPatchProperties(size, qosType, isCoolAccessEnabled, customThroughputMibpsInt, null),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Restore payload for Single File Backup Restore. </summary>
         /// <param name="fileList"> List of files to be restored. </param>
         /// <param name="restoreFilePath"> Destination folder where the files will be restored. The path name should start with a forward slash. If it is omitted from request then restore is done at the root folder of the destination volume by default. </param>
@@ -2455,19 +2431,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="qosType"></param>
         /// <param name="isCoolAccessEnabled"></param>
         /// <param name="customThroughputMibpsInt"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, int? customThroughputMibpsInt)
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? size = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, int? customThroughputMibpsInt = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CapacityPoolPatch(
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 location,
                 id,
                 name,
-                default,
                 tags,
-                default,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
@@ -2905,16 +2881,9 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolPatch(
-                location,
-                id,
-                name,
-                default,
-                tags,
-                default,
-                additionalBinaryDataProperties: null);
+            // TODO: Remove this manual fix after microsoft/typespec#10397 is resolved and regenerated.
+            // Generator bug: arguments were emitted in constructor order instead of method parameter order.
+            return CapacityPoolPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, size: size, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, customThroughputMibpsInt: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupVolume"/>. </summary>
