@@ -348,6 +348,49 @@ namespace Microsoft.Azure.WebPubSub.Common
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("thumbprint")]
         public string Thumbprint { get { throw null; } }
     }
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Text.Json.SourceGeneration", "10.0.14.7603")]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.ConnectEventResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.JoinedGroupEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.LeftGroupEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponseProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttConnectProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequest))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequestProperties))]
+    [System.Text.Json.Serialization.JsonSerializableAttribute(typeof(Microsoft.Azure.WebPubSub.Common.MqttUserProperty))]
+    [System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute(PropertyNamingPolicy=System.Text.Json.Serialization.JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition=System.Text.Json.Serialization.JsonIgnoreCondition.Never, WriteIndented=false)]
+    public partial class WebPubSubCommonJsonSerializerContext : System.Text.Json.Serialization.JsonSerializerContext, System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver
+    {
+        public WebPubSubCommonJsonSerializerContext() : base (default(System.Text.Json.JsonSerializerOptions)) { }
+        public WebPubSubCommonJsonSerializerContext(System.Text.Json.JsonSerializerOptions options) : base (default(System.Text.Json.JsonSerializerOptions)) { }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.ConnectEventRequest> ConnectEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.ConnectEventResponse> ConnectEventResponse { get { throw null; } }
+        public static Microsoft.Azure.WebPubSub.Common.WebPubSubCommonJsonSerializerContext Default { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest> DisconnectedEventRequest { get { throw null; } }
+        protected override System.Text.Json.JsonSerializerOptions? GeneratedSerializerOptions { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<int> Int32 { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>> IReadOnlyListMqttUserProperty { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.JoinedGroupEventRequest> JoinedGroupEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.LeftGroupEventRequest> LeftGroupEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponse> MqttConnectEventErrorResponse { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventErrorResponseProperties> MqttConnectEventErrorResponseProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventRequest> MqttConnectEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponse> MqttConnectEventResponse { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectEventResponseProperties> MqttConnectEventResponseProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttConnectProperties> MqttConnectProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequest> MqttDisconnectedEventRequest { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttDisconnectedEventRequestProperties> MqttDisconnectedEventRequestProperties { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<Microsoft.Azure.WebPubSub.Common.MqttUserProperty> MqttUserProperty { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<string> String { get { throw null; } }
+        public System.Text.Json.Serialization.Metadata.JsonTypeInfo<string[]> StringArray { get { throw null; } }
+        public override System.Text.Json.Serialization.Metadata.JsonTypeInfo? GetTypeInfo(System.Type type) { throw null; }
+        System.Text.Json.Serialization.Metadata.JsonTypeInfo? global::System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver.GetTypeInfo(System.Type type, System.Text.Json.JsonSerializerOptions options) { throw null; }
+    }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class WebPubSubConnectionContext
     {

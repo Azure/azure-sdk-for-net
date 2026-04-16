@@ -16,8 +16,7 @@ namespace Microsoft.Azure.WebPubSub.Common
 
             var mqtt = JsonSerializer.Deserialize(
                 element.GetProperty(MqttDisconnectedEventRequest.MqttProperty).GetRawText(),
-                typeof(MqttDisconnectedEventRequestProperties),
-                options) as MqttDisconnectedEventRequestProperties;
+                WebPubSubCommonJsonSerializerContext.Default.MqttDisconnectedEventRequestProperties);
 
             return new MqttDisconnectedEventRequest(
                 null,
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             writer.WriteString(DisconnectedEventRequest.ReasonProperty, value.Reason);
 
             writer.WritePropertyName(MqttDisconnectedEventRequest.MqttProperty);
-            JsonSerializer.Serialize(writer, value.Mqtt, typeof(MqttDisconnectedEventRequestProperties), options);
+            JsonSerializer.Serialize(writer, value.Mqtt, WebPubSubCommonJsonSerializerContext.Default.MqttDisconnectedEventRequestProperties);
 
             if (value.ConnectionContext != null)
             {

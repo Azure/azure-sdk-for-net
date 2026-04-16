@@ -16,8 +16,7 @@ namespace Microsoft.Azure.WebPubSub.Common
 
             var mqtt = JsonSerializer.Deserialize(
                 element.GetProperty(MqttConnectEventRequest.MqttPropertyName).GetRawText(),
-                typeof(MqttConnectProperties),
-                options) as MqttConnectProperties;
+                WebPubSubCommonJsonSerializerContext.Default.MqttConnectProperties);
 
             return new MqttConnectEventRequest(
                 null,
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.WebPubSub.Common
             JsonSerializationHelpers.WriteClientCertificates(writer, value.ClientCertificates);
 
             writer.WritePropertyName(MqttConnectEventRequest.MqttPropertyName);
-            JsonSerializer.Serialize(writer, value.Mqtt, typeof(MqttConnectProperties), options);
+            JsonSerializer.Serialize(writer, value.Mqtt, WebPubSubCommonJsonSerializerContext.Default.MqttConnectProperties);
 
             if (value.ConnectionContext != null)
             {
