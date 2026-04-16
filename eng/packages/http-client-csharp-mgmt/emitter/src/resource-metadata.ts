@@ -174,19 +174,18 @@ export class RequestPath {
     }
 
     if (lastProvidersIndex === -1) {
-      // No providers segment — check well-known scope patterns
-      if (
+      // No providers segment — return well-known resource types
+      if (this.segments.length === 0) {
+        return "Microsoft.Resources/tenants";
+      } else if (
         this.segments.length >= 3 &&
         this.segments[0] === "subscriptions" &&
         this.segments[2] === "resourceGroups"
       ) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (
-        this.segments.length >= 1 &&
-        this.segments[0] === "subscriptions"
-      ) {
+      } else if (this.segments[0] === "subscriptions") {
         return "Microsoft.Resources/subscriptions";
-      } else if (this.segments.length >= 1 && this.segments[0] === "tenants") {
+      } else if (this.segments[0] === "tenants") {
         return "Microsoft.Resources/tenants";
       }
       throw new Error(`Path ${this.path} doesn't have resource type`);
@@ -327,8 +326,7 @@ export interface ResourceScopeInfo {
   scopeIdPattern: RequestPath;
   /**
    * The ARM resource type of the scope (e.g., "Microsoft.Compute/virtualMachines").
-   * Undefined when the scope is empty (tenant scope),
-   * or when the resource type contains variable segments (e.g., "{parentProviderNamespace}/{parentResourceType}").
+   * Undefined when the resource type contains variable segments (e.g., "{parentProviderNamespace}/{parentResourceType}").
    */
   scopeResourceType?: string;
 }
@@ -817,11 +815,9 @@ export function postProcessArmResources(
     const scopePath = resource.metadata.resourceIdPattern.scopePath;
     resource.metadata.scope.scopeIdPattern = scopePath;
     // Include the scope's resource type when it's fully constant (no variable segments)
-    if (scopePath.length > 0) {
-      const rt = scopePath.resourceType;
-      if (!rt.includes("{")) {
-        resource.metadata.scope.scopeResourceType = rt;
-      }
+    const rt = scopePath.resourceType;
+    if (!rt.includes("{")) {
+      resource.metadata.scope.scopeResourceType = rt;
     }
   }
 
