@@ -14,16 +14,6 @@
 - Removed incorrectly writable `ProvisioningState` on `IpamPool`, `StaticCidr`, `NetworkVerifierWorkspace`, `ReachabilityAnalysisIntent`, and `ReachabilityAnalysisRun`.
 - Removed phantom `SubnetId` and `VirtualNetworkId` properties from `IPAllocation` that do not exist in the Bicep reference.
 
-## 1.1.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.2 (2026-03-24)
 
 ### Features Added
