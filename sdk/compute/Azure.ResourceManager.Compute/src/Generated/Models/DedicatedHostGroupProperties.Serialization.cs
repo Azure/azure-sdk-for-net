@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("platformFaultDomainCount"u8);
             writer.WriteNumberValue(PlatformFaultDomainCount);
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in Hosts)
+                foreach (SubResource item in DedicatedHosts)
                 {
                     if (item == null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             int platformFaultDomainCount = default;
-            IReadOnlyList<SubResource> hosts = default;
+            IReadOnlyList<SubResource> dedicatedHosts = default;
             DedicatedHostGroupInstanceView instanceView = default;
             bool? supportAutomaticPlacement = default;
             DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                             array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
                         }
                     }
-                    hosts = array;
+                    dedicatedHosts = array;
                     continue;
                 }
                 if (prop.NameEquals("instanceView"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new DedicatedHostGroupProperties(
                 platformFaultDomainCount,
-                hosts ?? new ChangeTrackingList<SubResource>(),
+                dedicatedHosts ?? new ChangeTrackingList<SubResource>(),
                 instanceView,
                 supportAutomaticPlacement,
                 additionalCapabilities,

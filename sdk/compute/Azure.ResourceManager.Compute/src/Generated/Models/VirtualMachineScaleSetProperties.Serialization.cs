@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("overprovision"u8);
                 writer.WriteBooleanValue(Overprovision.Value);
             }
-            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVMs))
+            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
             {
                 writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs"u8);
-                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVMs.Value);
+                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(ConstrainedMaximumCapacity))
+            if (Optional.IsDefined(IsMaximumCapacityConstrained))
             {
                 writer.WritePropertyName("constrainedMaximumCapacity"u8);
-                writer.WriteBooleanValue(ConstrainedMaximumCapacity.Value);
+                writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
             string provisioningState = default;
             bool? overprovision = default;
-            bool? doNotRunExtensionsOnOverprovisionedVMs = default;
+            bool? doNotRunExtensionsOnOverprovisionedVms = default;
             string uniqueId = default;
             bool? singlePlacementGroup = default;
             bool? zoneBalance = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute.Models
             SpotRestorePolicy spotRestorePolicy = default;
             VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default;
             DateTimeOffset? timeCreated = default;
-            bool? constrainedMaximumCapacity = default;
+            bool? isMaximumCapacityConstrained = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    doNotRunExtensionsOnOverprovisionedVMs = prop.Value.GetBoolean();
+                    doNotRunExtensionsOnOverprovisionedVms = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("uniqueId"u8))
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    constrainedMaximumCapacity = prop.Value.GetBoolean();
+                    isMaximumCapacityConstrained = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("resiliencyPolicy"u8))
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute.Models
                 virtualMachineProfile,
                 provisioningState,
                 overprovision,
-                doNotRunExtensionsOnOverprovisionedVMs,
+                doNotRunExtensionsOnOverprovisionedVms,
                 uniqueId,
                 singlePlacementGroup,
                 zoneBalance,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Compute.Models
                 spotRestorePolicy,
                 priorityMixPolicy,
                 timeCreated,
-                constrainedMaximumCapacity,
+                isMaximumCapacityConstrained,
                 resiliencyPolicy,
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,

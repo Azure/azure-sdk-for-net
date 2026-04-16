@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (Optional.IsDefined(MaxSurge))
+            if (Optional.IsDefined(IsMaxSurgeEnabled))
             {
                 writer.WritePropertyName("maxSurge"u8);
-                writer.WriteBooleanValue(MaxSurge.Value);
+                writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? enableCrossZoneUpgrade = default;
             bool? prioritizeUnhealthyInstances = default;
             bool? rollbackFailedInstancesOnPolicyBreach = default;
-            bool? maxSurge = default;
+            bool? isMaxSurgeEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maxSurge = prop.Value.GetBoolean();
+                    isMaxSurgeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                 enableCrossZoneUpgrade,
                 prioritizeUnhealthyInstances,
                 rollbackFailedInstancesOnPolicyBreach,
-                maxSurge,
+                isMaxSurgeEnabled,
                 additionalBinaryDataProperties);
         }
     }

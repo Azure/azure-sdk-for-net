@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(RecommendedMachineConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VCPUs))
+            if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue(VCPUs, options);
+                writer.WriteObjectValue(VCpus, options);
             }
             if (Optional.IsDefined(Memory))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ResourceRange vcpUs = default;
+            ResourceRange vCpus = default;
             ResourceRange memory = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vcpUs = ResourceRange.DeserializeResourceRange(prop.Value, options);
+                    vCpus = ResourceRange.DeserializeResourceRange(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("memory"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecommendedMachineConfiguration(vcpUs, memory, additionalBinaryDataProperties);
+            return new RecommendedMachineConfiguration(vCpus, memory, additionalBinaryDataProperties);
         }
     }
 }

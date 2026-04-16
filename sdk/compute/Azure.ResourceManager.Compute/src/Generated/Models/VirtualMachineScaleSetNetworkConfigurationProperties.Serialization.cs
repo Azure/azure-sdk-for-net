@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Optional.IsDefined(DisableTcpStateTracking))
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
-                writer.WriteBooleanValue(DisableTcpStateTracking.Value);
+                writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
             if (Optional.IsDefined(EnableFpga))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (VirtualMachineScaleSetIPConfiguration item in IpConfigurations)
+            foreach (VirtualMachineScaleSetIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             bool? primary = default;
             bool? enableAcceleratedNetworking = default;
-            bool? disableTcpStateTracking = default;
+            bool? isTcpStateTrackingDisabled = default;
             bool? enableFpga = default;
             SubResource networkSecurityGroup = default;
             VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    disableTcpStateTracking = prop.Value.GetBoolean();
+                    isTcpStateTrackingDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableFpga"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetNetworkConfigurationProperties(
                 primary,
                 enableAcceleratedNetworking,
-                disableTcpStateTracking,
+                isTcpStateTrackingDisabled,
                 enableFpga,
                 networkSecurityGroup,
                 dnsSettings,

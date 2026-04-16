@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
-            if (Optional.IsDefined(GetSecureVMGuestStateSAS))
+            if (Optional.IsDefined(GetSecureVmGuestStateSas))
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
-                writer.WriteBooleanValue(GetSecureVMGuestStateSAS.Value);
+                writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
             if (Optional.IsDefined(FileFormat))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             AccessLevel access = default;
             int durationInSeconds = default;
-            bool? getSecureVMGuestStateSAS = default;
+            bool? getSecureVmGuestStateSas = default;
             DiskImageFileFormat? fileFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    getSecureVMGuestStateSAS = prop.Value.GetBoolean();
+                    getSecureVmGuestStateSas = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("fileFormat"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GrantAccessData(access, durationInSeconds, getSecureVMGuestStateSAS, fileFormat, additionalBinaryDataProperties);
+            return new GrantAccessData(access, durationInSeconds, getSecureVmGuestStateSas, fileFormat, additionalBinaryDataProperties);
         }
     }
 }

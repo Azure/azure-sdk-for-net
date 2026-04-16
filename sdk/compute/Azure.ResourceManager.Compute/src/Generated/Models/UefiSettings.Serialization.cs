@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(UefiSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(VTpmEnabled))
+            if (Optional.IsDefined(IsVirtualTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
-                writer.WriteBooleanValue(VTpmEnabled.Value);
+                writer.WriteBooleanValue(IsVirtualTpmEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? secureBootEnabled = default;
-            bool? vTpmEnabled = default;
+            bool? isSecureBootEnabled = default;
+            bool? isVirtualTpmEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("vTpmEnabled"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vTpmEnabled = prop.Value.GetBoolean();
+                    isVirtualTpmEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UefiSettings(secureBootEnabled, vTpmEnabled, additionalBinaryDataProperties);
+            return new UefiSettings(isSecureBootEnabled, isVirtualTpmEnabled, additionalBinaryDataProperties);
         }
     }
 }

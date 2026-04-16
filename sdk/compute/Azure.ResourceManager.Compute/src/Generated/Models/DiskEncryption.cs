@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
-        /// <param name="type"> The type of key used to encrypt the data of the disk. </param>
+        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, ComputeEncryptionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryption(ResourceIdentifier diskEncryptionSetId, ComputeEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
-            Type = @type;
+            EncryptionType = encryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
 
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
-        public ComputeEncryptionType? Type { get; set; }
+        public ComputeEncryptionType? EncryptionType { get; set; }
     }
 }

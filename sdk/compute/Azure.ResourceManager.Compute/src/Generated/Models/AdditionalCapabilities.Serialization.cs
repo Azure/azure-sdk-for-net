@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             if (Optional.IsDefined(HibernationEnabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? ultraSSDEnabled = default;
+            bool? ultraSsdEnabled = default;
             bool? hibernationEnabled = default;
             bool? enableFips1403Encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    ultraSSDEnabled = prop.Value.GetBoolean();
+                    ultraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hibernationEnabled"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AdditionalCapabilities(ultraSSDEnabled, hibernationEnabled, enableFips1403Encryption, additionalBinaryDataProperties);
+            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled, enableFips1403Encryption, additionalBinaryDataProperties);
         }
     }
 }

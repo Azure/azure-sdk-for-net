@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineScaleSetIPTag> IpTags
+        public IList<VirtualMachineScaleSetIPTag> IPTags
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
                 }
-                return Properties.IpTags;
+                return Properties.IPTags;
             }
         }
 

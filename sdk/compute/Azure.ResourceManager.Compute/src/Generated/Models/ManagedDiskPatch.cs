@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsGroup EncryptionSettingsCollection
+        public EncryptionSettingsGroup EncryptionSettingsGroup
         {
             get
             {
-                return Properties is null ? default : Properties.EncryptionSettingsCollection;
+                return Properties is null ? default : Properties.EncryptionSettingsGroup;
             }
             set
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.EncryptionSettingsCollection = value;
+                Properties.EncryptionSettingsGroup = value;
             }
         }
 
         /// <summary> The number of IOPS allowed for this disk; only settable for UltraSSD disks. One operation can transfer between 4k and 256k bytes. </summary>
-        public long? DiskIOPSReadWrite
+        public long? DiskIopsReadWrite
         {
             get
             {
-                return Properties is null ? default : Properties.DiskIOPSReadWrite;
+                return Properties is null ? default : Properties.DiskIopsReadWrite;
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskIOPSReadWrite = value.Value;
+                Properties.DiskIopsReadWrite = value.Value;
             }
         }
 
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The total number of IOPS that will be allowed across all VMs mounting the shared disk as ReadOnly. One operation can transfer between 4k and 256k bytes. </summary>
-        public long? DiskIOPSReadOnly
+        public long? DiskIopsReadOnly
         {
             get
             {
-                return Properties is null ? default : Properties.DiskIOPSReadOnly;
+                return Properties is null ? default : Properties.DiskIopsReadOnly;
             }
             set
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.DiskIOPSReadOnly = value.Value;
+                Properties.DiskIopsReadOnly = value.Value;
             }
         }
 
@@ -353,11 +353,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </summary>
-        public bool? OptimizedForFrequentAttach
+        public bool? IsOptimizedForFrequentAttach
         {
             get
             {
-                return Properties is null ? default : Properties.OptimizedForFrequentAttach;
+                return Properties is null ? default : Properties.IsOptimizedForFrequentAttach;
             }
             set
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new DiskUpdateProperties();
                 }
-                Properties.OptimizedForFrequentAttach = value.Value;
+                Properties.IsOptimizedForFrequentAttach = value.Value;
             }
         }
 

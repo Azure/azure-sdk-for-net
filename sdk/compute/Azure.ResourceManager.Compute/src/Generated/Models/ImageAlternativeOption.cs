@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAlternativeOption"/>. </summary>
-        /// <param name="type"> Describes the type of the alternative option. </param>
+        /// <param name="alternativeType"> Describes the type of the alternative option. </param>
         /// <param name="value"> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageAlternativeOption(ImageAlternativeType? @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageAlternativeOption(ImageAlternativeType? alternativeType, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            AlternativeType = alternativeType;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the type of the alternative option. </summary>
-        public ImageAlternativeType? Type { get; }
+        public ImageAlternativeType? AlternativeType { get; }
 
         /// <summary> Indicates the alternative option value specified by the Publisher. This is the Offer name when the type is Offer or the Plan name when the type is Plan. </summary>
         public string Value { get; }

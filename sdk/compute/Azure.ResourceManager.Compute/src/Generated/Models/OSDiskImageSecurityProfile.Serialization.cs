@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ConfidentialVMEncryptionType))
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
-                writer.WriteStringValue(ConfidentialVMEncryptionType.Value.ToString());
+                writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (Optional.IsDefined(SecureVMDiskEncryptionSetId))
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
-                writer.WriteStringValue(SecureVMDiskEncryptionSetId);
+                writer.WriteStringValue(SecureVmDiskEncryptionSetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ConfidentialVmEncryptionType? confidentialVMEncryptionType = default;
-            string secureVMDiskEncryptionSetId = default;
+            ConfidentialVmEncryptionType? confidentialVmEncryptionType = default;
+            string secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    confidentialVMEncryptionType = new ConfidentialVmEncryptionType(prop.Value.GetString());
+                    confidentialVmEncryptionType = new ConfidentialVmEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("secureVMDiskEncryptionSetId"u8))
                 {
-                    secureVMDiskEncryptionSetId = prop.Value.GetString();
+                    secureVmDiskEncryptionSetId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OSDiskImageSecurityProfile(confidentialVMEncryptionType, secureVMDiskEncryptionSetId, additionalBinaryDataProperties);
+            return new OSDiskImageSecurityProfile(confidentialVmEncryptionType, secureVmDiskEncryptionSetId, additionalBinaryDataProperties);
         }
     }
 }

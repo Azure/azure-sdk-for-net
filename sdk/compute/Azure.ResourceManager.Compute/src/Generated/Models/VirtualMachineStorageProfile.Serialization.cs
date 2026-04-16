@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
             }
-            if (Optional.IsDefined(AlignRegionalDisksToVMZone))
+            if (Optional.IsDefined(AlignRegionalDisksToVmZone))
             {
                 writer.WritePropertyName("alignRegionalDisksToVMZone"u8);
-                writer.WriteBooleanValue(AlignRegionalDisksToVMZone.Value);
+                writer.WriteBooleanValue(AlignRegionalDisksToVmZone.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineOSDisk osDisk = default;
             IList<VirtualMachineDataDisk> dataDisks = default;
             DiskControllerType? diskControllerType = default;
-            bool? alignRegionalDisksToVMZone = default;
+            bool? alignRegionalDisksToVmZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    alignRegionalDisksToVMZone = prop.Value.GetBoolean();
+                    alignRegionalDisksToVmZone = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osDisk,
                 dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(),
                 diskControllerType,
-                alignRegionalDisksToVMZone,
+                alignRegionalDisksToVmZone,
                 additionalBinaryDataProperties);
         }
     }

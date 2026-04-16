@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityMetadataUri"u8);
                 writer.WriteStringValue(SecurityMetadataUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(PerformancePlus))
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus"u8);
-                writer.WriteBooleanValue(PerformancePlus.Value);
+                writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
             if (Optional.IsDefined(ElasticSanResourceId))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? logicalSectorSize = default;
             Uri securityDataUri = default;
             Uri securityMetadataUri = default;
-            bool? performancePlus = default;
+            bool? isPerformancePlusEnabled = default;
             ResourceIdentifier elasticSanResourceId = default;
             ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
             long? instantAccessDurationMinutes = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    performancePlus = prop.Value.GetBoolean();
+                    isPerformancePlusEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("elasticSanResourceId"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Compute.Models
                 logicalSectorSize,
                 securityDataUri,
                 securityMetadataUri,
-                performancePlus,
+                isPerformancePlusEnabled,
                 elasticSanResourceId,
                 provisionedBandwidthCopySpeed,
                 instantAccessDurationMinutes,

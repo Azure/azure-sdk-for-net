@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsGroup EncryptionSettingsCollection
+        public EncryptionSettingsGroup EncryptionSettingsGroup
         {
             get
             {
-                return Properties is null ? default : Properties.EncryptionSettingsCollection;
+                return Properties is null ? default : Properties.EncryptionSettingsGroup;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new SnapshotUpdateProperties();
                 }
-                Properties.EncryptionSettingsCollection = value;
+                Properties.EncryptionSettingsGroup = value;
             }
         }
 

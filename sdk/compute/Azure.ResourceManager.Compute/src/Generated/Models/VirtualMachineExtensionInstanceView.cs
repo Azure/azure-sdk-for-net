@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionInstanceView"/>. </summary>
         /// <param name="name"> The virtual machine extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="virtualMachineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="substatuses"> The resource status information. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionInstanceView(string name, string @type, string typeHandlerVersion, IList<InstanceViewStatus> substatuses, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionInstanceView(string name, string virtualMachineExtensionInstanceViewType, string typeHandlerVersion, IList<InstanceViewStatus> substatuses, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            VirtualMachineExtensionInstanceViewType = virtualMachineExtensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Substatuses = substatuses;
             Statuses = statuses;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; set; }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type { get; set; }
+        public string VirtualMachineExtensionInstanceViewType { get; set; }
 
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

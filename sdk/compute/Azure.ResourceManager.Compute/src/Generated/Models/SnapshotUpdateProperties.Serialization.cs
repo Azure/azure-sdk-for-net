@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsCollection, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             OperatingSystemTypes? osType = default;
             int? diskSizeGB = default;
-            EncryptionSettingsGroup encryptionSettingsCollection = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
             DiskEncryption encryption = default;
             NetworkAccessPolicy? networkAccessPolicy = default;
             ResourceIdentifier diskAccessId = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
+                    encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new SnapshotUpdateProperties(
                 osType,
                 diskSizeGB,
-                encryptionSettingsCollection,
+                encryptionSettingsGroup,
                 encryption,
                 networkAccessPolicy,
                 diskAccessId,

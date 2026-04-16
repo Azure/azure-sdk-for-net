@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(VirtualMachineExtensionHandlerInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(VirtualMachineExtensionHandlerInstanceViewType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string @type = default;
+            string virtualMachineExtensionHandlerInstanceViewType = default;
             string typeHandlerVersion = default;
             InstanceViewStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    virtualMachineExtensionHandlerInstanceViewType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineExtensionHandlerInstanceView(@type, typeHandlerVersion, status, additionalBinaryDataProperties);
+            return new VirtualMachineExtensionHandlerInstanceView(virtualMachineExtensionHandlerInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties);
         }
     }
 }

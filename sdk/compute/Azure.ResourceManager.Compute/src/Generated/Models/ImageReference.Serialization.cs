@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (Optional.IsDefined(SharedGalleryImageId))
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
-                writer.WriteStringValue(SharedGalleryImageId);
+                writer.WriteStringValue(SharedGalleryImageUniqueId);
             }
             if (Optional.IsDefined(CommunityGalleryImageId))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.Models
             string sku = default;
             string version = default;
             string exactVersion = default;
-            string sharedGalleryImageId = default;
+            string sharedGalleryImageUniqueId = default;
             string communityGalleryImageId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("sharedGalleryImageId"u8))
                 {
-                    sharedGalleryImageId = prop.Value.GetString();
+                    sharedGalleryImageUniqueId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("communityGalleryImageId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                 sku,
                 version,
                 exactVersion,
-                sharedGalleryImageId,
+                sharedGalleryImageUniqueId,
                 communityGalleryImageId);
         }
     }

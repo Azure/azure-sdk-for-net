@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("overprovision"u8);
                 writer.WriteBooleanValue(Overprovision.Value);
             }
-            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVMs))
+            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
             {
                 writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs"u8);
-                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVMs.Value);
+                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
             }
             if (Optional.IsDefined(SinglePlacementGroup))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.Models
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
             VirtualMachineScaleSetUpdateVmProfile virtualMachineProfile = default;
             bool? overprovision = default;
-            bool? doNotRunExtensionsOnOverprovisionedVMs = default;
+            bool? doNotRunExtensionsOnOverprovisionedVms = default;
             bool? singlePlacementGroup = default;
             AdditionalCapabilities additionalCapabilities = default;
             ScaleInPolicy scaleInPolicy = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    doNotRunExtensionsOnOverprovisionedVMs = prop.Value.GetBoolean();
+                    doNotRunExtensionsOnOverprovisionedVms = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("singlePlacementGroup"u8))
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Compute.Models
                 automaticRepairsPolicy,
                 virtualMachineProfile,
                 overprovision,
-                doNotRunExtensionsOnOverprovisionedVMs,
+                doNotRunExtensionsOnOverprovisionedVms,
                 singlePlacementGroup,
                 additionalCapabilities,
                 scaleInPolicy,

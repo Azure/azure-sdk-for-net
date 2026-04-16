@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
         public VirtualMachinePublicIPAddressConfigurationProperties()
         {
-            IpTags = new ChangeTrackingList<VirtualMachineIPTag>();
+            IPTags = new ChangeTrackingList<VirtualMachineIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePublicIPAddressConfigurationProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DeleteOption = deleteOption;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineIPTag> IpTags { get; } = new ChangeTrackingList<VirtualMachineIPTag>();
+        public IList<VirtualMachineIPTag> IPTags { get; } = new ChangeTrackingList<VirtualMachineIPTag>();
 
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
         internal ComputeSubResourceData PublicIPPrefix { get; set; }

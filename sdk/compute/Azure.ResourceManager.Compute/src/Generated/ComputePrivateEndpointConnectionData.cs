@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between DiskAccess and Virtual Network. </summary>
-        public ComputePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public ComputePrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

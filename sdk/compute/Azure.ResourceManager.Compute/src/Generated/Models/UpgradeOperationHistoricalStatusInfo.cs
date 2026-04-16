@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="UpgradeOperationHistoricalStatusInfo"/>. </summary>
         /// <param name="properties"> Information about the properties of the upgrade operation. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="upgradeOperationHistoricalStatusInfoType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string @type, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeOperationHistoricalStatusInfo(UpgradeOperationHistoricalStatusInfoProperties properties, string upgradeOperationHistoricalStatusInfoType, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            Type = @type;
+            UpgradeOperationHistoricalStatusInfoType = upgradeOperationHistoricalStatusInfoType;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         public UpgradeOperationHistoricalStatusInfoProperties Properties { get; }
 
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string UpgradeOperationHistoricalStatusInfoType { get; }
 
         /// <summary> Resource location. </summary>
         public string Location { get; }

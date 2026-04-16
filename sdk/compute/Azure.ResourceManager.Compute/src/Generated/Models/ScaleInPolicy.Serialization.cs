@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("forceDeletion"u8);
                 writer.WriteBooleanValue(ForceDeletion.Value);
             }
-            if (Optional.IsDefined(PrioritizeUnhealthyVMs))
+            if (Optional.IsDefined(PrioritizeUnhealthyVms))
             {
                 writer.WritePropertyName("prioritizeUnhealthyVMs"u8);
-                writer.WriteBooleanValue(PrioritizeUnhealthyVMs.Value);
+                writer.WriteBooleanValue(PrioritizeUnhealthyVms.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<VirtualMachineScaleSetScaleInRule> rules = default;
             bool? forceDeletion = default;
-            bool? prioritizeUnhealthyVMs = default;
+            bool? prioritizeUnhealthyVms = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    prioritizeUnhealthyVMs = prop.Value.GetBoolean();
+                    prioritizeUnhealthyVms = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, prioritizeUnhealthyVMs, additionalBinaryDataProperties);
+            return new ScaleInPolicy(rules ?? new ChangeTrackingList<VirtualMachineScaleSetScaleInRule>(), forceDeletion, prioritizeUnhealthyVms, additionalBinaryDataProperties);
         }
     }
 }

@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("patchStatus"u8);
                 writer.WriteObjectValue(PatchStatus, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsVMInStandbyPool))
+            if (options.Format != "W" && Optional.IsDefined(IsVmInStandbyPool))
             {
                 writer.WritePropertyName("isVMInStandbyPool"u8);
-                writer.WriteBooleanValue(IsVMInStandbyPool.Value);
+                writer.WriteBooleanValue(IsVmInStandbyPool.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
             string assignedHost = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             VirtualMachinePatchStatus patchStatus = default;
-            bool? isVMInStandbyPool = default;
+            bool? isVmInStandbyPool = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    isVMInStandbyPool = prop.Value.GetBoolean();
+                    isVmInStandbyPool = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute.Models
                 assignedHost,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 patchStatus,
-                isVMInStandbyPool,
+                isVmInStandbyPool,
                 additionalBinaryDataProperties);
         }
     }

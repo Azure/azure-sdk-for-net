@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
             }
-            if (Optional.IsDefined(DiskIOPSReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
-                writer.WriteNumberValue(DiskIOPSReadWrite.Value);
+                writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadWrite))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             VirtualMachineScaleSetManagedDisk managedDisk = default;
-            long? diskIOPSReadWrite = default;
+            long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
             DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadWrite = prop.Value.GetInt64();
+                    diskIopsReadWrite = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadWrite"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
                 createOption,
                 diskSizeGB,
                 managedDisk,
-                diskIOPSReadWrite,
+                diskIopsReadWrite,
                 diskMBpsReadWrite,
                 deleteOption,
                 additionalBinaryDataProperties);

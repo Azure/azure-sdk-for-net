@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(GalleryImageValidationsProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ValidationEtag))
+            if (Optional.IsDefined(ValidationETag))
             {
                 writer.WritePropertyName("validationEtag"u8);
-                writer.WriteStringValue(ValidationEtag);
+                writer.WriteStringValue(ValidationETag);
             }
             if (Optional.IsCollectionDefined(ExecutedValidations))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string validationEtag = default;
+            string validationETag = default;
             IReadOnlyList<GalleryImageExecutedValidation> executedValidations = default;
             IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("validationEtag"u8))
                 {
-                    validationEtag = prop.Value.GetString();
+                    validationETag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("executedValidations"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageValidationsProfile(validationEtag, executedValidations ?? new ChangeTrackingList<GalleryImageExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<ComputeGalleryPlatformAttribute>(), additionalBinaryDataProperties);
+            return new GalleryImageValidationsProfile(validationETag, executedValidations ?? new ChangeTrackingList<GalleryImageExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<ComputeGalleryPlatformAttribute>(), additionalBinaryDataProperties);
         }
     }
 }

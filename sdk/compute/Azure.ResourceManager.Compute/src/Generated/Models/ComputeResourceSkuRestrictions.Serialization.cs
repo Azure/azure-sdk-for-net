@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(ComputeResourceSkuRestrictions)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ComputeResourceSkuRestrictionsType? @type = default;
+            ComputeResourceSkuRestrictionsType? restrictionsType = default;
             IReadOnlyList<string> values = default;
             ComputeResourceSkuRestrictionInfo restrictionInfo = default;
             ComputeResourceSkuRestrictionsReasonCode? reasonCode = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToComputeResourceSkuRestrictionsType();
+                    restrictionsType = prop.Value.GetString().ToComputeResourceSkuRestrictionsType();
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeResourceSkuRestrictions(@type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
+            return new ComputeResourceSkuRestrictions(restrictionsType, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
     }
 }

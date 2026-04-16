@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="type"> It is type of the extended location. </param>
+        /// <param name="extendedLocationType"> It is type of the extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ExtendedLocationType = extendedLocationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; set; }
 
         /// <summary> It is type of the extended location. </summary>
-        public GalleryExtendedLocationType? Type { get; set; }
+        public GalleryExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }

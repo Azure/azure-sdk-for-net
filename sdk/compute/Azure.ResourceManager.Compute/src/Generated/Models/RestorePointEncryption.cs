@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorePointEncryption"/>. </summary>
         /// <param name="diskEncryptionSet"> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </param>
-        /// <param name="type"> The type of key used to encrypt the data of the disk restore point. </param>
+        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk restore point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointEncryption(DiskEncryptionSetParameters diskEncryptionSet, RestorePointEncryptionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointEncryption(DiskEncryptionSetParameters diskEncryptionSet, RestorePointEncryptionType? encryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionSet = diskEncryptionSet;
-            Type = @type;
+            EncryptionType = encryptionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
         /// <summary> The type of key used to encrypt the data of the disk restore point. </summary>
-        public RestorePointEncryptionType? Type { get; set; }
+        public RestorePointEncryptionType? EncryptionType { get; set; }
 
         /// <summary> Resource Id. </summary>
         public ResourceIdentifier DiskEncryptionSetId

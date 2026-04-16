@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
-        public bool? DisableTcpStateTracking
+        public bool? IsTcpStateTrackingDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.DisableTcpStateTracking;
+                return Properties is null ? default : Properties.IsTcpStateTrackingDisabled;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                Properties.DisableTcpStateTracking = value.Value;
+                Properties.IsTcpStateTrackingDisabled = value.Value;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine scale set IP Configuration. </summary>
-        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations
+        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IPConfigurations
         {
             get
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VirtualMachineScaleSetUpdateNetworkConfigurationProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="SnapshotUpdateProperties"/>. </summary>
         /// <param name="osType"> the Operating System type. </param>
         /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
-        /// <param name="encryptionSettingsCollection"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
         /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
         /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
         /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsCollection, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotUpdateProperties(OperatingSystemTypes? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             DiskSizeGB = diskSizeGB;
-            EncryptionSettingsCollection = encryptionSettingsCollection;
+            EncryptionSettingsGroup = encryptionSettingsGroup;
             Encryption = encryption;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsGroup EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
 
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
         public DiskEncryption Encryption { get; set; }

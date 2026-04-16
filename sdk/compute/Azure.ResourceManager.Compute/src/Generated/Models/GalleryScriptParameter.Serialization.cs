@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(GalleryScriptParameter)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (Optional.IsDefined(MinValue))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
             string defaultValue = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GalleryScriptParameterType? @type = default;
+            GalleryScriptParameterType? parameterType = default;
             string minValue = default;
             string maxValue = default;
             IList<string> enumValues = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new GalleryScriptParameterType(prop.Value.GetString());
+                    parameterType = new GalleryScriptParameterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minValue"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Models
                 defaultValue,
                 description,
                 additionalBinaryDataProperties,
-                @type,
+                parameterType,
                 minValue,
                 maxValue,
                 enumValues ?? new ChangeTrackingList<string>());

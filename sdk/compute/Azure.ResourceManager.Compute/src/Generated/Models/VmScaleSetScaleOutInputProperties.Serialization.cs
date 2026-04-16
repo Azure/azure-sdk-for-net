@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(VMScaleSetScaleOutInputProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Zone))
+            if (Optional.IsDefined(VmScaleSetScaleOutInputZone))
             {
                 writer.WritePropertyName("zone"u8);
-                writer.WriteStringValue(Zone);
+                writer.WriteStringValue(VmScaleSetScaleOutInputZone);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string zone = default;
+            string vmScaleSetScaleOutInputZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("zone"u8))
                 {
-                    zone = prop.Value.GetString();
+                    vmScaleSetScaleOutInputZone = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMScaleSetScaleOutInputProperties(zone, additionalBinaryDataProperties);
+            return new VMScaleSetScaleOutInputProperties(vmScaleSetScaleOutInputZone, additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(GalleryImageExecutedValidation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ExecutedValidationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ExecutedValidationType);
             }
             if (Optional.IsDefined(Status))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string @type = default;
+            string executedValidationType = default;
             ComputeGalleryValidationStatus? status = default;
             string version = default;
             DateTimeOffset? executionOn = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    executedValidationType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageExecutedValidation(@type, status, version, executionOn, additionalBinaryDataProperties);
+            return new GalleryImageExecutedValidation(executedValidationType, status, version, executionOn, additionalBinaryDataProperties);
         }
     }
 }

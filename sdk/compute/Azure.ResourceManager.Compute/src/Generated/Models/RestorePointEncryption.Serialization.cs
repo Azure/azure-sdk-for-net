@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 writer.WriteObjectValue(DiskEncryptionSet, options);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskEncryptionSetParameters diskEncryptionSet = default;
-            RestorePointEncryptionType? @type = default;
+            RestorePointEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new RestorePointEncryptionType(prop.Value.GetString());
+                    encryptionType = new RestorePointEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePointEncryption(diskEncryptionSet, @type, additionalBinaryDataProperties);
+            return new RestorePointEncryption(diskEncryptionSet, encryptionType, additionalBinaryDataProperties);
         }
     }
 }

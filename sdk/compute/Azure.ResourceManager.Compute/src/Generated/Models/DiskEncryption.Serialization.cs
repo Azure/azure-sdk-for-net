@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(EncryptionType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier diskEncryptionSetId = default;
-            ComputeEncryptionType? @type = default;
+            ComputeEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new ComputeEncryptionType(prop.Value.GetString());
+                    encryptionType = new ComputeEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskEncryption(diskEncryptionSetId, @type, additionalBinaryDataProperties);
+            return new DiskEncryption(diskEncryptionSetId, encryptionType, additionalBinaryDataProperties);
         }
     }
 }

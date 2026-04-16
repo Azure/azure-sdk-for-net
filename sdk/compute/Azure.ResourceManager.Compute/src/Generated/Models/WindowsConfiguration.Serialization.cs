@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
             if (Optional.IsDefined(EnableAutomaticUpdates))
             {
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("winRM"u8);
                 writer.WriteObjectValue(WinRM, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnableVMAgentPlatformUpdates))
+            if (options.Format != "W" && Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
-                writer.WriteBooleanValue(EnableVMAgentPlatformUpdates.Value);
+                writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? provisionVMAgent = default;
+            bool? provisionVmAgent = default;
             bool? enableAutomaticUpdates = default;
             string timeZone = default;
             IList<AdditionalUnattendContent> additionalUnattendContent = default;
             PatchSettings patchSettings = default;
             WinRMConfiguration winRM = default;
-            bool? enableVMAgentPlatformUpdates = default;
+            bool? isVmAgentPlatformUpdatesEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    provisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpdates"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    enableVMAgentPlatformUpdates = prop.Value.GetBoolean();
+                    isVmAgentPlatformUpdatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -236,13 +236,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new WindowsConfiguration(
-                provisionVMAgent,
+                provisionVmAgent,
                 enableAutomaticUpdates,
                 timeZone,
                 additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
                 patchSettings,
                 winRM,
-                enableVMAgentPlatformUpdates,
+                isVmAgentPlatformUpdatesEnabled,
                 additionalBinaryDataProperties);
         }
     }

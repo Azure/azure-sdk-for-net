@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdditionalCapabilities"/>. </summary>
-        /// <param name="ultraSSDEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
+        /// <param name="ultraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
         /// <param name="hibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
         /// <param name="enableFips1403Encryption"> The flag enables the usage of FIPS 140-3 compliant cryptography on the protectedSettings of an extension. Learn more at: https://aka.ms/linuxagentfipssupport. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalCapabilities(bool? ultraSSDEnabled, bool? hibernationEnabled, bool? enableFips1403Encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdditionalCapabilities(bool? ultraSsdEnabled, bool? hibernationEnabled, bool? enableFips1403Encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UltraSSDEnabled = ultraSSDEnabled;
+            UltraSsdEnabled = ultraSsdEnabled;
             HibernationEnabled = hibernationEnabled;
             EnableFips1403Encryption = enableFips1403Encryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </summary>
-        public bool? UltraSSDEnabled { get; set; }
+        public bool? UltraSsdEnabled { get; set; }
 
         /// <summary> The flag that enables or disables hibernation capability on the VM. </summary>
         public bool? HibernationEnabled { get; set; }

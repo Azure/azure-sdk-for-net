@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="MigrateVmToVirtualMachineScaleSetContent"/>. </summary>
         /// <param name="targetZone"> The target zone of VM migration to Flexible Virtual Machine Scale Set. </param>
         /// <param name="targetFaultDomain"> The target compute fault domain of VM migration to Flexible Virtual Machine Scale Set. </param>
-        /// <param name="targetVMSize"> The target Virtual Machine size of VM migration to Flexible Virtual Machine Scale Set. </param>
+        /// <param name="targetVmSize"> The target Virtual Machine size of VM migration to Flexible Virtual Machine Scale Set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateVmToVirtualMachineScaleSetContent(string targetZone, int? targetFaultDomain, string targetVMSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateVmToVirtualMachineScaleSetContent(string targetZone, int? targetFaultDomain, string targetVmSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetZone = targetZone;
             TargetFaultDomain = targetFaultDomain;
-            TargetVMSize = targetVMSize;
+            TargetVmSize = targetVmSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? TargetFaultDomain { get; set; }
 
         /// <summary> The target Virtual Machine size of VM migration to Flexible Virtual Machine Scale Set. </summary>
-        public string TargetVMSize { get; set; }
+        public string TargetVmSize { get; set; }
     }
 }

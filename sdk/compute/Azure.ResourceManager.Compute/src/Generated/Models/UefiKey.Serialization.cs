@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(UefiKey)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            UefiKeyType? @type = default;
+            UefiKeyType? keyType = default;
             IList<string> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new UefiKeyType(prop.Value.GetString());
+                    keyType = new UefiKeyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UefiKey(@type, value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new UefiKey(keyType, value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

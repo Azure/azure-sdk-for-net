@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsCollectionDefined(AdditionalReplicaSets))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? regionalReplicaCount = default;
             ImageStorageAccountType? storageAccountType = default;
             EncryptionImages encryption = default;
-            bool? excludeFromLatest = default;
+            bool? isExcludedFromLatest = default;
             IList<AdditionalReplicaSet> additionalReplicaSets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    excludeFromLatest = prop.Value.GetBoolean();
+                    isExcludedFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("additionalReplicaSets"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                 regionalReplicaCount,
                 storageAccountType,
                 encryption,
-                excludeFromLatest,
+                isExcludedFromLatest,
                 additionalReplicaSets ?? new ChangeTrackingList<AdditionalReplicaSet>(),
                 additionalBinaryDataProperties);
         }

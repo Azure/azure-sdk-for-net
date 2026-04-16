@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
-            ExtendedLocationType? @type = default;
+            ExtendedLocationType? extendedLocationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new ExtendedLocationType(prop.Value.GetString());
+                    extendedLocationType = new ExtendedLocationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute.Models
                 zones ?? new ChangeTrackingList<string>(),
                 zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
                 extendedLocations ?? new ChangeTrackingList<string>(),
-                @type,
+                extendedLocationType,
                 additionalBinaryDataProperties);
         }
     }

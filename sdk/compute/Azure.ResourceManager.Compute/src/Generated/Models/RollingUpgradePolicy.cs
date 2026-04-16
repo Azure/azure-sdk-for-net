@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enableCrossZoneUpgrade"> Allow VMSS to ignore AZ boundaries when constructing upgrade batches. Take into consideration the Update Domain and maxBatchInstancePercent to determine the batch size. </param>
         /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
         /// <param name="rollbackFailedInstancesOnPolicyBreach"> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </param>
-        /// <param name="maxSurge"> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </param>
+        /// <param name="isMaxSurgeEnabled"> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? maxSurge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? isMaxSurgeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableCrossZoneUpgrade = enableCrossZoneUpgrade;
             PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
             RollbackFailedInstancesOnPolicyBreach = rollbackFailedInstancesOnPolicyBreach;
-            MaxSurge = maxSurge;
+            IsMaxSurgeEnabled = isMaxSurgeEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? RollbackFailedInstancesOnPolicyBreach { get; set; }
 
         /// <summary> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </summary>
-        public bool? MaxSurge { get; set; }
+        public bool? IsMaxSurgeEnabled { get; set; }
     }
 }

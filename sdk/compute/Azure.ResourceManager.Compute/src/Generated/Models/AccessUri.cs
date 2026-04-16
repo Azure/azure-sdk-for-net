@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
-        /// <param name="accessSAS"> A SAS uri for accessing a disk. </param>
-        /// <param name="securityDataAccessSAS"> A SAS uri for accessing a VM guest state. </param>
-        /// <param name="securityMetadataAccessSAS"> A SAS uri for accessing a VM metadata. </param>
+        /// <param name="accessSas"> A SAS uri for accessing a disk. </param>
+        /// <param name="securityDataAccessSas"> A SAS uri for accessing a VM guest state. </param>
+        /// <param name="securityMetadataAccessSas"> A SAS uri for accessing a VM metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessUri(string accessSAS, string securityDataAccessSAS, string securityMetadataAccessSAS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessUri(string accessSas, string securityDataAccessSas, string securityMetadataAccessSas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AccessSAS = accessSAS;
-            SecurityDataAccessSAS = securityDataAccessSAS;
-            SecurityMetadataAccessSAS = securityMetadataAccessSAS;
+            AccessSas = accessSas;
+            SecurityDataAccessSas = securityDataAccessSas;
+            SecurityMetadataAccessSas = securityMetadataAccessSas;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A SAS uri for accessing a disk. </summary>
-        public string AccessSAS { get; }
+        public string AccessSas { get; }
 
         /// <summary> A SAS uri for accessing a VM guest state. </summary>
-        public string SecurityDataAccessSAS { get; }
+        public string SecurityDataAccessSas { get; }
 
         /// <summary> A SAS uri for accessing a VM metadata. </summary>
-        public string SecurityMetadataAccessSAS { get; }
+        public string SecurityMetadataAccessSas { get; }
     }
 }

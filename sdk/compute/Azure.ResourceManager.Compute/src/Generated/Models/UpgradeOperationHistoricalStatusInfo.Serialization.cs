@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(UpgradeOperationHistoricalStatusInfoType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(UpgradeOperationHistoricalStatusInfoType);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             UpgradeOperationHistoricalStatusInfoProperties properties = default;
-            string @type = default;
+            string upgradeOperationHistoricalStatusInfoType = default;
             string location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    upgradeOperationHistoricalStatusInfoType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfo(properties, @type, location, additionalBinaryDataProperties);
+            return new UpgradeOperationHistoricalStatusInfo(properties, upgradeOperationHistoricalStatusInfoType, location, additionalBinaryDataProperties);
         }
     }
 }

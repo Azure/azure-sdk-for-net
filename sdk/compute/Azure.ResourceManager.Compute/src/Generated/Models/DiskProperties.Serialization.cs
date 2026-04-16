@@ -122,30 +122,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsCollection, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(DiskIOPSReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
-                writer.WriteNumberValue(DiskIOPSReadWrite.Value);
+                writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskIOPSReadOnly))
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
-                writer.WriteNumberValue(DiskIOPSReadOnly.Value);
+                writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadOnly))
             {
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (Optional.IsDefined(OptimizedForFrequentAttach))
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
-                writer.WriteBooleanValue(OptimizedForFrequentAttach.Value);
+                writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(LastOwnershipUpdateOn))
             {
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.Compute.Models
             int? diskSizeGB = default;
             long? diskSizeBytes = default;
             string uniqueId = default;
-            EncryptionSettingsGroup encryptionSettingsCollection = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
             string provisioningState = default;
-            long? diskIOPSReadWrite = default;
+            long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
-            long? diskIOPSReadOnly = default;
+            long? diskIopsReadOnly = default;
             long? diskMBpsReadOnly = default;
             DiskState? diskState = default;
             DiskEncryption encryption = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
             float? completionPercent = default;
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
-            bool? optimizedForFrequentAttach = default;
+            bool? isOptimizedForFrequentAttach = default;
             DateTimeOffset? lastOwnershipUpdateOn = default;
             AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
+                    encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadWrite = prop.Value.GetInt64();
+                    diskIopsReadWrite = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadWrite"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadOnly = prop.Value.GetInt64();
+                    diskIopsReadOnly = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadOnly"u8))
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    optimizedForFrequentAttach = prop.Value.GetBoolean();
+                    isOptimizedForFrequentAttach = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("LastOwnershipUpdateTime"u8))
@@ -626,11 +626,11 @@ namespace Azure.ResourceManager.Compute.Models
                 diskSizeGB,
                 diskSizeBytes,
                 uniqueId,
-                encryptionSettingsCollection,
+                encryptionSettingsGroup,
                 provisioningState,
-                diskIOPSReadWrite,
+                diskIopsReadWrite,
                 diskMBpsReadWrite,
-                diskIOPSReadOnly,
+                diskIopsReadOnly,
                 diskMBpsReadOnly,
                 diskState,
                 encryption,
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Compute.Models
                 completionPercent,
                 publicNetworkAccess,
                 dataAccessAuthMode,
-                optimizedForFrequentAttach,
+                isOptimizedForFrequentAttach,
                 lastOwnershipUpdateOn,
                 availabilityPolicy,
                 additionalBinaryDataProperties);

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("latestOperationStatus"u8);
                 writer.WriteStringValue(LatestOperationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStatusChangeOn))
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChangedOn))
             {
                 writer.WritePropertyName("lastStatusChangeTime"u8);
-                writer.WriteStringValue(LastStatusChangeOn.Value, "O");
+                writer.WriteStringValue(LastStatusChangedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             OrchestrationServiceName? serviceName = default;
             OrchestrationServiceState? serviceState = default;
             OrchestrationServiceOperationStatus? latestOperationStatus = default;
-            DateTimeOffset? lastStatusChangeOn = default;
+            DateTimeOffset? lastStatusChangedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    lastStatusChangeOn = prop.Value.GetDateTimeOffset("O");
+                    lastStatusChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangeOn, additionalBinaryDataProperties);
+            return new OrchestrationServiceSummary(serviceName, serviceState, latestOperationStatus, lastStatusChangedOn, additionalBinaryDataProperties);
         }
     }
 }

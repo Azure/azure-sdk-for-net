@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="operatingSystem"> The operating system this extension supports. </param>
         /// <param name="computeRole"> The type of role (IaaS or PaaS) this extension supports. </param>
         /// <param name="handlerSchema"> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </param>
-        /// <param name="vmScaleSetEnabled"> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </param>
+        /// <param name="virtualMachineScaleSetEnabled"> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </param>
         /// <param name="supportsMultipleExtensions"> Whether the handler can support multiple extensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema, bool? vmScaleSetEnabled, bool? supportsMultipleExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema, bool? virtualMachineScaleSetEnabled, bool? supportsMultipleExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;
             HandlerSchema = handlerSchema;
-            VmScaleSetEnabled = vmScaleSetEnabled;
+            VirtualMachineScaleSetEnabled = virtualMachineScaleSetEnabled;
             SupportsMultipleExtensions = supportsMultipleExtensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string HandlerSchema { get; }
 
         /// <summary> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </summary>
-        public bool? VmScaleSetEnabled { get; }
+        public bool? VirtualMachineScaleSetEnabled { get; }
 
         /// <summary> Whether the handler can support multiple extensions. </summary>
         public bool? SupportsMultipleExtensions { get; }

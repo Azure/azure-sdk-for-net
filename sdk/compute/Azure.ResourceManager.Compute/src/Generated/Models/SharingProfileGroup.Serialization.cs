@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(GroupType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Ids))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            SharingProfileGroupType? @type = default;
+            SharingProfileGroupType? groupType = default;
             IList<string> ids = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = new SharingProfileGroupType(prop.Value.GetString());
+                    groupType = new SharingProfileGroupType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ids"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharingProfileGroup(@type, ids ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new SharingProfileGroup(groupType, ids ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

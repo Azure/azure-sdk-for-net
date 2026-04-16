@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("targetFaultDomain"u8);
                 writer.WriteNumberValue(TargetFaultDomain.Value);
             }
-            if (Optional.IsDefined(TargetVMSize))
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVMSize"u8);
-                writer.WriteStringValue(TargetVMSize);
+                writer.WriteStringValue(TargetVmSize);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string targetZone = default;
             int? targetFaultDomain = default;
-            string targetVMSize = default;
+            string targetVmSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("targetVMSize"u8))
                 {
-                    targetVMSize = prop.Value.GetString();
+                    targetVmSize = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrateVmToVirtualMachineScaleSetContent(targetZone, targetFaultDomain, targetVMSize, additionalBinaryDataProperties);
+            return new MigrateVmToVirtualMachineScaleSetContent(targetZone, targetFaultDomain, targetVmSize, additionalBinaryDataProperties);
         }
     }
 }

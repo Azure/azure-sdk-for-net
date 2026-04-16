@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(SharingProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Permissions))
+            if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permissions"u8);
-                writer.WriteStringValue(Permissions.Value.ToString());
+                writer.WriteStringValue(Permission.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            GallerySharingPermissionType? permissions = default;
+            GallerySharingPermissionType? permission = default;
             IReadOnlyList<SharingProfileGroup> groups = default;
             CommunityGalleryInfo communityGalleryInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    permissions = new GallerySharingPermissionType(prop.Value.GetString());
+                    permission = new GallerySharingPermissionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("groups"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SharingProfile(permissions, groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo, additionalBinaryDataProperties);
+            return new SharingProfile(permission, groups ?? new ChangeTrackingList<SharingProfileGroup>(), communityGalleryInfo, additionalBinaryDataProperties);
         }
     }
 }

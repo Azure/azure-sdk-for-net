@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuRestrictions"/>. </summary>
-        /// <param name="type"> The type of restrictions. </param>
+        /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSkuRestrictions(ComputeResourceSkuRestrictionsType? @type, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ComputeResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeResourceSkuRestrictions(ComputeResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ComputeResourceSkuRestrictionInfo restrictionInfo, ComputeResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The type of restrictions. </summary>
-        public ComputeResourceSkuRestrictionsType? Type { get; }
+        public ComputeResourceSkuRestrictionsType? RestrictionsType { get; }
 
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }

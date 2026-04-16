@@ -85,25 +85,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsCollection, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
-            if (Optional.IsDefined(DiskIOPSReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
-                writer.WriteNumberValue(DiskIOPSReadWrite.Value);
+                writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskIOPSReadOnly))
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
-                writer.WriteNumberValue(DiskIOPSReadOnly.Value);
+                writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadOnly))
             {
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (Optional.IsDefined(OptimizedForFrequentAttach))
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
-                writer.WriteBooleanValue(OptimizedForFrequentAttach.Value);
+                writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
             if (Optional.IsDefined(AvailabilityPolicy))
             {
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             OperatingSystemTypes? osType = default;
             int? diskSizeGB = default;
-            EncryptionSettingsGroup encryptionSettingsCollection = default;
-            long? diskIOPSReadWrite = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
+            long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
-            long? diskIOPSReadOnly = default;
+            long? diskIopsReadOnly = default;
             long? diskMBpsReadOnly = default;
             int? maxShares = default;
             DiskEncryption encryption = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? supportsHibernation = default;
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
-            bool? optimizedForFrequentAttach = default;
+            bool? isOptimizedForFrequentAttach = default;
             AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
+                    encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskIOPSReadWrite"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadWrite = prop.Value.GetInt64();
+                    diskIopsReadWrite = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadWrite"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadOnly = prop.Value.GetInt64();
+                    diskIopsReadOnly = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadOnly"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    optimizedForFrequentAttach = prop.Value.GetBoolean();
+                    isOptimizedForFrequentAttach = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("availabilityPolicy"u8))
@@ -439,10 +439,10 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskUpdateProperties(
                 osType,
                 diskSizeGB,
-                encryptionSettingsCollection,
-                diskIOPSReadWrite,
+                encryptionSettingsGroup,
+                diskIopsReadWrite,
                 diskMBpsReadWrite,
-                diskIOPSReadOnly,
+                diskIopsReadOnly,
                 diskMBpsReadOnly,
                 maxShares,
                 encryption,
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute.Models
                 supportsHibernation,
                 publicNetworkAccess,
                 dataAccessAuthMode,
-                optimizedForFrequentAttach,
+                isOptimizedForFrequentAttach,
                 availabilityPolicy,
                 additionalBinaryDataProperties);
         }

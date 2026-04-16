@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionHandlerInstanceView"/>. </summary>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="virtualMachineExtensionHandlerInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> The extension handler status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionHandlerInstanceView(string @type, string typeHandlerVersion, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionHandlerInstanceView(string virtualMachineExtensionHandlerInstanceViewType, string typeHandlerVersion, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            VirtualMachineExtensionHandlerInstanceViewType = virtualMachineExtensionHandlerInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string Type { get; }
+        public string VirtualMachineExtensionHandlerInstanceViewType { get; }
 
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; }

@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharingProfileGroup"/>. </summary>
-        /// <param name="type"> This property allows you to specify the type of sharing group. Possible values are: <b>Subscriptions,</b> <b>AADTenants.</b>. </param>
+        /// <param name="groupType"> This property allows you to specify the type of sharing group. Possible values are: <b>Subscriptions,</b> <b>AADTenants.</b>. </param>
         /// <param name="ids"> A list of subscription/tenant ids the gallery is aimed to be shared to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharingProfileGroup(SharingProfileGroupType? @type, IList<string> ids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharingProfileGroup(SharingProfileGroupType? groupType, IList<string> ids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            GroupType = groupType;
             Ids = ids;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This property allows you to specify the type of sharing group. Possible values are: <b>Subscriptions,</b> <b>AADTenants.</b>. </summary>
-        public SharingProfileGroupType? Type { get; set; }
+        public SharingProfileGroupType? GroupType { get; set; }
 
         /// <summary> A list of subscription/tenant ids the gallery is aimed to be shared to. </summary>
         public IList<string> Ids { get; }

@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.Compute.Models
         public DedicatedHostGroupProperties(int platformFaultDomainCount)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
-            Hosts = new ChangeTrackingList<SubResource>();
+            DedicatedHosts = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupProperties"/>. </summary>
         /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
-        /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
+        /// <param name="dedicatedHosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
         /// <param name="instanceView"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
         /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
         /// <param name="additionalCapabilities"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostGroupProperties(int platformFaultDomainCount, IReadOnlyList<SubResource> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DedicatedHostGroupProperties(int platformFaultDomainCount, IReadOnlyList<SubResource> dedicatedHosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformFaultDomainCount = platformFaultDomainCount;
-            Hosts = hosts;
+            DedicatedHosts = dedicatedHosts;
             InstanceView = instanceView;
             SupportAutomaticPlacement = supportAutomaticPlacement;
             AdditionalCapabilities = additionalCapabilities;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int PlatformFaultDomainCount { get; set; }
 
         /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResource> Hosts { get; } = new ChangeTrackingList<SubResource>();
+        public IReadOnlyList<SubResource> DedicatedHosts { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
         internal DedicatedHostGroupInstanceView InstanceView { get; }
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
-        public bool? UltraSSDEnabled
+        public bool? UltraSsdEnabled
         {
             get
             {
-                return AdditionalCapabilities is null ? default : AdditionalCapabilities.UltraSSDEnabled;
+                return AdditionalCapabilities is null ? default : AdditionalCapabilities.UltraSsdEnabled;
             }
             set
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     AdditionalCapabilities = new DedicatedHostGroupPropertiesAdditionalCapabilities();
                 }
-                AdditionalCapabilities.UltraSSDEnabled = value;
+                AdditionalCapabilities.UltraSsdEnabled = value;
             }
         }
     }

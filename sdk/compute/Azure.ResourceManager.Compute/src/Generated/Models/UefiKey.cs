@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UefiKey"/>. </summary>
-        /// <param name="type"> The type of key signature. </param>
+        /// <param name="keyType"> The type of key signature. </param>
         /// <param name="value"> The value of the key signature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UefiKey(UefiKeyType? @type, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UefiKey(UefiKeyType? keyType, IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            KeyType = keyType;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of key signature. </summary>
-        public UefiKeyType? Type { get; set; }
+        public UefiKeyType? KeyType { get; set; }
 
         /// <summary> The value of the key signature. </summary>
         public IList<string> Value { get; }

@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="RestorePointCollectionProperties"/>. </summary>
         /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
-        /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
         /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointCollectionProperties(RestorePointGroupSource source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointCollectionProperties(RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             ProvisioningState = provisioningState;
-            RestorePointCollectionId = restorePointCollectionId;
+            RestorePointGroupId = restorePointGroupId;
             RestorePoints = restorePoints;
             InstantAccess = instantAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ProvisioningState { get; }
 
         /// <summary> The unique id of the restore point collection. </summary>
-        public string RestorePointCollectionId { get; }
+        public string RestorePointGroupId { get; }
 
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
         public IReadOnlyList<RestorePointData> RestorePoints { get; } = new ChangeTrackingList<RestorePointData>();

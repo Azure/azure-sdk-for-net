@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(ResourceSkuCosts)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterID))
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterID"u8);
-                writer.WriteStringValue(MeterID);
+                writer.WriteStringValue(MeterId);
             }
             if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string meterID = default;
+            string meterId = default;
             long? quantity = default;
             string extendedUnit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("meterID"u8))
                 {
-                    meterID = prop.Value.GetString();
+                    meterId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("quantity"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceSkuCosts(meterID, quantity, extendedUnit, additionalBinaryDataProperties);
+            return new ResourceSkuCosts(meterId, quantity, extendedUnit, additionalBinaryDataProperties);
         }
     }
 }

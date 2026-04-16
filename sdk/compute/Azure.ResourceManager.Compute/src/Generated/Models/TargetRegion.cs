@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="regionalReplicaCount"> The number of replicas of the Image Version to be created per region. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        /// <param name="excludeFromLatest"> Contains the flag setting to hide an image when users specify version='latest'. </param>
+        /// <param name="isExcludedFromLatest"> Contains the flag setting to hide an image when users specify version='latest'. </param>
         /// <param name="additionalReplicaSets"> List of storage sku with replica count to create direct drive replicas. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? excludeFromLatest, IList<AdditionalReplicaSet> additionalReplicaSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TargetRegion(string name, int? regionalReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, bool? isExcludedFromLatest, IList<AdditionalReplicaSet> additionalReplicaSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RegionalReplicaCount = regionalReplicaCount;
             StorageAccountType = storageAccountType;
             Encryption = encryption;
-            ExcludeFromLatest = excludeFromLatest;
+            IsExcludedFromLatest = isExcludedFromLatest;
             AdditionalReplicaSets = additionalReplicaSets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionImages Encryption { get; set; }
 
         /// <summary> Contains the flag setting to hide an image when users specify version='latest'. </summary>
-        public bool? ExcludeFromLatest { get; set; }
+        public bool? IsExcludedFromLatest { get; set; }
 
         /// <summary> List of storage sku with replica count to create direct drive replicas. </summary>
         public IList<AdditionalReplicaSet> AdditionalReplicaSets { get; }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VMScaleSetScaleOutInputProperties"/>. </summary>
-        /// <param name="zone"> The zone in which the scale out is requested for the virtual machine scale set. </param>
+        /// <param name="vmScaleSetScaleOutInputZone"> The zone in which the scale out is requested for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMScaleSetScaleOutInputProperties(string zone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMScaleSetScaleOutInputProperties(string vmScaleSetScaleOutInputZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Zone = zone;
+            VmScaleSetScaleOutInputZone = vmScaleSetScaleOutInputZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The zone in which the scale out is requested for the virtual machine scale set. </summary>
-        public string Zone { get; set; }
+        public string VmScaleSetScaleOutInputZone { get; set; }
     }
 }

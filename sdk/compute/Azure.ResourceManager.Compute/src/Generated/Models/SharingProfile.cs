@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharingProfile"/>. </summary>
-        /// <param name="permissions"> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </param>
+        /// <param name="permission"> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="communityGalleryInfo"> Information of community gallery if current gallery is shared to community. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharingProfile(GallerySharingPermissionType? permissions, IReadOnlyList<SharingProfileGroup> groups, CommunityGalleryInfo communityGalleryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharingProfile(GallerySharingPermissionType? permission, IReadOnlyList<SharingProfileGroup> groups, CommunityGalleryInfo communityGalleryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Permissions = permissions;
+            Permission = permission;
             Groups = groups;
             CommunityGalleryInfo = communityGalleryInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This property allows you to specify the permission of sharing gallery. Possible values are: <b>Private,</b> <b>Groups,</b> <b>Community.</b>. </summary>
-        public GallerySharingPermissionType? Permissions { get; set; }
+        public GallerySharingPermissionType? Permission { get; set; }
 
         /// <summary> A list of sharing profile groups. </summary>
         public IReadOnlyList<SharingProfileGroup> Groups { get; }

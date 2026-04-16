@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ReportedForPolicyViolation))
+            if (options.Format != "W" && Optional.IsDefined(IsReportedForPolicyViolation))
             {
                 writer.WritePropertyName("reportedForPolicyViolation"u8);
-                writer.WriteBooleanValue(ReportedForPolicyViolation.Value);
+                writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PolicyViolations))
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BlockDeletionBeforeEndOfLife))
+            if (Optional.IsDefined(IsBlockedDeletionBeforeEndOfLife))
             {
                 writer.WritePropertyName("blockDeletionBeforeEndOfLife"u8);
-                writer.WriteBooleanValue(BlockDeletionBeforeEndOfLife.Value);
+                writer.WriteBooleanValue(IsBlockedDeletionBeforeEndOfLife.Value);
             }
         }
 
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            bool? reportedForPolicyViolation = default;
+            bool? isReportedForPolicyViolation = default;
             IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations = default;
-            bool? blockDeletionBeforeEndOfLife = default;
+            bool? isBlockedDeletionBeforeEndOfLife = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("allowDeletionOfReplicatedLocations"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    reportedForPolicyViolation = prop.Value.GetBoolean();
+                    isReportedForPolicyViolation = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("policyViolations"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    blockDeletionBeforeEndOfLife = prop.Value.GetBoolean();
+                    isBlockedDeletionBeforeEndOfLife = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties, reportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>(), blockDeletionBeforeEndOfLife);
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties, isReportedForPolicyViolation, policyViolations ?? new ChangeTrackingList<GalleryImageVersionPolicyViolation>(), isBlockedDeletionBeforeEndOfLife);
         }
     }
 }

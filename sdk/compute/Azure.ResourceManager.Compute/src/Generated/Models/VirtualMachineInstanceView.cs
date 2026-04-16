@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
-        /// <param name="isVMInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
+        /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGenerationType? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVMInStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGenerationType? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
             AssignedHost = assignedHost;
             Statuses = statuses;
             PatchStatus = patchStatus;
-            IsVMInStandbyPool = isVMInStandbyPool;
+            IsVmInStandbyPool = isVmInStandbyPool;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachinePatchStatus PatchStatus { get; }
 
         /// <summary> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </summary>
-        public bool? IsVMInStandbyPool { get; }
+        public bool? IsVmInStandbyPool { get; }
 
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus

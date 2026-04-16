@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The unique id of the restore point collection. </summary>
-        public string RestorePointCollectionId
+        public string RestorePointGroupId
         {
             get
             {
-                return Properties is null ? default : Properties.RestorePointCollectionId;
+                return Properties is null ? default : Properties.RestorePointGroupId;
             }
         }
 

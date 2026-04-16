@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(SecureVMDiskEncryptionSetId))
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
-                writer.WriteStringValue(SecureVMDiskEncryptionSetId);
+                writer.WriteStringValue(SecureVmDiskEncryptionSetId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             DiskSecurityType? securityType = default;
-            ResourceIdentifier secureVMDiskEncryptionSetId = default;
+            ResourceIdentifier secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    secureVMDiskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
+                    secureVmDiskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskSecurityProfile(securityType, secureVMDiskEncryptionSetId, additionalBinaryDataProperties);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, additionalBinaryDataProperties);
         }
     }
 }

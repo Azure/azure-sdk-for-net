@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageExecutedValidation"/>. </summary>
-        /// <param name="type"> This property specifies the type of image version validation. </param>
+        /// <param name="executedValidationType"> This property specifies the type of image version validation. </param>
         /// <param name="status"> This property specifies the status of the validationProfile of the image version. </param>
         /// <param name="version"> This property specifies the valid version of the validation. </param>
         /// <param name="executionOn"> This property specifies the starting timestamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageExecutedValidation(string @type, ComputeGalleryValidationStatus? status, string version, DateTimeOffset? executionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageExecutedValidation(string executedValidationType, ComputeGalleryValidationStatus? status, string version, DateTimeOffset? executionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ExecutedValidationType = executedValidationType;
             Status = status;
             Version = version;
             ExecutionOn = executionOn;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property specifies the type of image version validation. </summary>
-        public string Type { get; }
+        public string ExecutedValidationType { get; }
 
         /// <summary> This property specifies the status of the validationProfile of the image version. </summary>
         public ComputeGalleryValidationStatus? Status { get; }

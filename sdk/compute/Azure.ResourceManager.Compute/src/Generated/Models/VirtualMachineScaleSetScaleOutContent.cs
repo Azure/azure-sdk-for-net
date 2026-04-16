@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute.Models
         internal VMScaleSetScaleOutInputProperties Properties { get; set; }
 
         /// <summary> The zone in which the scale out is requested for the virtual machine scale set. </summary>
-        public string VMScaleSetScaleOutInputZone
+        public string VmScaleSetScaleOutInputZone
         {
             get
             {
-                return Properties is null ? default : Properties.Zone;
+                return Properties is null ? default : Properties.VmScaleSetScaleOutInputZone;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     Properties = new VMScaleSetScaleOutInputProperties();
                 }
-                Properties.Zone = value;
+                Properties.VmScaleSetScaleOutInputZone = value;
             }
         }
     }

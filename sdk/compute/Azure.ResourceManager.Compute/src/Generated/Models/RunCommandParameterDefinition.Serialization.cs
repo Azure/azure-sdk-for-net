@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(RunCommandParameterDefinitionType);
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string runCommandParameterDefinitionType = default;
             string defaultValue = default;
             bool? @required = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    runCommandParameterDefinitionType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RunCommandParameterDefinition(name, @type, defaultValue, @required, additionalBinaryDataProperties);
+            return new RunCommandParameterDefinition(name, runCommandParameterDefinitionType, defaultValue, @required, additionalBinaryDataProperties);
         }
     }
 }

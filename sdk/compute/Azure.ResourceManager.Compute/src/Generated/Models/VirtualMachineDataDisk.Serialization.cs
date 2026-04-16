@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("toBeDetached"u8);
                 writer.WriteBooleanValue(ToBeDetached.Value);
             }
-            if (Optional.IsDefined(DiskIOPSReadWrite))
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
-                writer.WriteNumberValue(DiskIOPSReadWrite.Value);
+                writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
             if (Optional.IsDefined(DiskMBpsReadWrite))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineManagedDisk managedDisk = default;
             ApiEntityReference sourceResource = default;
             bool? toBeDetached = default;
-            long? diskIOPSReadWrite = default;
+            long? diskIopsReadWrite = default;
             long? diskMBpsReadWrite = default;
             DiskDetachOptionType? detachOption = default;
             DiskDeleteOptionType? deleteOption = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskIOPSReadWrite = prop.Value.GetInt64();
+                    diskIopsReadWrite = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("diskMBpsReadWrite"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Compute.Models
                 managedDisk,
                 sourceResource,
                 toBeDetached,
-                diskIOPSReadWrite,
+                diskIopsReadWrite,
                 diskMBpsReadWrite,
                 detachOption,
                 deleteOption,

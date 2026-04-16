@@ -82,20 +82,20 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(AccessUri)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessSAS))
+            if (options.Format != "W" && Optional.IsDefined(AccessSas))
             {
                 writer.WritePropertyName("accessSAS"u8);
-                writer.WriteStringValue(AccessSAS);
+                writer.WriteStringValue(AccessSas);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityDataAccessSAS))
+            if (options.Format != "W" && Optional.IsDefined(SecurityDataAccessSas))
             {
                 writer.WritePropertyName("securityDataAccessSAS"u8);
-                writer.WriteStringValue(SecurityDataAccessSAS);
+                writer.WriteStringValue(SecurityDataAccessSas);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityMetadataAccessSAS))
+            if (options.Format != "W" && Optional.IsDefined(SecurityMetadataAccessSas))
             {
                 writer.WritePropertyName("securityMetadataAccessSAS"u8);
-                writer.WriteStringValue(SecurityMetadataAccessSAS);
+                writer.WriteStringValue(SecurityMetadataAccessSas);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,25 +139,25 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string accessSAS = default;
-            string securityDataAccessSAS = default;
-            string securityMetadataAccessSAS = default;
+            string accessSas = default;
+            string securityDataAccessSas = default;
+            string securityMetadataAccessSas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("accessSAS"u8))
                 {
-                    accessSAS = prop.Value.GetString();
+                    accessSas = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("securityDataAccessSAS"u8))
                 {
-                    securityDataAccessSAS = prop.Value.GetString();
+                    securityDataAccessSas = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("securityMetadataAccessSAS"u8))
                 {
-                    securityMetadataAccessSAS = prop.Value.GetString();
+                    securityMetadataAccessSas = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessUri(accessSAS, securityDataAccessSAS, securityMetadataAccessSAS, additionalBinaryDataProperties);
+            return new AccessUri(accessSas, securityDataAccessSas, securityMetadataAccessSas, additionalBinaryDataProperties);
         }
     }
 }

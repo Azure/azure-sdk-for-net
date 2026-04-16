@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(ComputeRole);
             writer.WritePropertyName("handlerSchema"u8);
             writer.WriteStringValue(HandlerSchema);
-            if (Optional.IsDefined(VmScaleSetEnabled))
+            if (Optional.IsDefined(VirtualMachineScaleSetEnabled))
             {
                 writer.WritePropertyName("vmScaleSetEnabled"u8);
-                writer.WriteBooleanValue(VmScaleSetEnabled.Value);
+                writer.WriteBooleanValue(VirtualMachineScaleSetEnabled.Value);
             }
             if (Optional.IsDefined(SupportsMultipleExtensions))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
             string operatingSystem = default;
             string computeRole = default;
             string handlerSchema = default;
-            bool? vmScaleSetEnabled = default;
+            bool? virtualMachineScaleSetEnabled = default;
             bool? supportsMultipleExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    vmScaleSetEnabled = prop.Value.GetBoolean();
+                    virtualMachineScaleSetEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportsMultipleExtensions"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Models
                 operatingSystem,
                 computeRole,
                 handlerSchema,
-                vmScaleSetEnabled,
+                virtualMachineScaleSetEnabled,
                 supportsMultipleExtensions,
                 additionalBinaryDataProperties);
         }

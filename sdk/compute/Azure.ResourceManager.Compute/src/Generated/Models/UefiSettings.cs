@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
-        /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
+        /// <param name="isVirtualTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UefiSettings(bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UefiSettings(bool? isSecureBootEnabled, bool? isVirtualTpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SecureBootEnabled = secureBootEnabled;
-            VTpmEnabled = vTpmEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
+            IsVirtualTpmEnabled = isVirtualTpmEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </summary>
-        public bool? SecureBootEnabled { get; set; }
+        public bool? IsSecureBootEnabled { get; set; }
 
         /// <summary> Specifies whether vTPM should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </summary>
-        public bool? VTpmEnabled { get; set; }
+        public bool? IsVirtualTpmEnabled { get; set; }
     }
 }

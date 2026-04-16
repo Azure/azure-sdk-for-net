@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageValidationsProfile"/>. </summary>
-        /// <param name="validationEtag"> The published time of the image version. </param>
+        /// <param name="validationETag"> The published time of the image version. </param>
         /// <param name="executedValidations"></param>
         /// <param name="platformAttributes"> This specifies the pub, offer, sku and version of the image version metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageValidationsProfile(string validationEtag, IReadOnlyList<GalleryImageExecutedValidation> executedValidations, IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageValidationsProfile(string validationETag, IReadOnlyList<GalleryImageExecutedValidation> executedValidations, IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ValidationEtag = validationEtag;
+            ValidationETag = validationETag;
             ExecutedValidations = executedValidations;
             PlatformAttributes = platformAttributes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The published time of the image version. </summary>
-        public string ValidationEtag { get; }
+        public string ValidationETag { get; }
 
         /// <summary> Gets the ExecutedValidations. </summary>
         public IReadOnlyList<GalleryImageExecutedValidation> ExecutedValidations { get; }

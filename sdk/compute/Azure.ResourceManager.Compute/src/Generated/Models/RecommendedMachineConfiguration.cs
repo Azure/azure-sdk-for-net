@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
-        /// <param name="vcpUs"> Describes the resource range. </param>
+        /// <param name="vCpus"> Describes the resource range. </param>
         /// <param name="memory"> Describes the resource range. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedMachineConfiguration(ResourceRange vcpUs, ResourceRange memory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendedMachineConfiguration(ResourceRange vCpus, ResourceRange memory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VCPUs = vcpUs;
+            VCpus = vCpus;
             Memory = memory;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the resource range. </summary>
-        public ResourceRange VCPUs { get; set; }
+        public ResourceRange VCpus { get; set; }
 
         /// <summary> Describes the resource range. </summary>
         public ResourceRange Memory { get; set; }

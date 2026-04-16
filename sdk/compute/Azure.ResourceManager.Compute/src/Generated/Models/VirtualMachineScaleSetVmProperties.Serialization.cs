@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile, options);
             }
-            if (Optional.IsDefined(ResilientVMDeletionStatus))
+            if (Optional.IsDefined(ResilientVmDeletionStatus))
             {
                 writer.WritePropertyName("resilientVMDeletionStatus"u8);
-                writer.WriteStringValue(ResilientVMDeletionStatus.Value.ToString());
+                writer.WriteStringValue(ResilientVmDeletionStatus.Value.ToString());
             }
             if (Optional.IsDefined(StorageProfile))
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Models
             string vmId = default;
             VirtualMachineScaleSetVmInstanceView instanceView = default;
             VirtualMachineHardwareProfile hardwareProfile = default;
-            ResilientVmDeletionStatus? resilientVMDeletionStatus = default;
+            ResilientVmDeletionStatus? resilientVmDeletionStatus = default;
             VirtualMachineStorageProfile storageProfile = default;
             AdditionalCapabilities additionalCapabilities = default;
             VirtualMachineOSProfile osProfile = default;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVMDeletionStatus = new ResilientVmDeletionStatus(prop.Value.GetString());
+                    resilientVmDeletionStatus = new ResilientVmDeletionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute.Models
                 vmId,
                 instanceView,
                 hardwareProfile,
-                resilientVMDeletionStatus,
+                resilientVmDeletionStatus,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,

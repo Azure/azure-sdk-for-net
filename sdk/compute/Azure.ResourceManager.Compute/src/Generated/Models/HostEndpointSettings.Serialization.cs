@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(InVMAccessControlProfileReferenceId))
+            if (Optional.IsDefined(InVmAccessControlProfileReferenceId))
             {
                 writer.WritePropertyName("inVMAccessControlProfileReferenceId"u8);
-                writer.WriteStringValue(InVMAccessControlProfileReferenceId);
+                writer.WriteStringValue(InVmAccessControlProfileReferenceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             HostEndpointSettingsMode? mode = default;
-            string inVMAccessControlProfileReferenceId = default;
+            string inVmAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
                 {
-                    inVMAccessControlProfileReferenceId = prop.Value.GetString();
+                    inVmAccessControlProfileReferenceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, additionalBinaryDataProperties);
+            return new HostEndpointSettings(mode, inVmAccessControlProfileReferenceId, additionalBinaryDataProperties);
         }
     }
 }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestorePointCollectionId))
+            if (options.Format != "W" && Optional.IsDefined(RestorePointGroupId))
             {
                 writer.WritePropertyName("restorePointCollectionId"u8);
-                writer.WriteStringValue(RestorePointCollectionId);
+                writer.WriteStringValue(RestorePointGroupId);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RestorePoints))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             RestorePointGroupSource source = default;
             string provisioningState = default;
-            string restorePointCollectionId = default;
+            string restorePointGroupId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
             bool? instantAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("restorePointCollectionId"u8))
                 {
-                    restorePointCollectionId = prop.Value.GetString();
+                    restorePointGroupId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("restorePoints"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute.Models
             return new RestorePointCollectionProperties(
                 source,
                 provisioningState,
-                restorePointCollectionId,
+                restorePointGroupId,
                 restorePoints ?? new ChangeTrackingList<RestorePointData>(),
                 instantAccess,
                 additionalBinaryDataProperties);

@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </summary>
-        public bool? VmScaleSetEnabled
+        public bool? VirtualMachineScaleSetEnabled
         {
             get
             {
-                return Properties.VmScaleSetEnabled;
+                return Properties.VirtualMachineScaleSetEnabled;
             }
         }
 

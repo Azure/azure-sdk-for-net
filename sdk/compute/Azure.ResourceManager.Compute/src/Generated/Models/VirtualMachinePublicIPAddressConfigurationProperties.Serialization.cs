@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings, options);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (VirtualMachineIPTag item in IpTags)
+                foreach (VirtualMachineIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }

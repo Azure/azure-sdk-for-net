@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 throw new FormatException($"The model {nameof(DedicatedHostGroupPropertiesAdditionalCapabilities)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            bool? ultraSSDEnabled = default;
+            bool? ultraSsdEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    ultraSSDEnabled = prop.Value.GetBoolean();
+                    ultraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSSDEnabled, additionalBinaryDataProperties);
+            return new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled, additionalBinaryDataProperties);
         }
     }
 }

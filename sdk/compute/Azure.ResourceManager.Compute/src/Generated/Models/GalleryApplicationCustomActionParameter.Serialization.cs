@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(ParameterType.Value.ToSerialString());
             }
             if (Optional.IsDefined(DefaultValue))
             {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            bool? @required = default;
-            GalleryApplicationCustomActionParameterType? @type = default;
+            bool? isRequired = default;
+            GalleryApplicationCustomActionParameterType? parameterType = default;
             string defaultValue = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToGalleryApplicationCustomActionParameterType();
+                    parameterType = prop.Value.GetString().ToGalleryApplicationCustomActionParameterType();
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new GalleryApplicationCustomActionParameter(
                 name,
-                @required,
-                @type,
+                isRequired,
+                parameterType,
                 defaultValue,
                 description,
                 additionalBinaryDataProperties);

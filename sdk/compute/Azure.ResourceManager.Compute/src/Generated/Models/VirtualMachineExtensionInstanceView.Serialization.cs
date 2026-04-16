@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(VirtualMachineExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(VirtualMachineExtensionInstanceViewType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            string @type = default;
+            string virtualMachineExtensionInstanceViewType = default;
             string typeHandlerVersion = default;
             IList<InstanceViewStatus> substatuses = default;
             IList<InstanceViewStatus> statuses = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    virtualMachineExtensionInstanceViewType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new VirtualMachineExtensionInstanceView(
                 name,
-                @type,
+                virtualMachineExtensionInstanceViewType,
                 typeHandlerVersion,
                 substatuses ?? new ChangeTrackingList<InstanceViewStatus>(),
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),

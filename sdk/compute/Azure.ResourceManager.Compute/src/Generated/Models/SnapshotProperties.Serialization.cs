@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsCollection, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute.Models
             long? diskSizeBytes = default;
             DiskState? diskState = default;
             string uniqueId = default;
-            EncryptionSettingsGroup encryptionSettingsCollection = default;
+            EncryptionSettingsGroup encryptionSettingsGroup = default;
             string provisioningState = default;
             bool? incremental = default;
             string incrementalSnapshotFamilyId = default;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryptionSettingsCollection = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
+                    encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Compute.Models
                 diskSizeBytes,
                 diskState,
                 uniqueId,
-                encryptionSettingsCollection,
+                encryptionSettingsGroup,
                 provisioningState,
                 incremental,
                 incrementalSnapshotFamilyId,
