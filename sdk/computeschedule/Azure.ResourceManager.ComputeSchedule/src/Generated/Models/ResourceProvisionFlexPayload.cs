@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
@@ -26,84 +25,33 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             Argument.AssertNotNull(flexProperties, nameof(flexProperties));
 
-            BaseProfile = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceOverrides = new ChangeTrackingList<IDictionary<string, BinaryData>>();
+            VirtualMachineOverrides = new ChangeTrackingList<BulkVMConfiguration>();
             ResourceCount = resourceCount;
             FlexProperties = flexProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProvisionFlexPayload"/>. </summary>
-        /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch. </param>
-        /// <param name="resourceOverrides"> JSON array that contains VM properties that should be overridden for each VM in the batch. </param>
+        /// <param name="virtualMachineBaseProfile"> JSON object that contains VM properties that are common across all VMs in this batch. </param>
+        /// <param name="virtualMachineOverrides"> JSON array that contains VM properties that should be overridden for each VM in the batch. </param>
         /// <param name="resourceCount"> Number of VMs to be created. </param>
         /// <param name="resourcePrefix"> If resourceOverrides doesn't contain name, service will create name based on prefix and resourceCount. </param>
         /// <param name="flexProperties"> The flex properties for flexible VM creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProvisionFlexPayload(IDictionary<string, BinaryData> baseProfile, IList<IDictionary<string, BinaryData>> resourceOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProvisionFlexPayload(BulkVMConfiguration virtualMachineBaseProfile, IList<BulkVMConfiguration> virtualMachineOverrides, int resourceCount, string resourcePrefix, ComputeScheduleFlexProperties flexProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseProfile = baseProfile;
-            ResourceOverrides = resourceOverrides;
+            VirtualMachineBaseProfile = virtualMachineBaseProfile;
+            VirtualMachineOverrides = virtualMachineOverrides;
             ResourceCount = resourceCount;
             ResourcePrefix = resourcePrefix;
             FlexProperties = flexProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// JSON object that contains VM properties that are common across all VMs in this batch
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> BaseProfile { get; }
+        /// <summary> JSON object that contains VM properties that are common across all VMs in this batch. </summary>
+        public BulkVMConfiguration VirtualMachineBaseProfile { get; set; }
 
-        /// <summary>
-        /// JSON array that contains VM properties that should be overridden for each VM in the batch
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<IDictionary<string, BinaryData>> ResourceOverrides { get; }
+        /// <summary> JSON array that contains VM properties that should be overridden for each VM in the batch. </summary>
+        public IList<BulkVMConfiguration> VirtualMachineOverrides { get; }
 
         /// <summary> Number of VMs to be created. </summary>
         public int ResourceCount { get; }
