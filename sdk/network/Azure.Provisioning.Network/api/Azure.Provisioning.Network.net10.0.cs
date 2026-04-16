@@ -3291,6 +3291,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.IpamIPType> IPAddressType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ParentPoolName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class IPGroup : Azure.Provisioning.Primitives.ProvisionableResource
@@ -4944,6 +4945,7 @@ namespace Azure.Provisioning.Network
     {
         public NetworkVerifierWorkspaceProperties() { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkVirtualAppliance : Azure.Provisioning.Primitives.ProvisionableResource
@@ -6134,6 +6136,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DestinationResourceId { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkVerifierIPTraffic IPTraffic { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -6160,6 +6163,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> ErrorMessage { get { throw null; } }
         public Azure.Provisioning.Network.AnalysisRunIntentContent IntentContent { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> IntentId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class RecordSet : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -7096,6 +7100,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> NumberOfIPAddressesToAllocate { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TotalNumberOfIPAddresses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

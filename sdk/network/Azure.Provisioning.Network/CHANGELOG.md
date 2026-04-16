@@ -11,8 +11,11 @@
 ### Bugs Fixed
 
 - Fixed `Name` property to be writable on `FirewallPolicyDraft`, `FrontendIPConfiguration`, `LoadBalancingRule`, `NetworkInterfaceIPConfiguration`, `OutboundRule`, and `ProbeResource`.
-- Removed incorrectly writable `ProvisioningState` on `IpamPool`, `StaticCidr`, `NetworkVerifierWorkspace`, `ReachabilityAnalysisIntent`, and `ReachabilityAnalysisRun`.
-- Removed phantom `SubnetId` and `VirtualNetworkId` properties from `IPAllocation` that do not exist in the Bicep reference.
+- Fixed `ProvisioningState` to be readonly on `IpamPool`, `StaticCidr`, `NetworkVerifierWorkspace`, `ReachabilityAnalysisIntent`, and `ReachabilityAnalysisRun`.
+
+### Breaking Changes
+
+- Removed `SubnetId` and `VirtualNetworkId` properties from `IPAllocation` that do not exist in the Bicep reference.
 
 ## 1.1.0-beta.2 (2026-03-24)
 

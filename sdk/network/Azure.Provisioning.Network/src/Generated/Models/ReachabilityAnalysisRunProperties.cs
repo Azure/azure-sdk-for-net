@@ -65,6 +65,15 @@ public partial class ReachabilityAnalysisRunProperties : ProvisionableConstruct
     private BicepValue<string>? _errorMessage;
 
     /// <summary>
+    /// Provisioning states of a resource.
+    /// </summary>
+    public BicepValue<NetworkProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<NetworkProvisioningState>? _provisioningState;
+
+    /// <summary>
     /// Creates a new ReachabilityAnalysisRunProperties.
     /// </summary>
     public ReachabilityAnalysisRunProperties()
@@ -83,5 +92,6 @@ public partial class ReachabilityAnalysisRunProperties : ProvisionableConstruct
         _intentContent = DefineModelProperty<AnalysisRunIntentContent>("IntentContent", ["intentContent"], isOutput: true);
         _analysisResult = DefineProperty<string>("AnalysisResult", ["analysisResult"], isOutput: true);
         _errorMessage = DefineProperty<string>("ErrorMessage", ["errorMessage"], isOutput: true);
+        _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
     }
 }
