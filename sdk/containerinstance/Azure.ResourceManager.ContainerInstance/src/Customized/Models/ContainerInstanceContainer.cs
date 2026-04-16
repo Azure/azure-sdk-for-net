@@ -8,9 +8,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-// Backward compatibility: the old SDK had a 3-param constructor taking (name, image, resources).
-// The new generator produces a different constructor signature.
-public partial class ContainerInstanceContainer
+    // Backward compatibility: the old SDK had a 3-param constructor taking (name, image, resources).
+    // The new generator produces a different constructor signature.
+    public partial class ContainerInstanceContainer
     {
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>

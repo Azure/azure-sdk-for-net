@@ -13,10 +13,10 @@ using Azure.ResourceManager.ContainerInstance.Models;
 namespace Azure.ResourceManager.ContainerInstance
 {
     // Backward compatibility: the old SDK had a 3-param constructor taking (location, containers, osType).
-// The new generator only produces a 2-param constructor (location, containers).
-// Also provides OSType (non-nullable) as a wrapper over ContainerGroupOSType (nullable),
-// and ContainerGroupProvisioningState (typed) as a wrapper over ProvisioningState (string).
-public partial class ContainerGroupData
+    // The new generator only produces a 2-param constructor (location, containers).
+    // Also provides OSType (non-nullable) as a wrapper over ContainerGroupOSType (nullable),
+    // and ContainerGroupProvisioningState (typed) as a wrapper over ProvisioningState (string).
+    public partial class ContainerGroupData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
