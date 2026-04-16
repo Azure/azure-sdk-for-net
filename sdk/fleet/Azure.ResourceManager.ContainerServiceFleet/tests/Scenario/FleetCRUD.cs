@@ -133,14 +133,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 DisplayName = "group after gate"
             };
 
-            // Create group
+            // Create group with MaxConcurrency set to a percentage
+            group1.MaxConcurrency = "50%";
             group1.BeforeGates.Add(groupBeforeGate);
             group1.AfterGates.Add(groupAfterGate);
 
-            // Create stage and attach group
+            // Create stage and attach group with MaxConcurrency set to a fixed integer
             var stage1 = new ContainerServiceFleetUpdateStage("stage1")
             {
-                AfterStageWaitInSeconds = 3600
+                AfterStageWaitInSeconds = 3600,
+                MaxConcurrency = "7"
             };
             stage1.BeforeGates.Add(stageBeforeGate);
             stage1.AfterGates.Add(stageAfterGate);
@@ -170,13 +172,42 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Debug.Assert(updateRunResource.HasData, "No UpdateRunData found");
             Console.WriteLine($"Succeeded on id: {updateRunResource.Data.Id}");
 
+            // Verify MaxConcurrency on the strategy (input values echoed back)
+            var createdStrategyStage = updateRunResource.Data.StrategyStages[0];
+            Debug.Assert(createdStrategyStage.MaxConcurrency == "7", $"Expected stage MaxConcurrency '7' but got '{createdStrategyStage.MaxConcurrency}'");
+            var createdStrategyGroup = createdStrategyStage.Groups[0];
+            Debug.Assert(createdStrategyGroup.MaxConcurrency == "50%", $"Expected group MaxConcurrency '50%' but got '{createdStrategyGroup.MaxConcurrency}'");
+            Console.WriteLine("MaxConcurrency strategy values verified on create response");
+
             // Get UpdateRun
             ContainerServiceFleetUpdateRunResource getUpdateRun = await updateRunResource.GetAsync();
             Console.WriteLine($"Succeeded on id: {getUpdateRun.Data.Id}");
 
+            // Verify MaxConcurrency on GET strategy (input values)
+            var getStrategyStage = getUpdateRun.Data.StrategyStages[0];
+            Debug.Assert(getStrategyStage.MaxConcurrency == "7", $"Expected stage strategy MaxConcurrency '7' but got '{getStrategyStage.MaxConcurrency}'");
+            var getStrategyGroup = getStrategyStage.Groups[0];
+            Debug.Assert(getStrategyGroup.MaxConcurrency == "50%", $"Expected group strategy MaxConcurrency '50%' but got '{getStrategyGroup.MaxConcurrency}'");
+            Console.WriteLine("MaxConcurrency strategy values verified on GET response");
+
             // Start UpdateRun
             ArmOperation<ContainerServiceFleetUpdateRunResource> startUpdateRunLRO = await updateRunResource.StartAsync(WaitUntil.Completed, ifMatch: (string)null);
             Console.WriteLine($"Succeeded on id: {startUpdateRunLRO.Value.Data.Id}");
+
+            // Verify resolved MaxConcurrency on the run status
+            // Stage: fixed "7" resolves to 7
+            // Group: 50% of 1 cluster = 0.5 -> rounded down = 0 -> min 1 enforced = 1
+            var runStatus = startUpdateRunLRO.Value.Data.Status;
+            Debug.Assert(runStatus != null, "UpdateRun status should not be null after start");
+            var statusStage = runStatus.Stages[0];
+            Debug.Assert(statusStage.MaxConcurrency.HasValue, "Resolved stage MaxConcurrency should have a value");
+            Console.WriteLine($"Resolved stage MaxConcurrency: {statusStage.MaxConcurrency.Value}");
+            Debug.Assert(statusStage.MaxConcurrency.Value == 7, $"Expected resolved stage MaxConcurrency 7 but got {statusStage.MaxConcurrency.Value}");
+            var statusGroup = statusStage.Groups[0];
+            Debug.Assert(statusGroup.MaxConcurrency.HasValue, "Resolved group MaxConcurrency should have a value");
+            Console.WriteLine($"Resolved group MaxConcurrency: {statusGroup.MaxConcurrency.Value}");
+            Debug.Assert(statusGroup.MaxConcurrency.Value == 1, $"Expected resolved group MaxConcurrency 1 (50% of 1 cluster, min 1) but got {statusGroup.MaxConcurrency.Value}");
+            Console.WriteLine("MaxConcurrency resolved status values verified after start");
 
             // ===== Gates =====
             // List Gates

@@ -18,7 +18,6 @@ jobs:
         "JobId=azsdk-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}",
       ]
     if: |
-      toJson(github.event.check_run.pull_requests) != '[]' &&
       github.event.check_run.check_suite.app.name == 'Azure Pipelines' && (
       contains(github.event.check_run.name, 'Build Build') ||
       contains(github.event.check_run.name, 'Build Analyze') ||

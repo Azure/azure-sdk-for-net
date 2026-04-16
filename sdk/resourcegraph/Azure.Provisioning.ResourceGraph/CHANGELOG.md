@@ -1,0 +1,8 @@
+# Release History
+
+## 1.0.0-beta.1 (2026-04-16)
+
+### Features Added
+
+- Initial beta release of Azure.Provisioning.ResourceGraph with support for declarative Resource Graph resource provisioning.
+- Added support for Resource Graph Query resources.

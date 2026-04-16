@@ -497,8 +497,8 @@ public class SdkRoundTripTests
         var tc = msg.AddTextContent();
         yield return tc.EmitAdded();
         yield return tc.EmitDelta(text);
-        yield return tc.EmitDone(text);
-        yield return msg.EmitContentDone(tc);
+        yield return tc.EmitTextDone(text);
+        yield return tc.EmitDone();
         yield return msg.EmitDone();
 
         yield return stream.EmitCompleted();
@@ -549,7 +549,6 @@ public class SdkRoundTripTests
         yield return part.EmitTextDelta(summaryText);
         yield return part.EmitTextDone(summaryText);
         yield return part.EmitDone();
-        reasoning.EmitSummaryPartDone(part);
         yield return reasoning.EmitDone();
 
         yield return stream.EmitCompleted();
@@ -722,7 +721,6 @@ public class SdkRoundTripTests
         yield return sp.EmitAdded();
         yield return sp.EmitTextDone("Thinking about the answer...");
         yield return sp.EmitDone();
-        reasoning.EmitSummaryPartDone(sp);
         yield return reasoning.EmitDone();
 
         // 2. Function call
@@ -736,8 +734,8 @@ public class SdkRoundTripTests
         yield return msg.EmitAdded();
         var tc = msg.AddTextContent();
         yield return tc.EmitAdded();
-        yield return tc.EmitDone("The answer is 42");
-        yield return msg.EmitContentDone(tc);
+        yield return tc.EmitTextDone("The answer is 42");
+        yield return tc.EmitDone();
         yield return msg.EmitDone();
 
         yield return stream.EmitCompleted();

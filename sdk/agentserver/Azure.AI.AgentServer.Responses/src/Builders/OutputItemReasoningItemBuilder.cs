@@ -9,11 +9,13 @@ namespace Azure.AI.AgentServer.Responses;
 /// <summary>
 /// Scoped builder for a reasoning output item. Manages the summary part index
 /// counter and provides factory methods for creating summary part scopes.
+/// Child summary builders are auto-tracked so <see cref="EmitDone"/> can build
+/// the final reasoning item from their accumulated state.
 /// </summary>
 public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReasoningItem>
 {
     private long _summaryIndex;
-    private readonly List<SummaryTextContent> _completedSummaries = new();
+    private readonly List<ReasoningSummaryPartBuilder> _summaryBuilders = new();
 
     /// <summary>
     /// Initializes a new instance of <see cref="OutputItemReasoningItemBuilder"/>.
@@ -47,22 +49,15 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
 
     /// <summary>
     /// Creates a reasoning summary part scope with the next summary index.
+    /// The builder is auto-tracked for inclusion in <see cref="EmitDone"/>.
     /// </summary>
     /// <returns>A new <see cref="ReasoningSummaryPartBuilder"/> for the summary part.</returns>
     public virtual ReasoningSummaryPartBuilder AddSummaryPart()
     {
         var summaryIndex = _summaryIndex++;
-        return new ReasoningSummaryPartBuilder(_stream, _outputIndex, summaryIndex, _itemId);
-    }
-
-    /// <summary>
-    /// Records a completed summary part for inclusion in the done event.
-    /// </summary>
-    /// <param name="summaryPart">The summary part builder whose final text to accumulate.</param>
-    public virtual void EmitSummaryPartDone(ReasoningSummaryPartBuilder summaryPart)
-    {
-        _completedSummaries.Add(new SummaryTextContent(
-            text: summaryPart.FinalText ?? string.Empty));
+        var builder = new ReasoningSummaryPartBuilder(_stream, _outputIndex, summaryIndex, _itemId);
+        _summaryBuilders.Add(builder);
+        return builder;
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -80,7 +75,6 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
         yield return builder.EmitTextDelta(text);
         yield return builder.EmitTextDone(text);
         yield return builder.EmitDone();
-        EmitSummaryPartDone(builder);
     }
 
     /// <summary>
@@ -108,19 +102,35 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
         var finalText = sb.ToString();
         yield return builder.EmitTextDone(finalText);
         yield return builder.EmitDone();
-        EmitSummaryPartDone(builder);
     }
 
     /// <summary>
     /// Produces a <c>response.output_item.done</c> event with a
-    /// completed reasoning output item containing the accumulated summaries.
+    /// completed reasoning output item. The summary list is built automatically
+    /// from the tracked child summary builders.
     /// </summary>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this reasoning item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
+        var completedSummaries = new List<SummaryTextContent>();
+        for (int i = 0; i < _summaryBuilders.Count; i++)
+        {
+            var builder = _summaryBuilders[i];
+            if (!builder.IsDone)
+            {
+                throw new ResponseValidationException(
+                [
+                    new ValidationError($"$.summary[{i}]", "Summary part builder must complete its full lifecycle (EmitTextDone + EmitDone) before reasoning EmitDone().")
+                ]);
+            }
+
+            completedSummaries.Add(new SummaryTextContent(
+                text: builder.FinalText));
+        }
+
         var item = new OutputItemReasoningItem(
             id: _itemId,
-            summary: _completedSummaries);
+            summary: completedSummaries);
         item.Status = OutputItemReasoningItemStatus.Completed;
         return EmitDone(item);
     }
