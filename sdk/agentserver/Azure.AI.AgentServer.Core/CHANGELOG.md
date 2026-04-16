@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.22 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.21 (2026-04-14)
 
 This is a major architectural rewrite. The package has been redesigned as a lightweight hosting
