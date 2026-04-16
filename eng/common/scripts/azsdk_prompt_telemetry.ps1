@@ -2,20 +2,7 @@ $ErrorActionPreference = "SilentlyContinue"
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
 $cliPath = Get-CommonInstallDirectory
-# check for azsdk.exe on Windows or azsdk on Linux/Mac in the install directory
-if ($IsWindows)
-{
-    $cliPath = Join-Path $cliPath "azsdk.exe"
-}
-else
-{
-    $cliPath = Join-Path $cliPath "azsdk"
-}
-
-if (-not (Test-Path $cliPath))
-{
-    Write-Success
-}
+$cliPath = Join-Path $cliPath "azsdk"
 
 # Skip telemetry if opted out
 if ($env:AZSDKTOOLS_COLLECT_TELEMETRY -eq "false")
@@ -68,29 +55,19 @@ if (-not $sessionId -and $inputData.PSObject.Properties['session_id'])
 }
 
 # === STEP 2: Publish event ===
-# Build MCP command arguments without passing the full prompt on the command line.
-$processStartInfo = [System.Diagnostics.ProcessStartInfo]::new()
-$processStartInfo.FileName = $cliPath
-$processStartInfo.UseShellExecute = $false
-$processStartInfo.CreateNoWindow = $true
-$processStartInfo.RedirectStandardInput = $true
-$processStartInfo.ArgumentList.Add("ingest-telemetry")
-$processStartInfo.ArgumentList.Add("--client-type")
-$processStartInfo.ArgumentList.Add([string]$clientType)
-$processStartInfo.ArgumentList.Add("--event-type")
-$processStartInfo.ArgumentList.Add([string]$eventType)
-$processStartInfo.ArgumentList.Add("--session-id")
-$processStartInfo.ArgumentList.Add([string]$sessionId)
+# Build MCP command arguments
+$cliArgs = @(
+    "ingest-telemetry",
+    "--client-type", $clientType,
+    "--event-type", $eventType,
+    "--session-id", $sessionId,
+    "--body", "'$prompt'"
+)
    
-# run azsdk cli to ingest telemetry (non-blocking) and pass the prompt via stdin
+# run azsdk cli to ingest telemetry (non-blocking)
 try
 {
-    $process = [System.Diagnostics.Process]::Start($processStartInfo)
-    if ($null -ne $process)
-    {
-        $process.StandardInput.Write($prompt)
-        $process.StandardInput.Close()
-    }
+    Start-Process -FilePath $cliPath -ArgumentList $cliArgs -NoNewWindow
 }
 catch
 {
