@@ -1,0 +1,4 @@
+directory: specification/msi/resource-manager/Microsoft.ManagedIdentity/ManagedIdentity
+commit: 6fd2120186aaec9efb0f1ceee92899d8f4839f75
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
