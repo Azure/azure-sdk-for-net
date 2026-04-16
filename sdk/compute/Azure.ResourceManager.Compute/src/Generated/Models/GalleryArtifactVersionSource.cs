@@ -24,14 +24,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
+        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryArtifactVersionSource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryArtifactVersionSource(ResourceIdentifier id, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
+            Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The id of the gallery artifact version source. </summary>
         public ResourceIdentifier Id { get; set; }
+
+        /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
+        public Uri Uri { get; set; }
     }
 }

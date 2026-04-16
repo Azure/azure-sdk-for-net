@@ -76,11 +76,6 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
-            }
             if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
@@ -114,8 +109,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri uri = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier storageAccountId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryDiskImageSource(id, additionalBinaryDataProperties, uri, storageAccountId);
+            return new GalleryDiskImageSource(id, uri, additionalBinaryDataProperties, storageAccountId);
         }
     }
 }

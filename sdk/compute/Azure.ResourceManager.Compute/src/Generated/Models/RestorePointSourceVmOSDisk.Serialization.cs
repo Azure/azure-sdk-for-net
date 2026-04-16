@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -104,10 +105,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk, options);
             }
-            if (Optional.IsDefined(DiskRestorePoint))
+            if (Optional.IsDefined(DiskRestorePointId))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
-                writer.WriteObjectValue(DiskRestorePoint, options);
+                writer.WriteStringValue(DiskRestorePointId);
             }
             if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
             {
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             CachingType? caching = default;
             int? diskSizeGB = default;
             VirtualMachineManagedDisk managedDisk = default;
-            DiskRestorePointAttributes diskRestorePoint = default;
+            ResourceIdentifier diskRestorePointId = default;
             bool? writeAcceleratorEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diskRestorePoint = DiskRestorePointAttributes.DeserializeDiskRestorePointAttributes(prop.Value, options);
+                    diskRestorePointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Models
                 caching,
                 diskSizeGB,
                 managedDisk,
-                diskRestorePoint,
+                diskRestorePointId,
                 writeAcceleratorEnabled,
                 additionalBinaryDataProperties);
         }

@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,12 +141,21 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("uri"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryArtifactVersionSource(id, additionalBinaryDataProperties);
+            return new GalleryArtifactVersionSource(id, uri, additionalBinaryDataProperties);
         }
     }
 }

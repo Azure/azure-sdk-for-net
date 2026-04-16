@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -28,10 +29,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="caching"> Gets the caching type. </param>
         /// <param name="diskSizeGB"> Gets the disk size in GB. </param>
         /// <param name="managedDisk"> Gets the managed disk details. </param>
-        /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
+        /// <param name="diskRestorePointId"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePointSourceVmOSDisk(SupportedOperatingSystemType? osType, DiskEncryptionSettings encryptionSettings, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, ResourceIdentifier diskRestorePointId, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             EncryptionSettings = encryptionSettings;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             Caching = caching;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
-            DiskRestorePoint = diskRestorePoint;
+            DiskRestorePointId = diskRestorePointId;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineManagedDisk ManagedDisk { get; set; }
 
         /// <summary> Contains Disk Restore Point properties. </summary>
-        public DiskRestorePointAttributes DiskRestorePoint { get; set; }
+        public ResourceIdentifier DiskRestorePointId { get; set; }
 
         /// <summary> Shows true if the disk is write-accelerator enabled. </summary>
         public bool? WriteAcceleratorEnabled { get; }
