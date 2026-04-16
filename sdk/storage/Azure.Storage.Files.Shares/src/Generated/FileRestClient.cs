@@ -1139,7 +1139,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange, int? timeout, string sourceContentCrc64, string sourceIfMatchCrc64, string sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRangeFromUrl");
             scope.Start();
@@ -1177,7 +1177,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange, int? timeout, string sourceContentCrc64, string sourceIfMatchCrc64, string sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.UploadRangeFromUrl");
             scope.Start();
@@ -1207,7 +1207,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, string sourceContentCrc64 = default, string sourceIfMatchCrc64 = default, string sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
+        public virtual Response UploadRangeFromUrl(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, BinaryData sourceContentCrc64 = default, BinaryData sourceIfMatchCrc64 = default, BinaryData sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
         {
             return UploadRangeFromUrl(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode?.ToSerialString(), cancellationToken.ToRequestContext());
         }
@@ -1226,7 +1226,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileLastWrittenMode"> If the file last write time should be preserved or overwritten. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, string sourceContentCrc64 = default, string sourceIfMatchCrc64 = default, string sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadRangeFromUrlAsync(string range, string copySource, long contentLength, string sourceRange = default, int? timeout = default, BinaryData sourceContentCrc64 = default, BinaryData sourceIfMatchCrc64 = default, BinaryData sourceIfNoneMatchCrc64 = default, string leaseId = default, string copySourceAuthorization = default, FileLastWrittenMode? fileLastWrittenMode = default, CancellationToken cancellationToken = default)
         {
             return await UploadRangeFromUrlAsync(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }

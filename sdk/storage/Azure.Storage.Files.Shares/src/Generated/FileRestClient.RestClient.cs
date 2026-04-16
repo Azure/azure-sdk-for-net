@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-structured-body", structuredBodyType);
             }
-            request.Headers.SetValue("Accept", "application/xml");
+            request.Headers.SetValue("Accept", "application/octet-stream");
             return message;
         }
 
@@ -597,7 +597,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateUploadRangeFromUrlRequest(string range, string copySource, long contentLength, string sourceRange, int? timeout, string sourceContentCrc64, string sourceIfMatchCrc64, string sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        internal HttpMessage CreateUploadRangeFromUrlRequest(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -624,15 +624,15 @@ namespace Azure.Storage.Files.Shares
             request.Headers.SetValue("Content-Length", TypeFormatters.ConvertToString(contentLength));
             if (sourceContentCrc64 != null)
             {
-                request.Headers.SetValue("x-ms-source-content-crc64", sourceContentCrc64);
+                request.Headers.SetValue("x-ms-source-content-crc64", TypeFormatters.ConvertToString(sourceContentCrc64, SerializationFormat.Bytes_Base64));
             }
             if (sourceIfMatchCrc64 != null)
             {
-                request.Headers.SetValue("x-ms-source-if-match-crc64", sourceIfMatchCrc64);
+                request.Headers.SetValue("x-ms-source-if-match-crc64", TypeFormatters.ConvertToString(sourceIfMatchCrc64, SerializationFormat.Bytes_Base64));
             }
             if (sourceIfNoneMatchCrc64 != null)
             {
-                request.Headers.SetValue("x-ms-source-if-none-match-crc64", sourceIfNoneMatchCrc64);
+                request.Headers.SetValue("x-ms-source-if-none-match-crc64", TypeFormatters.ConvertToString(sourceIfNoneMatchCrc64, SerializationFormat.Bytes_Base64));
             }
             if (leaseId != null)
             {
