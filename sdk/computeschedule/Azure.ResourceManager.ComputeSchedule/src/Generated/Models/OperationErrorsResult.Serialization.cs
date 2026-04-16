@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? activationOn = default;
             DateTimeOffset? completedOn = default;
-            IReadOnlyList<OperationErrorDetails> operationErrors = default;
+            IList<OperationErrorDetails> operationErrors = default;
             string requestErrorCode = default;
             string requestErrorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();

@@ -424,119 +424,83 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             AzureLocation locationparameter = new AzureLocation("oslhbouzgevzpeydssyelhw");
             ExecuteCreateContent content = new ExecuteCreateContent(new ResourceProvisionPayload(2)
             {
-                BaseProfile =
-{
-["hardwareProfile"] = BinaryData.FromObjectAsJson(new
-{
-name = "F1",
-}),
-["provisioningState"] = BinaryData.FromObjectAsJson(0),
-["storageProfile"] = BinaryData.FromObjectAsJson(new
-{
-osDisk = new
-{
-osType = 0,
-},
-}),
-["vmExtensions"] = BinaryData.FromObjectAsJson(new object[]
-{
-new
-{
-autoUpgradeMinorVersion = true,
-protectedSettings = "SomeDecryptedSecretValue",
-provisioningState = 0,
-enableAutomaticUpgrade = true,
-publisher = "Microsoft.Azure.Monitor",
-type = "AzureMonitorLinuxAgent",
-typeHandlerVersion = "1.0",
-},
-new
-{
-name = "myExtensionName",
-}
-}),
-["resourcegroupName"] = BinaryData.FromObjectAsJson("RG5ABF491C-3164-42A6-8CB5-BF3CB53B018B"),
-["computeApiVersion"] = BinaryData.FromObjectAsJson("2024-07-01")
-},
-                ResourceOverrides = {new Dictionary<string, BinaryData>
-{
-["name"] = BinaryData.FromObjectAsJson("myFleet_523"),
-["location"] = BinaryData.FromObjectAsJson("LocalDev"),
-["properties"] = BinaryData.FromObjectAsJson(new
-{
-hardwareProfile = new
-{
-vmSize = "Standard_F1s",
-},
-provisioningState = 0,
-osProfile = new
-{
-computerName = "myFleet000000",
-adminUsername = "adminUser",
-windowsConfiguration = new
-{
-additionalUnattendContent = new object[]
-{
-new
-{
-passName = "someValue",
-content = "",
-},
-new
-{
-passName = "someOtherValue",
-content = "SomeDecryptedSecretValue",
-}
-},
-},
-adminPassword = "SomeDecryptedSecretValue",
-},
-priority = 0,
-}),
-["zones"] = BinaryData.FromObjectAsJson(new object[]
-{
-"1"
-})
-}, new Dictionary<string, BinaryData>
-{
-["name"] = BinaryData.FromObjectAsJson("myFleet_524"),
-["location"] = BinaryData.FromObjectAsJson("LocalDev"),
-["properties"] = BinaryData.FromObjectAsJson(new
-{
-hardwareProfile = new
-{
-vmSize = "Standard_G1s",
-},
-provisioningState = 0,
-osProfile = new
-{
-computerName = "myFleet000000",
-adminUsername = "adminUser",
-windowsConfiguration = new
-{
-additionalUnattendContent = new object[]
-{
-new
-{
-passName = "someValue",
-content = "",
-},
-new
-{
-passName = "someOtherValue",
-content = "SomeDecryptedSecretValue",
-}
-},
-},
-adminPassword = "SomeDecryptedSecretValue",
-},
-priority = 0,
-}),
-["zones"] = BinaryData.FromObjectAsJson(new object[]
-{
-"2"
-})
-}},
+                VirtualMachineBaseProfile = new BulkVMConfiguration
+                {
+                    ResourceGroupName = "RG5ABF491C-3164-42A6-8CB5-BF3CB53B018B",
+                    ComputeApiVersion = "2024-07-01",
+                    Properties = new BulkActionVMProperties
+                    {
+                        HardwareProfile = new HardwareProfile { VmSize = "F1" },
+                        StorageProfile = new StorageProfile
+                        {
+                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            {
+                                OsType = OperatingSystemTypes.Windows,
+                            },
+                        },
+                    },
+                    VmExtensions =
+                    {
+                        new BulkActionVMExtension("AzureMonitorLinuxAgent", new BulkActionVmExtensionProperties
+                        {
+                            AutoUpgradeMinorVersion = true,
+                            EnableAutomaticUpgrade = true,
+                            Publisher = "Microsoft.Azure.Monitor",
+                            Type = "AzureMonitorLinuxAgent",
+                            TypeHandlerVersion = "1.0",
+                        }),
+                        new BulkActionVMExtension("myExtensionName", new BulkActionVmExtensionProperties()),
+                    },
+                },
+                VirtualMachineOverrides =
+                {
+                    new BulkVMConfiguration
+                    {
+                        Name = "myFleet_523",
+                        Zones = { "1" },
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_F1s" },
+                            OsProfile = new OSProfile
+                            {
+                                ComputerName = "myFleet000000",
+                                AdminUsername = "adminUser",
+                                AdminPassword = "SomeDecryptedSecretValue",
+                                WindowsConfiguration = new WindowsConfiguration
+                                {
+                                    AdditionalUnattendContent =
+                                    {
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "" },
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "SomeDecryptedSecretValue" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    new BulkVMConfiguration
+                    {
+                        Name = "myFleet_524",
+                        Zones = { "2" },
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_G1s" },
+                            OsProfile = new OSProfile
+                            {
+                                ComputerName = "myFleet000000",
+                                AdminUsername = "adminUser",
+                                AdminPassword = "SomeDecryptedSecretValue",
+                                WindowsConfiguration = new WindowsConfiguration
+                                {
+                                    AdditionalUnattendContent =
+                                    {
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "" },
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "SomeDecryptedSecretValue" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
                 ResourcePrefix = "TL1",
             }, new ScheduledActionExecutionParameterDetail
             {
@@ -576,119 +540,83 @@ priority = 0,
             AzureLocation locationparameter = new AzureLocation("useast");
             ExecuteCreateContent content = new ExecuteCreateContent(new ResourceProvisionPayload(2)
             {
-                BaseProfile =
-{
-["hardwareProfile"] = BinaryData.FromObjectAsJson(new
-{
-name = "F1",
-}),
-["provisioningState"] = BinaryData.FromObjectAsJson(0),
-["storageProfile"] = BinaryData.FromObjectAsJson(new
-{
-osDisk = new
-{
-osType = 0,
-},
-}),
-["vmExtensions"] = BinaryData.FromObjectAsJson(new object[]
-{
-new
-{
-autoUpgradeMinorVersion = true,
-protectedSettings = "SomeDecryptedSecretValue",
-provisioningState = 0,
-enableAutomaticUpgrade = true,
-publisher = "Microsoft.Azure.Monitor",
-type = "AzureMonitorLinuxAgent",
-typeHandlerVersion = "1.0",
-},
-new
-{
-name = "myExtensionName",
-}
-}),
-["resourcegroupName"] = BinaryData.FromObjectAsJson("RG5ABF491C-3164-42A6-8CB5-BF3CB53B018B"),
-["computeApiVersion"] = BinaryData.FromObjectAsJson("2024-07-01")
-},
-                ResourceOverrides = {new Dictionary<string, BinaryData>
-{
-["name"] = BinaryData.FromObjectAsJson("myFleet_523"),
-["location"] = BinaryData.FromObjectAsJson("LocalDev"),
-["properties"] = BinaryData.FromObjectAsJson(new
-{
-hardwareProfile = new
-{
-vmSize = "Standard_F1s",
-},
-provisioningState = 0,
-osProfile = new
-{
-computerName = "myFleet000000",
-adminUsername = "adminUser",
-windowsConfiguration = new
-{
-additionalUnattendContent = new object[]
-{
-new
-{
-passName = "someValue",
-content = "",
-},
-new
-{
-passName = "someOtherValue",
-content = "SomeDecryptedSecretValue",
-}
-},
-},
-adminPassword = "SomeDecryptedSecretValue",
-},
-priority = 0,
-}),
-["zones"] = BinaryData.FromObjectAsJson(new object[]
-{
-"1"
-})
-}, new Dictionary<string, BinaryData>
-{
-["name"] = BinaryData.FromObjectAsJson("myFleet_524"),
-["location"] = BinaryData.FromObjectAsJson("LocalDev"),
-["properties"] = BinaryData.FromObjectAsJson(new
-{
-hardwareProfile = new
-{
-vmSize = "Standard_G1s",
-},
-provisioningState = 0,
-osProfile = new
-{
-computerName = "myFleet000000",
-adminUsername = "adminUser",
-windowsConfiguration = new
-{
-additionalUnattendContent = new object[]
-{
-new
-{
-passName = "someValue",
-content = "",
-},
-new
-{
-passName = "someOtherValue",
-content = "SomeDecryptedSecretValue",
-}
-},
-},
-adminPassword = "SomeDecryptedSecretValue",
-},
-priority = 0,
-}),
-["zones"] = BinaryData.FromObjectAsJson(new object[]
-{
-"2"
-})
-}},
+                VirtualMachineBaseProfile = new BulkVMConfiguration
+                {
+                    ResourceGroupName = "RG5ABF491C-3164-42A6-8CB5-BF3CB53B018B",
+                    ComputeApiVersion = "2024-07-01",
+                    Properties = new BulkActionVMProperties
+                    {
+                        HardwareProfile = new HardwareProfile { VmSize = "F1" },
+                        StorageProfile = new StorageProfile
+                        {
+                            OsDisk = new OSDisk(DiskCreateOptionTypes.FromImage)
+                            {
+                                OsType = OperatingSystemTypes.Windows,
+                            },
+                        },
+                    },
+                    VmExtensions =
+                    {
+                        new BulkActionVMExtension("AzureMonitorLinuxAgent", new BulkActionVmExtensionProperties
+                        {
+                            AutoUpgradeMinorVersion = true,
+                            EnableAutomaticUpgrade = true,
+                            Publisher = "Microsoft.Azure.Monitor",
+                            Type = "AzureMonitorLinuxAgent",
+                            TypeHandlerVersion = "1.0",
+                        }),
+                        new BulkActionVMExtension("myExtensionName", new BulkActionVmExtensionProperties()),
+                    },
+                },
+                VirtualMachineOverrides =
+                {
+                    new BulkVMConfiguration
+                    {
+                        Name = "myFleet_523",
+                        Zones = { "1" },
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_F1s" },
+                            OsProfile = new OSProfile
+                            {
+                                ComputerName = "myFleet000000",
+                                AdminUsername = "adminUser",
+                                AdminPassword = "SomeDecryptedSecretValue",
+                                WindowsConfiguration = new WindowsConfiguration
+                                {
+                                    AdditionalUnattendContent =
+                                    {
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "" },
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "SomeDecryptedSecretValue" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    new BulkVMConfiguration
+                    {
+                        Name = "myFleet_524",
+                        Zones = { "2" },
+                        Properties = new BulkActionVMProperties
+                        {
+                            HardwareProfile = new HardwareProfile { VmSize = "Standard_G1s" },
+                            OsProfile = new OSProfile
+                            {
+                                ComputerName = "myFleet000000",
+                                AdminUsername = "adminUser",
+                                AdminPassword = "SomeDecryptedSecretValue",
+                                WindowsConfiguration = new WindowsConfiguration
+                                {
+                                    AdditionalUnattendContent =
+                                    {
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "" },
+                                        new Models.AdditionalUnattendContent { PassName = AdditionalUnattendContentPassName.OobeSystem, Content = "SomeDecryptedSecretValue" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             }, new ScheduledActionExecutionParameterDetail());
             CreateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineCreateOperationAsync(locationparameter, content);
 
