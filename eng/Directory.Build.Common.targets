@@ -531,6 +531,8 @@
     entry to eng/centralpackagemanagement/Directory.Packages.props with
     appropriate conditions. See eng/centralpackagemanagement/README.md.
   -->
+  <Import Project="NoWarnValidation.targets" />
+
   <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
     <!-- Block re-enabling VersionOverride -->
     <Error
