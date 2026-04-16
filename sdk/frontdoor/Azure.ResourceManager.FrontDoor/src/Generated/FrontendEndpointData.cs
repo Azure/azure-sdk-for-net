@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.webApplicationFirewallPolicyLink.id")]
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get
             {

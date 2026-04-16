@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.RoutingRuleData"/> instance for mocking. </returns>
-        public static RoutingRuleData RoutingRuleData(string id = default, IEnumerable<SubResource> frontendEndpoints = default, IEnumerable<FrontDoorProtocol> acceptedProtocols = default, IEnumerable<string> patternsToMatch = default, RoutingRuleEnabledState? enabledState = default, RouteConfiguration routeConfiguration = default, string rulesEngineId = default, string webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        public static RoutingRuleData RoutingRuleData(ResourceIdentifier id = default, IEnumerable<SubResource> frontendEndpoints = default, IEnumerable<FrontDoorProtocol> acceptedProtocols = default, IEnumerable<string> patternsToMatch = default, RoutingRuleEnabledState? enabledState = default, RouteConfiguration routeConfiguration = default, ResourceIdentifier rulesEngineId = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
         {
             return new RoutingRuleData(id, additionalBinaryDataProperties: null, frontendEndpoints is null && acceptedProtocols is null && patternsToMatch is null && enabledState is null && routeConfiguration is null && rulesEngineId is null && webApplicationFirewallPolicyLinkId is null && resourceState is null ? default : new RoutingRuleProperties(
                 (frontendEndpoints ?? new ChangeTrackingList<SubResource>()).ToList(),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.FrontDoorLoadBalancingSettingsData"/> instance for mocking. </returns>
-        public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(string id = default, int? sampleSize = default, int? successfulSamplesRequired = default, int? additionalLatencyMilliseconds = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        public static FrontDoorLoadBalancingSettingsData FrontDoorLoadBalancingSettingsData(ResourceIdentifier id = default, int? sampleSize = default, int? successfulSamplesRequired = default, int? additionalLatencyMilliseconds = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
         {
             return new FrontDoorLoadBalancingSettingsData(id, additionalBinaryDataProperties: null, sampleSize is null && successfulSamplesRequired is null && additionalLatencyMilliseconds is null && resourceState is null ? default : new LoadBalancingSettingsProperties(sampleSize, successfulSamplesRequired, additionalLatencyMilliseconds, null, resourceState), name, @type);
         }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.FrontDoorHealthProbeSettingsData"/> instance for mocking. </returns>
-        public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(string id = default, string path = default, FrontDoorProtocol? protocol = default, int? intervalInSeconds = default, FrontDoorHealthProbeMethod? healthProbeMethod = default, HealthProbeEnabled? enabledState = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        public static FrontDoorHealthProbeSettingsData FrontDoorHealthProbeSettingsData(ResourceIdentifier id = default, string path = default, FrontDoorProtocol? protocol = default, int? intervalInSeconds = default, FrontDoorHealthProbeMethod? healthProbeMethod = default, HealthProbeEnabled? enabledState = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
         {
             return new FrontDoorHealthProbeSettingsData(id, additionalBinaryDataProperties: null, path is null && protocol is null && intervalInSeconds is null && healthProbeMethod is null && enabledState is null && resourceState is null ? default : new HealthProbeSettingsProperties(
                 path,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.FrontDoorBackendPool"/> instance for mocking. </returns>
-        public static FrontDoorBackendPool FrontDoorBackendPool(string id = default, IEnumerable<FrontDoorBackend> backends = default, string loadBalancingSettingsId = default, string healthProbeSettingsId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
+        public static FrontDoorBackendPool FrontDoorBackendPool(ResourceIdentifier id = default, IEnumerable<FrontDoorBackend> backends = default, ResourceIdentifier loadBalancingSettingsId = default, ResourceIdentifier healthProbeSettingsId = default, FrontDoorResourceState? resourceState = default, string name = default, string @type = default)
         {
             return new FrontDoorBackendPool(id, additionalBinaryDataProperties: null, backends is null && loadBalancingSettingsId is null && healthProbeSettingsId is null && resourceState is null ? default : new BackendPoolProperties((backends ?? new ChangeTrackingList<FrontDoorBackend>()).ToList(), new SubResource(loadBalancingSettingsId, null), new SubResource(healthProbeSettingsId, null), null, resourceState), name, @type);
         }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
         /// <returns> A new <see cref="FrontDoor.FrontendEndpointData"/> instance for mocking. </returns>
-        public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id = default, string name = default, string @type = default, string hostName = default, SessionAffinityEnabledState? sessionAffinityEnabledState = default, int? sessionAffinityTtlSeconds = default, string webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default, CustomHttpsConfiguration customHttpsConfiguration = default)
+        public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id = default, string name = default, string @type = default, string hostName = default, SessionAffinityEnabledState? sessionAffinityEnabledState = default, int? sessionAffinityTtlSeconds = default, ResourceIdentifier webApplicationFirewallPolicyLinkId = default, FrontDoorResourceState? resourceState = default, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default, CustomHttpsConfiguration customHttpsConfiguration = default)
         {
             return new FrontendEndpointData(id, name, @type, additionalBinaryDataProperties: null, hostName is null && sessionAffinityEnabledState is null && sessionAffinityTtlSeconds is null && webApplicationFirewallPolicyLinkId is null && resourceState is null && customHttpsProvisioningState is null && customHttpsProvisioningSubstate is null && customHttpsConfiguration is null ? default : new FrontendEndpointProperties(
                 hostName,
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, ManagedRuleSetList managedRules = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<RoutingRuleLink> routingRuleLinks = default, IEnumerable<SecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> customRuleListRules = default, string etag = default, FrontDoorSkuName? skuName = default)
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, ManagedRuleSetList managedRules = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<RoutingRuleLink> routingRuleLinks = default, IEnumerable<SecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> customRuleListRules = default, ETag? etag = default, FrontDoorSkuName? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="enabledState"> The state of the Experiment. </param>
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
-        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, string etag = default)
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -808,15 +808,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     country,
                     (timeseriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>()).ToList(),
                     null));
-        }
-
-        /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
-        /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
-        /// <param name="value"> The Value of the Timeseries data point. </param>
-        /// <returns> A new <see cref="Models.FrontDoorTimeSeriesDataPoint"/> instance for mocking. </returns>
-        public static FrontDoorTimeSeriesDataPoint FrontDoorTimeSeriesDataPoint(string dateTimeUtc = default, float? value = default)
-        {
-            return new FrontDoorTimeSeriesDataPoint(dateTimeUtc, value, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Resource ID. </param>

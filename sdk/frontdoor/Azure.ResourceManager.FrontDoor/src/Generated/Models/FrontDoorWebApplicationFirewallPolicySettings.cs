@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="captchaExpirationInMinutes"> Defines the Captcha cookie validity lifetime in minutes. This setting is only applicable to Premium_AzureFrontDoor. Value must be an integer between 5 and 1440 with the default value being 30. </param>
         /// <param name="logScrubbing"> Defines rules that scrub sensitive fields in the Web Application Firewall logs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, FrontDoorWebApplicationFirewallPolicyMode? mode, string redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck, int? javascriptChallengeExpirationInMinutes, int? captchaExpirationInMinutes, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorWebApplicationFirewallPolicySettings(PolicyEnabledState? enabledState, FrontDoorWebApplicationFirewallPolicyMode? mode, Uri redirectUri, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicyRequestBodyCheck? requestBodyCheck, int? javascriptChallengeExpirationInMinutes, int? captchaExpirationInMinutes, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnabledState = enabledState;
             Mode = mode;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> If action type is redirect, this field represents redirect URL for the client. </summary>
         [WirePath("redirectUrl")]
-        public string RedirectUri { get; set; }
+        public Uri RedirectUri { get; set; }
 
         /// <summary> If the action type is block, customer can override the response status code. </summary>
         [WirePath("customBlockResponseStatusCode")]

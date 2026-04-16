@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HealthProbeSettingsProperties properties = default;
             string name = default;
@@ -126,7 +127,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

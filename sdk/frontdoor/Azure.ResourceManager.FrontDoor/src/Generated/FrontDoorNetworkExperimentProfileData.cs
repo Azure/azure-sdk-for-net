@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of a Profile. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProfileProperties properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal FrontDoorNetworkExperimentProfileData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProfileProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Resource status. </summary>
         [WirePath("properties.resourceState")]

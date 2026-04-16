@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

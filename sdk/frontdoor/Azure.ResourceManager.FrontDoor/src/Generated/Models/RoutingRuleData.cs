@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="properties"> Properties of the Front Door Routing Rule. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal RoutingRuleData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutingRuleProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        internal RoutingRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RoutingRuleProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.rulesEngine.id")]
-        public string RulesEngineId
+        public ResourceIdentifier RulesEngineId
         {
             get
             {
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.webApplicationFirewallPolicyLink.id")]
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get
             {

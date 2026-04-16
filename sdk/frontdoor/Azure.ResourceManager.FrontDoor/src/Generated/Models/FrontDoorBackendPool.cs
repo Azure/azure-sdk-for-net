@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="properties"> Properties of the Front Door Backend Pool. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal FrontDoorBackendPool(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackendPoolProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        internal FrontDoorBackendPool(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackendPoolProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.loadBalancingSettings.id")]
-        public string LoadBalancingSettingsId
+        public ResourceIdentifier LoadBalancingSettingsId
         {
             get
             {
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.healthProbeSettings.id")]
-        public string HealthProbeSettingsId
+        public ResourceIdentifier HealthProbeSettingsId
         {
             get
             {

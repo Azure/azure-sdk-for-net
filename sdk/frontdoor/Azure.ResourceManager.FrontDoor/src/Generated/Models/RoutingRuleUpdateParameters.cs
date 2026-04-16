@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("rulesEngine.id")]
-        public string RulesEngineId
+        public ResourceIdentifier RulesEngineId
         {
             get
             {
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("webApplicationFirewallPolicyLink.id")]
-        public string WebApplicationFirewallPolicyLinkId
+        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
         {
             get
             {

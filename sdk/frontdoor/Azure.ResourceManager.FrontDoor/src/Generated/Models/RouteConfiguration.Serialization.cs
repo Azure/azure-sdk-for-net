@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
     [PersistableModelProxy(typeof(UnknownRouteConfiguration))]
     public abstract partial class RouteConfiguration : IJsonModel<RouteConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/> for deserialization. </summary>
-        internal RouteConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RouteConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

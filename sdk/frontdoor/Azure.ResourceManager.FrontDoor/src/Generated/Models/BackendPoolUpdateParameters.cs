@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("loadBalancingSettings.id")]
-        public string LoadBalancingSettingsId
+        public ResourceIdentifier LoadBalancingSettingsId
         {
             get
             {
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("healthProbeSettings.id")]
-        public string HealthProbeSettingsId
+        public ResourceIdentifier HealthProbeSettingsId
         {
             get
             {

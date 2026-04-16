@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="properties"> Properties of the load balancing settings. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal FrontDoorLoadBalancingSettingsData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingSettingsProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        internal FrontDoorLoadBalancingSettingsData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, LoadBalancingSettingsProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;

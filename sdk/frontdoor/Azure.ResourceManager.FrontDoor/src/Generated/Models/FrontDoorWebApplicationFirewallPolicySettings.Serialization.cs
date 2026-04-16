@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
-                writer.WriteStringValue(RedirectUri);
+                writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
             if (Optional.IsDefined(CustomBlockResponseStatusCode))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             PolicyEnabledState? enabledState = default;
             FrontDoorWebApplicationFirewallPolicyMode? mode = default;
-            string redirectUri = default;
+            Uri redirectUri = default;
             int? customBlockResponseStatusCode = default;
             string customBlockResponseBody = default;
             PolicyRequestBodyCheck? requestBodyCheck = default;
@@ -193,7 +193,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (prop.NameEquals("redirectUrl"u8))
                 {
-                    redirectUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("customBlockResponseStatusCode"u8))

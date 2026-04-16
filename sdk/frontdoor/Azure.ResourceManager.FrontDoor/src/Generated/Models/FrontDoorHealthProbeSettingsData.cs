@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="properties"> Properties of the health probe settings. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        internal FrontDoorHealthProbeSettingsData(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthProbeSettingsProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        internal FrontDoorHealthProbeSettingsData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthProbeSettingsProperties properties, string name, string @type) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;

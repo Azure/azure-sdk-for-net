@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesDataPoint"/>. </summary>
-        internal FrontDoorTimeSeriesDataPoint()
+        public FrontDoorTimeSeriesDataPoint()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>
         [WirePath("dateTimeUTC")]
-        public string DateTimeUtc { get; }
+        public string DateTimeUtc { get; set; }
 
         /// <summary> The Value of the Timeseries data point. </summary>
         [WirePath("value")]
-        public float? Value { get; }
+        public float? Value { get; set; }
     }
 }
