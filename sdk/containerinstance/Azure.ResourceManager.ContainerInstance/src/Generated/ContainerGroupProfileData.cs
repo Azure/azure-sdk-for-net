@@ -206,23 +206,6 @@ namespace Azure.ResourceManager.ContainerInstance
             }
         }
 
-        /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType OSType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OSType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupProfileProperties();
-                }
-                Properties.OSType = value;
-            }
-        }
-
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerVolume> Volumes
         {
