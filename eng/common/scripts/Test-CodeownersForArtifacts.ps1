@@ -35,7 +35,7 @@ if ($failedPackages.Count -gt 0) {
     Write-Host ""
     Write-Host "Failed Packages:"
     foreach ($directoryPath in $failedPackages) {
-        Write-Host "  - $directoryPath"
+        LogError "  - $directoryPath does not have sufficient code owners coverage"
     }
     LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     exit 1
