@@ -3,7 +3,7 @@
 ## 12.27.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `ShareFileClient.GetRangeListPageable()`, `GetRangeListPageableAsync()`, `GetRangeListDiffPageable()`, and `GetRangeListDiffPageableAsync()` returning `Pageable<ShareFileRange>` / `AsyncPageable<ShareFileRange>` so callers can transparently iterate paginated List Ranges responses. Added the `ShareFileRange` model with `Range` and `IsClear` properties.
+- Added `ShareFileClient.GetRangeListPageable()`, `GetRangeListPageableAsync()`, `GetRangeListDiffPageable()`, and `GetRangeListDiffPageableAsync()`.
 
 ### Breaking Changes
 

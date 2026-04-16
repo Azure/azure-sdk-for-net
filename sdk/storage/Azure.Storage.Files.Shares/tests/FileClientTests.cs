@@ -4113,19 +4113,33 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient file = test.File;
 
             byte[] data = GetRandomBuffer(Constants.KB);
-            using Stream stream = new MemoryStream(data);
-            HttpRange range = new HttpRange(Constants.KB, Constants.KB);
-            await file.UploadRangeAsync(
-                writeType: ShareFileRangeWriteType.Update,
-                range: range,
-                content: stream);
+            HttpRange range1 = new HttpRange(0, Constants.KB);
+            using (Stream stream = new MemoryStream(data))
+            {
+                await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: range1,
+                    content: stream);
+            }
+
+            HttpRange range2 = new HttpRange(2 * Constants.KB, Constants.KB);
+            using (Stream stream = new MemoryStream(data))
+            {
+                await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: range2,
+                    content: stream);
+            }
 
             // Act
             IList<Page<ShareFileRange>> pages = await file.GetRangeListPageableAsync().AsPages(pageSizeHint: 1).ToListAsync();
 
             // Assert
-            Assert.IsTrue(pages.Count >= 1);
-            Assert.IsTrue(pages[0].Values.Count >= 1);
+            Assert.AreEqual(2, pages.Count);
+            Assert.AreEqual(1, pages[0].Values.Count);
+            Assert.AreEqual(range1, pages[0].Values[0].Range);
+            Assert.AreEqual(1, pages[1].Values.Count);
+            Assert.AreEqual(range2, pages[1].Values[0].Range);
         }
 
         [RecordedTest]
