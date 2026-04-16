@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ComputeExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeResourceSkuLocationInfo(string location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -55,6 +56,6 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<string> ExtendedLocations { get; }
 
         /// <summary> The type of the extended location. </summary>
-        public ComputeExtendedLocationType? ExtendedLocationType { get; }
+        public ExtendedLocationType? ExtendedLocationType { get; }
     }
 }

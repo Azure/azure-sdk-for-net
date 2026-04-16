@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<string> zones = default;
             IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
             IReadOnlyList<string> extendedLocations = default;
-            ComputeExtendedLocationType? extendedLocationType = default;
+            ExtendedLocationType? extendedLocationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    extendedLocationType = new ComputeExtendedLocationType(prop.Value.GetString());
+                    extendedLocationType = new ExtendedLocationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

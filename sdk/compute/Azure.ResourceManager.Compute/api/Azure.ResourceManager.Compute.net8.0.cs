@@ -4233,22 +4233,6 @@ namespace Azure.ResourceManager.Compute.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeExtendedLocationType : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeExtendedLocationType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType EdgeZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType left, Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType left, Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComputeGalleryEndpointAccess : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeGalleryEndpointAccess>
     {
         private readonly object _dummy;
@@ -4575,7 +4559,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ComputeResourceSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ComputeExtendedLocationType? ExtendedLocationType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }

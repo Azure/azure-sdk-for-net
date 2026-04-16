@@ -4494,7 +4494,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         /// <returns> A new <see cref="Models.ComputeResourceSkuLocationInfo"/> instance for mocking. </returns>
-        public static ComputeResourceSkuLocationInfo ComputeResourceSkuLocationInfo(string location = default, IEnumerable<string> zones = default, IEnumerable<ComputeResourceSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ComputeExtendedLocationType? extendedLocationType = default)
+        public static ComputeResourceSkuLocationInfo ComputeResourceSkuLocationInfo(string location = default, IEnumerable<string> zones = default, IEnumerable<ComputeResourceSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ExtendedLocationType? extendedLocationType = default)
         {
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<ComputeResourceSkuZoneDetails>();
