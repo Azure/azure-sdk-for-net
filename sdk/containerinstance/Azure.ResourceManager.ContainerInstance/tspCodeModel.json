@@ -4735,7 +4735,7 @@
                                     {
                                       "$id": "381",
                                       "kind": "property",
-                                      "name": "readOnly",
+                                      "name": "IsReadOnly",
                                       "serializedName": "readOnly",
                                       "doc": "The flag indicating whether the volume mount is read-only.",
                                       "type": {
@@ -5276,7 +5276,7 @@
                                   {
                                     "$id": "415",
                                     "kind": "property",
-                                    "name": "privileged",
+                                    "name": "IsPrivileged",
                                     "serializedName": "privileged",
                                     "doc": "The flag to determine if the container permissions is elevated to Privileged.",
                                     "type": {
@@ -6222,7 +6222,7 @@
                             {
                               "$id": "474",
                               "kind": "property",
-                              "name": "readOnly",
+                              "name": "IsReadOnly",
                               "serializedName": "readOnly",
                               "doc": "The flag indicating whether the Azure File shared mounted as a volume is read-only.",
                               "type": {

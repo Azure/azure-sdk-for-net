@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string shareName = default;
-            bool? readOnly = default;
+            bool? isReadOnly = default;
             string storageAccountName = default;
             string storageAccountKey = default;
             string storageAccountKeyReference = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    readOnly = prop.Value.GetBoolean();
+                    isReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountName"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             return new ContainerInstanceAzureFileVolume(
                 shareName,
-                readOnly,
+                isReadOnly,
                 storageAccountName,
                 storageAccountKey,
                 storageAccountKeyReference,

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Privileged))
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
-                writer.WriteBooleanValue(Privileged.Value);
+                writer.WriteBooleanValue(IsPrivileged.Value);
             }
             if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            bool? privileged = default;
+            bool? isPrivileged = default;
             bool? allowPrivilegeEscalation = default;
             ContainerSecurityContextCapabilitiesDefinition capabilities = default;
             int? runAsGroup = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    privileged = prop.Value.GetBoolean();
+                    isPrivileged = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allowPrivilegeEscalation"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             return new ContainerSecurityContextDefinition(
-                privileged,
+                isPrivileged,
                 allowPrivilegeEscalation,
                 capabilities,
                 runAsGroup,

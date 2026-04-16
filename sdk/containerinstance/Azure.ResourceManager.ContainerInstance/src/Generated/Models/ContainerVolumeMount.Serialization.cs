@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string mountPath = default;
-            bool? readOnly = default;
+            bool? isReadOnly = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    readOnly = prop.Value.GetBoolean();
+                    isReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerVolumeMount(name, mountPath, readOnly, additionalBinaryDataProperties);
+            return new ContainerVolumeMount(name, mountPath, isReadOnly, additionalBinaryDataProperties);
         }
     }
 }

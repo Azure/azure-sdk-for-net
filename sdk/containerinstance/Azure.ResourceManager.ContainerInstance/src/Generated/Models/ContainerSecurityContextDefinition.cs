@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextDefinition"/>. </summary>
-        /// <param name="privileged"> The flag to determine if the container permissions is elevated to Privileged. </param>
+        /// <param name="isPrivileged"> The flag to determine if the container permissions is elevated to Privileged. </param>
         /// <param name="allowPrivilegeEscalation"> A boolean value indicating whether the init process can elevate its privileges. </param>
         /// <param name="capabilities"> The capabilities to add or drop from a container. </param>
         /// <param name="runAsGroup"> Sets the User GID for the container. </param>
         /// <param name="runAsUser"> Sets the User UID for the container. </param>
         /// <param name="seccompProfile"> a base64 encoded string containing the contents of the JSON in the seccomp profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerSecurityContextDefinition(bool? privileged, bool? allowPrivilegeEscalation, ContainerSecurityContextCapabilitiesDefinition capabilities, int? runAsGroup, int? runAsUser, string seccompProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSecurityContextDefinition(bool? isPrivileged, bool? allowPrivilegeEscalation, ContainerSecurityContextCapabilitiesDefinition capabilities, int? runAsGroup, int? runAsUser, string seccompProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Privileged = privileged;
+            IsPrivileged = isPrivileged;
             AllowPrivilegeEscalation = allowPrivilegeEscalation;
             Capabilities = capabilities;
             RunAsGroup = runAsGroup;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The flag to determine if the container permissions is elevated to Privileged. </summary>
-        public bool? Privileged { get; set; }
+        public bool? IsPrivileged { get; set; }
 
         /// <summary> A boolean value indicating whether the init process can elevate its privileges. </summary>
         public bool? AllowPrivilegeEscalation { get; set; }
