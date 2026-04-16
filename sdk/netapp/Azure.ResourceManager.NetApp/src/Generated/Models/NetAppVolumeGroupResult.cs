@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume group resource. </summary>
-    public partial class NetAppVolumeGroupResult
+    public partial class NetAppVolumeGroupResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,33 +24,22 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupResult"/>. </summary>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Volume group properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeGroupResult(string location, string id, string name, string @type, VolumeGroupListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeGroupResult(ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, ResourceIdentifier id, string name, VolumeGroupListProperties properties) : base(id, name, resourceType, systemData)
         {
-            Location = location;
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Location = location;
+            Properties = properties;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
-
-        /// <summary> Resource Id. </summary>
-        public string Id { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Volume group properties. </summary>
         internal VolumeGroupListProperties Properties { get; }

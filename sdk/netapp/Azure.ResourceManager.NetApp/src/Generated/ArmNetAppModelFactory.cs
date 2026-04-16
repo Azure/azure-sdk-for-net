@@ -312,24 +312,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RansomwareProtectionSettings(desiredRansomwareProtectionState, actualRansomwareProtectionState, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="location"> Resource location. </param>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="groupMetaData"> Volume group details. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeGroupResult"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupResult NetAppVolumeGroupResult(string location = default, string id = default, string name = default, string @type = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default)
-        {
-            return new NetAppVolumeGroupResult(
-                location,
-                id,
-                name,
-                @type,
-                provisioningState is null && groupMetaData is null ? default : new VolumeGroupListProperties(provisioningState, groupMetaData, null),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2805,16 +2787,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupResult NetAppVolumeGroupResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData)
+        public static NetAppVolumeGroupResult NetAppVolumeGroupResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default)
         {
             return new NetAppVolumeGroupResult(
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 location,
                 id,
                 name,
-                default,
-                default,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeGroupData"/>. </summary>
