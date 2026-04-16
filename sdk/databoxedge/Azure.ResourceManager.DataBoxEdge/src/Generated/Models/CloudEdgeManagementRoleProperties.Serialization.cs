@@ -89,8 +89,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("edgeProfile"u8);
                 writer.WriteObjectValue(EdgeProfile, options);
             }
-            writer.WritePropertyName("roleStatus"u8);
-            writer.WriteStringValue(RoleStatus.ToString());
+            if (Optional.IsDefined(RoleStatus))
+            {
+                writer.WritePropertyName("roleStatus"u8);
+                writer.WriteStringValue(RoleStatus.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("roleStatus"u8);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             DataBoxEdgeRoleStatus? localManagementStatus = default;
             EdgeProfile edgeProfile = default;
-            DataBoxEdgeRoleStatus roleStatus = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,6 +166,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (prop.NameEquals("roleStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        roleStatus = null;
+                        continue;
+                    }
                     roleStatus = new DataBoxEdgeRoleStatus(prop.Value.GetString());
                     continue;
                 }

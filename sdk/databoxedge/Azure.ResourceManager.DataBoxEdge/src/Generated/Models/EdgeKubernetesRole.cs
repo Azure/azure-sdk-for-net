@@ -45,6 +45,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Properties specific to Kubernetes role. </summary>
         internal KubernetesRoleProperties Properties { get; set; }
 
+        /// <summary> Host OS supported by the Kubernetes role. </summary>
+        public DataBoxEdgeOSPlatformType? HostPlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostPlatform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesRoleProperties();
+                }
+                Properties.HostPlatform = value.Value;
+            }
+        }
+
         /// <summary> State of Kubernetes deployment. </summary>
         public EdgeKubernetesState? ProvisioningState
         {
@@ -94,6 +111,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Properties = new KubernetesRoleProperties();
                 }
                 Properties.KubernetesRoleResources = value;
+            }
+        }
+
+        /// <summary> Role status. </summary>
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
             }
         }
     }

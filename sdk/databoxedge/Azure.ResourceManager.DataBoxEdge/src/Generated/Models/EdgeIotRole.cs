@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Properties specific to IoT role. </summary>
         internal IoTRoleProperties Properties { get; set; }
 
+        /// <summary> Host OS supported by the IoT role. </summary>
+        public DataBoxEdgeOSPlatformType? HostPlatform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostPlatform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.HostPlatform = value.Value;
+            }
+        }
+
         /// <summary> IoT device metadata to which data box edge device needs to be connected. </summary>
         public EdgeIotDeviceInfo IotDeviceDetails
         {
@@ -124,6 +141,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Properties = new IoTRoleProperties();
                 }
                 Properties.ComputeResource = value;
+            }
+        }
+
+        /// <summary> Role status. </summary>
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
             }
         }
     }

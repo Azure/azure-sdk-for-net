@@ -79,8 +79,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 throw new FormatException($"The model {nameof(IoTRoleProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("hostPlatform"u8);
-            writer.WriteStringValue(HostPlatform.ToString());
+            if (Optional.IsDefined(HostPlatform))
+            {
+                writer.WritePropertyName("hostPlatform"u8);
+                writer.WriteStringValue(HostPlatform.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("hostPlatform"u8);
+            }
             writer.WritePropertyName("ioTDeviceDetails"u8);
             writer.WriteObjectValue(IotDeviceDetails, options);
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
@@ -110,8 +117,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("computeResource"u8);
                 writer.WriteObjectValue(ComputeResource, options);
             }
-            writer.WritePropertyName("roleStatus"u8);
-            writer.WriteStringValue(RoleStatus.ToString());
+            if (Optional.IsDefined(RoleStatus))
+            {
+                writer.WritePropertyName("roleStatus"u8);
+                writer.WriteStringValue(RoleStatus.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("roleStatus"u8);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -154,19 +168,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DataBoxEdgeOSPlatformType hostPlatform = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
             EdgeIotDeviceInfo iotDeviceDetails = default;
             EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
             IList<DataBoxEdgeMountPointMap> shareMappings = default;
             IotEdgeAgentInfo iotEdgeAgentInfo = default;
             HostPlatformType? hostPlatformType = default;
             EdgeComputeResourceInfo computeResource = default;
-            DataBoxEdgeRoleStatus roleStatus = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("hostPlatform"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hostPlatform = null;
+                        continue;
+                    }
                     hostPlatform = new DataBoxEdgeOSPlatformType(prop.Value.GetString());
                     continue;
                 }
@@ -223,6 +242,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (prop.NameEquals("roleStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        roleStatus = null;
+                        continue;
+                    }
                     roleStatus = new DataBoxEdgeRoleStatus(prop.Value.GetString());
                     continue;
                 }

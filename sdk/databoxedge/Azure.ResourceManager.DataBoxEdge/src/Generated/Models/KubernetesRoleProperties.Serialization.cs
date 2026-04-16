@@ -79,8 +79,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 throw new FormatException($"The model {nameof(KubernetesRoleProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("hostPlatform"u8);
-            writer.WriteStringValue(HostPlatform.ToString());
+            if (Optional.IsDefined(HostPlatform))
+            {
+                writer.WritePropertyName("hostPlatform"u8);
+                writer.WriteStringValue(HostPlatform.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("hostPlatform"u8);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -95,8 +102,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteObjectValue(KubernetesClusterInfo, options);
             writer.WritePropertyName("kubernetesRoleResources"u8);
             writer.WriteObjectValue(KubernetesRoleResources, options);
-            writer.WritePropertyName("roleStatus"u8);
-            writer.WriteStringValue(RoleStatus.ToString());
+            if (Optional.IsDefined(RoleStatus))
+            {
+                writer.WritePropertyName("roleStatus"u8);
+                writer.WriteStringValue(RoleStatus.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("roleStatus"u8);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,17 +153,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DataBoxEdgeOSPlatformType hostPlatform = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
             EdgeKubernetesState? provisioningState = default;
             HostPlatformType? hostPlatformType = default;
             EdgeKubernetesClusterInfo kubernetesClusterInfo = default;
             EdgeKubernetesRoleResources kubernetesRoleResources = default;
-            DataBoxEdgeRoleStatus roleStatus = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("hostPlatform"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        hostPlatform = null;
+                        continue;
+                    }
                     hostPlatform = new DataBoxEdgeOSPlatformType(prop.Value.GetString());
                     continue;
                 }
@@ -183,6 +202,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (prop.NameEquals("roleStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        roleStatus = null;
+                        continue;
+                    }
                     roleStatus = new DataBoxEdgeRoleStatus(prop.Value.GetString());
                     continue;
                 }

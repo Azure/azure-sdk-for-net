@@ -87,5 +87,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 Properties.ResourceUniqueId = value;
             }
         }
+
+        /// <summary> Role status. </summary>
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MECRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
+            }
+        }
     }
 }

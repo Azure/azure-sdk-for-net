@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="CloudEdgeManagementRoleProperties"/>. </summary>
         /// <param name="roleStatus"> Role status. </param>
-        public CloudEdgeManagementRoleProperties(DataBoxEdgeRoleStatus roleStatus)
+        public CloudEdgeManagementRoleProperties(DataBoxEdgeRoleStatus? roleStatus)
         {
             RoleStatus = roleStatus;
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="edgeProfile"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEdgeManagementRoleProperties(DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudEdgeManagementRoleProperties(DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocalManagementStatus = localManagementStatus;
             EdgeProfile = edgeProfile;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeProfile EdgeProfile { get; }
 
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
 
         /// <summary> Edge Profile Subscription. </summary>
         public EdgeProfileSubscription EdgeSubscription

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Initializes a new instance of <see cref="MECRoleProperties"/>. </summary>
         /// <param name="roleStatus"> Role status. </param>
-        public MECRoleProperties(DataBoxEdgeRoleStatus roleStatus)
+        public MECRoleProperties(DataBoxEdgeRoleStatus? roleStatus)
         {
             RoleStatus = roleStatus;
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceUniqueId"> Unique Id of the Resource. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MECRoleProperties(AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MECRoleProperties(AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ControllerEndpoint = controllerEndpoint;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ResourceUniqueId { get; set; }
 
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }

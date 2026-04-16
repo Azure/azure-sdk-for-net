@@ -50,6 +50,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
+        /// <summary> Role status. </summary>
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudEdgeManagementRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
+            }
+        }
+
         /// <summary> Edge Profile Subscription. </summary>
         public EdgeProfileSubscription EdgeSubscription
         {

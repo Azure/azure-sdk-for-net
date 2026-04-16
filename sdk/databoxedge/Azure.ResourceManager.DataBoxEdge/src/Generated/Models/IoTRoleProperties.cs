@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="iotEdgeDeviceDetails"> IoT edge device to which the IoT role needs to be configured. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iotDeviceDetails"/> or <paramref name="iotEdgeDeviceDetails"/> is null. </exception>
-        public IoTRoleProperties(DataBoxEdgeOSPlatformType hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, DataBoxEdgeRoleStatus roleStatus)
+        public IoTRoleProperties(DataBoxEdgeOSPlatformType? hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, DataBoxEdgeRoleStatus? roleStatus)
         {
             Argument.AssertNotNull(iotDeviceDetails, nameof(iotDeviceDetails));
             Argument.AssertNotNull(iotEdgeDeviceDetails, nameof(iotEdgeDeviceDetails));
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="computeResource"> Resource allocation. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTRoleProperties(DataBoxEdgeOSPlatformType hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTRoleProperties(DataBoxEdgeOSPlatformType? hostPlatform, EdgeIotDeviceInfo iotDeviceDetails, EdgeIotDeviceInfo iotEdgeDeviceDetails, IList<DataBoxEdgeMountPointMap> shareMappings, IotEdgeAgentInfo iotEdgeAgentInfo, HostPlatformType? hostPlatformType, EdgeComputeResourceInfo computeResource, DataBoxEdgeRoleStatus? roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostPlatform = hostPlatform;
             IotDeviceDetails = iotDeviceDetails;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Host OS supported by the IoT role. </summary>
-        public DataBoxEdgeOSPlatformType HostPlatform { get; set; }
+        public DataBoxEdgeOSPlatformType? HostPlatform { get; set; }
 
         /// <summary> IoT device metadata to which data box edge device needs to be connected. </summary>
         public EdgeIotDeviceInfo IotDeviceDetails { get; set; }
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeComputeResourceInfo ComputeResource { get; set; }
 
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }

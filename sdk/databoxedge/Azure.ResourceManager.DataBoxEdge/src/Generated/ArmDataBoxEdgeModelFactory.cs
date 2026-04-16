@@ -565,14 +565,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 DataBoxEdgeRoleType.IoT,
                 hostPlatform is null && iotDeviceDetails is null && iotEdgeDeviceDetails is null && shareMappings is null && iotEdgeAgentInfo is null && hostPlatformType is null && computeResource is null && roleStatus is null ? default : new IoTRoleProperties(
-                    hostPlatform.Value,
+                    hostPlatform,
                     iotDeviceDetails,
                     iotEdgeDeviceDetails,
                     (shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>()).ToList(),
                     iotEdgeAgentInfo,
                     hostPlatformType,
                     computeResource,
-                    roleStatus.Value,
+                    roleStatus,
                     null));
         }
 
@@ -615,12 +615,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 additionalBinaryDataProperties: null,
                 DataBoxEdgeRoleType.Kubernetes,
                 hostPlatform is null && provisioningState is null && hostPlatformType is null && kubernetesClusterInfo is null && kubernetesRoleResources is null && roleStatus is null ? default : new KubernetesRoleProperties(
-                    hostPlatform.Value,
+                    hostPlatform,
                     provisioningState,
                     hostPlatformType,
                     kubernetesClusterInfo,
                     kubernetesRoleResources,
-                    roleStatus.Value,
+                    roleStatus,
                     null));
         }
 
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 DataBoxEdgeRoleType.Mec,
-                connectionString is null && controllerEndpoint is null && resourceUniqueId is null && roleStatus is null ? default : new MECRoleProperties(connectionString, controllerEndpoint, resourceUniqueId, roleStatus.Value, null));
+                connectionString is null && controllerEndpoint is null && resourceUniqueId is null && roleStatus is null ? default : new MECRoleProperties(connectionString, controllerEndpoint, resourceUniqueId, roleStatus, null));
         }
 
         /// <summary> Role Addon. </summary>

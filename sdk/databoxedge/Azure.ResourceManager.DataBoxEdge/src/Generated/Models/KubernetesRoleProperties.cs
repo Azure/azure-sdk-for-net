@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterInfo"/> or <paramref name="kubernetesRoleResources"/> is null. </exception>
-        public KubernetesRoleProperties(DataBoxEdgeOSPlatformType hostPlatform, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus roleStatus)
+        public KubernetesRoleProperties(DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus)
         {
             Argument.AssertNotNull(kubernetesClusterInfo, nameof(kubernetesClusterInfo));
             Argument.AssertNotNull(kubernetesRoleResources, nameof(kubernetesRoleResources));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesRoleProperties(DataBoxEdgeOSPlatformType hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubernetesRoleProperties(DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Host OS supported by the Kubernetes role. </summary>
-        public DataBoxEdgeOSPlatformType HostPlatform { get; set; }
+        public DataBoxEdgeOSPlatformType? HostPlatform { get; set; }
 
         /// <summary> State of Kubernetes deployment. </summary>
         public EdgeKubernetesState? ProvisioningState { get; }
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeKubernetesRoleResources KubernetesRoleResources { get; set; }
 
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
     }
 }
