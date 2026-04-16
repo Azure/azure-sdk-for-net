@@ -204,9 +204,14 @@ describe("RequestPath", () => {
       strictEqual(rp.resourceType, "Microsoft.Resources/tenants");
     });
 
-    it("should throw for path without resource type", () => {
+    it("should return undefined for path without determinable resource type", () => {
       const rp = new RequestPath("/unknown/path");
-      throws(() => rp.resourceType);
+      strictEqual(rp.resourceType, undefined);
+    });
+
+    it("should return undefined for generic scope path like /{resourceUri}", () => {
+      const rp = new RequestPath("/{resourceUri}");
+      strictEqual(rp.resourceType, undefined);
     });
   });
 

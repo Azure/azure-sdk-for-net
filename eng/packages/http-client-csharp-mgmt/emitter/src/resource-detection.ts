@@ -179,10 +179,10 @@ export function buildArmProviderSchema(
             // Extract the resource type part (after "/providers/")
             const existingReqPath = new RequestPath(existingPath);
             const operationReqPath = new RequestPath(operationPath);
-            // Only compare resource types when both paths have a /providers/ segment
+            // Only compare resource types when both paths have a determinable resource type
             if (
-              existingReqPath.scopePath.length > 0 &&
-              operationReqPath.scopePath.length > 0 &&
+              existingReqPath.resourceType !== undefined &&
+              operationReqPath.resourceType !== undefined &&
               existingReqPath.resourceType === operationReqPath.resourceType
             ) {
               typeMatchCandidates.push({ existingPath });
@@ -302,7 +302,7 @@ export function buildArmProviderSchema(
         operationPath: opPath,
         operationScope: opPath.operationScope
       });
-      if (!entry.resourceType) {
+      if (!entry.resourceType && opPath.resourceType) {
         entry.resourceType = opPath.resourceType;
       }
       if (!entry.resourceIdPattern && isCRUDKind(kind)) {

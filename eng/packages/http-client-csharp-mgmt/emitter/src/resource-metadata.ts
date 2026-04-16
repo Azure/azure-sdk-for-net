@@ -163,8 +163,9 @@ export class RequestPath {
    *
    * For paths without a "/providers/" segment, returns well-known resource types
    * for resourceGroups, subscriptions, and tenants.
+   * Returns undefined for paths with no determinable resource type (e.g., /{resourceUri}).
    */
-  get resourceType(): string {
+  get resourceType(): string | undefined {
     // Find the last "providers" segment index
     let lastProvidersIndex = -1;
     for (let i = 0; i < this.segments.length; i++) {
@@ -188,7 +189,7 @@ export class RequestPath {
       } else if (this.segments[0] === "tenants") {
         return "Microsoft.Resources/tenants";
       }
-      throw new Error(`Path ${this.path} doesn't have resource type`);
+      return undefined;
     }
 
     // Segments after "providers": [namespace, type1, {name1}, type2, {name2}, ...]
@@ -814,17 +815,10 @@ export function postProcessArmResources(
   for (const resource of filteredResources) {
     const scopePath = resource.metadata.resourceIdPattern.scopePath;
     resource.metadata.scope.scopeIdPattern = scopePath;
-    // Include the scope's resource type when it's fully constant (no variable segments).
-    // Skip generic scope paths (e.g., /{resourceUri}) that consist entirely of variable segments
-    // — these have no determinable resource type.
-    if (
-      scopePath.length > 0 &&
-      scopePath.segments.some((s) => !isVariableSegment(s))
-    ) {
-      const rt = scopePath.resourceType;
-      if (!rt.includes("{")) {
-        resource.metadata.scope.scopeResourceType = rt;
-      }
+    // Include the scope's resource type when it's fully constant (no variable segments)
+    const rt = scopePath.resourceType;
+    if (rt !== undefined && !rt.includes("{")) {
+      resource.metadata.scope.scopeResourceType = rt;
     }
   }
 
@@ -890,8 +884,8 @@ export function assignNonResourceMethodsToResources(
       }
     } else {
       // Both prefix and model ID matching failed — try matching by resource type.
-      if (method.operationPath.scopePath.length > 0) {
-        const operationType = method.operationPath.resourceType;
+      const operationType = method.operationPath.resourceType;
+      if (operationType !== undefined) {
         const match = resources.find((r) => {
           if (
             !r.metadata.resourceIdPattern ||
