@@ -19,5 +19,5 @@ steps:
       filePath: eng/common/scripts/Test-CodeownersForArtifacts.ps1
       arguments: >-
         -AzsdkPath '$(AZSDK)'
-        -ArtifactPath '${{ parameters.ArtifactPath }}'
+        -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
         -Repo '${{ parameters.Repo }}'

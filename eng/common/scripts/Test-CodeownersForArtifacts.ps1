@@ -1,15 +1,15 @@
 param(
-    $ArtifactPath,
     $AzsdkPath,
+    $PackageInfoDirectory,
     $Repo
 )
 
 . "$PSScriptRoot/common.ps1"
 
-$succeeded = $true
+$failedPackages = @()
 
-foreach ($pkgPropertiesFile in Get-ChildItem -Path $ArtifactPath -File) {
-    $pkgProperties = Get-Content -Path $pkgPropertiesFile | ConvertFrom-Json
+foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -File) {
+    $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
     Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
 
     # Validate packages with a release date (intended to release)
@@ -17,12 +17,12 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $ArtifactPath -File) {
         $output = & $AzsdkPath config codeowners check-package `
             --directory-path $pkgProperties.DirectoryPath `
             --repo $Repo `
-            --output json
+            --output json 2>&1
 
         if ($LASTEXITCODE) {
-            Write-Host $output
-            Write-Host "  Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
-            $succeeded = $false
+            LogError "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
+            $output | Write-Host
+            $failedPackages += $pkgProperties.DirectoryPath
         } else {
             Write-Host "  Codeowners validation succeeded for package: $($pkgProperties.DirectoryPath)"
         }
@@ -31,8 +31,13 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $ArtifactPath -File) {
     }
 }
 
-if (!$succeeded) {
-    LogError "Codeowners validation failed for one or more packages."
+if ($failedPackages.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Failed Packages:"
+    foreach ($directoryPath in $failedPackages) {
+        Write-Host "  - $directoryPath"
+    }
+    LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     exit 1
 }
 exit 0
