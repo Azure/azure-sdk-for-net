@@ -45,7 +45,7 @@ namespace Azure.Generator.Management.Visitors
 
         private static string GetWirePath(PropertyProvider property)
         {
-            // if the property is an additional properties, return its name as the wire path
+            // if the property is an AdditionalProperties property, return its name as the wire path
             if (property.IsAdditionalProperties)
             {
                 return property.Name;
