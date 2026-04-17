@@ -344,6 +344,9 @@ internal sealed class ResponseEndpointHandler
                 // Chat isolation enforcement for in-flight responses
                 execution.EnforceChatIsolation(isolation);
 
+                // Store resolved session ID for the response header filter
+                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.Response?.AgentSessionId;
+
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
                 {
@@ -447,6 +450,9 @@ internal sealed class ResponseEndpointHandler
             // Chat isolation enforcement for in-flight responses
             execution.EnforceChatIsolation(isolation);
 
+            // Store resolved session ID for the response header filter (error paths)
+            httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.Response?.AgentSessionId;
+
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -466,6 +472,9 @@ internal sealed class ResponseEndpointHandler
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).
         // This works whether or not the response was in the tracker — the provider
         // is the source of truth for persisted responses.
+        // Read response first to capture session ID for the response header.
+        var persisted = await _provider.GetResponseAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = persisted.AgentSessionId;
         await _provider.DeleteResponseAsync(responseId, isolation);
 
         // Clean up event stream — deleted responses should not be replayable.
@@ -493,6 +502,12 @@ internal sealed class ResponseEndpointHandler
         ValidateResponseIdFormat(responseId);
         _logger.LogInformation("Getting input items for response {ResponseId}", responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+
+        // Read response to capture session ID for the response header.
+        // Also validates existence (throws ResourceNotFoundException if not found).
+        var response = await _provider.GetResponseAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
+
         // Parse limit (default 20, range 1–100)
         int limit = 20;
         if (httpContext.Request.Query.TryGetValue("limit", out var limitValue))
