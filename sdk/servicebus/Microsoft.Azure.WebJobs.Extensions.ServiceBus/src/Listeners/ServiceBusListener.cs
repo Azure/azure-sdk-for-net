@@ -816,16 +816,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     _logger.LogDebug($"Service Bus Listener has waited MaxWaitTime since last invocation but there are no messages still being held.");
                 }
+                // After one wait cycle, cancel the background task cancellation token source. It can be assumed that there will never be more than the
+                // minimum batch size number of messages in the cache. The monitoring cycle will be restarted by the receive batch loop if needed.
+                CancelExistingMonitoringTasks();
             }
             catch (OperationCanceledException)
             {
                 // Do nothing.
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unhandled exception occurred in MonitorCache ({_details.Value}).");
+                // Dispose background task resources when exception occurs other than the intended OperationCanceledException.
+                CancelExistingMonitoringTasks();
+            }
             finally
             {
-                // After one wait cycle, cancel the background task cancellation token source. It can be assumed that there will never be more than the
-                // minimum batch size number of messages in the cache. The monitoring cycle will be restarted by the receive batch loop if needed.
-                CancelExistingMonitoringTasks();
                 if (acquiredSemaphore)
                 {
                     _cachedMessagesGuard.Release();
