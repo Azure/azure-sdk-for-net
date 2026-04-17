@@ -729,14 +729,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="status"> The async operation state. </param>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
-        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, ResponseError error = default)
-        {
-            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResponse(error, null), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The response spec of checking name availability. </summary>
         /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
         /// <param name="reason"> The reason of the result. </param>
