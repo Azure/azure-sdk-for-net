@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -15,10 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric
     {
         private ServiceResourceProperties EnsureProperties()
         {
-            // The flattened compatibility members are common to both stateful and stateless
-            // service shapes. Create a mutable default bag so callers can keep using them.
-            Properties ??= new StatelessServiceProperties();
-            return Properties;
+            return Properties ?? throw new NotSupportedException("Flattened ServiceFabricServiceData properties cannot be used when Properties is null because the underlying service properties model is discriminated. Set Properties to a concrete StatefulServiceProperties or StatelessServiceProperties instance first.");
         }
 
         /// <summary> A list that describes the correlation of the service with other services. </summary>
