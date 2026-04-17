@@ -1,3 +1,4 @@
+[CmdletBinding()]
 param(
     [string] $AzsdkPath,
     [string] $PackageInfoDirectory,
@@ -6,6 +7,9 @@ param(
 )
 
 . "$PSScriptRoot/common.ps1"
+
+Set-StrictMode -Version 3
+$ErrorActionPreference = 'Stop'
 
 $failedPackages = @()
 
@@ -17,6 +21,11 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
     }
 
     Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
+
+    if (!$pkgProperties.ReleaseStatus) { 
+        LogWarning "  Skipping CODEOWNERS validation for package: $($pkgProperties.Name) because it does not have a ReleaseStatus property."
+         continue
+    }
 
     # Validate packages with a release date (intended to release)
     if ($pkgProperties.ReleaseStatus -ne "Unreleased") {
