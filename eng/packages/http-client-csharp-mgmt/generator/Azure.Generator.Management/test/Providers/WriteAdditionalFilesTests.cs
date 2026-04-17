@@ -5,6 +5,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.TestHelpers;
 using NUnit.Framework;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management.Tests.Providers
@@ -60,6 +61,27 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [Test]
+        public void GetSolutionFileContentIncludesTestProject()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+            string originalOutputDir = ManagementClientGenerator.Instance.Configuration.OutputDirectory;
+            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
+
+            try
+            {
+                SetOutputDirectory(@"C:\repo\sdk\test\" + packageName);
+
+                string content = scaffolding.TestGetSolutionFileContent();
+                Assert.IsTrue(content.Contains($@"<Project Path=""src/{packageName}.csproj"" />"));
+                Assert.IsTrue(content.Contains($@"<Project Path=""tests/{packageName}.Tests.csproj"" />"));
+            }
+            finally
+            {
+                SetOutputDirectory(originalOutputDir);
+            }
+        }
+
+        [Test]
         public async Task WriteAdditionalFilesSkipsNonSdkDirectory()
         {
             // The test output directory is under eng/, not sdk/, so files should NOT be created
@@ -104,7 +126,27 @@ namespace Azure.Generator.Management.Tests.Providers
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
             public string TestGetTestProjectContent(string packageName) => GetTestProjectContent(packageName);
+            public string TestGetSolutionFileContent() => GetSolutionFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
+        }
+
+        private static void SetOutputDirectory(string outputDirectory)
+        {
+            object configuration = ManagementClientGenerator.Instance.Configuration;
+            const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            PropertyInfo? property = configuration.GetType().GetProperty("OutputDirectory", Flags);
+            if (property?.CanWrite == true)
+            {
+                property.SetValue(configuration, outputDirectory);
+                return;
+            }
+
+            FieldInfo? field = configuration.GetType().GetField("<OutputDirectory>k__BackingField", Flags)
+                ?? configuration.GetType().GetField("_outputDirectory", Flags);
+
+            Assert.IsNotNull(field, "Unable to set Configuration.OutputDirectory for test.");
+            field!.SetValue(configuration, outputDirectory);
         }
     }
 }

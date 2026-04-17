@@ -16,6 +16,27 @@ namespace Azure.Generator.Management.Primitives
             => Array.Empty<CSharpProjectCompileInclude>();
 
         /// <summary>
+        /// Gets the content for the solution file.
+        /// </summary>
+        protected override string GetSolutionFileContent()
+        {
+            string packageName = ManagementClientGenerator.Instance.Configuration.PackageName;
+            string outputDir = ManagementClientGenerator.Instance.Configuration.OutputDirectory;
+
+            if (!IsUnderSdkDirectory(outputDir))
+            {
+                return base.GetSolutionFileContent();
+            }
+
+            return $$"""
+                <Solution>
+                  <Project Path="src/{{packageName}}.csproj" />
+                  <Project Path="tests/{{packageName}}.Tests.csproj" />
+                </Solution>
+                """;
+        }
+
+        /// <summary>
         /// Writes additional scaffolding files (README.md, CHANGELOG.md, Directory.Build.props)
         /// to the output directory when the output is under the sdk/ directory.
         /// Files are only written if they don't already exist, preventing
