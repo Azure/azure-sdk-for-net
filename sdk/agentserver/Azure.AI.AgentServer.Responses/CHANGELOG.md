@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-05-05)
 
 ### Features Added
 
@@ -19,8 +19,6 @@
   outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
   headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed error response shapes to match the container specification: `invalid_request_error` type
@@ -30,8 +28,6 @@
 - Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
   with the specification.
 - Fixed cancel-after-delete to return 404 (not-found) per the specification.
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-04-14)
 
