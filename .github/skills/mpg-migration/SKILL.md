@@ -55,6 +55,7 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 Fix errors **spec-side** (decorators in `client.tsp` with `"csharp"` scope) or **SDK-side** (custom code in `src/Customization/`). Always verify zero swagger diff after spec changes.
 
 After each fix: regenerate if spec changed → rebuild → check remaining errors → repeat until clean.
+Apply this same classify-first loop to both **compile/build errors** and **breaking-change remediation** from ApiCompat/API diff review.
 
 Before fixing an issue, **categorize it first** so the mitigation goes to the right layer and we do not paper over the real cause.
 
@@ -77,7 +78,7 @@ For **SDK-side custom code**, prefer MCP tools for deterministic edits:
 - `rename_codegen_type`
 - `add_codegen_suppress`
 
-Use them in a loop: **build/classify → batch MCP fixes → regenerate if `CodeGen*` attributes changed → hand-write only the remaining compatibility logic**.
+Use them in a loop: **build/classify → batch MCP fixes → regenerate if `CodeGen*` attributes changed → hand-write only the remaining compatibility logic**. Use this same loop again in Phase 3 when mitigating breaking changes; do not treat ApiCompat work as a separate ad hoc cleanup step.
 
 ### Spec-side decorator table
 
@@ -108,7 +109,7 @@ Every file needs a justification comment.
 
 1. Export API: `pwsh eng/scripts/Export-API.ps1 <service>`
 2. Diff with `origin/main` API file.
-3. Categorize each break (shape issue vs compatibility gap vs generator bug), then fix it using the tables from Phase 2 — **never** suppress with `ApiCompatBaseline.txt`.
+3. Categorize each break (shape issue vs compatibility gap vs generator bug), then fix it using the same **build/classify → fix → regenerate/export API → re-diff** loop from Phase 2 — **never** suppress with `ApiCompatBaseline.txt`.
 
 ## Phase 4 — Self-Review
 
