@@ -565,16 +565,8 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        string sessionId = IsAsync ? $"test_session_222_229" : $"test_session_112_229";
-        try
-        {
-            await agentsClient.DeleteSessionAsync(
-                agentName: agentVersion.Name,
-                sessionId: sessionId,
-                isolationKey: $"key_1"
-            );
-        }
-        catch { }
+        await Delay(60000);
+        string sessionId = IsAsync ? $"test_session_222_232" : $"test_session_111_232";
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             // See ADO item 519622

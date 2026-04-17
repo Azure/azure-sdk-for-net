@@ -467,10 +467,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             }
         }
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
-        //await DeleteSkillMayBe(skillsClient, SKILL);
-        //await DeleteSkillMayBe(skillsClient, $"{SKILL}_code");
-        //await DeleteSkillMayBe(skillsClient, $"{SKILL}_file");
-        // TODO: uncomment this code when the skills listing will be fixed.
         await foreach (AgentsSkill skill in skillsClient.GetSkillsAsync())
         {
             if (skill.Name.StartsWith(SKILL))
