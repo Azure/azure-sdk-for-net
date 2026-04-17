@@ -13,7 +13,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    // This helper class is used to support the mitigation solution of using a single data model for both CapabilityHost and ProjectCapabilityHost resources.
+    // This helper class is used by the CognitiveServicesProjectCapabilityHostCollection customization code.
     internal partial class OriginalProjectCapabilityHostsGetAllAsyncCollectionResultOfT : AsyncPageable<CognitiveServicesCapabilityHostData>
     {
         private readonly ProjectCapabilityHosts _client;

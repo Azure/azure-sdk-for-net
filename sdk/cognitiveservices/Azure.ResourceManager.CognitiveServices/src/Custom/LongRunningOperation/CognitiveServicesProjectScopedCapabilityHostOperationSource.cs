@@ -12,7 +12,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    // This helper class is used to support the mitigation solution of using a single data model for both CapabilityHost and ProjectCapabilityHost resources.
+    // This helper class is used by the CognitiveServicesProjectCapabilityHostCollection and CognitiveServicesProjectCapabilityHostResource customization code.
     /// <summary></summary>
     internal partial class CognitiveServicesProjectCapabilityHostOperationSource : IOperationSource<CognitiveServicesProjectCapabilityHostResource>
     {
