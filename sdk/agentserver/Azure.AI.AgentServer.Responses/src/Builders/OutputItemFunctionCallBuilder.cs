@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -78,6 +79,42 @@ public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctio
         _finalArguments = arguments;
         return new ResponseFunctionCallArgumentsDoneEvent(
             _stream.NextSequenceNumber(), _itemId, _name, _outputIndex, arguments);
+    }
+
+    // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
+
+    /// <summary>
+    /// Convenience generator that yields the complete arguments sub-item
+    /// event sequence from a single string (S-053, complete-text mode per S-054).
+    /// </summary>
+    /// <param name="arguments">The complete arguments JSON string.</param>
+    /// <returns>An enumerable of events: <c>function_call_arguments.delta</c> → <c>function_call_arguments.done</c>.</returns>
+    public virtual IEnumerable<ResponseStreamEvent> Arguments(string arguments)
+    {
+        yield return EmitArgumentsDelta(arguments);
+        yield return EmitArgumentsDone(arguments);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete arguments sub-item
+    /// event sequence from streaming chunks (S-053, streaming mode per S-054).
+    /// Each chunk is emitted as a delta immediately (S-055).
+    /// </summary>
+    /// <param name="chunks">An async enumerable of argument text chunks.</param>
+    /// <param name="cancellationToken">A token to cancel iteration.</param>
+    /// <returns>An async enumerable of events: N × <c>function_call_arguments.delta</c> → <c>function_call_arguments.done</c>.</returns>
+    public virtual async IAsyncEnumerable<ResponseStreamEvent> Arguments(
+        IAsyncEnumerable<string> chunks,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var sb = new StringBuilder();
+        await foreach (var chunk in chunks.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            sb.Append(chunk);
+            yield return EmitArgumentsDelta(chunk);
+        }
+
+        yield return EmitArgumentsDone(sb.ToString());
     }
 
     /// <summary>

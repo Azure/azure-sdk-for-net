@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        /// <summary> Gets a collection of AdvisorSuppressionContracts in the <see cref="ArmResource"/>. </summary>
+        /// <summary> Gets a collection of AdvisorSuppressionContracts in the <see cref="AdvisorRecommendationResource"/>. </summary>
         /// <returns> An object representing collection of AdvisorSuppressionContracts and their operations over a AdvisorSuppressionContractResource. </returns>
         public virtual AdvisorSuppressionContractCollection GetAdvisorSuppressionContracts()
         {

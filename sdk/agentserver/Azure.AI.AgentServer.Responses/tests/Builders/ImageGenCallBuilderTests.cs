@@ -109,15 +109,17 @@ public class ImageGenCallBuilderTests
     }
 
     [Test]
-    public void EmitDone_ContainsCompletedImageGenItem()
+    public void EmitDone_ContainsCompletedImageGenItemWithResult()
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemImageGenCall();
         builder.EmitAdded();
-        var evt = builder.EmitDone();
+        builder.EmitCompleted();
+        var evt = builder.EmitDone("dGVzdC1pbWFnZS1kYXRh");
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
         Assert.That(item.Status, Is.EqualTo(OutputItemImageGenToolCallStatus.Completed));
+        Assert.That(item.Result, Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
     }
 
     [Test]
@@ -130,7 +132,7 @@ public class ImageGenCallBuilderTests
         var generating = builder.EmitGenerating();    // 2
         var partial = builder.EmitPartialImage("d");  // 3
         var completed = builder.EmitCompleted();      // 4
-        var done = builder.EmitDone();                // 5
+        var done = builder.EmitDone("r");             // 5
         Assert.That(added.SequenceNumber, Is.EqualTo(0));
         Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
         Assert.That(generating.SequenceNumber, Is.EqualTo(2));

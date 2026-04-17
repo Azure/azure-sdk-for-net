@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Results))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             string description = default;
-            string @type = default;
+            string resourceType = default;
             AzureLocation location = default;
             IList<ResourceOperationResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateFlexResourceOperationResult(description, @type, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), additionalBinaryDataProperties);
+            return new CreateFlexResourceOperationResult(description, resourceType, location, results ?? new ChangeTrackingList<ResourceOperationResult>(), additionalBinaryDataProperties);
         }
     }
 }

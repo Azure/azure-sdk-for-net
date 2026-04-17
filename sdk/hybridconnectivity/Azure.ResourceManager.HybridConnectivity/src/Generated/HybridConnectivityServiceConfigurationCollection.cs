@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A class representing a collection of <see cref="HybridConnectivityServiceConfigurationResource"/> and their operations.
-    /// Each <see cref="HybridConnectivityServiceConfigurationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="HybridConnectivityServiceConfigurationCollection"/> instance call the GetHybridConnectivityServiceConfigurations method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="HybridConnectivityServiceConfigurationResource"/> in the collection will belong to the same instance of <see cref="HybridConnectivityEndpointResource"/>.
+    /// To get a <see cref="HybridConnectivityServiceConfigurationCollection"/> instance call the GetHybridConnectivityServiceConfigurations method from an instance of <see cref="HybridConnectivityEndpointResource"/>.
     /// </summary>
     public partial class HybridConnectivityServiceConfigurationCollection : ArmCollection, IEnumerable<HybridConnectivityServiceConfigurationResource>, IAsyncEnumerable<HybridConnectivityServiceConfigurationResource>
     {
