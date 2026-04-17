@@ -41,6 +41,7 @@ public sealed class AgentHostBuilder
         _builder.Services.AddSingleton(UserAgentRegistry);
         _builder.Services.AddSingleton<ServerUserAgentMiddleware>();
         _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
+        _builder.Services.AddSingleton<InboundRequestLoggingMiddleware>();
 
         // Register default options
         _builder.Services.Configure<AgentHostOptions>(_ => { });
@@ -178,6 +179,7 @@ public sealed class AgentHostBuilder
         // Middleware pipeline
         app.UseMiddleware<ServerUserAgentMiddleware>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
+        app.UseMiddleware<InboundRequestLoggingMiddleware>();
 
         // Health endpoint
         app.MapHealthEndpoint();

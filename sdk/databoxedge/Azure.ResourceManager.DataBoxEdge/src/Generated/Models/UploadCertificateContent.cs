@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The upload certificate request. </summary>
     public partial class UploadCertificateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
         /// <param name="certificate"> The base64 encoded certificate raw data. </param>
@@ -52,28 +24,53 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
 
-            Certificate = certificate;
+            Properties = new RawCertificateData(certificate);
         }
 
         /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
-        /// <param name="authenticationType"> The authentication type. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The Base 64 encoded certificate raw data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UploadCertificateContent(RawCertificateData properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthenticationType = authenticationType;
-            Certificate = certificate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/> for deserialization. </summary>
-        internal UploadCertificateContent()
-        {
-        }
+        /// <summary> The Base 64 encoded certificate raw data. </summary>
+        internal RawCertificateData Properties { get; set; }
 
         /// <summary> The authentication type. </summary>
-        public DataBoxEdgeAuthenticationType? AuthenticationType { get; set; }
+        public DataBoxEdgeAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RawCertificateData();
+                }
+                Properties.AuthenticationType = value.Value;
+            }
+        }
+
         /// <summary> The base64 encoded certificate raw data. </summary>
-        public string Certificate { get; }
+        public string Certificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Certificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RawCertificateData();
+                }
+                Properties.Certificate = value;
+            }
+        }
     }
 }

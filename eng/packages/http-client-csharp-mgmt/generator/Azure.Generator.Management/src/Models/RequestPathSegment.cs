@@ -5,12 +5,17 @@ using System;
 
 namespace Azure.Generator.Management.Models
 {
-    internal class RequestPathSegment : IEquatable<RequestPathSegment>
+    /// <summary>
+    /// Represents a single segment in an operation request path, which may be a constant or a variable.
+    /// </summary>
+    public class RequestPathSegment : IEquatable<RequestPathSegment>
     {
         private readonly string _value;
         private readonly bool _isConstant;
         private readonly string? _variableName;
 
+        /// <summary> Initializes a new instance of <see cref="RequestPathSegment"/> from a raw segment string. </summary>
+        /// <param name="value">The raw segment value, optionally enclosed in curly braces for variables.</param>
         // TODO - scope not supported yet. we need to add support for it in the future.
         public RequestPathSegment(string value)
         {
@@ -18,6 +23,7 @@ namespace Azure.Generator.Management.Models
             ParseValue(value, ref _isConstant, ref _variableName);
         }
 
+        /// <inheritdoc />
         public bool Equals(RequestPathSegment? other)
         {
             if (other is null)
@@ -64,17 +70,28 @@ namespace Azure.Generator.Management.Models
             }
         }
 
+        /// <inheritdoc />
         public override bool Equals(object? obj) => obj is RequestPathSegment other && Equals(other);
 
+        /// <inheritdoc />
         public override int GetHashCode() => _value.GetHashCode();
 
+        /// <inheritdoc />
         public override string ToString() => _value;
 
+        /// <summary> Determines whether two <see cref="RequestPathSegment"/> instances are equal. </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns><c>true</c> if the instances are equal; otherwise, <c>false</c>.</returns>
         public static bool operator ==(RequestPathSegment left, RequestPathSegment right)
         {
             return left.Equals(right);
         }
 
+        /// <summary> Determines whether two <see cref="RequestPathSegment"/> instances are not equal. </summary>
+        /// <param name="left">The first instance to compare.</param>
+        /// <param name="right">The second instance to compare.</param>
+        /// <returns><c>true</c> if the instances are not equal; otherwise, <c>false</c>.</returns>
         public static bool operator !=(RequestPathSegment left, RequestPathSegment right)
         {
             return !(left == right);
