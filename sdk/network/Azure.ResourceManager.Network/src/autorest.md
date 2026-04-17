@@ -310,6 +310,7 @@ acronym-mapping:
   Stag: STag|stag
   Nsp: NetworkSecurityPerimeter
   JWT: Jwt|jwt
+  FIPS: Fips
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -675,4 +676,17 @@ directive:
     where: $.definitions
     transform: >
       delete $.CommonResource.properties.id.format;
+  # Replace the property `enableFips` with upper case `enableFIPS` to match the actual service response on behave of issue: https://github.com/Azure/azure-sdk-for-net/issues/57391
+  - from: applicationGateway.json
+    where: $.definitions.ApplicationGatewayPropertiesFormat.properties
+    transform: >
+      var newProps = {};
+      for (var key in $) {
+        if (key === "enableFips") {
+          newProps["enableFIPS"] = $[key];
+        } else {
+          newProps[key] = $[key];
+        }
+      }
+      return newProps;
 ```

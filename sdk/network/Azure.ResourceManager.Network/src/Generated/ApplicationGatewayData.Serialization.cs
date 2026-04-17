@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(EnableFips))
             {
-                writer.WritePropertyName("enableFips"u8);
+                writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(EnableFips.Value);
             }
             if (Optional.IsDefined(AutoscaleConfiguration))
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Network
                             enableHttp2 = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableFips"u8))
+                        if (property0.NameEquals("enableFIPS"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -1742,14 +1742,14 @@ namespace Azure.ResourceManager.Network
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFips), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    enableFips: ");
+                builder.Append("    enableFIPS: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
                 if (Optional.IsDefined(EnableFips))
                 {
-                    builder.Append("    enableFips: ");
+                    builder.Append("    enableFIPS: ");
                     var boolValue = EnableFips.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
