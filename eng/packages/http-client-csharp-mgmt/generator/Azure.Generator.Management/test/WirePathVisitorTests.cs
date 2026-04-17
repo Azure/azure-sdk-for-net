@@ -43,13 +43,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
             Assert.IsNotNull(modelProvider);
 
-            // Run the WirePathVisitor on the model
-            var wirePathVisitor = new WirePathVisitor();
-            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
-                "VisitTypeCore",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
-            visitTypeCore!.Invoke(wirePathVisitor, [modelProvider]);
+            RunWirePathVisitor(modelProvider!);
 
             // Verify the regular property has WirePath attribute with the serialized name
             var qnaProperty = modelProvider!.Properties.FirstOrDefault(p => p.Name == "QnaRuntimeEndpoint");
@@ -94,13 +88,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
             Assert.IsNotNull(modelProvider);
 
-            // Run the WirePathVisitor
-            var wirePathVisitor = new WirePathVisitor();
-            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
-                "VisitTypeCore",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
-            visitTypeCore!.Invoke(wirePathVisitor, [modelProvider]);
+            RunWirePathVisitor(modelProvider!);
 
             // Verify that regular properties with WireInfo get the attribute with the correct value
             var displayNameProperty = modelProvider!.Properties.FirstOrDefault(p => p.Name == "DisplayName");
@@ -111,6 +99,16 @@ namespace Azure.Generator.Mgmt.Tests
                 "displayName",
                 GetWirePathValue(wirePathAttribute!),
                 "DisplayName should use its serialized name as the wire path");
+        }
+
+        private static void RunWirePathVisitor(TypeProvider modelProvider)
+        {
+            var wirePathVisitor = new WirePathVisitor();
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+            visitTypeCore!.Invoke(wirePathVisitor, [modelProvider]);
         }
 
         private static AttributeStatement? GetWirePathAttribute(PropertyProvider property)
