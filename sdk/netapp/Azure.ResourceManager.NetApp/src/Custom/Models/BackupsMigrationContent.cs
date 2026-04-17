@@ -13,7 +13,16 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class BackupsMigrationContent
     {
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
+        /// <param name="backupVaultId"> The resource ID of the backup vault as string. </param>
+        public BackupsMigrationContent(string backupVaultId)
+        {
+            Argument.AssertNotNull(backupVaultId, nameof(backupVaultId));
+            BackupVaultId = backupVaultId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
         /// <param name="backupVaultId"> The resource ID of the backup vault. </param>
-        public BackupsMigrationContent(string backupVaultId) : this(new ResourceIdentifier(backupVaultId)) { }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BackupsMigrationContent(ResourceIdentifier backupVaultId) : this(backupVaultId?.ToString()) { }
     }
 }

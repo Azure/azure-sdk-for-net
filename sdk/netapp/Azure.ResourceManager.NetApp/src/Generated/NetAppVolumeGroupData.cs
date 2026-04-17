@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Volume group properties. </param>
         /// <param name="location"> Resource location. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeGroupProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VolumeGroupProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp
         internal VolumeGroupProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState

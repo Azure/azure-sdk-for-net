@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ResourceIdentifier backupVaultId = default;
+            string backupVaultId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("backupVaultId"u8))
                 {
-                    backupVaultId = new ResourceIdentifier(prop.Value.GetString());
+                    backupVaultId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

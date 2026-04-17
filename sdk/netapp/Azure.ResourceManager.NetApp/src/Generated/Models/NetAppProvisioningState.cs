@@ -5,97 +5,30 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
-
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary></summary>
-    public readonly partial struct NetAppProvisioningState : IEquatable<NetAppProvisioningState>
+    public enum NetAppProvisioningState
     {
-        private readonly string _value;
-        /// <summary> Resource has been Accepted. </summary>
-        private const string AcceptedValue = "Accepted";
-        /// <summary> Resource is being Created. </summary>
-        private const string CreatingValue = "Creating";
-        /// <summary> Resource is being Patched. </summary>
-        private const string PatchingValue = "Patching";
-        /// <summary> Resource is updating. </summary>
-        private const string UpdatingValue = "Updating";
-        /// <summary> Resource is being Deleted. </summary>
-        private const string DeletingValue = "Deleting";
-        /// <summary> Resource is being Moved. </summary>
-        private const string MovingValue = "Moving";
-        /// <summary> Resource has Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Resource has Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Initializes a new instance of <see cref="NetAppProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Resource has been Accepted. </summary>
-        public static NetAppProvisioningState Accepted { get; } = new NetAppProvisioningState(AcceptedValue);
-
-        /// <summary> Resource is being Created. </summary>
-        public static NetAppProvisioningState Creating { get; } = new NetAppProvisioningState(CreatingValue);
-
-        /// <summary> Resource is being Patched. </summary>
-        public static NetAppProvisioningState Patching { get; } = new NetAppProvisioningState(PatchingValue);
-
-        /// <summary> Resource is updating. </summary>
-        public static NetAppProvisioningState Updating { get; } = new NetAppProvisioningState(UpdatingValue);
-
-        /// <summary> Resource is being Deleted. </summary>
-        public static NetAppProvisioningState Deleting { get; } = new NetAppProvisioningState(DeletingValue);
-
-        /// <summary> Resource is being Moved. </summary>
-        public static NetAppProvisioningState Moving { get; } = new NetAppProvisioningState(MovingValue);
-
-        /// <summary> Resource has Failed. </summary>
-        public static NetAppProvisioningState Failed { get; } = new NetAppProvisioningState(FailedValue);
-
-        /// <summary> Resource has Succeeded. </summary>
-        public static NetAppProvisioningState Succeeded { get; } = new NetAppProvisioningState(SucceededValue);
-
-        /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(NetAppProvisioningState left, NetAppProvisioningState right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="NetAppProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(NetAppProvisioningState left, NetAppProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppProvisioningState(string value) => new NetAppProvisioningState(value);
-
-        /// <summary> Converts a string to a <see cref="NetAppProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppProvisioningState?(string value) => value == null ? null : new NetAppProvisioningState(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is NetAppProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(NetAppProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        /// <summary> Accepted. </summary>
+        Accepted,
+        /// <summary> Creating. </summary>
+        Creating,
+        /// <summary> Patching. </summary>
+        Patching,
+        /// <summary> Deleting. </summary>
+        Deleting,
+        /// <summary> Moving. </summary>
+        Moving,
+        /// <summary> Failed. </summary>
+        Failed,
+        /// <summary> Succeeded. </summary>
+        Succeeded,
+        /// <summary> Canceled. </summary>
+        Canceled,
+        /// <summary> Provisioning. </summary>
+        Provisioning,
+        /// <summary> Updating. </summary>
+        Updating
     }
 }

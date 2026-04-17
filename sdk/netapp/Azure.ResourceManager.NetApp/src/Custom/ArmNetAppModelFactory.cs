@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeReplicationStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : null,
+                relationshipStatus,
                 mirrorState,
                 totalProgress,
                 errorMessage,
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeBackupStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : null,
+                relationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppRestoreStatus(
                 isHealthy,
-                relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : null,
+                relationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,

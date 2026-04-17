@@ -460,9 +460,9 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppVolumeExportPolicy exportPolicy = default;
             IList<string> protocolTypes = default;
             string provisioningState = default;
-            ResourceIdentifier snapshotId = default;
+            string snapshotId = default;
             bool? deleteBaseSnapshot = default;
-            ResourceIdentifier backupId = default;
+            string backupId = default;
             string baremetalTenantId = default;
             ResourceIdentifier subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? defaultGroupQuotaInKiBs = default;
             long? maximumNumberOfFiles = default;
             string volumeGroupName = default;
-            string capacityPoolResourceId = default;
+            ResourceIdentifier capacityPoolResourceId = default;
             ResourceIdentifier proximityPlacementGroupId = default;
             string t2Network = default;
             string volumeSpecName = default;
@@ -583,12 +583,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("snapshotId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        snapshotId = null;
-                        continue;
-                    }
-                    snapshotId = new ResourceIdentifier(prop.Value.GetString());
+                    snapshotId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("deleteBaseSnapshot"u8))
@@ -602,12 +597,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("backupId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        backupId = null;
-                        continue;
-                    }
-                    backupId = new ResourceIdentifier(prop.Value.GetString());
+                    backupId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("baremetalTenantId"u8))
@@ -959,7 +949,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("capacityPoolResourceId"u8))
                 {
-                    capacityPoolResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityPoolResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("proximityPlacementGroup"u8))

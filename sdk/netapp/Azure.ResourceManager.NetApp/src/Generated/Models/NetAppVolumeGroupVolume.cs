@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource identifier used to identify the Snapshot. </summary>
-        public ResourceIdentifier SnapshotId
+        public string SnapshotId
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource identifier used to identify the Backup. </summary>
-        public ResourceIdentifier BackupId
+        public string BackupId
         {
             get
             {
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Pool Resource Id used in case of creating a volume through volume group. </summary>
-        public string CapacityPoolResourceId
+        public ResourceIdentifier CapacityPoolResourceId
         {
             get
             {

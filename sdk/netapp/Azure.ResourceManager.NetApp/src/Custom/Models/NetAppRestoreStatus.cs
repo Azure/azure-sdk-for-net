@@ -12,5 +12,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Health check. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsHealthy => Healthy;
+
+        /// <summary> Backward-compat: VolumeRestoreRelationshipStatus mapped from RelationshipStatus. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VolumeRestoreRelationshipStatus? VolumeRestoreRelationshipStatus =>
+            RelationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(RelationshipStatus.Value.ToString()) : null;
     }
 }

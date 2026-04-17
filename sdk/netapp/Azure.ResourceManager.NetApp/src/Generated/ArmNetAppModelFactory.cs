@@ -40,27 +40,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 current is null && @default is null && usage is null ? default : new QuotaItemProperties(current, @default, usage, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="groupMetaData"> Volume group details. </param>
-        /// <param name="volumes"> List of volumes from group. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <returns> A new <see cref="NetApp.NetAppVolumeGroupData"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default, IEnumerable<NetAppVolumeGroupVolume> volumes = default, string location = default)
-        {
-            return new NetAppVolumeGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && groupMetaData is null && volumes is null ? default : new VolumeGroupProperties(provisioningState, groupMetaData, (volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>()).ToList(), null),
-                location);
-        }
-
         /// <summary> Volume group properties. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
@@ -162,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="breakthroughMode"> Specifies whether the volume operates in Breakthrough Mode. </param>
         /// <param name="exportRules"> Export policy rule. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -264,7 +243,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
         /// <param name="relationshipStatus"> The status of the Volume Replication. </param>
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = default, NetAppEndpointType? endpointType = default, NetAppReplicationSchedule? replicationSchedule = default, ResourceIdentifier remoteVolumeResourceId = default, RemotePath remotePath = default, string remoteVolumeRegion = default, IEnumerable<NetAppDestinationReplication> destinationReplications = default, ExternalReplicationSetupStatus? externalReplicationSetupStatus = default, string externalReplicationSetupInfo = default, NetAppMirrorState? mirrorState = default, VolumeReplicationRelationshipStatus? relationshipStatus = default)
+        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = default, NetAppEndpointType? endpointType = default, NetAppReplicationSchedule? replicationSchedule = default, ResourceIdentifier remoteVolumeResourceId = default, RemotePath remotePath = default, string remoteVolumeRegion = default, IEnumerable<NetAppDestinationReplication> destinationReplications = default, ExternalReplicationSetupStatus? externalReplicationSetupStatus = default, string externalReplicationSetupInfo = default, NetAppMirrorState? mirrorState = default, NetAppRelationshipStatus? relationshipStatus = default)
         {
             destinationReplications ??= new ChangeTrackingList<NetAppDestinationReplication>();
 
@@ -344,52 +323,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     backupPolicyResourceId,
                     isLargeVolume,
                     null));
-        }
-
-        /// <summary> Backup status. </summary>
-        /// <param name="healthy"> Backup health status. </param>
-        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
-        /// <param name="mirrorState"> The status of the backup. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
-        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
-        /// <param name="lastTransferType"> Displays the last transfer type. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? healthy = default, VolumeBackupRelationshipStatus? relationshipStatus = default, NetAppMirrorState? mirrorState = default, string unhealthyReason = default, string errorMessage = default, long? lastTransferSize = default, string lastTransferType = default, long? totalTransferBytes = default, long? transferProgressBytes = default)
-        {
-            return new NetAppVolumeBackupStatus(
-                healthy,
-                relationshipStatus,
-                mirrorState,
-                unhealthyReason,
-                errorMessage,
-                lastTransferSize,
-                lastTransferType,
-                totalTransferBytes,
-                transferProgressBytes,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Restore status. </summary>
-        /// <param name="healthy"> Restore health status. </param>
-        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
-        /// <param name="mirrorState"> The status of the restore. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? healthy = default, VolumeRestoreRelationshipStatus? relationshipStatus = default, NetAppMirrorState? mirrorState = default, string unhealthyReason = default, string errorMessage = default, long? totalTransferBytes = default)
-        {
-            return new NetAppRestoreStatus(
-                healthy,
-                relationshipStatus,
-                mirrorState,
-                unhealthyReason,
-                errorMessage,
-                totalTransferBytes,
-                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -477,7 +410,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="zones"> The availability zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="NetApp.VolumeData"/> instance for mocking. </returns>
-        public static VolumeData VolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, ResourceIdentifier snapshotId = default, bool? deleteBaseSnapshot = default, ResourceIdentifier backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, string capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, string etag = default, IEnumerable<string> zones = default)
+        public static VolumeData VolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? fileSystemId = default, string creationToken = default, NetAppFileServiceLevel? serviceLevel = default, long? usageThreshold = default, IEnumerable<string> protocolTypes = default, string provisioningState = default, string snapshotId = default, bool? deleteBaseSnapshot = default, string backupId = default, string baremetalTenantId = default, ResourceIdentifier subnetId = default, NetAppNetworkFeature? networkFeatures = default, NetAppNetworkFeature? effectiveNetworkFeatures = default, Guid? networkSiblingSetId = default, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<NetAppVolumeMountTarget> mountTargets = default, string volumeType = default, NetAppVolumeDataProtection dataProtection = default, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default, bool? isRestoring = default, bool? isSnapshotDirectoryVisible = default, bool? isKerberosEnabled = default, NetAppVolumeSecurityStyle? securityStyle = default, bool? isSmbEncryptionEnabled = default, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default, SmbNonBrowsable? smbNonBrowsable = default, bool? isSmbContinuouslyAvailable = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource? encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, bool? isLdapEnabled = default, LdapServerType? ldapServerType = default, bool? isCoolAccessEnabled = default, int? coolnessPeriod = default, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default, CoolAccessTieringPolicy? coolAccessTieringPolicy = default, string unixPermissions = default, int? cloneProgress = default, NetAppFileAccessLog? fileAccessLogs = default, NetAppAvsDataStore? avsDataStore = default, IEnumerable<string> dataStoreResourceId = default, bool? isDefaultQuotaEnabled = default, long? defaultUserQuotaInKiBs = default, long? defaultGroupQuotaInKiBs = default, long? maximumNumberOfFiles = default, string volumeGroupName = default, ResourceIdentifier capacityPoolResourceId = default, ResourceIdentifier proximityPlacementGroupId = default, string t2Network = default, string volumeSpecName = default, bool? isEncrypted = default, IEnumerable<NetAppVolumePlacementRule> placementRules = default, EnableNetAppSubvolume? enableSubvolumes = default, string provisionedAvailabilityZone = default, bool? isLargeVolume = default, LargeVolumeType? largeVolumeType = default, ResourceIdentifier originatingResourceId = default, long? inheritedSizeInBytes = default, VolumeLanguage? language = default, BreakthroughMode? breakthroughMode = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, string etag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -638,24 +571,6 @@ namespace Azure.ResourceManager.NetApp.Models
             groupIdsForLdapUser ??= new ChangeTrackingList<string>();
 
             return new GetGroupIdListForLdapUserResult(groupIdsForLdapUser.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Replication status. </summary>
-        /// <param name="healthy"> Replication health check. </param>
-        /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
-        /// <param name="mirrorState"> The status of the replication. </param>
-        /// <param name="totalProgress"> The progress of the replication. </param>
-        /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
-        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? healthy = default, VolumeReplicationRelationshipStatus? relationshipStatus = default, NetAppMirrorState? mirrorState = default, string totalProgress = default, string errorMessage = default)
-        {
-            return new NetAppVolumeReplicationStatus(
-                healthy,
-                relationshipStatus,
-                mirrorState,
-                totalProgress,
-                errorMessage,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Replication properties. </summary>
@@ -2083,7 +1998,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Migrate Backups Request. </summary>
         /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
-        public static BackupsMigrationContent BackupsMigrationContent(ResourceIdentifier backupVaultId = default)
+        public static BackupsMigrationContent BackupsMigrationContent(string backupVaultId = default)
         {
             return new BackupsMigrationContent(backupVaultId, additionalBinaryDataProperties: null);
         }
@@ -2623,8 +2538,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IEnumerable<NetAppVolumeGroupVolume> volumes)
+        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default, IEnumerable<NetAppVolumeGroupVolume> volumes = default)
         {
             volumes ??= new ChangeTrackingList<NetAppVolumeGroupVolume>();
 

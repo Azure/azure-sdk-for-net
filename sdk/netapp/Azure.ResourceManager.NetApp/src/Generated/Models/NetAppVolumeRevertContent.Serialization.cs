@@ -132,17 +132,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            ResourceIdentifier snapshotId = default;
+            string snapshotId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("snapshotId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    snapshotId = new ResourceIdentifier(prop.Value.GetString());
+                    snapshotId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -25,13 +24,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRevertContent"/>. </summary>
         /// <param name="snapshotId"> Resource id of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeRevertContent(ResourceIdentifier snapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeRevertContent(string snapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SnapshotId = snapshotId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id of the snapshot. </summary>
-        public ResourceIdentifier SnapshotId { get; set; }
+        public string SnapshotId { get; set; }
     }
 }

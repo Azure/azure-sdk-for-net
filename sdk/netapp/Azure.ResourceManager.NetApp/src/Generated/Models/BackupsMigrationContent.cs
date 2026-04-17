@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -20,24 +18,14 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
         /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupVaultId"/> is null. </exception>
-        public BackupsMigrationContent(ResourceIdentifier backupVaultId)
-        {
-            Argument.AssertNotNull(backupVaultId, nameof(backupVaultId));
-
-            BackupVaultId = backupVaultId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BackupsMigrationContent"/>. </summary>
-        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupsMigrationContent(ResourceIdentifier backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupsMigrationContent(string backupVaultId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupVaultId = backupVaultId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ResourceId of the Backup Vault. </summary>
-        public ResourceIdentifier BackupVaultId { get; }
+        public string BackupVaultId { get; }
     }
 }
