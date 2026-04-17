@@ -168,7 +168,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestApplyModelRenamingDisabled_DoesNotAffectEnumRenaming()
+        public void TestApplyModelRenamingDisabled_EnumRenamingStillApplied()
         {
             var enumName = "PrivateEndpointServiceConnectionStatus";
             var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
@@ -184,6 +184,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
             plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+            plugin.Setup(p => p.IsApplyEnumRenamingEnabled()).Returns(true);
 
             // PreVisitEnum is called during the enum creation
             var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
