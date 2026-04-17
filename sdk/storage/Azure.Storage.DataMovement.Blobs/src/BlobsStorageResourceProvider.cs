@@ -323,7 +323,6 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            DataMovementBlobsExtensions.ValidateSnapshotAndVersionId(blobUri, options);
             BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
@@ -369,7 +368,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
-            return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
+            return new BlockBlobStorageResource(client, new BlockBlobStorageResourceOptions(options));
         }
 
         #endregion

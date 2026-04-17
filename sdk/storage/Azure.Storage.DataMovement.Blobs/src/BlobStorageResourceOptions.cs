@@ -227,8 +227,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_versionId))
                 {
-                    throw new ArgumentException(
-                        "Snapshot and VersionId cannot both be set.");
+                    throw Errors.SnapshotVersionSet();
                 }
                 _snapshot = value;
             }
@@ -245,8 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_snapshot))
                 {
-                    throw new ArgumentException(
-                        "VersionId and Snapshot cannot both be set.");
+                    throw Errors.SnapshotVersionSet();
                 }
                 _versionId = value;
             }

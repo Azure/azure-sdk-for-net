@@ -21,18 +21,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal ShareFileClient ShareFileClient { get; }
 
-        public override Uri Uri => _uri ??= BuildSanitizedUri();
-
-        private Uri BuildSanitizedUri()
-        {
-            // Strip SAS from URI for security - snapshot is preserved automatically
-            // SAS should not be exposed in events/logs
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(ShareFileClient.Uri)
-            {
-                Sas = null
-            };
-            return uriBuilder.ToUri();
-        }
+        public override Uri Uri => _uri ??= ShareFileClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "share";
 
@@ -58,15 +47,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             _options = options ?? new ShareFileStorageResourceOptions();
 
-            // If options specify a snapshot but the client doesn't have it, create a new client
-            if (!string.IsNullOrEmpty(_options.Snapshot))
-            {
-                ShareUriBuilder uriBuilder = new ShareUriBuilder(fileClient.Uri);
-                if (uriBuilder.Snapshot != _options.Snapshot)
-                {
-                    fileClient = fileClient.WithSnapshot(_options.Snapshot);
-                }
-            }
+            fileClient.ValidateAndApplySnapshotAndVersionId(
+                fileClient.Uri,
+                options,
+                (c, s) => c.WithSnapshot(s));
 
             ShareFileClient = fileClient;
         }

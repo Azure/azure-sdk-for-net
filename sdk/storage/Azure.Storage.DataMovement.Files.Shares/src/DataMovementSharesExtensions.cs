@@ -767,24 +767,43 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        internal static void ValidateSnapshot(
+        internal static T ValidateAndApplySnapshotAndVersionId<T>(
+            this T client,
             Uri clientUri,
-            ShareFileStorageResourceOptions options)
+            ShareFileStorageResourceOptions options,
+            Func<T, string, T> withSnapshot)
         {
-            ShareUriBuilder uriBuilder = new ShareUriBuilder(clientUri);
-
             if (options == null)
             {
-                return;
+                return client;
             }
 
-            if (!string.IsNullOrEmpty(options.Snapshot) &&
-                !string.IsNullOrEmpty(uriBuilder.Snapshot) &&
-                options.Snapshot != uriBuilder.Snapshot)
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(clientUri);
+
+            if (!string.IsNullOrEmpty(options.Snapshot))
             {
-                throw new ArgumentException(
-                    $"Snapshot mismatch between URI '{uriBuilder.Snapshot}' and options '{options.Snapshot}'.");
+                if (!string.IsNullOrEmpty(uriBuilder.Snapshot) &&
+                    options.Snapshot != uriBuilder.Snapshot)
+                {
+                    throw Azure.Storage.Errors.SnapshotMismatch(uriBuilder.Snapshot, options.Snapshot);
+                }
+                if (string.IsNullOrEmpty(uriBuilder.Snapshot))
+                {
+                    client = withSnapshot(client, options.Snapshot);
+                }
             }
+            return client;
+        }
+
+        internal static Uri BuildSanitizedUri(this Uri uri)
+        {
+            // Strip SAS from URI for security - snapshot is preserved automatically
+            // SAS should not be exposed in events/logs
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(uri)
+            {
+                Sas = null
+            };
+            return uriBuilder.ToUri();
         }
     }
 

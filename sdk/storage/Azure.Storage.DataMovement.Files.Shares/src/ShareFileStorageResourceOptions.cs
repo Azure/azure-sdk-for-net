@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Storage.Files.Shares.Models;
-using static System.Net.WebRequestMethods;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -292,7 +291,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Snapshot identifier for reading from a specific snapshot.
         /// Only valid for source resources.
         /// </summary>
-        public string Snapshot;
+        public string Snapshot { get; set; }
 
         /// <summary>
         /// Constructor for ShareFileStorageResourceOptions.

@@ -281,7 +281,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            DataMovementSharesExtensions.ValidateSnapshot(directoryUri, options);
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
 
             ShareDirectoryClient CreateTokenClient()
@@ -323,7 +322,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            DataMovementSharesExtensions.ValidateSnapshot(fileUri, options);
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
 
             ShareFileClient CreateTokenClient()

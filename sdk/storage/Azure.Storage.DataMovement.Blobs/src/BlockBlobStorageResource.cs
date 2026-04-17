@@ -32,18 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
-        public override Uri Uri => _uri ??= BuildSanitizedUri();
-
-        private Uri BuildSanitizedUri()
-        {
-            // Strip SAS from URI for security - snapshot and version are preserved automatically
-            // SAS should not be exposed in events/logs
-            BlobUriBuilder uriBuilder = new BlobUriBuilder(BlobClient.Uri)
-            {
-                Sas = null
-            };
-            return uriBuilder.ToUri();
-        }
+        public override Uri Uri => _uri ??= BlobClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "blob";
 
@@ -79,33 +68,13 @@ namespace Azure.Storage.DataMovement.Blobs
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
 
-            DataMovementBlobsExtensions.ValidateSnapshotAndVersionId(blobClient.Uri, _options);
-            blobClient = ApplySnapshotAndVersionId(blobClient);
+            blobClient = blobClient.ValidateAndApplySnapshotAndVersionId(
+                blobClient.Uri,
+                _options,
+                (c, s) => c.WithSnapshot(s),
+                (c, v) => c.WithVersion(v));
 
             BlobClient = blobClient;
-        }
-
-        private BlockBlobClient ApplySnapshotAndVersionId(BlockBlobClient client)
-        {
-            if (!string.IsNullOrEmpty(_options?.Snapshot))
-            {
-                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
-                if (uriBuilder.Snapshot != _options.Snapshot)
-                {
-                    client = client.WithSnapshot(_options.Snapshot);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(_options?.VersionId))
-            {
-                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
-                if (uriBuilder.VersionId != _options.VersionId)
-                {
-                    client = client.WithVersion(_options.VersionId);
-                }
-            }
-
-            return client;
         }
 
         /// <summary>
