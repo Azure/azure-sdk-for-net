@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BotService.Models
         {
             get
             {
-                return Properties.Uri;
+                return Properties is null ? default : Properties.Uri;
             }
         }
     }

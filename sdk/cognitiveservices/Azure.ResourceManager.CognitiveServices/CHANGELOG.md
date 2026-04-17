@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Upgraded api-version to 2026-03-01.
+
 ### Breaking Changes
 
 ### Bugs Fixed

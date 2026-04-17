@@ -1,9 +1,17 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.2 (2026-05-05)
+
+### Other Changes
+
+- Updated dependency on `Azure.AI.AgentServer.Core` to 1.0.0-beta.22, which adds outbound
+  `HttpClient` instrumentation for distributed trace correlation.
+
+## 1.0.0-beta.1 (2026-04-14)
 
 ### Features Added
 
+- Initial release of the Azure.AI.AgentServer.Invocations library.
 - `InvocationHandler` abstract class for implementing invocation protocol endpoints.
 - `InvocationContext` providing request metadata and session information to handlers.
 - Automatic session ID resolution from query parameters and environment variables for multi-turn invocation tracking.

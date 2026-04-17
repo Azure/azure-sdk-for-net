@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
     }

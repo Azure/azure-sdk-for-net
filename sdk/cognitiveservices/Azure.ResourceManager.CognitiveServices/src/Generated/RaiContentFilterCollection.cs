@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -25,72 +26,79 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class RaiContentFilterCollection : ArmCollection, IEnumerable<RaiContentFilterResource>, IAsyncEnumerable<RaiContentFilterResource>
     {
-        private readonly ClientDiagnostics _raiContentFilterClientDiagnostics;
-        private readonly RaiContentFiltersRestOperations _raiContentFilterRestClient;
+        private readonly ClientDiagnostics _raiContentFiltersClientDiagnostics;
+        private readonly RaiContentFilters _raiContentFiltersRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="RaiContentFilterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RaiContentFilterCollection for mocking. </summary>
         protected RaiContentFilterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RaiContentFilterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiContentFilterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal RaiContentFilterCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            _location = location;
-            _raiContentFilterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiContentFilterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RaiContentFilterResource.ResourceType, out string raiContentFilterApiVersion);
-            _raiContentFilterRestClient = new RaiContentFiltersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, raiContentFilterApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _location = location;
+            _raiContentFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiContentFilterResource.ResourceType.Namespace, Diagnostics);
+            _raiContentFiltersRestClient = new RaiContentFilters(_raiContentFiltersClientDiagnostics, Pipeline, Endpoint, raiContentFilterApiVersion ?? "2026-03-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get Content Filters by Name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RaiContentFilterResource>> GetAsync(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.Get");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _raiContentFilterRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RaiContentFilterData> response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiContentFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,38 +112,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Get Content Filters by Name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RaiContentFilterResource> Get(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.Get");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.Get");
             scope.Start();
             try
             {
-                var response = _raiContentFilterRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RaiContentFilterData> response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiContentFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,50 +161,44 @@ namespace Azure.ResourceManager.CognitiveServices
         /// List Content Filters types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RaiContentFilterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RaiContentFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RaiContentFilterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _raiContentFilterRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _raiContentFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RaiContentFilterResource(Client, RaiContentFilterData.DeserializeRaiContentFilterData(e)), _raiContentFilterClientDiagnostics, Pipeline, "RaiContentFilterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFiltersGetAllAsyncCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
         }
 
         /// <summary>
         /// List Content Filters types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,45 +206,61 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="RaiContentFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RaiContentFilterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _raiContentFilterRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _raiContentFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RaiContentFilterResource(Client, RaiContentFilterData.DeserializeRaiContentFilterData(e)), _raiContentFilterClientDiagnostics, Pipeline, "RaiContentFilterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RaiContentFilterData, RaiContentFilterResource>(new RaiContentFiltersGetAllCollectionResultOfT(_raiContentFiltersRestClient, Id.SubscriptionId, _location, context, "RaiContentFilterCollection.GetAll"), data => new RaiContentFilterResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.Exists");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _raiContentFilterRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RaiContentFilterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RaiContentFilterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +274,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.Exists");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _raiContentFilterRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RaiContentFilterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RaiContentFilterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +331,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RaiContentFilterResource>> GetIfExistsAsync(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.GetIfExists");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _raiContentFilterRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RaiContentFilterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RaiContentFilterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RaiContentFilterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiContentFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +392,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/raiContentFilters/{filterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RaiContentFilters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RaiContentFilters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RaiContentFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The name of the RAI Content Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RaiContentFilterResource> GetIfExists(string filterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
 
-            using var scope = _raiContentFilterClientDiagnostics.CreateScope("RaiContentFilterCollection.GetIfExists");
+            using DiagnosticScope scope = _raiContentFiltersClientDiagnostics.CreateScope("RaiContentFilterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _raiContentFilterRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), filterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _raiContentFiltersRestClient.CreateGetRequest(Id.SubscriptionId, _location, filterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RaiContentFilterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RaiContentFilterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RaiContentFilterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RaiContentFilterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RaiContentFilterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +459,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RaiContentFilterResource> IAsyncEnumerable<RaiContentFilterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

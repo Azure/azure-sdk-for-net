@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         {
             get
             {
-                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
             }
         }
     }
