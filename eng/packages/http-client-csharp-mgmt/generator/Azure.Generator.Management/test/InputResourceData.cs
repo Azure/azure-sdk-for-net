@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
@@ -43,11 +43,11 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -98,11 +98,11 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -151,11 +151,11 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -201,10 +201,10 @@ namespace Azure.Generator.Management.Tests.Common
             // Update method has no body parameter
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -252,10 +252,10 @@ namespace Azure.Generator.Management.Tests.Common
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -305,11 +305,11 @@ namespace Azure.Generator.Management.Tests.Common
             // Update method has no body parameter
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -362,11 +362,11 @@ namespace Azure.Generator.Management.Tests.Common
             // Update method has no body parameter
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = singletonPath;
+            var resourceIdPattern = new RequestPathPattern(singletonPath);
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests/policies", "default", ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -426,11 +426,11 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, patchParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -481,11 +481,11 @@ namespace Azure.Generator.Management.Tests.Common
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
-            var resourceIdPattern = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, getMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, createMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!),
-                new ResourceMethod(ResourceOperationKind.Update, updateMethod, updateMethod.Operation.Path, ResourceScope.ResourceGroup, resourceIdPattern, null!)
+                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!),
+                new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), ResourceScope.ResourceGroup, resourceIdPattern, null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
@@ -594,14 +594,14 @@ namespace Azure.Generator.Management.Tests.Common
             // Build multi-resource schema
             var armProviderDecorator = BuildArmProviderSchemaMultiResource([
                 new ResourceSchemaInput(parentModel, [
-                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, parentGetOp.Path, ResourceScope.ResourceGroup, parentIdPattern, null!),
-                    new ResourceMethod(ResourceOperationKind.Create, parentCreateMethod, parentCreateOp.Path, ResourceScope.ResourceGroup, parentIdPattern, null!)
-                ], parentIdPattern, "Microsoft.Tests/parents", null, ResourceScope.ResourceGroup, "ParentType", null),
+                    new ResourceMethod(ResourceOperationKind.Read, parentGetMethod, new RequestPathPattern(parentGetOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Create, parentCreateMethod, new RequestPathPattern(parentCreateOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!)
+                ], parentIdPattern, "Microsoft.Tests/parents", null, ResourceScope.ResourceGroup, "ParentType", null, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup)),
                 new ResourceSchemaInput(childModel, [
-                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, childGetOp.Path, ResourceScope.ResourceGroup, childIdPattern, null!),
-                    new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, childCreateOp.Path, ResourceScope.ResourceGroup, childIdPattern, null!),
-                    new ResourceMethod(ResourceOperationKind.List, childListMethod, childListPath, ResourceScope.ResourceGroup, parentIdPattern, null!)
-                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, "ChildType", parentIdPattern)
+                    new ResourceMethod(ResourceOperationKind.Read, childGetMethod, new RequestPathPattern(childGetOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Create, childCreateMethod, new RequestPathPattern(childCreateOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(childIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.List, childListMethod, new RequestPathPattern(childListPath), ResourceScope.ResourceGroup, new RequestPathPattern(parentIdPattern), null!)
+                ], childIdPattern, "Microsoft.Tests/parents/nestedTypes/children", null, ResourceScope.ResourceGroup, "ChildType", parentIdPattern, GetDefaultScopeIdPattern(ResourceScope.ResourceGroup))
             ]);
 
             var parentClient = InputFactory.Client(
@@ -619,10 +619,10 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             return BuildArmProviderSchemaMultiResource([
-                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern, resourceType, singletonResourceName, resourceScope, resourceName, null)
+                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope))
             ]);
         }
 
@@ -641,7 +641,11 @@ namespace Azure.Generator.Management.Tests.Common
                     ["resourceModelId"] = r.ResourceModel.CrossLanguageDefinitionId,
                     ["resourceIdPattern"] = r.ResourceIdPattern,
                     ["resourceType"] = r.ResourceType,
-                    ["resourceScope"] = r.ResourceScope.ToString(),
+                    ["scope"] = new Dictionary<string, string?>
+                    {
+                        ["kind"] = r.ResourceScope.ToString(),
+                        ["scopeIdPattern"] = r.ScopeIdPattern
+                    },
                     ["methods"] = r.Methods.Select(SerializeResourceMethod).ToList(),
                     ["singletonResourceName"] = r.SingletonResourceName,
                     ["resourceName"] = r.ResourceName,
@@ -672,11 +676,21 @@ namespace Azure.Generator.Management.Tests.Common
                 };
                 if (m.ResourceScopeIdPattern != null)
                 {
-                    result["resourceScope"] = m.ResourceScopeIdPattern;
+                    result["resourceScopeIdPattern"] = m.ResourceScopeIdPattern;
                 }
                 return result;
             }
         }
+
+        private static string GetDefaultScopeIdPattern(ResourceScope scope) => scope switch
+        {
+            ResourceScope.ResourceGroup => "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+            ResourceScope.Subscription => "/subscriptions/{subscriptionId}",
+            ResourceScope.Tenant => "",
+            ResourceScope.ManagementGroup => "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+            ResourceScope.Extension => "",
+            _ => ""
+        };
 
         private record ResourceSchemaInput(
             InputModelType ResourceModel,
@@ -686,6 +700,7 @@ namespace Azure.Generator.Management.Tests.Common
             string? SingletonResourceName,
             ResourceScope ResourceScope,
             string? ResourceName,
-            string? ParentResourceId);
+            string? ParentResourceId,
+            string ScopeIdPattern);
     }
 }

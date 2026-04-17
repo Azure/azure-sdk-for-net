@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
@@ -73,8 +73,8 @@ namespace Azure.Generator.Management.Tests.Providers
             var siteDecorator = BuildArmProviderSchema(
                 sharedModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Create, createSiteMethod, createSiteOperation.Path, ResourceScope.ResourceGroup, siteResourceIdPattern, null!),
-                    new ResourceMethod(ResourceOperationKind.Read, getSiteMethod, createSiteOperation.Path, ResourceScope.ResourceGroup, siteResourceIdPattern, null!)
+                    new ResourceMethod(ResourceOperationKind.Create, createSiteMethod, new RequestPathPattern(createSiteOperation.Path), ResourceScope.ResourceGroup, new RequestPathPattern(siteResourceIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getSiteMethod, new RequestPathPattern(createSiteOperation.Path), ResourceScope.ResourceGroup, new RequestPathPattern(siteResourceIdPattern), null!)
                 ],
                 siteResourceIdPattern,
                 "Microsoft.SiteManager/sites",
@@ -112,8 +112,8 @@ namespace Azure.Generator.Management.Tests.Providers
             var sitesBySubscriptionDecorator = BuildArmProviderSchema(
                 sharedModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Create, createSiteBySubMethod, createSiteBySubOperation.Path, ResourceScope.Subscription, sitesBySubscriptionResourceIdPattern, null!),
-                    new ResourceMethod(ResourceOperationKind.Read, getSiteBySubMethod, createSiteBySubOperation.Path, ResourceScope.Subscription, sitesBySubscriptionResourceIdPattern, null!)
+                    new ResourceMethod(ResourceOperationKind.Create, createSiteBySubMethod, new RequestPathPattern(createSiteBySubOperation.Path), ResourceScope.Subscription, new RequestPathPattern(sitesBySubscriptionResourceIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getSiteBySubMethod, new RequestPathPattern(createSiteBySubOperation.Path), ResourceScope.Subscription, new RequestPathPattern(sitesBySubscriptionResourceIdPattern), null!)
                 ],
                 sitesBySubscriptionResourceIdPattern,
                 "Microsoft.SiteManager/sites",
@@ -267,16 +267,16 @@ namespace Azure.Generator.Management.Tests.Providers
                     new ResourceMethod(
                         ResourceOperationKind.Create,
                         createMethod,
-                        createMethod.Operation.Path,
+                        new RequestPathPattern(createMethod.Operation.Path),
                         ResourceScope.ResourceGroup,
-                        resourceIdPattern,
+                        new RequestPathPattern(resourceIdPattern),
                         null!),
                     new ResourceMethod(
                         ResourceOperationKind.Read,
                         getMethod,
-                        getMethod.Operation.Path,
+                        new RequestPathPattern(getMethod.Operation.Path),
                         ResourceScope.ResourceGroup,
-                        resourceIdPattern,
+                        new RequestPathPattern(resourceIdPattern),
                         null!)
                 ],
                 resourceIdPattern,
@@ -312,7 +312,18 @@ namespace Azure.Generator.Management.Tests.Providers
                 ["resourceModelId"] = resourceModel.CrossLanguageDefinitionId,
                 ["resourceIdPattern"] = resourceIdPattern,
                 ["resourceType"] = resourceType,
-                ["resourceScope"] = resourceScope.ToString(),
+                ["scope"] = new Dictionary<string, string?>
+                {
+                    ["kind"] = resourceScope.ToString(),
+                    ["scopeIdPattern"] = resourceScope switch
+                    {
+                        ResourceScope.ResourceGroup => "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                        ResourceScope.Subscription => "/subscriptions/{subscriptionId}",
+                        ResourceScope.Tenant => "",
+                        ResourceScope.ManagementGroup => "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+                        _ => ""
+                    }
+                },
                 ["methods"] = methods.Select(SerializeResourceMethod).ToList(),
                 ["singletonResourceName"] = singletonResourceName,
                 ["resourceName"] = resourceName,
@@ -337,7 +348,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 };
                 if (m.ResourceScopeIdPattern != null)
                 {
-                    result["resourceScope"] = m.ResourceScopeIdPattern;
+                    result["resourceScopeIdPattern"] = m.ResourceScopeIdPattern;
                 }
                 return result;
             }

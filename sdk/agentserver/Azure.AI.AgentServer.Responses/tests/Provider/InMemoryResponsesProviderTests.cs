@@ -299,7 +299,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Event stream evicted — subscribing throws
         var tcs = new TaskCompletionSource();
         var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<InvalidOperationException>(
+        Assert.ThrowsAsync<BadRequestException>(
             () => provider.SubscribeToEventsAsync("resp_evict", observer));
     }
 
@@ -391,7 +391,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Event stream evicted
         var tcs = new TaskCompletionSource();
         var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<InvalidOperationException>(
+        Assert.ThrowsAsync<BadRequestException>(
             () => provider.SubscribeToEventsAsync("resp_cleanup", observer));
 
         // CancellationTokenSource evicted — new call creates a fresh one
@@ -422,7 +422,7 @@ public class InMemoryResponsesProviderTests : IDisposable
         // Event stream evicted
         var tcs = new TaskCompletionSource();
         var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<InvalidOperationException>(
+        Assert.ThrowsAsync<BadRequestException>(
             () => provider.SubscribeToEventsAsync("resp_nonbg", observer));
     }
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         {
             get
             {
-                return BackupMetadata.CloudEndpointName;
+                return BackupMetadata is null ? default : BackupMetadata.CloudEndpointName;
             }
         }
     }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
     }

@@ -1,14 +1,36 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-05-05)
 
 ### Features Added
 
-### Breaking Changes
+- Added chat isolation key enforcement across all endpoints. When a response is created with
+  `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
+  include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
+  to ensure tenant isolation.
+- Added validation for malformed response IDs in both the `response_id` path parameter and the
+  `previous_response_id` request body field. IDs that do not match the expected format (prefix
+  and length) are rejected with 400 and a descriptive error message.
+- Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
+  and value length ≤ 512 characters, enforced via the validator pipeline.
+- Added deterministic `agent_session_id` derivation: SHA-256 hash of
+  `"{agent_name}:{agent_version}:{partition_hint}"` truncated to 63 lowercase hex chars.
+  Falls back to random hex when no conversational context is available.
+- Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
+  reducing memory pressure for long-running servers.
+- Added `FoundryStorageLoggingPolicy` — an Azure.Core per-retry pipeline policy that logs every
+  outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
+  headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed error response shapes to match the container specification: `invalid_request_error` type
+  for 400 errors and `not_found` message format.
+- Fixed cancel-after-terminal to return `invalid_request_error` type with the correct error shape
+  per the specification.
+- Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
+  with the specification.
+- Fixed cancel-after-delete to return 404 (not-found) per the specification.
 
 ## 1.0.0-beta.1 (2026-04-14)
 
