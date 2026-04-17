@@ -138,6 +138,15 @@ if ($null -eq $filter) {
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
 }
 
+if (-not $LaunchOnly) {
+    Write-Host "Regenerating emitter docs" -ForegroundColor Cyan
+    Invoke "npm run regen-docs"
+
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+}
+
 # Stop total timer
 $totalStopwatch.Stop()
 
