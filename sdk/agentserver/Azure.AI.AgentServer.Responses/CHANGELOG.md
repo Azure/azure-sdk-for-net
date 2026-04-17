@@ -13,8 +13,8 @@
   and length) are rejected with 400 and a descriptive error message.
 - Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
   and value length ≤ 512 characters, enforced via the validator pipeline.
-- Added deterministic `agent_session_id` derivation matching the Python SDK algorithm: SHA-256
-  hash of `"{agent_name}:{agent_version}:{partition_hint}"` truncated to 63 lowercase hex chars.
+- Added deterministic `agent_session_id` derivation: SHA-256 hash of
+  `"{agent_name}:{agent_version}:{partition_hint}"` truncated to 63 lowercase hex chars.
   Falls back to random hex when no conversational context is available.
 - Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
   reducing memory pressure for long-running servers.

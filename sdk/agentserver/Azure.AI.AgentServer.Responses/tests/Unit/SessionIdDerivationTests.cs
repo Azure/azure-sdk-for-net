@@ -125,10 +125,10 @@ public class SessionIdDerivationTests
     // ── Cross-language compatibility ──
 
     [Test]
-    public void Derive_MatchesPythonSdkOutput()
+    public void Derive_MatchesCrossLanguageOutput()
     {
-        // Verify the hash matches what the Python SDK produces for the same seed.
-        // Python: hashlib.sha256("my-agent:1.0:partition_hint".encode()).hexdigest()[:63]
+        // Verify the hash matches the cross-language contract for the same seed.
+        // SHA-256("my-agent:1.0:partition_hint") truncated to 63 hex chars
         var agentRef = new AgentReference("my-agent") { Version = "1.0" };
 
         // Use a raw conversation_id that will be used as-is (not a valid ID for partition extraction)
@@ -140,7 +140,7 @@ public class SessionIdDerivationTests
         var expected = Convert.ToHexString(expectedBytes).ToLowerInvariant()[..63];
 
         Assert.That(result, Is.EqualTo(expected),
-            "Should match Python SDK's SHA-256 derivation for the same seed");
+            "Should match cross-language SHA-256 derivation for the same seed");
     }
 
     // ── Partition key extraction from valid IDs ──

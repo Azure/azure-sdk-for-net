@@ -20,7 +20,7 @@ internal static class SessionIdDerivation
 {
     /// <summary>
     /// Session IDs are 63 lowercase hex characters (one less than a full SHA-256 hex digest).
-    /// This matches the cross-language contract with the Python SDK.
+    /// This matches the cross-language session ID derivation contract.
     /// </summary>
     private const int SessionIdLength = 63;
 
