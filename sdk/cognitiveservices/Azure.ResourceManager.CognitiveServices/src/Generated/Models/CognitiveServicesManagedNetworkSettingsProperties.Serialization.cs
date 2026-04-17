@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            ManagedNetworkSettingsEx managedNetwork = default;
+            CognitiveServicesManagedNetworkConfigurationExtended managedNetwork = default;
             CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    managedNetwork = ManagedNetworkSettingsEx.DeserializeManagedNetworkSettingsEx(prop.Value, options);
+                    managedNetwork = CognitiveServicesManagedNetworkConfigurationExtended.DeserializeCognitiveServicesManagedNetworkConfigurationExtended(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Managed Network settings for a cognitive services account. </param>
-        internal CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedNetworkSettings properties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesManagedNetworkConfiguration properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Managed Network settings for a cognitive services account. </summary>
         [WirePath("properties")]
-        public ManagedNetworkSettings Properties { get; set; }
+        public CognitiveServicesManagedNetworkConfiguration Properties { get; set; }
     }
 }

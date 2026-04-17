@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesOutboundRuleBasicProperties(RuleCategory? category, RuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesOutboundRuleBasicProperties(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Status = status;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Category of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("category")]
-        public RuleCategory? Category { get; set; }
+        public ServiceTagOutboundRuleCategory? Category { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("status")]
-        public RuleStatus? Status { get; set; }
+        public ServiceTagOutboundRuleStatus? Status { get; set; }
 
         /// <summary> Type of a managed network Outbound Rule of a cognitive services account. </summary>
         [WirePath("type")]

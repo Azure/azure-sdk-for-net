@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"> Private Endpoint destination. </param>
         /// <param name="fqdns"> List of FQDNs associated with the private endpoint outbound rule. </param>
-        internal CognitiveServicesPrivateEndpointOutboundRule(RuleCategory? category, RuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesPrivateEndpointOutboundRuleDestination destination, IList<string> fqdns) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
+        internal CognitiveServicesPrivateEndpointOutboundRule(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesPrivateEndpointOutboundRuleDestination destination, IList<string> fqdns) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
             Fqdns = fqdns;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentRuleNames"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"> Service Tag destination. </param>
-        internal ServiceTagOutboundRule(RuleCategory? category, RuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceTagOutboundRuleDestination destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
+        internal ServiceTagOutboundRule(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceTagOutboundRuleDestination destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
         }

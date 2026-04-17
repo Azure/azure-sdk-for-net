@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string serviceTag = default;
             string protocol = default;
             string portRanges = default;
-            RuleAction? action = default;
+            ServiceTagOutboundRuleAction? action = default;
             IList<string> addressPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    action = new RuleAction(prop.Value.GetString());
+                    action = new ServiceTagOutboundRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("addressPrefixes"u8))

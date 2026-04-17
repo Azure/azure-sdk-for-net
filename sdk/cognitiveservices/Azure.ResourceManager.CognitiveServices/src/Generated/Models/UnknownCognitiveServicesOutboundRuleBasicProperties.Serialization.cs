@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            RuleCategory? category = default;
-            RuleStatus? status = default;
+            ServiceTagOutboundRuleCategory? category = default;
+            ServiceTagOutboundRuleStatus? status = default;
             RuleType @type = default;
             string errorInformation = default;
             IReadOnlyList<string> parentRuleNames = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    category = new RuleCategory(prop.Value.GetString());
+                    category = new ServiceTagOutboundRuleCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    status = new RuleStatus(prop.Value.GetString());
+                    status = new ServiceTagOutboundRuleStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

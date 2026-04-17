@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="action"> The action for the service tag outbound rule. </param>
         /// <param name="addressPrefixes"> Optional address prefixes. If provided, the serviceTag property will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagOutboundRuleDestination(string serviceTag, string protocol, string portRanges, RuleAction? action, IList<string> addressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceTagOutboundRuleDestination(string serviceTag, string protocol, string portRanges, ServiceTagOutboundRuleAction? action, IList<string> addressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceTag = serviceTag;
             Protocol = protocol;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The action for the service tag outbound rule. </summary>
         [WirePath("action")]
-        public RuleAction? Action { get; set; }
+        public ServiceTagOutboundRuleAction? Action { get; set; }
 
         /// <summary> Optional address prefixes. If provided, the serviceTag property will be ignored. </summary>
         [WirePath("addressPrefixes")]

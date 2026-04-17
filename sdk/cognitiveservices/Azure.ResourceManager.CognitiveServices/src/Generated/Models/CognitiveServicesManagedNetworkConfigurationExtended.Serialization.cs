@@ -13,52 +13,52 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Managed Network settings for a cognitive services account. </summary>
-    public partial class ManagedNetworkSettings : IJsonModel<ManagedNetworkSettings>
+    /// <summary> The CognitiveServicesManagedNetworkConfigurationExtended. </summary>
+    public partial class CognitiveServicesManagedNetworkConfigurationExtended : CognitiveServicesManagedNetworkConfiguration, IJsonModel<CognitiveServicesManagedNetworkConfigurationExtended>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedNetworkSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesManagedNetworkConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedNetworkSettings(document.RootElement, options);
+                        return DeserializeCognitiveServicesManagedNetworkConfigurationExtended(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedNetworkConfigurationExtended)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedNetworkConfigurationExtended)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettings IPersistableModel<ManagedNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesManagedNetworkConfigurationExtended IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>.Create(BinaryData data, ModelReaderWriterOptions options) => (CognitiveServicesManagedNetworkConfigurationExtended)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesManagedNetworkConfigurationExtended>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -67,96 +67,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedNetworkConfigurationExtended)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsolationMode))
+            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChangeableIsolationModes))
             {
-                writer.WritePropertyName("isolationMode"u8);
-                writer.WriteStringValue(IsolationMode.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkId))
-            {
-                writer.WritePropertyName("networkId"u8);
-                writer.WriteStringValue(NetworkId);
-            }
-            if (Optional.IsCollectionDefined(OutboundRules))
-            {
-                writer.WritePropertyName("outboundRules"u8);
-                writer.WriteStartObject();
-                foreach (var item in OutboundRules)
+                writer.WritePropertyName("changeableIsolationModes"u8);
+                writer.WriteStartArray();
+                foreach (CognitiveServicesIsolationMode item in ChangeableIsolationModes)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteStringValue(item.ToString());
                 }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
-            }
-            if (Optional.IsDefined(FirewallSku))
-            {
-                writer.WritePropertyName("firewallSku"u8);
-                writer.WriteStringValue(FirewallSku.Value.ToString());
-            }
-            if (Optional.IsDefined(ManagedNetworkKind))
-            {
-                writer.WritePropertyName("managedNetworkKind"u8);
-                writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIpAddress))
-            {
-                writer.WritePropertyName("firewallPublicIpAddress"u8);
-                writer.WriteStringValue(FirewallPublicIpAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WriteEndArray();
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettings IJsonModel<ManagedNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesManagedNetworkConfigurationExtended IJsonModel<CognitiveServicesManagedNetworkConfigurationExtended>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CognitiveServicesManagedNetworkConfigurationExtended)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedNetworkSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesManagedNetworkConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedNetworkConfigurationExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedNetworkConfigurationExtended)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedNetworkSettings(document.RootElement, options);
+            return DeserializeCognitiveServicesManagedNetworkConfigurationExtended(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedNetworkSettings DeserializeManagedNetworkSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesManagedNetworkConfigurationExtended DeserializeCognitiveServicesManagedNetworkConfigurationExtended(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,6 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string firewallPublicIpAddress = default;
             CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IReadOnlyList<CognitiveServicesIsolationMode> changeableIsolationModes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("isolationMode"u8))
@@ -247,12 +198,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     provisioningState = new CognitiveServicesManagedNetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("changeableIsolationModes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CognitiveServicesIsolationMode> array = new List<CognitiveServicesIsolationMode>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new CognitiveServicesIsolationMode(item.GetString()));
+                    }
+                    changeableIsolationModes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkSettings(
+            return new CognitiveServicesManagedNetworkConfigurationExtended(
                 isolationMode,
                 networkId,
                 outboundRules ?? new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>(),
@@ -261,7 +226,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 managedNetworkKind,
                 firewallPublicIpAddress,
                 provisioningState,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                changeableIsolationModes ?? new ChangeTrackingList<CognitiveServicesIsolationMode>());
         }
     }
 }

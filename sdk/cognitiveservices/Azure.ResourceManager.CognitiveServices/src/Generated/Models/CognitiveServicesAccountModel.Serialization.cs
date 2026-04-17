@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IDictionary<string, string> capabilities = default;
             IDictionary<string, string> finetuneCapabilities = default;
             ServiceAccountModelDeprecationInfo deprecation = default;
-            ReplacementConfig replacementConfig = default;
+            ModelReplacementConfiguration replacementConfig = default;
             string modelCatalogAssetId = default;
             ModelLifecycleStatus? lifecycleStatus = default;
             SystemData systemData = default;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    replacementConfig = ReplacementConfig.DeserializeReplacementConfig(prop.Value, options);
+                    replacementConfig = ModelReplacementConfiguration.DeserializeModelReplacementConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("modelCatalogAssetId"u8))

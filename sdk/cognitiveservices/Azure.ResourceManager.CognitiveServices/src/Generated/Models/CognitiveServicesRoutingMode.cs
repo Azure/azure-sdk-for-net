@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The routing mode that determines how requests are distributed across models. </summary>
-    public readonly partial struct RoutingMode : IEquatable<RoutingMode>
+    public readonly partial struct CognitiveServicesRoutingMode : IEquatable<CognitiveServicesRoutingMode>
     {
         private readonly string _value;
         /// <summary> Route requests to minimize cost while meeting performance requirements. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Route requests to maximize accuracy regardless of cost. </summary>
         private const string AccuracyValue = "accuracy";
 
-        /// <summary> Initializes a new instance of <see cref="RoutingMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesRoutingMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RoutingMode(string value)
+        public CognitiveServicesRoutingMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Route requests to minimize cost while meeting performance requirements. </summary>
-        public static RoutingMode Cost { get; } = new RoutingMode(CostValue);
+        public static CognitiveServicesRoutingMode Cost { get; } = new CognitiveServicesRoutingMode(CostValue);
 
         /// <summary> Balance cost and accuracy when routing requests across models. </summary>
-        public static RoutingMode Balanced { get; } = new RoutingMode(BalancedValue);
+        public static CognitiveServicesRoutingMode Balanced { get; } = new CognitiveServicesRoutingMode(BalancedValue);
 
         /// <summary> Route requests to maximize accuracy regardless of cost. </summary>
-        public static RoutingMode Accuracy { get; } = new RoutingMode(AccuracyValue);
+        public static CognitiveServicesRoutingMode Accuracy { get; } = new CognitiveServicesRoutingMode(AccuracyValue);
 
-        /// <summary> Determines if two <see cref="RoutingMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesRoutingMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RoutingMode left, RoutingMode right) => left.Equals(right);
+        public static bool operator ==(CognitiveServicesRoutingMode left, CognitiveServicesRoutingMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RoutingMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesRoutingMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RoutingMode left, RoutingMode right) => !left.Equals(right);
+        public static bool operator !=(CognitiveServicesRoutingMode left, CognitiveServicesRoutingMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RoutingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingMode(string value) => new RoutingMode(value);
+        public static implicit operator CognitiveServicesRoutingMode(string value) => new CognitiveServicesRoutingMode(value);
 
-        /// <summary> Converts a string to a <see cref="RoutingMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesRoutingMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RoutingMode?(string value) => value == null ? null : new RoutingMode(value);
+        public static implicit operator CognitiveServicesRoutingMode?(string value) => value == null ? null : new CognitiveServicesRoutingMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RoutingMode other && Equals(other);
+        public override bool Equals(object obj) => obj is CognitiveServicesRoutingMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RoutingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CognitiveServicesRoutingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

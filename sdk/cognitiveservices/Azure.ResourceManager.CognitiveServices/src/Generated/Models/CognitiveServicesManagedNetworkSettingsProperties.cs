@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetwork"> Managed Network settings for a cognitive services account. </param>
         /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedNetworkSettingsProperties(ManagedNetworkSettingsEx managedNetwork, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedNetworkSettingsProperties(CognitiveServicesManagedNetworkConfigurationExtended managedNetwork, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedNetwork = managedNetwork;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Managed Network settings for a cognitive services account. </summary>
         [WirePath("managedNetwork")]
-        public ManagedNetworkSettingsEx ManagedNetwork { get; set; }
+        public CognitiveServicesManagedNetworkConfigurationExtended ManagedNetwork { get; set; }
 
         /// <summary> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </summary>
         [WirePath("provisioningState")]

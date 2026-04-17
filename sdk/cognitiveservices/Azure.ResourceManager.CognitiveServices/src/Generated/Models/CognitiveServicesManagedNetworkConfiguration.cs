@@ -12,18 +12,18 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Managed Network settings for a cognitive services account. </summary>
-    public partial class ManagedNetworkSettings
+    public partial class CognitiveServicesManagedNetworkConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
-        public ManagedNetworkSettings()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkConfiguration"/>. </summary>
+        public CognitiveServicesManagedNetworkConfiguration()
         {
             OutboundRules = new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkConfiguration"/>. </summary>
         /// <param name="isolationMode"> Isolation mode for the managed network of a cognitive services account. </param>
         /// <param name="networkId"></param>
         /// <param name="outboundRules"> Dictionary of &lt;OutboundRule&gt;. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkSettings(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsolationMode = isolationMode;
             NetworkId = networkId;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="mode"> The routing mode that determines how requests are distributed across models. </param>
         /// <param name="models"> Optional. The list of models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesDeploymentRouting(RoutingMode? mode, IList<CognitiveServicesAccountDeploymentModel> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesDeploymentRouting(CognitiveServicesRoutingMode? mode, IList<CognitiveServicesAccountDeploymentModel> models, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             Models = models;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The routing mode that determines how requests are distributed across models. </summary>
         [WirePath("mode")]
-        public RoutingMode? Mode { get; set; }
+        public CognitiveServicesRoutingMode? Mode { get; set; }
 
         /// <summary> Optional. The list of models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </summary>
         [WirePath("models")]

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCognitiveServicesOutboundRuleBasicProperties(RuleCategory? category, RuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(category, status, @type != default ? @type : "unknown", errorInformation, parentRuleNames, additionalBinaryDataProperties)
+        internal UnknownCognitiveServicesOutboundRuleBasicProperties(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(category, status, @type != default ? @type : "unknown", errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
         }
     }

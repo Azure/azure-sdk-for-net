@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ManagedNetworkSettings properties = default;
+            CognitiveServicesManagedNetworkConfiguration properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    properties = ManagedNetworkSettings.DeserializeManagedNetworkSettings(prop.Value, options);
+                    properties = CognitiveServicesManagedNetworkConfiguration.DeserializeCognitiveServicesManagedNetworkConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            RoutingMode? mode = default;
+            CognitiveServicesRoutingMode? mode = default;
             IList<CognitiveServicesAccountDeploymentModel> models = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    mode = new RoutingMode(prop.Value.GetString());
+                    mode = new CognitiveServicesRoutingMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("models"u8))

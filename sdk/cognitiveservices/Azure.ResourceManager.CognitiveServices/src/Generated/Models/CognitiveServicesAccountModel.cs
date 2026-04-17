@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="modelCatalogAssetId"> Asset identifier for the model in the model catalog. </param>
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal CognitiveServicesAccountModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ReplacementConfig replacementConfig, string modelCatalogAssetId, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(publisher, format, name, version, source, sourceAccount, callRateLimit, additionalBinaryDataProperties)
+        internal CognitiveServicesAccountModel(string publisher, string format, string name, string version, string source, ResourceIdentifier sourceAccount, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelReplacementConfiguration replacementConfig, string modelCatalogAssetId, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(publisher, format, name, version, source, sourceAccount, callRateLimit, additionalBinaryDataProperties)
         {
             BaseModel = baseModel;
             IsDefaultVersion = isDefaultVersion;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Configuration for model replacement. </summary>
         [WirePath("replacementConfig")]
-        public ReplacementConfig ReplacementConfig { get; set; }
+        public ModelReplacementConfiguration ReplacementConfig { get; set; }
 
         /// <summary> Asset identifier for the model in the model catalog. </summary>
         [WirePath("modelCatalogAssetId")]

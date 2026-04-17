@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = default, string format = default, string name = default, string version = default, string source = default, ResourceIdentifier sourceAccount = default, ServiceAccountCallRateLimit callRateLimit = default, CognitiveServicesAccountDeploymentModel baseModel = default, bool? isDefaultVersion = default, IEnumerable<CognitiveServicesModelSku> skus = default, int? maxCapacity = default, IDictionary<string, string> capabilities = default, IDictionary<string, string> finetuneCapabilities = default, ServiceAccountModelDeprecationInfo deprecation = default, ReplacementConfig replacementConfig = default, string modelCatalogAssetId = default, ModelLifecycleStatus? lifecycleStatus = default, SystemData systemData = default)
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string publisher = default, string format = default, string name = default, string version = default, string source = default, ResourceIdentifier sourceAccount = default, ServiceAccountCallRateLimit callRateLimit = default, CognitiveServicesAccountDeploymentModel baseModel = default, bool? isDefaultVersion = default, IEnumerable<CognitiveServicesModelSku> skus = default, int? maxCapacity = default, IDictionary<string, string> capabilities = default, IDictionary<string, string> finetuneCapabilities = default, ServiceAccountModelDeprecationInfo deprecation = default, ModelReplacementConfiguration replacementConfig = default, string modelCatalogAssetId = default, ModelLifecycleStatus? lifecycleStatus = default, SystemData systemData = default)
         {
             skus ??= new ChangeTrackingList<CognitiveServicesModelSku>();
             capabilities ??= new ChangeTrackingDictionary<string, string>();
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="mode"> The routing mode that determines how requests are distributed across models. </param>
         /// <param name="models"> Optional. The list of models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesDeploymentRouting"/> instance for mocking. </returns>
-        public static CognitiveServicesDeploymentRouting CognitiveServicesDeploymentRouting(RoutingMode? mode = default, IEnumerable<CognitiveServicesAccountDeploymentModel> models = default)
+        public static CognitiveServicesDeploymentRouting CognitiveServicesDeploymentRouting(CognitiveServicesRoutingMode? mode = default, IEnumerable<CognitiveServicesAccountDeploymentModel> models = default)
         {
             models ??= new ChangeTrackingList<CognitiveServicesAccountDeploymentModel>();
 
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesOutboundRuleBasicProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesOutboundRuleBasicProperties CognitiveServicesOutboundRuleBasicProperties(RuleCategory? category = default, RuleStatus? status = default, string @type = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default)
+        public static CognitiveServicesOutboundRuleBasicProperties CognitiveServicesOutboundRuleBasicProperties(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string @type = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentRuleNames"></param>
         /// <param name="destination"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesFqdnOutboundRule"/> instance for mocking. </returns>
-        public static CognitiveServicesFqdnOutboundRule CognitiveServicesFqdnOutboundRule(RuleCategory? category = default, RuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, string destination = default)
+        public static CognitiveServicesFqdnOutboundRule CognitiveServicesFqdnOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, string destination = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="destination"> Private Endpoint destination. </param>
         /// <param name="fqdns"> List of FQDNs associated with the private endpoint outbound rule. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesPrivateEndpointOutboundRule"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateEndpointOutboundRule CognitiveServicesPrivateEndpointOutboundRule(RuleCategory? category = default, RuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, CognitiveServicesPrivateEndpointOutboundRuleDestination destination = default, IEnumerable<string> fqdns = default)
+        public static CognitiveServicesPrivateEndpointOutboundRule CognitiveServicesPrivateEndpointOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, CognitiveServicesPrivateEndpointOutboundRuleDestination destination = default, IEnumerable<string> fqdns = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
             fqdns ??= new ChangeTrackingList<string>();
@@ -1718,7 +1718,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentRuleNames"></param>
         /// <param name="destination"> Service Tag destination. </param>
         /// <returns> A new <see cref="Models.ServiceTagOutboundRule"/> instance for mocking. </returns>
-        public static ServiceTagOutboundRule ServiceTagOutboundRule(RuleCategory? category = default, RuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, ServiceTagOutboundRuleDestination destination = default)
+        public static ServiceTagOutboundRule ServiceTagOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, ServiceTagOutboundRuleDestination destination = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="action"> The action for the service tag outbound rule. </param>
         /// <param name="addressPrefixes"> Optional address prefixes. If provided, the serviceTag property will be ignored. </param>
         /// <returns> A new <see cref="Models.ServiceTagOutboundRuleDestination"/> instance for mocking. </returns>
-        public static ServiceTagOutboundRuleDestination ServiceTagOutboundRuleDestination(string serviceTag = default, string protocol = default, string portRanges = default, RuleAction? action = default, IEnumerable<string> addressPrefixes = default)
+        public static ServiceTagOutboundRuleDestination ServiceTagOutboundRuleDestination(string serviceTag = default, string protocol = default, string portRanges = default, ServiceTagOutboundRuleAction? action = default, IEnumerable<string> addressPrefixes = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
 
@@ -1785,7 +1785,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetwork"> Managed Network settings for a cognitive services account. </param>
         /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkSettingsProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkSettingsProperties CognitiveServicesManagedNetworkSettingsProperties(ManagedNetworkSettingsEx managedNetwork = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
+        public static CognitiveServicesManagedNetworkSettingsProperties CognitiveServicesManagedNetworkSettingsProperties(CognitiveServicesManagedNetworkConfigurationExtended managedNetwork = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
         {
             return new CognitiveServicesManagedNetworkSettingsProperties(managedNetwork, provisioningState, additionalBinaryDataProperties: null);
         }
@@ -1799,13 +1799,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="changeableIsolationModes"></param>
-        /// <returns> A new <see cref="Models.ManagedNetworkSettingsEx"/> instance for mocking. </returns>
-        public static ManagedNetworkSettingsEx ManagedNetworkSettingsEx(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfigurationExtended"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkConfigurationExtended CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
             changeableIsolationModes ??= new ChangeTrackingList<CognitiveServicesIsolationMode>();
 
-            return new ManagedNetworkSettingsEx(
+            return new CognitiveServicesManagedNetworkConfigurationExtended(
                 isolationMode,
                 networkId,
                 outboundRules,
@@ -1826,12 +1826,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
-        /// <returns> A new <see cref="Models.ManagedNetworkSettings"/> instance for mocking. </returns>
-        public static ManagedNetworkSettings ManagedNetworkSettings(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfiguration"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkConfiguration CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
 
-            return new ManagedNetworkSettings(
+            return new CognitiveServicesManagedNetworkConfiguration(
                 isolationMode,
                 networkId,
                 outboundRules,
@@ -1850,7 +1850,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Managed Network settings for a cognitive services account. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkSettingsContent"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkSettingsContent CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettings properties = default)
+        public static CognitiveServicesManagedNetworkSettingsContent CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedNetworkConfiguration properties = default)
         {
             return new CognitiveServicesManagedNetworkSettingsContent(
                 id,

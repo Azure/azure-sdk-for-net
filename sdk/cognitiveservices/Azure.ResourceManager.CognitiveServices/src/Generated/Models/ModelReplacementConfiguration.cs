@@ -12,23 +12,23 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Configuration for model replacement. </summary>
-    public partial class ReplacementConfig
+    public partial class ModelReplacementConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReplacementConfig"/>. </summary>
-        public ReplacementConfig()
+        /// <summary> Initializes a new instance of <see cref="ModelReplacementConfiguration"/>. </summary>
+        public ModelReplacementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplacementConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelReplacementConfiguration"/>. </summary>
         /// <param name="targetModelName"> The name of the replacement model. </param>
         /// <param name="targetModelVersion"> The version of the replacement model. </param>
         /// <param name="autoUpgradeStartOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
         /// <param name="upgradeOnExpiryLeadTimeDays"> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplacementConfig(string targetModelName, string targetModelVersion, DateTimeOffset? autoUpgradeStartOn, int? upgradeOnExpiryLeadTimeDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelReplacementConfiguration(string targetModelName, string targetModelVersion, DateTimeOffset? autoUpgradeStartOn, int? upgradeOnExpiryLeadTimeDays, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetModelName = targetModelName;
             TargetModelVersion = targetModelVersion;
