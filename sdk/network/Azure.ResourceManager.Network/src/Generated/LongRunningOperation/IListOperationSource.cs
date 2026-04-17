@@ -39,9 +39,3 @@ namespace Azure.ResourceManager.Network
         }
     }
 }
-tails(item));
-            }
-            return array;
-        }
-    }
-}
