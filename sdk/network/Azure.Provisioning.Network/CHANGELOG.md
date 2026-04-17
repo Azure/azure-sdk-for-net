@@ -1,14 +1,18 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0 (2026-04-16)
 
 ### Features Added
 
-### Breaking Changes
+- Added remaining Network resource types, bringing the total from 37 to 120 resources.
+- Added polymorphic type support for `BaseAdminRule` (`NetworkAdminRule`, `NetworkDefaultAdminRule`), `FirewallPolicyRuleCollectionInfo`, and `FirewallPolicyRule` subtypes.
+- Added support for `NetworkSecurityPerimeter` resources.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `Name` property to be writable on `FirewallPolicyDraft`, `FrontendIPConfiguration`, `LoadBalancingRule`, `NetworkInterfaceIPConfiguration`, `OutboundRule`, and `ProbeResource`.
+- Fixed `ProvisioningState` to be readonly on `IpamPool`, `StaticCidr`, `NetworkVerifierWorkspace`, `ReachabilityAnalysisIntent`, and `ReachabilityAnalysisRun`.
+- Removed phantom `SubnetId` and `VirtualNetworkId` properties from `IPAllocation` that do not exist in the Bicep reference.
 
 ## 1.1.0-beta.2 (2026-03-24)
 
