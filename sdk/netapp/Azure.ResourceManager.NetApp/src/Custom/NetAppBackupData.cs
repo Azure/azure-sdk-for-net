@@ -36,6 +36,12 @@ namespace Azure.ResourceManager.NetApp
             VolumeResourceId = volumeResourceId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/> from vault backup data. </summary>
+        internal NetAppBackupData(NetAppBackupVaultBackupData vaultData)
+            : base(vaultData?.Id, vaultData?.Name, vaultData?.ResourceType ?? default, vaultData?.SystemData)
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, AzureLocation location, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyResourceId) : base(id, name, resourceType, systemData)
         {

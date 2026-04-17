@@ -345,15 +345,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Restoring. </summary>
-        public bool? IsRestoring
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsRestoring;
-            }
-        }
-
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
         public bool? IsSnapshotDirectoryVisible
         {
@@ -689,19 +680,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new VolumeProperties();
                 }
                 Properties.AvsDataStore = value.Value;
-            }
-        }
-
-        /// <summary> Data store resource unique identifier. </summary>
-        public IReadOnlyList<string> DataStoreResourceId
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                return Properties.DataStoreResourceId;
             }
         }
 

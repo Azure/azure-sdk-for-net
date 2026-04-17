@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.NetAppSubscriptionQuotaItemData" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSubscriptionQuotaItemData NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
         {
-            return NetAppSubscriptionQuotaItemData(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: null);
+            return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
@@ -368,9 +368,9 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Backward-compat: NetAppSubscriptionQuotaItem factory (7-arg overload). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSubscriptionQuotaItemData NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage)
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage)
         {
-            return NetAppSubscriptionQuotaItemData(id: id, name: name, resourceType: resourceType, systemData: systemData, current: current, @default: @default, usage: usage);
+            return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, usage);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

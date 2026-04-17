@@ -32,14 +32,5 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Represents the properties of the ListQuotaReport. </summary>
         internal NetAppVolumeQuotaReportListResult Properties { get; }
-
-        /// <summary> List of quota reports. </summary>
-        public IList<NetAppVolumeQuotaReport> QuotaReportRecords
-        {
-            get
-            {
-                return Properties.QuotaReportRecords;
-            }
-        }
     }
 }

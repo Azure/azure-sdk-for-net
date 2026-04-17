@@ -51,18 +51,5 @@ namespace Azure.ResourceManager.NetApp
                 Properties.StorageToNetworkProximity = value.Value;
             }
         }
-
-        /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetAppRegionInfo();
-                }
-                return Properties.AvailabilityZoneMappings;
-            }
-        }
     }
 }

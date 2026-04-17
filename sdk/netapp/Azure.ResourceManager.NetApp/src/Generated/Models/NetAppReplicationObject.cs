@@ -53,12 +53,6 @@ namespace Azure.ResourceManager.NetApp.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Id. </summary>
-        public string ReplicationId { get; }
-
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType { get; }
-
         /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
 
