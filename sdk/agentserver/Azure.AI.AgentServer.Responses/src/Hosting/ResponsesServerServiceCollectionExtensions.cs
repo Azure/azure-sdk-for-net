@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -99,7 +100,8 @@ public static class ResponsesServerServiceCollectionExtensions
             {
                 var pipeline = sp.GetRequiredService<HttpPipeline>();
                 var storageBaseUri = ResolveStorageBaseUri();
-                return new FoundryStorageProvider(pipeline, storageBaseUri);
+                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageProvider>();
+                return new FoundryStorageProvider(pipeline, storageBaseUri, logger);
             });
         }
         else
