@@ -1,0 +1,1205 @@
+[
+  {
+    "Name": "AvailabilitySetResource",
+    "FullName": "Azure.ResourceManager.Compute.AvailabilitySetResource",
+    "ResourceType": "Microsoft.Compute/availabilitySets",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}",
+    "DataType": "AvailabilitySetData",
+    "IsTrackedResource": true,
+    "CollectionType": "AvailabilitySetCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "CapacityReservationGroupResource",
+    "FullName": "Azure.ResourceManager.Compute.CapacityReservationGroupResource",
+    "ResourceType": "Microsoft.Compute/capacityReservationGroups",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}",
+    "DataType": "CapacityReservationGroupData",
+    "IsTrackedResource": true,
+    "CollectionType": "CapacityReservationGroupCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetCapacityReservations",
+        "ReturnType": "CapacityReservationCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "CapacityReservationResource",
+    "FullName": "Azure.ResourceManager.Compute.CapacityReservationResource",
+    "ResourceType": "Microsoft.Compute/capacityReservationGroups/capacityReservations",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}/capacityReservations/{capacityReservationName}",
+    "DataType": "CapacityReservationData",
+    "IsTrackedResource": true,
+    "CollectionType": "CapacityReservationCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "CapacityReservationGroupResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "CommunityGalleryImageResource",
+    "FullName": "Azure.ResourceManager.Compute.CommunityGalleryImageResource",
+    "ResourceType": "Microsoft.Compute/locations/communityGalleries/images",
+    "DataType": "CommunityGalleryImageData",
+    "IsTrackedResource": false,
+    "CollectionType": "CommunityGalleryImageCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetCommunityGalleryImageVersions",
+        "ReturnType": "CommunityGalleryImageVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "CommunityGalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "CommunityGalleryImageVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.CommunityGalleryImageVersionResource",
+    "ResourceType": "Microsoft.Compute/locations/communityGalleries/images/versions",
+    "DataType": "CommunityGalleryImageVersionData",
+    "IsTrackedResource": false,
+    "CollectionType": "CommunityGalleryImageVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "CommunityGalleryImageResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "CommunityGalleryResource",
+    "FullName": "Azure.ResourceManager.Compute.CommunityGalleryResource",
+    "ResourceType": "Microsoft.Compute/locations/communityGalleries",
+    "DataType": "CommunityGalleryData",
+    "IsTrackedResource": false,
+    "CollectionType": "CommunityGalleryCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetCommunityGalleryImages",
+        "ReturnType": "CommunityGalleryImageCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeSubscriptionResource"
+    ],
+    "Scopes": [
+      "Subscription"
+    ]
+  },
+  {
+    "Name": "ComputePrivateEndpointConnectionResource",
+    "FullName": "Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionResource",
+    "ResourceType": "Microsoft.Compute/diskAccesses/privateEndpointConnections",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}/privateEndpointConnections/{privateEndpointConnectionName}",
+    "DataType": "ComputePrivateEndpointConnectionData",
+    "IsTrackedResource": false,
+    "CollectionType": "ComputePrivateEndpointConnectionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "DiskAccessResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "DedicatedHostGroupResource",
+    "FullName": "Azure.ResourceManager.Compute.DedicatedHostGroupResource",
+    "ResourceType": "Microsoft.Compute/hostGroups",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}",
+    "DataType": "DedicatedHostGroupData",
+    "IsTrackedResource": true,
+    "CollectionType": "DedicatedHostGroupCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetDedicatedHosts",
+        "ReturnType": "DedicatedHostCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "DedicatedHostResource",
+    "FullName": "Azure.ResourceManager.Compute.DedicatedHostResource",
+    "ResourceType": "Microsoft.Compute/hostGroups/hosts",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}/hosts/{hostName}",
+    "DataType": "DedicatedHostData",
+    "IsTrackedResource": true,
+    "CollectionType": "DedicatedHostCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "DedicatedHostGroupResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "DiskAccessResource",
+    "FullName": "Azure.ResourceManager.Compute.DiskAccessResource",
+    "ResourceType": "Microsoft.Compute/diskAccesses",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}",
+    "DataType": "DiskAccessData",
+    "IsTrackedResource": true,
+    "CollectionType": "DiskAccessCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetComputePrivateEndpointConnections",
+        "ReturnType": "ComputePrivateEndpointConnectionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "DiskEncryptionSetResource",
+    "FullName": "Azure.ResourceManager.Compute.DiskEncryptionSetResource",
+    "ResourceType": "Microsoft.Compute/diskEncryptionSets",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}",
+    "DataType": "DiskEncryptionSetData",
+    "IsTrackedResource": true,
+    "CollectionType": "DiskEncryptionSetCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "DiskImageResource",
+    "FullName": "Azure.ResourceManager.Compute.DiskImageResource",
+    "ResourceType": "Microsoft.Compute/images",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}",
+    "DataType": "DiskImageData",
+    "IsTrackedResource": true,
+    "CollectionType": "DiskImageCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "DiskRestorePointResource",
+    "FullName": "Azure.ResourceManager.Compute.DiskRestorePointResource",
+    "ResourceType": "Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}",
+    "DataType": "DiskRestorePointData",
+    "IsTrackedResource": false,
+    "CollectionType": "DiskRestorePointCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "RestorePointResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryApplicationResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryApplicationResource",
+    "ResourceType": "Microsoft.Compute/galleries/applications",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}",
+    "DataType": "GalleryApplicationData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryApplicationCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetGalleryApplicationVersions",
+        "ReturnType": "GalleryApplicationVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryApplicationVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryApplicationVersionResource",
+    "ResourceType": "Microsoft.Compute/galleries/applications/versions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}/versions/{galleryApplicationVersionName}",
+    "DataType": "GalleryApplicationVersionData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryApplicationVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryApplicationResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryImageResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryImageResource",
+    "ResourceType": "Microsoft.Compute/galleries/images",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}",
+    "DataType": "GalleryImageData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryImageCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetGalleryImageVersions",
+        "ReturnType": "GalleryImageVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryImageVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryImageVersionResource",
+    "ResourceType": "Microsoft.Compute/galleries/images/versions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}",
+    "DataType": "GalleryImageVersionData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryImageVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryImageResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryInVmAccessControlProfileResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryInVmAccessControlProfileResource",
+    "ResourceType": "Microsoft.Compute/galleries/inVMAccessControlProfiles",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVmAccessControlProfileName}",
+    "DataType": "GalleryInVmAccessControlProfileData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryInVmAccessControlProfileCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetGalleryInVmAccessControlProfileVersions",
+        "ReturnType": "GalleryInVmAccessControlProfileVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryInVmAccessControlProfileVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryInVmAccessControlProfileVersionResource",
+    "ResourceType": "Microsoft.Compute/galleries/inVMAccessControlProfiles/versions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVmAccessControlProfileName}/versions/{inVmAccessControlProfileVersionName}",
+    "DataType": "GalleryInVmAccessControlProfileVersionData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryInVmAccessControlProfileVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryInVmAccessControlProfileResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryResource",
+    "ResourceType": "Microsoft.Compute/galleries",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}",
+    "DataType": "GalleryData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetGalleryApplications",
+        "ReturnType": "GalleryApplicationCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetGalleryImages",
+        "ReturnType": "GalleryImageCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetGalleryInVmAccessControlProfiles",
+        "ReturnType": "GalleryInVmAccessControlProfileCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetGalleryScripts",
+        "ReturnType": "GalleryScriptCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "GalleryScriptResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryScriptResource",
+    "ResourceType": "Microsoft.Compute/galleries/scripts",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}",
+    "DataType": "GalleryScriptData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryScriptCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetGalleryScriptVersions",
+        "ReturnType": "GalleryScriptVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "GalleryScriptVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.GalleryScriptVersionResource",
+    "ResourceType": "Microsoft.Compute/galleries/scripts/versions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}",
+    "DataType": "GalleryScriptVersionData",
+    "IsTrackedResource": true,
+    "CollectionType": "GalleryScriptVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "GalleryScriptResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "ManagedDiskResource",
+    "FullName": "Azure.ResourceManager.Compute.ManagedDiskResource",
+    "ResourceType": "Microsoft.Compute/disks",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}",
+    "DataType": "ManagedDiskData",
+    "IsTrackedResource": true,
+    "CollectionType": "ManagedDiskCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "MockableComputeArmClient",
+    "FullName": "Azure.ResourceManager.Compute.Mocking.MockableComputeArmClient",
+    "IsTrackedResource": false,
+    "ChildCollections": [],
+    "ChildResources": [
+      {
+        "MethodName": "GetCommunityGalleryResource",
+        "ReturnType": "CommunityGalleryResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetCommunityGalleryImageResource",
+        "ReturnType": "CommunityGalleryImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetCommunityGalleryImageVersionResource",
+        "ReturnType": "CommunityGalleryImageVersionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSharedGalleryResource",
+        "ReturnType": "SharedGalleryResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSharedGalleryImageResource",
+        "ReturnType": "SharedGalleryImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSharedGalleryImageVersionResource",
+        "ReturnType": "SharedGalleryImageVersionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetAvailabilitySetResource",
+        "ReturnType": "AvailabilitySetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetCapacityReservationGroupResource",
+        "ReturnType": "CapacityReservationGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDedicatedHostGroupResource",
+        "ReturnType": "DedicatedHostGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskImageResource",
+        "ReturnType": "DiskImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineExtensionImageResource",
+        "ReturnType": "VirtualMachineExtensionImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineRunCommandResource",
+        "ReturnType": "VirtualMachineRunCommandResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetVmRunCommandResource",
+        "ReturnType": "VirtualMachineScaleSetVmRunCommandResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetResource",
+        "ReturnType": "VirtualMachineScaleSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineResource",
+        "ReturnType": "VirtualMachineResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetProximityPlacementGroupResource",
+        "ReturnType": "ProximityPlacementGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetRestorePointGroupResource",
+        "ReturnType": "RestorePointGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSshPublicKeyResource",
+        "ReturnType": "SshPublicKeyResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetCapacityReservationResource",
+        "ReturnType": "CapacityReservationResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDedicatedHostResource",
+        "ReturnType": "DedicatedHostResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetRestorePointResource",
+        "ReturnType": "RestorePointResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetRollingUpgradeResource",
+        "ReturnType": "VirtualMachineScaleSetRollingUpgradeResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetExtensionResource",
+        "ReturnType": "VirtualMachineScaleSetExtensionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetVmResource",
+        "ReturnType": "VirtualMachineScaleSetVmResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetVmExtensionResource",
+        "ReturnType": "VirtualMachineScaleSetVmExtensionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineExtensionResource",
+        "ReturnType": "VirtualMachineExtensionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskAccessResource",
+        "ReturnType": "DiskAccessResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetComputePrivateEndpointConnectionResource",
+        "ReturnType": "ComputePrivateEndpointConnectionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskEncryptionSetResource",
+        "ReturnType": "DiskEncryptionSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetManagedDiskResource",
+        "ReturnType": "ManagedDiskResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSnapshotResource",
+        "ReturnType": "SnapshotResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskRestorePointResource",
+        "ReturnType": "DiskRestorePointResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryResource",
+        "ReturnType": "GalleryResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryApplicationResource",
+        "ReturnType": "GalleryApplicationResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryApplicationVersionResource",
+        "ReturnType": "GalleryApplicationVersionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryImageResource",
+        "ReturnType": "GalleryImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryImageVersionResource",
+        "ReturnType": "GalleryImageVersionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryInVmAccessControlProfileResource",
+        "ReturnType": "GalleryInVmAccessControlProfileResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryInVmAccessControlProfileVersionResource",
+        "ReturnType": "GalleryInVmAccessControlProfileVersionResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryScriptResource",
+        "ReturnType": "GalleryScriptResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleryScriptVersionResource",
+        "ReturnType": "GalleryScriptVersionResource",
+        "ParameterCount": 1
+      }
+    ],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "MockableComputeResourceGroupResource",
+    "FullName": "Azure.ResourceManager.Compute.Mocking.MockableComputeResourceGroupResource",
+    "IsTrackedResource": false,
+    "ChildCollections": [
+      {
+        "MethodName": "GetAvailabilitySets",
+        "ReturnType": "AvailabilitySetCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetCapacityReservationGroups",
+        "ReturnType": "CapacityReservationGroupCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetDedicatedHostGroups",
+        "ReturnType": "DedicatedHostGroupCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetDiskImages",
+        "ReturnType": "DiskImageCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSets",
+        "ReturnType": "VirtualMachineScaleSetCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetVirtualMachines",
+        "ReturnType": "VirtualMachineCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetProximityPlacementGroups",
+        "ReturnType": "ProximityPlacementGroupCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetRestorePointGroups",
+        "ReturnType": "RestorePointGroupCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetSshPublicKeys",
+        "ReturnType": "SshPublicKeyCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetDiskAccesses",
+        "ReturnType": "DiskAccessCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetDiskEncryptionSets",
+        "ReturnType": "DiskEncryptionSetCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetManagedDisks",
+        "ReturnType": "ManagedDiskCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetSnapshots",
+        "ReturnType": "SnapshotCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetGalleries",
+        "ReturnType": "GalleryCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "MockableComputeSubscriptionResource",
+    "FullName": "Azure.ResourceManager.Compute.Mocking.MockableComputeSubscriptionResource",
+    "IsTrackedResource": false,
+    "ChildCollections": [
+      {
+        "MethodName": "GetCommunityGalleries",
+        "ReturnType": "CommunityGalleryCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetSharedGalleries",
+        "ReturnType": "SharedGalleryCollection",
+        "ParameterCount": 1
+      }
+    ],
+    "ChildResources": [
+      {
+        "MethodName": "GetDedicatedHostGroupsAsync",
+        "ReturnType": "DedicatedHostGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDedicatedHostGroups",
+        "ReturnType": "DedicatedHostGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskImagesAsync",
+        "ReturnType": "DiskImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskImages",
+        "ReturnType": "DiskImageResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetsAsync",
+        "ReturnType": "VirtualMachineScaleSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSets",
+        "ReturnType": "VirtualMachineScaleSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetProximityPlacementGroupsAsync",
+        "ReturnType": "ProximityPlacementGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetProximityPlacementGroups",
+        "ReturnType": "ProximityPlacementGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetRestorePointGroupsAsync",
+        "ReturnType": "RestorePointGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetRestorePointGroups",
+        "ReturnType": "RestorePointGroupResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSshPublicKeysAsync",
+        "ReturnType": "SshPublicKeyResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSshPublicKeys",
+        "ReturnType": "SshPublicKeyResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskAccessesAsync",
+        "ReturnType": "DiskAccessResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskAccesses",
+        "ReturnType": "DiskAccessResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskEncryptionSetsAsync",
+        "ReturnType": "DiskEncryptionSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetDiskEncryptionSets",
+        "ReturnType": "DiskEncryptionSetResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetManagedDisksAsync",
+        "ReturnType": "ManagedDiskResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetManagedDisks",
+        "ReturnType": "ManagedDiskResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSnapshotsAsync",
+        "ReturnType": "SnapshotResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetSnapshots",
+        "ReturnType": "SnapshotResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleriesAsync",
+        "ReturnType": "GalleryResource",
+        "ParameterCount": 1
+      },
+      {
+        "MethodName": "GetGalleries",
+        "ReturnType": "GalleryResource",
+        "ParameterCount": 1
+      }
+    ],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "ProximityPlacementGroupResource",
+    "FullName": "Azure.ResourceManager.Compute.ProximityPlacementGroupResource",
+    "ResourceType": "Microsoft.Compute/proximityPlacementGroups",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}",
+    "DataType": "ProximityPlacementGroupData",
+    "IsTrackedResource": true,
+    "CollectionType": "ProximityPlacementGroupCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "RestorePointGroupResource",
+    "FullName": "Azure.ResourceManager.Compute.RestorePointGroupResource",
+    "ResourceType": "Microsoft.Compute/restorePointCollections",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}",
+    "DataType": "RestorePointGroupData",
+    "IsTrackedResource": true,
+    "CollectionType": "RestorePointGroupCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetRestorePoints",
+        "ReturnType": "RestorePointCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "RestorePointResource",
+    "FullName": "Azure.ResourceManager.Compute.RestorePointResource",
+    "ResourceType": "Microsoft.Compute/restorePointCollections/restorePoints",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName}",
+    "DataType": "RestorePointData",
+    "IsTrackedResource": false,
+    "CollectionType": "RestorePointCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetDiskRestorePoints",
+        "ReturnType": "DiskRestorePointCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "RestorePointGroupResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "SharedGalleryImageResource",
+    "FullName": "Azure.ResourceManager.Compute.SharedGalleryImageResource",
+    "ResourceType": "Microsoft.Compute/locations/sharedGalleries/images",
+    "DataType": "SharedGalleryImageData",
+    "IsTrackedResource": false,
+    "CollectionType": "SharedGalleryImageCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetSharedGalleryImageVersions",
+        "ReturnType": "SharedGalleryImageVersionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "SharedGalleryResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "SharedGalleryImageVersionResource",
+    "FullName": "Azure.ResourceManager.Compute.SharedGalleryImageVersionResource",
+    "ResourceType": "Microsoft.Compute/locations/sharedGalleries/images/versions",
+    "DataType": "SharedGalleryImageVersionData",
+    "IsTrackedResource": false,
+    "CollectionType": "SharedGalleryImageVersionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "SharedGalleryImageResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "SharedGalleryResource",
+    "FullName": "Azure.ResourceManager.Compute.SharedGalleryResource",
+    "ResourceType": "Microsoft.Compute/locations/sharedGalleries",
+    "DataType": "SharedGalleryData",
+    "IsTrackedResource": false,
+    "CollectionType": "SharedGalleryCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetSharedGalleryImages",
+        "ReturnType": "SharedGalleryImageCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeSubscriptionResource"
+    ],
+    "Scopes": [
+      "Subscription"
+    ]
+  },
+  {
+    "Name": "SnapshotResource",
+    "FullName": "Azure.ResourceManager.Compute.SnapshotResource",
+    "ResourceType": "Microsoft.Compute/snapshots",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}",
+    "DataType": "SnapshotData",
+    "IsTrackedResource": true,
+    "CollectionType": "SnapshotCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "SshPublicKeyResource",
+    "FullName": "Azure.ResourceManager.Compute.SshPublicKeyResource",
+    "ResourceType": "Microsoft.Compute/sshPublicKeys",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}",
+    "DataType": "SshPublicKeyData",
+    "IsTrackedResource": true,
+    "CollectionType": "SshPublicKeyCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "VirtualMachineExtensionImageResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineExtensionImageResource",
+    "ResourceType": "Microsoft.Compute/locations/publishers/artifacttypes/types/versions",
+    "DataType": "VirtualMachineExtensionImageData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineExtensionImageCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeSubscriptionResource"
+    ],
+    "Scopes": [
+      "Subscription"
+    ]
+  },
+  {
+    "Name": "VirtualMachineExtensionResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineExtensionResource",
+    "ResourceType": "Microsoft.Compute/virtualMachines/extensions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{vmExtensionName}",
+    "DataType": "VirtualMachineExtensionData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineExtensionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineResource",
+    "ResourceType": "Microsoft.Compute/virtualMachines",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}",
+    "DataType": "VirtualMachineData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetVirtualMachineRunCommands",
+        "ReturnType": "VirtualMachineRunCommandCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetVirtualMachineExtensions",
+        "ReturnType": "VirtualMachineExtensionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "VirtualMachineRunCommandResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineRunCommandResource",
+    "ResourceType": "Microsoft.Compute/virtualMachines/runCommands",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}",
+    "DataType": "VirtualMachineRunCommandData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineRunCommandCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineScaleSetExtensionResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/extensions/{vmssExtensionName}",
+    "DataType": "VirtualMachineScaleSetExtensionData",
+    "IsTrackedResource": false,
+    "CollectionType": "VirtualMachineScaleSetExtensionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineScaleSetResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineScaleSetResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}",
+    "DataType": "VirtualMachineScaleSetData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineScaleSetCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetVirtualMachineScaleSetExtensions",
+        "ReturnType": "VirtualMachineScaleSetExtensionCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetVms",
+        "ReturnType": "VirtualMachineScaleSetVmCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [
+      {
+        "MethodName": "GetVirtualMachineScaleSetRollingUpgrade",
+        "ReturnType": "VirtualMachineScaleSetRollingUpgradeResource",
+        "ParameterCount": 0
+      }
+    ],
+    "ParentResources": [
+      "MockableComputeResourceGroupResource"
+    ],
+    "Scopes": [
+      "Group"
+    ]
+  },
+  {
+    "Name": "VirtualMachineScaleSetRollingUpgradeResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetRollingUpgradeResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/rollingUpgrades/latest",
+    "DataType": "VirtualMachineScaleSetRollingUpgradeData",
+    "IsTrackedResource": true,
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineScaleSetVmExtensionResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{instanceId}/extensions/{vmExtensionName}",
+    "DataType": "VirtualMachineScaleSetVmExtensionData",
+    "IsTrackedResource": false,
+    "CollectionType": "VirtualMachineScaleSetVmExtensionCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineScaleSetVmResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineScaleSetVmResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetVmResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{instanceId}",
+    "DataType": "VirtualMachineScaleSetVmData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineScaleSetVmCollection",
+    "ChildCollections": [
+      {
+        "MethodName": "GetVirtualMachineScaleSetVmRunCommands",
+        "ReturnType": "VirtualMachineScaleSetVmRunCommandCollection",
+        "ParameterCount": 0
+      },
+      {
+        "MethodName": "GetVirtualMachineScaleSetVmExtensions",
+        "ReturnType": "VirtualMachineScaleSetVmExtensionCollection",
+        "ParameterCount": 0
+      }
+    ],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineScaleSetResource"
+    ],
+    "Scopes": []
+  },
+  {
+    "Name": "VirtualMachineScaleSetVmRunCommandResource",
+    "FullName": "Azure.ResourceManager.Compute.VirtualMachineScaleSetVmRunCommandResource",
+    "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/runCommands",
+    "ResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{instanceId}/runCommands/{runCommandName}",
+    "DataType": "VirtualMachineRunCommandData",
+    "IsTrackedResource": true,
+    "CollectionType": "VirtualMachineScaleSetVmRunCommandCollection",
+    "ChildCollections": [],
+    "ChildResources": [],
+    "ParentResources": [
+      "VirtualMachineScaleSetVmResource"
+    ],
+    "Scopes": []
+  }
+]
