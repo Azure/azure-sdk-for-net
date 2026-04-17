@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryScriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryScriptName, GalleryScriptData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GalleryScriptResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryScriptName, GalleryScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptName, nameof(galleryScriptName));
             Argument.AssertNotNull(data, nameof(data));
@@ -92,10 +92,16 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeArmOperation operation = new ComputeArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation<GalleryScriptResource> operation = new ComputeArmOperation<GalleryScriptResource>(
+                    new GalleryScriptOperationSource(Client),
+                    _galleryScriptsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryScriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string galleryScriptName, GalleryScriptData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GalleryScriptResource> CreateOrUpdate(WaitUntil waitUntil, string galleryScriptName, GalleryScriptData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptName, nameof(galleryScriptName));
             Argument.AssertNotNull(data, nameof(data));
@@ -144,10 +150,16 @@ namespace Azure.ResourceManager.Compute
                 };
                 HttpMessage message = _galleryScriptsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryScriptName, GalleryScriptData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeArmOperation operation = new ComputeArmOperation(_galleryScriptsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation<GalleryScriptResource> operation = new ComputeArmOperation<GalleryScriptResource>(
+                    new GalleryScriptOperationSource(Client),
+                    _galleryScriptsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
