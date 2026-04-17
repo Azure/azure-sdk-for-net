@@ -23,6 +23,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_Train
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "{modelLabel}",
@@ -38,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 details: trainingJobDetails
@@ -61,6 +63,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
 
             // Create connection info for data generation
@@ -89,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start the training operation
-            Operation<ConversationAuthoringTrainingJobResult> operation = client.Train(
+            Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 details: trainingJobDetails);
@@ -110,6 +114,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
                 modelLabel: "{modelLabel}",
@@ -125,7 +131,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 }
             };
 
-            Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 details: trainingJobDetails
@@ -148,6 +154,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
 
             // Create connection info for data generation
@@ -176,7 +184,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             // Start training
-            Operation<ConversationAuthoringTrainingJobResult> operation = await client.TrainAsync(
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 details: trainingJobDetails);
