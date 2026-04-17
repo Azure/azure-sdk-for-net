@@ -21,6 +21,9 @@
 - Added `FoundryStorageLoggingPolicy` — an Azure.Core per-retry pipeline policy that logs every
   outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
   headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
+- Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
+  InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
+  conversation ID, previous response ID, and store flag for full request traceability.
 
 ### Bugs Fixed
 

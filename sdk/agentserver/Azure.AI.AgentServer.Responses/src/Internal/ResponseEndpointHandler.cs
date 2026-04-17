@@ -134,10 +134,6 @@ internal sealed class ResponseEndpointHandler
         // Resolve model: request-level → DefaultModel → empty string (PW-006)
         request.Model ??= _options.Value.DefaultModel ?? string.Empty;
 
-        _logger.LogInformation(
-            "Creating response: Streaming={IsStreaming} Background={IsBackground} Model={Model}",
-            isStreaming, isBackground, request.Model);
-
         // B38: Use x-agent-response-id header as the response ID if present,
         // giving platform/middletier services full control over ID generation.
         // Otherwise, generate one with partition key colocation.
@@ -161,6 +157,10 @@ internal sealed class ResponseEndpointHandler
                 ?? "";
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
+
+        _logger.LogInformation(
+            "Creating response {ResponseId}: Streaming={IsStreaming} Background={IsBackground} Store={Store} Model={Model} ConversationId={ConversationId} PreviousResponseId={PreviousResponseId}",
+            responseId, isStreaming, isBackground, store, request.Model, request.GetConversationId(), request.PreviousResponseId);
 
         // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
@@ -280,6 +280,9 @@ internal sealed class ResponseEndpointHandler
                 // and the exception propagates to the exception filter → HTTP 500.
                 // The signal delivers an independent snapshot — no re-snapshot needed.
                 var handlerResponse = await execution.ResponseCreatedSignal.Task;
+                _logger.LogInformation(
+                    "Background response created signal received for {ResponseId}, status={Status}",
+                    responseId, handlerResponse.Status);
                 return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
             }
             finally
@@ -302,6 +305,9 @@ internal sealed class ResponseEndpointHandler
 
                 await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
+                _logger.LogInformation(
+                    "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
+                    responseId, execution.Response!.Status, execution.Response!.Output.Count);
                 return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
             }
             finally
@@ -325,6 +331,7 @@ internal sealed class ResponseEndpointHandler
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
         {
+            _logger.LogInformation("Getting response {ResponseId} with SSE replay", responseId);
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
@@ -393,7 +400,11 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Delegate guard logic and snapshot to orchestrator
+        _logger.LogInformation("Getting response {ResponseId}", responseId);
         var response = await _orchestrator.GetAsync(responseId, isolation);
+        _logger.LogInformation(
+            "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
+            responseId, response.Status, response.Output.Count);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
     /// <summary>
@@ -403,7 +414,9 @@ internal sealed class ResponseEndpointHandler
     {
         ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation("Cancelling response {ResponseId}", responseId);
         var response = await _orchestrator.CancelAsync(responseId, isolation);
+        _logger.LogInformation("Cancelled response {ResponseId}, status={Status}", responseId, response.Status);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }
 
@@ -414,6 +427,7 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
         ValidateResponseIdFormat(responseId);
+        _logger.LogInformation("Deleting response {ResponseId}", responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         // Guard: if response is in-flight, reject deletion.
@@ -456,6 +470,7 @@ internal sealed class ResponseEndpointHandler
         }
 
         var result = AzureAIAgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+        _logger.LogInformation("Deleted response {ResponseId}", responseId);
         return Results.Json(result, SharedJsonOptions.Instance, statusCode: 200);
     }
 
@@ -467,6 +482,7 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
         ValidateResponseIdFormat(responseId);
+        _logger.LogInformation("Getting input items for response {ResponseId}", responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         // Parse limit (default 20, range 1–100)
         int limit = 20;

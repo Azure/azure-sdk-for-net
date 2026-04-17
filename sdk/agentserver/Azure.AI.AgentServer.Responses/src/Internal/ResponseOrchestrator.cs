@@ -284,6 +284,10 @@ internal sealed class ResponseOrchestrator
         var firstEvent = true;
         var outputItemCount = 0;
 
+        _logger.LogInformation(
+            "Invoking handler {HandlerType} for response {ResponseId}",
+            _handler.GetType().Name, execution.ResponseId);
+
         await foreach (var evt in _handler.CreateAsync(request, context, ct)
             .WithCancellation(ct))
         {
