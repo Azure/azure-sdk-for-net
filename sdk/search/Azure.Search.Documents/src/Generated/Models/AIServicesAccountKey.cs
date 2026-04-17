@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="AIServicesAccountKey"/>. </summary>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
+        /// <param name="subdomainUrl"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="subdomainUrl"/> is null. </exception>
         public AIServicesAccountKey(string key, string subdomainUrl) : base("#Microsoft.Azure.Search.AIServicesByKey")
         {
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        /// <param name="subdomainUrl"> The subdomain url for the corresponding AI Service. </param>
+        /// <param name="subdomainUrl"> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </param>
         internal AIServicesAccountKey(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key, string subdomainUrl) : base(odataType, description, additionalBinaryDataProperties)
         {
             Key = key;
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>
         public string Key { get; set; }
 
-        /// <summary> The subdomain url for the corresponding AI Service. </summary>
+        /// <summary> The subdomain/Azure AI Services endpoint url for the corresponding AI Service. </summary>
         public string SubdomainUrl { get; set; }
     }
 }

@@ -57,7 +57,7 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     [Test]
     public async Task GET_UnknownId_404_HasErrorType_InvalidRequestError()
     {
-        var response = await GetResponseAsync("caresp_nonexistent_404");
+        var response = await GetResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
@@ -71,7 +71,7 @@ public class ErrorShapeProtocolTests : ProtocolTestBase
     [Test]
     public async Task Cancel_UnknownId_404_HasErrorType_InvalidRequestError()
     {
-        var response = await CancelResponseAsync("caresp_nonexistent_404");
+        var response = await CancelResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 

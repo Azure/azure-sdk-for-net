@@ -19,6 +19,10 @@ dotnet add package Azure.AI.AgentServer.Core --prerelease
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - [.NET 8](https://dotnet.microsoft.com/download) or later
 
+> **Upgrading from a version prior to beta.21?** The package has been redesigned as a lightweight hosting
+> foundation. Protocol logic has moved to [`Azure.AI.AgentServer.Responses`][responses] and
+> [`Azure.AI.AgentServer.Invocations`][invocations]. See the [Migration Guide][migration] for details.
+
 ### Start a server (recommended)
 
 Use the builder pattern to create a server. Protocol packages provide extension methods (`AddResponses<T>()`, `AddInvocations<T>()`) to register their endpoints:
@@ -95,3 +99,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/src
 [nuget]: https://www.nuget.org/packages/Azure.AI.AgentServer.Core
 [product_doc]: https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents
+[migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
+[responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
+[invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations

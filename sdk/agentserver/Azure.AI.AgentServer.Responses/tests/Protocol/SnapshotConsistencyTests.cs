@@ -21,14 +21,22 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     /// T009 / SC-001: Concurrent GET requests during streaming return consistent snapshots.
     /// Each GET response has a consistent status/output pair (in_progress with N items,
     /// never completed with fewer items than final count).
+    ///
+    /// Uses explicit gates instead of Task.Delay so the handler pauses after each item
+    /// until the test releases it — deterministic on any CI machine.
     /// </summary>
     [Test]
-    [Ignore("Flaky due to race condition — https://github.com/Azure/azure-sdk-for-net/issues/57815")]
     public async Task ConcurrentGET_DuringEmission_ReturnsConsistentSnapshots()
     {
+        const int itemCount = 10;
         var handlerStarted = new TaskCompletionSource();
+        // Handler waits on this after each item; test releases to let the next item emit.
+        var continueGate = new SemaphoreSlim(0);
+        // Handler signals this after each item is yielded so the test knows it's safe to GET.
+        var itemEmitted = new SemaphoreSlim(0);
 
-        Handler.EventFactory = (req, ctx, ct) => SlowMultiOutputStream(ctx, 10, handlerStarted, ct);
+        Handler.EventFactory = (req, ctx, ct) =>
+            GatedMultiOutputStream(ctx, itemCount, handlerStarted, continueGate, itemEmitted, ct);
 
         // Start background streaming response
         var postRequest = new HttpRequestMessage(HttpMethod.Post, "/responses")
@@ -62,33 +70,60 @@ public class SnapshotConsistencyTests : ProtocolTestBase
 
         Assert.That(responseId, Is.Not.Null);
 
-        // Issue concurrent GET requests during emission
-        var getResults = new List<(string Status, int OutputCount)>();
-        for (int i = 0; i < 5; i++)
+        // Wait for handler to start emitting (response.created yielded)
+        await handlerStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        // Issue GET requests at deterministic points during emission.
+        // Release items in batches, wait for the signal, then GET while handler is paused.
+        var getResults = new List<(string Status, int OutputCount, int ExpectedMinItems)>();
+        int[] batchSizes = [2, 2, 2, 2, 2]; // 5 batches × 2 items = 10 total
+
+        int totalReleased = 0;
+        foreach (var batch in batchSizes)
         {
-            await Task.Delay(50); // Let some events emit
+            // Release a batch of items
+            continueGate.Release(batch);
+            for (int j = 0; j < batch; j++)
+            {
+                Assert.That(
+                    await itemEmitted.WaitAsync(TimeSpan.FromSeconds(5)),
+                    Is.True, $"Handler did not emit item within timeout (released {totalReleased + j + 1})");
+            }
+            totalReleased += batch;
+
+            // GET while handler is paused on the next gate
             var getResponse = await GetResponseAsync(responseId!);
             using var getDoc = await ParseJsonAsync(getResponse);
             var root = getDoc.RootElement;
             var status = root.GetProperty("status").GetString()!;
             var output = root.GetProperty("output");
             var outputCount = output.GetArrayLength();
-            getResults.Add((status, outputCount));
+            getResults.Add((status, outputCount, totalReleased));
         }
 
-        // Wait for completion
+        // All items released — handler will emit response.completed next
         await WaitForBackgroundCompletionAsync(responseId!);
 
-        // Assert: each GET has consistent state
-        foreach (var (status, outputCount) in getResults)
+        // Assert snapshot consistency at each observation point
+        foreach (var (status, outputCount, expectedMin) in getResults)
         {
             if (status == "completed")
             {
-                // If completed, must have all 10 output items
-                Assert.That(outputCount, Is.EqualTo(10));
+                // If completed, must have all items
+                Assert.That(outputCount, Is.EqualTo(itemCount),
+                    "Completed response must contain all output items");
             }
-            // in_progress with any output count is fine — it's a point-in-time snapshot
+            else
+            {
+                // in_progress — output count should be at least what we released
+                // (events may still be persisting, so >= 0 is the safe lower bound)
+                Assert.That(status, Is.EqualTo("in_progress"));
+            }
         }
+
+        // Verify we observed at least one in_progress snapshot (the whole point of this test)
+        Assert.That(getResults.Any(r => r.Status == "in_progress"), Is.True,
+            "Expected at least one GET to observe in_progress state during gated emission");
     }
 
     /// <summary>
@@ -190,10 +225,13 @@ public class SnapshotConsistencyTests : ProtocolTestBase
     // ── Test helper streams ──────────────────────────────────────
 
     /// <summary>
-    /// Emits output items slowly for concurrent GET testing.
+    /// Emits output items with explicit gates for deterministic concurrent GET testing.
+    /// Pauses after each item until the test releases <paramref name="continueGate"/>,
+    /// and signals <paramref name="itemEmitted"/> after each item is yielded.
     /// </summary>
-    private static async IAsyncEnumerable<ResponseStreamEvent> SlowMultiOutputStream(
+    private static async IAsyncEnumerable<ResponseStreamEvent> GatedMultiOutputStream(
         ResponseContext ctx, int itemCount, TaskCompletionSource handlerStarted,
+        SemaphoreSlim continueGate, SemaphoreSlim itemEmitted,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var response = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.InProgress };
@@ -204,13 +242,17 @@ public class SnapshotConsistencyTests : ProtocolTestBase
         for (int i = 0; i < itemCount; i++)
         {
             ct.ThrowIfCancellationRequested();
-            await Task.Delay(30, ct);
+            // Wait for the test to release the gate before emitting the next item
+            await continueGate.WaitAsync(ct);
 
             var msg = new OutputItemMessage(
                 $"msg_{i}", MessageStatus.Completed, MessageRole.Assistant,
                 Array.Empty<MessageContent>());
             items.Add(msg);
             yield return new ResponseOutputItemAddedEvent(0, i, msg);
+
+            // Signal the test that this item has been yielded
+            itemEmitted.Release();
         }
 
         var completedResponse = new Models.ResponseObject(ctx.ResponseId, "test-model") { Status = ResponseStatus.Completed };

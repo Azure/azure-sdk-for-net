@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,12 @@
 
 ### Other Changes
 
+## 1.6.0 (2026-04-14)
+
+### Other Changes
+
 - Updated dependency from `Azure.Identity` to `Azure.Core` directly, as the `Azure.Identity` types moved to `Azure.Core`.
+- **This version is required when using `Azure.Identity` 1.21.0 or later (or `Azure.Core` 1.53.0 or later).** Older `Azure.Identity.Broker` versions are not compatible with the type consolidation. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md#azureidentitybroker-compatibility) for details.
 
 ## 1.5.0 (2026-04-02)
 

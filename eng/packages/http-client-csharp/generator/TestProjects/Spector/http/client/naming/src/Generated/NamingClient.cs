@@ -10,10 +10,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Client.Naming.Model;
-using Client.Naming.Property;
+using Client.Naming._Header;
+using Client.Naming._Property;
 using Client.Naming._UnionEnum;
 
 namespace Client.Naming
@@ -47,45 +47,9 @@ namespace Client.Naming
 
         public virtual Task<Response> ParameterAsync(string clientName, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response Client(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Property GetPropertyClient() => throw null;
 
-        public virtual Task<Response> ClientAsync(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Response Client(ClientNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> ClientAsync(ClientNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response Language(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Task<Response> LanguageAsync(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Response Language(LanguageClientNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> LanguageAsync(LanguageClientNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response CompatibleWithEncodedName(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Task<Response> CompatibleWithEncodedNameAsync(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Response CompatibleWithEncodedName(ClientNameAndJsonEncodedNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> CompatibleWithEncodedNameAsync(ClientNameAndJsonEncodedNameModel body, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response Request(string clientName, RequestContext context) => throw null;
-
-        public virtual Task<Response> RequestAsync(string clientName, RequestContext context) => throw null;
-
-        public virtual Response Request(string clientName, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> RequestAsync(string clientName, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response Response(RequestContext context) => throw null;
-
-        public virtual Task<Response> ResponseAsync(RequestContext context) => throw null;
-
-        public virtual Response Response(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response> ResponseAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Header GetHeaderClient() => throw null;
 
         public virtual ModelClient GetModelClient() => throw null;
 
