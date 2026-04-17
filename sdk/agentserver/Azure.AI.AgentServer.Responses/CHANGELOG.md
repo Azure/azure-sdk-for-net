@@ -4,9 +4,25 @@
 
 ### Features Added
 
-### Breaking Changes
+- Added chat isolation key enforcement across all endpoints. When a response is created with
+  `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
+  include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
+  to ensure tenant isolation.
+- Added request body validation for malformed response IDs (`response_id` in path, `previous_response_id`
+  and `conversation_id` in body). IDs that do not match the expected format (prefix, length, character
+  set) are rejected with 400 and a descriptive error message.
+- Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
+  and value length ≤ 512 characters, enforced via the validator pipeline.
+- Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
+  reducing memory pressure for long-running servers.
 
 ### Bugs Fixed
+
+- Fixed error response shapes to match the container specification: `invalid_request_error` type
+  for 400 errors, `not_found` message format, and `unsupported_parameter` for cancel-after-terminal.
+- Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
+  with the specification.
+- Fixed cancel-after-delete to return the correct `conflict_error` shape per the specification.
 
 ### Other Changes
 
