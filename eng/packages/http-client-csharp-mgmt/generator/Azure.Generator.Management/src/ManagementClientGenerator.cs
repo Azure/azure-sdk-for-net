@@ -71,6 +71,7 @@ namespace Azure.Generator.Management
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
         private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
         private const string ApplyModelRenamingFlag = "apply-model-renaming";
+        private const string ApplyEnumRenamingFlag = "apply-enum-renaming";
 
         private bool IsWirePathEnabled()
         {
@@ -95,7 +96,7 @@ namespace Azure.Generator.Management
         }
 
         /// <summary>
-        /// Determines whether the generator should apply the automatic model and enum name overrides
+        /// Determines whether the generator should apply the automatic model name overrides
         /// performed by <see cref="Visitors.NameVisitor"/> (e.g., renaming a PATCH body to
         /// '{Resource}Patch' or prefixing known-type names like 'Sku' with the resource provider name).
         /// When this returns <c>false</c>, those renames are skipped so that user-provided names in
@@ -108,6 +109,25 @@ namespace Azure.Generator.Management
         public virtual bool IsApplyModelRenamingEnabled()
         {
             if (Configuration.AdditionalConfigurationOptions.TryGetValue(ApplyModelRenamingFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the generator should apply the automatic enum name overrides
+        /// performed by <see cref="Visitors.NameVisitor"/> (e.g., prefixing known enum names
+        /// like 'PrivateEndpointServiceConnectionStatus' with the resource provider name).
+        /// </summary>
+        /// <remarks>
+        /// The value is controlled by the <c>apply-enum-renaming</c> emitter option. The default is <c>true</c>
+        /// so that existing generated code is unchanged when the option is not specified.
+        /// </remarks>
+        public virtual bool IsApplyEnumRenamingEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(ApplyEnumRenamingFlag, out var value)
                 && bool.TryParse(value.ToString(), out var flag))
             {
                 return flag;
