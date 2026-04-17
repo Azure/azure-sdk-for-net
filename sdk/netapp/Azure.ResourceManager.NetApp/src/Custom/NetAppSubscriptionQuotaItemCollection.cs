@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.NetApp
     /// Use <see cref="NetAppResourceQuotaLimitCollection"/> instead.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NetAppSubscriptionQuotaItemCollection : ArmCollection
+    public partial class NetAppSubscriptionQuotaItemCollection : ArmCollection, IEnumerable<NetAppSubscriptionQuotaItemResource>, IAsyncEnumerable<NetAppSubscriptionQuotaItemResource>
     {
         /// <summary> Initializes a new instance for mocking. </summary>
         protected NetAppSubscriptionQuotaItemCollection()
@@ -86,5 +88,9 @@ namespace Azure.ResourceManager.NetApp
             await Task.CompletedTask.ConfigureAwait(false);
             throw new NotSupportedException("This method is not supported on the deprecated NetAppSubscriptionQuotaItemCollection type. Use NetAppResourceQuotaLimitCollection instead.");
         }
+
+        IEnumerator<NetAppSubscriptionQuotaItemResource> IEnumerable<NetAppSubscriptionQuotaItemResource>.GetEnumerator() => throw new NotSupportedException("Deprecated. Use NetAppResourceQuotaLimitCollection.");
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException("Deprecated. Use NetAppResourceQuotaLimitCollection.");
+        IAsyncEnumerator<NetAppSubscriptionQuotaItemResource> IAsyncEnumerable<NetAppSubscriptionQuotaItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => throw new NotSupportedException("Deprecated. Use NetAppResourceQuotaLimitCollection.");
     }
 }

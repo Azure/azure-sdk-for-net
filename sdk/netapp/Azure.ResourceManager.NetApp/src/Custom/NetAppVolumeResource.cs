@@ -4,9 +4,11 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.NetApp
     /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeResource method.
     /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource" /> using the GetNetAppVolume method.
     /// </summary>
-    public partial class NetAppVolumeResource : ArmResource
+    public partial class NetAppVolumeResource : ArmResource, IJsonModel<NetAppVolumeData>, IPersistableModel<NetAppVolumeData>
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/> for mocking. </summary>
         protected NetAppVolumeResource()
@@ -978,5 +980,11 @@ namespace Azure.ResourceManager.NetApp
             await Task.CompletedTask.ConfigureAwait(false);
             throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeResource type. Use VolumeResource instead.");
         }
+
+        NetAppVolumeData IJsonModel<NetAppVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        void IJsonModel<NetAppVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        NetAppVolumeData IPersistableModel<NetAppVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        string IPersistableModel<NetAppVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        BinaryData IPersistableModel<NetAppVolumeData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
     }
 }

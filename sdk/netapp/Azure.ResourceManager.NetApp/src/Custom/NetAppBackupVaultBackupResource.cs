@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.NetApp.Models;
@@ -11,7 +14,7 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary> Backward-compat shims for NetAppBackupVaultBackupResource. </summary>
-    public partial class NetAppBackupVaultBackupResource : ArmResource
+    public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupData>, IPersistableModel<NetAppBackupData>
     {
         /// <summary> Restore files from a backup. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -26,5 +29,11 @@ namespace Azure.ResourceManager.NetApp
         {
             return RestoreFiles(waitUntil, body, cancellationToken);
         }
+
+        NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Use NetAppBackupVaultBackupData instead.");
+        void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("Use NetAppBackupVaultBackupData instead.");
+        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Use NetAppBackupVaultBackupData instead.");
+        string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Use NetAppBackupVaultBackupData instead.");
     }
 }

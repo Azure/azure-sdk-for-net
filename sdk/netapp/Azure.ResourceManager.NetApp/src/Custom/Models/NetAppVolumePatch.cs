@@ -2,15 +2,18 @@
 // Licensed under the MIT License.
 
 #nullable disable
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume patch resource. </summary>
-    public partial class NetAppVolumePatch : TrackedResourceData
+    public partial class NetAppVolumePatch : TrackedResourceData, IJsonModel<NetAppVolumePatch>, IPersistableModel<NetAppVolumePatch>
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatch"/>. </summary>
         /// <param name="location"> The location. </param>
@@ -97,5 +100,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Enables non-browsable property for SMB Shares. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
+
+        NetAppVolumePatch IJsonModel<NetAppVolumePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        void IJsonModel<NetAppVolumePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        NetAppVolumePatch IPersistableModel<NetAppVolumePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        string IPersistableModel<NetAppVolumePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        BinaryData IPersistableModel<NetAppVolumePatch>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
     }
 }

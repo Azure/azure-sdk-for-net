@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.NetApp
     /// This type is deprecated. Use <see cref="VolumeCollection"/> instead.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NetAppVolumeCollection : ArmCollection
+    public partial class NetAppVolumeCollection : ArmCollection, IEnumerable<NetAppVolumeResource>, IAsyncEnumerable<NetAppVolumeResource>
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeCollection"/>. </summary>
         protected NetAppVolumeCollection()
@@ -102,5 +104,9 @@ namespace Azure.ResourceManager.NetApp
             await Task.CompletedTask.ConfigureAwait(false);
             throw new NotSupportedException("This method is not supported on the deprecated NetAppVolumeCollection type. Use VolumeCollection instead.");
         }
+
+        IEnumerator<NetAppVolumeResource> IEnumerable<NetAppVolumeResource>.GetEnumerator() => throw new NotSupportedException("This type is deprecated. Use VolumeCollection instead.");
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException("This type is deprecated. Use VolumeCollection instead.");
+        IAsyncEnumerator<NetAppVolumeResource> IAsyncEnumerable<NetAppVolumeResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => throw new NotSupportedException("This type is deprecated. Use VolumeCollection instead.");
     }
 }

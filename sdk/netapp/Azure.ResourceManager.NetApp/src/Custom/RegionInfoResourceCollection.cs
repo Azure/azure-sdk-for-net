@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.NetApp
     /// A backward-compat stub for the removed RegionInfoResourceCollection type.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class RegionInfoResourceCollection : ArmCollection
+    public partial class RegionInfoResourceCollection : ArmCollection, IEnumerable<RegionInfoResource>, IAsyncEnumerable<RegionInfoResource>
     {
         /// <summary> Initializes a new instance for mocking. </summary>
         protected RegionInfoResourceCollection()
@@ -81,5 +83,9 @@ namespace Azure.ResourceManager.NetApp
             await Task.CompletedTask.ConfigureAwait(false);
             throw new NotSupportedException("This method is not supported on the deprecated RegionInfoResourceCollection type.");
         }
+
+        IEnumerator<RegionInfoResource> IEnumerable<RegionInfoResource>.GetEnumerator() => throw new NotSupportedException("Deprecated type.");
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException("Deprecated type.");
+        IAsyncEnumerator<RegionInfoResource> IAsyncEnumerable<RegionInfoResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => throw new NotSupportedException("Deprecated type.");
     }
 }

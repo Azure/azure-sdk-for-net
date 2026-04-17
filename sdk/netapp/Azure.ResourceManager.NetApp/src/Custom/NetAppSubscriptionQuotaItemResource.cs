@@ -4,8 +4,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.NetApp
     /// Use <see cref="NetAppResourceQuotaLimitResource"/> instead.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NetAppSubscriptionQuotaItemResource : ArmResource
+    public partial class NetAppSubscriptionQuotaItemResource : ArmResource, IJsonModel<NetAppSubscriptionQuotaItemData>, IPersistableModel<NetAppSubscriptionQuotaItemData>
     {
 #pragma warning disable CS0649
         private NetAppSubscriptionQuotaItemData _data;
@@ -79,5 +81,11 @@ namespace Azure.ResourceManager.NetApp
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
+
+        NetAppSubscriptionQuotaItemData IJsonModel<NetAppSubscriptionQuotaItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        void IJsonModel<NetAppSubscriptionQuotaItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        NetAppSubscriptionQuotaItemData IPersistableModel<NetAppSubscriptionQuotaItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
+        string IPersistableModel<NetAppSubscriptionQuotaItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        BinaryData IPersistableModel<NetAppSubscriptionQuotaItemData>.Write(ModelReaderWriterOptions options) => throw new NotSupportedException("Deprecated type.");
     }
 }
