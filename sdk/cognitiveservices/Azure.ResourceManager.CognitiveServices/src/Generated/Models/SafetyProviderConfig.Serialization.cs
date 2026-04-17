@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string safetyProviderName = default;
-            bool? blocking = default;
+            bool? isBlocking = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RaiPolicyContentSource? source = default;
             foreach (var prop in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    blocking = prop.Value.GetBoolean();
+                    isBlocking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SafetyProviderConfig(safetyProviderName, blocking, additionalBinaryDataProperties, source);
+            return new SafetyProviderConfig(safetyProviderName, isBlocking, additionalBinaryDataProperties, source);
         }
     }
 }

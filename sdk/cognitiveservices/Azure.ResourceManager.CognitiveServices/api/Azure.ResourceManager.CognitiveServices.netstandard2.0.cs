@@ -4626,6 +4626,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public RaiBlocklistConfig() { }
         public bool? Blocking { get { throw null; } set { } }
         public string BlocklistName { get { throw null; } set { } }
+        public bool? IsBlocking { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiBlocklistConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4725,6 +4726,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public Azure.ResourceManager.CognitiveServices.Models.RaiActionType? Action { get { throw null; } set { } }
         public bool? Blocking { get { throw null; } set { } }
         public bool? Enabled { get { throw null; } set { } }
+        public bool? IsBlocking { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentLevel? SeverityThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.CognitiveServices.Models.RaiPolicyContentSource? Source { get { throw null; } set { } }
@@ -4836,7 +4839,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class RaiSafetyProviderConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig>
     {
         public RaiSafetyProviderConfig() { }
-        public bool? Blocking { get { throw null; } set { } }
+        public bool? IsBlocking { get { throw null; } set { } }
         public string SafetyProviderName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiSafetyProviderConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4882,7 +4885,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class RaiTopicConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig>
     {
         public RaiTopicConfig() { }
-        public bool? Blocking { get { throw null; } set { } }
+        public bool? IsBlocking { get { throw null; } set { } }
         public string TopicName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CognitiveServices.Models.RaiTopicConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

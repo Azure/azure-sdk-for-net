@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiTopicConfig"/>. </summary>
         /// <param name="topicName"> Name of RAI topic. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiTopicConfig(string topicName, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiTopicConfig(string topicName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TopicName = topicName;
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
     }
 }

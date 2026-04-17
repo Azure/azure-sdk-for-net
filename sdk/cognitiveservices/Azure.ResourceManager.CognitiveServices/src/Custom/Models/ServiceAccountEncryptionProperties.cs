@@ -6,9 +6,9 @@
 using System;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Properties to configure Encryption. </summary>
     public partial class ServiceAccountEncryptionProperties
     {
         /// <summary> Name of the Key from KeyVault. </summary>

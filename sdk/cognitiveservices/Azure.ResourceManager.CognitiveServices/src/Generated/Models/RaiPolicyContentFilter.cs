@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyContentFilter"/>. </summary>
         /// <param name="name"> Name of ContentFilter. </param>
-        /// <param name="enabled"> If the ContentFilter is enabled. </param>
+        /// <param name="isEnabled"> If the ContentFilter is enabled. </param>
         /// <param name="severityThreshold"> Level at which content is filtered. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
         /// <param name="action"> The action types to apply to the content filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyContentFilter(string name, bool? enabled, RaiPolicyContentLevel? severityThreshold, bool? blocking, RaiPolicyContentSource? source, RaiActionType? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyContentFilter(string name, bool? isEnabled, RaiPolicyContentLevel? severityThreshold, bool? isBlocking, RaiPolicyContentSource? source, RaiActionType? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SeverityThreshold = severityThreshold;
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             Source = source;
             Action = action;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> If the ContentFilter is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Level at which content is filtered. </summary>
         [WirePath("severityThreshold")]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
 
         /// <summary> Content source to apply the Content Filters. </summary>
         [WirePath("source")]

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiSafetyProviderConfig"/>. </summary>
         /// <param name="safetyProviderName"> Name of RAI Safety Provider. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiSafetyProviderConfig(string safetyProviderName, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiSafetyProviderConfig(string safetyProviderName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SafetyProviderName = safetyProviderName;
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
     }
 }

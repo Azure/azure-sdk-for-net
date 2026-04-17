@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomTopicConfig"/>. </summary>
         /// <param name="topicName"> Name of RAI topic. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
-        internal CustomTopicConfig(string topicName, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(topicName, blocking, additionalBinaryDataProperties)
+        internal CustomTopicConfig(string topicName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(topicName, isBlocking, additionalBinaryDataProperties)
         {
             Source = source;
         }

@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistConfig"/>. </summary>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiBlocklistConfig(string blocklistName, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiBlocklistConfig(string blocklistName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlocklistName = blocklistName;
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
     }
 }

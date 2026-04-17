@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(SeverityThreshold))
             {
                 writer.WritePropertyName("severityThreshold"u8);
                 writer.WriteStringValue(SeverityThreshold.Value.ToString());
             }
-            if (Optional.IsDefined(Blocking))
+            if (Optional.IsDefined(IsBlocking))
             {
                 writer.WritePropertyName("blocking"u8);
-                writer.WriteBooleanValue(Blocking.Value);
+                writer.WriteBooleanValue(IsBlocking.Value);
             }
             if (Optional.IsDefined(Source))
             {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string name = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             RaiPolicyContentLevel? severityThreshold = default;
-            bool? blocking = default;
+            bool? isBlocking = default;
             RaiPolicyContentSource? source = default;
             RaiActionType? action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("severityThreshold"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    blocking = prop.Value.GetBoolean();
+                    isBlocking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             return new RaiPolicyContentFilter(
                 name,
-                enabled,
+                isEnabled,
                 severityThreshold,
-                blocking,
+                isBlocking,
                 source,
                 action,
                 additionalBinaryDataProperties);
