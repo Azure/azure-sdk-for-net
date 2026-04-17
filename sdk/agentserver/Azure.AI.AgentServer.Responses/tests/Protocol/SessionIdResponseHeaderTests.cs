@@ -131,17 +131,31 @@ public class SessionIdResponseHeaderTests : ProtocolTestBase
     [Test]
     public async Task Delete_SessionIdHeader_IsPresent()
     {
-        // Create a stored response
-        var createResponse = await PostResponsesAsync(new { model = "test" });
-        using var createDoc = await ParseJsonAsync(createResponse);
-        var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+        const string sessionId = "delete-header-session";
+        var originalValue = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
+        try
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", sessionId);
+            FoundryEnvironment.Reload();
 
-        // Delete — header should be present (falls back to env var or derivation)
-        var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
-        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        // The filter falls back to FoundryEnvironment.SessionId (empty in tests),
-        // or the handler may not set it. Verify header handling doesn't crash.
-        // In production, FOUNDRY_AGENT_SESSION_ID is always set.
+            // Create a stored response
+            var createResponse = await PostResponsesAsync(new { model = "test" });
+            using var createDoc = await ParseJsonAsync(createResponse);
+            var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+
+            // Delete — the resolved session ID header must be present.
+            var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
+            Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(deleteResponse.Headers.Contains(SessionIdHeader), Is.True,
+                "Delete response must include x-agent-session-id header");
+            var headerValue = deleteResponse.Headers.GetValues(SessionIdHeader).Single();
+            Assert.That(headerValue, Is.EqualTo(sessionId));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", originalValue);
+            FoundryEnvironment.Reload();
+        }
     }
 
     // ── GET /responses/{id}/input_items ──
@@ -149,16 +163,31 @@ public class SessionIdResponseHeaderTests : ProtocolTestBase
     [Test]
     public async Task InputItems_SessionIdHeader_IsPresent()
     {
-        // Create a response
-        var createResponse = await PostResponsesAsync(new { model = "test" });
-        using var createDoc = await ParseJsonAsync(createResponse);
-        var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+        const string sessionId = "input-items-header-session";
+        var originalValue = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
+        try
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", sessionId);
+            FoundryEnvironment.Reload();
 
-        // GET input items
-        var inputResponse = await Client.GetAsync($"/responses/{responseId}/input_items");
-        Assert.That(inputResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        // Same as Delete — in test env without FOUNDRY_AGENT_SESSION_ID set,
-        // the filter may not set the header. This test verifies no errors.
+            // Create a response
+            var createResponse = await PostResponsesAsync(new { model = "test" });
+            using var createDoc = await ParseJsonAsync(createResponse);
+            var responseId = createDoc.RootElement.GetProperty("id").GetString()!;
+
+            // GET input items — the resolved session ID header must be present.
+            var inputResponse = await Client.GetAsync($"/responses/{responseId}/input_items");
+            Assert.That(inputResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(inputResponse.Headers.Contains(SessionIdHeader), Is.True,
+                "Input items response must include x-agent-session-id header");
+            var headerValue = inputResponse.Headers.GetValues(SessionIdHeader).Single();
+            Assert.That(headerValue, Is.EqualTo(sessionId));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", originalValue);
+            FoundryEnvironment.Reload();
+        }
     }
 
     // ── Error responses with env var fallback ──
