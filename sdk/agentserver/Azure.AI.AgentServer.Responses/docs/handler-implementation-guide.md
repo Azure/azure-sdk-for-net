@@ -406,7 +406,9 @@ Output is constructed through a **builder hierarchy** that enforces correct even
 ```
 ResponseEventStream
   └── OutputItemBuilder (message, function call, reasoning, etc.)
-        └── Content builders (text, refusal, summary, etc.)
+        ├── TextContentBuilder    : EmitAdded → EmitDelta* → EmitTextDone → EmitAnnotationAdded* → EmitDone
+        ├── RefusalContentBuilder : EmitAdded → EmitDelta* → EmitRefusalDone → EmitDone
+        └── (other content builders follow the same Added → … → Done pattern)
 ```
 
 Each builder tracks its lifecycle state (`NotStarted` → `Added` → `Done`) and will throw if you emit events out of order. This prevents protocol violations at development time rather than runtime.
@@ -650,6 +652,76 @@ yield return message.EmitDone();
 ```
 
 **Tip**: For streaming, emit small deltas frequently for a responsive feel. For non-streaming mode, the library accumulates everything and delivers the final JSON — so delta granularity doesn't affect the JSON response, only SSE streaming UX.
+
+#### Annotations on text content
+
+After calling `EmitTextDone()`, you can attach annotations before closing the content part with `EmitDone()`. The lifecycle is: `EmitAdded` → `EmitDelta` (0+) → `EmitTextDone` → `EmitAnnotationAdded` (0+) → `EmitDone`.
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+var text = message.AddTextContent();
+yield return text.EmitAdded();
+yield return text.EmitDelta("Here are your files.");
+yield return text.EmitTextDone("Here are your files.");
+
+// Annotations are emitted after text is finalized
+yield return text.EmitAnnotationAdded(new FilePath(fileId: "/reports/summary.pdf", index: 0));
+yield return text.EmitAnnotationAdded(new UrlCitationBody(
+    url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"));
+
+yield return text.EmitDone();
+yield return message.EmitDone();
+```
+
+Or use the `TextContent(string, IEnumerable<Annotation>)` convenience on `OutputItemMessageBuilder` to handle the full sequence in one call:
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+foreach (var evt in message.TextContent("Here are your files.", new Annotation[]
+{
+    new FilePath(fileId: "/reports/summary.pdf", index: 0),
+    new UrlCitationBody(url: new Uri("https://example.com/docs"), startIndex: 0, endIndex: 19, title: "Docs"),
+}))
+    yield return evt;
+
+yield return message.EmitDone();
+```
+
+#### Refusal content
+
+When the model refuses a request, emit a refusal content part instead of (or alongside) text. The lifecycle is: `EmitAdded` → `EmitDelta` (0+) → `EmitRefusalDone` → `EmitDone`.
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+var refusal = message.AddRefusalContent();
+yield return refusal.EmitAdded();
+yield return refusal.EmitDelta("I cannot ");
+yield return refusal.EmitDelta("help with that.");
+yield return refusal.EmitRefusalDone("I cannot help with that.");
+yield return refusal.EmitDone();
+
+yield return message.EmitDone();
+```
+
+Or use the `RefusalContent(string)` convenience for the common case:
+
+```csharp
+var message = stream.AddOutputItemMessage();
+yield return message.EmitAdded();
+
+foreach (var evt in message.RefusalContent("I cannot help with that."))
+    yield return evt;
+
+yield return message.EmitDone();
+```
+
+Both `RefusalContent` overloads follow the same pattern as `TextContent` — a `string` overload for complete text and an `IAsyncEnumerable<string>` overload for streaming chunks.
 
 ### Function Calls (Tool Use)
 

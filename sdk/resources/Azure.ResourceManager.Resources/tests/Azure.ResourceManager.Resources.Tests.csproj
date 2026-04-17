@@ -4,7 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
-    <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Scenario\DeploymentTemplates\*.json">

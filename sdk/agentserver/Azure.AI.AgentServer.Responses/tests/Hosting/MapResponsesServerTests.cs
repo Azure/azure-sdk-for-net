@@ -59,7 +59,7 @@ public class MapResponsesServerTests : IDisposable
         using var client = factory.CreateClient();
 
         // Cancel on unknown ID should return 404 (not 405 / routing miss)
-        var response = await client.PostAsync("/responses/resp_test123/cancel", null);
+        var response = await client.PostAsync($"/responses/{IdGenerator.NewResponseId()}/cancel", null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
@@ -71,7 +71,7 @@ public class MapResponsesServerTests : IDisposable
         using var client = factory.CreateClient();
 
         // GET on unknown ID should return 404
-        var response = await client.GetAsync("/responses/resp_test123");
+        var response = await client.GetAsync($"/responses/{IdGenerator.NewResponseId()}");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }

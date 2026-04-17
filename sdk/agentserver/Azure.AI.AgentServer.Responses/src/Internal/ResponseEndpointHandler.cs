@@ -60,6 +60,26 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
+    /// B40: Validates that a path-parameter response ID matches the expected <c>caresp_*</c> format.
+    /// Throws <see cref="BadRequestException"/> with <c>code: "invalid_parameters"</c> for malformed IDs.
+    /// </summary>
+    /// <remarks>
+    /// Deliberately validates prefix and length only — character-set validation is not required.
+    /// IDs with valid prefix/length but unexpected characters will fall through to the provider
+    /// and return 404 (not found), which is an acceptable outcome.
+    /// </remarks>
+    private static void ValidateResponseIdFormat(string responseId)
+    {
+        if (!IdGenerator.IsValid(responseId, out _, allowedPrefixes: ["caresp"]))
+        {
+            throw new BadRequestException(
+                "Malformed identifier.",
+                code: "invalid_parameters",
+                paramName: $"responseId{{{responseId}}}");
+        }
+    }
+
+    /// <summary>
     /// Handles POST /responses — creates a new response and handles all 4 modes.
     /// </summary>
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
@@ -174,6 +194,9 @@ internal sealed class ResponseEndpointHandler
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+
+        // Record the creation-time chat isolation key for enforcement on subsequent operations
+        execution.ChatIsolationKey = isolation.ChatIsolationKey;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -292,6 +315,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         // SSE replay trigger: ?stream=true query parameter (B2)
@@ -301,33 +325,50 @@ internal sealed class ResponseEndpointHandler
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
+                // Chat isolation enforcement for in-flight responses
+                execution.EnforceChatIsolation(isolation);
+
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
                 {
                     throw new ResourceNotFoundException($"Response '{responseId}' not found.");
                 }
 
-                // Guard: SSE replay requires background + streaming (B2)
-                if (!execution.IsBackground || !execution.IsStreaming)
+                // Guard: SSE replay requires background (B2)
+                if (!execution.IsBackground)
                 {
                     throw new BadRequestException(
-                        "SSE replay is only available for background streaming responses.");
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
+                }
+
+                // Guard: SSE replay requires streaming (B2)
+                if (!execution.IsStreaming)
+                {
+                    throw new BadRequestException(
+                        "This response cannot be streamed because it was not created with stream=true.",
+                        code: null,
+                        paramName: "stream");
                 }
             }
             else
             {
-                // Not in-flight: verify the response exists in the provider before
-                // attempting replay. Provider throws ResourceNotFoundException (404)
-                // for unknown IDs and BadRequestException (400) for deleted responses.
+                // Not in-flight (evicted or never tracked): verify the response exists
+                // in the provider and check B2 mode flags from the persisted response.
+                // Provider throws ResourceNotFoundException (404) for unknown IDs.
                 // This also covers store=false (never persisted → 404).
-                await _provider.GetResponseAsync(responseId, isolation);
+                var persisted = await _provider.GetResponseAsync(responseId, isolation);
 
-                // B2: non-bg and non-streaming responses had their event stream
-                // deleted in FinalizeExecutionAsync (see ResponseOrchestrator).
-                // SubscribeToEventsAsync below will throw for missing streams,
-                // which maps to 400 for the caller. For custom stream providers
-                // backed by persistent storage, the provider must enforce B2
-                // mode-flag checks independently.
+                // B2: SSE replay requires background mode. Non-bg responses never
+                // have event streams (they use NullPublisher).
+                if (persisted.Background != true)
+                {
+                    throw new BadRequestException(
+                        "This response cannot be streamed because it was not created with background=true.",
+                        code: null,
+                        paramName: "stream");
+                }
             }
 
             // In-flight and passed guards OR not-in-flight and exists in provider —
@@ -357,6 +398,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> CancelResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         var response = await _orchestrator.CancelAsync(responseId, isolation);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
@@ -368,30 +410,31 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
 
-        // Guard: if response is in-flight, check for store=false and in-progress guards
+        // Guard: if response is in-flight, reject deletion.
+        // With eager eviction, all tracked executions are in-flight — completed
+        // responses are evicted by FinalizeExecutionAsync and served from the provider.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
+            // Chat isolation enforcement for in-flight responses
+            execution.EnforceChatIsolation(isolation);
+
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
             // B16: non-background in-flight responses are not findable
-            if (!execution.IsBackground && execution.CompletedAt is null)
+            if (!execution.IsBackground)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // In-flight guard: background response with no terminal state cannot be deleted
-            if (execution.CompletedAt is null)
-            {
-                throw new BadRequestException(
-                    "Response is currently in progress and cannot be deleted.");
-            }
-
-            _tracker.TryRemove(responseId);
+            // Background execution is still in progress — cannot delete
+            throw new BadRequestException(
+                "Cannot delete an in-flight response.");
         }
 
         // Delegate deletion to provider (throws ResourceNotFoundException if not found).
@@ -420,6 +463,7 @@ internal sealed class ResponseEndpointHandler
     /// </summary>
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
+        ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         // Parse limit (default 20, range 1–100)
         int limit = 20;

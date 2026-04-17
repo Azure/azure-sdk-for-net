@@ -125,6 +125,45 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsTrue(FlattenPropertyVisitor.IsBackwardCompatMethod(backCompatMethod));
         }
 
+        [Test]
+        public void TestFlattenedGetterAddsNullGuardForOptionalReadOnlyParent()
+        {
+            var errorsProperty = InputFactory.Property("errors", InputFactory.Array(InputPrimitiveType.String), isRequired: false, serializedName: "errors");
+            var dataModel = InputFactory.Model(
+                "AnalysisData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [errorsProperty]);
+
+            var dataProperty = InputFactory.Property("data", dataModel, isRequired: false, serializedName: "data");
+            ApplyFlattenDecorator(dataProperty);
+
+            var resultModel = InputFactory.Model(
+                "AnalysisResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [dataProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resultModel, dataModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(resultModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var rendered = new TypeProviderWriter(model!).Write().Content;
+            Assert.That(rendered, Does.Match(@"(?:this\.)?Data is null"));
+            StringAssert.Contains("Data.Errors", rendered);
+            Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
+        }
+
         /// <summary>
         /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
