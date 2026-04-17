@@ -196,6 +196,12 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(EnableClientSdkAnalyzers)' == 'true'">
+    <AdditionalFiles Include="$(RepoEngPath)\SuppressionAllowList.txt">
+      <Visible>false</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
   <!-- disable enhanced analysis-->
   <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
     <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />
