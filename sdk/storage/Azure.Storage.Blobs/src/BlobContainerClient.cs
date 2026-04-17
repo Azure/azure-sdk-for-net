@@ -2498,7 +2498,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="CreateSession"/> operation
         /// enables users to create a session scoped to a container.
         /// </summary>
-        /// <param name="options">
+        /// <param name="config">
         /// Specifies the options for creating the session.
         /// </param>
         /// <param name="cancellationToken">
@@ -2516,7 +2516,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual Response<CreateSessionResponse> CreateSession(
-            CreateSessionConfiguration options,
+            CreateSessionConfiguration config,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2525,7 +2525,7 @@ namespace Azure.Storage.Blobs
                     nameof(BlobContainerClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options)}: {options}");
+                    $"{nameof(config)}: {config}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
 
@@ -2533,7 +2533,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
-                        createSessionConfiguration: options,
+                        createSessionConfiguration: config,
                         cancellationToken: cancellationToken);
 
                     return Response.FromValue(
@@ -2558,7 +2558,7 @@ namespace Azure.Storage.Blobs
         /// The <see cref="CreateSessionAsync"/> operation
         /// enables users to create a session scoped to a container.
         /// </summary>
-        /// <param name="options">
+        /// <param name="config">
         /// Specifies the options for creating the session.
         /// </param>
         /// <param name="cancellationToken">
@@ -2576,7 +2576,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
-            CreateSessionConfiguration options,
+            CreateSessionConfiguration config,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2585,7 +2585,7 @@ namespace Azure.Storage.Blobs
                     nameof(BlobContainerClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options)}: {options}");
+                    $"{nameof(config)}: {config}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
 
@@ -2593,7 +2593,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
-                        createSessionConfiguration: options,
+                        createSessionConfiguration: config,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 

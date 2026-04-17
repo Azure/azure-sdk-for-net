@@ -1008,8 +1008,8 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             AuthenticationType authType = AuthenticationType.Hmac;
-            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
-            Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(options: options);
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
+            Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(config: config);
 
             // Assert
             Assert.IsNotNull(response.Value.Id);
@@ -1027,11 +1027,11 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
             AuthenticationType authType = AuthenticationType.Hmac;
-            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                container.CreateSessionAsync(options: options),
+                container.CreateSessionAsync(config: config),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
@@ -1043,11 +1043,11 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(service);
 
             AuthenticationType authType = AuthenticationType.Hmac;
-            CreateSessionConfiguration options = new CreateSessionConfiguration(authType);
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                test.Container.CreateSessionAsync(options: options),
+                test.Container.CreateSessionAsync(config: config),
                 e => StringAssert.Contains("Identity-based authorization is required for the Create Session API.", e.Message));
         }
 

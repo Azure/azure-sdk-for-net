@@ -259,8 +259,8 @@ namespace Azure.Storage.Blobs
             CreateSessionConfiguration config = new CreateSessionConfiguration(AuthenticationType.Hmac);
 
             Response<CreateSessionResponse> response = async
-                ? await containerClient.CreateSessionAsync(options: config, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : containerClient.CreateSession(options: config, cancellationToken: cancellationToken);
+                ? await containerClient.CreateSessionAsync(config: config, cancellationToken: cancellationToken).ConfigureAwait(false)
+                : containerClient.CreateSession(config: config, cancellationToken: cancellationToken);
 
             CreateSessionResponse session = response.Value;
             DateTimeOffset expiresOn = session.Expiration ?? DateTimeOffset.UtcNow.AddMinutes(5);
