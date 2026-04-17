@@ -17,9 +17,9 @@ namespace Azure.Generator.Management.Models;
 public record ResourceMethod(
     ResourceOperationKind Kind,
     InputServiceMethod InputMethod,
-    string OperationPath,
+    RequestPathPattern OperationPath,
     ResourceScope OperationScope,
-    string? ResourceScopeIdPattern,
+    RequestPathPattern? ResourceScopeIdPattern,
     InputClient InputClient)
 {
     internal static ResourceMethod DeserializeResourceMethod(JsonElement element)
@@ -48,7 +48,7 @@ public record ResourceMethod(
             {
                 operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
             }
-            if (prop.NameEquals("resourceScope"u8))
+            if (prop.NameEquals("resourceScopeIdPattern"u8))
             {
                 resourceScopeIdPattern = prop.Value.GetString();
             }
@@ -59,9 +59,9 @@ public record ResourceMethod(
         return new ResourceMethod(
             operationKind ?? throw new JsonException("operationKind cannot be null"),
             inputMethod,
-            operationPath ?? throw new JsonException("operationPath cannot be null"),
+            new RequestPathPattern(operationPath ?? throw new JsonException("operationPath cannot be null")),
             operationScope ?? throw new JsonException("operationScope cannot be null"),
-            resourceScopeIdPattern,
+            resourceScopeIdPattern is not null ? new RequestPathPattern(resourceScopeIdPattern) : null,
             inputClient ?? throw new JsonException($"cannot find method {inputMethod.CrossLanguageDefinitionId}'s client"));
     }
 }

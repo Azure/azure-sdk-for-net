@@ -1,5 +1,12 @@
 # Release History
 
+## 1.0.0-beta.2 (2026-04-17)
+
+### Other Changes
+
+- Updated dependency on `Azure.AI.AgentServer.Core` to 1.0.0-beta.22, which adds outbound
+  `HttpClient` instrumentation for distributed trace correlation.
+
 ## 1.0.0-beta.1 (2026-04-14)
 
 ### Features Added

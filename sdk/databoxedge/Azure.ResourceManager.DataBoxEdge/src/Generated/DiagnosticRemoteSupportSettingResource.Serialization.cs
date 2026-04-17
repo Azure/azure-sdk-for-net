@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DiagnosticRemoteSupportSettingResource : IJsonModel<DiagnosticRemoteSupportSettingData>
     {
-        private static DiagnosticRemoteSupportSettingData s_dataDeserializationInstance;
-        private static DiagnosticRemoteSupportSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiagnosticRemoteSupportSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiagnosticRemoteSupportSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiagnosticRemoteSupportSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiagnosticRemoteSupportSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)Data).Write(writer, options);
 
-        DiagnosticRemoteSupportSettingData IJsonModel<DiagnosticRemoteSupportSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiagnosticRemoteSupportSettingData IJsonModel<DiagnosticRemoteSupportSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticRemoteSupportSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DiagnosticRemoteSupportSettingData IPersistableModel<DiagnosticRemoteSupportSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DiagnosticRemoteSupportSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticRemoteSupportSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiagnosticRemoteSupportSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A Class representing a DiagnosticRemoteSupportSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticRemoteSupportSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticRemoteSupportSettingResource method.
+    /// A class representing a DiagnosticRemoteSupportSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticRemoteSupportSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDiagnosticRemoteSupportSetting method.
     /// </summary>
     public partial class DiagnosticRemoteSupportSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DiagnosticRemoteSupportSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="deviceName"> The deviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics;
-        private readonly DiagnosticSettingsRestOperations _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient;
+        private readonly ClientDiagnostics _diagnosticSettingsClientDiagnostics;
+        private readonly DiagnosticSettings _diagnosticSettingsRestClient;
         private readonly DiagnosticRemoteSupportSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticRemoteSupportSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingResource for mocking. </summary>
         protected DiagnosticRemoteSupportSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticRemoteSupportSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticRemoteSupportSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticRemoteSupportSettingResource(ArmClient client, DiagnosticRemoteSupportSettingData data) : this(client, data.Id)
@@ -53,117 +43,50 @@ namespace Azure.ResourceManager.DataBoxEdge
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticRemoteSupportSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticRemoteSupportSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiagnosticRemoteSupportSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string diagnosticRemoteSupportSettingDiagnosticSettingsApiVersion);
-            _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient = new DiagnosticSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticRemoteSupportSettingDiagnosticSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string diagnosticRemoteSupportSettingApiVersion);
+            _diagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
+            _diagnosticSettingsRestClient = new DiagnosticSettings(_diagnosticSettingsClientDiagnostics, Pipeline, Endpoint, diagnosticRemoteSupportSettingApiVersion ?? "2023-12-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiagnosticRemoteSupportSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_GetDiagnosticRemoteSupportSettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticRemoteSupportSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticRemoteSupportSettingResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.GetDiagnosticRemoteSupportSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticRemoteSupportSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box Gateway device.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_GetDiagnosticRemoteSupportSettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticRemoteSupportSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticRemoteSupportSettingResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.GetDiagnosticRemoteSupportSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DiagnosticRemoteSupportSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -171,20 +94,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_UpdateDiagnosticRemoteSupportSettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticRemoteSupportSettingsOperationGroup_UpdateDiagnosticRemoteSupportSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticRemoteSupportSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticRemoteSupportSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,14 +119,27 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
+                    new DiagnosticRemoteSupportSettingOperationSource(Client),
+                    _diagnosticSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +153,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Updates the diagnostic remote support settings on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_UpdateDiagnosticRemoteSupportSettings</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticRemoteSupportSettingsOperationGroup_UpdateDiagnosticRemoteSupportSettings. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticRemoteSupportSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticRemoteSupportSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,15 +178,124 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.UpdateDiagnosticRemoteSupportSettings(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(new DiagnosticRemoteSupportSettingOperationSource(Client), _diagnosticRemoteSupportSettingDiagnosticSettingsClientDiagnostics, Pipeline, _diagnosticRemoteSupportSettingDiagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticRemoteSupportSettingData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticRemoteSupportSettingResource>(
+                    new DiagnosticRemoteSupportSettingOperationSource(Client),
+                    _diagnosticSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticRemoteSupportSettingsOperationGroup_GetDiagnosticRemoteSupportSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticRemoteSupportSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DiagnosticRemoteSupportSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticRemoteSupportSettingData> response = Response.FromValue(DiagnosticRemoteSupportSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DiagnosticRemoteSupportSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the diagnostic remote support settings of the specified Data Box Edge/Data Box Gateway device.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiagnosticRemoteSupportSettingsOperationGroup_GetDiagnosticRemoteSupportSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticRemoteSupportSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DiagnosticRemoteSupportSettingResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnosticSettingsClientDiagnostics.CreateScope("DiagnosticRemoteSupportSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticRemoteSupportSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticRemoteSupportSettingData> response = Response.FromValue(DiagnosticRemoteSupportSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DiagnosticRemoteSupportSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

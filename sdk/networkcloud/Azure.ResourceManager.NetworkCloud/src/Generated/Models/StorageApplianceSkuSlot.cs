@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.CapacityGB;
+                return Properties is null ? default : Properties.CapacityGB;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.Model;
+                return Properties is null ? default : Properties.Model;
             }
         }
     }
