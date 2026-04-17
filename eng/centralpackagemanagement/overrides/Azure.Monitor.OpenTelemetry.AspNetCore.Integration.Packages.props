@@ -4,6 +4,8 @@
     for integration scenarios.
   -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+    <PackageVersion Update="NUnit" Version="3.14.0" />
+    <PackageVersion Update="NUnit3TestAdapter" Version="4.6.0" />
     <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
   </ItemGroup>
 </Project>
