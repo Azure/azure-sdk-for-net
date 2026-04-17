@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Trigger Kind. </summary>
-    internal readonly partial struct TriggerEventType : IEquatable<TriggerEventType>
+    public readonly partial struct TriggerEventType : IEquatable<TriggerEventType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TriggerEventType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TriggerEventType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FileEventValue = "FileEvent";
         private const string PeriodicTimerEventValue = "PeriodicTimerEvent";
 
-        /// <summary> FileEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TriggerEventType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the FileEvent. </summary>
         public static TriggerEventType FileEvent { get; } = new TriggerEventType(FileEventValue);
-        /// <summary> PeriodicTimerEvent. </summary>
+
+        /// <summary> Gets the PeriodicTimerEvent. </summary>
         public static TriggerEventType PeriodicTimerEvent { get; } = new TriggerEventType(PeriodicTimerEventValue);
+
         /// <summary> Determines if two <see cref="TriggerEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TriggerEventType left, TriggerEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TriggerEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TriggerEventType left, TriggerEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TriggerEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TriggerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TriggerEventType(string value) => new TriggerEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TriggerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TriggerEventType?(string value) => value == null ? null : new TriggerEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TriggerEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TriggerEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

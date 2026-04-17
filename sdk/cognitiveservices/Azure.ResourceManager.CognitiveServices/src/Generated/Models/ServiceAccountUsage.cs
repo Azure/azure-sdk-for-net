@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <param name="scopeType"> The scope type of the quota usage. </param>
+        /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Unit = unit;
             Name = name;
@@ -40,6 +42,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentValue = currentValue;
             NextResetTime = nextResetTime;
             Status = status;
+            ScopeType = scopeType;
+            ScopeId = scopeId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,5 +74,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Cognitive Services account quota usage status. </summary>
         [WirePath("status")]
         public ServiceAccountQuotaUsageStatus? Status { get; }
+
+        /// <summary> The scope type of the quota usage. </summary>
+        [WirePath("scopeType")]
+        public CognitiveServicesQuotaScopeType? ScopeType { get; }
+
+        /// <summary> The scope identifier of the quota usage. </summary>
+        [WirePath("scopeId")]
+        public string ScopeId { get; }
     }
 }
