@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Tests.Common;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Utilities;
 using NUnit.Framework;
 
@@ -160,6 +163,61 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
             // Assert
             Assert.AreEqual("Resources_Get", result);
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_WhenApplyMethodRenamingEnabled_ReturnsOverride()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            // Default flag value is true; assert explicit-positive behavior.
+            plugin.Setup(p => p.IsApplyMethodRenamingEnabled()).Returns(true);
+
+            Assert.AreEqual("GetAsync", ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync: true, isResourceCollection: false));
+            Assert.AreEqual("Get", ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync: false, isResourceCollection: false));
+            Assert.AreEqual("GetAllAsync", ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync: true, isResourceCollection: true));
+            Assert.AreEqual("CreateOrUpdate", ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync: false, isResourceCollection: false));
+            Assert.AreEqual("Delete", ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, isAsync: false, isResourceCollection: false));
+        }
+
+        [TestCase]
+        public void GetOperationMethodName_WhenApplyMethodRenamingDisabled_ReturnsNull()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            plugin.Setup(p => p.IsApplyMethodRenamingEnabled()).Returns(false);
+
+            // All operation kinds should return null so the TypeSpec method name is used downstream.
+            Assert.IsNull(ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync: true, isResourceCollection: false));
+            Assert.IsNull(ResourceHelpers.GetOperationMethodName(ResourceOperationKind.List, isAsync: true, isResourceCollection: true));
+            Assert.IsNull(ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync: false, isResourceCollection: false));
+            Assert.IsNull(ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Delete, isAsync: false, isResourceCollection: false));
+        }
+
+        [TestCase]
+        public void GetExtensionOperationMethodName_WhenApplyMethodRenamingEnabled_ReturnsOverride()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            plugin.Setup(p => p.IsApplyMethodRenamingEnabled()).Returns(true);
+
+            Assert.AreEqual("GetAccounts", ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.List, "Account", isAsync: false));
+            Assert.AreEqual("GetAccount", ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Read, "Account", isAsync: false));
+            Assert.AreEqual("CreateOrUpdateAccount", ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Create, "Account", isAsync: false));
+            Assert.AreEqual("DeleteAccount", ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Delete, "Account", isAsync: false));
+            Assert.AreEqual("UpdateAccount", ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Update, "Account", isAsync: false));
+        }
+
+        [TestCase]
+        public void GetExtensionOperationMethodName_WhenApplyMethodRenamingDisabled_ReturnsNull()
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin();
+            plugin.Setup(p => p.IsApplyMethodRenamingEnabled()).Returns(false);
+
+            // When the flag is disabled, TypeSpec-provided method names (e.g., a user-chosen `list` that
+            // should not become `GetAccounts`) flow through untouched.
+            Assert.IsNull(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.List, "Account", isAsync: false));
+            Assert.IsNull(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Read, "Account", isAsync: false));
+            Assert.IsNull(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Create, "Account", isAsync: false));
+            Assert.IsNull(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Delete, "Account", isAsync: false));
+            Assert.IsNull(ResourceHelpers.GetExtensionOperationMethodName(ResourceOperationKind.Update, "Account", isAsync: false));
         }
     }
 }

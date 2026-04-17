@@ -49,7 +49,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (!ManagementClientGenerator.Instance.IsApplyModelRenamingEnabled())
+        if (!ManagementClientGenerator.Instance.IsApplyEnumRenamingEnabled())
         {
             return base.PreVisitEnum(enumType, type);
         }

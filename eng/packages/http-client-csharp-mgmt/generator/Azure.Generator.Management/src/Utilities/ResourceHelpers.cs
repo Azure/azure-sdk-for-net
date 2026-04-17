@@ -60,6 +60,13 @@ namespace Azure.Generator.Management.Utilities
         /// <returns>The method name to use, or null if no override is needed.</returns>
         public static string? GetOperationMethodName(ResourceOperationKind operationKind, bool isAsync, bool isResourceCollection)
         {
+            // When the user opts out of generator-side method renaming, fall back to the
+            // TypeSpec-provided method name by returning null here.
+            if (!ManagementClientGenerator.Instance.IsApplyMethodRenamingEnabled())
+            {
+                return null;
+            }
+
             return operationKind switch
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
@@ -80,6 +87,13 @@ namespace Azure.Generator.Management.Utilities
         /// <returns>The method name to use for the extension operation, or null if no override is needed.</returns>
         public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
         {
+            // When the user opts out of generator-side method renaming, fall back to the
+            // TypeSpec-provided method name by returning null here.
+            if (!ManagementClientGenerator.Instance.IsApplyMethodRenamingEnabled())
+            {
+                return null;
+            }
+
             return operationKind switch
             {
                 ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",

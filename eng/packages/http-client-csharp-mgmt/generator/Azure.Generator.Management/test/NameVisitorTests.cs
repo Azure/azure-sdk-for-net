@@ -168,7 +168,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestApplyModelRenamingDisabled_SkipsKnownTypePrefixForEnum()
+        public void TestApplyEnumRenamingDisabled_SkipsKnownTypePrefixForEnum()
         {
             var enumName = "PrivateEndpointServiceConnectionStatus";
             var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
@@ -183,11 +183,37 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
-            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+            plugin.Setup(p => p.IsApplyEnumRenamingEnabled()).Returns(false);
 
             // PreVisitEnum is called during the enum creation
             var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
             Assert.That(type?.Name, Is.EqualTo(enumName));
+        }
+
+        [Test]
+        public void TestApplyModelRenamingDisabled_DoesNotAffectEnumRenaming()
+        {
+            // When apply-model-renaming is false but apply-enum-renaming is true (default),
+            // enum known-type prefixing should still be applied.
+            var enumName = "PrivateEndpointServiceConnectionStatus";
+            var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: stringEnum);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+            // Enum renaming remains at its default (true).
+
+            var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
+            var resourceProviderName = ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName;
+            Assert.That(type?.Name, Is.EqualTo($"{resourceProviderName}{enumName}"));
         }
 
         [Test]
