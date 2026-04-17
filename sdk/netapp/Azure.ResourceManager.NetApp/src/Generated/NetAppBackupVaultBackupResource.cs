@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp
         private readonly Backups _backupsRestClient;
         private readonly ClientDiagnostics _backupsUnderBackupVaultClientDiagnostics;
         private readonly BackupsUnderBackupVault _backupsUnderBackupVaultRestClient;
-        private readonly NetAppBackupVaultBackupData _data;
+        private readonly NetAppBackupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/backupVaults/backups";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetAppBackupVaultBackupResource(ArmClient client, NetAppBackupVaultBackupData data) : this(client, data.Id)
+        internal NetAppBackupVaultBackupResource(ArmClient client, NetAppBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NetAppBackupVaultBackupData Data
+        public virtual NetAppBackupData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetAppBackupVaultBackupData> response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                Response<NetAppBackupData> response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetAppBackupVaultBackupData> response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                Response<NetAppBackupData> response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

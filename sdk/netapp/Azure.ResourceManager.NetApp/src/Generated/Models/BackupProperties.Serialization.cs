@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier volumeResourceId = default;
             bool? useExistingSnapshot = default;
             string snapshotName = default;
-            ResourceIdentifier backupPolicyResourceId = default;
+            string backupPolicyResourceId = default;
             bool? isLargeVolume = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -294,11 +294,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("backupPolicyResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backupPolicyResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    backupPolicyResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("isLargeVolume"u8))

@@ -18,10 +18,10 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary> Backup under a Backup Vault. </summary>
-    public partial class NetAppBackupVaultBackupData : ResourceData, IJsonModel<NetAppBackupVaultBackupData>
+    public partial class NetAppBackupData : ResourceData, IJsonModel<NetAppBackupData>
     {
-        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultBackupData"/> for deserialization. </summary>
-        internal NetAppBackupVaultBackupData()
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/> for deserialization. </summary>
+        internal NetAppBackupData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNetAppBackupVaultBackupData(document.RootElement, options);
+                        return DeserializeNetAppBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupVaultBackupData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupVaultBackupData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppBackupVaultBackupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppBackupVaultBackupData IPersistableModel<NetAppBackupVaultBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppBackupVaultBackupData)PersistableModelCreateCore(data, options);
+        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppBackupData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppBackupVaultBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="netAppBackupVaultBackupData"> The <see cref="NetAppBackupVaultBackupData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetAppBackupVaultBackupData netAppBackupVaultBackupData)
+        /// <param name="netAppBackupData"> The <see cref="NetAppBackupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppBackupData netAppBackupData)
         {
-            if (netAppBackupVaultBackupData == null)
+            if (netAppBackupData == null)
             {
                 return null;
             }
-            return RequestContent.Create(netAppBackupVaultBackupData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(netAppBackupData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppBackupVaultBackupData"/> from. </param>
-        internal static NetAppBackupVaultBackupData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppBackupData"/> from. </param>
+        internal static NetAppBackupData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNetAppBackupVaultBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppBackupVaultBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupVaultBackupData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.NetApp
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppBackupVaultBackupData IJsonModel<NetAppBackupVaultBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppBackupVaultBackupData)JsonModelCreateCore(ref reader, options);
+        NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetAppBackupData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupVaultBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupVaultBackupData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppBackupVaultBackupData(document.RootElement, options);
+            return DeserializeNetAppBackupData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetAppBackupVaultBackupData DeserializeNetAppBackupVaultBackupData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetAppBackupData DeserializeNetAppBackupData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetApp
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetAppBackupVaultBackupData(
+            return new NetAppBackupData(
                 id,
                 name,
                 resourceType,

@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
         /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
-        /// <returns> A new <see cref="NetApp.NetAppBackupVaultBackupData"/> instance for mocking. </returns>
-        public static NetAppBackupVaultBackupData NetAppBackupVaultBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupId = default, DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, string provisioningState = default, long? size = default, string label = default, NetAppBackupType? backupType = default, string failureReason = default, ResourceIdentifier volumeResourceId = default, bool? useExistingSnapshot = default, string snapshotName = default, ResourceIdentifier backupPolicyResourceId = default, bool? isLargeVolume = default)
+        /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string backupId = default, DateTimeOffset? createdOn = default, DateTimeOffset? snapshotCreationOn = default, DateTimeOffset? completionOn = default, string provisioningState = default, long? size = default, string label = default, NetAppBackupType? backupType = default, string failureReason = default, ResourceIdentifier volumeResourceId = default, bool? useExistingSnapshot = default, string snapshotName = default, string backupPolicyResourceId = default, bool? isLargeVolume = default)
         {
-            return new NetAppBackupVaultBackupData(
+            return new NetAppBackupData(
                 id,
                 name,
                 resourceType,

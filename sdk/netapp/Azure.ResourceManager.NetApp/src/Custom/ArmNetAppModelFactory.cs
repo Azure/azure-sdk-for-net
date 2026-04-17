@@ -42,20 +42,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, AzureLocation location, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
         {
-            return NetAppBackupData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                backupId: backupId,
-                createdOn: createdOn,
-                provisioningState: provisioningState,
-                size: size,
-                label: label,
-                backupType: backupType,
-                failureReason: failureReason,
-                useExistingSnapshot: useExistingSnapshot
-            );
+            var properties = new BackupProperties(backupId, createdOn, null, null, provisioningState, size, label, backupType, failureReason, null, useExistingSnapshot, null, null, null, null);
+            return new NetAppBackupData(id, name, resourceType, systemData, null, properties) { Location = location };
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
@@ -143,23 +131,8 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
         {
-            return new NetAppBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                backupId,
-                createdOn,
-                provisioningState,
-                size,
-                label,
-                backupType,
-                failureReason,
-                volumeResourceId,
-                useExistingSnapshot,
-                snapshotName,
-                backupPolicyResourceId != null ? new ResourceIdentifier(backupPolicyResourceId) : null);
+            var properties = new BackupProperties(backupId, createdOn, null, null, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId, null, null);
+            return new NetAppBackupData(id, name, resourceType, systemData, null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         NetAppBackupVaultBackupResource IOperationSource<NetAppBackupVaultBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetAppBackupVaultBackupData data = NetAppBackupVaultBackupData.DeserializeNetAppBackupVaultBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetAppBackupData data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppBackupVaultBackupResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<NetAppBackupVaultBackupResource> IOperationSource<NetAppBackupVaultBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetAppBackupVaultBackupData data = NetAppBackupVaultBackupData.DeserializeNetAppBackupVaultBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetAppBackupData data = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppBackupVaultBackupResource(_client, data);
         }
     }

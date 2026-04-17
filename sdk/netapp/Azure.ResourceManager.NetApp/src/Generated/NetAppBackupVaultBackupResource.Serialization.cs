@@ -5,36 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupVaultBackupData>
+    public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupData>
     {
-        private static IJsonModel<NetAppBackupVaultBackupData> s_dataDeserializationInstance;
+        private static IJsonModel<NetAppBackupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<NetAppBackupVaultBackupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppBackupVaultBackupData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppBackupVaultBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupVaultBackupData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppBackupVaultBackupData IJsonModel<NetAppBackupVaultBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppBackupVaultBackupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupVaultBackupData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppBackupVaultBackupData IPersistableModel<NetAppBackupVaultBackupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupVaultBackupData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppBackupVaultBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        private static IJsonModel<NetAppBackupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppBackupData();
     }
 }

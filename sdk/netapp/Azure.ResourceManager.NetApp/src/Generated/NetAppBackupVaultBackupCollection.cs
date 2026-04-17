@@ -59,122 +59,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Create a backup under the Backup Vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupVaults/{backupVaultName}/backups/{backupName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Backups_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="data"> Backup object supplied in the body of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NetAppBackupVaultBackupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, NetAppBackupVaultBackupData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _backupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppBackupVaultBackupData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetAppArmOperation<NetAppBackupVaultBackupResource> operation = new NetAppArmOperation<NetAppBackupVaultBackupResource>(
-                    new NetAppBackupVaultBackupOperationSource(Client),
-                    _backupsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a backup under the Backup Vault
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupVaults/{backupVaultName}/backups/{backupName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Backups_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="data"> Backup object supplied in the body of the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NetAppBackupVaultBackupResource> CreateOrUpdate(WaitUntil waitUntil, string backupName, NetAppBackupVaultBackupData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("NetAppBackupVaultBackupCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _backupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppBackupVaultBackupData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetAppArmOperation<NetAppBackupVaultBackupResource> operation = new NetAppArmOperation<NetAppBackupVaultBackupResource>(
-                    new NetAppBackupVaultBackupOperationSource(Client),
-                    _backupsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get the specified Backup under Backup Vault.
         /// <list type="bullet">
         /// <item>
@@ -209,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetAppBackupVaultBackupData> response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                Response<NetAppBackupData> response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -258,7 +142,7 @@ namespace Azure.ResourceManager.NetApp
                 };
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetAppBackupVaultBackupData> response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                Response<NetAppBackupData> response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -298,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetAppBackupVaultBackupData, NetAppBackupVaultBackupResource>(new BackupsGetByVaultAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetAppBackupData, NetAppBackupVaultBackupResource>(new BackupsGetByVaultAsyncCollectionResultOfT(
                 _backupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +219,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetAppBackupVaultBackupData, NetAppBackupVaultBackupResource>(new BackupsGetByVaultCollectionResultOfT(
+            return new PageableWrapper<NetAppBackupData, NetAppBackupVaultBackupResource>(new BackupsGetByVaultCollectionResultOfT(
                 _backupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -382,14 +266,14 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NetAppBackupVaultBackupData> response = default;
+                Response<NetAppBackupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                        response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetAppBackupVaultBackupData)null, result);
+                        response = Response.FromValue((NetAppBackupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -439,14 +323,14 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NetAppBackupVaultBackupData> response = default;
+                Response<NetAppBackupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                        response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetAppBackupVaultBackupData)null, result);
+                        response = Response.FromValue((NetAppBackupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -496,14 +380,14 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NetAppBackupVaultBackupData> response = default;
+                Response<NetAppBackupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                        response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetAppBackupVaultBackupData)null, result);
+                        response = Response.FromValue((NetAppBackupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -557,14 +441,14 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NetAppBackupVaultBackupData> response = default;
+                Response<NetAppBackupData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NetAppBackupVaultBackupData.FromResponse(result), result);
+                        response = Response.FromValue(NetAppBackupData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NetAppBackupVaultBackupData)null, result);
+                        response = Response.FromValue((NetAppBackupData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

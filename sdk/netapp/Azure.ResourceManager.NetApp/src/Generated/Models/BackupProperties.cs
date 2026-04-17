@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
         /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProperties(string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, string backupPolicyResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             CreatedOn = createdOn;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string SnapshotName { get; set; }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        public ResourceIdentifier BackupPolicyResourceId { get; }
+        public string BackupPolicyResourceId { get; }
 
         /// <summary> Specifies if the backup is for a large volume. </summary>
         public bool? IsLargeVolume { get; }

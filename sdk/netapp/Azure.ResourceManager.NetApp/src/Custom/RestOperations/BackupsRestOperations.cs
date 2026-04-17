@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         NetAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement);
+                        value = NetAppBackupData.DeserializeNetAppBackupData(document.RootElement, ModelSerializationExtensions.WireOptions);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
