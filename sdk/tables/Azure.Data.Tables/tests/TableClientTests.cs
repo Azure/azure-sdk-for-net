@@ -797,7 +797,7 @@ namespace Azure.Data.Tables.Tests
             var transport = new MockTransport(_ => response);
             var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
 
-            Assert.ThrowsAsync<RequestFailedException>(() => tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
         }
 
         /// <summary>
@@ -812,7 +812,7 @@ namespace Azure.Data.Tables.Tests
             var transport = new MockTransport(_ => response);
             var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
 
-            Assert.ThrowsAsync<RequestFailedException>(() => tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
         }
 
         /// <summary>
