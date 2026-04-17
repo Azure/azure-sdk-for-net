@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="RaiPolicyResource"/> and their operations.
-    /// Each <see cref="RaiPolicyResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
-    /// To get a <see cref="RaiPolicyCollection"/> instance call the GetRaiPolicies method from an instance of <see cref="AccountResource"/>.
+    /// Each <see cref="RaiPolicyResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="RaiPolicyCollection"/> instance call the GetRaiPolicies method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class RaiPolicyCollection : ArmCollection, IEnumerable<RaiPolicyResource>, IAsyncEnumerable<RaiPolicyResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiPolicyResource.ResourceType, out string raiPolicyApiVersion);
             _raiPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiPolicyResource.ResourceType.Namespace, Diagnostics);
-            _raiPoliciesRestClient = new RaiPolicies(_raiPoliciesClientDiagnostics, Pipeline, Endpoint, raiPolicyApiVersion ?? "2026-01-15-preview");
+            _raiPoliciesRestClient = new RaiPolicies(_raiPoliciesClientDiagnostics, Pipeline, Endpoint, raiPolicyApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllAsyncCollectionResultOfT(_raiPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RaiPolicyResource(Client, data));
+            return new AsyncPageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllAsyncCollectionResultOfT(
+                _raiPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RaiPolicyCollection.GetAll"), data => new RaiPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllCollectionResultOfT(_raiPoliciesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RaiPolicyResource(Client, data));
+            return new PageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllCollectionResultOfT(
+                _raiPoliciesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RaiPolicyCollection.GetAll"), data => new RaiPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +457,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +518,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

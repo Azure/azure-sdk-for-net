@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class DeploymentsGetSkusCollectionResultOfT : Pageable<CognitiveServices.Models.SkuResource>
+    internal partial class DeploymentsGetSkusCollectionResultOfT : Pageable<CognitiveServicesResourceSku>
     {
         private readonly Deployments _client;
         private readonly string _subscriptionId;
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _accountName;
         private readonly string _deploymentName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeploymentsGetSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Deployments client used to send requests. </param>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeploymentsGetSkusCollectionResultOfT(Deployments client, string subscriptionId, string resourceGroupName, string accountName, string deploymentName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeploymentsGetSkusCollectionResultOfT(Deployments client, string subscriptionId, string resourceGroupName, string accountName, string deploymentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,13 +40,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _accountName = accountName;
             _deploymentName = deploymentName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeploymentsGetSkusCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeploymentsGetSkusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CognitiveServices.Models.SkuResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesResourceSku>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,8 +57,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.DeploymentSkuListResult result = CognitiveServices.Models.DeploymentSkuListResult.FromResponse(response);
-                yield return Page<CognitiveServices.Models.SkuResource>.FromValues((IReadOnlyList<CognitiveServices.Models.SkuResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DeploymentSkuListResult result = DeploymentSkuListResult.FromResponse(response);
+                yield return Page<CognitiveServicesResourceSku>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSkusRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _deploymentName, _context) : _client.CreateGetSkusRequest(_subscriptionId, _resourceGroupName, _accountName, _deploymentName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeploymentResource.GetSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -1611,7 +1611,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(createMessageActivity, expectedCreateMessageEvents));
     }
 
-    private void CheckSubmitToolOutputSpan(Activity submitActivity, string content, bool allowAdditionalEvents=false)
+    private void CheckSubmitToolOutputSpan(Activity submitActivity, string content, bool allowAdditionalEvents = false)
     {
         Assert.IsNotNull(submitActivity);
         var expectedSubmitToolOutputsAttributes = new Dictionary<string, object>

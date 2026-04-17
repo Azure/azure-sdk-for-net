@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The commitment plan association. </summary>
-    internal partial class CommitmentPlanAssociation : IJsonModel<CognitiveServices.Models.CommitmentPlanAssociation>
+    public partial class CommitmentPlanAssociation : IJsonModel<CommitmentPlanAssociation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.CommitmentPlanAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommitmentPlanAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return CognitiveServices.Models.CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(document.RootElement, options);
+                        return DeserializeCommitmentPlanAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.CommitmentPlanAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.CommitmentPlanAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommitmentPlanAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.CommitmentPlanAssociation IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommitmentPlanAssociation IPersistableModel<CommitmentPlanAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommitmentPlanAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServices.Models.CommitmentPlanAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommitmentPlanAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +70,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.CommitmentPlanAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CommitmentPlanId))
             {
@@ -103,37 +104,41 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.CommitmentPlanAssociation IJsonModel<CognitiveServices.Models.CommitmentPlanAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommitmentPlanAssociation IJsonModel<CommitmentPlanAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.CommitmentPlanAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommitmentPlanAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.CommitmentPlanAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return CognitiveServices.Models.CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(document.RootElement, options);
+            return DeserializeCommitmentPlanAssociation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServices.Models.CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string commitmentPlanId = default;
+            ResourceIdentifier commitmentPlanId = default;
             string commitmentPlanLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("commitmentPlanId"u8))
                 {
-                    commitmentPlanId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commitmentPlanId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("commitmentPlanLocation"u8))
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServices.Models.CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, additionalBinaryDataProperties);
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, additionalBinaryDataProperties);
         }
     }
 }

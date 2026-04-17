@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _accountName;
         private readonly string _raiBlocklistName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RaiBlocklistItemsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RaiBlocklistItems client used to send requests. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="raiBlocklistName"> The name of the RaiBlocklist associated with the Cognitive Services Account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RaiBlocklistItemsGetAllAsyncCollectionResultOfT(RaiBlocklistItems client, string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RaiBlocklistItemsGetAllAsyncCollectionResultOfT(RaiBlocklistItems client, string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
             _accountName = accountName;
             _raiBlocklistName = raiBlocklistName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RaiBlocklistItemsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -54,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.RaiBlockListItemsResult result = CognitiveServices.Models.RaiBlockListItemsResult.FromResponse(response);
+                RaiBlockListItemsResult result = RaiBlockListItemsResult.FromResponse(response);
                 yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _raiBlocklistName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _raiBlocklistName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RaiBlocklistItemCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

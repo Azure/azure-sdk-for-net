@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SearchPrivateEndpointConnectionResource.ResourceType, out string searchPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, searchPrivateEndpointConnectionApiVersion ?? "2025-05-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, searchPrivateEndpointConnectionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != SearchServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SearchServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,7 +335,8 @@ namespace Azure.ResourceManager.Search
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
-                context), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                context,
+                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +352,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +410,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +468,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,7 +530,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

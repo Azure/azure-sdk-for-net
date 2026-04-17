@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
@@ -22,22 +23,198 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterProjectPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="devCenterId"> Resource Id of an associated DevCenter. </param>
-        /// <param name="description"> Description of the project. </param>
-        /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
-        internal DevCenterProjectPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser) : base(tags, location, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a project to be updated. </param>
+        /// <param name="identity"> Managed identity properties. </param>
+        internal DevCenterProjectPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, ProjectUpdateProperties properties, ManagedServiceIdentity identity) : base(tags, location, additionalBinaryDataProperties)
         {
-            DevCenterId = devCenterId;
-            Description = description;
-            MaxDevBoxesPerUser = maxDevBoxesPerUser;
+            Properties = properties;
+            Identity = identity;
         }
 
+        /// <summary> Properties of a project to be updated. </summary>
+        internal ProjectUpdateProperties Properties { get; set; }
+
+        /// <summary> Managed identity properties. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource Id of an associated DevCenter. </summary>
-        public ResourceIdentifier DevCenterId { get; set; }
+        public ResourceIdentifier DevCenterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevCenterId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.DevCenterId = value;
+            }
+        }
+
         /// <summary> Description of the project. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </summary>
-        public int? MaxDevBoxesPerUser { get; set; }
+        public int? MaxDevBoxesPerUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxDevBoxesPerUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.MaxDevBoxesPerUser = value.Value;
+            }
+        }
+
+        /// <summary> The display name of the project. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Settings to be used for customizations. </summary>
+        public DevCenterProjectCustomizationSettings CustomizationSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomizationSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.CustomizationSettings = value;
+            }
+        }
+
+        /// <summary> Dev Box Schedule Delete settings. </summary>
+        public DevCenterDevBoxScheduleDeleteSettings DevBoxScheduleDeleteSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DevBoxScheduleDeleteSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.DevBoxScheduleDeleteSettings = value;
+            }
+        }
+
+        /// <summary> Settings to be used for serverless GPU. </summary>
+        public DevCenterServerlessGpuSessionsSettings ServerlessGpuSessionsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerlessGpuSessionsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.ServerlessGpuSessionsSettings = value;
+            }
+        }
+
+        /// <summary> List of Entra ID group assignments associated with this project. </summary>
+        public IList<DevCenterAssignedGroup> AssignedGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                return Properties.AssignedGroups;
+            }
+        }
+
+        /// <summary> Indicates catalog item types that can be synced. </summary>
+        public IList<DevCenterCatalogItemType> CatalogItemSyncTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                return Properties.CatalogItemSyncTypes;
+            }
+        }
+
+        /// <summary> The property indicates whether Azure AI services is enabled. </summary>
+        public AzureAiServicesMode? AzureAiServicesMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureAiServicesMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.AzureAiServicesMode = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether workspace storage is enabled. </summary>
+        public DevCenterWorkspaceStorageMode? WorkspaceStorageMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceStorageMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProjectUpdateProperties();
+                }
+                Properties.WorkspaceStorageMode = value.Value;
+            }
+        }
     }
 }

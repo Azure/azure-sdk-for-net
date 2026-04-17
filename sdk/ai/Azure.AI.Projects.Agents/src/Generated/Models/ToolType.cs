@@ -14,6 +14,7 @@ namespace OpenAI
         private readonly string _value;
         private const string FunctionValue = "function";
         private const string FileSearchValue = "file_search";
+        private const string ComputerValue = "computer";
         private const string ComputerUsePreviewValue = "computer_use_preview";
         private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
@@ -22,6 +23,8 @@ namespace OpenAI
         private const string LocalShellValue = "local_shell";
         private const string ShellValue = "shell";
         private const string CustomValue = "custom";
+        private const string NamespaceValue = "namespace";
+        private const string ToolSearchValue = "tool_search";
         private const string WebSearchPreviewValue = "web_search_preview";
         private const string ApplyPatchValue = "apply_patch";
         private const string A2aPreviewValue = "a2a_preview";
@@ -30,6 +33,7 @@ namespace OpenAI
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
+        private const string WorkIqPreviewValue = "work_iq_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -51,6 +55,9 @@ namespace OpenAI
 
         /// <summary> Gets the FileSearch. </summary>
         public static ToolType FileSearch { get; } = new ToolType(FileSearchValue);
+
+        /// <summary> Gets the Computer. </summary>
+        public static ToolType Computer { get; } = new ToolType(ComputerValue);
 
         /// <summary> Gets the ComputerUsePreview. </summary>
         public static ToolType ComputerUsePreview { get; } = new ToolType(ComputerUsePreviewValue);
@@ -76,6 +83,12 @@ namespace OpenAI
         /// <summary> Gets the Custom. </summary>
         public static ToolType Custom { get; } = new ToolType(CustomValue);
 
+        /// <summary> Gets the Namespace. </summary>
+        public static ToolType Namespace { get; } = new ToolType(NamespaceValue);
+
+        /// <summary> Gets the ToolSearch. </summary>
+        public static ToolType ToolSearch { get; } = new ToolType(ToolSearchValue);
+
         /// <summary> Gets the WebSearchPreview. </summary>
         public static ToolType WebSearchPreview { get; } = new ToolType(WebSearchPreviewValue);
 
@@ -99,6 +112,9 @@ namespace OpenAI
 
         /// <summary> Gets the MemorySearchPreview. </summary>
         public static ToolType MemorySearchPreview { get; } = new ToolType(MemorySearchPreviewValue);
+
+        /// <summary> Gets the WorkIqPreview. </summary>
+        public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

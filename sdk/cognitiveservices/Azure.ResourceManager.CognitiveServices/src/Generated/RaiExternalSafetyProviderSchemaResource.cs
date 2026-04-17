@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class RaiExternalSafetyProviderSchemaResource : ArmResource
     {
-        private readonly ClientDiagnostics _raiExternalSafetyProviderClientDiagnostics;
-        private readonly RaiExternalSafetyProvider _raiExternalSafetyProviderRestClient;
-        private readonly ClientDiagnostics _raiExternalSafetyProvidersClientDiagnostics;
-        private readonly RaiExternalSafetyProviders _raiExternalSafetyProvidersRestClient;
+        private readonly ClientDiagnostics _raiExternalSafetyProviderSchemasClientDiagnostics;
+        private readonly RaiExternalSafetyProviderSchemas _raiExternalSafetyProviderSchemasRestClient;
         private readonly RaiExternalSafetyProviderSchemaData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/raiExternalSafetyProviders";
@@ -53,10 +51,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal RaiExternalSafetyProviderSchemaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string raiExternalSafetyProviderSchemaApiVersion);
-            _raiExternalSafetyProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiExternalSafetyProviderRestClient = new RaiExternalSafetyProvider(_raiExternalSafetyProviderClientDiagnostics, Pipeline, Endpoint, raiExternalSafetyProviderSchemaApiVersion ?? "2026-01-15-preview");
-            _raiExternalSafetyProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiExternalSafetyProvidersRestClient = new RaiExternalSafetyProviders(_raiExternalSafetyProvidersClientDiagnostics, Pipeline, Endpoint, raiExternalSafetyProviderSchemaApiVersion ?? "2026-01-15-preview");
+            _raiExternalSafetyProviderSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _raiExternalSafetyProviderSchemasRestClient = new RaiExternalSafetyProviderSchemas(_raiExternalSafetyProviderSchemasClientDiagnostics, Pipeline, Endpoint, raiExternalSafetyProviderSchemaApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -91,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -108,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -119,7 +115,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RaiExternalSafetyProviderSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Get");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Get");
             scope.Start();
             try
             {
@@ -127,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -167,7 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RaiExternalSafetyProviderSchemaResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Get");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Get");
             scope.Start();
             try
             {
@@ -175,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -216,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Delete");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Delete");
             scope.Start();
             try
             {
@@ -224,9 +220,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiExternalSafetyProviderClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiExternalSafetyProviderSchemasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -253,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Delete");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Delete");
             scope.Start();
             try
             {
@@ -273,9 +269,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiExternalSafetyProviderClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_raiExternalSafetyProviderSchemasClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -302,7 +298,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -318,7 +314,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Update");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Update");
             scope.Start();
             try
             {
@@ -326,7 +322,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -358,7 +354,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Update");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.Update");
             scope.Start();
             try
             {
@@ -382,7 +378,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -411,7 +407,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.AddTag");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.AddTag");
             scope.Start();
             try
             {
@@ -424,7 +420,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +450,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.AddTag");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.AddTag");
             scope.Start();
             try
             {
@@ -467,7 +463,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());
@@ -495,7 +491,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.SetTags");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.SetTags");
             scope.Start();
             try
             {
@@ -509,7 +505,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());
@@ -537,7 +533,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.SetTags");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.SetTags");
             scope.Start();
             try
             {
@@ -551,7 +547,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());
@@ -579,7 +575,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.RemoveTag");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.RemoveTag");
             scope.Start();
             try
             {
@@ -592,7 +588,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());
@@ -620,7 +616,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _raiExternalSafetyProviderClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.RemoveTag");
+            using DiagnosticScope scope = _raiExternalSafetyProviderSchemasClientDiagnostics.CreateScope("RaiExternalSafetyProviderSchemaResource.RemoveTag");
             scope.Start();
             try
             {
@@ -633,7 +629,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _raiExternalSafetyProviderRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                    HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                     return Response.FromValue(new RaiExternalSafetyProviderSchemaResource(Client, response.Value), response.GetRawResponse());

@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class AgentApplicationsGetAllCollectionResultOfT : Pageable<AgentApplicationData>
+    internal partial class AgentApplicationsGetAllCollectionResultOfT : Pageable<CognitiveServicesAgentApplicationData>
     {
         private readonly AgentApplications _client;
         private readonly string _subscriptionId;
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _orderBy;
         private readonly bool? _orderByAsc;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AgentApplicationsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentApplications client used to send requests. </param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="orderBy"> Field to order by. </param>
         /// <param name="orderByAsc"> Whether to order in ascending order. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentApplicationsGetAllCollectionResultOfT(AgentApplications client, string subscriptionId, string resourceGroupName, string accountName, string projectName, int? count, int? skip, string skipToken, IEnumerable<string> names, string searchText, string orderBy, bool? orderByAsc, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AgentApplicationsGetAllCollectionResultOfT(AgentApplications client, string subscriptionId, string resourceGroupName, string accountName, string projectName, int? count, int? skip, string skipToken, IEnumerable<string> names, string searchText, string orderBy, bool? orderByAsc, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -58,13 +61,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _orderBy = orderBy;
             _orderByAsc = orderByAsc;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AgentApplicationsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AgentApplicationsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AgentApplicationData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesAgentApplicationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -74,8 +78,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.AgentApplicationResourceArmPaginatedResult result = CognitiveServices.Models.AgentApplicationResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<AgentApplicationData>.FromValues((IReadOnlyList<AgentApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AgentApplicationResourceArmPaginatedResult result = AgentApplicationResourceArmPaginatedResult.FromResponse(response);
+                yield return Page<CognitiveServicesAgentApplicationData>.FromValues((IReadOnlyList<CognitiveServicesAgentApplicationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _count, _skip, _skipToken, _names, _searchText, _orderBy, _orderByAsc, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _count, _skip, _skipToken, _names, _searchText, _orderBy, _orderByAsc, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentApplicationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

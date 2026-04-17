@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Properties of Cognitive Services account commitment plan association. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal CommitmentPlanAccountAssociationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.CommitmentPlanAccountAssociationProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal CommitmentPlanAccountAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommitmentPlanAccountAssociationProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,15 +44,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services account commitment plan association. </summary>
-        internal CognitiveServices.Models.CommitmentPlanAccountAssociationProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal CommitmentPlanAccountAssociationProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The Azure resource id of the account. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId
         {
             get
@@ -61,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (Properties is null)
                 {
-                    Properties = new CognitiveServices.Models.CommitmentPlanAccountAssociationProperties();
+                    Properties = new CommitmentPlanAccountAssociationProperties();
                 }
                 Properties.AccountId = value;
             }

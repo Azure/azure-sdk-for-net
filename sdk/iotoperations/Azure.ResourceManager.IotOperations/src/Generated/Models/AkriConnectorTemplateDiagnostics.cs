@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/>. </summary>
+        public AkriConnectorTemplateDiagnostics()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDiagnostics"/>. </summary>
         /// <param name="logs"> The log settings for the Connector template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AkriConnectorTemplateDiagnostics(AkriConnectorsDiagnosticsLogs logs, IDictionary<string, BinaryData> additionalBinaryDataProperties)

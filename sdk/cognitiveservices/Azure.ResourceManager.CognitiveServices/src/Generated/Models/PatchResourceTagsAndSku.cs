@@ -7,27 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update tags and sku of a resource, in general used for PATCH operations. </summary>
-    public partial class PatchResourceTagsAndSku : CognitiveServices.Models.PatchResourceTags
+    public partial class PatchResourceTagsAndSku : CognitiveServicesPatchResourceTags
     {
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.PatchResourceTagsAndSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchResourceTagsAndSku"/>. </summary>
         public PatchResourceTagsAndSku()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.PatchResourceTagsAndSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchResourceTagsAndSku"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
-        internal PatchResourceTagsAndSku(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.CognitiveServicesSku sku) : base(tags, additionalBinaryDataProperties)
+        internal PatchResourceTagsAndSku(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesSku sku) : base(tags, additionalBinaryDataProperties)
         {
             Sku = sku;
         }
 
         /// <summary> The resource model definition representing SKU. </summary>
-        public CognitiveServices.Models.CognitiveServicesSku Sku { get; set; }
+        [WirePath("sku")]
+        public CognitiveServicesSku Sku { get; set; }
     }
 }

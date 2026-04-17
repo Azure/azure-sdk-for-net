@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,11 +23,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve a model evaluation summary, call GetModelEvaluationSummary on the `ConversationAuthoringTrainedModel` client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary();
+Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary(projectName, trainedModelLabel);
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
@@ -35,7 +35,7 @@ Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision
 Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
 // Print detailed metrics per entity
-foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
+foreach (KeyValuePair<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entity in entitiesEval.Entities)
 {
     Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
     Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");
@@ -61,11 +61,11 @@ foreach (KeyValuePair<string, IntentEvaluationSummary> intent in intentsEval.Int
 To asynchronously retrieve a model evaluation summary, call GetModelEvaluationSummaryAsync on the `ConversationAuthoringTrainedModel` client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
-
-Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync();
+Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
@@ -73,7 +73,7 @@ Console.WriteLine($"Entities - Micro F1: {entitiesEval.MicroF1}, Micro Precision
 Console.WriteLine($"Entities - Macro F1: {entitiesEval.MacroF1}, Macro Precision: {entitiesEval.MacroPrecision}, Macro Recall: {entitiesEval.MacroRecall}");
 
 // Print detailed metrics per entity
-foreach (KeyValuePair<string, ConversationAuthoringEntityEvalSummary> entity in entitiesEval.Entities)
+foreach (KeyValuePair<string, AnalyzeConversationAuthoringEntityEvaluationSummary> entity in entitiesEval.Entities)
 {
     Console.WriteLine($"Entity '{entity.Key}': F1 = {entity.Value.F1}, Precision = {entity.Value.Precision}, Recall = {entity.Value.Recall}");
     Console.WriteLine($"  True Positives: {entity.Value.TruePositiveCount}, True Negatives: {entity.Value.TrueNegativeCount}");

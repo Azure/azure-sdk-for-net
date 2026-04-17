@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetCognitiveServicesAccountsRequest(string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetCognitiveServicesAccountsRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -359,6 +359,55 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string accountName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string safetyProviderName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/testRaiExternalSafetyProvider/", false);
+            uri.AppendPath(safetyProviderName, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

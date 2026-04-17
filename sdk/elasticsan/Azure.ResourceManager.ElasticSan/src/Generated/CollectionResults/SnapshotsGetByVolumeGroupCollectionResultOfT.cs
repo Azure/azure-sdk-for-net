@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly string _volumeGroupName;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SnapshotsGetByVolumeGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Snapshots client used to send requests. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="volumeGroupName"> The name of the VolumeGroup. </param>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SnapshotsGetByVolumeGroupCollectionResultOfT(Snapshots client, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SnapshotsGetByVolumeGroupCollectionResultOfT(Snapshots client, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.ElasticSan
             _volumeGroupName = volumeGroupName;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SnapshotsGetByVolumeGroupCollectionResultOfT as an enumerable collection. </summary>
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByVolumeGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _elasticSanName, _volumeGroupName, _filter, _context) : _client.CreateGetByVolumeGroupRequest(_subscriptionId, _resourceGroupName, _elasticSanName, _volumeGroupName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

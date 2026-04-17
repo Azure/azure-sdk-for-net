@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class ProjectConnectionsGetAllCollectionResultOfT : Pageable<ConnectionPropertiesV2BasicResourceData>
+    internal partial class ProjectConnectionsGetAllCollectionResultOfT : Pageable<CognitiveServicesConnectionData>
     {
         private readonly ProjectConnections _client;
         private readonly string _subscriptionId;
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _category;
         private readonly bool? _includeAll;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProjectConnectionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProjectConnections client used to send requests. </param>
@@ -35,7 +37,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="category"> Category of the connection. </param>
         /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectConnectionsGetAllCollectionResultOfT(ProjectConnections client, string subscriptionId, string resourceGroupName, string accountName, string projectName, string target, string category, bool? includeAll, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ProjectConnectionsGetAllCollectionResultOfT(ProjectConnections client, string subscriptionId, string resourceGroupName, string accountName, string projectName, string target, string category, bool? includeAll, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,13 +49,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _category = category;
             _includeAll = includeAll;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ProjectConnectionsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProjectConnectionsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ConnectionPropertiesV2BasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,8 +66,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.ConnectionPropertiesV2BasicResourceArmPaginatedResult result = CognitiveServices.Models.ConnectionPropertiesV2BasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<ConnectionPropertiesV2BasicResourceData>.FromValues((IReadOnlyList<ConnectionPropertiesV2BasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ConnectionPropertiesV2BasicResourceArmPaginatedResult result = ConnectionPropertiesV2BasicResourceArmPaginatedResult.FromResponse(response);
+                yield return Page<CognitiveServicesConnectionData>.FromValues((IReadOnlyList<CognitiveServicesConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -79,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _target, _category, _includeAll, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _target, _category, _includeAll, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectConnectionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

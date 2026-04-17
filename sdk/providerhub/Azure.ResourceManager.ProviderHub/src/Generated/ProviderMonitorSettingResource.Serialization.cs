@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ProviderHub
 {
+    /// <summary></summary>
     public partial class ProviderMonitorSettingResource : IJsonModel<ProviderMonitorSettingData>
     {
-        private static ProviderMonitorSettingData s_dataDeserializationInstance;
-        private static ProviderMonitorSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProviderMonitorSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProviderMonitorSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProviderMonitorSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderMonitorSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProviderMonitorSettingData>)Data).Write(writer, options);
 
-        ProviderMonitorSettingData IJsonModel<ProviderMonitorSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProviderMonitorSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProviderMonitorSettingData IJsonModel<ProviderMonitorSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProviderMonitorSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProviderMonitorSettingData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProviderMonitorSettingData IPersistableModel<ProviderMonitorSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProviderMonitorSettingData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<ProviderMonitorSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProviderMonitorSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProviderMonitorSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

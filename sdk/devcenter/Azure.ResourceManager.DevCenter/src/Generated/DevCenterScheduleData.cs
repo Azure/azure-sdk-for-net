@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary>
-    /// A class representing the DevCenterSchedule data model.
-    /// Represents a Schedule to execute a task.
-    /// </summary>
+    /// <summary> Represents a Schedule to execute a task. </summary>
     public partial class DevCenterScheduleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
         public DevCenterScheduleData()
@@ -57,39 +25,143 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterScheduleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
-        /// <param name="frequency"> The frequency of this scheduled task. </param>
-        /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
-        /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state, DevCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a Schedule resource. </param>
+        internal DevCenterScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
-            ScheduledType = scheduledType;
-            Frequency = frequency;
-            Time = time;
-            TimeZone = timeZone;
-            State = state;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+        }
+
+        /// <summary> Properties of a Schedule resource. </summary>
+        internal ScheduleProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                return Properties.Tags;
+            }
+        }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Location;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.Location = value.Value;
+            }
         }
 
         /// <summary> Supported type this scheduled task represents. </summary>
-        public DevCenterScheduledType? ScheduledType { get; set; }
+        public DevCenterScheduledType? ScheduledType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.ScheduledType = value.Value;
+            }
+        }
+
         /// <summary> The frequency of this scheduled task. </summary>
-        public DevCenterScheduledFrequency? Frequency { get; set; }
+        public DevCenterScheduledFrequency? Frequency
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Frequency;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.Frequency = value.Value;
+            }
+        }
+
         /// <summary> The target time to trigger the action. The format is HH:MM. </summary>
-        public string Time { get; set; }
+        public string Time
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Time;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.Time = value;
+            }
+        }
+
         /// <summary> The IANA timezone id at which the schedule should execute. </summary>
-        public string TimeZone { get; set; }
+        public string TimeZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.TimeZone = value;
+            }
+        }
+
         /// <summary> Indicates whether or not this scheduled task is enabled. </summary>
-        public DevCenterScheduleEnableStatus? State { get; set; }
+        public DevCenterScheduleEnableStatus? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleProperties();
+                }
+                Properties.State = value.Value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

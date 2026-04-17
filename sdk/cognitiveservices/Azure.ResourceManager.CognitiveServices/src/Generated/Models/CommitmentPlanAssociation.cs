@@ -7,25 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The commitment plan association. </summary>
-    internal partial class CommitmentPlanAssociation
+    public partial class CommitmentPlanAssociation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.CommitmentPlanAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAssociation"/>. </summary>
         internal CommitmentPlanAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.CommitmentPlanAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAssociation"/>. </summary>
         /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
         /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommitmentPlanAssociation(string commitmentPlanId, string commitmentPlanLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId, string commitmentPlanLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitmentPlanId = commitmentPlanId;
             CommitmentPlanLocation = commitmentPlanLocation;
@@ -33,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The Azure resource id of the commitment plan. </summary>
-        public string CommitmentPlanId { get; }
+        [WirePath("commitmentPlanId")]
+        public ResourceIdentifier CommitmentPlanId { get; }
 
         /// <summary> The location of of the commitment plan. </summary>
+        [WirePath("commitmentPlanLocation")]
         public string CommitmentPlanLocation { get; }
     }
 }

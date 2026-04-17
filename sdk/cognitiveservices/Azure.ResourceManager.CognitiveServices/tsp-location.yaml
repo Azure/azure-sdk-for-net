@@ -1,6 +1,4 @@
 directory: specification/cognitiveservices/CognitiveServices.Management
-commit: 2f2a6cd8118938c1ba3f65d4e09a550d4504620f
+commit: 485a9069b3c9008f6b517ed2147d95fbde38faf1
 repo: Azure/azure-rest-api-specs
-additionalDirectories: 
-
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

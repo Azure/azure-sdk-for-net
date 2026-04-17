@@ -10,31 +10,35 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class QuotaTiersGetBySubscriptionCollectionResultOfT : Pageable<QuotaTierData>
+    internal partial class QuotaTiersGetBySubscriptionCollectionResultOfT : Pageable<CognitiveServicesQuotaTierData>
     {
         private readonly QuotaTiers _client;
         private readonly string _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of QuotaTiersGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The QuotaTiers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuotaTiersGetBySubscriptionCollectionResultOfT(QuotaTiers client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public QuotaTiersGetBySubscriptionCollectionResultOfT(QuotaTiers client, string subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of QuotaTiersGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of QuotaTiersGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<QuotaTierData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesQuotaTierData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -44,8 +48,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.QuotaTierListResult result = CognitiveServices.Models.QuotaTierListResult.FromResponse(response);
-                yield return Page<QuotaTierData>.FromValues((IReadOnlyList<QuotaTierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                QuotaTierListResult result = QuotaTierListResult.FromResponse(response);
+                yield return Page<CognitiveServicesQuotaTierData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaTierCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

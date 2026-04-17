@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Resource properties. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="location"> The location of the private endpoint connection. </param>
-        internal CognitiveServicesPrivateEndpointConnectionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.PrivateEndpointConnectionProperties properties, string eTag, string location) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesPrivateEndpointConnectionProperties properties, ETag? eTag, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,12 +43,67 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Resource properties. </summary>
-        public CognitiveServices.Models.PrivateEndpointConnectionProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal CognitiveServicesPrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> The location of the private endpoint connection. </summary>
-        public string Location { get; set; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
+        public CognitiveServicesPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CognitiveServicesPrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public CognitiveServicesPrivateEndpointConnectionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The private link resource group ids. </summary>
+        [WirePath("properties.groupIds")]
+        public IList<string> GroupIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CognitiveServicesPrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
+            }
+        }
+
+        /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+        }
     }
 }

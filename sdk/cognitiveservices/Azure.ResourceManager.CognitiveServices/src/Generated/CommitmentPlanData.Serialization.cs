@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.CommitmentPlanProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -119,12 +120,12 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Kind))
             {
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.CognitiveServicesSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
         }
 
@@ -163,22 +164,26 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CognitiveServices.Models.CommitmentPlanProperties properties = default;
+            CommitmentPlanProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
-            string eTag = default;
+            AzureLocation? location = default;
+            ETag? eTag = default;
             string kind = default;
-            CognitiveServices.Models.CognitiveServicesSku sku = default;
+            CognitiveServicesSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -210,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServices.Models.CommitmentPlanProperties.DeserializeCommitmentPlanProperties(prop.Value, options);
+                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -236,12 +241,20 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -255,7 +268,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    sku = CognitiveServices.Models.CognitiveServicesSku.DeserializeCognitiveServicesSku(prop.Value, options);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

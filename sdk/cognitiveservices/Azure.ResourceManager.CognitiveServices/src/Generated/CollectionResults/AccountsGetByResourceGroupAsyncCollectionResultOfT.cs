@@ -11,34 +11,38 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class AccountsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<AccountData>
+    internal partial class AccountsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<CognitiveServicesAccountData>
     {
         private readonly Accounts _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AccountsGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Accounts client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AccountsGetByResourceGroupAsyncCollectionResultOfT(Accounts client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AccountsGetByResourceGroupAsyncCollectionResultOfT(Accounts client, string subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AccountsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccountsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AccountData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CognitiveServicesAccountData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -48,8 +52,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.AccountListResult result = CognitiveServices.Models.AccountListResult.FromResponse(response);
-                yield return Page<AccountData>.FromValues((IReadOnlyList<AccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AccountListResult result = AccountListResult.FromResponse(response);
+                yield return Page<CognitiveServicesAccountData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AccountCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -7,26 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The abuse penalty. </summary>
-    internal partial class AbusePenalty
+    public partial class AbusePenalty
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.AbusePenalty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         internal AbusePenalty()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.AbusePenalty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         /// <param name="action"> The action of AbusePenalty. </param>
         /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
         /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbusePenalty(CognitiveServices.Models.AbusePenaltyAction? action, float? rateLimitPercentage, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbusePenalty(AbusePenaltyAction? action, float? rateLimitPercentage, DateTimeOffset? expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             RateLimitPercentage = rateLimitPercentage;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The action of AbusePenalty. </summary>
-        public CognitiveServices.Models.AbusePenaltyAction? Action { get; }
+        [WirePath("action")]
+        public AbusePenaltyAction? Action { get; }
 
         /// <summary> The percentage of rate limit. </summary>
+        [WirePath("rateLimitPercentage")]
         public float? RateLimitPercentage { get; }
 
         /// <summary> The datetime of expiration of the AbusePenalty. </summary>
+        [WirePath("expiration")]
         public DateTimeOffset? Expiration { get; }
     }
 }

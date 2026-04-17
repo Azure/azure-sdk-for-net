@@ -20,13 +20,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
             Operation operation = projectClient.DeleteProject(
-                waitUntil: WaitUntil.Completed
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName
             );
 
             // Extract the operation-location header
@@ -43,13 +45,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
             Operation operation = await projectClient.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed
+                waitUntil: WaitUntil.Completed,
+                projectName: projectName
             );
 
             // Extract the operation-location header

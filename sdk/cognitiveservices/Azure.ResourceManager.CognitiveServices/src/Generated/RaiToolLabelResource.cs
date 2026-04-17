@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a RaiToolLabel along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RaiToolLabelResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource"/> using the GetRaiToolLabels method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetRaiToolLabels method.
     /// </summary>
     public partial class RaiToolLabelResource : ArmResource
     {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string raiToolLabelApiVersion);
             _raiToolLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _raiToolLabelsRestClient = new RaiToolLabels(_raiToolLabelsClientDiagnostics, Pipeline, Endpoint, raiToolLabelApiVersion ?? "2026-01-15-preview");
+            _raiToolLabelsRestClient = new RaiToolLabels(_raiToolLabelsClientDiagnostics, Pipeline, Endpoint, raiToolLabelApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

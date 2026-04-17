@@ -14,51 +14,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The abuse penalty. </summary>
-    internal partial class AbusePenalty : IJsonModel<CognitiveServices.Models.AbusePenalty>
+    public partial class AbusePenalty : IJsonModel<AbusePenalty>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.AbusePenalty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AbusePenalty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return CognitiveServices.Models.AbusePenalty.DeserializeAbusePenalty(document.RootElement, options);
+                        return DeserializeAbusePenalty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.AbusePenalty)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbusePenalty)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.AbusePenalty)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbusePenalty)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServices.Models.AbusePenalty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AbusePenalty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.AbusePenalty IPersistableModel<CognitiveServices.Models.AbusePenalty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AbusePenalty IPersistableModel<AbusePenalty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServices.Models.AbusePenalty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AbusePenalty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServices.Models.AbusePenalty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AbusePenalty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.AbusePenalty)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AbusePenalty)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Action))
             {
@@ -108,30 +108,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.AbusePenalty IJsonModel<CognitiveServices.Models.AbusePenalty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AbusePenalty IJsonModel<AbusePenalty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.AbusePenalty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AbusePenalty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AbusePenalty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.AbusePenalty)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AbusePenalty)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return CognitiveServices.Models.AbusePenalty.DeserializeAbusePenalty(document.RootElement, options);
+            return DeserializeAbusePenalty(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServices.Models.AbusePenalty DeserializeAbusePenalty(JsonElement element, ModelReaderWriterOptions options)
+        internal static AbusePenalty DeserializeAbusePenalty(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CognitiveServices.Models.AbusePenaltyAction? action = default;
+            AbusePenaltyAction? action = default;
             float? rateLimitPercentage = default;
             DateTimeOffset? expiration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    action = new CognitiveServices.Models.AbusePenaltyAction(prop.Value.GetString());
+                    action = new AbusePenaltyAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rateLimitPercentage"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServices.Models.AbusePenalty(action, rateLimitPercentage, expiration, additionalBinaryDataProperties);
+            return new AbusePenalty(action, rateLimitPercentage, expiration, additionalBinaryDataProperties);
         }
     }
 }

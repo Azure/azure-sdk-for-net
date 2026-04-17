@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RaiContentFilterData"/>. </summary>
-        internal RaiContentFilterData()
+        public RaiContentFilterData()
         {
         }
 
@@ -30,13 +31,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Azure OpenAI Content Filter Properties. </param>
-        internal RaiContentFilterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.RaiContentFilterProperties properties) : base(id, name, resourceType, systemData)
+        internal RaiContentFilterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiContentFilterProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Azure OpenAI Content Filter Properties. </summary>
-        public CognitiveServices.Models.RaiContentFilterProperties Properties { get; }
+        [WirePath("properties")]
+        public RaiContentFilterProperties Properties { get; set; }
     }
 }

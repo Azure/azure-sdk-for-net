@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -98,17 +99,17 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.PrivateEndpointConnectionProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
@@ -137,19 +138,23 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CognitiveServices.Models.PrivateEndpointConnectionProperties properties = default;
-            string eTag = default;
-            string location = default;
+            CognitiveServicesPrivateEndpointConnectionProperties properties = default;
+            ETag? eTag = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -181,17 +186,25 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServices.Models.PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = CognitiveServicesPrivateEndpointConnectionProperties.DeserializeCognitiveServicesPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices.Mocking
@@ -22,24 +23,24 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
     {
         private ClientDiagnostics _accountsClientDiagnostics;
         private Accounts _accountsRestClient;
-        private ClientDiagnostics _commitmentPlansClientDiagnostics;
-        private CommitmentPlans _commitmentPlansRestClient;
-        private ClientDiagnostics _cognitiveServicesClientClientDiagnostics;
-        private CognitiveServicesClient _cognitiveServicesClientRestClient;
         private ClientDiagnostics _deletedAccountsClientDiagnostics;
         private DeletedAccounts _deletedAccountsRestClient;
-        private ClientDiagnostics _resourceSkusClientDiagnostics;
-        private ResourceSkus _resourceSkusRestClient;
-        private ClientDiagnostics _usagesClientDiagnostics;
-        private Usages _usagesRestClient;
-        private ClientDiagnostics _commitmentTiersClientDiagnostics;
-        private CommitmentTiers _commitmentTiersRestClient;
-        private ClientDiagnostics _modelsClientDiagnostics;
-        private CognitiveServices.Models _modelsRestClient;
-        private ClientDiagnostics _locationBasedModelCapacitiesClientDiagnostics;
-        private LocationBasedModelCapacities _locationBasedModelCapacitiesRestClient;
-        private ClientDiagnostics _modelCapacitiesClientDiagnostics;
-        private ModelCapacities _modelCapacitiesRestClient;
+        private ClientDiagnostics _commitmentPlanOperationGroupClientDiagnostics;
+        private CommitmentPlanOperationGroup _commitmentPlanOperationGroupRestClient;
+        private ClientDiagnostics _cognitiveServicesClientClientDiagnostics;
+        private CognitiveServicesClient _cognitiveServicesClientRestClient;
+        private ClientDiagnostics _resourceSkusOperationGroupClientDiagnostics;
+        private ResourceSkusOperationGroup _resourceSkusOperationGroupRestClient;
+        private ClientDiagnostics _usagesOperationGroupClientDiagnostics;
+        private UsagesOperationGroup _usagesOperationGroupRestClient;
+        private ClientDiagnostics _commitmentTiersOperationGroupClientDiagnostics;
+        private CommitmentTiersOperationGroup _commitmentTiersOperationGroupRestClient;
+        private ClientDiagnostics _locationBasedModelCapacitiesOperationGroupClientDiagnostics;
+        private LocationBasedModelCapacitiesOperationGroup _locationBasedModelCapacitiesOperationGroupRestClient;
+        private ClientDiagnostics _modelCapacitiesOperationGroupClientDiagnostics;
+        private ModelCapacitiesOperationGroup _modelCapacitiesOperationGroupRestClient;
+        private ClientDiagnostics _cognitiveServicesModelsClientDiagnostics;
+        private CognitiveServicesModels _cognitiveServicesModelsRestClient;
 
         /// <summary> Initializes a new instance of MockableCognitiveServicesSubscriptionResource for mocking. </summary>
         protected MockableCognitiveServicesSubscriptionResource()
@@ -55,49 +56,49 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
-
-        private ClientDiagnostics CommitmentPlansClientDiagnostics => _commitmentPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private CommitmentPlans CommitmentPlansRestClient => _commitmentPlansRestClient ??= new CommitmentPlans(CommitmentPlansClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
-
-        private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CommitmentPlanOperationGroupClientDiagnostics => _commitmentPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceSkus ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkus(ResourceSkusClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private CommitmentPlanOperationGroup CommitmentPlanOperationGroupRestClient => _commitmentPlanOperationGroupRestClient ??= new CommitmentPlanOperationGroup(CommitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CognitiveServicesClientClientDiagnostics => _cognitiveServicesClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private CognitiveServicesClient CognitiveServicesClientRestClient => _cognitiveServicesClientRestClient ??= new CognitiveServicesClient(CognitiveServicesClientClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics CommitmentTiersClientDiagnostics => _commitmentTiersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ResourceSkusOperationGroupClientDiagnostics => _resourceSkusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommitmentTiers CommitmentTiersRestClient => _commitmentTiersRestClient ??= new CommitmentTiers(CommitmentTiersClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private ResourceSkusOperationGroup ResourceSkusOperationGroupRestClient => _resourceSkusOperationGroupRestClient ??= new ResourceSkusOperationGroup(ResourceSkusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics ModelsClientDiagnostics => _modelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UsagesOperationGroupClientDiagnostics => _usagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CognitiveServices.Models ModelsRestClient => _modelsRestClient ??= new CognitiveServices.Models(ModelsClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private UsagesOperationGroup UsagesOperationGroupRestClient => _usagesOperationGroupRestClient ??= new UsagesOperationGroup(UsagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics LocationBasedModelCapacitiesClientDiagnostics => _locationBasedModelCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics CommitmentTiersOperationGroupClientDiagnostics => _commitmentTiersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocationBasedModelCapacities LocationBasedModelCapacitiesRestClient => _locationBasedModelCapacitiesRestClient ??= new LocationBasedModelCapacities(LocationBasedModelCapacitiesClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private CommitmentTiersOperationGroup CommitmentTiersOperationGroupRestClient => _commitmentTiersOperationGroupRestClient ??= new CommitmentTiersOperationGroup(CommitmentTiersOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        private ClientDiagnostics ModelCapacitiesClientDiagnostics => _modelCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LocationBasedModelCapacitiesOperationGroupClientDiagnostics => _locationBasedModelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ModelCapacities ModelCapacitiesRestClient => _modelCapacitiesRestClient ??= new ModelCapacities(ModelCapacitiesClientDiagnostics, Pipeline, Endpoint, "2026-01-15-preview");
+        private LocationBasedModelCapacitiesOperationGroup LocationBasedModelCapacitiesOperationGroupRestClient => _locationBasedModelCapacitiesOperationGroupRestClient ??= new LocationBasedModelCapacitiesOperationGroup(LocationBasedModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
-        /// <summary> Gets a collection of DeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of DeletedAccounts and their operations over a DeletedAccountResource. </returns>
-        public virtual DeletedAccountCollection GetDeletedAccounts()
+        private ClientDiagnostics ModelCapacitiesOperationGroupClientDiagnostics => _modelCapacitiesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ModelCapacitiesOperationGroup ModelCapacitiesOperationGroupRestClient => _modelCapacitiesOperationGroupRestClient ??= new ModelCapacitiesOperationGroup(ModelCapacitiesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
+
+        private ClientDiagnostics CognitiveServicesModelsClientDiagnostics => _cognitiveServicesModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CognitiveServicesModels CognitiveServicesModelsRestClient => _cognitiveServicesModelsRestClient ??= new CognitiveServicesModels(CognitiveServicesModelsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
+
+        /// <summary> Gets a collection of CognitiveServicesDeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesDeletedAccounts and their operations over a CognitiveServicesDeletedAccountResource. </returns>
+        public virtual CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts()
         {
-            return GetCachedClient(client => new DeletedAccountCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesDeletedAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,16 +122,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return await GetDeletedAccounts().GetAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesDeletedAccounts().GetAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,16 +154,80 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeletedAccountResource> GetDeletedAccount(string location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            return GetDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
+            return GetCognitiveServicesDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RaiExternalSafetyProviderSchemas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of RaiExternalSafetyProviderSchemas and their operations over a RaiExternalSafetyProviderSchemaResource. </returns>
+        public virtual RaiExternalSafetyProviderSchemaCollection GetRaiExternalSafetyProviderSchemas()
+        {
+            return GetCachedClient(client => new RaiExternalSafetyProviderSchemaCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified external safety provider associated with the Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiExternalSafetyProviders/{safetyProviderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RaiExternalSafetyProviderSchemas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="safetyProviderName"> The name of the Rai External Safety Provider associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="safetyProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="safetyProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RaiExternalSafetyProviderSchemaResource>> GetRaiExternalSafetyProviderSchemaAsync(string safetyProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
+
+            return await GetRaiExternalSafetyProviderSchemas().GetAsync(safetyProviderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified external safety provider associated with the Subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiExternalSafetyProviders/{safetyProviderName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RaiExternalSafetyProviderSchemas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="safetyProviderName"> The name of the Rai External Safety Provider associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="safetyProviderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="safetyProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RaiExternalSafetyProviderSchemaResource> GetRaiExternalSafetyProviderSchema(string safetyProviderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
+
+            return GetRaiExternalSafetyProviderSchemas().Get(safetyProviderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiContentFilters in the <see cref="SubscriptionResource"/>. </summary>
@@ -187,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,11 +298,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return GetRaiContentFilters(location).Get(filterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of QuotaTiers in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of QuotaTiers and their operations over a QuotaTierResource. </returns>
-        public virtual QuotaTierCollection GetQuotaTiers()
+        /// <summary> Gets a collection of CognitiveServicesQuotaTiers in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesQuotaTiers and their operations over a CognitiveServicesQuotaTierResource. </returns>
+        public virtual CognitiveServicesQuotaTierCollection GetCognitiveServicesQuotaTiers()
         {
-            return GetCachedClient(client => new QuotaTierCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesQuotaTierCollection(client, Id));
         }
 
         /// <summary>
@@ -254,7 +318,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,11 +327,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaTierResource>> GetQuotaTierAsync(string @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesQuotaTierResource>> GetCognitiveServicesQuotaTierAsync(string @default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@default, nameof(@default));
 
-            return await GetQuotaTiers().GetAsync(@default, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesQuotaTiers().GetAsync(@default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +347,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,199 +356,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="default"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="default"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaTierResource> GetQuotaTier(string @default, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesQuotaTierResource> GetCognitiveServicesQuotaTier(string @default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@default, nameof(@default));
 
-            return GetQuotaTiers().Get(@default, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ComputeOperationStatuses in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of ComputeOperationStatuses and their operations over a ComputeOperationStatusResource. </returns>
-        public virtual ComputeOperationStatusCollection GetComputeOperationStatuses()
-        {
-            return GetCachedClient(client => new ComputeOperationStatusCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the status of a compute operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/computeOperations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputeOperations_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of the compute operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ComputeOperationStatusResource>> GetComputeOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetComputeOperationStatuses().GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the status of a compute operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/computeOperations/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputeOperations_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of the compute operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ComputeOperationStatusResource> GetComputeOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetComputeOperationStatuses().Get(location, operationId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RaiExternalSafetyProviderSchemas in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of RaiExternalSafetyProviderSchemas and their operations over a RaiExternalSafetyProviderSchemaResource. </returns>
-        public virtual RaiExternalSafetyProviderSchemaCollection GetRaiExternalSafetyProviderSchemas()
-        {
-            return GetCachedClient(client => new RaiExternalSafetyProviderSchemaCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified external safety provider associated with the Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiExternalSafetyProviders/{safetyProviderName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RaiExternalSafetyProviderSchemas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="safetyProviderName"> The name of the Rai External Safety Provider associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="safetyProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="safetyProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RaiExternalSafetyProviderSchemaResource>> GetRaiExternalSafetyProviderSchemaAsync(string safetyProviderName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
-
-            return await GetRaiExternalSafetyProviderSchemas().GetAsync(safetyProviderName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified external safety provider associated with the Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiExternalSafetyProviders/{safetyProviderName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RaiExternalSafetyProviderSchemas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="safetyProviderName"> The name of the Rai External Safety Provider associated with the Cognitive Services Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="safetyProviderName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="safetyProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RaiExternalSafetyProviderSchemaResource> GetRaiExternalSafetyProviderSchema(string safetyProviderName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(safetyProviderName, nameof(safetyProviderName));
-
-            return GetRaiExternalSafetyProviderSchemas().Get(safetyProviderName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AccountData, AccountResource>(new AccountsGetAllAsyncCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context), data => new AccountResource(Client, data));
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/accounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AccountData, AccountResource>(new AccountsGetAllCollectionResultOfT(AccountsRestClient, Id.SubscriptionId, context), data => new AccountResource(Client, data));
+            return GetCognitiveServicesQuotaTiers().Get(@default, cancellationToken);
         }
 
         /// <summary>
@@ -500,19 +376,19 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommitmentPlanResource> GetCommitmentPlansAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CommitmentPlanData, CommitmentPlanResource>(new CommitmentPlansGetPlansBySubscriptionAsyncCollectionResultOfT(CommitmentPlansRestClient, Id.SubscriptionId, context), data => new CommitmentPlanResource(Client, data));
+            return new AsyncPageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansAsyncCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -528,19 +404,19 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommitmentPlanResource> GetCommitmentPlans(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CommitmentPlanData, CommitmentPlanResource>(new CommitmentPlansGetPlansBySubscriptionCollectionResultOfT(CommitmentPlansRestClient, Id.SubscriptionId, context), data => new CommitmentPlanResource(Client, data));
+            return new PageableWrapper<CommitmentPlanData, CognitiveServicesCommitmentPlanResource>(new CommitmentPlanOperationGroupGetCognitiveServicesCommitmentPlansCollectionResultOfT(CommitmentPlanOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans"), data => new CognitiveServicesCommitmentPlanResource(Client, data));
         }
 
         /// <summary>
@@ -556,21 +432,96 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="checkSkuAvailabilityParameter"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CognitiveServices.Models.SkuAvailabilityListResult>> CheckSkuAvailabilityAsync(string location, CognitiveServices.Models.CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability");
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesClientCheckSkuAvailabilityAsyncCollectionResultOfT(
+                CognitiveServicesClientRestClient,
+                Id.SubscriptionId,
+                location,
+                CognitiveServicesSkuAvailabilityContent.ToRequestContent(content),
+                context,
+                "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability");
+        }
+
+        /// <summary>
+        /// Check available SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CognitiveServices_CheckSkuAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesClientCheckSkuAvailabilityCollectionResultOfT(
+                CognitiveServicesClientRestClient,
+                Id.SubscriptionId,
+                location,
+                CognitiveServicesSkuAvailabilityContent.ToRequestContent(content),
+                context,
+                "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability");
+        }
+
+        /// <summary>
+        /// Check whether a domain is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CognitiveServices_CheckDomainAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CheckDomainAvailability");
             scope.Start();
             try
             {
@@ -578,60 +529,9 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, CognitiveServices.Models.CheckSkuAvailabilityParameter.ToRequestContent(checkSkuAvailabilityParameter), context);
+                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CognitiveServices.Models.SkuAvailabilityListResult> response = Response.FromValue(CognitiveServices.Models.SkuAvailabilityListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check available SKUs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/checkSkuAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CognitiveServices_CheckSkuAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="checkSkuAvailabilityParameter"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="checkSkuAvailabilityParameter"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CognitiveServices.Models.SkuAvailabilityListResult> CheckSkuAvailability(string location, CognitiveServices.Models.CheckSkuAvailabilityParameter checkSkuAvailabilityParameter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-            Argument.AssertNotNull(checkSkuAvailabilityParameter, nameof(checkSkuAvailabilityParameter));
-
-            using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, CognitiveServices.Models.CheckSkuAvailabilityParameter.ToRequestContent(checkSkuAvailabilityParameter), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CognitiveServices.Models.SkuAvailabilityListResult> response = Response.FromValue(CognitiveServices.Models.SkuAvailabilityListResult.FromResponse(result), result);
+                Response<CognitiveServicesDomainAvailabilityList> response = Response.FromValue(CognitiveServicesDomainAvailabilityList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -658,16 +558,16 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkDomainAvailabilityParameter"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServices.Models.DomainAvailability>> CheckDomainAvailabilityAsync(CognitiveServices.Models.CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CheckDomainAvailability");
             scope.Start();
@@ -677,57 +577,9 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServices.Models.CheckDomainAvailabilityParameter.ToRequestContent(checkDomainAvailabilityParameter), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CognitiveServices.Models.DomainAvailability> response = Response.FromValue(CognitiveServices.Models.DomainAvailability.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Check whether a domain is available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/checkDomainAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CognitiveServices_CheckDomainAvailability. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="checkDomainAvailabilityParameter"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkDomainAvailabilityParameter"/> is null. </exception>
-        public virtual Response<CognitiveServices.Models.DomainAvailability> CheckDomainAvailability(CognitiveServices.Models.CheckDomainAvailabilityParameter checkDomainAvailabilityParameter, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkDomainAvailabilityParameter, nameof(checkDomainAvailabilityParameter));
-
-            using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CheckDomainAvailability");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServices.Models.CheckDomainAvailabilityParameter.ToRequestContent(checkDomainAvailabilityParameter), context);
+                HttpMessage message = CognitiveServicesClientRestClient.CreateCheckDomainAvailabilityRequest(Id.SubscriptionId, CognitiveServicesDomainAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CognitiveServices.Models.DomainAvailability> response = Response.FromValue(CognitiveServices.Models.DomainAvailability.FromResponse(result), result);
+                Response<CognitiveServicesDomainAvailabilityList> response = Response.FromValue(CognitiveServicesDomainAvailabilityList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -754,16 +606,16 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="calculateModelCapacityParameter"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="calculateModelCapacityParameter"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServices.Models.CalculateModelCapacityResult>> CalculateModelCapacityAsync(CognitiveServices.Models.CalculateModelCapacityParameter calculateModelCapacityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CalculateModelCapacityResult>> CalculateModelCapacityAsync(CalculateModelCapacityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(calculateModelCapacityParameter, nameof(calculateModelCapacityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CalculateModelCapacity");
             scope.Start();
@@ -773,9 +625,9 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CognitiveServices.Models.CalculateModelCapacityParameter.ToRequestContent(calculateModelCapacityParameter), context);
+                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CognitiveServices.Models.CalculateModelCapacityResult> response = Response.FromValue(CognitiveServices.Models.CalculateModelCapacityResult.FromResponse(result), result);
+                Response<CalculateModelCapacityResult> response = Response.FromValue(CalculateModelCapacityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -802,16 +654,16 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="calculateModelCapacityParameter"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="calculateModelCapacityParameter"/> is null. </exception>
-        public virtual Response<CognitiveServices.Models.CalculateModelCapacityResult> CalculateModelCapacity(CognitiveServices.Models.CalculateModelCapacityParameter calculateModelCapacityParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CalculateModelCapacityResult> CalculateModelCapacity(CalculateModelCapacityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(calculateModelCapacityParameter, nameof(calculateModelCapacityParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = CognitiveServicesClientClientDiagnostics.CreateScope("MockableCognitiveServicesSubscriptionResource.CalculateModelCapacity");
             scope.Start();
@@ -821,9 +673,9 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CognitiveServices.Models.CalculateModelCapacityParameter.ToRequestContent(calculateModelCapacityParameter), context);
+                HttpMessage message = CognitiveServicesClientRestClient.CreateCalculateModelCapacityRequest(Id.SubscriptionId, CalculateModelCapacityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CognitiveServices.Models.CalculateModelCapacityResult> response = Response.FromValue(CognitiveServices.Models.CalculateModelCapacityResult.FromResponse(result), result);
+                Response<CalculateModelCapacityResult> response = Response.FromValue(CalculateModelCapacityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -838,59 +690,31 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         }
 
         /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
+        /// Gets the list of Microsoft.CognitiveServices SKUs available for your Subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
+        /// <description> ResourceSkusOperationGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountData> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableCognitiveServicesSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DeletedAccountsGetAllAsyncCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context);
-        }
-
-        /// <summary>
-        /// Returns all the resources of a particular type belonging to a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/deletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountData> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new DeletedAccountsGetAllCollectionResultOfT(DeletedAccountsRestClient, Id.SubscriptionId, context);
+            return new ResourceSkusOperationGroupGetResourceSkusAsyncCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -906,47 +730,19 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.ResourceSku> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableCognitiveServicesSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableCognitiveServicesSku> GetResourceSkus(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetAllAsyncCollectionResultOfT(ResourceSkusRestClient, Id.SubscriptionId, context);
-        }
-
-        /// <summary>
-        /// Gets the list of Microsoft.CognitiveServices SKUs available for your Subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/skus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceSkusOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.ResourceSku> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ResourceSkusGetAllCollectionResultOfT(ResourceSkusRestClient, Id.SubscriptionId, context);
+            return new ResourceSkusOperationGroupGetResourceSkusCollectionResultOfT(ResourceSkusOperationGroupRestClient, Id.SubscriptionId, context, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus");
         }
 
         /// <summary>
@@ -962,25 +758,27 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.CognitiveServicesUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.CognitiveServicesUsage> GetAllAsync(string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceAccountUsage> GetUsagesAsync(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllAsyncCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
+            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(
+                UsagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -996,25 +794,27 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="filter"> An OData filter expression that describes a subset of usages to return. The supported parameter is name.value (name of the metric, can have an or of multiple names). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.CognitiveServicesUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.CognitiveServicesUsage> GetAll(string location, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceAccountUsage> GetUsages(AzureLocation location, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetAllCollectionResultOfT(UsagesRestClient, Id.SubscriptionId, location, filter, context);
+            return new UsagesOperationGroupGetUsagesCollectionResultOfT(
+                UsagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                filter,
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -1030,24 +830,20 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.CommitmentTier> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommitmentTier> GetCommitmentTiersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersGetAllAsyncCollectionResultOfT(CommitmentTiersRestClient, Id.SubscriptionId, location, context);
+            return new CommitmentTiersOperationGroupGetCommitmentTiersAsyncCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1063,90 +859,20 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.CommitmentTier> GetAll(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommitmentTier> GetCommitmentTiers(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CommitmentTiersGetAllCollectionResultOfT(CommitmentTiersRestClient, Id.SubscriptionId, location, context);
-        }
-
-        /// <summary>
-        /// List Models.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ModelsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.Model"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.Model> GetAllAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ModelsGetAllAsyncCollectionResultOfT(ModelsRestClient, Id.SubscriptionId, location, context);
-        }
-
-        /// <summary>
-        /// List Models.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ModelsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.Model"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.Model> GetAll(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ModelsGetAllCollectionResultOfT(ModelsRestClient, Id.SubscriptionId, location, context);
+            return new CommitmentTiersOperationGroupGetCommitmentTiersCollectionResultOfT(CommitmentTiersOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers");
         }
 
         /// <summary>
@@ -1162,7 +888,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1171,12 +897,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="modelName"> The name of the Model. </param>
         /// <param name="modelVersion"> The version of the Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(string location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetLocationBasedModelCapacitiesAsync(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
             Argument.AssertNotNullOrEmpty(modelVersion, nameof(modelVersion));
@@ -1185,14 +910,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesGetAllAsyncCollectionResultOfT(
-                LocationBasedModelCapacitiesRestClient,
+            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesAsyncCollectionResultOfT(
+                LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
                 modelFormat,
                 modelName,
                 modelVersion,
-                context);
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetLocationBasedModelCapacities");
         }
 
         /// <summary>
@@ -1208,7 +934,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1217,12 +943,11 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="modelName"> The name of the Model. </param>
         /// <param name="modelVersion"> The version of the Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(string location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ModelCapacityListResultValueItem> GetLocationBasedModelCapacities(AzureLocation location, string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
             Argument.AssertNotNullOrEmpty(modelVersion, nameof(modelVersion));
@@ -1231,14 +956,15 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationBasedModelCapacitiesGetAllCollectionResultOfT(
-                LocationBasedModelCapacitiesRestClient,
+            return new LocationBasedModelCapacitiesOperationGroupGetLocationBasedModelCapacitiesCollectionResultOfT(
+                LocationBasedModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
                 modelFormat,
                 modelName,
                 modelVersion,
-                context);
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetLocationBasedModelCapacities");
         }
 
         /// <summary>
@@ -1254,7 +980,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1264,8 +990,8 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CognitiveServices.Models.ModelCapacityListResultValueItem> GetAllAsync(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ModelCapacityListResultValueItem> GetModelCapacitiesAsync(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1275,13 +1001,14 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesGetAllAsyncCollectionResultOfT(
-                ModelCapacitiesRestClient,
+            return new ModelCapacitiesOperationGroupGetModelCapacitiesAsyncCollectionResultOfT(
+                ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
                 modelName,
                 modelVersion,
-                context);
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetModelCapacities");
         }
 
         /// <summary>
@@ -1297,7 +1024,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1307,8 +1034,8 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelFormat"/>, <paramref name="modelName"/> or <paramref name="modelVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="CognitiveServices.Models.ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CognitiveServices.Models.ModelCapacityListResultValueItem> GetAll(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ModelCapacityListResultValueItem"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ModelCapacityListResultValueItem> GetModelCapacities(string modelFormat, string modelName, string modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelFormat, nameof(modelFormat));
             Argument.AssertNotNullOrEmpty(modelName, nameof(modelName));
@@ -1318,13 +1045,72 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ModelCapacitiesGetAllCollectionResultOfT(
-                ModelCapacitiesRestClient,
+            return new ModelCapacitiesOperationGroupGetModelCapacitiesCollectionResultOfT(
+                ModelCapacitiesOperationGroupRestClient,
                 Id.SubscriptionId,
                 modelFormat,
                 modelName,
                 modelVersion,
-                context);
+                context,
+                "MockableCognitiveServicesSubscriptionResource.GetModelCapacities");
+        }
+
+        /// <summary>
+        /// List Models.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ModelsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesModel> GetModelsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesModelsGetModelsAsyncCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
+        }
+
+        /// <summary>
+        /// List Models.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/models. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ModelsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CognitiveServicesModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesModel> GetModels(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new CognitiveServicesModelsGetModelsCollectionResultOfT(CognitiveServicesModelsRestClient, Id.SubscriptionId, location, context, "MockableCognitiveServicesSubscriptionResource.GetModels");
         }
     }
 }

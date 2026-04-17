@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> The Defender for AI resource properties. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal DefenderForAISettingData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.DefenderForAISettingProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal DefenderForAISettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DefenderForAISettingProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> The Defender for AI resource properties. </summary>
-        internal CognitiveServices.Models.DefenderForAISettingProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal DefenderForAISettingProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Defender for AI state on the AI resource. </summary>
-        public CognitiveServices.Models.DefenderForAISettingState? State
+        [WirePath("properties.state")]
+        public DefenderForAISettingState? State
         {
             get
             {
@@ -61,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (Properties is null)
                 {
-                    Properties = new CognitiveServices.Models.DefenderForAISettingProperties();
+                    Properties = new DefenderForAISettingProperties();
                 }
                 Properties.State = value.Value;
             }

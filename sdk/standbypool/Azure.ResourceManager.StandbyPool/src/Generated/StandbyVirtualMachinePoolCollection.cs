@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StandbyVirtualMachinePoolResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
         }
 
         /// <summary>

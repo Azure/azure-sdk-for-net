@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             if (id.ResourceType != BatchAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BatchAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsAsyncCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BatchAccountDetectorResource(Client, data));
+            return new AsyncPageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsAsyncCollectionResultOfT(
+                _batchAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BatchAccountDetectorCollection.GetAll"), data => new BatchAccountDetectorResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Batch
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsCollectionResultOfT(_batchAccountRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BatchAccountDetectorResource(Client, data));
+            return new PageableWrapper<BatchAccountDetectorData, BatchAccountDetectorResource>(new BatchAccountGetDetectorsCollectionResultOfT(
+                _batchAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BatchAccountDetectorCollection.GetAll"), data => new BatchAccountDetectorResource(Client, data));
         }
 
         /// <summary>

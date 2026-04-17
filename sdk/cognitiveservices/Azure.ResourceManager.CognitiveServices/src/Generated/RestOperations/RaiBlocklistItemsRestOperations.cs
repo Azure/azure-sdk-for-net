@@ -167,58 +167,5 @@ namespace Azure.ResourceManager.CognitiveServices
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
-
-        internal HttpMessage CreateBatchAddRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/raiBlocklists/", false);
-            uri.AppendPath(raiBlocklistName, true);
-            uri.AppendPath("/addRaiBlocklistItems", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateBatchDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string raiBlocklistName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.CognitiveServices/accounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/raiBlocklists/", false);
-            uri.AppendPath(raiBlocklistName, true);
-            uri.AppendPath("/deleteRaiBlocklistItems", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
     }
 }

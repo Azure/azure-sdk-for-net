@@ -114,7 +114,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation()),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -128,7 +128,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var collectionResult = ((ScmMethodProvider)_convenienceMethod).CollectionDefinition!;
             var diagnosticScope = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, diagnosticScope);
 
             var collectionResultOfT = collectionResult.Type;
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
@@ -141,6 +140,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             arguments.AddRange(_parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            arguments.Add(Literal(diagnosticScope));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)

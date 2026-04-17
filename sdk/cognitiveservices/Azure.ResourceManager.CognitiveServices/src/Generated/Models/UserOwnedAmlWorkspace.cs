@@ -7,25 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The user owned AML account for Cognitive Services account. </summary>
-    internal partial class UserOwnedAmlWorkspace
+    public partial class UserOwnedAmlWorkspace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.UserOwnedAmlWorkspace"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserOwnedAmlWorkspace"/>. </summary>
         public UserOwnedAmlWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.UserOwnedAmlWorkspace"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserOwnedAmlWorkspace"/>. </summary>
         /// <param name="resourceId"> Full resource id of a AML account resource. </param>
         /// <param name="identityClientId"> Identity Client id of a AML account resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserOwnedAmlWorkspace(string resourceId, string identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserOwnedAmlWorkspace(ResourceIdentifier resourceId, Guid? identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             IdentityClientId = identityClientId;
@@ -33,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a AML account resource. </summary>
-        public string ResourceId { get; set; }
+        [WirePath("resourceId")]
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Identity Client id of a AML account resource. </summary>
-        public string IdentityClientId { get; set; }
+        [WirePath("identityClientId")]
+        public Guid? IdentityClientId { get; set; }
     }
 }

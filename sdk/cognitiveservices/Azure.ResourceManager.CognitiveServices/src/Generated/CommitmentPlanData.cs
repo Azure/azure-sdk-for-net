@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
-        internal CommitmentPlanData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.CommitmentPlanProperties properties, IDictionary<string, string> tags, string location, string eTag, string kind, CognitiveServices.Models.CognitiveServicesSku sku) : base(id, name, resourceType, systemData)
+        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommitmentPlanProperties properties, IDictionary<string, string> tags, AzureLocation? location, ETag? eTag, string kind, CognitiveServicesSku sku) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,21 +50,27 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services account commitment plan. </summary>
-        public CognitiveServices.Models.CommitmentPlanProperties Properties { get; set; }
+        [WirePath("properties")]
+        public CommitmentPlanProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> The kind (type) of cognitive service account. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The resource model definition representing SKU. </summary>
-        public CognitiveServices.Models.CognitiveServicesSku Sku { get; set; }
+        [WirePath("sku")]
+        public CognitiveServicesSku Sku { get; set; }
     }
 }

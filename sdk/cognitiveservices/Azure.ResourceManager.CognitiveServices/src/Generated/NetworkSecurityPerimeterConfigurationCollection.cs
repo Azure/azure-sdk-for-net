@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="NetworkSecurityPerimeterConfigurationResource"/> and their operations.
-    /// Each <see cref="NetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
-    /// To get a <see cref="NetworkSecurityPerimeterConfigurationCollection"/> instance call the GetNetworkSecurityPerimeterConfigurations method from an instance of <see cref="AccountResource"/>.
+    /// Each <see cref="NetworkSecurityPerimeterConfigurationResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="NetworkSecurityPerimeterConfigurationCollection"/> instance call the GetNetworkSecurityPerimeterConfigurations method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class NetworkSecurityPerimeterConfigurationCollection : ArmCollection, IEnumerable<NetworkSecurityPerimeterConfigurationResource>, IAsyncEnumerable<NetworkSecurityPerimeterConfigurationResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(NetworkSecurityPerimeterConfigurationResource.ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", NetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-01-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
+            return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +233,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +290,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +347,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,7 +408,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

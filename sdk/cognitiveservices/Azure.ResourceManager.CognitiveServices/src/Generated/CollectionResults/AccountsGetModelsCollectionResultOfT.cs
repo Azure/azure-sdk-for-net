@@ -10,16 +10,18 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class AccountsGetModelsCollectionResultOfT : Pageable<CognitiveServices.Models.AccountModel>
+    internal partial class AccountsGetModelsCollectionResultOfT : Pageable<CognitiveServicesAccountModel>
     {
         private readonly Accounts _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _accountName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AccountsGetModelsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Accounts client used to send requests. </param>
@@ -27,20 +29,22 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AccountsGetModelsCollectionResultOfT(Accounts client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AccountsGetModelsCollectionResultOfT(Accounts client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _accountName = accountName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AccountsGetModelsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AccountsGetModelsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CognitiveServices.Models.AccountModel>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesAccountModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,8 +54,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.AccountModelListResult result = CognitiveServices.Models.AccountModelListResult.FromResponse(response);
-                yield return Page<CognitiveServices.Models.AccountModel>.FromValues((IReadOnlyList<CognitiveServices.Models.AccountModel>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AccountModelListResult result = AccountModelListResult.FromResponse(response);
+                yield return Page<CognitiveServicesAccountModel>.FromValues((IReadOnlyList<CognitiveServicesAccountModel>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetModelsRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _context) : _client.CreateGetModelsRequest(_subscriptionId, _resourceGroupName, _accountName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AccountResource.GetModels");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

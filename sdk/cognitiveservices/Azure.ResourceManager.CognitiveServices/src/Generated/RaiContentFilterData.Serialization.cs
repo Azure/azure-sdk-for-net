@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.RaiContentFilterProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -117,17 +118,21 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CognitiveServices.Models.RaiContentFilterProperties properties = default;
+            RaiContentFilterProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServices.Models.RaiContentFilterProperties.DeserializeRaiContentFilterProperties(prop.Value, options);
+                    properties = RaiContentFilterProperties.DeserializeRaiContentFilterProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

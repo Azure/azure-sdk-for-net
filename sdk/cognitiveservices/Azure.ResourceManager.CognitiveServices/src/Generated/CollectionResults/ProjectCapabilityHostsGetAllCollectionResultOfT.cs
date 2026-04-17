@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class ProjectCapabilityHostsGetAllCollectionResultOfT : Pageable<ProjectCapabilityHostData>
+    internal partial class ProjectCapabilityHostsGetAllCollectionResultOfT : Pageable<CognitiveServicesProjectScopedCapabilityHostData>
     {
         private readonly ProjectCapabilityHosts _client;
         private readonly string _subscriptionId;
@@ -21,6 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _accountName;
         private readonly string _projectName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProjectCapabilityHostsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProjectCapabilityHosts client used to send requests. </param>
@@ -29,7 +31,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="projectName"> The name of Cognitive Services account's project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ProjectCapabilityHostsGetAllCollectionResultOfT(ProjectCapabilityHosts client, string subscriptionId, string resourceGroupName, string accountName, string projectName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ProjectCapabilityHostsGetAllCollectionResultOfT(ProjectCapabilityHosts client, string subscriptionId, string resourceGroupName, string accountName, string projectName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,13 +40,14 @@ namespace Azure.ResourceManager.CognitiveServices
             _accountName = accountName;
             _projectName = projectName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ProjectCapabilityHostsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProjectCapabilityHostsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ProjectCapabilityHostData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesProjectScopedCapabilityHostData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,8 +57,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.ProjectCapabilityHostResourceArmPaginatedResult result = CognitiveServices.Models.ProjectCapabilityHostResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<ProjectCapabilityHostData>.FromValues((IReadOnlyList<ProjectCapabilityHostData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ProjectCapabilityHostResourceArmPaginatedResult result = ProjectCapabilityHostResourceArmPaginatedResult.FromResponse(response);
+                yield return Page<CognitiveServicesProjectScopedCapabilityHostData>.FromValues((IReadOnlyList<CognitiveServicesProjectScopedCapabilityHostData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _accountName, _projectName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _accountName, _projectName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectCapabilityHostCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

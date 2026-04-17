@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["DisableFabricIntegration"] = "true"
                 }
             };
-            var createResult = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData);
+            var createResult = await clusterManagerCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterManagerName, createData, matchConditions: null);
             // check a specific tag as the subscription policies add more automatically.
             Assert.AreEqual(createResult.Value.Data.Tags["DisableFabricIntegration"], createData.Tags["DisableFabricIntegration"]);
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["PatchTag"] = "patchTag",
                 }
             };
-            NetworkCloudClusterManagerResource updateResponse = await clusterManagerResource.UpdateAsync(newTags);
+            NetworkCloudClusterManagerResource updateResponse = await clusterManagerResource.UpdateAsync(newTags, matchConditions: null);
             Assert.AreEqual(updateResponse.Data.Tags["DisableFabricIntegration"], "true");
             Assert.AreEqual(updateResponse.Data.Tags["PatchTag"], "patchTag");
 

@@ -15,50 +15,50 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update tags and sku of a resource, in general used for PATCH operations. </summary>
-    public partial class PatchResourceTagsAndSku : CognitiveServices.Models.PatchResourceTags, IJsonModel<CognitiveServices.Models.PatchResourceTagsAndSku>
+    public partial class PatchResourceTagsAndSku : CognitiveServicesPatchResourceTags, IJsonModel<PatchResourceTagsAndSku>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CognitiveServices.Models.PatchResourceTags PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesPatchResourceTags PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return CognitiveServices.Models.PatchResourceTagsAndSku.DeserializePatchResourceTagsAndSku(document.RootElement, options);
+                        return DeserializePatchResourceTagsAndSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.PatchResourceTagsAndSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchResourceTagsAndSku)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.PatchResourceTagsAndSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchResourceTagsAndSku)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PatchResourceTagsAndSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.PatchResourceTagsAndSku IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>.Create(BinaryData data, ModelReaderWriterOptions options) => (CognitiveServices.Models.PatchResourceTagsAndSku)PersistableModelCreateCore(data, options);
+        PatchResourceTagsAndSku IPersistableModel<PatchResourceTagsAndSku>.Create(BinaryData data, ModelReaderWriterOptions options) => (PatchResourceTagsAndSku)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PatchResourceTagsAndSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="patchResourceTagsAndSku"> The <see cref="CognitiveServices.Models.PatchResourceTagsAndSku"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CognitiveServices.Models.PatchResourceTagsAndSku patchResourceTagsAndSku)
+        /// <param name="patchResourceTagsAndSku"> The <see cref="PatchResourceTagsAndSku"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PatchResourceTagsAndSku patchResourceTagsAndSku)
         {
             if (patchResourceTagsAndSku == null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServices.Models.PatchResourceTagsAndSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PatchResourceTagsAndSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,39 +80,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.PatchResourceTagsAndSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchResourceTagsAndSku)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.CognitiveServicesSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.PatchResourceTagsAndSku IJsonModel<CognitiveServices.Models.PatchResourceTagsAndSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CognitiveServices.Models.PatchResourceTagsAndSku)JsonModelCreateCore(ref reader, options);
+        PatchResourceTagsAndSku IJsonModel<PatchResourceTagsAndSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PatchResourceTagsAndSku)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CognitiveServices.Models.PatchResourceTags JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesPatchResourceTags JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchResourceTagsAndSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.PatchResourceTagsAndSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchResourceTagsAndSku)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return CognitiveServices.Models.PatchResourceTagsAndSku.DeserializePatchResourceTagsAndSku(document.RootElement, options);
+            return DeserializePatchResourceTagsAndSku(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServices.Models.PatchResourceTagsAndSku DeserializePatchResourceTagsAndSku(JsonElement element, ModelReaderWriterOptions options)
+        internal static PatchResourceTagsAndSku DeserializePatchResourceTagsAndSku(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CognitiveServices.Models.CognitiveServicesSku sku = default;
+            CognitiveServicesSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    sku = CognitiveServices.Models.CognitiveServicesSku.DeserializeCognitiveServicesSku(prop.Value, options);
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServices.Models.PatchResourceTagsAndSku(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, sku);
+            return new PatchResourceTagsAndSku(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, sku);
         }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The resource model definition representing SKU. </summary>
-    internal partial class CognitiveServicesSku : IJsonModel<CognitiveServices.Models.CognitiveServicesSku>
+    public partial class CognitiveServicesSku : IJsonModel<CognitiveServicesSku>
     {
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.CognitiveServicesSku"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSku"/> for deserialization. </summary>
         internal CognitiveServicesSku()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.CognitiveServicesSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return CognitiveServices.Models.CognitiveServicesSku.DeserializeCognitiveServicesSku(document.RootElement, options);
+                        return DeserializeCognitiveServicesSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.CognitiveServicesSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSku)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServices.Models.CognitiveServicesSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSku)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.CognitiveServicesSku IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesSku IPersistableModel<CognitiveServicesSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServices.Models.CognitiveServicesSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.CognitiveServicesSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSku)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -120,31 +120,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServices.Models.CognitiveServicesSku IJsonModel<CognitiveServices.Models.CognitiveServicesSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesSku IJsonModel<CognitiveServicesSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CognitiveServices.Models.CognitiveServicesSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServices.Models.CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServices.Models.CognitiveServicesSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSku)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return CognitiveServices.Models.CognitiveServicesSku.DeserializeCognitiveServicesSku(document.RootElement, options);
+            return DeserializeCognitiveServicesSku(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServices.Models.CognitiveServicesSku DeserializeCognitiveServicesSku(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesSku DeserializeCognitiveServicesSku(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            CognitiveServices.Models.CognitiveServicesSkuTier? tier = default;
+            CognitiveServicesSkuTier? tier = default;
             string size = default;
             string family = default;
             int? capacity = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    tier = new CognitiveServices.Models.CognitiveServicesSkuTier(prop.Value.GetString());
+                    tier = new CognitiveServicesSkuTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("size"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServices.Models.CognitiveServicesSku(
+            return new CognitiveServicesSku(
                 name,
                 tier,
                 size,

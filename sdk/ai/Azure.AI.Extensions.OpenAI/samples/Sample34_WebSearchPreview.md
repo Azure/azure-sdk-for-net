@@ -26,7 +26,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-ProjectsAgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -38,7 +38,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful assistant that can search the web.",
     Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
-ProjectsAgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -69,7 +69,7 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 Synchronous sample:
 ```C# Snippet:Sample_StreamResponse_WebSearchPreviewStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -110,7 +110,7 @@ Console.WriteLine($"{text}{annotation}");
 
 Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_WebSearchPreviewStreaming_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 string annotation = "";
 string text = "";
@@ -152,10 +152,10 @@ Console.WriteLine($"{text}{annotation}");
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

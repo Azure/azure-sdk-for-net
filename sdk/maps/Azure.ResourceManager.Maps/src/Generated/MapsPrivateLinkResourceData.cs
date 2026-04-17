@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Maps
         {
             get
             {
-                return Properties.GroupId;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Maps
         {
             get
             {
-                return Properties.RequiredMembers;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maps
         {
             get
             {
-                return Properties.RequiredZoneNames;
+                return Properties is null ? default : Properties.RequiredZoneNames;
             }
         }
     }

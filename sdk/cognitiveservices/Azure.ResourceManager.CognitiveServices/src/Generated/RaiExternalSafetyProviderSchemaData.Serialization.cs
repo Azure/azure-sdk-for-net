@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -98,12 +99,12 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
@@ -148,19 +149,23 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties properties = default;
-            string eTag = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            RaiExternalSafetyProviderSchemaProperties properties = default;
+            ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -192,12 +197,16 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         continue;
                     }
-                    properties = CognitiveServices.Models.RaiExternalSafetyProviderSchemaProperties.DeserializeRaiExternalSafetyProviderSchemaProperties(prop.Value, options);
+                    properties = RaiExternalSafetyProviderSchemaProperties.DeserializeRaiExternalSafetyProviderSchemaProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

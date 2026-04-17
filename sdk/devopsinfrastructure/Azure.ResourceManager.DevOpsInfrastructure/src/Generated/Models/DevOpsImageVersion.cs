@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             get
             {
-                return Properties.Version;
+                return Properties is null ? default : Properties.Version;
             }
         }
     }

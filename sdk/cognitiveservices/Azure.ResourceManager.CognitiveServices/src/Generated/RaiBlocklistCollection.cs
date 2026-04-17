@@ -20,15 +20,13 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="RaiBlocklistResource"/> and their operations.
-    /// Each <see cref="RaiBlocklistResource"/> in the collection will belong to the same instance of <see cref="AccountResource"/>.
-    /// To get a <see cref="RaiBlocklistCollection"/> instance call the GetRaiBlocklists method from an instance of <see cref="AccountResource"/>.
+    /// Each <see cref="RaiBlocklistResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="RaiBlocklistCollection"/> instance call the GetRaiBlocklists method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class RaiBlocklistCollection : ArmCollection, IEnumerable<RaiBlocklistResource>, IAsyncEnumerable<RaiBlocklistResource>
     {
         private readonly ClientDiagnostics _raiBlocklistsClientDiagnostics;
         private readonly RaiBlocklists _raiBlocklistsRestClient;
-        private readonly ClientDiagnostics _raiBlocklistItemsClientDiagnostics;
-        private readonly RaiBlocklistItems _raiBlocklistItemsRestClient;
 
         /// <summary> Initializes a new instance of RaiBlocklistCollection for mocking. </summary>
         protected RaiBlocklistCollection()
@@ -42,9 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(RaiBlocklistResource.ResourceType, out string raiBlocklistApiVersion);
             _raiBlocklistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBlocklistResource.ResourceType.Namespace, Diagnostics);
-            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-01-15-preview");
-            _raiBlocklistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiBlocklistResource.ResourceType.Namespace, Diagnostics);
-            _raiBlocklistItemsRestClient = new RaiBlocklistItems(_raiBlocklistItemsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-01-15-preview");
+            _raiBlocklistsRestClient = new RaiBlocklists(_raiBlocklistsClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -52,9 +48,9 @@ namespace Azure.ResourceManager.CognitiveServices
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AccountResource.ResourceType)
+            if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AccountResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +287,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllAsyncCollectionResultOfT(_raiBlocklistsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RaiBlocklistResource(Client, data));
+            return new AsyncPageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllAsyncCollectionResultOfT(
+                _raiBlocklistsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RaiBlocklistCollection.GetAll"), data => new RaiBlocklistResource(Client, data));
         }
 
         /// <summary>
@@ -307,7 +309,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +321,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllCollectionResultOfT(_raiBlocklistsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RaiBlocklistResource(Client, data));
+            return new PageableWrapper<RaiBlocklistData, RaiBlocklistResource>(new RaiBlocklistsGetAllCollectionResultOfT(
+                _raiBlocklistsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RaiBlocklistCollection.GetAll"), data => new RaiBlocklistResource(Client, data));
         }
 
         /// <summary>
@@ -335,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +457,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +518,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

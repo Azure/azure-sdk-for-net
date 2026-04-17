@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckSkuAvailabilityRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckSkuAvailabilityRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.CognitiveServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkSkuAvailability", false);
             if (_apiVersion != null)
             {

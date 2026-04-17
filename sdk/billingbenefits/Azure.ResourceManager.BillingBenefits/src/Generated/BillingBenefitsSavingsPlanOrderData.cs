@@ -13,138 +13,223 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    /// <summary>
-    /// A class representing the BillingBenefitsSavingsPlanOrder data model.
-    /// Savings plan order
-    /// </summary>
+    /// <summary> Savings plan order. </summary>
     public partial class BillingBenefitsSavingsPlanOrderData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/>. </summary>
-        /// <param name="sku"> Savings plan SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public BillingBenefitsSavingsPlanOrderData(BillingBenefitsSku sku)
+        public BillingBenefitsSavingsPlanOrderData()
         {
-            Argument.AssertNotNull(sku, nameof(sku));
 
-            Sku = sku;
-            SavingsPlans = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Savings plan order properties. </param>
         /// <param name="sku"> Savings plan SKU. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </param>
-        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="expireOn"> Expiry date time. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
-        /// <param name="savingsPlans"></param>
-        /// <param name="extendedStatusInfo"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, BillingPlanInformation planInformation, IList<string> savingsPlans, BillingBenefitsExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanOrderModelProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            DisplayName = displayName;
-            ProvisioningState = provisioningState;
-            BillingScopeId = billingScopeId;
-            BillingProfileId = billingProfileId;
-            CustomerId = customerId;
-            BillingAccountId = billingAccountId;
-            Term = term;
-            BillingPlan = billingPlan;
-            ExpireOn = expireOn;
-            BenefitStartOn = benefitStartOn;
-            PlanInformation = planInformation;
-            SavingsPlans = savingsPlans;
-            ExtendedStatusInfo = extendedStatusInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderData"/> for deserialization. </summary>
-        internal BillingBenefitsSavingsPlanOrderData()
-        {
-        }
+        /// <summary> Savings plan order properties. </summary>
+        internal SavingsPlanOrderModelProperties Properties { get; set; }
 
         /// <summary> Savings plan SKU. </summary>
-        internal BillingBenefitsSku Sku { get; set; }
-        /// <summary> Name of the SKU to be applied. </summary>
-        public string SkuName
+        internal ResourceSku Sku { get; set; }
+
+        /// <summary> Display name. </summary>
+        public string DisplayName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
             set
             {
-                if (Sku is null)
-                    Sku = new BillingBenefitsSku();
-                Sku.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
-        /// <summary> Display name. </summary>
-        public string DisplayName { get; set; }
         /// <summary> Provisioning state. </summary>
-        public BillingBenefitsProvisioningState? ProvisioningState { get; }
+        public BillingBenefitsProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
-        /// <summary> Fully-qualified identifier of the billing profile where the savings plan is applied. Present only for Field-led or Customer-led customers. </summary>
-        public ResourceIdentifier BillingProfileId { get; }
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
+        /// <summary> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </summary>
+        public ResourceIdentifier BillingProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </summary>
-        public string CustomerId { get; }
-        /// <summary> Fully-qualified identifier of the billing account where the savings plan is applied. Present only for Enterprise Agreement customers. </summary>
-        public ResourceIdentifier BillingAccountId { get; }
+        public ResourceIdentifier CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
+        /// <summary> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </summary>
+        public ResourceIdentifier BillingAccountId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingAccountId;
+            }
+        }
+
         /// <summary> Represent benefit term in ISO 8601 format. </summary>
-        public BillingBenefitsTerm? Term { get; set; }
+        public BillingBenefitsTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.Term = value.Value;
+            }
+        }
+
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
-        public BillingBenefitsBillingPlan? BillingPlan { get; set; }
+        public BillingBenefitsBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.BillingPlan = value.Value;
+            }
+        }
+
         /// <summary> Expiry date time. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
         /// <summary> This is the DateTime when the savings plan benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; set; }
+        public DateTimeOffset? BenefitStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.BenefitStartOn = value.Value;
+            }
+        }
+
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
-        public BillingPlanInformation PlanInformation { get; set; }
-        /// <summary> Gets the savings plans. </summary>
-        public IList<string> SavingsPlans { get; }
-        /// <summary> Gets the extended status info. </summary>
-        public BillingBenefitsExtendedStatusInfo ExtendedStatusInfo { get; }
+        public BillingPlanInformation PlanInformation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanInformation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                Properties.PlanInformation = value;
+            }
+        }
+
+        /// <summary> Gets the SavingsPlans. </summary>
+        public IList<string> SavingsPlans
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanOrderModelProperties();
+                }
+                return Properties.SavingsPlans;
+            }
+        }
+
+        /// <summary> Gets the ExtendedStatusInfo. </summary>
+        public BillingBenefitsExtendedStatusInfo ExtendedStatusInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtendedStatusInfo;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

@@ -7,25 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services Rai Monitor Config. </summary>
-    internal partial class RaiMonitorConfig
+    public partial class RaiMonitorConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.RaiMonitorConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiMonitorConfig"/>. </summary>
         public RaiMonitorConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServices.Models.RaiMonitorConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiMonitorConfig"/>. </summary>
         /// <param name="adxStorageResourceId"> The storage resource Id. </param>
         /// <param name="identityClientId"> The identity client Id to access the storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiMonitorConfig(string adxStorageResourceId, string identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiMonitorConfig(ResourceIdentifier adxStorageResourceId, Guid? identityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdxStorageResourceId = adxStorageResourceId;
             IdentityClientId = identityClientId;
@@ -33,9 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The storage resource Id. </summary>
-        public string AdxStorageResourceId { get; set; }
+        [WirePath("adxStorageResourceId")]
+        public ResourceIdentifier AdxStorageResourceId { get; set; }
 
         /// <summary> The identity client Id to access the storage. </summary>
-        public string IdentityClientId { get; set; }
+        [WirePath("identityClientId")]
+        public Guid? IdentityClientId { get; set; }
     }
 }

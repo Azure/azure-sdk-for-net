@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Properties of Cognitive Services RaiBlocklist. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal RaiBlocklistData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.RaiBlocklistProperties properties, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal RaiBlocklistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiBlocklistProperties properties, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,15 +44,19 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Properties of Cognitive Services RaiBlocklist. </summary>
-        internal CognitiveServices.Models.RaiBlocklistProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal RaiBlocklistProperties Properties { get; set; }
 
         /// <summary> Resource Etag. </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Description of the block list. </summary>
+        [WirePath("properties.description")]
         public string RaiBlocklistDescription
         {
             get
@@ -61,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (Properties is null)
                 {
-                    Properties = new CognitiveServices.Models.RaiBlocklistProperties();
+                    Properties = new RaiBlocklistProperties();
                 }
                 Properties.Description = value;
             }

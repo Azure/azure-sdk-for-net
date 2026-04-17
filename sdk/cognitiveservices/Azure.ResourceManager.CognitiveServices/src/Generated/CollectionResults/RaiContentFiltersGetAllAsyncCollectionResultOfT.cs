@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -20,18 +21,21 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RaiContentFiltersGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RaiContentFilters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RaiContentFiltersGetAllAsyncCollectionResultOfT(RaiContentFilters client, string subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RaiContentFiltersGetAllAsyncCollectionResultOfT(RaiContentFilters client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RaiContentFiltersGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -48,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     yield break;
                 }
-                CognitiveServices.Models.RaiContentFilterListResult result = CognitiveServices.Models.RaiContentFilterListResult.FromResponse(response);
+                RaiContentFilterListResult result = RaiContentFilterListResult.FromResponse(response);
                 yield return Page<RaiContentFilterData>.FromValues((IReadOnlyList<RaiContentFilterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RaiContentFilterCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

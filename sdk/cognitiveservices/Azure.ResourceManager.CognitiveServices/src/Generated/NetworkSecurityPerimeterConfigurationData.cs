@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationData()
+        public NetworkSecurityPerimeterConfigurationData()
         {
         }
 
@@ -30,13 +31,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> NSP Configuration properties. </param>
-        internal NetworkSecurityPerimeterConfigurationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> NSP Configuration properties. </summary>
-        public CognitiveServices.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        [WirePath("properties")]
+        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

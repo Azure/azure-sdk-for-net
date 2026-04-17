@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridConnectivityEndpointData, HybridConnectivityEndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new HybridConnectivityEndpointResource(Client, data));
+            return new AsyncPageableWrapper<HybridConnectivityEndpointData, HybridConnectivityEndpointResource>(new EndpointResourcesGetAllAsyncCollectionResultOfT(_endpointResourcesRestClient, Id, context, "HybridConnectivityEndpointCollection.GetAll"), data => new HybridConnectivityEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridConnectivityEndpointData, HybridConnectivityEndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context), data => new HybridConnectivityEndpointResource(Client, data));
+            return new PageableWrapper<HybridConnectivityEndpointData, HybridConnectivityEndpointResource>(new EndpointResourcesGetAllCollectionResultOfT(_endpointResourcesRestClient, Id, context, "HybridConnectivityEndpointCollection.GetAll"), data => new HybridConnectivityEndpointResource(Client, data));
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="unit"> The unit of measurement for the search SKU. </param>
         /// <param name="currentValue"> The currently used up value for the particular search SKU. </param>
         /// <param name="limit"> The quota limit for the particular search SKU. </param>
-        /// <param name="name"> The name of the SKU supported by Azure AI Search. </param>
+        /// <param name="name"> The SKU name information of the current search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal QuotaUsageResult(ResourceIdentifier id, string unit, int? currentValue, int? limit, QuotaUsageResultName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search.Models
         [WirePath("limit")]
         public int? Limit { get; }
 
-        /// <summary> The name of the SKU supported by Azure AI Search. </summary>
+        /// <summary> The SKU name information of the current search service. </summary>
         [WirePath("name")]
         public QuotaUsageResultName Name { get; }
     }
