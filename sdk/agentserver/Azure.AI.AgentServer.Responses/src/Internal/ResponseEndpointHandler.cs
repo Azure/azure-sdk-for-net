@@ -177,6 +177,9 @@ internal sealed class ResponseEndpointHandler
                     request.AgentReference);
         }
 
+        // Store resolved session ID for the response header filter (§8).
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = request.AgentSessionId;
+
         // Start distributed tracing span — delegates all tag/baggage logic
         // to ResponsesActivitySource.StartCreateResponseActivity (virtual, overridable).
         // Do NOT use 'using' — for streaming, SseResult takes ownership and disposes
@@ -372,6 +375,7 @@ internal sealed class ResponseEndpointHandler
                 // Provider throws ResourceNotFoundException (404) for unknown IDs.
                 // This also covers store=false (never persisted → 404).
                 var persisted = await _provider.GetResponseAsync(responseId, isolation);
+                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = persisted.AgentSessionId;
 
                 // B2: SSE replay requires background mode. Non-bg responses never
                 // have event streams (they use NullPublisher).
@@ -405,6 +409,7 @@ internal sealed class ResponseEndpointHandler
         // Delegate guard logic and snapshot to orchestrator
         _logger.LogInformation("Getting response {ResponseId}", responseId);
         var response = await _orchestrator.GetAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation(
             "Retrieved response {ResponseId}: Status={Status} OutputCount={OutputCount}",
             responseId, response.Status, response.Output.Count);
@@ -419,6 +424,7 @@ internal sealed class ResponseEndpointHandler
         var isolation = IsolationContext.FromRequest(httpContext.Request);
         _logger.LogInformation("Cancelling response {ResponseId}", responseId);
         var response = await _orchestrator.CancelAsync(responseId, isolation);
+        httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation("Cancelled response {ResponseId}, status={Status}", responseId, response.Status);
         return Results.Json(response, SharedJsonOptions.Instance, statusCode: 200);
     }

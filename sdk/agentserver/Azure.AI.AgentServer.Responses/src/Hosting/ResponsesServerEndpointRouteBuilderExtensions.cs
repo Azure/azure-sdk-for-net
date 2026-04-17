@@ -48,6 +48,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
                 typeof(ResponsesServerEndpointRouteBuilderExtensions).Assembly));
         }
 
+        group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>

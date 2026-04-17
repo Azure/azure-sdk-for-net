@@ -86,6 +86,7 @@ internal sealed class InvocationEndpointHandler
     internal async Task HandleGetAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
         var context = BuildContext(httpContext, invocationId);
+        InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await handler.GetAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
     }
 
@@ -95,6 +96,7 @@ internal sealed class InvocationEndpointHandler
     internal async Task HandleCancelAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
         var context = BuildContext(httpContext, invocationId);
+        InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await handler.CancelAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
     }
 
@@ -103,6 +105,13 @@ internal sealed class InvocationEndpointHandler
     /// </summary>
     internal async Task HandleGetOpenApiAsync(HttpContext httpContext, InvocationHandler handler)
     {
+        // OpenAPI docs endpoint — inject session ID from env var only (no invocation context).
+        var sessionId = FoundryEnvironment.SessionId;
+        if (!string.IsNullOrEmpty(sessionId))
+        {
+            httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
+        }
+
         await handler.GetOpenApiAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
     }
 
@@ -130,5 +139,17 @@ internal sealed class InvocationEndpointHandler
         var queryParams = ClientHeaderForwarder.ExtractQueryParameters(request);
         var isolation = IsolationContext.FromRequest(request);
         return new InvocationContext(invocationId, sessionId, clientHeaders, queryParams, isolation);
+    }
+
+    /// <summary>
+    /// Injects the <c>x-agent-session-id</c> response header. Called before the
+    /// handler writes the response body so the header is present on all responses.
+    /// </summary>
+    private static void InjectSessionIdHeader(HttpResponse response, string sessionId)
+    {
+        if (!string.IsNullOrEmpty(sessionId))
+        {
+            response.Headers[SessionIdResponseHeader] = sessionId;
+        }
     }
 }
