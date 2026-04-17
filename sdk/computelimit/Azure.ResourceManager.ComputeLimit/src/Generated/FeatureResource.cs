@@ -13,45 +13,46 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a ComputeLimitSharedLimit along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitSharedLimitResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitSharedLimits method.
+    /// A class representing a Feature along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FeatureResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetFeatures method.
     /// </summary>
-    public partial class ComputeLimitSharedLimitResource : ArmResource
+    public partial class FeatureResource : ArmResource
     {
-        private readonly ClientDiagnostics _sharedLimitsClientDiagnostics;
-        private readonly SharedLimits _sharedLimitsRestClient;
-        private readonly ComputeLimitSharedLimitData _data;
+        private readonly ClientDiagnostics _featuresClientDiagnostics;
+        private readonly Features _featuresRestClient;
+        private readonly FeatureData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/sharedLimits";
+        public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/features";
 
-        /// <summary> Initializes a new instance of ComputeLimitSharedLimitResource for mocking. </summary>
-        protected ComputeLimitSharedLimitResource()
+        /// <summary> Initializes a new instance of FeatureResource for mocking. </summary>
+        protected FeatureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputeLimitSharedLimitResource(ArmClient client, ComputeLimitSharedLimitData data) : this(client, data.Id)
+        internal FeatureResource(ArmClient client, FeatureData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComputeLimitSharedLimitResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FeatureResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string computeLimitSharedLimitApiVersion);
-            _sharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2026-04-30");
+            TryGetApiVersion(ResourceType, out string featureApiVersion);
+            _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, featureApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ComputeLimitSharedLimitData Data
+        public virtual FeatureData Data
         {
             get
             {
@@ -74,10 +75,10 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string name)
+        /// <param name="featureName"> The featureName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string featureName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +93,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// Gets the properties of a compute limit feature.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Get. </description>
+        /// <description> Features_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="FeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeLimitSharedLimitResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,15 +141,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// Gets the properties of a compute limit feature.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Get. </description>
+        /// <description> Features_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="FeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeLimitSharedLimitResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<FeatureResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Get");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +172,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<FeatureData> response = Response.FromValue(FeatureData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,15 +189,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables sharing of a compute limit by the host subscription with its guest subscriptions.
+        /// Disables a compute limit feature for the subscription at the specified location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}/disable. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Delete. </description>
+        /// <description> Features_Disable. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,15 +205,15 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="FeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> DisableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Delete");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Disable");
             scope.Start();
             try
             {
@@ -220,118 +221,15 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation operation = new ComputeLimitArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disables sharing of a compute limit by the host subscription with its guest subscriptions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedLimitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation operation = new ComputeLimitArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a ComputeLimitSharedLimit.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComputeLimitSharedLimitResource>> UpdateAsync(WaitUntil waitUntil, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _featuresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -346,15 +244,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Update a ComputeLimitSharedLimit.
+        /// Disables a compute limit feature for the subscription at the specified location.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}/disable. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Create. </description>
+        /// <description> Features_Disable. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -362,19 +260,15 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="FeatureResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ComputeLimitSharedLimitResource> Update(WaitUntil waitUntil, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Disable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Update");
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Disable");
             scope.Start();
             try
             {
@@ -382,12 +276,125 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _featuresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enables a compute limit feature for the subscription at the specified location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}/enable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Features_Enable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FeatureResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Enable");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _featuresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Enables a compute limit feature for the subscription at the specified location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/features/{featureName}/enable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Features_Enable. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FeatureResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("FeatureResource.Enable");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
+                    new OperationStatusResultOperationSource(),
+                    _featuresClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
