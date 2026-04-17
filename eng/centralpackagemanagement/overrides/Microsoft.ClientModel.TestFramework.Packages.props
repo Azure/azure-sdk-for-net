@@ -1,5 +1,4 @@
 <Project>
-  <!-- The unbranded test framework uses NUnit 4 -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="NUnit" Version="4.4.0" />
