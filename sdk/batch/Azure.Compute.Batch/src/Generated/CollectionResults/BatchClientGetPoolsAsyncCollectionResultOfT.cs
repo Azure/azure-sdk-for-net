@@ -17,8 +17,8 @@ namespace Azure.Compute.Batch
     internal partial class BatchClientGetPoolsAsyncCollectionResultOfT : AsyncPageable<BatchPool>
     {
         private readonly BatchClient _client;
-        private readonly TimeSpan? _timeOutInSeconds;
-        private readonly DateTimeOffset? _ocpDate;
+        private readonly TimeSpan? _timeout;
+        private readonly DateTimeOffset? _requestDate;
         private readonly int? _maxresults;
         private readonly string _filter;
         private readonly IEnumerable<string> _select;
@@ -28,8 +28,8 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of BatchClientGetPoolsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpDate">
+        /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="requestDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -46,11 +46,11 @@ namespace Azure.Compute.Batch
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetPoolsAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetPoolsAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _timeOutInSeconds = timeOutInSeconds;
-            _ocpDate = ocpDate;
+            _timeout = timeout;
+            _requestDate = requestDate;
             _maxresults = maxresults;
             _filter = filter;
             _select = @select;
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolsRequest(nextLink, _timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetPoolsRequest(_timeOutInSeconds, _ocpDate, _maxresults, _filter, _select, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolsRequest(nextLink, _timeout, _requestDate, _maxresults, _filter, _select, _expand, _context) : _client.CreateGetPoolsRequest(_timeout, _requestDate, _maxresults, _filter, _select, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

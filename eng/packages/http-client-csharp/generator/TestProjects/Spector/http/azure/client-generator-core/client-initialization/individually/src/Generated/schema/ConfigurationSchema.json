@@ -20,7 +20,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithPathClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         },
@@ -40,7 +40,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithQueryClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         },
@@ -60,7 +60,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithHeaderClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         },
@@ -83,7 +83,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithMultipleClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         },
@@ -103,7 +103,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithMixedClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         },
@@ -123,7 +123,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/individuallyNestedWithParamAliasClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitIndividuallyClientOptions"
             }
           }
         }
@@ -135,42 +135,7 @@
     }
   },
   "definitions": {
-    "individuallyNestedWithHeaderClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "individuallyNestedWithMixedClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "individuallyNestedWithMultipleClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "individuallyNestedWithParamAliasClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "individuallyNestedWithPathClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "individuallyNestedWithQueryClientOptions": {
+    "specsAzureTcgcClientInitIndividuallyClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"

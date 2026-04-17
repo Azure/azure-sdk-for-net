@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             get
             {
-                return FilterGroup.Filter;
+                return FilterGroup is null ? default : FilterGroup.Filter;
             }
         }
     }

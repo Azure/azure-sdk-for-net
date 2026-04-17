@@ -23,8 +23,10 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To delete a project, call DeleteProject on the `ConversationAuthoringProject` client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProject
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Operation operation = client.DeleteProject(
+Operation operation = projectClient.DeleteProject(
     waitUntil: WaitUntil.Completed,
     projectName: projectName
 );
@@ -41,8 +43,10 @@ Console.WriteLine($"Project deletion completed with status: {operation.GetRawRes
 To delete a project, call DeleteProjectAsync on the `ConversationAuthoringProject` client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-Operation operation = await client.DeleteProjectAsync(
+Operation operation = await projectClient.DeleteProjectAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName
 );

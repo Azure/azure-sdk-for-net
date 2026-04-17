@@ -27,6 +27,7 @@ public static class AgentHostMiddlewareExtensions
     {
         services.TryAddSingleton<ServerUserAgentRegistry>();
         services.TryAddSingleton<ServerUserAgentMiddleware>();
+        services.TryAddSingleton<InboundRequestLoggingMiddleware>();
         services.Configure<AgentHostOptions>(_ => { });
         return services;
     }

@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return ProviderAuthentication.ProviderAuthenticationAllowedAudiences;
+                return ProviderAuthentication is null ? default : ProviderAuthentication.ProviderAuthenticationAllowedAudiences;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return FeaturesRule.RequiredFeaturesPolicy;
+                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
+                return ResourceProviderAuthorizationRules is null ? default : ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
             }
         }
     }

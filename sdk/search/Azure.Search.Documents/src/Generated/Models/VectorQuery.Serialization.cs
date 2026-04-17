@@ -102,21 +102,6 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(Threshold))
-            {
-                writer.WritePropertyName("threshold"u8);
-                writer.WriteObjectValue(Threshold, options);
-            }
-            if (Optional.IsDefined(FilterOverride))
-            {
-                writer.WritePropertyName("filterOverride"u8);
-                writer.WriteStringValue(FilterOverride);
-            }
-            if (Optional.IsDefined(PerDocumentVectorLimit))
-            {
-                writer.WritePropertyName("perDocumentVectorLimit"u8);
-                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
-            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

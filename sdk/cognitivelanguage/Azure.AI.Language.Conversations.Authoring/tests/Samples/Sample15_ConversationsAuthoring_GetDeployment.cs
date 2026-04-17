@@ -22,9 +22,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample15_ConversationsAuthoring_GetDeployment
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            Response<ConversationAuthoringProjectDeployment> response = client.GetDeployment(projectName, deploymentName);
+            Response<ConversationAuthoringProjectDeployment> response = deploymentClient.GetDeployment(projectName, deploymentName);
 
             ConversationAuthoringProjectDeployment deployment = response.Value;
 
@@ -56,9 +58,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
-            Response<ConversationAuthoringProjectDeployment> response = await client.GetDeploymentAsync(projectName, deploymentName);
+            Response<ConversationAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync(projectName, deploymentName);
 
             ConversationAuthoringProjectDeployment deployment = response.Value;
 
