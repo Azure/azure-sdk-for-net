@@ -18,16 +18,6 @@ Activate only when the user wants an Azure.ResourceManager package refresh PR dr
 - Access to remote origin and GitHub PR creation
 - Current date available in yyyy-mm-dd format
 
-## MCP Tools Used
-
-| Step | Tool Category | Purpose |
-|---|---|---|
-| 1 | Git tools | Create branch from origin/main |
-| 2 | File read/search tools | Resolve API version source and dependency versions |
-| 3 | File edit tools | Update changelog and project version when required |
-| 4 | Git tools | Commit and push changes |
-| 5 | GitHub PR tools | Open release PR |
-
 ## Workflow
 
 ### Step 1: Create Branch
@@ -59,15 +49,10 @@ Activate only when the user wants an Azure.ResourceManager package refresh PR dr
 - Resolve these versions from eng/centralpackagemanagement/Directory.Packages.props.
 
 ### Step 5: Update Project Version for Stable Flow Only
-- If stable flow, set Version in src/Azure.ResourceManager.XXX.csproj to the new stable version.
-- If beta flow, keep beta versioning and do not apply a stable patch bump.
+- If stable flow, set Version in src/Azure.ResourceManager.XXX.csproj to the new stable version matching the changelog entry.
+- If beta flow, keep beta versioning and do not apply a version bump.
 
-### Step 6: Validate Changes
-- Check git diff for only intended files.
-- Verify changelog format and dependency version values.
-- Verify no unrelated files were modified.
-
-### Step 7: Commit, Push, and Create PR
+### Step 6: Commit, Push, and Create PR
 - Commit with a refresh-focused message.
 - Push branch to origin.
 - Create PR with title format:
