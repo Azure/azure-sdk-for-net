@@ -788,7 +788,8 @@ namespace Azure.Data.Tables.Tests
         /// <summary>
         /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
         /// Verifies that GetEntityIfExistsAsync throws RequestFailedException instead of
-        /// ArgumentNullException when the HTTP response has a null ContentStream.
+        /// ArgumentNullException when the HTTP response has a null ContentStream, and that
+        /// the exception's raw response ContentStream is non-null so callers can read it safely.
         /// </summary>
         [Test]
         public async Task GetEntityIfExistsAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
@@ -797,13 +798,15 @@ namespace Azure.Data.Tables.Tests
             var transport = new MockTransport(_ => response);
             var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
+            Assert.IsNotNull(ex.GetRawResponse()?.ContentStream);
         }
 
         /// <summary>
         /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
         /// Verifies that GetEntityAsync throws RequestFailedException instead of
-        /// ArgumentNullException when the HTTP response has a null ContentStream.
+        /// ArgumentNullException when the HTTP response has a null ContentStream, and that
+        /// the exception's raw response ContentStream is non-null so callers can read it safely.
         /// </summary>
         [Test]
         public async Task GetEntityAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
@@ -812,7 +815,8 @@ namespace Azure.Data.Tables.Tests
             var transport = new MockTransport(_ => response);
             var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
+            Assert.IsNotNull(ex.GetRawResponse()?.ContentStream);
         }
 
         /// <summary>
@@ -832,16 +836,19 @@ namespace Azure.Data.Tables.Tests
         }
 
         /// <summary>
-        /// A mock response with a null ContentStream. Used by regression tests for issue #58303.
+        /// A mock response with a null ContentStream. The ContentStream starts null to simulate a
+        /// response with no body, but can be overwritten via the setter. Used by regression tests for issue #58303.
         /// </summary>
         private class NullContentStreamMockResponse : MockResponse
         {
+            private Stream _contentStream;
+
             public NullContentStreamMockResponse(int status) : base(status) { }
 
             public override Stream ContentStream
             {
-                get => null;
-                set { }
+                get => _contentStream;
+                set => _contentStream = value;
             }
         }
 
