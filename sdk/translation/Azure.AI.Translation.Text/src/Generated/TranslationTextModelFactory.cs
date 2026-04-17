@@ -167,13 +167,12 @@ namespace Azure.AI.Translation.Text
         /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true 
         /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
         /// </param>
-        /// <param name="grade"> Defines complexity of LLM prompts to provide high accuracy translation. </param>
-        /// <param name="tone"> Desired tone of target translation. </param>
-        /// <param name="gender"> Desired gender of target translation. </param>
+        /// <param name="tone"> Desired tone of target translation. Accepted values are formal, informal, or neutral. </param>
+        /// <param name="gender"> Desired gender of target translation. Accepted values are female, male, or neutral. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <param name="referenceTextPairs"> Reference text pairs to generate adaptive customized translation. </param>
         /// <returns> A new <see cref="Text.TranslationTarget"/> instance for mocking. </returns>
-        public static TranslationTarget TranslationTarget(string language = default, string script = default, ProfanityAction? profanityAction = default, ProfanityMarker? profanityMarker = default, string deploymentName = default, bool? allowFallback = default, string grade = default, string tone = default, string gender = default, string adaptiveDatasetId = default, IEnumerable<ReferenceTextPair> referenceTextPairs = default)
+        public static TranslationTarget TranslationTarget(string language = default, string script = default, ProfanityAction? profanityAction = default, ProfanityMarker? profanityMarker = default, string deploymentName = default, bool? allowFallback = default, TranslationTone? tone = default, TranslationGender? gender = default, string adaptiveDatasetId = default, IEnumerable<ReferenceTextPair> referenceTextPairs = default)
         {
             referenceTextPairs ??= new ChangeTrackingList<ReferenceTextPair>();
 
@@ -184,7 +183,6 @@ namespace Azure.AI.Translation.Text
                 profanityMarker,
                 deploymentName,
                 allowFallback,
-                grade,
                 tone,
                 gender,
                 adaptiveDatasetId,
