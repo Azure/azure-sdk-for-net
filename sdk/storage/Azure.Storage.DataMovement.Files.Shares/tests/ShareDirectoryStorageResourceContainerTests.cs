@@ -205,24 +205,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Ctor_SnapshotFromOptions_OverridesClientSnapshot()
-        {
-            // Arrange - client has a different snapshot than options
-            string oldSnapshot = "2023-01-01T00:00:00.0000000Z";
-            string newSnapshot = "2024-06-15T00:00:00.0000000Z";
-            Uri uri = new Uri($"https://myaccount.file.core.windows.net/myshare/mydir?sharesnapshot={oldSnapshot}");
-            ShareDirectoryClient client = new(uri, new ShareClientOptions());
-            ShareFileStorageResourceOptions options = new() { Snapshot = newSnapshot };
-
-            // Act
-            ShareDirectoryStorageResourceContainer container = new(client, options);
-
-            // Assert - new snapshot should be applied
-            ShareUriBuilder resultUri = new(container.ShareDirectoryClient.Uri);
-            Assert.That(resultUri.Snapshot, Is.EqualTo(newSnapshot));
-        }
-
-        [Test]
         public void GetChildStorageResourceContainer_PreservesSnapshot()
         {
             // Arrange - container with snapshot

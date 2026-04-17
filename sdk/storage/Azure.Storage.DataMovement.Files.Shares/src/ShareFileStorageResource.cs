@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             _options = options ?? new ShareFileStorageResourceOptions();
 
-            fileClient.ValidateAndApplySnapshotAndVersionId(
+            fileClient = fileClient.ValidateAndApplySnapshotAndVersionId(
                 fileClient.Uri,
                 options,
                 (c, s) => c.WithSnapshot(s));
