@@ -245,6 +245,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
+            Console.WriteLine("[TestConsole] Starting transfer...");
             TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
