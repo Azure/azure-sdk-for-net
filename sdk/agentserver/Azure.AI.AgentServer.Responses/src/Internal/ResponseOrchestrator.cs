@@ -137,6 +137,9 @@ internal sealed class ResponseOrchestrator
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
+            // Chat isolation enforcement for in-flight responses
+            EnforceInFlightChatIsolation(execution, isolation);
+
             // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
             {
@@ -195,6 +198,9 @@ internal sealed class ResponseOrchestrator
                 _ => throw new BadRequestException("Cannot cancel a response in terminal state."),
             };
         }
+
+        // Chat isolation enforcement for in-flight responses
+        EnforceInFlightChatIsolation(execution, isolation);
 
         // B1/B16: non-background in-flight responses are not findable via Cancel.
         // With eager eviction, all tracked executions are in-flight — completed
@@ -515,6 +521,21 @@ internal sealed class ResponseOrchestrator
     }
 
     // --- Shared Helpers ---
+
+    /// <summary>
+    /// Enforces chat isolation key for in-flight responses.
+    /// If the execution was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    private static void EnforceInFlightChatIsolation(ResponseExecution execution, IsolationContext isolation)
+    {
+        if (execution.ChatIsolationKey is not null
+            && !string.Equals(execution.ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{execution.ResponseId}' not found.");
+        }
+    }
 
     /// <summary>
     /// Logs a bad-handler error, cancels the execution CTS, and throws

@@ -48,6 +48,14 @@ internal sealed class ResponseExecution : IDisposable
     public bool Store { get; }
 
     /// <summary>
+    /// Gets or sets the chat isolation key that was present when this response was created.
+    /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
+    /// provide the same key; mismatches are treated as "not found" (404) to prevent
+    /// information leakage across chat partitions.
+    /// </summary>
+    public string? ChatIsolationKey { get; set; }
+
+    /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
     /// <c>null</c> until the handler yields <c>response.created</c> and
     /// <see cref="ResponseMutations.ReplaceResponse"/> sets it.

@@ -75,6 +75,21 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
+    /// Enforces chat isolation key for in-flight responses.
+    /// If the execution was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    private static void EnforceInFlightChatIsolation(ResponseExecution execution, IsolationContext isolation)
+    {
+        if (execution.ChatIsolationKey is not null
+            && !string.Equals(execution.ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{execution.ResponseId}' not found.");
+        }
+    }
+
+    /// <summary>
     /// Handles POST /responses — creates a new response and handles all 4 modes.
     /// </summary>
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
@@ -189,6 +204,9 @@ internal sealed class ResponseEndpointHandler
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+
+        // Record the creation-time chat isolation key for enforcement on subsequent operations
+        execution.ChatIsolationKey = isolation.ChatIsolationKey;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -317,6 +335,9 @@ internal sealed class ResponseEndpointHandler
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
+                // Chat isolation enforcement for in-flight responses
+                EnforceInFlightChatIsolation(execution, isolation);
+
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
                 {
@@ -407,6 +428,9 @@ internal sealed class ResponseEndpointHandler
         // responses are evicted by FinalizeExecutionAsync and served from the provider.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
+            // Chat isolation enforcement for in-flight responses
+            EnforceInFlightChatIsolation(execution, isolation);
+
             if (!execution.Store)
             {
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
