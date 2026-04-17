@@ -8,6 +8,8 @@
   endpoint already set the header; all Invocations protocol endpoints now include it per spec §8.
 - Added isolation key presence logging (`HasUserIsolationKey`, `HasChatIsolationKey`) to all
   endpoint handler logs (POST, GET, Cancel). Key values are never logged.
+- Added startup configuration logging: protocol registration is logged at `Information` level
+  when the host starts.
 
 - Added inbound request logging for Tier 1 and Tier 2 setups (via `InvocationsServer.Run()` or
   `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status

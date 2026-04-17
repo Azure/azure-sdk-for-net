@@ -13,6 +13,8 @@
   `Warning` level. Request start is logged at `Information` level.
 - Added `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for Tier 3 setups to
   independently enable the inbound request logging middleware.
+- Added startup configuration logging: platform environment, connectivity, host options, and
+  registered protocols are logged at `Information` level when the host starts.
 
 ### Breaking Changes
 

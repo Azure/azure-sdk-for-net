@@ -119,6 +119,9 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddScoped<ResponseEndpointHandler>();
         services.AddScoped<ResponsesExceptionFilter>();
 
+        // Log startup configuration when the host starts
+        services.AddHostedService<ResponsesStartupLogger>();
+
         return services;
     }
 
