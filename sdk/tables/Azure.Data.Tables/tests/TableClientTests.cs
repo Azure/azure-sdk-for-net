@@ -786,6 +786,36 @@ namespace Azure.Data.Tables.Tests
         }
 
         /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
+        /// Verifies that GetEntityIfExistsAsync throws RequestFailedException instead of
+        /// ArgumentNullException when the HTTP response has a null ContentStream.
+        /// </summary>
+        [Test]
+        public async Task GetEntityIfExistsAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
+        {
+            var response = new NullContentStreamMockResponse(200);
+            var transport = new MockTransport(_ => response);
+            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+            Assert.ThrowsAsync<RequestFailedException>(() => tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
+        }
+
+        /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
+        /// Verifies that GetEntityAsync throws RequestFailedException instead of
+        /// ArgumentNullException when the HTTP response has a null ContentStream.
+        /// </summary>
+        [Test]
+        public async Task GetEntityAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
+        {
+            var response = new NullContentStreamMockResponse(200);
+            var transport = new MockTransport(_ => response);
+            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+            Assert.ThrowsAsync<RequestFailedException>(() => tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
+        }
+
+        /// <summary>
         /// A mock response that disposes its ContentStream on Dispose(), simulating the
         /// behavior of the real HttpClientTransportResponse for non-MemoryStream seekable
         /// streams. Used by regression tests for issue #57079.
@@ -798,6 +828,20 @@ namespace Azure.Data.Tables.Tests
             {
                 ContentStream?.Dispose();
                 base.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// A mock response with a null ContentStream. Used by regression tests for issue #58303.
+        /// </summary>
+        private class NullContentStreamMockResponse : MockResponse
+        {
+            public NullContentStreamMockResponse(int status) : base(status) { }
+
+            public override Stream ContentStream
+            {
+                get => null;
+                set { }
             }
         }
 

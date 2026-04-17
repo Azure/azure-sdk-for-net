@@ -792,12 +792,15 @@ namespace Azure.Data.Tables
                 {
                     return new NoValueResponse<T>(response);
                 }
-                else
+
+                if (response.ContentStream is null)
                 {
-                    var dictionary = SerializationHelpers.ResponseToDictionary(response);
-                    var result = dictionary.ToTableEntity<T>();
-                    return Response.FromValue(result, response);
+                    throw new RequestFailedException(response);
                 }
+
+                var dictionary = SerializationHelpers.ResponseToDictionary(response);
+                var result = dictionary.ToTableEntity<T>();
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
