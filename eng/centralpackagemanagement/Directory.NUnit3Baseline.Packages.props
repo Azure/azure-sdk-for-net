@@ -455,6 +455,5 @@
         $(MSBuildProjectName) == 'System.ClientModel.Tests.Client' or
         $(MSBuildProjectName) == 'System.ClientModel.Tests.Internal')">
     <PackageVersion Update="NUnit" Version="3.14.0" />
-    <PackageVersion Update="NUnit3TestAdapter" Version="4.6.0" />
   </ItemGroup>
 </Project>
