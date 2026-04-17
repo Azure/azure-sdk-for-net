@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             get
             {
-                return Properties.VmSize;
+                return Properties is null ? default : Properties.VmSize;
             }
         }
     }

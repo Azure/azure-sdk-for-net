@@ -16,7 +16,7 @@ using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The ClusterCodeVersionsResult. </summary>
+    /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ClusterCodeVersionsResult : ResourceData, IJsonModel<ClusterCodeVersionsResult>
     {
         /// <param name="data"> The data to parse. </param>

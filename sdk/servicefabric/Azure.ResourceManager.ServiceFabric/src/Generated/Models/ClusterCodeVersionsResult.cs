@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The ClusterCodeVersionsResult. </summary>
+    /// <summary> The result of the Service Fabric runtime versions. </summary>
     public partial class ClusterCodeVersionsResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return Properties.CodeVersion;
+                return Properties is null ? default : Properties.CodeVersion;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return Properties.SupportExpireOn;
+                return Properties is null ? default : Properties.SupportExpireOn;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             get
             {
-                return Properties.Environment;
+                return Properties is null ? default : Properties.Environment;
             }
         }
     }
