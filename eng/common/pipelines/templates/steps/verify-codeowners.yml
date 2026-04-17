@@ -24,7 +24,7 @@ steps:
     condition: and(succeeded(), ne(variables['Skip.VerifyCodeowners'], 'true'))
     inputs:
       pwsh: true
-      filePath: eng/common/scripts/Test-CodeownersForArtifacts.ps1
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Test-CodeownersForArtifacts.ps1
       arguments: >-
         -AzsdkPath '$(AZSDK)'
         -PackageInfoDirectory '${{ parameters.ArtifactPath }}'
