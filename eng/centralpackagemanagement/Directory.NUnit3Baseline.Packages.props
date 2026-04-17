@@ -11,7 +11,11 @@
       2. Fix any NUnit 4 breaking changes (assertion model, attributes, etc.).
       3. Verify tests pass.
   -->
-  <ItemGroup Condition="'$(IsTestProject)' == 'true' and (
+  <ItemGroup Condition="('$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true') and (
         $(MSBuildProjectName) == 'Azure.AI.Agents.Persistent.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.AnomalyDetector.Tests' or
         $(MSBuildProjectName) == 'Azure.AI.ContentSafety.Tests' or
