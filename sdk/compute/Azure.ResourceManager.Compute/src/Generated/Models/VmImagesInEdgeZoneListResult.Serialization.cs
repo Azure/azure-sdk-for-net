@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VmImages in EdgeZone operation response. </summary>
-    public partial class VmImagesInEdgeZoneListResult : IJsonModel<VmImagesInEdgeZoneListResult>
+    internal partial class VmImagesInEdgeZoneListResult : IJsonModel<VmImagesInEdgeZoneListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -2424,11 +2424,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<VmImagesInEdgeZoneListResult>> GetVirtualMachineImagesByEdgeZoneAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone, cancellationToken).ConfigureAwait(false);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -2443,7 +2444,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<VmImagesInEdgeZoneListResult> GetVirtualMachineImagesByEdgeZone(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

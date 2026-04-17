@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List VmImages in EdgeZone operation response. </summary>
-    public partial class VmImagesInEdgeZoneListResult
+    internal partial class VmImagesInEdgeZoneListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

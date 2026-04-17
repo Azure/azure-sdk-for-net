@@ -2472,17 +2472,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new ImageAlternativeOption(alternativeType, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The List VmImages in EdgeZone operation response. </summary>
-        /// <param name="value"> The list of VMImages in EdgeZone. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of VMImages in EdgeZone. Call ListNext() with this URI to fetch the next page of VmImages. </param>
-        /// <returns> A new <see cref="Models.VmImagesInEdgeZoneListResult"/> instance for mocking. </returns>
-        public static VmImagesInEdgeZoneListResult VmImagesInEdgeZoneListResult(IEnumerable<VirtualMachineImageBase> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<VirtualMachineImageBase>();
-
-            return new VmImagesInEdgeZoneListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Api request input for LogAnalytics getRequestRateByInterval Api. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
@@ -2867,16 +2856,6 @@ namespace Azure.ResourceManager.Compute.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DiskAccessPatch(tags, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <returns> A new <see cref="Models.ComputePrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static ComputePrivateLinkResourceListResult ComputePrivateLinkResourceListResult(IEnumerable<ComputePrivateLinkResourceData> value = default)
-        {
-            value ??= new ChangeTrackingList<ComputePrivateLinkResourceData>();
-
-            return new ComputePrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="groupId"> The private link resource group id. </param>

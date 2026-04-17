@@ -1882,33 +1882,23 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VmImagesInEdgeZoneListResult>> GetVirtualMachineImagesByEdgeZoneAsync(string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
-            using DiagnosticScope scope = VirtualMachineImagesOperationGroupClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImagesByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmImagesInEdgeZoneListResult> response = Response.FromValue(VmImagesInEdgeZoneListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneAsyncCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                edgeZone,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone");
         }
 
         /// <summary>
@@ -1933,33 +1923,23 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VmImagesInEdgeZoneListResult> GetVirtualMachineImagesByEdgeZone(string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(string location, string edgeZone, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
-            using DiagnosticScope scope = VirtualMachineImagesOperationGroupClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VirtualMachineImagesOperationGroupRestClient.CreateGetVirtualMachineImagesByEdgeZoneRequest(Id.SubscriptionId, location, edgeZone, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmImagesInEdgeZoneListResult> response = Response.FromValue(VmImagesInEdgeZoneListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineImagesOperationGroupGetVirtualMachineImagesByEdgeZoneCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                location,
+                edgeZone,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone");
         }
 
         /// <summary>

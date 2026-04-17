@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class ComputePrivateLinkResourceListResult : IJsonModel<ComputePrivateLinkResourceListResult>
+    internal partial class ComputePrivateLinkResourceListResult : IJsonModel<ComputePrivateLinkResourceListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

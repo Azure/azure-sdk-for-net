@@ -427,30 +427,20 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputePrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diskAccessesClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _diskAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputePrivateLinkResourceListResult> response = Response.FromValue(ComputePrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DiskAccessesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _diskAccessesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DiskAccessResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -475,30 +465,20 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputePrivateLinkResourceListResult> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diskAccessesClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _diskAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputePrivateLinkResourceListResult> response = Response.FromValue(ComputePrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DiskAccessesGetPrivateLinkResourcesCollectionResultOfT(
+                _diskAccessesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DiskAccessResource.GetPrivateLinkResources");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
