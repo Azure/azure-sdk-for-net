@@ -204,10 +204,6 @@ namespace Azure.Generator.Management.Primitives
                   <ItemGroup>
                     <ProjectReference Include="..\src\{packageName}.csproj" />
                   </ItemGroup>
-                  <ItemGroup>
-                    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
-                    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
-                  </ItemGroup>
                 </Project>
                 """;
         }

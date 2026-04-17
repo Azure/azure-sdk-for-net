@@ -56,8 +56,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var scaffolding = new TestableNewManagementProjectScaffolding();
             string content = scaffolding.TestGetTestProjectContent("Azure.ResourceManager.Test");
             Assert.IsTrue(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"));
-            Assert.IsTrue(content.Contains("TestFrameworkSupportFiles"));
-            Assert.IsTrue(content.Contains("ManagementTestShared"));
+            Assert.IsTrue(content.Contains("<Project Sdk=\"Microsoft.NET.Sdk\">"));
         }
 
         [Test]
