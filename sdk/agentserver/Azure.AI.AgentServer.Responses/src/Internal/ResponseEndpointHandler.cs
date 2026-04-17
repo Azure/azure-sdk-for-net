@@ -162,13 +162,16 @@ internal sealed class ResponseEndpointHandler
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
 
-        // B39: Resolve session ID — request payload → environment variable → generated UUID.
+        // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
         if (string.IsNullOrEmpty(request.AgentSessionId))
         {
             request.AgentSessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
                 ? FoundryEnvironment.SessionId
-                : Guid.NewGuid().ToString();
+                : SessionIdDerivation.Derive(
+                    request.GetConversationId(),
+                    request.PreviousResponseId,
+                    request.AgentReference);
         }
 
         // Start distributed tracing span — delegates all tag/baggage logic

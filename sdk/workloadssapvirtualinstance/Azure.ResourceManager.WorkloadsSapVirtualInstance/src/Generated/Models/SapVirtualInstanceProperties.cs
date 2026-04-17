@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         {
             get
             {
-                return Errors.Properties;
+                return Errors is null ? default : Errors.Properties;
             }
         }
     }

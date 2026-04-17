@@ -1,18 +1,12 @@
 # Release History
 
-## 1.0.0-beta.22 (Unreleased)
+## 1.0.0-beta.22 (2026-05-05)
 
 ### Features Added
 
 - Added `HttpClient` instrumentation (`AddHttpClientInstrumentation`) for both tracing and metrics
   in the OTLP-only telemetry path. This exports outbound HTTP client spans, enabling end-to-end
   distributed trace correlation through Foundry storage and other downstream services.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.21 (2026-04-14)
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-05-05)
 
 ### Features Added
 
@@ -13,13 +13,14 @@
   and length) are rejected with 400 and a descriptive error message.
 - Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
   and value length ≤ 512 characters, enforced via the validator pipeline.
+- Added deterministic `agent_session_id` derivation: SHA-256 hash of
+  `"{agent_name}:{agent_version}:{partition_hint}"` truncated to 63 lowercase hex chars.
+  Falls back to random hex when no conversational context is available.
 - Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
   reducing memory pressure for long-running servers.
 - Added `FoundryStorageLoggingPolicy` — an Azure.Core per-retry pipeline policy that logs every
   outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
   headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
-
-### Breaking Changes
 
 ### Bugs Fixed
 
@@ -30,8 +31,6 @@
 - Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
   with the specification.
 - Fixed cancel-after-delete to return 404 (not-found) per the specification.
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-04-14)
 

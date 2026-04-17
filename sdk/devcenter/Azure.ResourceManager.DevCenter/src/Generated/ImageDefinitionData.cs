@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ImageReference;
+                return Properties is null ? default : Properties.ImageReference;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.FileUri;
+                return Properties is null ? default : Properties.FileUri;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.LatestBuild;
+                return Properties is null ? default : Properties.LatestBuild;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ImageValidationStatus;
+                return Properties is null ? default : Properties.ImageValidationStatus;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ImageValidationErrorDetails;
+                return Properties is null ? default : Properties.ImageValidationErrorDetails;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ValidationStatus;
+                return Properties is null ? default : Properties.ValidationStatus;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ActiveImageReference;
+                return Properties is null ? default : Properties.ActiveImageReference;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.AutoImageBuild;
+                return Properties is null ? default : Properties.AutoImageBuild;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Tasks;
+                return Properties is null ? default : Properties.Tasks;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.UserTasks;
+                return Properties is null ? default : Properties.UserTasks;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Extends;
+                return Properties is null ? default : Properties.Extends;
             }
         }
     }

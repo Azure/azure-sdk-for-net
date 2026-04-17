@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.ArcApplicationClientId;
+                return Properties is null ? default : Properties.ArcApplicationClientId;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.ArcApplicationTenantId;
+                return Properties is null ? default : Properties.ArcApplicationTenantId;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.ArcServicePrincipalObjectId;
+                return Properties is null ? default : Properties.ArcServicePrincipalObjectId;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.ArcApplicationObjectId;
+                return Properties is null ? default : Properties.ArcApplicationObjectId;
             }
         }
     }
