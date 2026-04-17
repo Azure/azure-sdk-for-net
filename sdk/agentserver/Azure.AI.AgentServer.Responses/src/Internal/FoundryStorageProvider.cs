@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -15,26 +13,23 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state to the Azure AI Foundry storage API using an Azure.Core
 /// <see cref="HttpPipeline"/> for retry, authentication, telemetry, and tracing.
 /// </summary>
-internal sealed partial class FoundryStorageProvider : ResponsesProvider
+internal sealed class FoundryStorageProvider : ResponsesProvider
 {
     private const string ApiVersion = "v1";
     private const string JsonContentType = "application/json; charset=utf-8";
 
     private readonly HttpPipeline _pipeline;
     private readonly Uri _storageBaseUri;
-    private readonly ILogger _logger;
 
     /// <summary>
     /// Initializes a new instance of <see cref="FoundryStorageProvider"/>.
     /// </summary>
     /// <param name="pipeline">The Azure.Core HTTP pipeline (includes retry, auth, telemetry).</param>
     /// <param name="storageBaseUri">The base URI for the Foundry storage API (e.g. <c>https://host/storage/</c>).</param>
-    /// <param name="logger">Logger for structured diagnostics of storage API calls.</param>
-    public FoundryStorageProvider(HttpPipeline pipeline, Uri storageBaseUri, ILogger<FoundryStorageProvider> logger)
+    public FoundryStorageProvider(HttpPipeline pipeline, Uri storageBaseUri)
     {
         _pipeline = pipeline;
         _storageBaseUri = storageBaseUri;
-        _logger = logger;
     }
 
     /// <summary>
@@ -70,38 +65,6 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <summary>
-    /// Sends a pipeline request with structured logging for the operation.
-    /// </summary>
-    private async Task SendWithLoggingAsync(
-        HttpMessage message,
-        string operation,
-        string? responseId,
-        CancellationToken cancellationToken)
-    {
-        var sw = Stopwatch.StartNew();
-        try
-        {
-            await _pipeline.SendAsync(message, cancellationToken);
-            sw.Stop();
-
-            if (message.Response.IsError)
-            {
-                LogStorageRequestFailed(operation, responseId, message.Response.Status, sw.ElapsedMilliseconds);
-            }
-            else
-            {
-                LogStorageRequestSucceeded(operation, responseId, message.Response.Status, sw.ElapsedMilliseconds);
-            }
-        }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            sw.Stop();
-            LogStorageRequestException(operation, responseId, sw.ElapsedMilliseconds, ex);
-            throw;
-        }
-    }
-
-    /// <summary>
     /// Applies isolation key headers to an outbound HTTP request when present.
     /// </summary>
     private static void ApplyIsolationHeaders(Request request, IsolationContext isolation)
@@ -134,7 +97,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "CreateResponse", null, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
     }
 
@@ -148,7 +111,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "GetResponse", responseId, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
@@ -167,7 +130,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "UpdateResponse", response.Id, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
     }
 
@@ -180,7 +143,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         using var message = CreateRequest(RequestMethod.Delete, $"responses/{Uri.EscapeDataString(responseId)}");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "DeleteResponse", responseId, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
     }
 
@@ -205,7 +168,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "GetInputItems", responseId, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
@@ -226,7 +189,7 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "GetItems", null, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
@@ -251,21 +214,10 @@ internal sealed partial class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendWithLoggingAsync(message, "GetHistoryItemIds", previousResponseId, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
         StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);
     }
-
-    // --- LoggerMessage source-generated methods ---
-
-    [LoggerMessage(Level = LogLevel.Debug, Message = "Foundry storage {Operation} succeeded for {ResponseId} with HTTP {StatusCode} in {DurationMs}ms")]
-    private partial void LogStorageRequestSucceeded(string operation, string? responseId, int statusCode, long durationMs);
-
-    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Operation} failed for {ResponseId} with HTTP {StatusCode} in {DurationMs}ms")]
-    private partial void LogStorageRequestFailed(string operation, string? responseId, int statusCode, long durationMs);
-
-    [LoggerMessage(Level = LogLevel.Error, Message = "Foundry storage {Operation} threw exception for {ResponseId} after {DurationMs}ms")]
-    private partial void LogStorageRequestException(string operation, string? responseId, long durationMs, Exception exception);
 }

@@ -87,10 +87,14 @@ public static class ResponsesServerServiceCollectionExtensions
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
             // distributed tracing, logging, and token caching.
+            // The FoundryStorageLoggingPolicy is added as a per-retry policy so each
+            // attempt (including retries) is logged with correlation headers.
             services.TryAddSingleton(sp =>
             {
                 var credential = sp.GetRequiredService<TokenCredential>();
+                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
                 var options = new FoundryStorageClientOptions();
+                options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
                 return HttpPipelineBuilder.Build(
                     options,
                     new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
@@ -100,8 +104,7 @@ public static class ResponsesServerServiceCollectionExtensions
             {
                 var pipeline = sp.GetRequiredService<HttpPipeline>();
                 var storageBaseUri = ResolveStorageBaseUri();
-                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageProvider>();
-                return new FoundryStorageProvider(pipeline, storageBaseUri, logger);
+                return new FoundryStorageProvider(pipeline, storageBaseUri);
             });
         }
         else
