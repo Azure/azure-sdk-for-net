@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             if (id.ResourceType != ContainerGroupProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerGroupProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerGroupProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsAsyncCollectionResultOfT(_cgProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerGroupProfileRevisionResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsAsyncCollectionResultOfT(
+                _cgProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupProfileRevisionCollection.GetAll"), data => new ContainerGroupProfileRevisionResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsCollectionResultOfT(_cgProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerGroupProfileRevisionResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsCollectionResultOfT(
+                _cgProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupProfileRevisionCollection.GetAll"), data => new ContainerGroupProfileRevisionResource(Client, data));
         }
 
         /// <summary>

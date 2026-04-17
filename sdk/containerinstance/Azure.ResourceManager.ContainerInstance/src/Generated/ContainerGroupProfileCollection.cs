@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupAsyncCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupAsyncCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupProfileResource(Client, data));
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileResource>(new CGProfilesGetByResourceGroupCollectionResultOfT(_cgProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupProfileCollection.GetAll"), data => new ContainerGroupProfileResource(Client, data));
         }
 
         /// <summary>

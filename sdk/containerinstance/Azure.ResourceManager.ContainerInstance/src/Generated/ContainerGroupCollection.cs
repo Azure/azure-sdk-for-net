@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupAsyncCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupResource(Client, data));
+            return new AsyncPageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupAsyncCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerGroupResource(Client, data));
+            return new PageableWrapper<ContainerGroupData, ContainerGroupResource>(new ContainerGroupsGetByResourceGroupCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerGroupCollection.GetAll"), data => new ContainerGroupResource(Client, data));
         }
 
         /// <summary>

@@ -111,6 +111,50 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary>
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLinkAsync(WaitUntil, ResourceIdentifier, string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
+        /// <param name="subnetName"> The name of the subnet. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string virtualNetworkName, string subnetName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableContainerInstanceArmClient(client).DeleteSubnetServiceAssociationLinkAsync(waitUntil, scope, virtualNetworkName, subnetName, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLink(WaitUntil, ResourceIdentifier, string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
+        /// <param name="subnetName"> The name of the subnet. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static ArmOperation DeleteSubnetServiceAssociationLink(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string virtualNetworkName, string subnetName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerInstanceArmClient(client).DeleteSubnetServiceAssociationLink(waitUntil, scope, virtualNetworkName, subnetName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of ContainerGroups in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -273,46 +317,6 @@ namespace Azure.ResourceManager.ContainerInstance
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupProfile(containerGroupProfileName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLinkAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Delete container group virtual network association links. The operation does not delete other resources provided by the user.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLink(WaitUntil, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation DeleteSubnetServiceAssociationLink(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
         }
 
         /// <summary>

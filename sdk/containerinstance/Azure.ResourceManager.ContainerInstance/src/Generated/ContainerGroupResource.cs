@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -652,7 +652,13 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+                _containerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -684,7 +690,13 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_containerGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+                _containerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
