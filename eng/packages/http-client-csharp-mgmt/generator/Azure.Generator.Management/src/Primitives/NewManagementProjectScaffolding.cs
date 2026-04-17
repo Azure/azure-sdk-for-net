@@ -38,6 +38,11 @@ namespace Azure.Generator.Management.Primitives
             WriteFileIfNotExists(Path.Combine(outputDir, "README.md"), packageName, GetReadmeContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "CHANGELOG.md"), packageName, GetChangelogContent);
             WriteFileIfNotExists(Path.Combine(outputDir, "Directory.Build.props"), packageName, GetDirectoryBuildPropsContent);
+
+            // Generate test project csproj
+            string testsDir = Path.Combine(outputDir, "tests");
+            string testCsprojPath = Path.Combine(testsDir, $"{packageName}.Tests.csproj");
+            WriteFileIfNotExists(testCsprojPath, packageName, GetTestProjectContent);
         }
 
         private static void WriteFileIfNotExists(string filePath, string packageName, Func<string, string> contentFactory)
@@ -185,6 +190,24 @@ namespace Azure.Generator.Management.Primitives
                     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
                   -->
                   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+                </Project>
+                """;
+        }
+
+        /// <summary>
+        /// Gets the content for the test project .csproj file.
+        /// </summary>
+        protected virtual string GetTestProjectContent(string packageName)
+        {
+            return $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <ItemGroup>
+                    <ProjectReference Include="..\src\{packageName}.csproj" />
+                  </ItemGroup>
+                  <ItemGroup>
+                    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+                    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+                  </ItemGroup>
                 </Project>
                 """;
         }

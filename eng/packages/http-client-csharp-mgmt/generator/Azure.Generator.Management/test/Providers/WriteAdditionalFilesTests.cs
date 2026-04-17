@@ -51,6 +51,16 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [Test]
+        public void GetTestProjectContentContainsProjectReference()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+            string content = scaffolding.TestGetTestProjectContent("Azure.ResourceManager.Test");
+            Assert.IsTrue(content.Contains(@"<ProjectReference Include=""..\src\Azure.ResourceManager.Test.csproj"" />"));
+            Assert.IsTrue(content.Contains("TestFrameworkSupportFiles"));
+            Assert.IsTrue(content.Contains("ManagementTestShared"));
+        }
+
+        [Test]
         public async Task WriteAdditionalFilesSkipsNonSdkDirectory()
         {
             // The test output directory is under eng/, not sdk/, so files should NOT be created
@@ -58,6 +68,7 @@ namespace Azure.Generator.Management.Tests.Providers
             string readmePath = Path.Combine(outputDir, "README.md");
             string changelogPath = Path.Combine(outputDir, "CHANGELOG.md");
             string propsPath = Path.Combine(outputDir, "Directory.Build.props");
+            string testCsprojPath = Path.Combine(outputDir, "tests", "Samples.Tests.csproj");
 
             try
             {
@@ -65,6 +76,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 if (File.Exists(readmePath)) File.Delete(readmePath);
                 if (File.Exists(changelogPath)) File.Delete(changelogPath);
                 if (File.Exists(propsPath)) File.Delete(propsPath);
+                if (File.Exists(testCsprojPath)) File.Delete(testCsprojPath);
 
                 var scaffolding = new TestableNewManagementProjectScaffolding();
                 await scaffolding.TestWriteAdditionalFiles();
@@ -73,12 +85,14 @@ namespace Azure.Generator.Management.Tests.Providers
                 Assert.IsFalse(File.Exists(readmePath));
                 Assert.IsFalse(File.Exists(changelogPath));
                 Assert.IsFalse(File.Exists(propsPath));
+                Assert.IsFalse(File.Exists(testCsprojPath));
             }
             finally
             {
                 if (File.Exists(readmePath)) File.Delete(readmePath);
                 if (File.Exists(changelogPath)) File.Delete(changelogPath);
                 if (File.Exists(propsPath)) File.Delete(propsPath);
+                if (File.Exists(testCsprojPath)) File.Delete(testCsprojPath);
             }
         }
 
@@ -90,6 +104,7 @@ namespace Azure.Generator.Management.Tests.Providers
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
+            public string TestGetTestProjectContent(string packageName) => GetTestProjectContent(packageName);
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
         }
     }
