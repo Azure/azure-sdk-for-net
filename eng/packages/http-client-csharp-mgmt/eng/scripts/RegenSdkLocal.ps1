@@ -20,7 +20,7 @@
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
 
-.PARAMETER LocalSpecRepoPath
+.PARAMETER LocalSpecPath
     Path to the local TypeSpec service folder (e.g., the folder containing main.tsp
     and client.tsp). When specified, reads spec files from this local directory instead
     of fetching from GitHub. Useful for fast iteration when making spec changes
@@ -50,14 +50,14 @@
     .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs\specification\keyvault\Security.KeyVault.Management"
+    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecPath "C:\src\azure-rest-api-specs\specification\keyvault\Security.KeyVault.Management"
 #>
 
 param(
     [string[]]$Services,
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
-    [string]$LocalSpecRepoPath,
+    [string]$LocalSpecPath,
     [switch]$SaveInputs,
     [switch]$DebugGenerator
 )
@@ -76,12 +76,12 @@ Test-Prerequisite "git" "Git"
 Test-Prerequisite "npm" "npm (Node.js)"
 Test-Prerequisite "dotnet" ".NET SDK"
 
-# Validate LocalSpecRepoPath upfront
-if ($LocalSpecRepoPath) {
-    if (-not (Test-Path $LocalSpecRepoPath)) {
-        throw "LocalSpecRepoPath not found: $LocalSpecRepoPath"
+# Validate LocalSpecPath upfront
+if ($LocalSpecPath) {
+    if (-not (Test-Path $LocalSpecPath)) {
+        throw "LocalSpecPath not found: $LocalSpecPath"
     }
-    $LocalSpecRepoPath = (Resolve-Path $LocalSpecRepoPath).Path
+    $LocalSpecPath = (Resolve-Path $LocalSpecPath).Path
 }
 
 # Resolve paths
@@ -179,7 +179,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $mgmtPkgRoot = $using:mgmtPackageRoot
         $sdkRepo = $using:sdkRepoRoot
         $worker = $using:workerScript
-        $localSpecRepo = $using:LocalSpecRepoPath
+        $localSpec = $using:LocalSpecPath
         $saveInputsFlag = $using:SaveInputs
         $debugFlag = $using:DebugGenerator
         
@@ -194,7 +194,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 SaveInputs = $saveInputsFlag
                 DebugGenerator = $debugFlag
             }
-            if ($localSpecRepo) { $workerArgs['LocalSpecRepoPath'] = $localSpecRepo }
+            if ($localSpec) { $workerArgs['LocalSpecPath'] = $localSpec }
             $output = & $worker @workerArgs 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
@@ -236,7 +236,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 SaveInputs = $SaveInputs
                 DebugGenerator = $DebugGenerator
             }
-            if ($LocalSpecRepoPath) { $workerArgs['LocalSpecRepoPath'] = $LocalSpecRepoPath }
+            if ($LocalSpecPath) { $workerArgs['LocalSpecPath'] = $LocalSpecPath }
             $output = & $workerScript @workerArgs 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {

@@ -17,7 +17,7 @@
 .PARAMETER SdkRepoRoot
     Full path to the azure-sdk-for-net repository root.
 
-.PARAMETER LocalSpecRepoPath
+.PARAMETER LocalSpecPath
     Path to a local TypeSpec service folder. When specified, spec files are
     copied from this directory instead of fetching from GitHub via sparse clone.
     The script first tries joining this path with the 'directory' value from
@@ -34,7 +34,7 @@ param(
     [Parameter(Mandatory)]
     [string]$SdkRepoRoot,
     
-    [string]$LocalSpecRepoPath,
+    [string]$LocalSpecPath,
     
     [switch]$SaveInputs,
     
@@ -70,27 +70,27 @@ try {
     }
     New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
     
-    if ($LocalSpecRepoPath) {
+    if ($LocalSpecPath) {
         # Use local spec repo — try joining with tsp-location directory first,
         # fall back to using the path directly if it already points to the service folder.
         $normalizedDir = $directory -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
-        $joinedSource = Join-Path $LocalSpecRepoPath $normalizedDir
+        $joinedSource = Join-Path $LocalSpecPath $normalizedDir
         if (Test-Path $joinedSource) {
             $source = $joinedSource
         }
-        elseif (Test-Path $LocalSpecRepoPath) {
+        elseif (Test-Path $LocalSpecPath) {
             # Path likely already points to the service folder
-            $source = $LocalSpecRepoPath
+            $source = $LocalSpecPath
         }
         else {
-            throw "Local spec directory not found: tried '$joinedSource' and '$LocalSpecRepoPath'"
+            throw "Local spec directory not found: tried '$joinedSource' and '$LocalSpecPath'"
         }
         Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
         
         if ($additionalDirs) {
             foreach ($addDir in $additionalDirs) {
                 $normalizedAddDir = $addDir -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
-                $addSource = Join-Path $LocalSpecRepoPath $normalizedAddDir
+                $addSource = Join-Path $LocalSpecPath $normalizedAddDir
                 if (Test-Path $addSource) {
                     Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
                 }

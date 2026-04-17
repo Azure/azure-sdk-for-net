@@ -47,7 +47,7 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 1. **Check for `migration-status.md`** in the package directory. If it exists, read it and resume from the recorded phase — skip completed work.
 2. Sync both repos to latest `main`.
 3. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-4. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
+4. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecPath <path>`.
 5. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
