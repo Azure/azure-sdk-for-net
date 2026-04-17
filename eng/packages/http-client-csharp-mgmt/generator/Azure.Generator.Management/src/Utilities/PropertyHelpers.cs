@@ -84,6 +84,7 @@ namespace Azure.Generator.Management.Utilities
         public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
+            var shouldNullGuard = internalProperty.Type.IsNullable || internalProperty.WireInfo?.IsRequired == false || innerModel.Type.IsNullable;
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
@@ -129,9 +130,9 @@ namespace Azure.Generator.Management.Utilities
             }
             else
             {
-                if (innerModel.Type.IsNullable)
+                if (shouldNullGuard)
                 {
-                    return Return(new MemberExpression(internalProperty.AsVariableExpression.NullConditional(), innerProperty.Name));
+                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
                 }
                 return Return(new MemberExpression(internalProperty, innerProperty.Name));
             }

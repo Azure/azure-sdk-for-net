@@ -21,11 +21,13 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To deploy a project, call `DeployProject` on the `ConversationAuthoringDeployment` client. Deploying a project ensures that the trained model is available for use.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProject
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-Operation operation = client.DeployProject(
+Operation operation = deploymentClient.DeployProject(
     WaitUntil.Completed,
     projectName,
     deploymentName,
@@ -45,6 +47,8 @@ This feature is supported in both the `2025-11-01` GA version and the `2025-11-1
 If you are using `2025-11-15-preview`, create a `ConversationAuthoringCreateDeploymentDetails` instance and add one or more `ConversationAuthoringAssignedProjectResource` items to its `AzureResourceIds` collection, then call `DeployProject` on the `ConversationAuthoringDeployment` client:
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectWithAssignedResources
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 
@@ -71,7 +75,7 @@ ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
 deploymentDetails.AssignedResources.Add(assignedResource);
 // Start deployment
-Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+Operation operation = deploymentClient.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 
 // Output result
 Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -92,6 +96,7 @@ ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAut
 
 ConversationAnalysisAuthoring client =
     new ConversationAnalysisAuthoring(endpoint, credential, options);
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
 
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
@@ -100,7 +105,7 @@ string deploymentName = "{deploymentName}";
 ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
 // Start deployment
-Operation operation = client.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+Operation operation = deploymentClient.DeployProject(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 ```
 
 ## Deploy a Project Async
@@ -108,11 +113,13 @@ Operation operation = client.DeployProject(WaitUntil.Started, projectName, deplo
 To deploy a project asynchronously, call `DeployProjectAsync` on the `ConversationAuthoringDeployment` client. This ensures that the trained model is deployed and available for use without blocking execution.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectAsync
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
 
-Operation operation = await client.DeployProjectAsync(
+Operation operation = await deploymentClient.DeployProjectAsync(
     WaitUntil.Completed,
     projectName,
     deploymentName,
@@ -132,6 +139,8 @@ This async version feature is also supported in both the `2025-11-01` GA version
 If you are using `2025-11-15-preview`, create a `ConversationAuthoringCreateDeploymentDetails` instance and add one or more `ConversationAuthoringAssignedProjectResource` items to its `AzureResourceIds` collection, then call `DeployProjectAsync` on the `ConversationAuthoringDeployment` client:
 
 ```C# Snippet:Sample14_ConversationsAuthoring_DeployProjectAsyncWithAssignedResources
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 
@@ -158,7 +167,7 @@ ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
 deploymentDetails.AssignedResources.Add(assignedResource);
 // Start deployment
-Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 
 // Output result
 Console.WriteLine($"Deployment started with status: {operation.GetRawResponse().Status}");
@@ -179,6 +188,7 @@ ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAut
 
 ConversationAnalysisAuthoring client =
     new ConversationAnalysisAuthoring(endpoint, credential, options);
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
 
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
@@ -187,5 +197,5 @@ string deploymentName = "{deploymentName}";
 ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
 // Start deployment asynchronously
-Operation operation = await client.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
+Operation operation = await deploymentClient.DeployProjectAsync(WaitUntil.Started, projectName, deploymentName, deploymentDetails);
 ```

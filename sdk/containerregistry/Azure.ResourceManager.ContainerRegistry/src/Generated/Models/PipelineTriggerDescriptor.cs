@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Source.SourceTriggerTimestamp;
+                return Source is null ? default : Source.SourceTriggerTimestamp;
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties.PrincipalId;
+                return Properties is null ? default : Properties.PrincipalId;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties.RoleDefinitionId;
+                return Properties is null ? default : Properties.RoleDefinitionId;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             get
             {
-                return Properties.Scope;
+                return Properties is null ? default : Properties.Scope;
             }
         }
     }

@@ -423,7 +423,7 @@ public class DefaultProviderZeroRegressionTests : ProtocolTestBase
     [Test]
     public async Task Default_Get_Unknown_Returns_404()
     {
-        var response = await GetResponseAsync("resp_unknown_provider_test");
+        var response = await GetResponseAsync(IdGenerator.NewResponseId());
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 

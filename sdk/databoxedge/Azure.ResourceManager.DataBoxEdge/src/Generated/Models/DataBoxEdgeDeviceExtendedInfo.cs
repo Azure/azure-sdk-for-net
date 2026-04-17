@@ -15,114 +15,223 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The extended Info of the Data Box Edge/Gateway device. </summary>
     public partial class DataBoxEdgeDeviceExtendedInfo : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfo"/>. </summary>
         public DataBoxEdgeDeviceExtendedInfo()
         {
-            DeviceSecrets = new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="encryptionKeyThumbprint"> The digital signature of encrypted certificate. </param>
-        /// <param name="encryptionKey"> The public part of the encryption certificate. Client uses this to encrypt any secret. </param>
-        /// <param name="resourceKey"> The Resource ID of the Resource. </param>
-        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
-        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyName"> The name of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="keyVaultSyncStatus"> Key vault sync status. </param>
-        /// <param name="deviceSecrets"> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </param>
-        /// <param name="clusterWitnessType"> Cluster Witness Type. </param>
-        /// <param name="fileShareWitnessLocation"> The witness location of file share. </param>
-        /// <param name="fileShareWitnessUsername"> The username of file share. </param>
-        /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
-        /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
-        /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string encryptionKeyThumbprint, string encryptionKey, string resourceKey, ResourceIdentifier clientSecretStoreId, Uri clientSecretStoreUri, string channelIntegrityKeyName, string channelIntegrityKeyVersion, EdgeKeyVaultSyncStatus? keyVaultSyncStatus, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets, EdgeClusterWitnessType? clusterWitnessType, string fileShareWitnessLocation, string fileShareWitnessUsername, string cloudWitnessStorageAccountName, string cloudWitnessContainerName, string cloudWitnessStorageEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The extended info properties. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of DataBoxEdgeDevice. </param>
+        internal DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxEdgeDeviceExtendedInfoProperties properties, SystemData systemData) : base(id, name, resourceType, systemData)
         {
-            EncryptionKeyThumbprint = encryptionKeyThumbprint;
-            EncryptionKey = encryptionKey;
-            ResourceKey = resourceKey;
-            ClientSecretStoreId = clientSecretStoreId;
-            ClientSecretStoreUri = clientSecretStoreUri;
-            ChannelIntegrityKeyName = channelIntegrityKeyName;
-            ChannelIntegrityKeyVersion = channelIntegrityKeyVersion;
-            KeyVaultSyncStatus = keyVaultSyncStatus;
-            DeviceSecrets = deviceSecrets;
-            ClusterWitnessType = clusterWitnessType;
-            FileShareWitnessLocation = fileShareWitnessLocation;
-            FileShareWitnessUsername = fileShareWitnessUsername;
-            CloudWitnessStorageAccountName = cloudWitnessStorageAccountName;
-            CloudWitnessContainerName = cloudWitnessContainerName;
-            CloudWitnessStorageEndpoint = cloudWitnessStorageEndpoint;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The extended info properties. </summary>
+        internal DataBoxEdgeDeviceExtendedInfoProperties Properties { get; set; }
+
         /// <summary> The digital signature of encrypted certificate. </summary>
-        public string EncryptionKeyThumbprint { get; set; }
+        public string EncryptionKeyThumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKeyThumbprint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.EncryptionKeyThumbprint = value;
+            }
+        }
+
         /// <summary> The public part of the encryption certificate. Client uses this to encrypt any secret. </summary>
-        public string EncryptionKey { get; set; }
+        public string EncryptionKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.EncryptionKey = value;
+            }
+        }
+
         /// <summary> The Resource ID of the Resource. </summary>
-        public string ResourceKey { get; }
+        public string ResourceKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceKey;
+            }
+        }
+
         /// <summary> The Key Vault ARM Id for client secrets. </summary>
-        public ResourceIdentifier ClientSecretStoreId { get; set; }
+        public ResourceIdentifier ClientSecretStoreId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecretStoreId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.ClientSecretStoreId = value;
+            }
+        }
+
         /// <summary> The url to access the Client Key Vault. </summary>
-        public Uri ClientSecretStoreUri { get; set; }
+        public Uri ClientSecretStoreUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecretStoreUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.ClientSecretStoreUri = value;
+            }
+        }
+
         /// <summary> The name of Channel Integrity Key stored in the Client Key Vault. </summary>
-        public string ChannelIntegrityKeyName { get; set; }
+        public string ChannelIntegrityKeyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChannelIntegrityKeyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.ChannelIntegrityKeyName = value;
+            }
+        }
+
         /// <summary> The version of Channel Integrity Key stored in the Client Key Vault. </summary>
-        public string ChannelIntegrityKeyVersion { get; set; }
+        public string ChannelIntegrityKeyVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChannelIntegrityKeyVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.ChannelIntegrityKeyVersion = value;
+            }
+        }
+
         /// <summary> Key vault sync status. </summary>
-        public EdgeKeyVaultSyncStatus? KeyVaultSyncStatus { get; set; }
+        public EdgeKeyVaultSyncStatus? KeyVaultSyncStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultSyncStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                Properties.KeyVaultSyncStatus = value.Value;
+            }
+        }
+
         /// <summary> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </summary>
-        public IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> DeviceSecrets { get; }
+        public IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> DeviceSecrets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DataBoxEdgeDeviceExtendedInfoProperties();
+                }
+                return Properties.DeviceSecrets;
+            }
+        }
+
         /// <summary> Cluster Witness Type. </summary>
-        public EdgeClusterWitnessType? ClusterWitnessType { get; }
+        public EdgeClusterWitnessType? ClusterWitnessType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterWitnessType;
+            }
+        }
+
         /// <summary> The witness location of file share. </summary>
-        public string FileShareWitnessLocation { get; }
+        public string FileShareWitnessLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileShareWitnessLocation;
+            }
+        }
+
         /// <summary> The username of file share. </summary>
-        public string FileShareWitnessUsername { get; }
+        public string FileShareWitnessUsername
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileShareWitnessUsername;
+            }
+        }
+
         /// <summary> The Cloud Witness Storage account name. </summary>
-        public string CloudWitnessStorageAccountName { get; }
+        public string CloudWitnessStorageAccountName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudWitnessStorageAccountName;
+            }
+        }
+
         /// <summary> The Container for cloud witness in the storage account. </summary>
-        public string CloudWitnessContainerName { get; }
+        public string CloudWitnessContainerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudWitnessContainerName;
+            }
+        }
+
         /// <summary> The Azure service endpoint of the cloud witness storage account. </summary>
-        public string CloudWitnessStorageEndpoint { get; }
+        public string CloudWitnessStorageEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CloudWitnessStorageEndpoint;
+            }
+        }
     }
 }
