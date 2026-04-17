@@ -11,11 +11,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClient
 {
-    public partial class IndividuallyNestedWithParamAliasClientOptions : ClientOptions
+    public partial class SpecsAzureTcgcClientInitIndividuallyClientOptions : ClientOptions
     {
-        public IndividuallyNestedWithParamAliasClientOptions() => throw null;
+        public SpecsAzureTcgcClientInitIndividuallyClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal IndividuallyNestedWithParamAliasClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+        internal SpecsAzureTcgcClientInitIndividuallyClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }
