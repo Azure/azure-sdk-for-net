@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         internal MaintenanceConfigurationAssignmentListResult()
         {
-            Value = new ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
+            Value = new ChangeTrackingList<Maintenance.MaintenanceConfigurationAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of configuration Assignments. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationAssignmentListResult(IList<MaintenanceConfigurationAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceConfigurationAssignmentListResult(IList<Maintenance.MaintenanceConfigurationAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         }
 
         /// <summary> The list of configuration Assignments. </summary>
-        public IList<MaintenanceConfigurationAssignmentData> Value { get; }
+        public IList<Maintenance.MaintenanceConfigurationAssignmentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

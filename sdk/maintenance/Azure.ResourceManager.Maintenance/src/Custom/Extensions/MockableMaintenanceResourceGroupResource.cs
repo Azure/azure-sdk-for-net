@@ -383,14 +383,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
+            return new ModelsConfigurationAssignmentAsyncPageable(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
         }
 
         /// <summary> List configurationAssignments for resource. </summary>
@@ -398,14 +398,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetAllCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments");
+            return new ModelsConfigurationAssignmentPageable(new ConfigurationAssignmentsGetAllCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignments"));
         }
 
         /// <summary> List configurationAssignments for resource with parent. </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
+            return new ModelsConfigurationAssignmentAsyncPageable(new ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent"));
         }
 
         /// <summary> List configurationAssignments for resource with parent. </summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new ConfigurationAssignmentsGetConfigurationAssignmentsByParentCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent");
+            return new ModelsConfigurationAssignmentPageable(new ConfigurationAssignmentsGetConfigurationAssignmentsByParentCollectionResultOfT(ConfigurationAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, context, "MockableMaintenanceResourceGroupResource.GetConfigurationAssignmentsByParent"));
         }
 
         /// <summary> Register configuration for resource. </summary>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, Models.MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
@@ -468,7 +468,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -484,7 +485,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, Models.MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
@@ -499,7 +500,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -511,7 +513,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <summary> Register configuration for resource with parent. </summary>
         /// <param name="options"> The options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
             return await CreateOrUpdateConfigurationAssignmentByParentAsync(options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, options.Data, cancellationToken).ConfigureAwait(false);
@@ -520,7 +522,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <summary> Register configuration for resource with parent. </summary>
         /// <param name="options"> The options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
             return CreateOrUpdateConfigurationAssignmentByParent(options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, options.Data, cancellationToken);
@@ -535,7 +537,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, Models.MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -552,7 +554,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                return Response.FromValue((Models.MaintenanceConfigurationAssignmentData)MaintenanceConfigurationAssignmentData.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -570,7 +572,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, Models.MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -587,7 +589,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -602,7 +605,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
@@ -616,7 +619,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -631,7 +635,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
@@ -645,7 +649,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -657,7 +662,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <summary> Unregister configuration for resource with parent. </summary>
         /// <param name="options"> The options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
             return await DeleteConfigurationAssignmentByParentAsync(options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
@@ -666,7 +671,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <summary> Unregister configuration for resource with parent. </summary>
         /// <param name="options"> The options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
             return DeleteConfigurationAssignmentByParent(options.ProviderName, options.ResourceParentType, options.ResourceParentName, options.ResourceType, options.ResourceName, options.ConfigurationAssignmentName, cancellationToken);
@@ -680,7 +685,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -696,7 +701,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {
@@ -713,7 +719,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<Models.MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
             Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
@@ -729,7 +735,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = ConfigurationAssignmentsRestClient.CreateDeleteConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
+                Models.MaintenanceConfigurationAssignmentData value = MaintenanceConfigurationAssignmentData.FromResponse(result);
+                return Response.FromValue(value, result);
             }
             catch (Exception e)
             {

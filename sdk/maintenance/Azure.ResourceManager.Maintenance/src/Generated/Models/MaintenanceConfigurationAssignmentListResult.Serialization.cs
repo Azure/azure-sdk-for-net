@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MaintenanceConfigurationAssignmentData item in Value)
+                foreach (Maintenance.MaintenanceConfigurationAssignmentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            IList<MaintenanceConfigurationAssignmentData> value = default;
+            IList<Maintenance.MaintenanceConfigurationAssignmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    List<MaintenanceConfigurationAssignmentData> array = new List<MaintenanceConfigurationAssignmentData>();
+                    List<Maintenance.MaintenanceConfigurationAssignmentData> array = new List<Maintenance.MaintenanceConfigurationAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item, options));
+                        array.Add(Maintenance.MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceConfigurationAssignmentListResult(value ?? new ChangeTrackingList<MaintenanceConfigurationAssignmentData>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceConfigurationAssignmentListResult(value ?? new ChangeTrackingList<Maintenance.MaintenanceConfigurationAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
