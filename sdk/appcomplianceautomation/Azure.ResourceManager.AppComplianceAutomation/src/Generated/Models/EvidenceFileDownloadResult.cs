@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             get
             {
-                return EvidenceFile.Uri;
+                return EvidenceFile is null ? default : EvidenceFile.Uri;
             }
         }
     }

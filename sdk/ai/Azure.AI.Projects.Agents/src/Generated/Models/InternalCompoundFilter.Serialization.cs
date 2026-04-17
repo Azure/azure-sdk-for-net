@@ -76,7 +76,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalCompoundFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
             foreach (BinaryData item in Filters)
@@ -138,14 +138,14 @@ namespace OpenAI
             {
                 return null;
             }
-            CompoundFilterType @type = default;
+            FileSearchToolFiltersType1 @type = default;
             IList<BinaryData> filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CompoundFilterType(prop.Value.GetString());
+                    @type = prop.Value.GetString().ToFileSearchToolFiltersType1();
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))

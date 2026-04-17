@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeDownloadPhase : IEquatable<DataBoxEdgeDownloadPhase>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeDownloadPhase(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string InitializingValue = "Initializing";
         private const string DownloadingValue = "Downloading";
         private const string VerifyingValue = "Verifying";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeDownloadPhase(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static DataBoxEdgeDownloadPhase Unknown { get; } = new DataBoxEdgeDownloadPhase(UnknownValue);
-        /// <summary> Initializing. </summary>
+
+        /// <summary> Gets the Initializing. </summary>
         public static DataBoxEdgeDownloadPhase Initializing { get; } = new DataBoxEdgeDownloadPhase(InitializingValue);
-        /// <summary> Downloading. </summary>
+
+        /// <summary> Gets the Downloading. </summary>
         public static DataBoxEdgeDownloadPhase Downloading { get; } = new DataBoxEdgeDownloadPhase(DownloadingValue);
-        /// <summary> Verifying. </summary>
+
+        /// <summary> Gets the Verifying. </summary>
         public static DataBoxEdgeDownloadPhase Verifying { get; } = new DataBoxEdgeDownloadPhase(VerifyingValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDownloadPhase"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDownloadPhase left, DataBoxEdgeDownloadPhase right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeDownloadPhase"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDownloadPhase left, DataBoxEdgeDownloadPhase right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeDownloadPhase(string value) => new DataBoxEdgeDownloadPhase(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeDownloadPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeDownloadPhase?(string value) => value == null ? null : new DataBoxEdgeDownloadPhase(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDownloadPhase other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeDownloadPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

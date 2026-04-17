@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.AadClientId;
+                return Properties is null ? default : Properties.AadClientId;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.AadTenantId;
+                return Properties is null ? default : Properties.AadTenantId;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.AadServicePrincipalObjectId;
+                return Properties is null ? default : Properties.AadServicePrincipalObjectId;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.AadApplicationObjectId;
+                return Properties is null ? default : Properties.AadApplicationObjectId;
             }
         }
     }
