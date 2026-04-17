@@ -7,11 +7,12 @@
 - Added `x-agent-session-id` response header on GET, Cancel, and OpenAPI endpoints. The POST
   endpoint already set the header; all Invocations protocol endpoints now include it per spec §8.
 
+- Added inbound request logging for Tier 1 and Tier 2 setups (via `InvocationsServer.Run()` or
+  `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
+  code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
+
 ### Other Changes
 
-- Inbound request logging is now automatically enabled for Tier 1 and Tier 2 setups
-  (via `InvocationsServer.Run()` or `AgentHost.CreateBuilder()`). All incoming HTTP
-  requests are logged with method, path, status code, duration, and correlation headers.
 - Updated dependency on `Azure.AI.AgentServer.Core` to 1.0.0-beta.22, which adds outbound
   `HttpClient` instrumentation for distributed trace correlation.
 

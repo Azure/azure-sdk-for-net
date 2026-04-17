@@ -27,6 +27,9 @@
 - Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
   InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
   conversation ID, previous response ID, and store flag for full request traceability.
+- Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
+  `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
+  code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
 
 ### Bugs Fixed
 
@@ -37,12 +40,6 @@
 - Fixed DELETE endpoint to return 404 (not 400) when the response ID does not exist, aligning
   with the specification.
 - Fixed cancel-after-delete to return 404 (not-found) per the specification.
-
-### Other Changes
-
-- Inbound request logging is now automatically enabled for Tier 1 and Tier 2 setups
-  (via `ResponsesServer.Run()` or `AgentHost.CreateBuilder()`). All incoming HTTP
-  requests are logged with method, path, status code, duration, and correlation headers.
 
 ## 1.0.0-beta.1 (2026-04-14)
 
