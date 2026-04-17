@@ -794,7 +794,7 @@ namespace Azure.Data.Tables
                     return new NoValueResponse<T>(response);
                 }
 
-                if (response.ContentStream is null)
+                if (response.ContentStream is null || (response.ContentStream.CanSeek && response.ContentStream.Length == 0))
                 {
                     throw new RequestFailedException(
                         response.Status,
