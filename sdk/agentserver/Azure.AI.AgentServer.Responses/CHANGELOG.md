@@ -27,6 +27,8 @@
 - Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
   InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
   conversation ID, previous response ID, and store flag for full request traceability.
+- Added isolation key presence logging (`HasUserIsolationKey`, `HasChatIsolationKey`) to all
+  endpoint handler logs and outbound Foundry storage request logs. Key values are never logged.
 - Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
   `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
   code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
