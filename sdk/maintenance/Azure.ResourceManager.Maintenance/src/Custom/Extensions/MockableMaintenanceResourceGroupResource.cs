@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -56,7 +55,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         /// <summary> Get Configuration records within a subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -67,7 +65,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         /// <summary> Get Configuration records within a subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
