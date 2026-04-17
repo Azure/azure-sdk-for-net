@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { strictEqual, deepStrictEqual, ok, throws } from "assert";
+import { strictEqual, deepStrictEqual, ok } from "assert";
 import { RequestPath, isVariableSegment } from "../src/resource-metadata.js";
 import { ResourceScopeKind } from "../src/resource-metadata.js";
 
