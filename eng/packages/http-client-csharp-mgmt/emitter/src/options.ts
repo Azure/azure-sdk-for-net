@@ -35,6 +35,7 @@ export interface AzureMgmtEmitterOptions extends AzureEmitterOptions {
   "skip-api-version-override"?: boolean;
   "apply-model-renaming"?: boolean;
   "apply-enum-renaming"?: boolean;
+  "apply-method-renaming"?: boolean;
 }
 
 export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptions> =
@@ -68,14 +69,21 @@ export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptio
         type: "boolean",
         nullable: true,
         description:
-          "Whether to apply the generator-side automatic model name overrides (e.g., renaming a PATCH body to '{Resource}Patch' or prefixing known model names like 'Sku' with the resource provider name). When false, model renames in NameVisitor are skipped so that names from TypeSpec (including user-provided `@@clientName` decorators) are preserved. The default value is 'true'.",
+          "Whether to apply the generator-side automatic model name overrides (e.g., renaming a PATCH body to '{Resource}Patch' / '{Resource}CreateOrUpdateContent', 'Url' -> 'Uri', or prefixing known-type model names like 'Sku' with the resource provider name). When false, the generator-side model renames in NameVisitor are skipped so that names from TypeSpec (including user-provided `@@clientName` decorators) are preserved. The default value is 'true'.",
         default: true
       },
       "apply-enum-renaming": {
         type: "boolean",
         nullable: true,
         description:
-          "Whether to apply the generator-side automatic enum name overrides (e.g., prefixing known enum names like 'PrivateEndpointServiceConnectionStatus' with the resource provider name). When false, enum renames in NameVisitor are skipped so that names from TypeSpec (including user-provided `@@clientName` decorators) are preserved. The default value is 'true'.",
+          "Whether to apply the generator-side automatic enum name overrides (e.g., prefixing known-type enum names like 'PrivateEndpointServiceConnectionStatus' with the resource provider name). When false, the generator-side enum renames in NameVisitor are skipped so that names from TypeSpec (including user-provided `@@clientName` decorators) are preserved. The default value is 'true'.",
+        default: true
+      },
+      "apply-method-renaming": {
+        type: "boolean",
+        nullable: true,
+        description:
+          "Whether to apply the generator-side automatic method name overrides for resource operations (e.g., 'Get', 'GetAll', 'CreateOrUpdate', 'Delete' on resource/collection clients, and 'Get{Resource}s' / 'CreateOrUpdate{Resource}' on extension clients). When false, the generator uses the TypeSpec-provided method names (including names set via the `@@clientName` decorator). The default value is 'true'.",
         default: true
       }
     }

@@ -72,6 +72,7 @@ namespace Azure.Generator.Management
         private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
         private const string ApplyModelRenamingFlag = "apply-model-renaming";
         private const string ApplyEnumRenamingFlag = "apply-enum-renaming";
+        private const string ApplyMethodRenamingFlag = "apply-method-renaming";
 
         private bool IsWirePathEnabled()
         {
@@ -95,45 +96,55 @@ namespace Azure.Generator.Management
             return false;
         }
 
+        private bool TryGetBoolOption(string name, bool defaultValue)
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(name, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return defaultValue;
+        }
+
         /// <summary>
         /// Determines whether the generator should apply the automatic model name overrides
         /// performed by <see cref="Visitors.NameVisitor"/> (e.g., renaming a PATCH body to
-        /// '{Resource}Patch' or prefixing known-type names like 'Sku' with the resource provider name).
-        /// When this returns <c>false</c>, those renames are skipped so that user-provided names in
-        /// TypeSpec (including names set via the <c>@@clientName</c> decorator) are preserved.
+        /// '{Resource}Patch', 'Url' -> 'Uri', or prefixing known-type model names like 'Sku'
+        /// with the resource provider name). When this returns <c>false</c>, those model
+        /// renames are skipped so that user-provided names in TypeSpec (including names set
+        /// via the <c>@@clientName</c> decorator) are preserved.
         /// </summary>
         /// <remarks>
         /// The value is controlled by the <c>apply-model-renaming</c> emitter option. The default is <c>true</c>
         /// so that existing generated code is unchanged when the option is not specified.
         /// </remarks>
-        public virtual bool IsApplyModelRenamingEnabled()
-        {
-            if (Configuration.AdditionalConfigurationOptions.TryGetValue(ApplyModelRenamingFlag, out var value)
-                && bool.TryParse(value.ToString(), out var flag))
-            {
-                return flag;
-            }
-            return true;
-        }
+        public virtual bool IsApplyModelRenamingEnabled() => TryGetBoolOption(ApplyModelRenamingFlag, defaultValue: true);
 
         /// <summary>
         /// Determines whether the generator should apply the automatic enum name overrides
-        /// performed by <see cref="Visitors.NameVisitor"/> (e.g., prefixing known enum names
-        /// like 'PrivateEndpointServiceConnectionStatus' with the resource provider name).
+        /// performed by <see cref="Visitors.NameVisitor"/> (e.g., prefixing known-type enum
+        /// names like 'PrivateEndpointServiceConnectionStatus' with the resource provider name).
+        /// When this returns <c>false</c>, those enum renames are skipped so that user-provided
+        /// names in TypeSpec (including names set via the <c>@@clientName</c> decorator) are preserved.
         /// </summary>
         /// <remarks>
         /// The value is controlled by the <c>apply-enum-renaming</c> emitter option. The default is <c>true</c>
         /// so that existing generated code is unchanged when the option is not specified.
         /// </remarks>
-        public virtual bool IsApplyEnumRenamingEnabled()
-        {
-            if (Configuration.AdditionalConfigurationOptions.TryGetValue(ApplyEnumRenamingFlag, out var value)
-                && bool.TryParse(value.ToString(), out var flag))
-            {
-                return flag;
-            }
-            return true;
-        }
+        public virtual bool IsApplyEnumRenamingEnabled() => TryGetBoolOption(ApplyEnumRenamingFlag, defaultValue: true);
+
+        /// <summary>
+        /// Determines whether the generator should apply automatic method name overrides for resource
+        /// operations (e.g., 'Get', 'GetAll', 'CreateOrUpdate', 'Delete' on resource/collection clients,
+        /// and 'Get{Resource}s' / 'CreateOrUpdate{Resource}' on extension clients). When this returns
+        /// <c>false</c>, the generator uses the TypeSpec-provided method names (including names set via
+        /// the <c>@@clientName</c> decorator).
+        /// </summary>
+        /// <remarks>
+        /// The value is controlled by the <c>apply-method-renaming</c> emitter option. The default is <c>true</c>
+        /// so that existing generated code is unchanged when the option is not specified.
+        /// </remarks>
+        public virtual bool IsApplyMethodRenamingEnabled() => TryGetBoolOption(ApplyMethodRenamingFlag, defaultValue: true);
 
         /// <summary>
         /// Management plane SDKs do not need ConfigurationSchema.json generation.
