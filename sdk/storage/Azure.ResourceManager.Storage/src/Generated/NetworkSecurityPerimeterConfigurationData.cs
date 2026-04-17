@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.ProvisioningIssues;
+                return Properties is null ? default : Properties.ProvisioningIssues;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.NetworkSecurityPerimeter;
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.ResourceAssociation;
+                return Properties is null ? default : Properties.ResourceAssociation;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.Profile;
+                return Properties is null ? default : Properties.Profile;
             }
         }
     }

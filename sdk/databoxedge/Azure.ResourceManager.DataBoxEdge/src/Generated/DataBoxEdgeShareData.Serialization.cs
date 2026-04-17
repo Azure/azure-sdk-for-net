@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeShareData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeShareData>
+    /// <summary> Represents a share on the  Data Box Edge/Gateway device. </summary>
+    public partial class DataBoxEdgeShareData : ResourceData, IJsonModel<DataBoxEdgeShareData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeShareData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/> for deserialization. </summary>
+        internal DataBoxEdgeShareData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxEdgeShareData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeShareData IPersistableModel<DataBoxEdgeShareData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeShareData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeShareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataBoxEdgeShareData"> The <see cref="DataBoxEdgeShareData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataBoxEdgeShareData dataBoxEdgeShareData)
+        {
+            if (dataBoxEdgeShareData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataBoxEdgeShareData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataBoxEdgeShareData"/> from. </param>
+        internal static DataBoxEdgeShareData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataBoxEdgeShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeShareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,290 +95,98 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WritePropertyName("shareStatus"u8);
-            writer.WriteStringValue(ShareStatus.ToString());
-            writer.WritePropertyName("monitoringStatus"u8);
-            writer.WriteStringValue(MonitoringStatus.ToString());
-            if (Optional.IsDefined(AzureContainerInfo))
-            {
-                writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo, options);
-            }
-            writer.WritePropertyName("accessProtocol"u8);
-            writer.WriteStringValue(AccessProtocol.ToString());
-            if (Optional.IsCollectionDefined(UserAccessRights))
-            {
-                writer.WritePropertyName("userAccessRights"u8);
-                writer.WriteStartArray();
-                foreach (var item in UserAccessRights)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ClientAccessRights))
-            {
-                writer.WritePropertyName("clientAccessRights"u8);
-                writer.WriteStartArray();
-                foreach (var item in ClientAccessRights)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RefreshDetails))
-            {
-                writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
-            {
-                writer.WritePropertyName("shareMappings"u8);
-                writer.WriteStartArray();
-                foreach (var item in ShareMappings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DataPolicy))
-            {
-                writer.WritePropertyName("dataPolicy"u8);
-                writer.WriteStringValue(DataPolicy.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
-        DataBoxEdgeShareData IJsonModel<DataBoxEdgeShareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeShareData IJsonModel<DataBoxEdgeShareData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeShareData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeShareData(document.RootElement, options);
         }
 
-        internal static DataBoxEdgeShareData DeserializeDataBoxEdgeShareData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxEdgeShareData DeserializeDataBoxEdgeShareData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string description = default;
-            ShareStatus shareStatus = default;
-            DataBoxEdgeShareMonitoringStatus monitoringStatus = default;
-            DataBoxEdgeStorageContainerInfo azureContainerInfo = default;
-            ShareAccessProtocol accessProtocol = default;
-            IList<UserAccessRight> userAccessRights = default;
-            IList<ClientAccessRight> clientAccessRights = default;
-            DataBoxEdgeRefreshDetails refreshDetails = default;
-            IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings = default;
-            DataBoxEdgeDataPolicy? dataPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ShareProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("shareStatus"u8))
-                        {
-                            shareStatus = new ShareStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("monitoringStatus"u8))
-                        {
-                            monitoringStatus = new DataBoxEdgeShareMonitoringStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("azureContainerInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("accessProtocol"u8))
-                        {
-                            accessProtocol = new ShareAccessProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("userAccessRights"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<UserAccessRight> array = new List<UserAccessRight>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(UserAccessRight.DeserializeUserAccessRight(item, options));
-                            }
-                            userAccessRights = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clientAccessRights"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ClientAccessRight> array = new List<ClientAccessRight>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ClientAccessRight.DeserializeClientAccessRight(item, options));
-                            }
-                            clientAccessRights = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("refreshDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("shareMappings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
-                            }
-                            shareMappings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dataPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataPolicy = new DataBoxEdgeDataPolicy(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = ShareProperties.DeserializeShareProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeShareData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                description,
-                shareStatus,
-                monitoringStatus,
-                azureContainerInfo,
-                accessProtocol,
-                userAccessRights ?? new ChangeTrackingList<UserAccessRight>(),
-                clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(),
-                refreshDetails,
-                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
-                dataPolicy,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataBoxEdgeShareData IPersistableModel<DataBoxEdgeShareData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxEdgeShareData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataBoxEdgeShareData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

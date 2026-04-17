@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -24,73 +25,84 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class BandwidthScheduleCollection : ArmCollection, IEnumerable<BandwidthScheduleResource>, IAsyncEnumerable<BandwidthScheduleResource>
     {
-        private readonly ClientDiagnostics _bandwidthScheduleClientDiagnostics;
-        private readonly BandwidthSchedulesRestOperations _bandwidthScheduleRestClient;
+        private readonly ClientDiagnostics _bandwidthSchedulesClientDiagnostics;
+        private readonly BandwidthSchedules _bandwidthSchedulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BandwidthScheduleCollection for mocking. </summary>
         protected BandwidthScheduleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BandwidthScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bandwidthScheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", BandwidthScheduleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BandwidthScheduleResource.ResourceType, out string bandwidthScheduleApiVersion);
-            _bandwidthScheduleRestClient = new BandwidthSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bandwidthScheduleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _bandwidthSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", BandwidthScheduleResource.ResourceType.Namespace, Diagnostics);
+            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The bandwidth schedule name which needs to be added/updated. </param>
+        /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="data"> The bandwidth schedule to be added or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BandwidthScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, BandwidthScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _bandwidthScheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(new BandwidthScheduleOperationSource(Client), _bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, BandwidthScheduleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
+                    new BandwidthScheduleOperationSource(Client),
+                    _bandwidthSchedulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,51 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Creates or updates a bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The bandwidth schedule name which needs to be added/updated. </param>
+        /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="data"> The bandwidth schedule to be added or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BandwidthScheduleResource> CreateOrUpdate(WaitUntil waitUntil, string name, BandwidthScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _bandwidthScheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(new BandwidthScheduleOperationSource(Client), _bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, BandwidthScheduleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
+                    new BandwidthScheduleOperationSource(Client),
+                    _bandwidthSchedulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BandwidthScheduleResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.Get");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _bandwidthScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BandwidthScheduleData> response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BandwidthScheduleResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.Get");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = _bandwidthScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BandwidthScheduleData> response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets all the bandwidth schedules for a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BandwidthScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BandwidthScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BandwidthScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
+                _bandwidthSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BandwidthScheduleCollection.GetAll"), data => new BandwidthScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the bandwidth schedules for a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_ListByDataBoxEdgeDevice</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_ListByDataBoxEdgeDevice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="BandwidthScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BandwidthScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BandwidthScheduleData, BandwidthScheduleResource>(new BandwidthSchedulesGetByDataBoxEdgeDeviceCollectionResultOfT(
+                _bandwidthSchedulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BandwidthScheduleCollection.GetAll"), data => new BandwidthScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.Exists");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _bandwidthScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BandwidthScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BandwidthScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.Exists");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _bandwidthScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BandwidthScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BandwidthScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BandwidthScheduleResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _bandwidthScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BandwidthScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BandwidthScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BandwidthScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BandwidthSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BandwidthSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BandwidthScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The bandwidth schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BandwidthScheduleResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _bandwidthScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BandwidthScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BandwidthScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BandwidthScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BandwidthScheduleResource> IAsyncEnumerable<BandwidthScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
