@@ -43,5 +43,23 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             ComputeLimitSharedLimitResource.ValidateResourceId(id);
             return new ComputeLimitSharedLimitResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="FeatureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FeatureResource"/> object. </returns>
+        public virtual FeatureResource GetFeatureResource(ResourceIdentifier id)
+        {
+            FeatureResource.ValidateResourceId(id);
+            return new FeatureResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VmFamilyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmFamilyResource"/> object. </returns>
+        public virtual VmFamilyResource GetVmFamilyResource(ResourceIdentifier id)
+        {
+            VmFamilyResource.ValidateResourceId(id);
+            return new VmFamilyResource(Client, id);
+        }
     }
 }
