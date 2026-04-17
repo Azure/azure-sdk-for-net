@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineAssignRelayType : IEquatable<VirtualMachineAssignRelayType>
     {
         private readonly string _value;
+        /// <summary> Utilize the platform-dedicated relay for Arc services. </summary>
+        private const string PlatformValue = "Platform";
+        /// <summary> Utilize the standard public relay for Arc services. </summary>
+        private const string PublicValue = "Public";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineAssignRelayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineAssignRelayType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PlatformValue = "Platform";
-        private const string PublicValue = "Public";
-
-        /// <summary> Platform. </summary>
+        /// <summary> Utilize the platform-dedicated relay for Arc services. </summary>
         public static VirtualMachineAssignRelayType Platform { get; } = new VirtualMachineAssignRelayType(PlatformValue);
-        /// <summary> Public. </summary>
+
+        /// <summary> Utilize the standard public relay for Arc services. </summary>
         public static VirtualMachineAssignRelayType Public { get; } = new VirtualMachineAssignRelayType(PublicValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineAssignRelayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineAssignRelayType left, VirtualMachineAssignRelayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineAssignRelayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineAssignRelayType left, VirtualMachineAssignRelayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineAssignRelayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineAssignRelayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineAssignRelayType(string value) => new VirtualMachineAssignRelayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineAssignRelayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineAssignRelayType?(string value) => value == null ? null : new VirtualMachineAssignRelayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineAssignRelayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineAssignRelayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

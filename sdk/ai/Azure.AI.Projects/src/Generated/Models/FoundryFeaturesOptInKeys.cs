@@ -16,6 +16,10 @@ namespace Azure.AI.Projects
         /// <summary> InsightsV1Preview. </summary>
         InsightsV1Preview,
         /// <summary> MemoryStoresV1Preview. </summary>
-        MemoryStoresV1Preview
+        MemoryStoresV1Preview,
+        /// <summary> SkillsV1Preview. </summary>
+        SkillsV1Preview,
+        /// <summary> ToolboxesV1Preview. </summary>
+        ToolboxesV1Preview
     }
 }

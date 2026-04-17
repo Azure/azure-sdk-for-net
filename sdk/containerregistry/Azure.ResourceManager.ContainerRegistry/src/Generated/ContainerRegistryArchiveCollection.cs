@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -24,56 +25,53 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryArchiveCollection : ArmCollection, IEnumerable<ContainerRegistryArchiveResource>, IAsyncEnumerable<ContainerRegistryArchiveResource>
     {
-        private readonly ClientDiagnostics _containerRegistryArchiveArchivesClientDiagnostics;
-        private readonly ArchivesRestOperations _containerRegistryArchiveArchivesRestClient;
+        private readonly ClientDiagnostics _archivesClientDiagnostics;
+        private readonly Archives _archivesRestClient;
+        /// <summary> The packageType. </summary>
         private readonly string _packageType;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryArchiveCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryArchiveCollection for mocking. </summary>
         protected ContainerRegistryArchiveCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryArchiveCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArchiveCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="packageType"> The package type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packageType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="packageType"> The packageType for the resource. </param>
         internal ContainerRegistryArchiveCollection(ArmClient client, ResourceIdentifier id, string packageType) : base(client, id)
         {
+            TryGetApiVersion(ContainerRegistryArchiveResource.ResourceType, out string containerRegistryArchiveApiVersion);
             _packageType = packageType;
-            _containerRegistryArchiveArchivesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryArchiveResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerRegistryArchiveResource.ResourceType, out string containerRegistryArchiveArchivesApiVersion);
-            _containerRegistryArchiveArchivesRestClient = new ArchivesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryArchiveArchivesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _archivesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryArchiveResource.ResourceType.Namespace, Diagnostics);
+            _archivesRestClient = new Archives(_archivesClientDiagnostics, Pipeline, Endpoint, containerRegistryArchiveApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a archive for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,21 +79,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="data"> The parameters for creating a archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryArchiveResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string archiveName, ContainerRegistryArchiveData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveArchivesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(new ContainerRegistryArchiveOperationSource(Client), _containerRegistryArchiveArchivesClientDiagnostics, Pipeline, _containerRegistryArchiveArchivesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, ContainerRegistryArchiveData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ContainerRegistryArchiveResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(
+                    new ContainerRegistryArchiveOperationSource(Client),
+                    _archivesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -109,20 +120,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a archive for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,21 +137,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="data"> The parameters for creating a archive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerRegistryArchiveResource> CreateOrUpdate(WaitUntil waitUntil, string archiveName, ContainerRegistryArchiveData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveArchivesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(new ContainerRegistryArchiveOperationSource(Client), _containerRegistryArchiveArchivesClientDiagnostics, Pipeline, _containerRegistryArchiveArchivesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, ContainerRegistryArchiveData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ContainerRegistryArchiveResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveResource>(
+                    new ContainerRegistryArchiveOperationSource(Client),
+                    _archivesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +178,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the archive.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerRegistryArchiveResource>> GetAsync(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Get");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveArchivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerRegistryArchiveData> response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +227,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the archive.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerRegistryArchiveResource> Get(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Get");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveArchivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerRegistryArchiveData> response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +276,51 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all archives for the specified container registry and package type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryArchiveResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryArchiveResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryArchiveResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryArchiveArchivesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryArchiveArchivesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryArchiveResource(Client, ContainerRegistryArchiveData.DeserializeContainerRegistryArchiveData(e)), _containerRegistryArchiveArchivesClientDiagnostics, Pipeline, "ContainerRegistryArchiveCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerRegistryArchiveData, ContainerRegistryArchiveResource>(new ArchivesGetAllAsyncCollectionResultOfT(
+                _archivesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _packageType,
+                context,
+                "ContainerRegistryArchiveCollection.GetAll"), data => new ContainerRegistryArchiveResource(Client, data));
         }
 
         /// <summary>
         /// Lists all archives for the specified container registry and package type.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +328,68 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryArchiveResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryArchiveResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryArchiveArchivesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryArchiveArchivesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryArchiveResource(Client, ContainerRegistryArchiveData.DeserializeContainerRegistryArchiveData(e)), _containerRegistryArchiveArchivesClientDiagnostics, Pipeline, "ContainerRegistryArchiveCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerRegistryArchiveData, ContainerRegistryArchiveResource>(new ArchivesGetAllCollectionResultOfT(
+                _archivesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                _packageType,
+                context,
+                "ContainerRegistryArchiveCollection.GetAll"), data => new ContainerRegistryArchiveResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Exists");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveArchivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +403,50 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Exists");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveArchivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +460,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryArchiveResource>> GetIfExistsAsync(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetIfExists");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryArchiveArchivesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryArchiveResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +521,54 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Archives_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Archives_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2026-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="archiveName"> The name of the archive resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerRegistryArchiveResource> GetIfExists(string archiveName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(archiveName, nameof(archiveName));
 
-            using var scope = _containerRegistryArchiveArchivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetIfExists");
+            using DiagnosticScope scope = _archivesClientDiagnostics.CreateScope("ContainerRegistryArchiveCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerRegistryArchiveArchivesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, _packageType, archiveName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _archivesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, _packageType, archiveName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryArchiveData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryArchiveData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryArchiveData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryArchiveResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryArchiveResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +588,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerRegistryArchiveResource> IAsyncEnumerable<ContainerRegistryArchiveResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

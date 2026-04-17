@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionAsyncCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SapVirtualInstanceResource(Client, data));
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetBySubscriptionCollectionResultOfT(SapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadsSapVirtualInstanceSubscriptionResource.GetSapVirtualInstances"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>

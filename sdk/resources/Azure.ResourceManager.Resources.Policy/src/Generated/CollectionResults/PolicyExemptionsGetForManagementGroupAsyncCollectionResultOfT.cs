@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Resources.Policy
         private readonly string _managementGroupId;
         private readonly string _filter;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicyExemptions client used to send requests. </param>
         /// <param name="managementGroupId"> The management group ID. </param>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not provided, no filtering is performed. If $filter is not provided, the unfiltered list includes all policy exemptions associated with the scope, including those that apply directly or apply from containing scopes. If $filter=atScope() is provided, the returned list only includes all policy exemptions that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy exemptions that at the given scope. If $filter=excludeExpired() is provided, the returned list only includes all policy exemptions that either haven't expired or didn't set expiration date. If $filter=policyAssignmentId eq '{value}' is provided. the returned list only includes all policy exemptions that are associated with the give policyAssignmentId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT(PolicyExemptions client, string managementGroupId, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT(PolicyExemptions client, string managementGroupId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _managementGroupId = managementGroupId;
             _filter = filter;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PolicyExemptionsGetForManagementGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Policy
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetForManagementGroupRequest(nextLink, _managementGroupId, _filter, _context) : _client.CreateGetForManagementGroupRequest(_managementGroupId, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableResourcesPolicyManagementGroupResource.GetPolicyExemptions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

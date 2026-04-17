@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of an item. </summary>
-    public partial class ItemProperties : ProvisionableConstruct
+    internal partial class ItemProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;
         private BicepValue<string> _contentType;

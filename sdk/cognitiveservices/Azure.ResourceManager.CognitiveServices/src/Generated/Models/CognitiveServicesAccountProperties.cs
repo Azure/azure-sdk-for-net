@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account. </summary>
     public partial class CognitiveServicesAccountProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountProperties"/>. </summary>
         public CognitiveServicesAccountProperties()
@@ -76,6 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="createdOn"> Gets the date of cognitive services account creation. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="enableDynamicThrottling"> The flag to enable dynamic throttling. </param>
+        /// <param name="storedCompletionsDisabled"> The flag to disable stored completions. </param>
         /// <param name="quotaLimit"></param>
         /// <param name="restrictOutboundNetworkAccess"></param>
         /// <param name="allowedFqdnList"></param>
@@ -89,11 +62,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
         /// <param name="aiFoundryNetworkInjections"></param>
+        /// <param name="foundryAutoUpgrade"> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, bool? storedCompletionsDisabled, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections, FoundryAutoUpgrade foundryAutoUpgrade, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -112,6 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CreatedOn = createdOn;
             CallRateLimit = callRateLimit;
             EnableDynamicThrottling = enableDynamicThrottling;
+            StoredCompletionsDisabled = storedCompletionsDisabled;
             QuotaLimit = quotaLimit;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             AllowedFqdnList = allowedFqdnList;
@@ -125,108 +100,149 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty = abusePenalty;
             RaiMonitorConfig = raiMonitorConfig;
             AIFoundryNetworkInjections = aiFoundryNetworkInjections;
+            FoundryAutoUpgrade = foundryAutoUpgrade;
             AllowProjectManagement = allowProjectManagement;
             DefaultProject = defaultProject;
             AssociatedProjects = associatedProjects;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the status of the cognitive services account at the time the operation was called. </summary>
         [WirePath("provisioningState")]
         public ServiceAccountProvisioningState? ProvisioningState { get; }
+
         /// <summary> Endpoint of the created account. </summary>
         [WirePath("endpoint")]
         public string Endpoint { get; }
+
         /// <summary> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </summary>
         [WirePath("capabilities")]
         public IReadOnlyList<CognitiveServicesSkuCapability> Capabilities { get; }
+
         /// <summary> If the resource is migrated from an existing key. </summary>
         [WirePath("isMigrated")]
         public bool? IsMigrated { get; }
+
         /// <summary> Resource migration token. </summary>
         [WirePath("migrationToken")]
         public string MigrationToken { get; set; }
+
         /// <summary> Sku change info of account. </summary>
         [WirePath("skuChangeInfo")]
         public CognitiveServicesSkuChangeInfo SkuChangeInfo { get; }
+
         /// <summary> Optional subdomain name used for token-based authentication. </summary>
         [WirePath("customSubDomainName")]
         public string CustomSubDomainName { get; set; }
+
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         [WirePath("networkAcls")]
         public CognitiveServicesNetworkRuleSet NetworkAcls { get; set; }
+
         /// <summary> The encryption properties for this resource. </summary>
         [WirePath("encryption")]
         public ServiceAccountEncryptionProperties Encryption { get; set; }
+
         /// <summary> The storage accounts for this resource. </summary>
         [WirePath("userOwnedStorage")]
         public IList<ServiceAccountUserOwnedStorage> UserOwnedStorage { get; }
+
         /// <summary> The user owned AML account properties. </summary>
         [WirePath("amlWorkspace")]
         public UserOwnedAmlWorkspace AmlWorkspace { get; set; }
+
         /// <summary> The private endpoint connection associated with the Cognitive Services account. </summary>
         [WirePath("privateEndpointConnections")]
         public IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
         /// <summary> Whether or not public endpoint access is allowed for this account. </summary>
         [WirePath("publicNetworkAccess")]
         public ServiceAccountPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
         /// <summary> The api properties for special APIs. </summary>
         [WirePath("apiProperties")]
         public ServiceAccountApiProperties ApiProperties { get; set; }
+
         /// <summary> Gets the date of cognitive services account creation. </summary>
         [WirePath("dateCreated")]
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> The call rate limit Cognitive Services account. </summary>
         [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }
+
         /// <summary> The flag to enable dynamic throttling. </summary>
         [WirePath("dynamicThrottlingEnabled")]
         public bool? EnableDynamicThrottling { get; set; }
-        /// <summary> Gets the quota limit. </summary>
+
+        /// <summary> The flag to disable stored completions. </summary>
+        [WirePath("storedCompletionsDisabled")]
+        public bool? StoredCompletionsDisabled { get; set; }
+
+        /// <summary> Gets the QuotaLimit. </summary>
         [WirePath("quotaLimit")]
         public ServiceAccountQuotaLimit QuotaLimit { get; }
-        /// <summary> Gets or sets the restrict outbound network access. </summary>
+
+        /// <summary> Gets or sets the RestrictOutboundNetworkAccess. </summary>
         [WirePath("restrictOutboundNetworkAccess")]
         public bool? RestrictOutboundNetworkAccess { get; set; }
-        /// <summary> Gets the allowed fqdn list. </summary>
+
+        /// <summary> Gets the AllowedFqdnList. </summary>
         [WirePath("allowedFqdnList")]
         public IList<string> AllowedFqdnList { get; }
-        /// <summary> Gets or sets the disable local auth. </summary>
+
+        /// <summary> Gets or sets the DisableLocalAuth. </summary>
         [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
+
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         [WirePath("endpoints")]
         public IReadOnlyDictionary<string, string> Endpoints { get; }
-        /// <summary> Gets or sets the restore. </summary>
+
+        /// <summary> Gets or sets the Restore. </summary>
         [WirePath("restore")]
         public bool? Restore { get; set; }
+
         /// <summary> The deletion date, only available for deleted account. </summary>
         [WirePath("deletionDate")]
         public DateTimeOffset? DeletedOn { get; }
+
         /// <summary> The scheduled purge date, only available for deleted account. </summary>
         [WirePath("scheduledPurgeDate")]
         public string ScheduledPurgeDate { get; }
+
         /// <summary> The multiregion settings of Cognitive Services account. </summary>
         [WirePath("locations")]
         public CognitiveServicesMultiRegionSettings Locations { get; set; }
+
         /// <summary> The commitment plan associations of Cognitive Services account. </summary>
         [WirePath("commitmentPlanAssociations")]
         public IReadOnlyList<CommitmentPlanAssociation> CommitmentPlanAssociations { get; }
+
         /// <summary> The abuse penalty. </summary>
         [WirePath("abusePenalty")]
         public AbusePenalty AbusePenalty { get; }
+
         /// <summary> Cognitive Services Rai Monitor Config. </summary>
         [WirePath("raiMonitorConfig")]
         public RaiMonitorConfig RaiMonitorConfig { get; set; }
-        /// <summary> Gets the ai foundry network injections. </summary>
+
+        /// <summary> Gets the AIFoundryNetworkInjections. </summary>
         [WirePath("networkInjections")]
         public IList<AIFoundryNetworkInjection> AIFoundryNetworkInjections { get; }
+
+        /// <summary> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </summary>
+        [WirePath("foundryAutoUpgrade")]
+        public FoundryAutoUpgrade FoundryAutoUpgrade { get; set; }
+
         /// <summary> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </summary>
         [WirePath("allowProjectManagement")]
         public bool? AllowProjectManagement { get; set; }
+
         /// <summary> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </summary>
         [WirePath("defaultProject")]
         public string DefaultProject { get; set; }
+
         /// <summary> Specifies the projects, by project name, that are associated with this resource. </summary>
         [WirePath("associatedProjects")]
         public IList<string> AssociatedProjects { get; }

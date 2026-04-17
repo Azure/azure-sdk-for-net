@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != VirtualWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WorkspacePrivateEndpointConnectionCollection.GetAll"), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +322,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<DesktopVirtualizationPrivateEndpointConnectionDataData, WorkspacePrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByWorkspaceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "WorkspacePrivateEndpointConnectionCollection.GetAll"), data => new WorkspacePrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

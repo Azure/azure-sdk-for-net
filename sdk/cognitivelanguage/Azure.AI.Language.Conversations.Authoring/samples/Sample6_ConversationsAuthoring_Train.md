@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,8 +23,9 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To train a model, call Train on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -41,6 +42,7 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
 
 Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     details: trainingJobDetails
 );
 
@@ -56,6 +58,8 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 To train a model with data generation, include `DataGenerationSettings` when calling `Train` on the `ConversationAuthoringProject` client. This enables the service to generate additional training data using a connected Azure OpenAI resource. The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_Train_WithDataGeneration
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Create connection info for data generation
@@ -84,9 +88,9 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start the training operation
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
 Operation<ConversationAuthoringTrainingJobResult> operation = projectClient.Train(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     details: trainingJobDetails);
 
 // Extract operation location header and print status
@@ -100,9 +104,9 @@ Console.WriteLine($"Training completed with status: {operation.GetRawResponse().
 To train a model asynchronously, call TrainAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object containing the status of the training job, and the operation-location header can be used to track the training process.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync
-string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
+string projectName = "{projectName}";
 ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
     modelLabel: "{modelLabel}",
     trainingMode: ConversationAuthoringTrainingMode.Standard
@@ -119,6 +123,7 @@ ConversationAuthoringTrainingJobDetails trainingJobDetails = new ConversationAut
 
 Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     details: trainingJobDetails
 );
 
@@ -136,6 +141,8 @@ By providing `DataGenerationSettings`, the service can generate additional train
 The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training status.
 
 ```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Create connection info for data generation
@@ -164,9 +171,9 @@ var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
 };
 
 // Start training
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
 Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     details: trainingJobDetails);
 
 // Extract and print operation location and status

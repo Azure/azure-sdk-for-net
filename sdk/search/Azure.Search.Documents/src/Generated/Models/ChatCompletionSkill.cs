@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="uri"> The url for the Web API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/>, <paramref name="outputs"/> or <paramref name="uri"/> is null. </exception>
-        public ChatCompletionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, string uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
+        public ChatCompletionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, Uri uri) : base("#Microsoft.Skills.Custom.ChatCompletionSkill", inputs, outputs)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
@@ -39,27 +39,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The url for the Web API. </param>
-        /// <param name="httpHeaders"> The headers required to make the http request. </param>
-        /// <param name="httpMethod"> The method for the http request. </param>
-        /// <param name="timeout"> The desired timeout for the request. Default is 30 seconds. </param>
-        /// <param name="batchSize"> The desired batch size which indicates number of documents. </param>
-        /// <param name="degreeOfParallelism"> If set, the number of parallel calls that can be made to the Web API. </param>
-        /// <param name="authResourceId"> Applies to custom skills that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the custom skill connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </param>
         /// <param name="authIdentity"> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="apiKey"> API key for authenticating to the model. Both apiKey and authIdentity cannot be specified at the same time. </param>
         /// <param name="commonModelParameters"> Common language model parameters that customers can tweak. If omitted, reasonable defaults will be applied. </param>
         /// <param name="extraParameters"> Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry's extensibility pattern. </param>
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
-        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, string authResourceId, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal ChatCompletionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, SearchIndexerDataIdentity authIdentity, string apiKey, ChatCompletionCommonModelParameters commonModelParameters, IDictionary<string, BinaryData> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             Uri = uri;
-            HttpHeaders = httpHeaders;
-            HttpMethod = httpMethod;
-            Timeout = timeout;
-            BatchSize = batchSize;
-            DegreeOfParallelism = degreeOfParallelism;
-            AuthResourceId = authResourceId;
             AuthIdentity = authIdentity;
             ApiKey = apiKey;
             CommonModelParameters = commonModelParameters;
@@ -69,25 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> The url for the Web API. </summary>
-        public string Uri { get; set; }
-
-        /// <summary> The headers required to make the http request. </summary>
-        public WebApiHttpHeaders HttpHeaders { get; set; }
-
-        /// <summary> The method for the http request. </summary>
-        public string HttpMethod { get; set; }
-
-        /// <summary> The desired timeout for the request. Default is 30 seconds. </summary>
-        public TimeSpan? Timeout { get; set; }
-
-        /// <summary> The desired batch size which indicates number of documents. </summary>
-        public int? BatchSize { get; set; }
-
-        /// <summary> If set, the number of parallel calls that can be made to the Web API. </summary>
-        public int? DegreeOfParallelism { get; set; }
-
-        /// <summary> Applies to custom skills that connect to external code in an Azure function or some other application that provides the transformations. This value should be the application ID created for the function or app when it was registered with Azure Active Directory. When specified, the custom skill connects to the function or app using a managed ID (either system or user-assigned) of the search service and the access token of the function or app, using this value as the resource id for creating the scope of the access token. </summary>
-        public string AuthResourceId { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> The user-assigned managed identity used for outbound connections. If an authResourceId is provided and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </summary>
         public SearchIndexerDataIdentity AuthIdentity { get; set; }

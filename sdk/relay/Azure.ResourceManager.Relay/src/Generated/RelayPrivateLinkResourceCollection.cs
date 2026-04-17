@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             if (id.ResourceType != RelayNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RelayNamespaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayPrivateLinkResourceCollection.GetAll"), data => new RelayPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RelayPrivateLinkResource(Client, data));
+            return new PageableWrapper<RelayPrivateLinkResourceData, RelayPrivateLinkResource>(new PrivateLinkResourcesGetAllCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RelayPrivateLinkResourceCollection.GetAll"), data => new RelayPrivateLinkResource(Client, data));
         }
 
         /// <summary>

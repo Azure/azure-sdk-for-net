@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Support
         private readonly Guid _subscriptionId;
         private readonly string _supportTicketName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SupportTicketChatTranscript client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT(SupportTicketChatTranscript client, Guid subscriptionId, string supportTicketName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT(SupportTicketChatTranscript client, Guid subscriptionId, string supportTicketName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _supportTicketName = supportTicketName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SupportTicketChatTranscriptGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.Support
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _supportTicketName, _context) : _client.CreateGetAllRequest(_subscriptionId, _supportTicketName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SupportTicketChatTranscriptCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

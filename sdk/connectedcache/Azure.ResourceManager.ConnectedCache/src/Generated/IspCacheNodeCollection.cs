@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != IspCustomerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IspCustomerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IspCustomerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(_ispCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IspCacheNodeResource(Client, data));
+            return new AsyncPageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceAsyncCollectionResultOfT(
+                _ispCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IspCacheNodeCollection.GetAll"), data => new IspCacheNodeResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(_ispCacheNodesOperationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IspCacheNodeResource(Client, data));
+            return new PageableWrapper<IspCacheNodeData, IspCacheNodeResource>(new IspCacheNodesOperationsGetByIspCustomerResourceCollectionResultOfT(
+                _ispCacheNodesOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IspCacheNodeCollection.GetAll"), data => new IspCacheNodeResource(Client, data));
         }
 
         /// <summary>

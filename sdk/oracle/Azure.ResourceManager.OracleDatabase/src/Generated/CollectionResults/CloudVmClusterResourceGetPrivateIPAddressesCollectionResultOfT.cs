@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _cloudvmclustername;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudVmClusters client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(CloudVmClusters client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContent content, RequestContext context)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(CloudVmClusters client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,6 +43,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _cloudvmclustername = cloudvmclustername;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT as an enumerable collection. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.OracleDatabase
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetPrivateIPAddressesRequest(_subscriptionId, _resourceGroupName, _cloudvmclustername, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CloudVmClusterResource.GetPrivateIPAddresses");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

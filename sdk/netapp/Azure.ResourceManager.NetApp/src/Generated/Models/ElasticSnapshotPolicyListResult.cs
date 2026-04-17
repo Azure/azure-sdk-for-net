@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyListResult"/>. </summary>
         /// <param name="value"> The ElasticSnapshotPolicy items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ElasticSnapshotPolicyListResult(IEnumerable<ElasticSnapshotPolicyData> value)
+        internal ElasticSnapshotPolicyListResult(IEnumerable<NetAppElasticSnapshotPolicyData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The ElasticSnapshotPolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSnapshotPolicyListResult(IReadOnlyList<ElasticSnapshotPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSnapshotPolicyListResult(IReadOnlyList<NetAppElasticSnapshotPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ElasticSnapshotPolicy items on this page. </summary>
-        public IReadOnlyList<ElasticSnapshotPolicyData> Value { get; }
+        public IReadOnlyList<NetAppElasticSnapshotPolicyData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
