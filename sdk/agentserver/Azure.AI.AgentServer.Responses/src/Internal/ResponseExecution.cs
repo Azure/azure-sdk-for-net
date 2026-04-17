@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -139,6 +140,25 @@ internal sealed class ResponseExecution : IDisposable
     /// regardless of streaming vs non-streaming mode.
     /// </summary>
     public TaskCompletionSource FinalizedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>
+    /// Enforces chat isolation key for in-flight responses.
+    /// If this execution was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    /// <param name="isolation">The caller's isolation context.</param>
+    /// <exception cref="ResourceNotFoundException">
+    /// Thrown when the execution has a chat isolation key and the caller's key does not match.
+    /// </exception>
+    public void EnforceChatIsolation(IsolationContext isolation)
+    {
+        if (ChatIsolationKey is not null
+            && !string.Equals(ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
+        }
+    }
 
     /// <inheritdoc />
     public void Dispose()

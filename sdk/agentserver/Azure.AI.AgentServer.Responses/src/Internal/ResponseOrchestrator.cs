@@ -138,7 +138,7 @@ internal sealed class ResponseOrchestrator
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
             // Chat isolation enforcement for in-flight responses
-            EnforceInFlightChatIsolation(execution, isolation);
+            execution.EnforceChatIsolation(isolation);
 
             // Guard: store=false responses are not retrievable (B14)
             if (!execution.Store)
@@ -154,7 +154,13 @@ internal sealed class ResponseOrchestrator
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            return execution.Response!.Snapshot();
+            // Response object may not yet exist if GET arrives before handler yields response.created.
+            if (execution.Response is null)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            return execution.Response.Snapshot();
         }
 
         // Not in-flight — fall through to the durable store.
@@ -200,7 +206,7 @@ internal sealed class ResponseOrchestrator
         }
 
         // Chat isolation enforcement for in-flight responses
-        EnforceInFlightChatIsolation(execution, isolation);
+        execution.EnforceChatIsolation(isolation);
 
         // B1/B16: non-background in-flight responses are not findable via Cancel.
         // With eager eviction, all tracked executions are in-flight — completed
@@ -521,21 +527,6 @@ internal sealed class ResponseOrchestrator
     }
 
     // --- Shared Helpers ---
-
-    /// <summary>
-    /// Enforces chat isolation key for in-flight responses.
-    /// If the execution was created with a chat isolation key, the caller must
-    /// provide the same key; mismatches are treated as "not found" to prevent
-    /// cross-chat information leakage.
-    /// </summary>
-    private static void EnforceInFlightChatIsolation(ResponseExecution execution, IsolationContext isolation)
-    {
-        if (execution.ChatIsolationKey is not null
-            && !string.Equals(execution.ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
-        {
-            throw new ResourceNotFoundException($"Response '{execution.ResponseId}' not found.");
-        }
-    }
 
     /// <summary>
     /// Logs a bad-handler error, cancels the execution CTS, and throws

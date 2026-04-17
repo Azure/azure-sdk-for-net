@@ -75,21 +75,6 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
-    /// Enforces chat isolation key for in-flight responses.
-    /// If the execution was created with a chat isolation key, the caller must
-    /// provide the same key; mismatches are treated as "not found" to prevent
-    /// cross-chat information leakage.
-    /// </summary>
-    private static void EnforceInFlightChatIsolation(ResponseExecution execution, IsolationContext isolation)
-    {
-        if (execution.ChatIsolationKey is not null
-            && !string.Equals(execution.ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
-        {
-            throw new ResourceNotFoundException($"Response '{execution.ResponseId}' not found.");
-        }
-    }
-
-    /// <summary>
     /// Handles POST /responses — creates a new response and handles all 4 modes.
     /// </summary>
     public async Task<IResult> CreateResponseAsync(HttpContext httpContext)
@@ -336,7 +321,7 @@ internal sealed class ResponseEndpointHandler
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
                 // Chat isolation enforcement for in-flight responses
-                EnforceInFlightChatIsolation(execution, isolation);
+                execution.EnforceChatIsolation(isolation);
 
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
@@ -429,7 +414,7 @@ internal sealed class ResponseEndpointHandler
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
             // Chat isolation enforcement for in-flight responses
-            EnforceInFlightChatIsolation(execution, isolation);
+            execution.EnforceChatIsolation(isolation);
 
             if (!execution.Store)
             {
