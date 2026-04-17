@@ -110,6 +110,8 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(true);
+            plugin.Setup(p => p.IsApplyEnumRenamingEnabled()).Returns(true);
 
             // PreVisitEnum is called during the enum creation
             var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
@@ -208,6 +210,7 @@ namespace Azure.Generator.Mgmt.Tests
                 decorators: []);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(true);
             plugin.Setup(p => p.IsApplyEnumRenamingEnabled()).Returns(false);
 
             // PreVisitEnum is called during the enum creation
