@@ -8,13 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary></summary>
-    public partial class MaintenancePublicConfigurationResource : ArmResource, IJsonModel<MaintenanceConfigurationData>
+    public partial class MaintenancePublicConfigurationResource : IJsonModel<MaintenanceConfigurationData>
     {
+        private static IJsonModel<MaintenanceConfigurationData> s_dataDeserializationInstance;
+
+        private static IJsonModel<MaintenanceConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceConfigurationData();
+
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceConfigurationData>)Data).Write(writer, options);

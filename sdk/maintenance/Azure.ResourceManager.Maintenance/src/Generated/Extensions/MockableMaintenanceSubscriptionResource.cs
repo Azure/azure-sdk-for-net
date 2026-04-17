@@ -7,12 +7,12 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maintenance;
-using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
@@ -22,8 +22,6 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     {
         private ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private MaintenanceConfigurations _maintenanceConfigurationsRestClient;
-        private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
-        private ConfigurationAssignmentsWithinSubscription _configurationAssignmentsWithinSubscriptionRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
 
@@ -43,52 +41,150 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private MaintenanceConfigurations MaintenanceConfigurationsRestClient => _maintenanceConfigurationsRestClient ??= new MaintenanceConfigurations(MaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
-        private ClientDiagnostics ConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ConfigurationAssignmentsWithinSubscription ConfigurationAssignmentsWithinSubscriptionRestClient => _configurationAssignmentsWithinSubscriptionRestClient ??= new ConfigurationAssignmentsWithinSubscription(ConfigurationAssignmentsWithinSubscriptionClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
-
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
-        /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of MaintenancePublicConfigurations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenancePublicConfigurations and their operations over a MaintenancePublicConfigurationResource. </returns>
+        public virtual MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations()
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionAsyncCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
+            return GetCachedClient(client => new MaintenancePublicConfigurationCollection(client, Id));
         }
 
         /// <summary>
-        /// [UNSUPPORTED] Get configuration assignment within a subscription. This API is not implemented yet.
+        /// Get Public Maintenance Configuration record
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_List. </description>
+        /// <description> MaintenanceConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return await GetMaintenancePublicConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Public Maintenance Configuration record
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MaintenanceConfigurationAssignmentForSubscriptions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceConfigurationAssignmentForSubscriptions and their operations over a MaintenanceConfigurationAssignmentForSubscriptionResource. </returns>
+        public virtual MaintenanceConfigurationAssignmentForSubscriptionCollection GetMaintenanceConfigurationAssignmentForSubscriptions()
+        {
+            return GetCachedClient(client => new MaintenanceConfigurationAssignmentForSubscriptionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentForSubscriptionResource>> GetMaintenanceConfigurationAssignmentForSubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetMaintenanceConfigurationAssignmentForSubscriptions().GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MaintenanceConfigurationAssignmentForSubscriptionResource> GetMaintenanceConfigurationAssignmentForSubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetMaintenanceConfigurationAssignmentForSubscriptions().Get(configurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurationOperationGroup_MaintenanceConfigurationsList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -97,14 +193,42 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignmentResource> GetConfigurationAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsWithinSubscriptionGetConfigurationAssignmentsBySubscriptionCollectionResultOfT(ConfigurationAssignmentsWithinSubscriptionRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetConfigurationAssignments"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceConfigurationOperationGroup_MaintenanceConfigurationsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -125,14 +249,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetApplyUpdatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceApplyUpdateOperationGroupResource> GetMaintenanceApplyUpdateOperationGroupsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetApplyUpdates"), data => new MaintenanceApplyUpdateResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateOperationGroupResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdateOperationGroups"), data => new MaintenanceApplyUpdateOperationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -153,14 +277,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceApplyUpdateResource> GetApplyUpdates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceApplyUpdateOperationGroupResource> GetMaintenanceApplyUpdateOperationGroups(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetApplyUpdates"), data => new MaintenanceApplyUpdateResource(Client, data));
+            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateOperationGroupResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdateOperationGroups"), data => new MaintenanceApplyUpdateOperationGroupResource(Client, data));
         }
     }
 }

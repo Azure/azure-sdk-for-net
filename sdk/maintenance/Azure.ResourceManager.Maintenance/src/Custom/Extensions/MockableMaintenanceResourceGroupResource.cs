@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,12 +13,18 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    // Backward-compat mocking support: the old Swagger-based SDK (1.1.3) exposed extensive methods
-    // on MockableMaintenanceResourceGroupResource for by-parent operations: apply updates (create,
-    // get, get-by-parent), configuration assignments (create, delete, get, list, by-parent variants),
-    // and update listing (get updates, get-updates-by-parent). The TypeSpec generator uses
-    // scope-based ResourceIdentifier patterns. These custom methods use direct REST client calls
-    // to preserve the old parameter-based API surface for existing consumers.
+    // Backward-compat bridge: The TypeSpec migration uses OverrideResourceName on ExtensionOperations
+    // in ConfigurationAssignment.tsp and ApplyUpdate.tsp to create separate
+    // MaintenanceConfigurationAssignment*Resource/Collection and MaintenanceApplyUpdate*Resource/Collection
+    // classes per scope variant, resolving CS0111 duplicate method errors from merging operations that
+    // share the ConfigurationAssignment/ApplyUpdate models across different scope paths (5-param generic,
+    // 7-param by-parent, subscription, resource-group). This changes the API from flat extension methods
+    // with explicit path parameters (providerName, resourceType, resourceName, etc.) to typed
+    // Resource/Collection classes with scope encoded in ResourceIdentifier. These bridge methods preserve
+    // the old v1.1.3 parameter-based API surface using direct REST client calls.
+    //
+    // Methods in this file cover: apply updates (create, get, get-by-parent), configuration assignments
+    // (create, delete, get, list, by-parent variants), and update listing (get updates, get-updates-by-parent).
     public partial class MockableMaintenanceResourceGroupResource
     {
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
@@ -49,16 +56,24 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         /// <summary> Get Configuration records within a subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
-            return GetAllAsync(cancellationToken);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateResource>(
+                new ApplyUpdateForResourceGroupGetAllAsyncCollectionResultOfT(ApplyUpdateForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates"),
+                data => new MaintenanceApplyUpdateResource(Client, data));
         }
 
         /// <summary> Get Configuration records within a subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
-            return GetAll(cancellationToken);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateResource>(
+                new ApplyUpdateForResourceGroupGetAllCollectionResultOfT(ApplyUpdateForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableMaintenanceResourceGroupResource.GetMaintenanceApplyUpdates"),
+                data => new MaintenanceApplyUpdateResource(Client, data));
         }
 
         /// <summary> Apply maintenance updates to resource. </summary>

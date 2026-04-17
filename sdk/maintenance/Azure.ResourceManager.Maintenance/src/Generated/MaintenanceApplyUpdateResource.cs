@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a ApplyUpdate along with the instance operations that can be performed on it.
+    /// A class representing a MaintenanceApplyUpdate along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceApplyUpdateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetApplyUpdates method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetMaintenanceApplyUpdates method.
     /// </summary>
     public partial class MaintenanceApplyUpdateResource : ArmResource
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceApplyUpdateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string applyUpdateApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceApplyUpdateApiVersion);
             _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
+            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, maintenanceApplyUpdateApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -92,112 +92,6 @@ namespace Azure.ResourceManager.Maintenance
             if (id.ResourceType != ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
-        }
-
-        /// <summary>
-        /// Track maintenance updates to resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetAsync(string applyUpdateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, applyUpdateName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Track maintenance updates to resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MaintenanceApplyUpdateResource> Get(string applyUpdateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, applyUpdateName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
 
@@ -289,124 +183,6 @@ namespace Azure.ResourceManager.Maintenance
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a ApplyUpdate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_CreateOrUpdateOrCancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
-        /// <param name="data"> The ApplyUpdate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MaintenanceApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a ApplyUpdate.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_CreateOrUpdateOrCancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
-        /// <param name="data"> The ApplyUpdate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MaintenanceApplyUpdateResource> Update(WaitUntil waitUntil, string applyUpdateName, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateCreateOrUpdateOrCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, applyUpdateName, MaintenanceApplyUpdateData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
             }
             catch (Exception e)
             {

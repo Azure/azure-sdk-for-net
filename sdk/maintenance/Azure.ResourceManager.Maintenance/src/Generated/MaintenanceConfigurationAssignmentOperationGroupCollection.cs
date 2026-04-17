@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,28 +16,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenanceConfigurationAssignmentResource"/> and their operations.
-    /// Each <see cref="MaintenanceConfigurationAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="MaintenanceConfigurationAssignmentCollection"/> instance call the GetMaintenanceConfigurationAssignments method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> and their operations.
+    /// Each <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="MaintenanceConfigurationAssignmentOperationGroupCollection"/> instance call the GetMaintenanceConfigurationAssignmentOperationGroups method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class MaintenanceConfigurationAssignmentCollection : ArmCollection, IEnumerable<MaintenanceConfigurationAssignmentResource>, IAsyncEnumerable<MaintenanceConfigurationAssignmentResource>
+    public partial class MaintenanceConfigurationAssignmentOperationGroupCollection : ArmCollection
     {
         private readonly ClientDiagnostics _configurationAssignmentsClientDiagnostics;
         private readonly ConfigurationAssignments _configurationAssignmentsRestClient;
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentCollection for mocking. </summary>
-        protected MaintenanceConfigurationAssignmentCollection()
+        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentOperationGroupCollection for mocking. </summary>
+        protected MaintenanceConfigurationAssignmentOperationGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentOperationGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceConfigurationAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceConfigurationAssignmentOperationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MaintenanceConfigurationAssignmentResource.ResourceType, out string maintenanceConfigurationAssignmentApiVersion);
-            _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
+            TryGetApiVersion(MaintenanceConfigurationAssignmentOperationGroupResource.ResourceType, out string maintenanceConfigurationAssignmentOperationGroupApiVersion);
+            _configurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationAssignmentOperationGroupResource.ResourceType.Namespace, Diagnostics);
+            _configurationAssignmentsRestClient = new ConfigurationAssignments(_configurationAssignmentsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentOperationGroupApiVersion ?? "2023-10-01-preview");
         }
 
         /// <summary>
@@ -47,11 +45,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_CreateOrUpdateParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -65,12 +63,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MaintenanceConfigurationAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -78,12 +76,12 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource>(Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -102,11 +100,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_CreateOrUpdateParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -120,12 +118,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MaintenanceConfigurationAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource> CreateOrUpdate(WaitUntil waitUntil, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -133,12 +131,12 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, MaintenanceConfigurationAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentResource>(Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentOperationGroupResource>(Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -157,11 +155,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -173,11 +171,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentResource>> GetAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentOperationGroupResource>> GetAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.Get");
             scope.Start();
             try
             {
@@ -185,14 +183,14 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,11 +204,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -222,11 +220,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentResource> Get(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentOperationGroupResource> Get(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.Get");
             scope.Start();
             try
             {
@@ -234,14 +232,14 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -251,15 +249,15 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// List configurationAssignments for resource.
+        /// Get Configuration records within a subscription and resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_ListParent. </description>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -267,37 +265,46 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentOperationGroupResource> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetConfigurationAssignmentsByParentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentOperationGroupResource>(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
-                Id.Parent.ResourceType.Type,
-                Id.Parent.Name,
-                Id.ResourceType.Type,
-                Id.Name,
+                resourceGroupName,
+                providerName,
+                resourceType,
+                resourceName,
                 context,
-                "MaintenanceConfigurationAssignmentCollection.GetAll"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
+                "MaintenanceConfigurationAssignmentOperationGroupCollection.GetAll"), data => new MaintenanceConfigurationAssignmentOperationGroupResource(Client, data));
         }
 
         /// <summary>
-        /// List configurationAssignments for resource.
+        /// Get Configuration records within a subscription and resource group
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_ListParent. </description>
+        /// <description> ConfigurationAssignmentForResourceGroupOperationGroup_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -305,25 +312,34 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignmentResource> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentOperationGroupResource> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentResource>(new ConfigurationAssignmentsGetConfigurationAssignmentsByParentCollectionResultOfT(
+            return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceConfigurationAssignmentOperationGroupResource>(new ConfigurationAssignmentsGetAllCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
-                Id.Parent.ResourceType.Type,
-                Id.Parent.Name,
-                Id.ResourceType.Type,
-                Id.Name,
+                resourceGroupName,
+                providerName,
+                resourceType,
+                resourceName,
                 context,
-                "MaintenanceConfigurationAssignmentCollection.GetAll"), data => new MaintenanceConfigurationAssignmentResource(Client, data));
+                "MaintenanceConfigurationAssignmentOperationGroupCollection.GetAll"), data => new MaintenanceConfigurationAssignmentOperationGroupResource(Client, data));
         }
 
         /// <summary>
@@ -331,11 +347,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +367,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -359,7 +375,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -388,11 +404,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +424,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.Exists");
             scope.Start();
             try
             {
@@ -416,7 +432,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -445,11 +461,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -461,11 +477,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<MaintenanceConfigurationAssignmentResource>> GetIfExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MaintenanceConfigurationAssignmentOperationGroupResource>> GetIfExistsAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -473,7 +489,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -490,9 +506,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MaintenanceConfigurationAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceConfigurationAssignmentOperationGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -506,11 +522,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignments_GetParent. </description>
+        /// <description> ConfigurationAssignmentOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -522,11 +538,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<MaintenanceConfigurationAssignmentResource> GetIfExists(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MaintenanceConfigurationAssignmentOperationGroupResource> GetIfExists(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentOperationGroupCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -534,7 +550,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -551,31 +567,15 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MaintenanceConfigurationAssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<MaintenanceConfigurationAssignmentOperationGroupResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationAssignmentOperationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<MaintenanceConfigurationAssignmentResource> IEnumerable<MaintenanceConfigurationAssignmentResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<MaintenanceConfigurationAssignmentResource> IAsyncEnumerable<MaintenanceConfigurationAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -12,14 +12,58 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // Backward-compat overloads: the old Swagger-based SDK (1.1.3) had Get/Exists/GetIfExists
-    // with (providerName, resourceType, resourceName, applyUpdateName) parameters on ApplyUpdateCollection.
-    // The TypeSpec generator produces these methods with only (applyUpdateName). These custom overloads
-    // preserve the old 4-parameter API surface to avoid breaking existing consumers.
-    // The Maintenance REST API (ApplyUpdates_Get) requires providerName, resourceType, and resourceName
-    // as URL segments, which were previously exposed as method parameters.
-    // [CodeGenType("ApplyUpdateCollection")] renames the generated ApplyUpdateCollection to
-    // MaintenanceApplyUpdateCollection, matching the old SDK naming convention.
+    // Backward-compatibility customization for the Swagger-to-TypeSpec migration.
+    //
+    // Background: why the generated Collection only takes 1 parameter
+    //
+    // In the old Swagger SDK (v1.1.3), MaintenanceApplyUpdateCollection.Get/Exists/GetIfExists
+    // took 4 explicit parameters: (providerName, resourceType, resourceName, applyUpdateName).
+    // This was because the Swagger generator exposed every URL path segment as a method parameter.
+    //
+    // REST API path (ApplyUpdates_Get — without parent, 5-segment scope):
+    //   GET /subscriptions/{sub}/resourceGroups/{rg}/providers/{providerName}/{resourceType}/{resourceName}
+    //       /providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
+    //
+    // In the TypeSpec migration, ApplyUpdate.tsp defines the resource using
+    // Legacy.ExtensionOperations with OverrideResourceName="MaintenanceApplyUpdate". The TypeSpec MPG
+    // generator encodes (providerName, resourceType, resourceName) into the parent ResourceIdentifier
+    // rather than exposing them as method parameters. So the generated Collection methods only take
+    // (applyUpdateName), deriving the other segments from Id.Parent.ResourceType.Namespace, etc.
+    //
+    // However, the 7-segment by-parent path variant (ApplyUpdates_GetParent) is what the generated
+    // MaintenanceApplyUpdateResource/Collection actually binds to:
+    //   GET /subscriptions/{sub}/resourceGroups/{rg}/providers/{providerName}/{resourceParentType}/{resourceParentName}
+    //       /{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
+    //
+    // What this custom code does:
+    //
+    // 1. [CodeGenType("ApplyUpdateCollection")] — renames the generated "ApplyUpdateCollection" class
+    //    to "MaintenanceApplyUpdateCollection", matching the old Swagger SDK naming convention.
+    //    Without this, the generated class name would not have the "Maintenance" prefix.
+    //
+    // 2. Provides backward-compatible 4-parameter overloads for Get, Exists, and GetIfExists
+    //    (both sync and async), preserving the old v1.1.3 public API surface. These overloads
+    //    bypass the generated code and call the REST client directly with explicit path parameters,
+    //    because the generated methods have scope segments encoded in the ResourceIdentifier,
+    //    not as separate method parameters.
+    //
+    // 3. The custom methods call _maintenanceApplyUpdateRestClient.CreateGetRequest (the 5-segment,
+    //    without-parent REST endpoint — ApplyUpdateOperationGroup_Get) instead of
+    //    CreateGetApplyUpdatesByParentRequest (the 7-segment by-parent endpoint), because the old
+    //    v1.1.3 API used the without-parent path and only had (providerName, resourceType,
+    //    resourceName, applyUpdateName) — no resourceParentType/resourceParentName.
+    //
+    // Relationship to ApplyUpdate.tsp:
+    //
+    // ApplyUpdate.tsp defines two @armResourceOperations interfaces:
+    //   - ApplyUpdateOps (7-param by-parent) → MaintenanceApplyUpdate* classes (with parent segments)
+    //   - ApplyUpdateOperationGroupOps (5-param) → MaintenanceApplyUpdateOperationGroup* classes (without parent)
+    //
+    // back-compatible.tsp moves ApplyUpdateOperationGroup ops via @@clientLocation to the ApplyUpdates
+    // interface, so they appear on the same client. But the generated Resource/Collection types remain
+    // split. The custom 4-param overloads here allow existing callers who had:
+    //     collection.Get(providerName, resourceType, resourceName, applyUpdateName)
+    // to keep working, even though internally this now calls the 5-segment path through the REST client.
     [CodeGenType("ApplyUpdateCollection")]
     public partial class MaintenanceApplyUpdateCollection
     {
