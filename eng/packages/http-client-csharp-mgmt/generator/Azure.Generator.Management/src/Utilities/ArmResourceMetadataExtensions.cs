@@ -111,7 +111,7 @@ namespace Azure.Generator.Management.Utilities
                             }
                             else
                             {
-                                if (method.OperationScope == resourceMetadata.ResourceScope)
+                                if (method.OperationScope == resourceMetadata.Scope.Kind)
                                 {
                                     // if the operation scope is the resource scope, it is a collection method
                                     methodsInCollection.Add(method);

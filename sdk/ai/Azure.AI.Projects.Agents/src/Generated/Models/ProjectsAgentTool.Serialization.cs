@@ -175,6 +175,12 @@ namespace Azure.AI.Projects.Agents
                         return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
                         return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
+                    case "computer":
+                        return InternalComputerTool.DeserializeInternalComputerTool(element, options);
+                    case "namespace":
+                        return InternalNamespaceToolParam.DeserializeInternalNamespaceToolParam(element, options);
+                    case "tool_search":
+                        return InternalToolSearchToolParam.DeserializeInternalToolSearchToolParam(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

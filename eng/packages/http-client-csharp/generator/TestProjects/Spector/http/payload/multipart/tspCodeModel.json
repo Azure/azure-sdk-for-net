@@ -2403,7 +2403,7 @@
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
-                  "name": "FloatRequestTemperatureContentType",
+                  "name": "FloatRequest1",
                   "isGeneratedName": true
                 },
                 "name": "contentType",
@@ -2411,7 +2411,7 @@
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
-                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.Request.temperature.anonymous.contentType",
+                "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.Request.anonymous.contentType",
                 "decorators": [],
                 "visibility": [
                   1,
