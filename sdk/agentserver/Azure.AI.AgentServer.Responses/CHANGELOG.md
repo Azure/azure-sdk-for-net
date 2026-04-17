@@ -8,9 +8,9 @@
   `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
   include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
   to ensure tenant isolation.
-- Added request body validation for malformed response IDs (`response_id` in path and
-  `previous_response_id` in body). IDs that do not match the expected format (prefix, length,
-  character set) are rejected with 400 and a descriptive error message.
+- Added validation for malformed response IDs in both the `response_id` path parameter and the
+  `previous_response_id` request body field. IDs that do not match the expected format (prefix
+  and length) are rejected with 400 and a descriptive error message.
 - Added metadata constraint validation: metadata maps are limited to 16 keys with key length ≤ 64
   and value length ≤ 512 characters, enforced via the validator pipeline.
 - Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,

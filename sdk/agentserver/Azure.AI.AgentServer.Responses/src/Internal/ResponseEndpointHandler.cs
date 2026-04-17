@@ -63,6 +63,11 @@ internal sealed class ResponseEndpointHandler
     /// B40: Validates that a path-parameter response ID matches the expected <c>caresp_*</c> format.
     /// Throws <see cref="BadRequestException"/> with <c>code: "invalid_parameters"</c> for malformed IDs.
     /// </summary>
+    /// <remarks>
+    /// Deliberately validates prefix and length only — character-set validation is not required.
+    /// IDs with valid prefix/length but unexpected characters will fall through to the provider
+    /// and return 404 (not found), which is an acceptable outcome.
+    /// </remarks>
     private static void ValidateResponseIdFormat(string responseId)
     {
         if (!IdGenerator.IsValid(responseId, out _, allowedPrefixes: ["caresp"]))

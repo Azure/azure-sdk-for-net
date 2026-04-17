@@ -323,25 +323,37 @@ public class ChatIsolationEnforcementTests : ProtocolTestBase
 
     private async Task WaitForBackgroundCompletionWithChatKeyAsync(string responseId, string chatKey, TimeSpan? timeout = null)
     {
-        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        var effectiveTimeout = timeout ?? TimeSpan.FromSeconds(5);
+        var deadline = DateTimeOffset.UtcNow + effectiveTimeout;
+        string lastObservedState = "no response received";
         while (DateTimeOffset.UtcNow < deadline)
         {
             var response = await GetWithChatKeyAsync(responseId, chatKey);
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
+                lastObservedState = "HTTP 404 NotFound";
                 await Task.Delay(50);
                 continue;
             }
+
             using var doc = await ParseJsonAsync(response);
             if (doc.RootElement.TryGetProperty("status", out var statusProp))
             {
                 var status = statusProp.GetString();
+                lastObservedState = $"status '{status}'";
                 if (status is "completed" or "failed" or "incomplete" or "cancelled")
                 {
                     return;
                 }
             }
+            else
+            {
+                lastObservedState = $"HTTP {(int)response.StatusCode} {response.StatusCode} without status property";
+            }
+
             await Task.Delay(50);
         }
+
+        Assert.Fail($"Timed out after {effectiveTimeout} waiting for response '{responseId}' to reach a terminal status. Last observed state: {lastObservedState}.");
     }
 }

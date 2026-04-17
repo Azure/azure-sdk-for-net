@@ -36,10 +36,15 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         var clientRequestId = message.Request.ClientRequestId;
         LogRequestStarted(message.Request.Method.ToString(), message.Request.Uri.ToString(), clientRequestId);
 
-        ProcessNext(message, pipeline);
-        sw.Stop();
-
-        LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+        try
+        {
+            ProcessNext(message, pipeline);
+        }
+        finally
+        {
+            sw.Stop();
+            LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+        }
     }
 
     /// <inheritdoc/>
@@ -49,10 +54,15 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         var clientRequestId = message.Request.ClientRequestId;
         LogRequestStarted(message.Request.Method.ToString(), message.Request.Uri.ToString(), clientRequestId);
 
-        await ProcessNextAsync(message, pipeline);
-        sw.Stop();
-
-        LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+        try
+        {
+            await ProcessNextAsync(message, pipeline);
+        }
+        finally
+        {
+            sw.Stop();
+            LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+        }
     }
 
     private void LogResponse(HttpMessage message, string clientRequestId, long durationMs)

@@ -16,7 +16,10 @@ internal static partial class CreateResponsePayloadValidator
 
     static partial void ValidateCustom(JsonElement element, List<ValidationError> errors)
     {
-        // Validate previous_response_id format (if it's a string)
+        // Validate previous_response_id format (if it's a string).
+        // Deliberately validates prefix and length only — character-set validation is not
+        // required. IDs with valid prefix/length but unexpected characters will return 404
+        // from the provider, which is an acceptable outcome.
         if (element.TryGetProperty("previous_response_id", out var prevIdProp)
             && prevIdProp.ValueKind == JsonValueKind.String)
         {
