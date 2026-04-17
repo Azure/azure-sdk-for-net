@@ -61,9 +61,18 @@ namespace Azure.Generator.Management.Providers
             // Build methods for non-resource extension operations
             foreach (var method in _nonResourceMethods)
             {
-                // Process both async and sync method variants
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                // For extension-scoped non-resource methods, create a scope-specific OperationContext
+                // so that parameters within the scope path are contextual (extracted from the scope ResourceIdentifier)
+                // rather than passed as separate method parameters.
+                var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                var scopeContext = method.Scope.ScopeIdPattern.Count > 0
+                    ? OperationContext.Create(method.Scope.ScopeIdPattern)
+                    : OperationContext.Create(RequestPathPattern.Tenant);
+
+                // Process both async and sync method variants, passing the scope parameter
+                // so that PopulateArguments uses it instead of Id
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, true, scopeParameter: scopeParameter));
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, false, scopeParameter: scopeParameter));
             }
 
             return [.. methods];
@@ -99,21 +108,19 @@ namespace Azure.Generator.Management.Providers
         {
             var result = new List<MethodProvider>();
             var scopeParameter = new ParameterProvider("scope", $"The scope of the resource collection to get.", typeof(ResourceIdentifier));
-            var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
                 $"Gets a collection of {resource.ResourceCollection!.Type:C} objects within the specified scope.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.ResourceCollection!.Type,
                 $"Returns a collection of {resource.Type:C} objects.",
-                [scopeParameter, .. extraParameters]);
+                [scopeParameter]);
             var body = new MethodBodyStatement[]
             {
                 Return(New.Instance(resource.ResourceCollection!.Type,
                     [
                         This.As<ArmResource>().Client(),
-                        scopeParameter,
-                        .. extraParameters
+                        scopeParameter
                     ]))
             };
             result.Add(new MethodProvider(signature, body, this));
@@ -166,14 +173,13 @@ namespace Azure.Generator.Management.Providers
             var result = new List<MethodProvider>();
 
             var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
-            var extraParameters = resource.FactoryMethodSignature.Parameters;
             var signature = new MethodSignature(
                 $"{resource.FactoryMethodSignature.Name}",
                 $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the ArmClient",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 resource.Type,
                 $"Returns a {resource.Type:C} object.",
-                [scopeParameter, .. extraParameters]);
+                [scopeParameter]);
 
             var body = new MethodBodyStatement[]
             {

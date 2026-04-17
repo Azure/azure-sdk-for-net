@@ -255,7 +255,10 @@ export function resolveArmResources(
         methodId,
         operationPath: opPath,
         // TODO: this is also temporary because resolveArmResources does not have the scope of a provider operation
-        operationScope: opPath.operationScope
+        scope: {
+          kind: opPath.operationScope,
+          scopeIdPattern: opPath.scopePath
+        }
       });
     }
   }
@@ -295,7 +298,10 @@ export function resolveArmResources(
       nonResourceMethods.push({
         methodId: methodId,
         operationPath: opPath,
-        operationScope: opPath.operationScope
+        scope: {
+          kind: opPath.operationScope,
+          scopeIdPattern: opPath.scopePath
+        }
       });
     }
   }
@@ -349,11 +355,13 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Read,
             operationPath: new RequestPath(readOp.path),
-            operationScope: operationScopeKind,
-            resourceScopeIdPattern: findResourceScopeIdPattern(
-              readOp.path,
-              resolvedResource
-            )
+            scope: {
+              kind: operationScopeKind,
+              scopeIdPattern: findResourceScopeIdPattern(
+                readOp.path,
+                resolvedResource
+              ) ?? RequestPath.empty
+            }
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -374,11 +382,13 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Create,
             operationPath: new RequestPath(createOp.path),
-            operationScope: operationScopeKind,
-            resourceScopeIdPattern: findResourceScopeIdPattern(
-              createOp.path,
-              resolvedResource
-            )
+            scope: {
+              kind: operationScopeKind,
+              scopeIdPattern: findResourceScopeIdPattern(
+                createOp.path,
+                resolvedResource
+              ) ?? RequestPath.empty
+            }
           });
         }
       }
@@ -395,11 +405,13 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Update,
             operationPath: new RequestPath(updateOp.path),
-            operationScope: operationScopeKind,
-            resourceScopeIdPattern: findResourceScopeIdPattern(
-              updateOp.path,
-              resolvedResource
-            )
+            scope: {
+              kind: operationScopeKind,
+              scopeIdPattern: findResourceScopeIdPattern(
+                updateOp.path,
+                resolvedResource
+              ) ?? RequestPath.empty
+            }
           });
         }
       }
@@ -416,11 +428,13 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Delete,
             operationPath: new RequestPath(deleteOp.path),
-            operationScope: operationScopeKind,
-            resourceScopeIdPattern: findResourceScopeIdPattern(
-              deleteOp.path,
-              resolvedResource
-            )
+            scope: {
+              kind: operationScopeKind,
+              scopeIdPattern: findResourceScopeIdPattern(
+                deleteOp.path,
+                resolvedResource
+              ) ?? RequestPath.empty
+            }
           });
         }
       }
@@ -447,11 +461,13 @@ function convertResolvedResourceToMetadata(
             ? ResourceOperationKind.List
             : ResourceOperationKind.Action,
           operationPath: new RequestPath(actionOp.path),
-          operationScope: operationScopeKind,
-          resourceScopeIdPattern: findResourceScopeIdPattern(
-            actionOp.path,
-            resolvedResource
-          )
+          scope: {
+            kind: operationScopeKind,
+            scopeIdPattern: findResourceScopeIdPattern(
+              actionOp.path,
+              resolvedResource
+            ) ?? RequestPath.empty
+          }
         });
       }
     }
@@ -733,8 +749,10 @@ function assignListOperationsToResources(
         methodId,
         kind: ResourceOperationKind.List,
         operationPath: listPath,
-        operationScope: listPath.operationScope,
-        resourceScopeIdPattern: undefined
+        scope: {
+          kind: listPath.operationScope,
+          scopeIdPattern: RequestPath.empty
+        }
       });
     }
   }
