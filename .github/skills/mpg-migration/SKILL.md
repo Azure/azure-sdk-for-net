@@ -44,12 +44,12 @@ Proceed autonomously through the normal generate/build/fix loop. Ask the user on
 
 ## Phase 1 — Setup & First Generation
 
-1. **Remove all existing SDK custom code first** (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, backward-compat shims). Start from the raw generated surface so stale customizations do not hide real migration problems.
-2. If resuming and a draft PR already exists, **read the current PR description** first and continue from the recorded phase/blockers.
-3. Sync both repos to latest `main`.
+1. If resuming and a draft PR already exists, **read the current PR description** first and continue from the recorded phase/blockers.
+2. Sync both repos to latest `main`.
+3. **Fresh migration only / before the very first generation**: remove existing SDK custom code that predates the migration (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, backward-compat shims) so stale customizations do not hide real migration problems. When resuming, preserve minimal compatibility shims that were intentionally reintroduced during earlier migration work.
 4. Do **not** spend time porting old custom code during the initial build-fix loop. Only add back the pieces that are still required, and do that later during breaking-change mitigation.
 5. Update `tsp-location.yaml`: set `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
-6. Generate: `dotnet build /t:GenerateCode` in `src/`, or `RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
+6. Generate: `dotnet build /t:GenerateCode` in `src/`, or `pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services "<Service>" -LocalSpecRepoPath <path>`.
 7. Build — expect errors, proceed to Phase 2.
 
 ## Phase 2 — Build-Fix Loop
@@ -126,10 +126,9 @@ Before opening the SDK PR:
 
 1. Run the `pre-commit-checks` skill on the SDK package.
 2. Push spec to fork → draft PR against `Azure/azure-rest-api-specs`.
-3. Update the PR description with the current migration phase, blockers, and any remaining breaking-change items.
-4. Update `tsp-location.yaml` to point to fork commit.
-5. Push SDK to fork → draft PR against `Azure/azure-sdk-for-net`.
-6. Keep the SDK PR description updated as the migration status tracker instead of creating a separate status file.
+3. Update `tsp-location.yaml` to point to fork commit.
+4. Push SDK to fork → draft PR against `Azure/azure-sdk-for-net`.
+5. Keep the **SDK PR description** updated with the current migration phase, blockers, and remaining breaking-change items; use it as the migration status tracker instead of creating a separate status file.
 
 Use concise PR titles:
 - Spec PR: `Add csharp customizations for <Service> migration`
