@@ -134,6 +134,9 @@ internal sealed class ResponseEndpointHandler
         // Resolve model: request-level → DefaultModel → empty string (PW-006)
         request.Model ??= _options.Value.DefaultModel ?? string.Empty;
 
+        // Cache conversation ID — GetConversationId() parses the conversation JSON each call.
+        var conversationId = request.GetConversationId();
+
         // B38: Use x-agent-response-id header as the response ID if present,
         // giving platform/middletier services full control over ID generation.
         // Otherwise, generate one with partition key colocation.
@@ -153,14 +156,14 @@ internal sealed class ResponseEndpointHandler
         else
         {
             var partitionKeyHint = request.PreviousResponseId
-                ?? request.GetConversationId()
+                ?? conversationId
                 ?? "";
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
 
         _logger.LogInformation(
             "Creating response {ResponseId}: Streaming={IsStreaming} Background={IsBackground} Store={Store} Model={Model} ConversationId={ConversationId} PreviousResponseId={PreviousResponseId}",
-            responseId, isStreaming, isBackground, store, request.Model, request.GetConversationId(), request.PreviousResponseId);
+            responseId, isStreaming, isBackground, store, request.Model, conversationId, request.PreviousResponseId);
 
         // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
@@ -169,7 +172,7 @@ internal sealed class ResponseEndpointHandler
             request.AgentSessionId = !string.IsNullOrEmpty(FoundryEnvironment.SessionId)
                 ? FoundryEnvironment.SessionId
                 : SessionIdDerivation.Derive(
-                    request.GetConversationId(),
+                    conversationId,
                     request.PreviousResponseId,
                     request.AgentReference);
         }

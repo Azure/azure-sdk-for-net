@@ -36,14 +36,28 @@ internal sealed partial class InboundRequestLoggingMiddleware : IMiddleware
 
         LogRequestStarted(method, path, xRequestId.ToString(), clientRequestId.ToString(), traceId);
 
+        Exception? caughtException = null;
         try
         {
             await next(context);
         }
+        catch (Exception ex)
+        {
+            caughtException = ex;
+            throw;
+        }
         finally
         {
             sw.Stop();
-            var statusCode = context.Response.StatusCode;
+
+            // Re-read traceId in case an Activity was created further down the pipeline.
+            traceId = Activity.Current?.TraceId.ToString() ?? traceId;
+
+            // If an exception escaped, the status code may still be the default (200).
+            // Force 500 in the log so we don't emit a misleading "completed HTTP 200".
+            var statusCode = caughtException is not null
+                ? 500
+                : context.Response.StatusCode;
 
             if (statusCode >= 400)
             {
