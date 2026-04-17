@@ -797,7 +797,7 @@ namespace Azure.Data.Tables
                 {
                     throw new RequestFailedException(
                         response.Status,
-                        $"The response body was unexpectedly missing.  The client cannot determine if the entity exists or not.  HTTP {response.Status} ({response.ReasonPhrase}).");
+                        $"The response body was unexpectedly missing, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).");
                 }
 
                 var dictionary = SerializationHelpers.ResponseToDictionary(response);
