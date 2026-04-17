@@ -9,10 +9,12 @@ namespace Azure.Generator.Management.Models;
 
 /// <summary> Represents a method that is not associated with a specific ARM resource. </summary>
 /// <param name="OperationScope"> The scope of the operation. </param>
+/// <param name="Scope"> The detailed scope info for extension operations, including the scope's ID pattern and resource type. </param>
 /// <param name="InputMethod"> The input service method. </param>
 /// <param name="InputClient"> The input client. </param>
 public record NonResourceMethod(
     ResourceScope OperationScope,
+    ArmResourceScopeInfo? Scope,
     InputServiceMethod InputMethod,
     InputClient InputClient)
 {
@@ -20,6 +22,7 @@ public record NonResourceMethod(
     {
         string? methodId = null;
         ResourceScope operationScope = default;
+        ArmResourceScopeInfo? scope = null;
         foreach (var prop in element.EnumerateObject())
         {
             if (prop.NameEquals("methodId"u8))
@@ -30,12 +33,17 @@ public record NonResourceMethod(
             {
                 operationScope = Enum.Parse<ResourceScope>(prop.Value.GetString() ?? throw new JsonException("operationScope cannot be null"), true);
             }
+            if (prop.NameEquals("scope"u8) && prop.Value.ValueKind != JsonValueKind.Null)
+            {
+                scope = ArmResourceScopeInfo.Deserialize(prop.Value);
+            }
         }
         // find the method by its ID
         var method = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(methodId ?? throw new JsonException("methodId cannot be null")) ?? throw new JsonException($"cannot find the method with crossLanguageDefinitionId {methodId}");
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(method) ?? throw new JsonException($"cannot find the client for method {methodId}");
         return new NonResourceMethod(
             operationScope,
+            scope,
             method,
             client);
     }

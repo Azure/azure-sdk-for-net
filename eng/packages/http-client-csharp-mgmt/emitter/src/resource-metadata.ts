@@ -396,6 +396,8 @@ export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;
   operationScope: ResourceScopeKind;
+  /** The scope info for this operation, including the scope's ID pattern and resource type. Only present for Extension scope. */
+  scope?: ResourceScopeInfo;
   /** The cross-language definition ID of the resource model this method originally belonged to */
   resourceModelId?: string;
 }
@@ -578,7 +580,16 @@ export function convertArmProviderSchemaToArguments(
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath.path,
-      operationScope: m.operationScope
+      operationScope: m.operationScope,
+      ...(m.scope
+        ? {
+            scope: {
+              kind: m.scope.kind,
+              scopeIdPattern: m.scope.scopeIdPattern.path,
+              scopeResourceType: m.scope.scopeResourceType
+            }
+          }
+        : {})
     }))
   };
 }
