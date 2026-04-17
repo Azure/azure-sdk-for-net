@@ -23,6 +23,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResources
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             // Define the Azure resource IDs from which the deployment should be deleted
@@ -36,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             // Begin delete operation
             Operation operation =
-                client.DeleteDeploymentFromResources(WaitUntil.Started, projectName, deploymentName, deleteBody);
+                deploymentClient.DeleteDeploymentFromResources(WaitUntil.Started, projectName, deploymentName, deleteBody);
 
             // Wait for completion
             operation.WaitForCompletionResponse();
@@ -55,6 +57,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResourcesAsync
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             // Define the Azure resource IDs from which the deployment should be deleted
@@ -68,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             // Begin the delete operation
             Operation operation =
-                await client.DeleteDeploymentFromResourcesAsync(
+                await deploymentClient.DeleteDeploymentFromResourcesAsync(
                     WaitUntil.Started,
                     projectName,
                     deploymentName,

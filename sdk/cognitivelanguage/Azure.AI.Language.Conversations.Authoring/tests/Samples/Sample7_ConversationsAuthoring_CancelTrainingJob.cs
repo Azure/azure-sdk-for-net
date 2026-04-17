@@ -23,9 +23,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = client.CancelTrainingJob(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 jobId: jobId
@@ -48,9 +50,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
             string jobId = "{jobId}";
-            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await client.CancelTrainingJobAsync(
+            Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 jobId: jobId
