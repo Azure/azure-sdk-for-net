@@ -385,7 +385,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestPatchHostedAgent()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
         AgentEndpoint config = new()
         {
@@ -442,7 +442,7 @@ public class AgentsTests : AgentsTestBase
         }
         catch { }
         // Create
-        AgentSession session1 = await agentsClient.CreateSessionAsync(
+        ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId1,
             isolationKey: sessionKey1,
@@ -458,7 +458,7 @@ public class AgentsTests : AgentsTestBase
         }
         Assert.That(session1.Status, Is.EqualTo(AgentSessionStatus.Active));
         Assert.That(session1.AgentSessionId, Is.EqualTo(sessionId1));
-        AgentSession session2 = await agentsClient.CreateSessionAsync(
+        ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId2,
             isolationKey: sessionKey2,
@@ -475,7 +475,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session2.Status, Is.EqualTo(AgentSessionStatus.Active));
         Assert.That(session2.AgentSessionId, Is.EqualTo(sessionId2));
         // Get
-        AgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.AgentSessionId, Is.EqualTo(sessionId1));
         Assert.That(session.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
         Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
@@ -503,7 +503,7 @@ public class AgentsTests : AgentsTestBase
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
-        await foreach (AgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name))
+        await foreach (ProjectAgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name))
         {
             await agentsClient.DeleteSessionAsync(
                 agentName: agentVersion.Name,
@@ -522,14 +522,14 @@ public class AgentsTests : AgentsTestBase
                 versionIndicator: new VersionRefIndicator(agentVersion.Version)
             );
         }
-        await foreach (AgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending))
+        await foreach (ProjectAgentSession item in agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending))
         {
             Console.WriteLine(item.AgentSessionId);
         }
-        List<AgentSession> records = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
+        List<ProjectAgentSession> records = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<AgentSession> forward = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Ascending, after: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        List<ProjectAgentSession> forward = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Ascending, after: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
         Assert.That(forward[forward.Count - 1].AgentSessionId, Is.EqualTo(records[records.Count - 1].AgentSessionId));
@@ -539,7 +539,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(forward[0].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
         Assert.That(forward[1].AgentSessionId, Is.EqualTo(records[2].AgentSessionId));
         // Go backwards.
-        List<AgentSession> backwards = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Descending, before: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
+        List<ProjectAgentSession> backwards = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name, order: AgentListOrder.Descending, before: records[0].AgentSessionId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].AgentSessionId, Is.EqualTo(records[records.Count - 1].AgentSessionId));
         Assert.That(backwards[backwards.Count - 1].AgentSessionId, Is.EqualTo(records[1].AgentSessionId));
@@ -575,7 +575,7 @@ public class AgentsTests : AgentsTestBase
             );
         }
         catch { }
-        AgentSession session = await agentsClient.CreateSessionAsync(
+        ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             // See ADO item 519622
             agentSessionId: sessionId,
@@ -639,7 +639,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestSkillsCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         string codeSkillName = $"{SKILL}_code", fileSkillName = $"{SKILL}_file";
         AgentsSkill skillFromCode = await skillsClient.CreateSkillAsync(name: codeSkillName, description: "Calculates the sum of two numbers.", instructions: """
             To calculate the sum  run
@@ -715,7 +715,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestSkillPagination()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
         for (int i = 0; i < PAGE_SIZE + 1; i++)

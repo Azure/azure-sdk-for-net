@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
-    private AgentSkills _cachedAgentSkills;
+    private ProjectAgentSkills _cachedAgentSkills;
     private AgentSessionFiles _cachedAgentSessionFiles;
 
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
@@ -413,7 +413,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectAgentSession> CreateSession(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
         return CreateSession(
             agentName: agentName,
@@ -437,7 +437,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="isolationKey"/> or <paramref name="versionIndicator"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="isolationKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectAgentSession>> CreateSessionAsync(string agentName, string isolationKey, VersionIndicator versionIndicator, string agentSessionId = default, CancellationToken cancellationToken = default)
     {
         return await CreateSessionAsync(
             agentName: agentName,
@@ -472,9 +472,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentSession> GetSessions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ProjectAgentSession> GetSessions(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAICollectionResultOfT<AgentSession>(
+        return new InternalOpenAICollectionResultOfT<ProjectAgentSession>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetSessionsRequest(
@@ -485,7 +485,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentSession>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectAgentSession>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName]),
             cancellationToken.ToRequestOptions());
     }
@@ -514,9 +514,9 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentSession> GetSessionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ProjectAgentSession> GetSessionsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentSession>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ProjectAgentSession>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetSessionsRequest(
@@ -527,7 +527,7 @@ public partial class AgentAdministrationClient
                     localCollectionOptions.AfterId,
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentSession>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ProjectAgentSession>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [agentName]),
             cancellationToken.ToRequestOptions());
     }
@@ -581,7 +581,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectAgentSession> GetSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return GetSession(
             agentName: agentName,
@@ -654,10 +654,95 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectAgentSession>> GetSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
     {
         return await GetSessionAsync(
             agentName: agentName,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Streams console logs (stdout / stderr) for a specific hosted agent session
+    /// as a Server-Sent Events (SSE) stream.
+    /// Each SSE frame contains:
+    /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+    /// is not contractual and may include additional keys or change format
+    /// over time — clients should treat it as an opaque string)
+    /// Example SSE frames:
+    /// ```
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+    /// ```
+    /// The stream remains open until the client disconnects or the server
+    /// terminates the connection. Clients should handle reconnection as needed.
+    /// </summary>
+    /// <param name="agentName"> The name of the hosted agent. </param>
+    /// <param name="agentVersion"> The version of the agent. </param>
+    /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult<SessionLogEvent> GetSessionLogStream(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        return GetSessionLogStream(
+            agentName: agentName,
+            agentVersion: agentVersion,
+            sessionId: sessionId,
+            foundryFeatures: default,
+            cancellationToken: cancellationToken);
+    }
+
+    /// <summary>
+    /// Streams console logs (stdout / stderr) for a specific hosted agent session
+    /// as a Server-Sent Events (SSE) stream.
+    /// Each SSE frame contains:
+    /// <list type="bullet"><item><description>`event`: always `"log"`</description></item><item><description>`data`: a plain-text log line (currently JSON-formatted, but the schema</description></item></list>
+    /// is not contractual and may include additional keys or change format
+    /// over time — clients should treat it as an opaque string)
+    /// Example SSE frames:
+    /// ```
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting FoundryCBAgent server on port 8088"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:33:17.130Z","stream":"stderr","message":"INFO: Application startup complete."}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+    /// event: log
+    /// data: {"timestamp":"2026-03-10T09:35:52.714Z","stream":"status","message":"No logs since last 60 seconds"}
+    /// ```
+    /// The stream remains open until the client disconnects or the server
+    /// terminates the connection. Clients should handle reconnection as needed.
+    /// </summary>
+    /// <param name="agentName"> The name of the hosted agent. </param>
+    /// <param name="agentVersion"> The version of the agent. </param>
+    /// <param name="sessionId"> The session ID (maps to an ADC sandbox). </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="agentVersion"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult<SessionLogEvent>> GetSessionLogStreamAsync(string agentName, string agentVersion, string sessionId, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+
+        return await GetSessionLogStreamAsync(
+            agentName: agentName,
+            agentVersion: agentVersion,
             sessionId: sessionId,
             foundryFeatures: default,
             cancellationToken: cancellationToken
@@ -669,9 +754,9 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
-    public virtual AgentSkills GetAgentSkills()
+    public virtual ProjectAgentSkills GetAgentSkills()
     {
-        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new AgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+        return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
     public virtual AgentSessionFiles GetAgentSessionFiles()

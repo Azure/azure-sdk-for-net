@@ -859,10 +859,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdAt"> The Unix timestamp (in seconds) when the session was created. </param>
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
-        /// <returns> A new <see cref="Agents.AgentSession"/> instance for mocking. </returns>
-        public static AgentSession AgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
+        /// <returns> A new <see cref="Agents.ProjectAgentSession"/> instance for mocking. </returns>
+        public static ProjectAgentSession ProjectAgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
         {
-            return new AgentSession(
+            return new ProjectAgentSession(
                 agentSessionId,
                 versionIndicator,
                 status,
@@ -870,6 +870,31 @@ namespace Azure.AI.Projects.Agents
                 lastAccessedAt,
                 expiresAt,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A single Server-Sent Event frame emitted by the hosted agent session log stream.
+        /// Each frame contains an `event` field identifying the event type and a `data`
+        /// field carrying the payload as plain text. Although the current `data` payload
+        /// is JSON-formatted, its schema is not contractual — additional keys may appear
+        /// and the format may change over time. Clients should treat `data` as an
+        /// opaque string and optionally attempt JSON parsing.
+        /// New event types may be added in the future. Clients should gracefully
+        /// ignore unrecognized event types.
+        /// Wire format:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting server on port 18080"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// ```
+        /// </summary>
+        /// <param name="event"> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </param>
+        /// <param name="data"> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </param>
+        /// <returns> A new <see cref="Agents.SessionLogEvent"/> instance for mocking. </returns>
+        public static SessionLogEvent SessionLogEvent(SessionLogEventType @event = default, string data = default)
+        {
+            return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>

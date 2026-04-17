@@ -41,7 +41,7 @@ public class Sample_SessionFiles : SamplesBase
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString("N");
         string sessionId = Guid.NewGuid().ToString("N");
-        AgentSession session = await agentsClient.CreateSessionAsync(
+        ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
             isolationKey: sessionKey,
@@ -131,7 +131,7 @@ public class Sample_SessionFiles : SamplesBase
             agentVersion: hostedAgentVersion);
         string sessionKey = Guid.NewGuid().ToString();
         string sessionId = Guid.NewGuid().ToString();
-        AgentSession session = agentsClient.CreateSession(
+        ProjectAgentSession session = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
             isolationKey: sessionKey,

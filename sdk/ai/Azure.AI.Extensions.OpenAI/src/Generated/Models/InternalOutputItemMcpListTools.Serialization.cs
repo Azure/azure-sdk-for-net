@@ -88,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteStringValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             IList<InternalMCPListToolsTool> tools = default;
-            string error = default;
+            RealtimeMCPError error = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,10 +170,9 @@ namespace Azure.AI.Extensions.OpenAI
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        error = null;
                         continue;
                     }
-                    error = prop.Value.GetString();
+                    error = RealtimeMCPError.DeserializeRealtimeMCPError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 
 public class Sample_AgentsEndpoint : SamplesBase
 {
-    private static void DeleteSkillMaybe(AgentSkills client, string name)
+    private static void DeleteSkillMaybe(ProjectAgentSkills client, string name)
     {
         try
         {
@@ -43,7 +43,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "simpleSkill");
 
         #region Snippet:Sample_GetAgentAndCreateSession_AgentsEndpoint_Async
@@ -103,7 +103,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "simpleSkill");
 
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(

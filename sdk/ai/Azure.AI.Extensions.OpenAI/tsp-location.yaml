@@ -1,0 +1,12 @@
+directory: specification/ai-foundry/data-plane/Foundry/src/sdk-extensions-openai
+commit: 353e0be504d64ad23dcb7ec5a694bbd8835a645c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+- specification/ai-foundry/data-plane/Foundry/src/common
+- specification/ai-foundry/data-plane/Foundry/src/memory-stores
+- specification/ai-foundry/data-plane/Foundry/src/openai-conversations
+- specification/ai-foundry/data-plane/Foundry/src/openai-responses
+- specification/ai-foundry/data-plane/Foundry/src/tools
+- specification/ai-foundry/data-plane/Foundry/src/servicepatterns.tsp
+
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

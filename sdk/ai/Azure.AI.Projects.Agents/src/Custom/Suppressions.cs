@@ -98,5 +98,8 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns CollectionResult<AgentSessionResource>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetSessions(System.String,System.Nullable{System.Int32},System.Nullable{Azure.AI.Projects.Agents.AgentListOrder},System.String,System.String,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns AsyncCollectionResult<AgentSessionResource>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetSessionsAsync(System.String,System.Nullable{System.Int32},System.Nullable{Azure.AI.Projects.Agents.AgentListOrder},System.String,System.String,System.Threading.CancellationToken)")]
 
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<SessionLogEvent>>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetSessionLogStreamAsync(System.String,System.String,System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<SessionLogEvent>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetSessionLogStream(System.String,System.String,System.String,System.Threading.CancellationToken)")]
+
 // AZC0007 Suppress the warning on AgentAdministrationClient creation.
 [assembly: SuppressMessage("Usage", "AZC0007", Justification = "Custom constructor for AgentsClient.", Scope = "member", Target = "~T:Azure.AI.Projects.Agents.AgentAdministrationClient")]

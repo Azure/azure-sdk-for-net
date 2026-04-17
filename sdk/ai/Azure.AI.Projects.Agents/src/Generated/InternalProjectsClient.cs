@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
-        private AgentSkills _cachedAgentSkills;
+        private ProjectAgentSkills _cachedProjectAgentSkills;
         private AgentSessionFiles _cachedAgentSessionFiles;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
@@ -85,10 +85,10 @@ namespace Azure.AI.Projects.Agents
             return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
         }
 
-        /// <summary> Initializes a new instance of AgentSkills. </summary>
-        public virtual AgentSkills GetAgentSkillsClient()
+        /// <summary> Initializes a new instance of ProjectAgentSkills. </summary>
+        public virtual ProjectAgentSkills GetProjectAgentSkillsClient()
         {
-            return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new AgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
+            return Volatile.Read(ref _cachedProjectAgentSkills) ?? Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills;
         }
 
         /// <summary> Initializes a new instance of AgentSessionFiles. </summary>

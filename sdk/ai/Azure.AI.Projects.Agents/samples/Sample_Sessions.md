@@ -69,14 +69,14 @@ string sessionKey1 = "sample-isolation-key";
 string sessionKey2 = "sample-isolation-key2";
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
-AgentSession session1 = agentsClient.CreateSession(
+ProjectAgentSession session1 = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
     isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-AgentSession session2 = agentsClient.CreateSession(
+ProjectAgentSession session2 = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
     isolationKey: sessionKey2,
@@ -102,14 +102,14 @@ string sessionKey1 = Guid.NewGuid().ToString();
 string sessionKey2 = Guid.NewGuid().ToString();
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
-AgentSession session1 = await agentsClient.CreateSessionAsync(
+ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
     isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-AgentSession session2 = await agentsClient.CreateSessionAsync(
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
     isolationKey: sessionKey2,
@@ -132,13 +132,13 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
 
 Synchronous sample:
 ```C# Snippet:Sample_Get_SessionsCRUD_Sync
-AgentSession session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+ProjectAgentSession session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Get_SessionsCRUD_Async
-AgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
 ```
 
@@ -146,9 +146,9 @@ Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
 
 Synchronous sample:
 ```C# Snippet:Sample_List_SessionsCRUD_Sync
-List<AgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
+List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
 Console.WriteLine($"Found {sessions.Count} sessions.");
-foreach (AgentSession item in sessions)
+foreach (ProjectAgentSession item in sessions)
 {
     Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
 }
@@ -156,9 +156,9 @@ foreach (AgentSession item in sessions)
 
 Asynchronous sample:
 ```C# Snippet:Sample_List_SessionsCRUD_Async
-List<AgentSession> sessions = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).ToListAsync();
+List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).ToListAsync();
 Console.WriteLine($"Found {sessions.Count} sessions.");
-foreach (AgentSession item in sessions)
+foreach (ProjectAgentSession item in sessions)
 {
     Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
 }

@@ -420,21 +420,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         }
     }
 
-    private static async Task DeleteSkillMayBe(AgentSkills client, string name)
-    {
-        try
-        {
-            await client.DeleteSkillAsync(name);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 404)
-            {
-                throw;
-            }
-        }
-    }
-
     [TearDown]
     public async virtual Task Cleanup()
     {
@@ -481,7 +466,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 await DeleteToolboxMayBe(toolboxClient, record.Name);
             }
         }
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         //await DeleteSkillMayBe(skillsClient, SKILL);
         //await DeleteSkillMayBe(skillsClient, $"{SKILL}_code");
         //await DeleteSkillMayBe(skillsClient, $"{SKILL}_file");

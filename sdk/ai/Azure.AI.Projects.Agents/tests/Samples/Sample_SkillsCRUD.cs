@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 
 public class Sample_Skills_CRUD : SamplesBase
 {
-    private static void DeleteSkillMaybe(AgentSkills client, string name)
+    private static void DeleteSkillMaybe(ProjectAgentSkills client, string name)
     {
         try
         {
@@ -49,7 +49,7 @@ public class Sample_Skills_CRUD : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         #endregion
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");
@@ -138,7 +138,7 @@ public class Sample_Skills_CRUD : SamplesBase
         options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        AgentSkills skillsClient = agentsClient.GetAgentSkills();
+        ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "roll-dice");
         DeleteSkillMaybe(skillsClient, "simpleSkill");
         #region Snippet:Sample_CreateSkill_SkillsCRUD_Sync

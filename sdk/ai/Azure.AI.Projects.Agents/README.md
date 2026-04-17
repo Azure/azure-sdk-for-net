@@ -270,14 +270,14 @@ string sessionKey1 = Guid.NewGuid().ToString();
 string sessionKey2 = Guid.NewGuid().ToString();
 string sessionId1 = Guid.NewGuid().ToString();
 string sessionId2 = Guid.NewGuid().ToString();
-AgentSession session1 = await agentsClient.CreateSessionAsync(
+ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId1,
     isolationKey: sessionKey1,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
-AgentSession session2 = await agentsClient.CreateSessionAsync(
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId2,
     isolationKey: sessionKey2,
@@ -351,6 +351,15 @@ AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDi
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
 AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
 To calculate the sum  run
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```bash
 echo $((<first> + <second>))
 ```
@@ -485,6 +494,14 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
     To calculate the sum  run
     ```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell

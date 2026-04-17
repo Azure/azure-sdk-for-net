@@ -420,5 +420,31 @@ namespace Azure.AI.Projects.Agents
             message.Apply(options);
             return message;
         }
+
+        internal PipelineMessage CreateGetSessionLogStreamRequest(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(agentVersion, true);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath(":logstream", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "text/event-stream");
+            message.Apply(options);
+            return message;
+        }
     }
 }
