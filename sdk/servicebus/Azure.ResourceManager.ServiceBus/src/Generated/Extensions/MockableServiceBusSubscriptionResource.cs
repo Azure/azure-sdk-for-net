@@ -8,58 +8,108 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableServiceBusSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _serviceBusNamespaceNamespacesClientDiagnostics;
-        private NamespacesRestOperations _serviceBusNamespaceNamespacesRestClient;
+        private ClientDiagnostics _namespacesClientDiagnostics;
+        private Namespaces _namespacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceBusSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableServiceBusSubscriptionResource for mocking. </summary>
         protected MockableServiceBusSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableServiceBusSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableServiceBusSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableServiceBusSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ServiceBusNamespaceNamespacesClientDiagnostics => _serviceBusNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusNamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations ServiceBusNamespaceNamespacesRestClient => _serviceBusNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceBusNamespaceResource.ResourceType));
+        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceBus.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SBNamespaces_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SBNamespaces_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
         /// Check the give namespace name availability.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> NamespacesOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -70,11 +120,21 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceBusNamespaceNamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
+            using DiagnosticScope scope = NamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = await ServiceBusNamespaceNamespacesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceBusNameAvailabilityResult> response = Response.FromValue(ServiceBusNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -88,20 +148,16 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// Check the give namespace name availability.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> NamespacesOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,11 +168,21 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ServiceBusNamespaceNamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
+            using DiagnosticScope scope = NamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
             scope.Start();
             try
             {
-                var response = ServiceBusNamespaceNamespacesRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NamespacesRestClient.CreateCheckServiceBusNamespaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ServiceBusNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceBusNameAvailabilityResult> response = Response.FromValue(ServiceBusNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -124,66 +190,6 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceBusNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceBusNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), ServiceBusNamespaceNamespacesClientDiagnostics, Pipeline, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceBusNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceBusNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceBusNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusNamespaceResource(Client, ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(e)), ServiceBusNamespaceNamespacesClientDiagnostics, Pipeline, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

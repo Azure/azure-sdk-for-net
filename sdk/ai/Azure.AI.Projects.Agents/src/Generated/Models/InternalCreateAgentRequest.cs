@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        internal InternalCreateAgentRequest(string name, AgentDefinition definition)
+        internal InternalCreateAgentRequest(string name, ProjectsAgentDefinition definition)
         {
             Name = name;
             Metadata = new ChangeTrackingDictionary<string, string>();
@@ -39,13 +39,19 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <param name="blueprintReference"> The blueprint reference for the agent. </param>
+        /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
+        /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, AgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpoint agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Metadata = metadata;
             Description = description;
             Definition = definition;
+            BlueprintReference = blueprintReference;
+            AgentEndpoint = agentEndpoint;
+            AgentCard = agentCard;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,5 +72,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A human-readable description of the agent. </summary>
         public string Description { get; }
+
+        /// <summary> The blueprint reference for the agent. </summary>
+        public AgentBlueprintReference BlueprintReference { get; }
+
+        /// <summary> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </summary>
+        public AgentEndpoint AgentEndpoint { get; }
+
+        /// <summary> Optional agent card for the agent. </summary>
+        public AgentCard AgentCard { get; }
     }
 }

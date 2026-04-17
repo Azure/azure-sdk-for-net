@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -305,6 +306,97 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             Assert.DoesNotContain(telemetryItems!, x => x.Name == "Availability");
             var telemetryItem = telemetryItems?.Where(x => x.Name == "Message").Single();
             Assert.NotNull(telemetryItem);
+        }
+
+        [Fact]
+        public void VerifyAvailabilityTelemetryWithTestTimestamp()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+            var testTimestamp = "2025-04-19T12:10:59.9930000+00:00";
+            var expectedTime = DateTimeOffset.Parse(testTimestamp, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, LogLevel.Information)
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("{microsoft.availability.id} {microsoft.availability.name} {microsoft.availability.duration} {microsoft.availability.success} {microsoft.availability.testTimestamp}",
+                "test-id-ts", "TimestampTest", "00:00:03", true, testTimestamp);
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Availability").Single();
+            Assert.NotNull(telemetryItem);
+
+            // Envelope time should equal the testTimestamp, not the logRecord.Timestamp
+            Assert.Equal(expectedTime, telemetryItem!.Time);
+
+            // testTimestamp attribute must NOT appear in AvailabilityData.Properties
+            var availabilityData = (AvailabilityData)telemetryItem.Data.BaseData;
+            Assert.False(availabilityData.Properties.ContainsKey("microsoft.availability.testTimestamp"),
+                "microsoft.availability.testTimestamp should not be leaked into AvailabilityData.Properties.");
+        }
+
+        [Fact]
+        public void VerifyAvailabilityTelemetryWithoutTestTimestamp()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, LogLevel.Information)
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var beforeLog = DateTimeOffset.UtcNow;
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+            logger.LogInformation("{microsoft.availability.id} {microsoft.availability.name} {microsoft.availability.duration} {microsoft.availability.success}",
+                "test-id-nots", "NoTimestampTest", "00:00:01", true);
+            var afterLog = DateTimeOffset.UtcNow;
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Availability").Single();
+            Assert.NotNull(telemetryItem);
+
+            // Envelope time should be derived from logRecord.Timestamp (wall-clock time), not a fixed past time
+            Assert.True(telemetryItem!.Time >= beforeLog && telemetryItem.Time <= afterLog,
+                $"Expected envelope time between {beforeLog} and {afterLog}, but got {telemetryItem.Time}.");
+
+            // testTimestamp attribute must NOT appear in AvailabilityData.Properties
+            var availabilityData = (AvailabilityData)telemetryItem.Data.BaseData;
+            Assert.False(availabilityData.Properties.ContainsKey("microsoft.availability.testTimestamp"),
+                "microsoft.availability.testTimestamp should not appear in AvailabilityData.Properties when not provided.");
         }
     }
 }

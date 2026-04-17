@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.EdgeActions
         private readonly string _resourceGroupName;
         private readonly string _edgeActionName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EdgeActionVersionsGetByEdgeActionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EdgeActionVersions client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="edgeActionName"> The name of the Edge Action. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EdgeActionVersionsGetByEdgeActionCollectionResultOfT(EdgeActionVersions client, Guid subscriptionId, string resourceGroupName, string edgeActionName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EdgeActionVersionsGetByEdgeActionCollectionResultOfT(EdgeActionVersions client, Guid subscriptionId, string resourceGroupName, string edgeActionName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _edgeActionName = edgeActionName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EdgeActionVersionsGetByEdgeActionCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.ResourceManager.EdgeActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByEdgeActionRequest(nextLink, _subscriptionId, _resourceGroupName, _edgeActionName, _context) : _client.CreateGetByEdgeActionRequest(_subscriptionId, _resourceGroupName, _edgeActionName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeActionVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

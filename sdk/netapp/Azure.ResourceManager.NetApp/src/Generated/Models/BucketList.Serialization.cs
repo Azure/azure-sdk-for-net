@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<BucketData> value = default;
+            IReadOnlyList<NetAppBucketData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BucketData> array = new List<BucketData>();
+                    List<NetAppBucketData> array = new List<NetAppBucketData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BucketData.DeserializeBucketData(item, options));
+                        array.Add(NetAppBucketData.DeserializeNetAppBucketData(item, options));
                     }
                     value = array;
                     continue;

@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-    public partial class MicrosoftFabricPreviewTool : AgentTool
+    public partial class MicrosoftFabricPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>

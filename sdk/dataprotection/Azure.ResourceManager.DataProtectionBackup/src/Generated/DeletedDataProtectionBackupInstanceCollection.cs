@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedDataProtectionBackupInstanceData, DeletedDataProtectionBackupInstanceResource>(new DeletedBackupInstanceResourcesGetAllAsyncCollectionResultOfT(_deletedBackupInstanceResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeletedDataProtectionBackupInstanceResource(Client, data));
+            return new AsyncPageableWrapper<DeletedDataProtectionBackupInstanceData, DeletedDataProtectionBackupInstanceResource>(new DeletedBackupInstanceResourcesGetAllAsyncCollectionResultOfT(
+                _deletedBackupInstanceResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeletedDataProtectionBackupInstanceCollection.GetAll"), data => new DeletedDataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedDataProtectionBackupInstanceData, DeletedDataProtectionBackupInstanceResource>(new DeletedBackupInstanceResourcesGetAllCollectionResultOfT(_deletedBackupInstanceResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeletedDataProtectionBackupInstanceResource(Client, data));
+            return new PageableWrapper<DeletedDataProtectionBackupInstanceData, DeletedDataProtectionBackupInstanceResource>(new DeletedBackupInstanceResourcesGetAllCollectionResultOfT(
+                _deletedBackupInstanceResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DeletedDataProtectionBackupInstanceCollection.GetAll"), data => new DeletedDataProtectionBackupInstanceResource(Client, data));
         }
 
         /// <summary>

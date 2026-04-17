@@ -8,20 +8,22 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Search.Documents;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Search.Documents.KnowledgeBases
 {
     /// <summary> Represents the settings used to configure a <see cref="KnowledgeBaseRetrievalClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class KnowledgeBaseRetrievalClientSettings : ClientSettings
+    internal partial class KnowledgeBaseRetrievalClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
+        /// <summary> Gets or sets the KnowledgeBaseName. </summary>
+        public string KnowledgeBaseName { get; set; }
+
         /// <summary> Gets or sets the Options. </summary>
-        public SearchClientOptions Options { get; set; }
+        public KnowledgeBaseRetrievalClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -31,10 +33,15 @@ namespace Azure.Search.Documents.KnowledgeBases
             {
                 Endpoint = endpoint;
             }
+            string knowledgeBaseName = section["KnowledgeBaseName"];
+            if (!string.IsNullOrEmpty(knowledgeBaseName))
+            {
+                KnowledgeBaseName = knowledgeBaseName;
+            }
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new SearchClientOptions(optionsSection);
+                Options = new KnowledgeBaseRetrievalClientOptions(optionsSection);
             }
         }
     }

@@ -24,6 +24,7 @@ namespace Azure.Compute.Batch
         private readonly DateTimeOffset? _ocpDate;
         private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BatchClientGetSubTasksAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BatchClientGetSubTasksAsyncCollectionResult(BatchClient client, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BatchClientGetSubTasksAsyncCollectionResult(BatchClient client, string jobId, string taskId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _jobId = jobId;
@@ -46,6 +48,7 @@ namespace Azure.Compute.Batch
             _ocpDate = ocpDate;
             _select = @select;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BatchClientGetSubTasksAsyncCollectionResult as an enumerable collection. </summary>
@@ -83,7 +86,7 @@ namespace Azure.Compute.Batch
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSubTasksRequest(nextLink, _jobId, _taskId, _timeOutInSeconds, _ocpDate, _select, _context) : _client.CreateGetSubTasksRequest(_jobId, _taskId, _timeOutInSeconds, _ocpDate, _select, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetSubTasks");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

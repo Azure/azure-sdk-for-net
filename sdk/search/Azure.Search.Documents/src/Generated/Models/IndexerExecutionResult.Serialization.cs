@@ -79,16 +79,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusDetail))
-            {
-                writer.WritePropertyName("statusDetail"u8);
-                writer.WriteStringValue(StatusDetail.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
@@ -187,8 +177,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
-            IndexerExecutionStatusDetail? statusDetail = default;
-            IndexingMode? mode = default;
             string errorMessage = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -204,24 +192,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("status"u8))
                 {
                     status = prop.Value.GetString().ToIndexerExecutionStatus();
-                    continue;
-                }
-                if (prop.NameEquals("statusDetail"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    statusDetail = new IndexerExecutionStatusDetail(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("mode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mode = new IndexingMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))
@@ -295,8 +265,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new IndexerExecutionResult(
                 status,
-                statusDetail,
-                mode,
                 errorMessage,
                 startTime,
                 endTime,

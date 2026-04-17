@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -16,38 +17,92 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class MecRole : DataBoxEdgeRoleData
     {
         /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
-        public MecRole()
+        public MecRole() : base(DataBoxEdgeRoleType.Mec)
         {
-            Kind = DataBoxEdgeRoleType.Mec;
         }
 
         /// <summary> Initializes a new instance of <see cref="MecRole"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Role type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectionString"> Activation key of the MEC. </param>
-        /// <param name="controllerEndpoint"> Controller Endpoint. </param>
-        /// <param name="resourceUniqueId"> Unique Id of the Resource. </param>
-        /// <param name="roleStatus"> Role status. </param>
-        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AsymmetricEncryptedSecret connectionString, string controllerEndpoint, string resourceUniqueId, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> Properties specific to MEC role. </param>
+        internal MecRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxEdgeRoleType kind, MECRoleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            ConnectionString = connectionString;
-            ControllerEndpoint = controllerEndpoint;
-            ResourceUniqueId = resourceUniqueId;
-            RoleStatus = roleStatus;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Properties specific to MEC role. </summary>
+        internal MECRoleProperties Properties { get; set; }
+
         /// <summary> Activation key of the MEC. </summary>
-        public AsymmetricEncryptedSecret ConnectionString { get; set; }
+        public AsymmetricEncryptedSecret ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MECRoleProperties();
+                }
+                Properties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Controller Endpoint. </summary>
-        public string ControllerEndpoint { get; set; }
+        public string ControllerEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ControllerEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MECRoleProperties();
+                }
+                Properties.ControllerEndpoint = value;
+            }
+        }
+
         /// <summary> Unique Id of the Resource. </summary>
-        public string ResourceUniqueId { get; set; }
+        public string ResourceUniqueId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceUniqueId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MECRoleProperties();
+                }
+                Properties.ResourceUniqueId = value;
+            }
+        }
+
         /// <summary> Role status. </summary>
-        public DataBoxEdgeRoleStatus? RoleStatus { get; set; }
+        public DataBoxEdgeRoleStatus? RoleStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MECRoleProperties();
+                }
+                Properties.RoleStatus = value.Value;
+            }
+        }
     }
 }

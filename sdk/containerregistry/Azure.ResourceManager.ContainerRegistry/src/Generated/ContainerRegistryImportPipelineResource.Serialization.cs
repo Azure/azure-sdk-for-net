@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    /// <summary></summary>
     public partial class ContainerRegistryImportPipelineResource : IJsonModel<ContainerRegistryImportPipelineData>
     {
-        private static ContainerRegistryImportPipelineData s_dataDeserializationInstance;
-        private static ContainerRegistryImportPipelineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerRegistryImportPipelineData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerRegistryImportPipelineData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerRegistryImportPipelineData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerRegistryImportPipelineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryImportPipelineData>)Data).Write(writer, options);
 
-        ContainerRegistryImportPipelineData IJsonModel<ContainerRegistryImportPipelineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryImportPipelineData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerRegistryImportPipelineData IJsonModel<ContainerRegistryImportPipelineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerRegistryImportPipelineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryImportPipelineData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerRegistryImportPipelineData IPersistableModel<ContainerRegistryImportPipelineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryImportPipelineData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ContainerRegistryImportPipelineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryImportPipelineData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerRegistryImportPipelineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

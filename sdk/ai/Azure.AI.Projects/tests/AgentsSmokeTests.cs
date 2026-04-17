@@ -3,9 +3,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -28,9 +27,9 @@ public class AgentsSmokeTests : AgentsTestBase
             new Uri("https://ai.azure.com/mock/endpoint/api/projects/myProject"),
             new MockCredential());
         Assert.That(projectClient, Is.Not.Null);
-        AgentAdministrationClient agentClient = projectClient.Agents;
+        AgentAdministrationClient agentClient = projectClient.AgentAdministrationClient;
         Assert.That(agentClient, Is.Not.Null);
-        ProjectOpenAIClient openAIClient = projectClient.OpenAI;
+        ProjectOpenAIClient openAIClient = projectClient.ProjectOpenAIClient;
         Assert.That(openAIClient, Is.Not.Null);
 
         ProjectOpenAIClient projectOpenAIClient = projectClient.GetProjectOpenAIClient(new ProjectOpenAIClientOptions());

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeAuthenticationType : IEquatable<DataBoxEdgeAuthenticationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeAuthenticationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeAuthenticationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static DataBoxEdgeAuthenticationType Invalid { get; } = new DataBoxEdgeAuthenticationType(InvalidValue);
-        /// <summary> AzureActiveDirectory. </summary>
+
+        /// <summary> Gets the AzureActiveDirectory. </summary>
         public static DataBoxEdgeAuthenticationType AzureActiveDirectory { get; } = new DataBoxEdgeAuthenticationType(AzureActiveDirectoryValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeAuthenticationType left, DataBoxEdgeAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeAuthenticationType left, DataBoxEdgeAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeAuthenticationType(string value) => new DataBoxEdgeAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeAuthenticationType?(string value) => value == null ? null : new DataBoxEdgeAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

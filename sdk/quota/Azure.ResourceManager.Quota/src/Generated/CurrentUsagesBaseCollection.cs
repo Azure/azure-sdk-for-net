@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id, context), data => new CurrentUsagesBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllAsyncCollectionResultOfT(_currentUsagesBasesRestClient, Id, context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(_currentUsagesBasesRestClient, Id, context), data => new CurrentUsagesBaseResource(Client, data));
+            return new PageableWrapper<CurrentUsagesBaseData, CurrentUsagesBaseResource>(new CurrentUsagesBasesGetAllCollectionResultOfT(_currentUsagesBasesRestClient, Id, context, "CurrentUsagesBaseCollection.GetAll"), data => new CurrentUsagesBaseResource(Client, data));
         }
 
         /// <summary>

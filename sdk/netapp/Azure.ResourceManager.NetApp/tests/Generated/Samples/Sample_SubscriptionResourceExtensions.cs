@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetActiveDirectoryConfigs_ActiveDirectoryConfigsListBySubscription()
+        public async Task GetNetAppActiveDirectoryConfigs_ActiveDirectoryConfigsListBySubscription()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ActiveDirectoryConfigs_ListBySubscription.json
             // this example is just showing the usage of "ActiveDirectoryConfigs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ActiveDirectoryConfigResource item in subscriptionResource.GetActiveDirectoryConfigsAsync())
+            await foreach (NetAppActiveDirectoryConfigResource item in subscriptionResource.GetNetAppActiveDirectoryConfigsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ActiveDirectoryConfigData resourceData = item.Data;
+                NetAppActiveDirectoryConfigData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetElasticAccounts_ElasticAccountsListBySubscription()
+        public async Task GetNetAppElasticAccounts_ElasticAccountsListBySubscription()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/ElasticAccounts_ListBySubscription.json
             // this example is just showing the usage of "ElasticAccounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ElasticAccountResource item in subscriptionResource.GetElasticAccountsAsync())
+            await foreach (NetAppElasticAccountResource item in subscriptionResource.GetNetAppElasticAccountsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ElasticAccountData resourceData = item.Data;
+                NetAppElasticAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
