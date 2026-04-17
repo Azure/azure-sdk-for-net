@@ -38,6 +38,12 @@
   with the specification.
 - Fixed cancel-after-delete to return 404 (not-found) per the specification.
 
+### Other Changes
+
+- Inbound request logging is now automatically enabled for Tier 1 and Tier 2 setups
+  (via `ResponsesServer.Run()` or `AgentHost.CreateBuilder()`). All incoming HTTP
+  requests are logged with method, path, status code, duration, and correlation headers.
+
 ## 1.0.0-beta.1 (2026-04-14)
 
 ### Features Added
