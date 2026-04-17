@@ -36,8 +36,9 @@ for upgrading from earlier beta versions.
 - Multi-protocol composition via `AgentHostBuilder.RegisterProtocol()`. Protocol packages provide extension methods (e.g., `AddResponses<T>()`, `AddInvocations<T>()`) built on top of this API.
 - Graceful shutdown with configurable drain period.
 - Server user-agent `x-platform-server` header on every response with SDK version info.
-- `ServerUserAgentRegistry` for protocol packages to register user-agent identity segments.
-- `AddAgentServerUserAgent()` and `UseAgentServerUserAgent()` extensions for standalone (Tier 3) setups.
+- `ServerVersionRegistry` for protocol packages to register version identity segments.
+- `AddAgentServerVersion()` and `UseAgentServerVersion()` extensions for standalone (Tier 3) setups.
+- `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for standalone inbound request logging.
 - `FoundryEnvironment` for Azure AI Foundry platform variable resolution.
 - Distributed tracing context propagation via request ID baggage.
 

@@ -60,7 +60,7 @@
 - Built-in in-memory response provider and execution tracking.
 - Support for default, streaming, background, and streaming+background response modes.
 - `AgentHostBuilder` convenience methods for zero-config server startup via `ResponsesServer.Run<T>()`.
-- Protocol identity registration with `ServerUserAgentRegistry` during route mapping.
+- Protocol identity registration with `ServerVersionRegistry` during route mapping.
 - `x-agent-response-id` header validation matching the Responses API specification.
 - Conversation ID round-trip support in both synchronous and SSE streaming modes.
 - OpenTelemetry distributed tracing via `Azure.AI.AgentServer.Responses` activity source.

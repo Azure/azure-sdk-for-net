@@ -1346,7 +1346,7 @@ This happens transparently — no handler code is needed.
 
 ### Library Identity Header
 
-The server automatically adds an `x-platform-server` identity header to all responses via the `ServerUserAgentMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerUserAgentRegistry` during route mapping. To append custom identity information, use the core options:
+The server automatically adds an `x-platform-server` identity header to all responses via the `ServerVersionMiddleware` in the Core package. Each protocol registers its own identity segment (e.g., `azure-ai-agentserver-responses/{version}`) with the `ServerVersionRegistry` during route mapping. To append custom identity information, use the core options:
 
 ```csharp
 var builder = AgentHost.CreateBuilder(args);

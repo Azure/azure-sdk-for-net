@@ -175,12 +175,12 @@ public class InvocationEndpointTests
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerUserAgent();
+        builder.Services.AddAgentServerVersion();
         builder.Services.AddInvocationsServer();
         builder.Services.AddScoped<InvocationHandler, TestInvocationHandler>();
 
         var app = builder.Build();
-        app.UseAgentServerUserAgent();
+        app.UseAgentServerVersion();
         app.MapInvocationsServer();
         await app.StartAsync();
 

@@ -36,10 +36,10 @@ public sealed class AgentHostBuilder
     {
         _builder = WebApplication.CreateSlimBuilder(args ?? Array.Empty<string>());
 
-        // Register user-agent registry + middleware
-        UserAgentRegistry = new ServerUserAgentRegistry();
-        _builder.Services.AddSingleton(UserAgentRegistry);
-        _builder.Services.AddSingleton<ServerUserAgentMiddleware>();
+        // Register version registry + middleware
+        VersionRegistry = new ServerVersionRegistry();
+        _builder.Services.AddSingleton(VersionRegistry);
+        _builder.Services.AddSingleton<ServerVersionMiddleware>();
         _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
         _builder.Services.AddSingleton<InboundRequestLoggingMiddleware>();
 
@@ -63,11 +63,11 @@ public sealed class AgentHostBuilder
     public WebApplicationBuilder WebApplicationBuilder => _builder;
 
     /// <summary>
-    /// Registry for protocol user-agent identity segments appended to the
+    /// Registry for protocol version identity segments appended to the
     /// <c>x-platform-server</c> response header. Protocol extensions register
     /// their identity during route mapping.
     /// </summary>
-    public ServerUserAgentRegistry UserAgentRegistry { get; }
+    public ServerVersionRegistry VersionRegistry { get; }
 
     /// <summary>
     /// Configure agent server options (port, shutdown timeout, identity).
@@ -177,7 +177,7 @@ public sealed class AgentHostBuilder
         var app = _builder.Build();
 
         // Middleware pipeline
-        app.UseMiddleware<ServerUserAgentMiddleware>();
+        app.UseMiddleware<ServerVersionMiddleware>();
         app.UseMiddleware<RequestIdBaggagePropagator>();
         app.UseMiddleware<InboundRequestLoggingMiddleware>();
 

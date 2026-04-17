@@ -50,7 +50,7 @@ The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder
 
 ### AgentHostBuilder
 
-Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` user-agent header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` version header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerVersionRegistry`.
 
 ### AgentHostApp
 

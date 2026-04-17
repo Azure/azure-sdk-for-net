@@ -6,12 +6,12 @@ using System.Reflection;
 namespace Azure.AI.AgentServer.Core;
 
 /// <summary>
-/// Registry that collects user-agent identity segments from protocol packages.
+/// Registry that collects version identity segments from protocol packages.
 /// Each protocol registers its identity string (e.g., <c>azure-ai-agentserver-responses/1.0.0 (dotnet/10.0)</c>)
-/// during route mapping, and the <c>ServerUserAgentMiddleware</c> reads all segments to compose the
+/// during route mapping, and the <see cref="Internal.ServerVersionMiddleware"/> reads all segments to compose the
 /// final <c>x-platform-server</c> response header.
 /// </summary>
-public sealed class ServerUserAgentRegistry
+public sealed class ServerVersionRegistry
 {
     private readonly object _lock = new();
     private readonly List<string> _segments = new();

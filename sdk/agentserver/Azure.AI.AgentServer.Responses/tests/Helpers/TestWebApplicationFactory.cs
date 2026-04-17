@@ -34,7 +34,7 @@ public sealed class TestWebApplicationFactory : IDisposable
                 webHost.ConfigureServices(services =>
                 {
                     services.AddRouting();
-                    services.AddAgentServerUserAgent();
+                    services.AddAgentServerVersion();
                     if (configureHostOptions is not null)
                     {
                         services.Configure(configureHostOptions);
@@ -45,7 +45,7 @@ public sealed class TestWebApplicationFactory : IDisposable
                 });
                 webHost.Configure(app =>
                 {
-                    app.UseAgentServerUserAgent();
+                    app.UseAgentServerVersion();
                     app.UseRouting();
                     app.UseEndpoints(endpoints =>
                     {
