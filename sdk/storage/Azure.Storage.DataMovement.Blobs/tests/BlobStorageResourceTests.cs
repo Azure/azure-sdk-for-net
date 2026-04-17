@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options.Snapshot = "2024-01-02T00:00:00.0000000Z";
             });
 
-            Assert.IsTrue(ex.Message.Contains("Snapshot and VersionId cannot both be set"));
+            Assert.IsTrue(ex.Message.Contains("Cannot set both snapshot and versionId"));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options.VersionId = "2024-01-02T00:00:00.0000000Z";
             });
 
-            Assert.IsTrue(ex.Message.Contains("VersionId and Snapshot cannot both be set"));
+            Assert.IsTrue(ex.Message.Contains("Cannot set both snapshot and versionId"));
         }
 
         [Test]
