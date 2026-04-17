@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class AvailableDataBoxEdgeSku : IUtf8JsonSerializable, IJsonModel<AvailableDataBoxEdgeSku>
+    /// <summary> The Sku information. </summary>
+    public partial class AvailableDataBoxEdgeSku : IJsonModel<AvailableDataBoxEdgeSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableDataBoxEdgeSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvailableDataBoxEdgeSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvailableDataBoxEdgeSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailableDataBoxEdgeSku IPersistableModel<AvailableDataBoxEdgeSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvailableDataBoxEdgeSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvailableDataBoxEdgeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
@@ -68,7 +109,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Locations)
+                foreach (AzureLocation item in Locations)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -78,8 +119,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApiVersions)
+                foreach (string item in ApiVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -88,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
-                foreach (var item in LocationInfo)
+                foreach (DataBoxEdgeSkuLocationInfo item in LocationInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
-                foreach (var item in Costs)
+                foreach (DataBoxEdgeSkuCost item in Costs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("shipmentTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ShipmentTypes)
+                foreach (DataBoxEdgeShipmentType item in ShipmentTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -133,21 +179,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Capabilities)
+                foreach (DataBoxEdgeSkuCapability item in Capabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -156,22 +202,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        AvailableDataBoxEdgeSku IJsonModel<AvailableDataBoxEdgeSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailableDataBoxEdgeSku IJsonModel<AvailableDataBoxEdgeSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AvailableDataBoxEdgeSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
         }
 
-        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AvailableDataBoxEdgeSku DeserializeAvailableDataBoxEdgeSku(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -191,153 +242,159 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeSkuAvailability? availability = default;
             IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes = default;
             IReadOnlyList<DataBoxEdgeSkuCapability> capabilities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    name = new DataBoxEdgeSkuName(property.Value.GetString());
+                    name = new DataBoxEdgeSkuName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tier"u8))
+                if (prop.NameEquals("tier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tier = new DataBoxEdgeSkuTier(property.Value.GetString());
+                    tier = new DataBoxEdgeSkuTier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    size = property.Value.GetString();
+                    size = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("family"u8))
+                if (prop.NameEquals("family"u8))
                 {
-                    family = property.Value.GetString();
+                    family = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
+                if (prop.NameEquals("locations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("apiVersions"u8))
+                if (prop.NameEquals("apiVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     apiVersions = array;
                     continue;
                 }
-                if (property.NameEquals("locationInfo"u8))
+                if (prop.NameEquals("locationInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxEdgeSkuLocationInfo> array = new List<DataBoxEdgeSkuLocationInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataBoxEdgeSkuLocationInfo.DeserializeDataBoxEdgeSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
                 }
-                if (property.NameEquals("costs"u8))
+                if (prop.NameEquals("costs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxEdgeSkuCost> array = new List<DataBoxEdgeSkuCost>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataBoxEdgeSkuCost.DeserializeDataBoxEdgeSkuCost(item, options));
                     }
                     costs = array;
                     continue;
                 }
-                if (property.NameEquals("signupOption"u8))
+                if (prop.NameEquals("signupOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signupOption = new DataBoxEdgeSkuSignupOption(property.Value.GetString());
+                    signupOption = new DataBoxEdgeSkuSignupOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = new DataBoxEdgeSkuVersion(property.Value.GetString());
+                    version = new DataBoxEdgeSkuVersion(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("availability"u8))
+                if (prop.NameEquals("availability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availability = new DataBoxEdgeSkuAvailability(property.Value.GetString());
+                    availability = new DataBoxEdgeSkuAvailability(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shipmentTypes"u8))
+                if (prop.NameEquals("shipmentTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxEdgeShipmentType> array = new List<DataBoxEdgeShipmentType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new DataBoxEdgeShipmentType(item.GetString()));
                     }
                     shipmentTypes = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxEdgeSkuCapability> array = new List<DataBoxEdgeSkuCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataBoxEdgeSkuCapability.DeserializeDataBoxEdgeSkuCapability(item, options));
                     }
@@ -346,10 +403,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AvailableDataBoxEdgeSku(
                 resourceType,
                 name,
@@ -366,38 +422,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 availability,
                 shipmentTypes ?? new ChangeTrackingList<DataBoxEdgeShipmentType>(),
                 capabilities ?? new ChangeTrackingList<DataBoxEdgeSkuCapability>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AvailableDataBoxEdgeSku>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AvailableDataBoxEdgeSku IPersistableModel<AvailableDataBoxEdgeSku>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AvailableDataBoxEdgeSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.ExitCode;
+                return Properties is null ? default : Properties.ExitCode;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.OutputHead;
+                return Properties is null ? default : Properties.OutputHead;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.ResultRef;
+                return Properties is null ? default : Properties.ResultRef;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.ResultUri;
+                return Properties is null ? default : Properties.ResultUri;
             }
         }
     }

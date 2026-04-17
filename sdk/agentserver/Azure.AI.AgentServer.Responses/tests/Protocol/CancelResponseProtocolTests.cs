@@ -98,19 +98,21 @@ public class CancelResponseProtocolTests : ProtocolTestBase
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", error.GetProperty("message").GetString());
     }
 
     [Test]
     public async Task Cancel_UnknownId_Returns404_WithErrorShape()
     {
-        var cancelResponse = await CancelResponseAsync("caresp_nonexistent_id");
+        var cancelResponse = await CancelResponseAsync(IdGenerator.NewResponseId());
 
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         using var doc = await ParseJsonAsync(cancelResponse);
         var error = doc.RootElement.GetProperty("error");
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         Assert.That(string.IsNullOrEmpty(error.GetProperty("message").GetString()), Is.False);
     }
 

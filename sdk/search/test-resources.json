@@ -60,6 +60,13 @@
             "metadata": {
                 "description": "The Search service SKU to create."
             }
+        },
+        "openAiLocation": {
+            "type": "string",
+            "defaultValue": "[parameters('location')]",
+            "metadata": {
+                "description": "The location for the Azure OpenAI resource."
+            }
         }
     },
     "variables": {
@@ -77,7 +84,9 @@
         "cognitiveServicesAccountName": "[concat(parameters('baseName'), 'cog')]",
         "cognitiveServicesApiVersion": "2017-04-18",
         "keyVaultName": "[concat(parameters('baseName'), 'kv')]",
-        "keyVaultApiVersion": "2016-10-01"
+        "keyVaultApiVersion": "2016-10-01",
+        "openAiAccountName": "[concat(parameters('baseName'), 'oai')]",
+        "openAiApiVersion": "2024-10-01"
     },
     "resources": [
         {
@@ -164,6 +173,96 @@
                 "enableSoftDelete": true,
                 "softDeleteRetentionInDays": 7
             }
+        },
+        {
+            "name": "[variables('openAiAccountName')]",
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "[variables('openAiApiVersion')]",
+            "location": "[parameters('openAiLocation')]",
+            "sku": {
+                "name": "S0"
+            },
+            "kind": "OpenAI",
+            "properties": {
+                "customSubDomainName": "[variables('openAiAccountName')]",
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "name": "[concat(variables('openAiAccountName'), '/gpt-4.1')]",
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "[variables('openAiApiVersion')]",
+            "properties": {
+                "model": {
+                    "name": "gpt-4.1",
+                    "format": "OpenAI",
+                    "version": "2025-04-14"
+                }
+            },
+            "sku": {
+                "name": "GlobalStandard",
+                "capacity": 10
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName'))]"
+            ]
+        },
+        {
+            "name": "[concat(variables('openAiAccountName'), '/text-embedding-3-small')]",
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "[variables('openAiApiVersion')]",
+            "properties": {
+                "model": {
+                    "name": "text-embedding-3-small",
+                    "format": "OpenAI",
+                    "version": "1"
+                }
+            },
+            "sku": {
+                "name": "Standard",
+                "capacity": 30
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'gpt-4.1')]"
+            ]
+        },
+        {
+            "name": "[concat(variables('openAiAccountName'), '/text-embedding-3-large')]",
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "[variables('openAiApiVersion')]",
+            "properties": {
+                "model": {
+                    "name": "text-embedding-3-large",
+                    "format": "OpenAI",
+                    "version": "1"
+                }
+            },
+            "sku": {
+                "name": "Standard",
+                "capacity": 30
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'text-embedding-3-small')]"
+            ]
+        },
+        {
+            "name": "[concat(variables('openAiAccountName'), '/text-embedding-ada-002')]",
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "[variables('openAiApiVersion')]",
+            "properties": {
+                "model": {
+                    "name": "text-embedding-ada-002",
+                    "format": "OpenAI",
+                    "version": "2"
+                }
+            },
+            "sku": {
+                "name": "Standard",
+                "capacity": 30
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts/deployments', variables('openAiAccountName'), 'text-embedding-3-large')]"
+            ]
         }
     ],
     "outputs": {
@@ -203,6 +302,14 @@
             "type": "string",
             "condition": "[and(contains(variables('searchEncryptionLocations'), parameters('location')), not(equals(parameters('searchSku'), 'free')))]",
             "value": "[reference(variables('keyVaultName')).vaultUri]"
+        },
+        "OPENAI_ENDPOINT": {
+            "type": "string",
+            "value": "[concat('https://', variables('openAiAccountName'), '.openai.azure.com/')]"
+        },
+        "OPENAI_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('openAiAccountName')), variables('openAiApiVersion')).key1]"
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.SupportedGeoBackupRegions;
+                return Properties is null ? default : Properties.SupportedGeoBackupRegions;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.SupportedFlexibleServerEditions;
+                return Properties is null ? default : Properties.SupportedFlexibleServerEditions;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.SupportedServerVersions;
+                return Properties is null ? default : Properties.SupportedServerVersions;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties.SupportedFeatures;
+                return Properties is null ? default : Properties.SupportedFeatures;
             }
         }
     }

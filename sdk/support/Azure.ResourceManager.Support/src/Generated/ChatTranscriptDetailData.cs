@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties.Messages;
+                return Properties is null ? default : Properties.Messages;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
     }
