@@ -26,7 +26,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
 {
     protected const string AGENT_NAME = "cs-e2e-tests-client";
     protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
-    protected const string HOSTED_AGENT = "cs-e2e-hosted";
+    protected const string HOSTED_AGENT = "cs-e2e-hosted2";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string TOOLBOX = "test-toolbox";
     protected const string SKILL = "test-skill";
@@ -229,28 +229,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         AzureFunctionTool,
     }
 
-    private WebSearchTool GetCustomWebSearch()
-    {
-        WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
-        webSearchTool.CustomSearchConfiguration = new(
-            TestEnvironment.CUSTOM_BING_CONNECTION_ID,
-            TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME);
-        return webSearchTool;
-    }
-
-    private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
-    {
-        VectorStoreClient vctStoreClient = openAIClient.GetVectorStoreClient();
-        VectorStoreCreationOptions vctOptions = new()
-        {
-            Name = VECTOR_STORE,
-            FileIds = { TestEnvironment.OPENAI_FILE_ID }
-        };
-        return await vctStoreClient.CreateVectorStoreAsync(
-            vctOptions
-        );
-    }
-
     private AzureAISearchToolIndex GetAISearchIndex()
     {
         AzureAISearchToolIndex index = new()
@@ -404,7 +382,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     }
     #endregion
     #region Cleanup
-
     private static async Task DeleteToolboxMayBe(AgentToolboxes client, string name)
     {
         try
@@ -459,20 +436,16 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             await DeleteToolboxMayBe(toolboxClient, name);
         }
-        await foreach (ToolboxRecord record in toolboxClient.GetToolboxesAsync())
+        HashSet<string> delete = [.. await toolboxClient.GetToolboxesAsync().Select(x => x.Name).Where(x => x.StartsWith(TOOLBOX)).ToListAsync()];
+        foreach (string record in delete)
         {
-            if (record.Name.StartsWith(TOOLBOX))
-            {
-                await DeleteToolboxMayBe(toolboxClient, record.Name);
-            }
+            await DeleteToolboxMayBe(toolboxClient, record);
         }
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
-        await foreach (AgentsSkill skill in skillsClient.GetSkillsAsync())
+        delete = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).Where(x => x.StartsWith(SKILL)).ToListAsync()];
+        foreach (string skill in delete)
         {
-            if (skill.Name.StartsWith(SKILL))
-            {
-                await skillsClient.DeleteSkillAsync(skill.Name);
-            }
+            await skillsClient.DeleteSkillAsync(skill);
         }
     }
     #endregion

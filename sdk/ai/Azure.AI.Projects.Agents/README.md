@@ -27,6 +27,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Sessions](#sessions)
   - [Skills](#skills)
   - [Agent endpoints](#agent-endpoints)
+  - [Streaming the logs](#streaming-the-logs)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -379,6 +380,15 @@ Replace <first> and <second> by the actual summation arguments.
 """);
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell
@@ -517,6 +527,14 @@ AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill
     ```
     Replace <first> and <second> by the actual summation arguments.
     """);
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
 ```
 
 3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
@@ -538,6 +556,22 @@ ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
     agentName: hostedAgentName,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
+```
+
+### Streaming the logs
+
+The most probable reason for an error during session creation is the failure of a main script in the agent container.
+The hosted agent container logs can be streamed using `AgentAdministrationClient` methods `GetSessionLogStream`
+and `GetSessionLogStreamAsync`.
+
+```C# Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
+ProjectAgentSession session = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    isolationKey: "key_1",
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
+Console.WriteLine(logEvent.Data);
 ```
 
 ## Tracing

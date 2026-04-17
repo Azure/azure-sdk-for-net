@@ -92,6 +92,15 @@ Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}"
     ```
     Replace <first> and <second> by the actual summation arguments.
     """);
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
 }
 catch (ClientResultException e)
 {
@@ -146,6 +155,15 @@ AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDi
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
 AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
 To calculate the sum  run
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```bash
 echo $((<first> + <second>))
 ```
@@ -375,6 +393,24 @@ catch (ClientResultException e)
     skill = skillsClient.GetSkill("simpleSkill");
 }
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = skillsClient.GetSkill("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 
 Asynchronous sample:
@@ -384,6 +420,24 @@ try
     skill = await skillsClient.UpdateSkillAsync(skillName: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
     To calculate the sum  run
     ```bash
+    echo $((<first> * <second>))
+    ```
+    ```powershell
+    (<first> * <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+}
+catch (ClientResultException e)
+{
+    if (e.Status != 201)
+    {
+        throw;
+    }
+    skill = await skillsClient.GetSkillAsync("simpleSkill");
+}
+Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
+```bash
     echo $((<first> * <second>))
     ```
     ```powershell

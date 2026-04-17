@@ -4,6 +4,10 @@
 
 ### Features Added
 - Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
+- In `AgentAdministrationClient` added CRUD operations for sessions on the hosted Agent.
+- Added `AgentSessionFiles` client to work with the files in the session samdbox.
+- Added `ProjectAgentSkills` to manage agent skills.
+- Added `GetSessionLogStreamAsync` and `GetSessionLogStream` to get the logs from the hosted Agent docker container.
 
 ### Breaking Changes
 

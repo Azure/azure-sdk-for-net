@@ -9,31 +9,12 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Agents.Tests.Samples;
 # pragma warning disable AAIP001
+namespace Azure.AI.Projects.Agents.Tests.Samples;
 
-#region Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
+public class Sample_HostedAgentLogStreaming : SamplesBase
 {
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-#endregion
-public class Sample_HostedAgent : SamplesBase
-{
-    #region Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId)
     {
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
@@ -49,23 +30,20 @@ public class Sample_HostedAgent : SamplesBase
         };
         return agentDefinition;
     }
-    #endregion
 
     [Test]
     [AsyncOnly]
-    public async Task HostedAgentCreateAsync()
+    public async Task HostedAgentLogsAsync()
     {
 #if SNIPPET
         var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
@@ -78,9 +56,7 @@ public class Sample_HostedAgent : SamplesBase
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
             modelDeploymentName: modelDeploymentName,
-            accountId: accountId,
-            applicationInsightConnectionString: projectName,
-            projectEndpoint: projectEndpoint
+            accountId: accountId
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
@@ -88,23 +64,32 @@ public class Sample_HostedAgent : SamplesBase
             agentName: hostedAgentName,
             options: creationOptions);
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
+        #region Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
+        ProjectAgentSession session = await agentsClient.CreateSessionAsync(
+            agentName: agentVersion.Name,
+            isolationKey: "key_1",
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
+        Console.WriteLine(logEvent.Data);
+        #endregion
         // Do not do this occasionally.
-        await agentsClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        await agentsClient.DeleteAgentAsync(agentName: agentVersion.Name);
     }
 
     [Test]
     [SyncOnly]
-    public void HostedAgentCreate()
+    public void HostedAgentLogsSync()
     {
 #if SNIPPET
+        var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-        var applicationInsightConnectionString = System.Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
+        var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        var applicationInsightConnectionString = TestEnvironment.APPLICATIONINSIGHTS_CONNECTION_STRING;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
@@ -114,24 +99,28 @@ public class Sample_HostedAgent : SamplesBase
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage,
             modelDeploymentName: modelDeploymentName,
-            accountId: accountId,
-            applicationInsightConnectionString: projectName,
-            projectEndpoint: projectEndpoint
+            accountId: accountId
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
-            agentName: "myHostedAgent",
+            agentName: hostedAgentName,
             options: creationOptions);
         Console.WriteLine($"Deployed hosted agent {agentVersion.Name}, version {agentVersion.Version}.");
+        ProjectAgentSession session = agentsClient.CreateSession(
+            agentName: agentVersion.Name,
+            isolationKey: "key_1",
+            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+        );
+        SessionLogEvent logEvent = agentsClient.GetSessionLogStream(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
+        Console.WriteLine(logEvent.Data);
         // Do not do this occasionally.
-        agentsClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        agentsClient.DeleteAgent(agentName: agentVersion.Name);
     }
 
-    public Sample_HostedAgent(bool isAsync) : base(isAsync)
+    public Sample_HostedAgentLogStreaming(bool isAsync) : base(isAsync)
     { }
 }

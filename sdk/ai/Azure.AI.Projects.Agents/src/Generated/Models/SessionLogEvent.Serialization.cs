@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -73,14 +72,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SessionLogEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="SessionLogEvent"/> from. </param>
-        public static explicit operator SessionLogEvent(ClientResult result)
-        {
-            PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSessionLogEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
