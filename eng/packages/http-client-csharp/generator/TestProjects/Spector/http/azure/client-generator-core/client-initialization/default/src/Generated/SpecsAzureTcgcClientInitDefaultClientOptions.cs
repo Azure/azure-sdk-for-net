@@ -11,11 +11,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    public partial class MixedParamsClientOptions : ClientOptions
+    public partial class SpecsAzureTcgcClientInitDefaultClientOptions : ClientOptions
     {
-        public MixedParamsClientOptions() => throw null;
+        public SpecsAzureTcgcClientInitDefaultClientOptions() => throw null;
 
         [Experimental("SCME0002")]
-        internal MixedParamsClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+        internal SpecsAzureTcgcClientInitDefaultClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }
