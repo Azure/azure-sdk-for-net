@@ -667,17 +667,6 @@ namespace Azure.AI.AgentServer.Responses
         protected ResponseHandler() { }
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> CreateAsync(Azure.AI.AgentServer.Responses.Models.CreateResponse request, Azure.AI.AgentServer.Responses.ResponseContext context, System.Threading.CancellationToken cancellationToken);
     }
-    public partial class ResponsesActivitySource
-    {
-        public const string DefaultName = "Azure.AI.AgentServer.Responses";
-        public const string DefaultProviderName = "AzureAI Hosted Agents";
-        public const string DefaultServiceName = "azure.ai.agentserver";
-        public ResponsesActivitySource() { }
-        protected ResponsesActivitySource(string? name) { }
-        public string Name { get { throw null; } }
-        protected System.Diagnostics.ActivitySource Source { get { throw null; } }
-        public virtual System.Diagnostics.Activity? StartCreateResponseActivity(Azure.AI.AgentServer.Responses.Models.CreateResponse request, string responseId, Microsoft.AspNetCore.Http.IHeaderDictionary headers) { throw null; }
-    }
     public partial class ResponsesApiException : System.Exception
     {
         public ResponsesApiException(Azure.AI.AgentServer.Responses.Models.Error error, int statusCode) { }
@@ -733,45 +722,6 @@ namespace Azure.AI.AgentServer.Responses
         public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public virtual System.Threading.Tasks.Task DeleteEventStreamAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract System.Threading.Tasks.Task<System.IAsyncDisposable> SubscribeToEventsAsync(string responseId, Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> observer, long? cursor = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    }
-    public static partial class ResponsesTracingConstants
-    {
-        public const string OperationName = "invoke_agent";
-        public const string ProviderName = "AzureAI Hosted Agents";
-        public const string ServiceName = "azure.ai.agentserver";
-        public static partial class Baggage
-        {
-            public const string ConversationId = "azure.ai.agentserver.conversation_id";
-            public const string RequestId = "azure.ai.agentserver.x-request-id";
-            public const string ResponseId = "azure.ai.agentserver.response_id";
-            public const string Streaming = "azure.ai.agentserver.streaming";
-        }
-        public static partial class LogScope
-        {
-            public const string ConversationId = "ConversationId";
-            public const string ResponseId = "ResponseId";
-            public const string Streaming = "Streaming";
-        }
-        public static partial class Tags
-        {
-            public const string AgentId = "gen_ai.agent.id";
-            public const string AgentName = "gen_ai.agent.name";
-            public const string AgentVersion = "gen_ai.agent.version";
-            public const string ConversationId = "gen_ai.conversation.id";
-            public const string ErrorCode = "azure.ai.agentserver.responses.error.code";
-            public const string ErrorMessage = "azure.ai.agentserver.responses.error.message";
-            public const string FoundryProjectId = "microsoft.foundry.project.id";
-            public const string NamespacedConversationId = "azure.ai.agentserver.responses.conversation_id";
-            public const string NamespacedResponseId = "azure.ai.agentserver.responses.response_id";
-            public const string NamespacedStreaming = "azure.ai.agentserver.responses.streaming";
-            public const string OperationName = "gen_ai.operation.name";
-            public const string OTelErrorType = "error.type";
-            public const string OTelStatusDescription = "otel.status_description";
-            public const string ProviderName = "gen_ai.provider.name";
-            public const string RequestModel = "gen_ai.request.model";
-            public const string ResponseId = "gen_ai.response.id";
-            public const string ServiceName = "service.name";
-        }
     }
     public partial class TextContentBuilder
     {

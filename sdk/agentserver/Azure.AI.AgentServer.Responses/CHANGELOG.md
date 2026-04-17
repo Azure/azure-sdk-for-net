@@ -31,6 +31,13 @@
   `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
   code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
 
+### Breaking Changes
+
+- Made `ResponsesActivitySource` internal. The activity source is managed by
+  the framework; handlers do not need to create tracing activities directly.
+- Made `ResponsesTracingConstants` internal. The tracing tag, baggage, and log scope
+  constants are implementation details not needed by handler authors.
+
 ### Bugs Fixed
 
 - Fixed error response shapes to match the container specification: `invalid_request_error` type

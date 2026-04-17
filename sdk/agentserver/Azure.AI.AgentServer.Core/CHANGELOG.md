@@ -22,6 +22,8 @@
   `UseAgentServerUserAgent()` to `UseAgentServerVersion()`. The version middleware
   no longer bundles the inbound request logging registration — use the new
   `AddAgentServerLogging()` / `UseAgentServerLogging()` pair separately.
+- Made `AgentHostTelemetry` internal. The telemetry source and meter name constants
+  are implementation details; use the string values directly if needed for OTel filtering.
 
 ## 1.0.0-beta.21 (2026-04-14)
 

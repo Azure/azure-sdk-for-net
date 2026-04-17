@@ -11,6 +11,11 @@
   `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
   code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
 
+### Breaking Changes
+
+- Made `InvocationsActivitySource` internal. The activity source is managed by
+  the framework; handlers do not need to create tracing activities directly.
+
 ### Other Changes
 
 - Updated dependency on `Azure.AI.AgentServer.Core` to 1.0.0-beta.22, which adds outbound

@@ -38,13 +38,6 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
-    public static partial class AgentHostTelemetry
-    {
-        public const string InvocationsMeterName = "Azure.AI.AgentServer.Invocations";
-        public const string InvocationsSourceName = "Azure.AI.AgentServer.Invocations";
-        public const string ResponsesMeterName = "Azure.AI.AgentServer.Responses";
-        public const string ResponsesSourceName = "Azure.AI.AgentServer.Responses";
-    }
     public static partial class FoundryEnvironment
     {
         public static string? AgentName { get { throw null; } }
