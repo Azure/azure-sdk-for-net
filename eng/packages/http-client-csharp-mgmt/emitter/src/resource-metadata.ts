@@ -816,9 +816,9 @@ export function postProcessArmResources(
     const scopePath = resource.metadata.resourceIdPattern.scopePath;
     resource.metadata.scope.scopeIdPattern = scopePath;
     // Include the scope's resource type when it's fully constant (no variable segments)
-    const rt = scopePath.resourceType;
-    if (rt !== undefined && !rt.includes("{")) {
-      resource.metadata.scope.scopeResourceType = rt;
+    const resourceType = scopePath.resourceType;
+    if (resourceType !== undefined && !resourceType.includes("{")) {
+      resource.metadata.scope.scopeResourceType = resourceType;
     }
   }
 
