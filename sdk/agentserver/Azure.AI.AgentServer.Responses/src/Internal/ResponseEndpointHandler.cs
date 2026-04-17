@@ -161,9 +161,12 @@ internal sealed class ResponseEndpointHandler
             responseId = IdGenerator.NewResponseId(partitionKeyHint);
         }
 
+        var isolation = IsolationContext.FromRequest(httpContext.Request);
+
         _logger.LogInformation(
-            "Creating response {ResponseId}: Streaming={IsStreaming} Background={IsBackground} Store={Store} Model={Model} ConversationId={ConversationId} PreviousResponseId={PreviousResponseId}",
-            responseId, isStreaming, isBackground, store, request.Model, conversationId, request.PreviousResponseId);
+            "Creating response {ResponseId}: Streaming={IsStreaming} Background={IsBackground} Store={Store} Model={Model} ConversationId={ConversationId} PreviousResponseId={PreviousResponseId} HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isStreaming, isBackground, store, request.Model, conversationId, request.PreviousResponseId,
+            isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
 
         // B39: Resolve session ID — request payload → environment variable → deterministic derivation.
         // Stamp on the request so the orchestrator can propagate it to the ResponseObject.
@@ -202,7 +205,6 @@ internal sealed class ResponseEndpointHandler
         // Extract x-client-* headers and query parameters for ResponseContext
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
-        var isolation = IsolationContext.FromRequest(httpContext.Request);
 
         // Record the creation-time chat isolation key for enforcement on subsequent operations
         execution.ChatIsolationKey = isolation.ChatIsolationKey;
@@ -337,7 +339,9 @@ internal sealed class ResponseEndpointHandler
         if (httpContext.Request.Query.TryGetValue("stream", out var streamValue)
             && string.Equals(streamValue, "true", StringComparison.OrdinalIgnoreCase))
         {
-            _logger.LogInformation("Getting response {ResponseId} with SSE replay", responseId);
+            _logger.LogInformation(
+                "Getting response {ResponseId} with SSE replay: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+                responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
@@ -410,7 +414,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Delegate guard logic and snapshot to orchestrator
-        _logger.LogInformation("Getting response {ResponseId}", responseId);
+        _logger.LogInformation(
+            "Getting response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
         var response = await _orchestrator.GetAsync(responseId, isolation);
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation(
@@ -425,7 +431,9 @@ internal sealed class ResponseEndpointHandler
     {
         ValidateResponseIdFormat(responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
-        _logger.LogInformation("Cancelling response {ResponseId}", responseId);
+        _logger.LogInformation(
+            "Cancelling response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
         var response = await _orchestrator.CancelAsync(responseId, isolation);
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = response.AgentSessionId;
         _logger.LogInformation("Cancelled response {ResponseId}, status={Status}", responseId, response.Status);
@@ -439,8 +447,10 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> DeleteResponseAsync(HttpContext httpContext, string responseId)
     {
         ValidateResponseIdFormat(responseId);
-        _logger.LogInformation("Deleting response {ResponseId}", responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation(
+            "Deleting response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
 
         // Guard: if response is in-flight, reject deletion.
         // With eager eviction, all tracked executions are in-flight — completed
@@ -500,8 +510,10 @@ internal sealed class ResponseEndpointHandler
     public async Task<IResult> GetInputItemsAsync(HttpContext httpContext, string responseId)
     {
         ValidateResponseIdFormat(responseId);
-        _logger.LogInformation("Getting input items for response {ResponseId}", responseId);
         var isolation = IsolationContext.FromRequest(httpContext.Request);
+        _logger.LogInformation(
+            "Getting input items for response {ResponseId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            responseId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
 
         // Read response to capture session ID for the response header.
         // Also validates existence (throws ResourceNotFoundException if not found).

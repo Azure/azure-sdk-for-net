@@ -61,6 +61,10 @@ internal sealed class InvocationEndpointHandler
             ["SessionId"] = sessionId,
         });
 
+        _logger.LogInformation(
+            "Handling invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            invocationId, isolation.UserIsolationKey is not null, isolation.ChatIsolationKey is not null);
+
         try
         {
             // Inject response headers before handler writes body
@@ -86,6 +90,9 @@ internal sealed class InvocationEndpointHandler
     internal async Task HandleGetAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
         var context = BuildContext(httpContext, invocationId);
+        _logger.LogInformation(
+            "Getting invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await handler.GetAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
     }
@@ -96,6 +103,9 @@ internal sealed class InvocationEndpointHandler
     internal async Task HandleCancelAsync(HttpContext httpContext, string invocationId, InvocationHandler handler)
     {
         var context = BuildContext(httpContext, invocationId);
+        _logger.LogInformation(
+            "Cancelling invocation {InvocationId}: HasUserIsolationKey={HasUserIsolationKey} HasChatIsolationKey={HasChatIsolationKey}",
+            invocationId, context.Isolation.UserIsolationKey is not null, context.Isolation.ChatIsolationKey is not null);
         InjectSessionIdHeader(httpContext.Response, context.SessionId);
         await handler.CancelAsync(invocationId, httpContext.Request, httpContext.Response, context, httpContext.RequestAborted);
     }
