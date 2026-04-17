@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    internal partial class Features
+    internal partial class VmFamilies
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Features for mocking. </summary>
-        protected Features()
+        /// <summary> Initializes a new instance of VmFamilies for mocking. </summary>
+        protected VmFamilies()
         {
         }
 
-        /// <summary> Initializes a new instance of Features. </summary>
+        /// <summary> Initializes a new instance of VmFamilies. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Features(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal VmFamilies(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation location, string vmFamilyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ComputeLimit
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ComputeLimit/locations/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/features/", false);
-            uri.AppendPath(featureName, true);
+            uri.AppendPath("/vmFamilies/", false);
+            uri.AppendPath(vmFamilyName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionLocationResourceRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionLocationResourceRequest(Guid subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -71,10 +71,14 @@ namespace Azure.ResourceManager.ComputeLimit
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ComputeLimit/locations/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/features", false);
+            uri.AppendPath("/vmFamilies", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -84,7 +88,7 @@ namespace Azure.ResourceManager.ComputeLimit
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionLocationResourceRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionLocationResourceRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -103,52 +107,6 @@ namespace Azure.ResourceManager.ComputeLimit
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateEnableRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.ComputeLimit/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/features/", false);
-            uri.AppendPath(featureName, true);
-            uri.AppendPath("/enable", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDisableRequest(Guid subscriptionId, AzureLocation location, string featureName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.ComputeLimit/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/features/", false);
-            uri.AppendPath(featureName, true);
-            uri.AppendPath("/disable", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }

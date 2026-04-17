@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,45 +15,48 @@ using Azure.ResourceManager.ComputeLimit.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    internal partial class FeaturesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<FeatureData>
+    internal partial class VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT : AsyncPageable<VmFamilyData>
     {
-        private readonly Features _client;
+        private readonly VmFamilies _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Features client used to send requests. </param>
+        /// <summary> Initializes a new instance of VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VmFamilies client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="filter"> The filter to apply to the list operation. Filter can be applied to the 'category' property. Example: $filter=category eq 'generalPurposeCategory'. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(Features client, Guid subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(VmFamilies client, Guid subscriptionId, AzureLocation location, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of FeaturesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FeatureData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<VmFamilyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                FeatureListResult result = FeatureListResult.FromResponse(response);
-                yield return Page<FeatureData>.FromValues((IReadOnlyList<FeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                VmFamilyListResult result = VmFamilyListResult.FromResponse(response);
+                yield return Page<VmFamilyData>.FromValues((IReadOnlyList<VmFamilyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -64,14 +68,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionLocationResourceRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetBySubscriptionLocationResourceRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionLocationResourceRequest(nextLink, _subscriptionId, _location, _filter, _context) : _client.CreateGetBySubscriptionLocationResourceRequest(_subscriptionId, _location, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

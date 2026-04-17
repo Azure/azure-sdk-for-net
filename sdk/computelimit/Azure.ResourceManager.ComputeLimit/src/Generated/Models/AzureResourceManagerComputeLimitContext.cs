@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ComputeLimit
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(VmFamilyData))]
+    [ModelReaderWriterBuildable(typeof(VmFamilyListResult))]
+    [ModelReaderWriterBuildable(typeof(VmFamilyProperties))]
+    [ModelReaderWriterBuildable(typeof(VmFamilyResource))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {
     }

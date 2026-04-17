@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ComputeLimit
             TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
             _location = location;
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", FeatureResource.ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, featureApiVersion ?? "2026-03-20");
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, featureApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new FeatureResource(Client, data));
+            return new AsyncPageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "FeatureCollection.GetAll"), data => new FeatureResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new FeatureResource(Client, data));
+            return new PageableWrapper<FeatureData, FeatureResource>(new FeaturesGetBySubscriptionLocationResourceCollectionResultOfT(_featuresRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "FeatureCollection.GetAll"), data => new FeatureResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>

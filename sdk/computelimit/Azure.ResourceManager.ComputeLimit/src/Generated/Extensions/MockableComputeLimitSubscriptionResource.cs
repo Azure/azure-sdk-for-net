@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-20. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +233,74 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
             return GetFeatures(location).Get(featureName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VmFamilies in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of VmFamilies and their operations over a VmFamilyResource. </returns>
+        public virtual VmFamilyCollection GetVmFamilies(AzureLocation location)
+        {
+            return GetCachedClient(client => new VmFamilyCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets the properties of a VM family.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/vmFamilies/{vmFamilyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VmFamilies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the VmFamily. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VmFamilyResource>> GetVmFamilyAsync(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
+
+            return await GetVmFamilies(location).GetAsync(vmFamilyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of a VM family.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/vmFamilies/{vmFamilyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VmFamilies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the VmFamily. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VmFamilyResource> GetVmFamily(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
+
+            return GetVmFamilies(location).Get(vmFamilyName, cancellationToken);
         }
     }
 }
