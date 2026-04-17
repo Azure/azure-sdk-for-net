@@ -24,7 +24,8 @@ namespace Azure.Generator.Management.Utilities
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool shouldApplyLroHandling = false)
+            bool shouldApplyLroHandling = false,
+            ParameterProvider? scopeParameter = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
@@ -34,6 +35,13 @@ namespace Azure.Generator.Management.Utilities
             if (shouldApplyLroHandling)
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
+            }
+
+            // Add scope parameter for extension-scoped non-resource methods on ArmClient
+            if (scopeParameter != null)
+            {
+                requiredParameters.Add(scopeParameter);
+                scopeParameterTransformed = true;
             }
 
             // Iterate through the convenience method parameters directly

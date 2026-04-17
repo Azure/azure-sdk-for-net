@@ -52,14 +52,6 @@ internal class OperationContext
 
     public IReadOnlyList<ContextualParameter> SecondaryContextualPathParameters { get; }
 
-    /// <summary>
-    /// Initializes a new instance of the OperationContext class with the specified primary and secondary request
-    /// path patterns.
-    /// </summary>
-    /// <param name="contextualPath">The primary request path pattern that defines the main context for the operation. Cannot be null.</param>
-    /// <param name="secondaryContextualPath">An optional secondary request path pattern that provides additional context for the operation. Can be null
-    /// if no secondary context is required.</param>
-    /// <param name="fieldSelector">The function to get the corresponding field for secondary contextual parameters.</param>
     private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector)
     {
         ContextualPath = contextualPath;

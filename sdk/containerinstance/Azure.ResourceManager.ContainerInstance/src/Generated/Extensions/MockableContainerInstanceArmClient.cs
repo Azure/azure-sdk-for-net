@@ -93,18 +93,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, ResourceIdentifier scope, string virtualNetworkName, string subnetName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
-
             using DiagnosticScope scope0 = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLink");
             scope0.Start();
             try
@@ -113,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(subscriptionId, scope.ToString(), virtualNetworkName, subnetName, context);
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -148,18 +139,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="virtualNetworkName"> The name of the virtual network. </param>
-        /// <param name="subnetName"> The name of the subnet. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/>, <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, ResourceIdentifier scope, string virtualNetworkName, string subnetName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteSubnetServiceAssociationLink(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
-
             using DiagnosticScope scope0 = SubnetServiceAssociationLinkClientDiagnostics.CreateScope("MockableContainerInstanceArmClient.DeleteSubnetServiceAssociationLink");
             scope0.Start();
             try
@@ -168,7 +150,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(subscriptionId, scope.ToString(), virtualNetworkName, subnetName, context);
+                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
