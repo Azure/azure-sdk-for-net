@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(ErrorInfo))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<ErrorResponse>(Error, options);
+                writer.WriteObjectValue(ErrorInfo, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             HDInsightAsyncOperationState? status = default;
-            ErrorResponse error = default;
+            ErrorResponse errorInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    errorInfo = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightAsyncOperationResult(status, error, additionalBinaryDataProperties);
+            return new HDInsightAsyncOperationResult(status, errorInfo, additionalBinaryDataProperties);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -591,16 +591,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new RegionalQuotaCapability(region, coresUsed, coresAvailable, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The response for the operation to get regional usages for a subscription. </summary>
-        /// <param name="value"> The list of usages. </param>
-        /// <returns> A new <see cref="Models.UsagesListResult"/> instance for mocking. </returns>
-        public static UsagesListResult UsagesListResult(IEnumerable<HDInsightUsage> value = default)
-        {
-            value ??= new ChangeTrackingList<HDInsightUsage>();
-
-            return new UsagesListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The details about the usage of a particular limited resource. </summary>
         /// <param name="unit"> The type of measurement for usage. </param>
         /// <param name="currentValue"> The current usage. </param>

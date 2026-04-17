@@ -111,24 +111,6 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetScriptActionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
-        public static ScriptActionResource GetScriptActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHDInsightArmClient(client).GetScriptActionResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of HDInsightClusters in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -223,108 +205,110 @@ namespace Azure.ResourceManager.HDInsight
         /// Gets the capabilities for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetCapabilitiesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightCapabilitiesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<HDInsightCapabilitiesResult>> GetCapabilitiesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightCapabilitiesResult>> GetHDInsightCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).GetCapabilitiesAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightCapabilitiesAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the capabilities for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetCapabilities(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightCapabilities(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<HDInsightCapabilitiesResult> GetCapabilities(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<HDInsightCapabilitiesResult> GetHDInsightCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetCapabilities(location, cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightCapabilities(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the usages for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetUsagesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightUsagesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<UsagesListResult>> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken).ConfigureAwait(false);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the usages for the specified location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetUsages(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightUsages(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<UsagesListResult> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HDInsightUsage> GetHDInsightUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightUsages(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetBillingSpecsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecsAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<HDInsightBillingSpecsListResult>> GetBillingSpecsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightBillingSpecsListResult>> GetHDInsightBillingSpecsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).GetBillingSpecsAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightBillingSpecsAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetBillingSpecs(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<HDInsightBillingSpecsListResult> GetBillingSpecs(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Response<HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetBillingSpecs(location, cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightBillingSpecs(location, cancellationToken);
         }
 
         /// <summary>
@@ -369,76 +353,76 @@ namespace Azure.ResourceManager.HDInsight
         /// Check the cluster name is available or not.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.CheckNameAvailabilityAsync(string, HDInsightNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailabilityAsync(AzureLocation, HDInsightNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<HDInsightNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).CheckHDInsightNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Check the cluster name is available or not.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.CheckNameAvailability(string, HDInsightNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability(AzureLocation, HDInsightNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<HDInsightNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, string location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).CheckNameAvailability(location, content, cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).CheckHDInsightNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.ValidateClusterCreateRequestAsync(string, HDInsightClusterCreationValidateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreationAsync(AzureLocation, HDInsightClusterCreationValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<HDInsightClusterCreationValidateResult>> ValidateClusterCreateRequestAsync(this SubscriptionResource subscriptionResource, string location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).ValidateClusterCreateRequestAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHDInsightSubscriptionResource(subscriptionResource).ValidateHDInsightClusterCreationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Validate the cluster create request spec is valid or not.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.ValidateClusterCreateRequest(string, HDInsightClusterCreationValidateContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation(AzureLocation, HDInsightClusterCreationValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<HDInsightClusterCreationValidateResult> ValidateClusterCreateRequest(this SubscriptionResource subscriptionResource, string location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
+        public static Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).ValidateClusterCreateRequest(location, content, cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).ValidateHDInsightClusterCreation(location, content, cancellationToken);
         }
     }
 }

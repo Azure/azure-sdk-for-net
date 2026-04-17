@@ -15,7 +15,7 @@ using Azure.ResourceManager.HDInsight;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The response for the operation to get regional usages for a subscription. </summary>
-    public partial class UsagesListResult : IJsonModel<UsagesListResult>
+    internal partial class UsagesListResult : IJsonModel<UsagesListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

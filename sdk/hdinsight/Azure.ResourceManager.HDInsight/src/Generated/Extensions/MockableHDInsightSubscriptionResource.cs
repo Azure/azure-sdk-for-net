@@ -119,15 +119,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HDInsightCapabilitiesResult>> GetCapabilitiesAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightCapabilitiesResult>> GetHDInsightCapabilitiesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetCapabilities");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
             scope.Start();
             try
             {
@@ -135,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetHDInsightCapabilitiesRequest(Id.SubscriptionId, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,15 +164,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HDInsightCapabilitiesResult> GetCapabilities(string location, CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightCapabilitiesResult> GetHDInsightCapabilities(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetCapabilities");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
             scope.Start();
             try
             {
@@ -184,7 +176,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetHDInsightCapabilitiesRequest(Id.SubscriptionId, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -217,36 +209,16 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<UsagesListResult>> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetUsages");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UsagesListResult> response = Response.FromValue(UsagesListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new LocationsGetHDInsightUsagesAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>
@@ -266,36 +238,16 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<UsagesListResult> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetUsages");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<UsagesListResult> response = Response.FromValue(UsagesListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new LocationsGetHDInsightUsagesCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
         }
 
         /// <summary>
@@ -315,15 +267,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HDInsightBillingSpecsListResult>> GetBillingSpecsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightBillingSpecsListResult>> GetHDInsightBillingSpecsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetBillingSpecs");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
             scope.Start();
             try
             {
@@ -331,7 +279,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetHDInsightBillingSpecsRequest(Id.SubscriptionId, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,15 +312,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HDInsightBillingSpecsListResult> GetBillingSpecs(string location, CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetBillingSpecs");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
             scope.Start();
             try
             {
@@ -380,7 +324,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetHDInsightBillingSpecsRequest(Id.SubscriptionId, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -513,17 +457,15 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckNameAvailabilityAsync(string location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
@@ -531,7 +473,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateCheckHDInsightNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -564,17 +506,15 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HDInsightNameAvailabilityResult> CheckNameAvailability(string location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
@@ -582,7 +522,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateCheckHDInsightNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -615,17 +555,15 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HDInsightClusterCreationValidateResult>> ValidateClusterCreateRequestAsync(string location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateClusterCreateRequest");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();
             try
             {
@@ -633,7 +571,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateValidateHDInsightClusterCreationRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -666,17 +604,15 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HDInsightClusterCreationValidateResult> ValidateClusterCreateRequest(string location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateClusterCreateRequest");
+            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();
             try
             {
@@ -684,7 +620,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateValidateHDInsightClusterCreationRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
                 if (response.Value == null)

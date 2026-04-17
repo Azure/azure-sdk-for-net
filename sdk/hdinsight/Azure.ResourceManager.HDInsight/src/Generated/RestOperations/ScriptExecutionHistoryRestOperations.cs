@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetScriptExecutionHistoryRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetScriptExecutionHistoriesRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateNextGetScriptExecutionHistoryRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateNextGetScriptExecutionHistoriesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

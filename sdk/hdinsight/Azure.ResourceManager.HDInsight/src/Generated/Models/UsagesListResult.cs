@@ -12,7 +12,7 @@ using Azure.ResourceManager.HDInsight;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The response for the operation to get regional usages for a subscription. </summary>
-    public partial class UsagesListResult
+    internal partial class UsagesListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

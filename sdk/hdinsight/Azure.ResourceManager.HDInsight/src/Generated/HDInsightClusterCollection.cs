@@ -35,6 +35,8 @@ namespace Azure.ResourceManager.HDInsight
         private readonly Extensions _extensionsRestClient;
         private readonly ClientDiagnostics _scriptActionsClientDiagnostics;
         private readonly ScriptActions _scriptActionsRestClient;
+        private readonly ClientDiagnostics _scriptExecutionHistoryClientDiagnostics;
+        private readonly ScriptExecutionHistory _scriptExecutionHistoryRestClient;
         private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
         private readonly VirtualMachines _virtualMachinesRestClient;
 
@@ -57,6 +59,8 @@ namespace Azure.ResourceManager.HDInsight
             _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
             _scriptActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
             _scriptActionsRestClient = new ScriptActions(_scriptActionsClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _scriptExecutionHistoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _scriptExecutionHistoryRestClient = new ScriptExecutionHistory(_scriptExecutionHistoryClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
             _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
             _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCapabilitiesRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetHDInsightCapabilitiesRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/capabilities", false);
             if (_apiVersion != null)
             {
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetUsagesRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetHDInsightUsagesRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             if (_apiVersion != null)
             {
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetBillingSpecsRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetHDInsightBillingSpecsRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/billingSpecs", false);
             if (_apiVersion != null)
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckHDInsightNameAvailabilityRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateValidateClusterCreateRequestRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateHDInsightClusterCreationRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/validateCreateRequest", false);
             if (_apiVersion != null)
             {

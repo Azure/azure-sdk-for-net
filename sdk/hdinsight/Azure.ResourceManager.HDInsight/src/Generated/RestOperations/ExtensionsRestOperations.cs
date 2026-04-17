@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateEnableMonitoringRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateEnableClusterMonitoringExtensionRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetMonitoringStatusRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetClusterMonitoringExtensionStatusRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateDisableMonitoringRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateDisableClusterMonitoringExtensionRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateEnableAzureMonitorRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateEnableAzureMonitorExtensionRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetAzureMonitorStatusRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetAzureMonitorExtensionStatusRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateDisableAzureMonitorRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateDisableAzureMonitorExtensionRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -245,31 +245,6 @@ namespace Azure.ResourceManager.HDInsight
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string extensionName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/extensions/", false);
-            uri.AppendPath(extensionName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
     }

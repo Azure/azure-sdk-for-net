@@ -61,14 +61,5 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             HDInsightPrivateLinkResource.ValidateResourceId(id);
             return new HDInsightPrivateLinkResource(Client, id);
         }
-
-        /// <summary> Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
-        public virtual ScriptActionResource GetScriptActionResource(ResourceIdentifier id)
-        {
-            ScriptActionResource.ValidateResourceId(id);
-            return new ScriptActionResource(Client, id);
-        }
     }
 }
