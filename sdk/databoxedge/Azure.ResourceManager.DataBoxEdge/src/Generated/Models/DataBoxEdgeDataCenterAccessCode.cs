@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.AuthCode;
+                return Properties is null ? default : Properties.AuthCode;
             }
         }
     }

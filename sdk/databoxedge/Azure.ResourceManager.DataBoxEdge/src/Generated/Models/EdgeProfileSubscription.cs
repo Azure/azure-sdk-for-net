@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.TenantId;
+                return Properties is null ? default : Properties.TenantId;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.LocationPlacementId;
+                return Properties is null ? default : Properties.LocationPlacementId;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.QuotaId;
+                return Properties is null ? default : Properties.QuotaId;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.SerializedDetails;
+                return Properties is null ? default : Properties.SerializedDetails;
             }
         }
     }

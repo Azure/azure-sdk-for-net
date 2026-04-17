@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return EdgeProfile.Subscription;
+                return EdgeProfile is null ? default : EdgeProfile.Subscription;
             }
         }
     }

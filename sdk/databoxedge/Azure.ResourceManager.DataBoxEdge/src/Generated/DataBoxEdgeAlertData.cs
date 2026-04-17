@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.Title;
+                return Properties is null ? default : Properties.Title;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.AlertType;
+                return Properties is null ? default : Properties.AlertType;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.AppearedOn;
+                return Properties is null ? default : Properties.AppearedOn;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.Recommendation;
+                return Properties is null ? default : Properties.Recommendation;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.Severity;
+                return Properties is null ? default : Properties.Severity;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.ErrorDetails;
+                return Properties is null ? default : Properties.ErrorDetails;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.DetailedInformation;
+                return Properties is null ? default : Properties.DetailedInformation;
             }
         }
     }

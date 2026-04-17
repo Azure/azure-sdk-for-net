@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.JobType;
+                return Properties is null ? default : Properties.JobType;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.CurrentStage;
+                return Properties is null ? default : Properties.CurrentStage;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.DownloadProgress;
+                return Properties is null ? default : Properties.DownloadProgress;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.InstallProgress;
+                return Properties is null ? default : Properties.InstallProgress;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.TotalRefreshErrors;
+                return Properties is null ? default : Properties.TotalRefreshErrors;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.ErrorManifestFile;
+                return Properties is null ? default : Properties.ErrorManifestFile;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.RefreshedEntityId;
+                return Properties is null ? default : Properties.RefreshedEntityId;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.Folder;
+                return Properties is null ? default : Properties.Folder;
             }
         }
     }

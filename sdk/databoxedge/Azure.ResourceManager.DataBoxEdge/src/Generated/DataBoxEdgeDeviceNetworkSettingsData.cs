@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             get
             {
-                return Properties.NetworkAdapters;
+                return Properties is null ? default : Properties.NetworkAdapters;
             }
         }
     }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeStatus;
+                return Properties is null ? default : Properties.NodeStatus;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeChassisSerialNumber;
+                return Properties is null ? default : Properties.NodeChassisSerialNumber;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeSerialNumber;
+                return Properties is null ? default : Properties.NodeSerialNumber;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeDisplayName;
+                return Properties is null ? default : Properties.NodeDisplayName;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeFriendlySoftwareVersion;
+                return Properties is null ? default : Properties.NodeFriendlySoftwareVersion;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeHcsVersion;
+                return Properties is null ? default : Properties.NodeHcsVersion;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             get
             {
-                return Properties.NodeInstanceId;
+                return Properties is null ? default : Properties.NodeInstanceId;
             }
         }
     }
