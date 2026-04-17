@@ -22,6 +22,7 @@ namespace Azure.Storage.Tests
         }
 
         #region Test Value Type
+
         /// <summary>
         /// Lightweight test struct implementing <see cref="IExpiringValue"/>
         /// so we can test <see cref="AutoRefreshingCache{TValue}"/> in isolation.
@@ -46,6 +47,7 @@ namespace Azure.Storage.Tests
             public IExpiringValue WithRefreshOn(DateTimeOffset refreshOn) =>
                 new TestValue(Token, ExpiresOn, refreshOn);
         }
+
         #endregion
 
         #region Helpers
