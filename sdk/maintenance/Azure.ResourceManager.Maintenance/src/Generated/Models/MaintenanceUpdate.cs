@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         {
             get
             {
-                return Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
         }
     }

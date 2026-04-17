@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> Initializes a new instance of <see cref="MaintenancePatchConfiguration"/>. </summary>
         /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
-        /// <param name="windowsParameters"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
-        /// <param name="linuxParameters"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
+        /// <param name="windowsPatchSettings"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
+        /// <param name="linuxPatchSettings"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting, MaintenanceWindowsPatchSettings windowsParameters, MaintenanceLinuxPatchSettings linuxParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting, MaintenanceWindowsPatchSettings windowsPatchSettings, MaintenanceLinuxPatchSettings linuxPatchSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RebootSetting = rebootSetting;
-            WindowsParameters = windowsParameters;
-            LinuxParameters = linuxParameters;
+            WindowsPatchSettings = windowsPatchSettings;
+            LinuxPatchSettings = linuxPatchSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public MaintenanceRebootOption? RebootSetting { get; set; }
 
         /// <summary> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </summary>
-        public MaintenanceWindowsPatchSettings WindowsParameters { get; set; }
+        public MaintenanceWindowsPatchSettings WindowsPatchSettings { get; set; }
 
         /// <summary> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </summary>
-        public MaintenanceLinuxPatchSettings LinuxParameters { get; set; }
+        public MaintenanceLinuxPatchSettings LinuxPatchSettings { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         {
             ResourceTypes = new ChangeTrackingList<ResourceType>();
             ResourceGroups = new ChangeTrackingList<string>();
-            OsTypes = new ChangeTrackingList<string>();
+            OSTypes = new ChangeTrackingList<string>();
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         {
             ResourceTypes = resourceTypes;
             ResourceGroups = resourceGroups;
-            OsTypes = osTypes;
+            OSTypes = osTypes;
             Locations = locations;
             TagSettings = tagSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public IList<string> ResourceGroups { get; }
 
         /// <summary> List of allowed operating systems. </summary>
-        public IList<string> OsTypes { get; }
+        public IList<string> OSTypes { get; }
 
         /// <summary> List of locations to scope the query to. </summary>
         public IList<AzureLocation> Locations { get; }

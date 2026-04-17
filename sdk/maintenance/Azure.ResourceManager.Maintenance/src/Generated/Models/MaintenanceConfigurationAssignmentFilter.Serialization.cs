@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OsTypes))
+            if (Optional.IsCollectionDefined(OSTypes))
             {
                 writer.WritePropertyName("osTypes"u8);
                 writer.WriteStartArray();
-                foreach (string item in OsTypes)
+                foreach (string item in OSTypes)
                 {
                     if (item == null)
                     {

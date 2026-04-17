@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceConfigurationAssignmentForSubscriptions in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceConfigurationAssignmentForSubscriptions and their operations over a MaintenanceConfigurationAssignmentForSubscriptionResource. </returns>
-        public virtual MaintenanceConfigurationAssignmentForSubscriptionCollection GetMaintenanceConfigurationAssignmentForSubscriptions()
+        /// <summary> Gets a collection of MaintenanceSubscriptionConfigurationAssignments in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceSubscriptionConfigurationAssignments and their operations over a MaintenanceSubscriptionConfigurationAssignmentResource. </returns>
+        public virtual MaintenanceSubscriptionConfigurationAssignmentCollection GetMaintenanceSubscriptionConfigurationAssignments()
         {
-            return GetCachedClient(client => new MaintenanceConfigurationAssignmentForSubscriptionCollection(client, Id));
+            return GetCachedClient(client => new MaintenanceSubscriptionConfigurationAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentForSubscriptionResource>> GetMaintenanceConfigurationAssignmentForSubscriptionAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceSubscriptionConfigurationAssignmentResource>> GetMaintenanceSubscriptionConfigurationAssignmentAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetMaintenanceConfigurationAssignmentForSubscriptions().GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceSubscriptionConfigurationAssignments().GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceConfigurationAssignmentForSubscriptionResource> GetMaintenanceConfigurationAssignmentForSubscription(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceSubscriptionConfigurationAssignmentResource> GetMaintenanceSubscriptionConfigurationAssignment(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetMaintenanceConfigurationAssignmentForSubscriptions().Get(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceSubscriptionConfigurationAssignments().Get(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceApplyUpdateOperationGroupResource> GetMaintenanceApplyUpdateOperationGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceGroupApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateOperationGroupResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdateOperationGroups"), data => new MaintenanceApplyUpdateOperationGroupResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceGroupApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdates"), data => new MaintenanceGroupApplyUpdateResource(Client, data));
         }
 
         /// <summary>
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceApplyUpdateOperationGroupResource> GetMaintenanceApplyUpdateOperationGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceGroupApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdates(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceApplyUpdateOperationGroupResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceApplyUpdateOperationGroups"), data => new MaintenanceApplyUpdateOperationGroupResource(Client, data));
+            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceGroupApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdates"), data => new MaintenanceGroupApplyUpdateResource(Client, data));
         }
     }
 }

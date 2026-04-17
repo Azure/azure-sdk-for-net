@@ -18,11 +18,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a MaintenanceConfigurationAssignmentForResourceGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceConfigurationAssignmentForResourceGroups method.
+    /// A class representing a MaintenanceResourceGroupConfigurationAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceResourceGroupConfigurationAssignments method.
     /// </summary>
-    public partial class MaintenanceConfigurationAssignmentForResourceGroupResource : ArmResource
+    public partial class MaintenanceResourceGroupConfigurationAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _configurationAssignmentsForResourceGroupClientDiagnostics;
         private readonly ConfigurationAssignmentsForResourceGroup _configurationAssignmentsForResourceGroupRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/configurationAssignments";
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentForResourceGroupResource for mocking. </summary>
-        protected MaintenanceConfigurationAssignmentForResourceGroupResource()
+        /// <summary> Initializes a new instance of MaintenanceResourceGroupConfigurationAssignmentResource for mocking. </summary>
+        protected MaintenanceResourceGroupConfigurationAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceConfigurationAssignmentForResourceGroupResource(ArmClient client, MaintenanceConfigurationAssignmentData data) : this(client, data.Id)
+        internal MaintenanceResourceGroupConfigurationAssignmentResource(ArmClient client, MaintenanceConfigurationAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceConfigurationAssignmentForResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceResourceGroupConfigurationAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maintenanceConfigurationAssignmentForResourceGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceResourceGroupConfigurationAssignmentApiVersion);
             _configurationAssignmentsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationAssignmentForResourceGroupApiVersion ?? "2023-10-01-preview");
+            _configurationAssignmentsForResourceGroupRestClient = new ConfigurationAssignmentsForResourceGroup(_configurationAssignmentsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceResourceGroupConfigurationAssignmentApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentForResourceGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceResourceGroupConfigurationAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Get");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignmentForResourceGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceResourceGroupConfigurationAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Get");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,18 +204,18 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentForResourceGroupResource>> UpdateAsync(MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceResourceGroupConfigurationAssignmentResource>> UpdateAsync(MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Update");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Update");
             scope.Start();
             try
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,18 +256,18 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<MaintenanceConfigurationAssignmentForResourceGroupResource> Update(MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceResourceGroupConfigurationAssignmentResource> Update(MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Update");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Update");
             scope.Start();
             try
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,15 +308,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Delete");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Delete");
             scope.Start();
             try
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource>(Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource>(Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -360,15 +360,15 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceConfigurationAssignmentForResourceGroupResource.Delete");
+            using DiagnosticScope scope = _configurationAssignmentsForResourceGroupClientDiagnostics.CreateScope("MaintenanceResourceGroupConfigurationAssignmentResource.Delete");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationAssignmentForResourceGroupResource>(Response.FromValue(new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource> operation = new MaintenanceArmOperation<MaintenanceResourceGroupConfigurationAssignmentResource>(Response.FromValue(new MaintenanceResourceGroupConfigurationAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

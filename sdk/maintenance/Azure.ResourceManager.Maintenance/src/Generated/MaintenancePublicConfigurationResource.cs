@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenancePublicConfigurationResource : ArmResource
     {
-        private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
-        private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
         private readonly PublicMaintenanceConfigurations _publicMaintenanceConfigurationsRestClient;
         private readonly MaintenanceConfigurationData _data;
@@ -52,8 +50,6 @@ namespace Azure.ResourceManager.Maintenance
         internal MaintenancePublicConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string maintenancePublicConfigurationApiVersion);
-            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenancePublicConfigurationApiVersion ?? "2023-10-01-preview");
             _publicMaintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
             _publicMaintenanceConfigurationsRestClient = new PublicMaintenanceConfigurations(_publicMaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenancePublicConfigurationApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
@@ -118,7 +114,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MaintenancePublicConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationResource.Get");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +122,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -166,7 +162,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MaintenancePublicConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationResource.Get");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -174,7 +170,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)

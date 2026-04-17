@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenancePublicConfigurationCollection : ArmCollection, IEnumerable<MaintenancePublicConfigurationResource>, IAsyncEnumerable<MaintenancePublicConfigurationResource>
     {
-        private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
-        private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
         private readonly ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
         private readonly PublicMaintenanceConfigurations _publicMaintenanceConfigurationsRestClient;
 
@@ -42,8 +40,6 @@ namespace Azure.ResourceManager.Maintenance
         internal MaintenancePublicConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(MaintenancePublicConfigurationResource.ResourceType, out string maintenancePublicConfigurationApiVersion);
-            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenancePublicConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenancePublicConfigurationApiVersion ?? "2023-10-01-preview");
             _publicMaintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenancePublicConfigurationResource.ResourceType.Namespace, Diagnostics);
             _publicMaintenanceConfigurationsRestClient = new PublicMaintenanceConfigurations(_publicMaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenancePublicConfigurationApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
@@ -84,7 +80,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -92,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -133,7 +129,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Get");
             scope.Start();
             try
             {
@@ -141,7 +137,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -246,7 +242,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -295,7 +291,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.Exists");
             scope.Start();
             try
             {
@@ -303,7 +299,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -360,7 +356,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;
@@ -413,7 +409,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _publicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -421,7 +417,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
+                HttpMessage message = _publicMaintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationData> response = default;

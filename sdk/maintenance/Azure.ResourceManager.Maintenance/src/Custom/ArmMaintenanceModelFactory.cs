@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null)
+        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId = null, ResourceIdentifier resourceId = null)
         {
             return MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, maintenanceConfigurationId, resourceId, filter: default, location);
         }

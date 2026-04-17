@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary></summary>
-    public partial class MaintenanceApplyUpdateOperationGroupResource : IJsonModel<MaintenanceApplyUpdateData>
+    public partial class MaintenanceGroupApplyUpdateResource : IJsonModel<MaintenanceApplyUpdateData>
     {
         private static IJsonModel<MaintenanceApplyUpdateData> s_dataDeserializationInstance;
 

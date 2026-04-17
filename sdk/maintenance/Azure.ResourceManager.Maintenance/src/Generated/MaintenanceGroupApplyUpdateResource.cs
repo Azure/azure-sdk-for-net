@@ -17,11 +17,11 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a MaintenanceApplyUpdateOperationGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceApplyUpdateOperationGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetMaintenanceApplyUpdateOperationGroups method.
+    /// A class representing a MaintenanceGroupApplyUpdate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceGroupApplyUpdateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetMaintenanceGroupApplyUpdates method.
     /// </summary>
-    public partial class MaintenanceApplyUpdateOperationGroupResource : ArmResource
+    public partial class MaintenanceGroupApplyUpdateResource : ArmResource
     {
         private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/applyUpdates";
 
-        /// <summary> Initializes a new instance of MaintenanceApplyUpdateOperationGroupResource for mocking. </summary>
-        protected MaintenanceApplyUpdateOperationGroupResource()
+        /// <summary> Initializes a new instance of MaintenanceGroupApplyUpdateResource for mocking. </summary>
+        protected MaintenanceGroupApplyUpdateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceGroupApplyUpdateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceApplyUpdateOperationGroupResource(ArmClient client, MaintenanceApplyUpdateData data) : this(client, data.Id)
+        internal MaintenanceGroupApplyUpdateResource(ArmClient client, MaintenanceApplyUpdateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceGroupApplyUpdateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceApplyUpdateOperationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceGroupApplyUpdateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maintenanceApplyUpdateOperationGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceGroupApplyUpdateApiVersion);
             _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, maintenanceApplyUpdateOperationGroupApiVersion ?? "2023-10-01-preview");
+            _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, maintenanceGroupApplyUpdateApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateOperationGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceGroupApplyUpdateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceApplyUpdateOperationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceGroupApplyUpdateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateOperationGroupResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceGroupApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceApplyUpdateOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceGroupApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateOperationGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceGroupApplyUpdateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceApplyUpdateOperationGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceGroupApplyUpdateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateOperationGroupResource.Get");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceGroupApplyUpdateResource.Get");
             scope.Start();
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceApplyUpdateOperationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceGroupApplyUpdateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Update a MaintenanceApplyUpdateOperationGroup.
+        /// Update a MaintenanceGroupApplyUpdate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateOperationGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceGroupApplyUpdateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="data"> The ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MaintenanceApplyUpdateOperationGroupResource>> UpdateAsync(WaitUntil waitUntil, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MaintenanceGroupApplyUpdateResource>> UpdateAsync(WaitUntil waitUntil, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateOperationGroupResource.Update");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceGroupApplyUpdateResource.Update");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceApplyUpdateOperationGroupResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateOperationGroupResource>(Response.FromValue(new MaintenanceApplyUpdateOperationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceGroupApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceGroupApplyUpdateResource>(Response.FromValue(new MaintenanceGroupApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Update a MaintenanceApplyUpdateOperationGroup.
+        /// Update a MaintenanceGroupApplyUpdate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MaintenanceApplyUpdateOperationGroupResource"/>. </description>
+        /// <description> <see cref="MaintenanceGroupApplyUpdateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="data"> The ApplyUpdate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MaintenanceApplyUpdateOperationGroupResource> Update(WaitUntil waitUntil, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MaintenanceGroupApplyUpdateResource> Update(WaitUntil waitUntil, MaintenanceApplyUpdateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateOperationGroupResource.Update");
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceGroupApplyUpdateResource.Update");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceApplyUpdateOperationGroupResource> operation = new MaintenanceArmOperation<MaintenanceApplyUpdateOperationGroupResource>(Response.FromValue(new MaintenanceApplyUpdateOperationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<MaintenanceGroupApplyUpdateResource> operation = new MaintenanceArmOperation<MaintenanceGroupApplyUpdateResource>(Response.FromValue(new MaintenanceGroupApplyUpdateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

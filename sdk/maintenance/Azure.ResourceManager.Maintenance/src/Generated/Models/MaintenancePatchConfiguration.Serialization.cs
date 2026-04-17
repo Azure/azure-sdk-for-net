@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (Optional.IsDefined(WindowsParameters))
+            if (Optional.IsDefined(WindowsPatchSettings))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters, options);
+                writer.WriteObjectValue(WindowsPatchSettings, options);
             }
-            if (Optional.IsDefined(LinuxParameters))
+            if (Optional.IsDefined(LinuxPatchSettings))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters, options);
+                writer.WriteObjectValue(LinuxPatchSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                 return null;
             }
             MaintenanceRebootOption? rebootSetting = default;
-            MaintenanceWindowsPatchSettings windowsParameters = default;
-            MaintenanceLinuxPatchSettings linuxParameters = default;
+            MaintenanceWindowsPatchSettings windowsPatchSettings = default;
+            MaintenanceLinuxPatchSettings linuxPatchSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    windowsParameters = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(prop.Value, options);
+                    windowsPatchSettings = MaintenanceWindowsPatchSettings.DeserializeMaintenanceWindowsPatchSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("linuxParameters"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    linuxParameters = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(prop.Value, options);
+                    linuxPatchSettings = MaintenanceLinuxPatchSettings.DeserializeMaintenanceLinuxPatchSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenancePatchConfiguration(rebootSetting, windowsParameters, linuxParameters, additionalBinaryDataProperties);
+            return new MaintenancePatchConfiguration(rebootSetting, windowsPatchSettings, linuxPatchSettings, additionalBinaryDataProperties);
         }
     }
 }

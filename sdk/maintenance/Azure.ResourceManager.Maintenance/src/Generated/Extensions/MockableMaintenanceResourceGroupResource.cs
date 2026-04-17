@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return GetMaintenanceConfigurations().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceConfigurationAssignmentForResourceGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceConfigurationAssignmentForResourceGroups and their operations over a MaintenanceConfigurationAssignmentForResourceGroupResource. </returns>
-        public virtual MaintenanceConfigurationAssignmentForResourceGroupCollection GetMaintenanceConfigurationAssignmentForResourceGroups()
+        /// <summary> Gets a collection of MaintenanceResourceGroupConfigurationAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceResourceGroupConfigurationAssignments and their operations over a MaintenanceResourceGroupConfigurationAssignmentResource. </returns>
+        public virtual MaintenanceResourceGroupConfigurationAssignmentCollection GetMaintenanceResourceGroupConfigurationAssignments()
         {
-            return GetCachedClient(client => new MaintenanceConfigurationAssignmentForResourceGroupCollection(client, Id));
+            return GetCachedClient(client => new MaintenanceResourceGroupConfigurationAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentForResourceGroupResource>> GetMaintenanceConfigurationAssignmentForResourceGroupAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceResourceGroupConfigurationAssignmentResource>> GetMaintenanceResourceGroupConfigurationAssignmentAsync(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetMaintenanceConfigurationAssignmentForResourceGroups().GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceResourceGroupConfigurationAssignments().GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceConfigurationAssignmentForResourceGroupResource> GetMaintenanceConfigurationAssignmentForResourceGroup(string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceResourceGroupConfigurationAssignmentResource> GetMaintenanceResourceGroupConfigurationAssignment(string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetMaintenanceConfigurationAssignmentForResourceGroups().Get(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceResourceGroupConfigurationAssignments().Get(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>

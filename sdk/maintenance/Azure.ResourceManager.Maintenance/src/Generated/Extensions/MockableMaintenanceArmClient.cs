@@ -63,39 +63,39 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return new MaintenanceConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentForSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentForSubscriptionResource"/> object. </returns>
-        public virtual MaintenanceConfigurationAssignmentForSubscriptionResource GetMaintenanceConfigurationAssignmentForSubscriptionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceSubscriptionConfigurationAssignmentResource GetMaintenanceSubscriptionConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationAssignmentForSubscriptionResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationAssignmentForSubscriptionResource(Client, id);
+            MaintenanceSubscriptionConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceSubscriptionConfigurationAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentForResourceGroupResource"/> object. </returns>
-        public virtual MaintenanceConfigurationAssignmentForResourceGroupResource GetMaintenanceConfigurationAssignmentForResourceGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceResourceGroupConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceResourceGroupConfigurationAssignmentResource GetMaintenanceResourceGroupConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationAssignmentForResourceGroupResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationAssignmentForResourceGroupResource(Client, id);
+            MaintenanceResourceGroupConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceResourceGroupConfigurationAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceGroupConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> object. </returns>
-        public virtual MaintenanceConfigurationAssignmentOperationGroupResource GetMaintenanceConfigurationAssignmentOperationGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceGroupConfigurationAssignmentResource"/> object. </returns>
+        public virtual MaintenanceGroupConfigurationAssignmentResource GetMaintenanceGroupConfigurationAssignmentResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationAssignmentOperationGroupResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationAssignmentOperationGroupResource(Client, id);
+            MaintenanceGroupConfigurationAssignmentResource.ValidateResourceId(id);
+            return new MaintenanceGroupConfigurationAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="MaintenanceConfigurationAssignmentOperationGroupCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="MaintenanceGroupConfigurationAssignmentCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="MaintenanceConfigurationAssignmentOperationGroupResource"/> objects. </returns>
-        public virtual MaintenanceConfigurationAssignmentOperationGroupCollection GetMaintenanceConfigurationAssignmentOperationGroups(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="MaintenanceGroupConfigurationAssignmentResource"/> objects. </returns>
+        public virtual MaintenanceGroupConfigurationAssignmentCollection GetMaintenanceGroupConfigurationAssignments(ResourceIdentifier scope)
         {
-            return new MaintenanceConfigurationAssignmentOperationGroupCollection(Client, scope);
+            return new MaintenanceGroupConfigurationAssignmentCollection(Client, scope);
         }
 
         /// <summary> Get configuration assignment for resource.. </summary>
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceConfigurationAssignmentOperationGroupResource> GetMaintenanceConfigurationAssignmentOperationGroup(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceGroupConfigurationAssignmentResource> GetMaintenanceGroupConfigurationAssignment(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetMaintenanceConfigurationAssignmentOperationGroups(scope).Get(configurationAssignmentName, cancellationToken);
+            return GetMaintenanceGroupConfigurationAssignments(scope).Get(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary> Get configuration assignment for resource.. </summary>
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceConfigurationAssignmentOperationGroupResource>> GetMaintenanceConfigurationAssignmentOperationGroupAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceGroupConfigurationAssignmentResource>> GetMaintenanceGroupConfigurationAssignmentAsync(ResourceIdentifier scope, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetMaintenanceConfigurationAssignmentOperationGroups(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceGroupConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -171,35 +171,21 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return await GetMaintenanceConfigurationAssignments(scope).GetAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceApplyUpdateOperationGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceGroupApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceApplyUpdateOperationGroupResource"/> object. </returns>
-        public virtual MaintenanceApplyUpdateOperationGroupResource GetMaintenanceApplyUpdateOperationGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
+        public virtual MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier id)
         {
-            MaintenanceApplyUpdateOperationGroupResource.ValidateResourceId(id);
-            return new MaintenanceApplyUpdateOperationGroupResource(Client, id);
+            MaintenanceGroupApplyUpdateResource.ValidateResourceId(id);
+            return new MaintenanceGroupApplyUpdateResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="MaintenanceApplyUpdateOperationGroupCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="MaintenanceGroupApplyUpdateCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="MaintenanceApplyUpdateOperationGroupResource"/> objects. </returns>
-        public virtual MaintenanceApplyUpdateOperationGroupCollection GetMaintenanceApplyUpdateOperationGroups(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="MaintenanceGroupApplyUpdateResource"/> objects. </returns>
+        public virtual MaintenanceGroupApplyUpdateCollection GetMaintenanceGroupApplyUpdates(ResourceIdentifier scope)
         {
-            return new MaintenanceApplyUpdateOperationGroupCollection(Client, scope);
-        }
-
-        /// <summary> Track maintenance updates to resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MaintenanceApplyUpdateOperationGroupResource> GetMaintenanceApplyUpdateOperationGroup(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-
-            return GetMaintenanceApplyUpdateOperationGroups(scope).Get(applyUpdateName, cancellationToken);
+            return new MaintenanceGroupApplyUpdateCollection(Client, scope);
         }
 
         /// <summary> Track maintenance updates to resource. </summary>
@@ -209,11 +195,25 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceApplyUpdateOperationGroupResource>> GetMaintenanceApplyUpdateOperationGroupAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdate(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
 
-            return await GetMaintenanceApplyUpdateOperationGroups(scope).GetAsync(applyUpdateName, cancellationToken).ConfigureAwait(false);
+            return GetMaintenanceGroupApplyUpdates(scope).Get(applyUpdateName, cancellationToken);
+        }
+
+        /// <summary> Track maintenance updates to resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaintenanceGroupApplyUpdateResource>> GetMaintenanceGroupApplyUpdateAsync(ResourceIdentifier scope, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            return await GetMaintenanceGroupApplyUpdates(scope).GetAsync(applyUpdateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
