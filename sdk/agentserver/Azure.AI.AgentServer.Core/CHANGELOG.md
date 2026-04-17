@@ -11,6 +11,17 @@
   status code, duration, correlation headers (`x-request-id`, `x-ms-client-request-id`), and
   OpenTelemetry trace ID. Successful requests log at `Information` level; 4xx/5xx responses log at
   `Warning` level. Request start is logged at `Information` level.
+- Added `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for Tier 3 setups to
+  independently enable the inbound request logging middleware.
+
+### Breaking Changes
+
+- Renamed `ServerUserAgentRegistry` to `ServerVersionRegistry`.
+- Renamed `AgentHostBuilder.UserAgentRegistry` property to `VersionRegistry`.
+- Renamed `AddAgentServerUserAgent()` to `AddAgentServerVersion()` and
+  `UseAgentServerUserAgent()` to `UseAgentServerVersion()`. The version middleware
+  no longer bundles the inbound request logging registration — use the new
+  `AddAgentServerLogging()` / `UseAgentServerLogging()` pair separately.
 
 ## 1.0.0-beta.21 (2026-04-14)
 

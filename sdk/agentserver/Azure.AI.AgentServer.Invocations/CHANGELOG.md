@@ -2,6 +2,11 @@
 
 ## 1.0.0-beta.2 (2026-04-17)
 
+### Features Added
+
+- Added `x-agent-session-id` response header on GET, Cancel, and OpenAPI endpoints. The POST
+  endpoint already set the header; all Invocations protocol endpoints now include it per spec §8.
+
 ### Other Changes
 
 - Updated dependency on `Azure.AI.AgentServer.Core` to 1.0.0-beta.22, which adds outbound
