@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,15 +15,18 @@ internal sealed class ResponsesStartupLogger : IHostedService
     private readonly ILogger<ResponsesStartupLogger> _logger;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly IOptions<InMemoryProviderOptions> _providerOptions;
+    private readonly ResponsesProvider _provider;
 
     public ResponsesStartupLogger(
         ILogger<ResponsesStartupLogger> logger,
         IOptions<ResponsesServerOptions> options,
-        IOptions<InMemoryProviderOptions> providerOptions)
+        IOptions<InMemoryProviderOptions> providerOptions,
+        ResponsesProvider provider)
     {
         _logger = logger;
         _options = options;
         _providerOptions = providerOptions;
+        _provider = provider;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -35,7 +37,7 @@ internal sealed class ResponsesStartupLogger : IHostedService
         _logger.LogInformation(
             "Responses protocol configuration: StorageProvider={StorageProvider} DefaultModel={DefaultModel} " +
             "DefaultFetchHistoryCount={DefaultFetchHistoryCount} EventStreamTtl={EventStreamTtl}",
-            FoundryEnvironment.IsHosted ? "FoundryStorage" : "InMemory",
+            _provider.GetType().Name,
             opts.DefaultModel ?? "(not set)",
             opts.DefaultFetchHistoryCount,
             providerOpts.EventStreamTtl);
