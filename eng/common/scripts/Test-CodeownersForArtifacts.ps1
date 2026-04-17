@@ -1,3 +1,4 @@
+[CmdletBinding()]
 param(
     [string] $AzsdkPath,
     [string] $PackageInfoDirectory,
@@ -7,9 +8,12 @@ param(
 
 . "$PSScriptRoot/common.ps1"
 
+Set-StrictMode -Version 3
+$ErrorActionPreference = 'Stop'
+
 $failedPackages = @()
 
-foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -File) {
+foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter '*.json' -File) {
     $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
     if ($SdkTypes -notcontains $pkgProperties.SdkType) {
         Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because its SdkType '$($pkgProperties.SdkType)' is not in the list of SdkTypes to validate."
