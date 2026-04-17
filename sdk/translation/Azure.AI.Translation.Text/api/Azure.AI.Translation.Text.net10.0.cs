@@ -361,11 +361,11 @@ namespace Azure.AI.Translation.Text
     }
     public partial class TextTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public TextTranslationClientOptions(Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V2025_10_01_Preview) { }
+        public TextTranslationClientOptions(Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V2026_06_06) { }
         public enum ServiceVersion
         {
             V3_0 = 1,
-            V2025_10_01_Preview = 2,
+            V2026_06_06 = 2,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -476,6 +476,24 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateInputItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateInputItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TranslationGender : System.IEquatable<Azure.AI.Translation.Text.TranslationGender>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TranslationGender(string value) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationGender Female { get { throw null; } }
+        public static Azure.AI.Translation.Text.TranslationGender Male { get { throw null; } }
+        public static Azure.AI.Translation.Text.TranslationGender Neutral { get { throw null; } }
+        public bool Equals(Azure.AI.Translation.Text.TranslationGender other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Translation.Text.TranslationGender left, Azure.AI.Translation.Text.TranslationGender right) { throw null; }
+        public static implicit operator Azure.AI.Translation.Text.TranslationGender (string value) { throw null; }
+        public static implicit operator Azure.AI.Translation.Text.TranslationGender? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Translation.Text.TranslationGender left, Azure.AI.Translation.Text.TranslationGender right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TranslationLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslationLanguage>
     {
         internal TranslationLanguage() { }
@@ -496,18 +514,17 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslationTarget>
     {
         public TranslationTarget(string language) { }
-        public TranslationTarget(string language, string script = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), string deploymentName = null, bool? allowFallback = default(bool?), string grade = null, string tone = null, string gender = null, string adaptiveDatasetId = null) { }
+        public TranslationTarget(string language, string script = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), string deploymentName = null, bool? allowFallback = default(bool?), Azure.AI.Translation.Text.TranslationTone? tone = default(Azure.AI.Translation.Text.TranslationTone?), Azure.AI.Translation.Text.TranslationGender? gender = default(Azure.AI.Translation.Text.TranslationGender?), string adaptiveDatasetId = null) { }
         public string AdaptiveDatasetId { get { throw null; } set { } }
         public bool? AllowFallback { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
-        public string Gender { get { throw null; } set { } }
-        public string Grade { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.TranslationGender? Gender { get { throw null; } set { } }
         public string Language { get { throw null; } }
         public Azure.AI.Translation.Text.ProfanityAction? ProfanityAction { get { throw null; } set { } }
         public Azure.AI.Translation.Text.ProfanityMarker? ProfanityMarker { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Text.ReferenceTextPair> ReferenceTextPairs { get { throw null; } }
         public string Script { get { throw null; } set { } }
-        public string Tone { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.TranslationTone? Tone { get { throw null; } set { } }
         protected virtual Azure.AI.Translation.Text.TranslationTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Translation.Text.TranslationTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -556,11 +573,29 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.TranslatedTextItem TranslatedTextItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationText> translations = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslateInputItem TranslateInputItem(string text = null, string script = null, string language = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationTarget> translationTargets = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<string> models = null) { throw null; }
-        public static Azure.AI.Translation.Text.TranslationTarget TranslationTarget(string language = null, string script = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), string deploymentName = null, bool? allowFallback = default(bool?), string grade = null, string tone = null, string gender = null, string adaptiveDatasetId = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.ReferenceTextPair> referenceTextPairs = null) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationTarget TranslationTarget(string language = null, string script = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), string deploymentName = null, bool? allowFallback = default(bool?), Azure.AI.Translation.Text.TranslationTone? tone = default(Azure.AI.Translation.Text.TranslationTone?), Azure.AI.Translation.Text.TranslationGender? gender = default(Azure.AI.Translation.Text.TranslationGender?), string adaptiveDatasetId = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.ReferenceTextPair> referenceTextPairs = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslationText TranslationText(string language = null, int? sourceCharacters = default(int?), int? instructionTokens = default(int?), int? sourceTokens = default(int?), int? responseTokens = default(int?), int? targetTokens = default(int?), string text = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> toScripts = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliteratedText TransliteratedText(string text = null, string script = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterationLanguage TransliterationLanguage(string name = null, string nativeName = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TransliterableScript> scripts = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TranslationTone : System.IEquatable<Azure.AI.Translation.Text.TranslationTone>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TranslationTone(string value) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationTone Formal { get { throw null; } }
+        public static Azure.AI.Translation.Text.TranslationTone Informal { get { throw null; } }
+        public static Azure.AI.Translation.Text.TranslationTone Neutral { get { throw null; } }
+        public bool Equals(Azure.AI.Translation.Text.TranslationTone other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Translation.Text.TranslationTone left, Azure.AI.Translation.Text.TranslationTone right) { throw null; }
+        public static implicit operator Azure.AI.Translation.Text.TranslationTone (string value) { throw null; }
+        public static implicit operator Azure.AI.Translation.Text.TranslationTone? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Translation.Text.TranslationTone left, Azure.AI.Translation.Text.TranslationTone right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TransliterableScript : Azure.AI.Translation.Text.LanguageScript, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>
     {
