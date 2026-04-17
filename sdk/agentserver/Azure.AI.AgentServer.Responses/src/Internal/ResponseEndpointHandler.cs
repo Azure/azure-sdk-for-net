@@ -190,7 +190,7 @@ internal sealed class ResponseEndpointHandler
         using var logScope = _logger.BeginScope(new Dictionary<string, object?>
         {
             [ResponsesTracingConstants.LogScope.ResponseId] = responseId,
-            [ResponsesTracingConstants.LogScope.ConversationId] = request.GetConversationId() ?? string.Empty,
+            [ResponsesTracingConstants.LogScope.ConversationId] = conversationId ?? string.Empty,
             [ResponsesTracingConstants.LogScope.Streaming] = isStreaming,
         });
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Metadata;
+                return Properties is null ? default : Properties.Metadata;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Dataset;
+                return Properties is null ? default : Properties.Dataset;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.DataProvidersMetadata;
+                return Properties is null ? default : Properties.DataProvidersMetadata;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties.SuggestedUtterances;
+                return Properties is null ? default : Properties.SuggestedUtterances;
             }
         }
     }

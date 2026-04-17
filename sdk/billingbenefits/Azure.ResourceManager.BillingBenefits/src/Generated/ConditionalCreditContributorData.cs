@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.BillingAccountResourceId;
+                return Properties is null ? default : Properties.BillingAccountResourceId;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.ProductCode;
+                return Properties is null ? default : Properties.ProductCode;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.BenefitResourceId;
+                return Properties is null ? default : Properties.BenefitResourceId;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.PrimaryResourceId;
+                return Properties is null ? default : Properties.PrimaryResourceId;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.SystemId;
+                return Properties is null ? default : Properties.SystemId;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.Milestones;
+                return Properties is null ? default : Properties.Milestones;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             get
             {
-                return Properties.PrimaryBillingAccountResourceId;
+                return Properties is null ? default : Properties.PrimaryBillingAccountResourceId;
             }
         }
     }
