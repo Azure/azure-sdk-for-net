@@ -50,5 +50,18 @@ namespace Azure.Storage.Blobs.Models
         /// For recursive list, multiple entity levels are supported. (Inclusive).
         /// </summary>
         public string StartFrom { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies a fully qualified path within the container,
+        /// ending the listing when all results before have been returned.
+        /// This is only supported if <see cref="UseApacheArrow"/> is set to true.
+        /// </summary>
+        public string EndBefore { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies whether we are using Apache Arrow, rather than XML,
+        /// to list blobs. Defaults to false.
+        /// </summary>
+        public bool UseApacheArrow { get; set; }
     }
 }

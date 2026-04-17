@@ -1299,18 +1299,22 @@ namespace Azure.Storage.Blobs.Models
     {
         public GetBlobsByHierarchyOptions() { }
         public string Delimiter { get { throw null; } set { } }
+        public string EndBefore { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
         public string StartFrom { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
+        public bool UseApacheArrow { get { throw null; } set { } }
     }
     public partial class GetBlobsOptions
     {
         public GetBlobsOptions() { }
+        public string EndBefore { get { throw null; } set { } }
         public string Prefix { get { throw null; } set { } }
         public string StartFrom { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobStates States { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobTraits Traits { get { throw null; } set { } }
+        public bool UseApacheArrow { get { throw null; } set { } }
     }
     public partial class GetBlobTagResult
     {

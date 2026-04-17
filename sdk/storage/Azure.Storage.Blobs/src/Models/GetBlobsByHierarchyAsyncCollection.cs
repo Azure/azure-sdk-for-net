@@ -13,26 +13,32 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsByHierarchyAsyncCollection : StorageCollectionEnumerator<BlobHierarchyItem>
     {
         private readonly BlobContainerClient _client;
+        private readonly bool _useApacheArrow;
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _delimiter;
         private readonly string _prefix;
         private readonly string _startFrom;
+        private readonly string _endBefore;
 
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
+            bool useApacheArrow,
             string delimiter,
             BlobTraits traits,
             BlobStates states,
             string prefix,
-            string startFrom)
+            string startFrom,
+            string endBefore)
         {
             _client = client;
+            _useApacheArrow = useApacheArrow;
             _delimiter = delimiter;
             _traits = traits;
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
+            _endBefore = endBefore;
         }
 
         public override async ValueTask<Page<BlobHierarchyItem>> GetNextPageAsync(
@@ -46,12 +52,14 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsByHierarchyInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -60,12 +68,14 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsByHierarchyInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)

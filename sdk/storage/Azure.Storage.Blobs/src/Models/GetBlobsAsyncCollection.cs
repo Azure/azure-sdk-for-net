@@ -15,23 +15,29 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
+        private readonly bool _useApacheArrow;
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _prefix;
         private readonly string _startFrom;
+        private readonly string _endBefore;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
+            bool useApacheArrow,
             BlobTraits traits,
             BlobStates states,
             string prefix,
-            string startFrom)
+            string startFrom,
+            string endBefore)
         {
             _client = client;
+            _useApacheArrow = useApacheArrow;
             _traits = traits;
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
+            _endBefore = endBefore;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -45,11 +51,13 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -58,11 +66,13 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsInternal(
+                    useApacheArrow: _useApacheArrow,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    endBefore: _endBefore,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)

@@ -2827,6 +2827,525 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(BlobNames.Length, blobs.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+
+            Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            GetBlobsOptions getBlobsOptions = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Tags
+            };
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(options: getBlobsOptions).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobItems[0].Tags);
+            Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blockBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blockBlob.UploadAsync(stream);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority, blobItems[0].Properties.RehydratePriority);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_MaxResults()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+
+            int numPages = 0;
+            // Act
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options)
+                .AsPages(pageSizeHint: 2))
+            {
+                // Assert
+                Assert.AreEqual(2, page.Values.Count);
+                ++numPages;
+            }
+
+            // Assert
+            Assert.AreEqual(4, numPages);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Metadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> metadata = BuildMetadata();
+            await blob.CreateIfNotExistsAsync(metadata: metadata);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Metadata
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(metadata, blobs.First().Metadata);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+
+            await blob.CreateIfNotExistsAsync();
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Deleted()
+        {
+            // Arrange
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete_OAuth(TestEnvironment.Credential);
+            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateIfNotExistsAsync();
+            await blob.DeleteIfExistsAsync();
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Deleted
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(blobName, blobs[0].Name);
+            Assert.IsTrue(blobs[0].Deleted);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Uncommited()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+            var blockId = ToBase64(GetNewBlockName());
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(
+                    base64BlockId: blockId,
+                    content: stream);
+            }
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Uncommitted
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Snapshot()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Snapshots
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Snapshot);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Prefix()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                Prefix = "foo"
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            var id = Recording.Random.NewGuid().ToString();
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.GetBlobsAsync(options: options).ToListAsync(),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_PreservesWhitespace()
+        {
+            await VerifyBlobNameWhitespaceRoundtrips("    prefix");
+            await VerifyBlobNameWhitespaceRoundtrips("suffix    ");
+            await VerifyBlobNameWhitespaceRoundtrips("    ");
+
+            async Task VerifyBlobNameWhitespaceRoundtrips(string blobName)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+                await blob.UploadAsync(new MemoryStream(Encoding.UTF8.GetBytes("data")));
+
+                GetBlobsOptions options = new GetBlobsOptions
+                {
+                    UseApacheArrow = true
+                };
+                BlobItem blobItem = await test.Container.GetBlobsAsync(options: options).FirstAsync();
+                Assert.AreEqual(blobName, blobItem.Name);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Version
+            };
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.IsNull(blobs[0].IsLatestVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR Metadata
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            IList<BlobItem> blobs = await sourceContainer.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            // Since this is a PLAYBACK ONLY test. We expect all the blobs in this source container/account
+            // to have OrMetadata
+            Assert.IsNotNull(blobs.First().ObjectReplicationSourceProperties);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_LastAccessed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreNotEqual(DateTimeOffset.MinValue, blobs.FirstOrDefault().Properties.LastAccessedOn);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.DeletedWithVersions
+            };
+
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync(options))
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(blob.Name, blobItems[0].Name);
+            Assert.IsTrue(blobItems[0].HasVersionsOnly);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_EncodedBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true
+            };
+            BlobItem blobItem = await test.Container.GetBlobsAsync(options: options).FirstAsync();
+
+            // Assert
+            Assert.AreEqual(blobName, blobItem.Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_StartFrom()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                StartFrom = "foo"
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_EndBefore()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                EndBefore = "foo"
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(5, blobs.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsFlatSegmentAsync_UseApacheArrow_StartFromEndBefore()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                UseApacheArrow = true,
+                StartFrom = "foo",
+                EndBefore = "foo/foo"
+            };
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
@@ -3332,6 +3851,609 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(3, blobHierachyItems.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+            var delimiter = "/";
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                Delimiter = delimiter
+            };
+
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options: options).AsPages())
+            {
+                blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
+                prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
+            }
+
+            Assert.AreEqual(3, blobs.Count);
+            Assert.AreEqual(2, prefixes.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+            var foundBlobPrefixes = prefixes.ToArray();
+            IEnumerable<string> expectedPrefixes =
+                BlobNames
+                .Where(blobName => blobName.Contains(delimiter))
+                .Select(blobName => blobName.Split(new[] { delimiter[0] })[0] + delimiter)
+                .Distinct()
+                ;
+
+            Assert.IsTrue(
+                BlobNames
+                .Where(blobName => !blobName.Contains(delimiter))
+                .All(blobName => foundBlobNames.Contains(blobName))
+                );
+
+            Assert.IsTrue(
+                expectedPrefixes
+                .All(prefix => foundBlobPrefixes.Contains(prefix))
+                );
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            GetBlobsByHierarchyOptions getBlobsByHierarchyOptions = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Tags
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: getBlobsByHierarchyOptions).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
+            Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blockBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blockBlob.UploadAsync(stream);
+
+            if (rehydratePriority.HasValue)
+            {
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blockBlob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+            IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(rehydratePriority, blobItems[0].Blob.Properties.RehydratePriority);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_MaxResults()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+
+            int numPages = 0;
+            // Act
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options: options)
+                .AsPages(pageSizeHint: 2))
+            {
+                // Assert
+                Assert.AreEqual(2, page.Values.Count);
+                ++numPages;
+            }
+
+            // Assert
+            Assert.AreEqual(4, numPages);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Metadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> metadata = BuildMetadata();
+            await blob.CreateIfNotExistsAsync(metadata: metadata);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Metadata
+            };
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+            // Assert
+            AssertDictionaryEquality(metadata, item.Blob.Metadata);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Metadata_NoMetadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateAsync();
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                Traits = BlobTraits.Metadata
+            };
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+            // Assert
+            Assert.IsNotNull(item.Blob.Metadata);
+            Assert.AreEqual(0, item.Blob.Metadata.Count);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            await blob.CreateIfNotExistsAsync();
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Deleted()
+        {
+            // Arrange
+            BlobServiceClient blobServiceClient = BlobsClientBuilder.GetServiceClient_SoftDelete_OAuth(TestEnvironment.Credential);
+            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            await blob.DeleteAsync();
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Deleted
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(blobName, blobs[0].Blob.Name);
+            Assert.IsTrue(blobs[0].Blob.Deleted);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Uncommited()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+            var blockId = ToBase64(GetNewBlockName());
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(
+                    base64BlockId: blockId,
+                    content: stream);
+            }
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Uncommitted
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(blobName, blobs.First().Blob.Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Snapshot()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync();
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Snapshots
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Version
+            };
+
+            var blobs = new List<BlobHierarchyItem>();
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options: options).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobs.Count);
+            Assert.IsNull(blobs[0].Blob.IsLatestVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Prefix()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                Prefix = "foo"
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobs.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            var id = Recording.Random.NewGuid().ToString();
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.GetBlobsByHierarchyAsync(options: options).ToListAsync(),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_ObjectReplication()
+        {
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR Metadata
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+
+            // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+            BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+            // Assert
+            // Since this is a PLAYBACK ONLY test. We expect all the blobs in this source container/account
+            // to have OrMetadata
+            Assert.IsNotNull(item.Blob.ObjectReplicationSourceProperties);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_LastAccessed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(content: stream);
+
+            // Act
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true
+            };
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+            // Assert
+            Assert.IsNotNull(item.Blob.Properties.LastAccessedOn);
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_DeletedWithVersions()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+            await blob.DeleteAsync();
+
+            // Act
+            List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.DeletedWithVersions
+            };
+
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options: options))
+            {
+                blobHierarchyItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobHierarchyItems.Count);
+            Assert.AreEqual(blob.Name, blobHierarchyItems[0].Blob.Name);
+            Assert.IsTrue(blobHierarchyItems[0].Blob.HasVersionsOnly);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_EncodedBlobName(bool delimiter)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "dir1/dir2/file\uFFFF.blob";
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item;
+            if (delimiter)
+            {
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    UseApacheArrow = true
+                };
+                item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsBlob);
+                Assert.AreEqual(blobName, item.Blob.Name);
+            }
+            else
+            {
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    UseApacheArrow = true,
+                    Delimiter = ".b"
+                };
+
+                item = await test.Container.GetBlobsByHierarchyAsync(
+                    options: options).FirstAsync();
+
+                // Assert
+                Assert.IsTrue(item.IsPrefix);
+                Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
+            }
+        }
+
+        [Ignore("Feature not supported in current test environment")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_VersionPrefixDelimiter()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                States = BlobStates.Version,
+                Delimiter = "/",
+                Prefix = "baz"
+            };
+
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(
+                options: options))
+            {
+                if (blobItem.IsBlob)
+                {
+                    blobs.Add(blobItem.Blob);
+                }
+                else
+                {
+                    prefixes.Add(blobItem.Prefix);
+                }
+            }
+
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(1, prefixes.Count);
+
+            Assert.AreEqual("baz", blobs[0].Name);
+            Assert.IsNotNull(blobs[0].VersionId);
+
+            Assert.AreEqual("baz/", prefixes[0]);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_StartFrom()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                StartFrom = "foo"
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(3, blobHierachyItems.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_EndBefore()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                EndBefore = "foo"
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(5, blobHierachyItems.Count);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task ListBlobsHierarchySegmentAsync_UseApacheArrow_StartFromEndBefore()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                UseApacheArrow = true,
+                StartFrom = "foo",
+                EndBefore = "foo/foo"
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
+
+            // Assert
+            Assert.AreEqual(2, blobHierachyItems.Count);
         }
 
         [RecordedTest]
