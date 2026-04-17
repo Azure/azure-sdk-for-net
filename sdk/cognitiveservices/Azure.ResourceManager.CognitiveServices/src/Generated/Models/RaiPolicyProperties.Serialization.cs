@@ -109,16 +109,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomTopics))
-            {
-                writer.WritePropertyName("customTopics"u8);
-                writer.WriteStartArray();
-                foreach (CustomTopicConfig item in CustomTopics)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(SafetyProviders))
             {
                 writer.WritePropertyName("safetyProviders"u8);
@@ -176,7 +166,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string basePolicyName = default;
             IList<RaiPolicyContentFilter> contentFilters = default;
             IList<CustomBlocklistConfig> customBlocklists = default;
-            IList<CustomTopicConfig> customTopics = default;
             IList<SafetyProviderConfig> safetyProviders = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -232,20 +221,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     customBlocklists = array;
                     continue;
                 }
-                if (prop.NameEquals("customTopics"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CustomTopicConfig> array = new List<CustomTopicConfig>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(CustomTopicConfig.DeserializeCustomTopicConfig(item, options));
-                    }
-                    customTopics = array;
-                    continue;
-                }
                 if (prop.NameEquals("safetyProviders"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -271,7 +246,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 basePolicyName,
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),
                 customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>(),
-                customTopics ?? new ChangeTrackingList<CustomTopicConfig>(),
                 safetyProviders ?? new ChangeTrackingList<SafetyProviderConfig>(),
                 additionalBinaryDataProperties);
         }

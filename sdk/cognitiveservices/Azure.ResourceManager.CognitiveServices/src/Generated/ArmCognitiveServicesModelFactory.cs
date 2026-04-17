@@ -754,14 +754,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="basePolicyName"> Name of Rai policy. </param>
         /// <param name="contentFilters"> The list of Content Filters. </param>
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
-        /// <param name="customTopics"> The list of custom rai topics. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
         /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<CustomTopicConfig> customTopics = default, IEnumerable<SafetyProviderConfig> safetyProviders = default)
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<SafetyProviderConfig> safetyProviders = default)
         {
             contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
             customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
-            customTopics ??= new ChangeTrackingList<CustomTopicConfig>();
             safetyProviders ??= new ChangeTrackingList<SafetyProviderConfig>();
 
             return new RaiPolicyProperties(
@@ -770,7 +768,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 basePolicyName,
                 contentFilters.ToList(),
                 customBlocklists.ToList(),
-                customTopics.ToList(),
                 safetyProviders.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -2529,7 +2526,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType, RaiPolicyMode? mode, string basePolicyName, IEnumerable<RaiPolicyContentFilter> contentFilters, IEnumerable<CustomBlocklistConfig> customBlocklists)
         {
-            return RaiPolicyProperties(policyType, mode, basePolicyName, contentFilters, customBlocklists, customTopics: default, safetyProviders: default);
+            return RaiPolicyProperties(policyType, mode, basePolicyName, contentFilters, customBlocklists, safetyProviders: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.RaiBlocklistData"/>. </summary>
