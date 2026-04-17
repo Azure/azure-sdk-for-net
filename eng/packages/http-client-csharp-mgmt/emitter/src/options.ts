@@ -33,6 +33,7 @@ export interface AzureMgmtEmitterOptions extends AzureEmitterOptions {
   "enable-wire-path-attribute"?: boolean;
   "use-legacy-resource-detection"?: boolean;
   "skip-api-version-override"?: boolean;
+  "apply-model-renaming"?: boolean;
 }
 
 export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptions> =
@@ -61,6 +62,13 @@ export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptio
         description:
           "Temporary workaround: Whether to pass skipApiVersionOverride: true when instantiating ArmOperation types in generated LRO methods. When true, the LRO polling will not override the api-version from the initial request URI. This option will be removed once the api-version override issue is properly resolved in Azure.Core. The default value is 'false'.",
         default: false
+      },
+      "apply-model-renaming": {
+        type: "boolean",
+        nullable: true,
+        description:
+          "Whether to apply the generator-side automatic model and enum name overrides (e.g., renaming a PATCH body to '{Resource}Patch' or prefixing known-type names like 'Sku' with the resource provider name). When false, the generator-side renames in NameVisitor are skipped so that names from TypeSpec (including user-provided `@@clientName` decorators) are preserved. The default value is 'true'.",
+        default: true
       }
     }
   };

@@ -49,6 +49,11 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
+        if (!ManagementClientGenerator.Instance.IsApplyModelRenamingEnabled())
+        {
+            return base.PreVisitEnum(enumType, type);
+        }
+
         if (_knownTypes.Contains(enumType.Name))
         {
             var newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{enumType.Name}";
@@ -63,6 +68,11 @@ internal class NameVisitor : ScmLibraryVisitor
         if (type is null)
         {
             return null;
+        }
+
+        if (!ManagementClientGenerator.Instance.IsApplyModelRenamingEnabled())
+        {
+            return base.PreVisitModel(model, type);
         }
 
         if (TryTransformUrlToUri(model.Name, out var newName))

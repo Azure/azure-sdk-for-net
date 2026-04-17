@@ -70,6 +70,7 @@ namespace Azure.Generator.Management
 
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
         private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
+        private const string ApplyModelRenamingFlag = "apply-model-renaming";
 
         private bool IsWirePathEnabled()
         {
@@ -91,6 +92,27 @@ namespace Azure.Generator.Management
                 return flag;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Determines whether the generator should apply the automatic model and enum name overrides
+        /// performed by <see cref="Visitors.NameVisitor"/> (e.g., renaming a PATCH body to
+        /// '{Resource}Patch' or prefixing known-type names like 'Sku' with the resource provider name).
+        /// When this returns <c>false</c>, those renames are skipped so that user-provided names in
+        /// TypeSpec (including names set via the <c>@@clientName</c> decorator) are preserved.
+        /// </summary>
+        /// <remarks>
+        /// The value is controlled by the <c>apply-model-renaming</c> emitter option. The default is <c>true</c>
+        /// so that existing generated code is unchanged when the option is not specified.
+        /// </remarks>
+        public virtual bool IsApplyModelRenamingEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(ApplyModelRenamingFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return true;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -139,6 +140,80 @@ namespace Azure.Generator.Mgmt.Tests
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
             Assert.That(type?.Properties[0].Name, Is.EqualTo("ETag"));
+        }
+
+        [Test]
+        public void TestApplyModelRenamingDisabled_SkipsKnownTypePrefixForModel()
+        {
+            var skuModelName = "Sku";
+            var modelProperty = InputFactory.Property("TestName", InputPrimitiveType.String, serializedName: "testName", isRequired: true);
+            var model = InputFactory.Model(skuModelName, properties: [modelProperty]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+            // Opt out of generator-side name overrides, e.g. to respect `@@clientName` from TypeSpec.
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+
+            // PreVisitModel is called during the model creation
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            Assert.That(type?.Name, Is.EqualTo(skuModelName));
+        }
+
+        [Test]
+        public void TestApplyModelRenamingDisabled_SkipsKnownTypePrefixForEnum()
+        {
+            var enumName = "PrivateEndpointServiceConnectionStatus";
+            var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: stringEnum);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [stringEnum], clients: () => [client]);
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+
+            // PreVisitEnum is called during the enum creation
+            var type = plugin.Object.TypeFactory.CreateEnum(stringEnum);
+            Assert.That(type?.Name, Is.EqualTo(enumName));
+        }
+
+        [Test]
+        public void TestApplyModelRenamingDisabled_SkipsUrlToUriTransform()
+        {
+            const string testModelName = "TestModelUrl";
+            const string testPropertyName = "TestName";
+            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
+            var model = InputFactory.Model(testModelName, properties: [modelProperty]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
+            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+            plugin.Setup(p => p.IsApplyModelRenamingEnabled()).Returns(false);
+
+            // PreVisitModel is called during the model creation
+            var type = plugin.Object.TypeFactory.CreateModel(model);
+            // When flag is false, the automatic Url -> Uri transform should be skipped
+            Assert.That(type?.Name, Is.EqualTo(testModelName));
         }
     }
 }
