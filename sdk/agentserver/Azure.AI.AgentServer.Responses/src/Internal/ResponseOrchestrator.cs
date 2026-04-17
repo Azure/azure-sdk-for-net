@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Core;
@@ -87,11 +88,13 @@ internal sealed class ResponseOrchestrator
         ResponseContext context,
         CancellationToken ct)
     {
+        var parentActivity = Activity.Current;
+
         if (execution.IsStreaming)
         {
             // Streaming: return a lazy event stream. Error recovery + finalization
             // happen inside the stream when the consumer iterates it.
-            var events = CreateStreamingAsync(request, execution, context, ct);
+            var events = CreateStreamingAsync(request, execution, context, parentActivity, ct);
             return OrchestratorResult.Streaming(events);
         }
 
@@ -103,7 +106,7 @@ internal sealed class ResponseOrchestrator
         IAsyncObserver<ResponseStreamEvent> publisher = new NullPublisher();
         try
         {
-            await foreach (var _ in ProcessEventsAsync(request, execution, context, publisher, ct)
+            await foreach (var _ in ProcessEventsAsync(request, execution, context, publisher, parentActivity, ct)
                 .WithCancellation(ct))
             {
                 // Consume — non-streaming just accumulates state.
@@ -279,14 +282,30 @@ internal sealed class ResponseOrchestrator
         ResponseExecution execution,
         ResponseContext context,
         IAsyncObserver<ResponseStreamEvent> publisher,
+        Activity? parentActivity,
         [EnumeratorCancellation] CancellationToken ct)
     {
         var firstEvent = true;
         var outputItemCount = 0;
 
-        await foreach (var evt in _handler.CreateAsync(request, context, ct)
-            .WithCancellation(ct))
+        await using var enumerator = _handler.CreateAsync(request, context, ct)
+            .GetAsyncEnumerator(ct);
+
+        while (true)
         {
+            // Response handlers are async iterators. After each yielded event,
+            // control returns to the orchestrator and the handler resumes on a
+            // later MoveNextAsync call. Re-establish the response activity so
+            // downstream instrumentation observes the /responses span as current.
+            Activity.Current = parentActivity;
+
+            if (!await enumerator.MoveNextAsync())
+            {
+                break;
+            }
+
+            var evt = enumerator.Current;
+
             if (firstEvent)
             {
                 firstEvent = false;
@@ -465,6 +484,7 @@ internal sealed class ResponseOrchestrator
         CreateResponse request,
         ResponseExecution execution,
         ResponseContext context,
+        Activity? parentActivity,
         [EnumeratorCancellation] CancellationToken ct)
     {
         // Only bg+streaming responses need a replay-capable publisher — these are
@@ -474,7 +494,7 @@ internal sealed class ResponseOrchestrator
         var publisher = execution.IsBackground
             ? await _streamProvider.CreateEventPublisherAsync(execution.ResponseId, ct)
             : (IAsyncObserver<ResponseStreamEvent>)new NullPublisher();
-        var enumerator = ProcessEventsAsync(request, execution, context, publisher, ct)
+        var enumerator = ProcessEventsAsync(request, execution, context, publisher, parentActivity, ct)
             .GetAsyncEnumerator(ct);
         var terminalEventYielded = false;
         try

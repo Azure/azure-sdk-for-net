@@ -25,6 +25,10 @@ public sealed class DistributedTracingProtocolTests : IDisposable
     private readonly Dictionary<string, string?> _capturedBaggage = new();
     private readonly Dictionary<string, object?> _capturedTags = new();
     private string? _capturedDisplayName;
+    private string? _capturedTraceId;
+    private string? _capturedResumedDisplayName;
+    private string? _capturedResumedTraceId;
+    private string? _capturedResumedResponseId;
 
     // Captured via ActivityStopped (works for all modes including streaming)
     private readonly List<Activity> _stoppedActivities = new();
@@ -70,6 +74,7 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         if (activity is not null)
         {
             _capturedDisplayName = activity.DisplayName;
+            _capturedTraceId = activity.TraceId.ToString();
             foreach (var tag in activity.TagObjects)
             {
                 _capturedTags[tag.Key] = tag.Value;
@@ -85,6 +90,37 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         yield return new Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent(0, response);
         response.SetCompleted();
         yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(0, response);
+    }
+
+    private async IAsyncEnumerable<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> CaptureAfterResumption(
+        Azure.AI.AgentServer.Responses.Models.CreateResponse request,
+        ResponseContext context,
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
+    {
+        var activity = Activity.Current;
+        if (activity is not null)
+        {
+            _capturedDisplayName = activity.DisplayName;
+            _capturedTraceId = activity.TraceId.ToString();
+        }
+
+        var response = new Azure.AI.AgentServer.Responses.Models.ResponseObject(context.ResponseId, request.Model ?? "test-model")
+        {
+            Status = Azure.AI.AgentServer.Responses.Models.ResponseStatus.InProgress
+        };
+
+        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent(0, response);
+        yield return new Azure.AI.AgentServer.Responses.Models.ResponseInProgressEvent(1, response);
+
+        await Task.Yield();
+
+        var resumedActivity = Activity.Current;
+        _capturedResumedDisplayName = resumedActivity?.DisplayName;
+        _capturedResumedTraceId = resumedActivity?.TraceId.ToString();
+        _capturedResumedResponseId = resumedActivity?.GetTagItem(ResponsesTracingConstants.Tags.ResponseId)?.ToString();
+
+        response.SetCompleted();
+        yield return new Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent(2, response);
     }
 
     // --- US2: GenAI Tags (T012-T017) ---
@@ -183,6 +219,19 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         await PostDefaultAsync(new { model = "" });
 
         Assert.That(_capturedDisplayName, Is.EqualTo("invoke_agent"));
+    }
+
+    [Test]
+    public async Task Activity_RemainsCurrent_WhenHandlerResumesAfterYield()
+    {
+        _handler.EventFactory = (request, context, ct) => CaptureAfterResumption(request, context, ct);
+
+        await PostDefaultAsync(new { model = "gpt-4o" });
+
+        Assert.That(_capturedDisplayName, Is.EqualTo("invoke_agent gpt-4o"));
+        Assert.That(_capturedResumedDisplayName, Is.EqualTo("invoke_agent gpt-4o"));
+        Assert.That(_capturedResumedTraceId, Is.EqualTo(_capturedTraceId));
+        XAssert.StartsWith("caresp_", _capturedResumedResponseId);
     }
 
     [Test]
