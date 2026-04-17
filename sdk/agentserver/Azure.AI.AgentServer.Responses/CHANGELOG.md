@@ -15,6 +15,9 @@
   and value length ≤ 512 characters, enforced via the validator pipeline.
 - Added eager eviction of completed `ResponseExecution` entries from the in-flight tracker,
   reducing memory pressure for long-running servers.
+- Added `FoundryStorageLoggingPolicy` — an Azure.Core per-retry pipeline policy that logs every
+  outbound Foundry storage API call with HTTP method, URI, status code, duration, and correlation
+  headers (`x-ms-client-request-id`, `x-ms-request-id`, `x-request-id`, `apim-request-id`).
 
 ### Bugs Fixed
 
