@@ -214,7 +214,7 @@ namespace Azure.Storage.Blobs
         {
             int statusCode = message.Response.Status;
 
-            // --- 401 Unauthorized (Please create a new session) ---
+            // --- 401 Unauthorized ("Please create a new session") ---
             if (statusCode == (int)HttpStatusCode.Unauthorized
                 && message.Response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string wwwAuth))
             {

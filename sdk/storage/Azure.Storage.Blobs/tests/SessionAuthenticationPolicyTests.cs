@@ -391,6 +391,30 @@ namespace Azure.Storage.Blobs.Tests
             Assert.AreEqual(200, message.Response.Status);
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
+
+        [Test]
+        public async Task CustomDomainUrl_MatchingContainer_UsesSessionToken()
+        {
+            // Arrange – custom domain URL where host is not *.blob.core.windows.net
+            var customDomainBlobUri = new Uri($"https://storage.mycustomdomain.com/{ContainerName}/{BlobName}");
+
+            var mockBearer = CreateMockBearerPolicy();
+            var policy = CreatePolicy(
+                mockBearer,
+                SingleContainerOptions,
+                CreateSessionMockResponse());
+
+            var (message, _) = await SendBlobGetAsync(
+                policy,
+                customDomainBlobUri,
+                RequestMethod.Get,
+                CreateBlobGetResponse(200));
+
+            // Assert – session token was used (bearer policy NOT invoked)
+            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+            Assert.IsTrue(message.Request.Headers.TryGetValue("Authorization", out string authHeader));
+            Assert.That(authHeader, Does.StartWith("Session "));
+        }
         #endregion
 
         #region Session Token Acquisition & Signing
