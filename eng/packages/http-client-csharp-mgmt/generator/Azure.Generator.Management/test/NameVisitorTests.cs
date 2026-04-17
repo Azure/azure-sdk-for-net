@@ -170,7 +170,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void TestApplyModelRenamingDisabled_EnumRenamingStillApplied()
+        public void TestApplyModelRenamingDisabled_EnumRenamingStillAppliesWithEnumRenamingEnabled()
         {
             var enumName = "PrivateEndpointServiceConnectionStatus";
             var stringEnum = InputFactory.StringEnum(enumName, [("a", "a"), ("b", "b")]);
