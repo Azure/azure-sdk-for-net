@@ -87,11 +87,10 @@ Use them in a loop: **build/classify → batch MCP fixes → regenerate if `Code
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
 | Type should be public | `@@access(Model, Access.public, "csharp")` |
-| Constructor should be protected | `@@usage(Model, Usage.input \| Usage.output, "csharp")` |
+| Model should be input and output | `@@usage(Model, Usage.input \| Usage.output, "csharp")` |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |
 | Change base type | `@@hierarchyBuilding(Model, TargetBase, "csharp")` |
-| Unwanted ARM resource type from operation | Convert `LegacyOperations.Read` to plain inline operation |
 | Wrong operation parameter type | `@@alternateType(Interface.op::parameters.param, targetType, "csharp")` |
 | Operation name collision | `@@clientLocation(Interface.op, "GroupName", "csharp")` |
 
