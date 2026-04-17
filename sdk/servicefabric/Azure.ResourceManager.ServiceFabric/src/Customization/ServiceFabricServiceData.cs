@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -14,92 +13,76 @@ namespace Azure.ResourceManager.ServiceFabric
     // generated Properties bag so that existing consumer code continues to compile.
     public partial class ServiceFabricServiceData
     {
+        private ServiceResourceProperties EnsureProperties()
+        {
+            // The flattened compatibility members are common to both stateful and stateless
+            // service shapes. Create a mutable default bag so callers can keep using them.
+            Properties ??= new StatelessServiceProperties();
+            return Properties;
+        }
+
         /// <summary> A list that describes the correlation of the service with other services. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<ServiceCorrelationDescription> CorrelationScheme => Properties?.CorrelationScheme ?? Array.Empty<ServiceCorrelationDescription>();
+        public IList<ServiceCorrelationDescription> CorrelationScheme => EnsureProperties().CorrelationScheme;
 
         /// <summary> Specifies the move cost for the service. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ApplicationMoveCost? DefaultMoveCost
         {
-            get => Properties?.DefaultMoveCost;
-            set
-            {
-                if (Properties != null)
-                    Properties.DefaultMoveCost = value;
-            }
+            get => EnsureProperties().DefaultMoveCost;
+            set => EnsureProperties().DefaultMoveCost = value;
         }
 
         /// <summary> Describes how the service is partitioned. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public PartitionSchemeDescription PartitionDescription
         {
-            get => Properties?.PartitionDescription;
-            set
-            {
-                if (Properties != null)
-                    Properties.PartitionDescription = value;
-            }
+            get => EnsureProperties().PartitionDescription;
+            set => EnsureProperties().PartitionDescription = value;
         }
 
         /// <summary> The placement constraints as a string. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string PlacementConstraints
         {
-            get => Properties?.PlacementConstraints;
-            set
-            {
-                if (Properties != null)
-                    Properties.PlacementConstraints = value;
-            }
+            get => EnsureProperties().PlacementConstraints;
+            set => EnsureProperties().PlacementConstraints = value;
         }
 
         /// <summary> The current deployment or provisioning state. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProvisioningState => Properties?.ProvisioningState;
+        public string ProvisioningState => EnsureProperties().ProvisioningState;
 
         /// <summary> Dns name used for the service. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ServiceDnsName
         {
-            get => Properties?.ServiceDnsName;
-            set
-            {
-                if (Properties != null)
-                    Properties.ServiceDnsName = value;
-            }
+            get => EnsureProperties().ServiceDnsName;
+            set => EnsureProperties().ServiceDnsName = value;
         }
 
         /// <summary> The service load metrics. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<ServiceLoadMetricDescription> ServiceLoadMetrics => Properties?.ServiceLoadMetrics ?? Array.Empty<ServiceLoadMetricDescription>();
+        public IList<ServiceLoadMetricDescription> ServiceLoadMetrics => EnsureProperties().ServiceLoadMetrics;
 
         /// <summary> The activation Mode of the service package. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ArmServicePackageActivationMode? ServicePackageActivationMode
         {
-            get => Properties?.ServicePackageActivationMode;
-            set
-            {
-                if (Properties != null)
-                    Properties.ServicePackageActivationMode = value;
-            }
+            get => EnsureProperties().ServicePackageActivationMode;
+            set => EnsureProperties().ServicePackageActivationMode = value;
         }
 
         /// <summary> A list that describes the service placement policies. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<ServicePlacementPolicyDescription> ServicePlacementPolicies => Properties?.ServicePlacementPolicies ?? Array.Empty<ServicePlacementPolicyDescription>();
+        public IList<ServicePlacementPolicyDescription> ServicePlacementPolicies => EnsureProperties().ServicePlacementPolicies;
 
         /// <summary> The name of the service type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ServiceTypeName
         {
-            get => Properties?.ServiceTypeName;
-            set
-            {
-                if (Properties != null)
-                    Properties.ServiceTypeName = value;
-            }
+            get => EnsureProperties().ServiceTypeName;
+            set => EnsureProperties().ServiceTypeName = value;
         }
     }
 }
