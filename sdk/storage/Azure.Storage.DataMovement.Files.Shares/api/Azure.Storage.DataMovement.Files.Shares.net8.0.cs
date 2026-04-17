@@ -24,7 +24,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
     }
     public partial class ShareFileStorageResourceOptions
     {
-        public string Snapshot;
         public ShareFileStorageResourceOptions() { }
         public string CacheControl { get { throw null; } set { } }
         public string ContentDisposition { get { throw null; } set { } }
@@ -41,6 +40,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public bool? FilePermissions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Files.Shares.ShareProtocol ShareProtocol { get { throw null; } set { } }
         public bool SkipProtocolValidation { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
     public enum ShareProtocol : byte
