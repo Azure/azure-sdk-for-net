@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added `HttpClient` instrumentation (`AddHttpClientInstrumentation`) for both tracing and metrics
+  in the OTLP-only telemetry path. This exports outbound HTTP client spans, enabling end-to-end
+  distributed trace correlation through Foundry storage and other downstream services.
+
 ### Breaking Changes
 
 ### Bugs Fixed

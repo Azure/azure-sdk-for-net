@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,9 +13,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    internal partial class ConversationAnalysisAuthoringGetModelEvaluationResultsCollectionResult : Pageable<BinaryData>
+    internal partial class ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT : Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult>
     {
-        private readonly ConversationAnalysisAuthoring _client;
+        private readonly ConversationAuthoringTrainedModel _client;
         private readonly string _projectName;
         private readonly string _trainedModelLabel;
         private readonly string _stringIndexType;
@@ -26,8 +25,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConversationAnalysisAuthoringGetModelEvaluationResultsCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConversationAnalysisAuthoring client used to send requests. </param>
+        /// <summary> Initializes a new instance of ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ConversationAuthoringTrainedModel client used to send requests. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
@@ -36,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConversationAnalysisAuthoringGetModelEvaluationResultsCollectionResult(ConversationAnalysisAuthoring client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(ConversationAuthoringTrainedModel client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -49,11 +48,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConversationAnalysisAuthoringGetModelEvaluationResultsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConversationAnalysisAuthoringGetModelEvaluationResultsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<AnalyzeConversationAuthoringUtteranceEvaluationResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,12 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     yield break;
                 }
                 PagedAnalyzeConversationAuthoringUtteranceEvaluationResult result = (PagedAnalyzeConversationAuthoringUtteranceEvaluationResult)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in result.Value)
-                {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageConversationsAuthoringContext.Default));
-                }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AnalyzeConversationAuthoringUtteranceEvaluationResult>.FromValues((IReadOnlyList<AnalyzeConversationAuthoringUtteranceEvaluationResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

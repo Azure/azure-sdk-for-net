@@ -49,6 +49,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
             #region Snippet:AuthoringClient_BadRequest
             try
@@ -63,7 +64,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                     Description = "This is a test for invalid configuration."
                 };
                 using RequestContent content = RequestContent.Create(projectData);
-                Response response = client.CreateProject(invalidProjectName, content);
+                Response response = projectClient.CreateProject(invalidProjectName, content);
             }
             catch (RequestFailedException ex)
             {
