@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ComputeLimit
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource>> GetComputeLimitSharedLimitAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource GetComputeLimitSharedLimitResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitCollection GetComputeLimitSharedLimits(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource> GetFeature(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource>> GetFeatureAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.FeatureResource GetFeatureResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.FeatureCollection GetFeatures(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
     }
     public partial class ComputeLimitGuestSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionResource>, System.Collections.IEnumerable
     {
@@ -117,6 +121,52 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class FeatureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.FeatureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.FeatureResource>, System.Collections.IEnumerable
+    {
+        protected FeatureCollection() { }
+        public virtual Azure.Response<bool> Exists(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource> Get(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ComputeLimit.FeatureResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ComputeLimit.FeatureResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource>> GetAsync(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.FeatureResource> GetIfExists(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ComputeLimit.FeatureResource>> GetIfExistsAsync(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ComputeLimit.FeatureResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ComputeLimit.FeatureResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ComputeLimit.FeatureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeLimit.FeatureResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FeatureData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>
+    {
+        internal FeatureData() { }
+        public Azure.ResourceManager.ComputeLimit.Models.FeatureProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.FeatureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.FeatureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FeatureResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FeatureResource() { }
+        public virtual Azure.ResourceManager.ComputeLimit.FeatureData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string featureName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult> Enable(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Models.OperationStatusResult>> EnableAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ComputeLimit.FeatureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.FeatureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.FeatureData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.ComputeLimit.Mocking
 {
@@ -125,6 +175,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         protected MockableComputeLimitArmClient() { }
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitGuestSubscriptionResource GetComputeLimitGuestSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource GetComputeLimitSharedLimitResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.FeatureResource GetFeatureResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableComputeLimitSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -135,6 +186,9 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource> GetComputeLimitSharedLimit(Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitResource>> GetComputeLimitSharedLimitAsync(Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitCollection GetComputeLimitSharedLimits(Azure.Core.AzureLocation location) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource> GetFeature(Azure.Core.AzureLocation location, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ComputeLimit.FeatureResource>> GetFeatureAsync(Azure.Core.AzureLocation location, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ComputeLimit.FeatureCollection GetFeatures(Azure.Core.AzureLocation location) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ComputeLimit.Models
@@ -145,6 +199,8 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName ComputeLimitLimitName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.ComputeLimitSharedLimitData ComputeLimitSharedLimitData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties ComputeLimitSharedLimitProperties(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName resourceName = null, int? limit = default(int?), string unit = null, Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.FeatureData FeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ComputeLimit.Models.FeatureProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.FeatureProperties FeatureProperties(Azure.ResourceManager.ComputeLimit.Models.FeatureState? state = default(Azure.ResourceManager.ComputeLimit.Models.FeatureState?), Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? provisioningState = default(Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState?)) { throw null; }
     }
     public partial class ComputeLimitLimitName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitLimitName>
     {
@@ -195,5 +251,37 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.ComputeLimitSharedLimitProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FeatureProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>
+    {
+        internal FeatureProperties() { }
+        public Azure.ResourceManager.ComputeLimit.Models.ComputeLimitResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ComputeLimit.Models.FeatureState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.FeatureProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ComputeLimit.Models.FeatureProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ComputeLimit.Models.FeatureProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ComputeLimit.Models.FeatureProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeLimit.Models.FeatureProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FeatureState : System.IEquatable<Azure.ResourceManager.ComputeLimit.Models.FeatureState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FeatureState(string value) { throw null; }
+        public static Azure.ResourceManager.ComputeLimit.Models.FeatureState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ComputeLimit.Models.FeatureState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ComputeLimit.Models.FeatureState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ComputeLimit.Models.FeatureState left, Azure.ResourceManager.ComputeLimit.Models.FeatureState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeLimit.Models.FeatureState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ComputeLimit.Models.FeatureState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ComputeLimit.Models.FeatureState left, Azure.ResourceManager.ComputeLimit.Models.FeatureState right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }
