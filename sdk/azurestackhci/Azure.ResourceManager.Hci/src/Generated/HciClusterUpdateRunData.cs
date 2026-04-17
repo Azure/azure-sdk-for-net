@@ -13,135 +13,266 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary>
-    /// A class representing the HciClusterUpdateRun data model.
-    /// Details of an Update run
-    /// </summary>
+    /// <summary> Details of an Update run. </summary>
     public partial class HciClusterUpdateRunData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunData"/>. </summary>
         public HciClusterUpdateRunData()
         {
-            Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes Update Run Properties. </param>
+        /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. </param>
-        /// <param name="timeStarted"> Timestamp of the update run was started. </param>
-        /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
-        /// <param name="duration"> Duration of the update run. </param>
-        /// <param name="state"> State of the update run. </param>
-        /// <param name="namePropertiesProgressName"> Name of the step. </param>
-        /// <param name="description"> More detailed description of the step. </param>
-        /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
-        /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="startOn"> When the step started, or empty if it has not started executing. </param>
-        /// <param name="endOn"> When the step reached a terminal state. </param>
-        /// <param name="lastCompletedOn"> Completion time of this step or the last completed sub-step. </param>
-        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
-        /// <param name="steps"> Recursive model for child steps of this step. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastCompletedOn, string expectedExecutionTime, IList<HciUpdateStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HciClusterUpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateRunProperties properties, string updateRunName, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            UpdateRunName = updateRunName;
             Location = location;
-            ProvisioningState = provisioningState;
-            TimeStarted = timeStarted;
-            LastUpdatedOn = lastUpdatedOn;
-            Duration = duration;
-            State = state;
-            NamePropertiesProgressName = namePropertiesProgressName;
-            Description = description;
-            ErrorMessage = errorMessage;
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            LastCompletedOn = lastCompletedOn;
-            ExpectedExecutionTime = expectedExecutionTime;
-            Steps = steps;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Describes Update Run Properties. </summary>
+        [WirePath("properties")]
+        internal UpdateRunProperties Properties { get; set; }
+
+        /// <summary> The name of the Update Run. </summary>
+        [WirePath("name")]
+        public string UpdateRunName { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the UpdateRuns proxy resource. </summary>
+
+        /// <summary> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Timestamp of the update run was started. </summary>
         [WirePath("properties.timeStarted")]
-        public DateTimeOffset? TimeStarted { get; set; }
+        public DateTimeOffset? TimeStarted
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeStarted;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.TimeStarted = value.Value;
+            }
+        }
+
         /// <summary> Timestamp of the most recently completed step in the update run. </summary>
         [WirePath("properties.lastUpdatedTime")]
-        public DateTimeOffset? LastUpdatedOn { get; set; }
+        public DateTimeOffset? LastCompletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastCompletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.LastCompletedOn = value.Value;
+            }
+        }
+
         /// <summary> Duration of the update run. </summary>
         [WirePath("properties.duration")]
-        public string Duration { get; set; }
-        /// <summary> State of the update run. </summary>
+        public string Duration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Duration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.Duration = value;
+            }
+        }
+
+        /// <summary> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </summary>
         [WirePath("properties.state")]
-        public UpdateRunPropertiesState? State { get; set; }
-        /// <summary> Name of the step. </summary>
-        [WirePath("properties.name")]
-        public string NamePropertiesProgressName { get; set; }
+        public UpdateRunPropertiesState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.State = value.Value;
+            }
+        }
+
         /// <summary> More detailed description of the step. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        [WirePath("properties.progress.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Error message, specified if the step is in a failed state. </summary>
-        [WirePath("properties.errorMessage")]
-        public string ErrorMessage { get; set; }
+        [WirePath("properties.progress.errorMessage")]
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.ErrorMessage = value;
+            }
+        }
+
         /// <summary> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </summary>
-        [WirePath("properties.status")]
-        public string Status { get; set; }
+        [WirePath("properties.progress.status")]
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> When the step started, or empty if it has not started executing. </summary>
-        [WirePath("properties.startTimeUtc")]
-        public DateTimeOffset? StartOn { get; set; }
+        [WirePath("properties.progress.startTimeUtc")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
         /// <summary> When the step reached a terminal state. </summary>
-        [WirePath("properties.endTimeUtc")]
-        public DateTimeOffset? EndOn { get; set; }
+        [WirePath("properties.progress.endTimeUtc")]
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.EndOn = value.Value;
+            }
+        }
+
         /// <summary> Completion time of this step or the last completed sub-step. </summary>
-        [WirePath("properties.lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastCompletedOn { get; set; }
+        [WirePath("properties.progress.lastUpdatedTimeUtc")]
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.LastUpdatedOn = value.Value;
+            }
+        }
+
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
-        [WirePath("properties.expectedExecutionTime")]
-        public string ExpectedExecutionTime { get; set; }
+        [WirePath("properties.progress.expectedExecutionTime")]
+        public string ExpectedExecutionTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpectedExecutionTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.ExpectedExecutionTime = value;
+            }
+        }
+
         /// <summary> Recursive model for child steps of this step. </summary>
-        [WirePath("properties.steps")]
-        public IList<HciUpdateStep> Steps { get; }
+        [WirePath("properties.progress.steps")]
+        public IList<HciUpdateStep> Steps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                return Properties.Steps;
+            }
+        }
     }
 }

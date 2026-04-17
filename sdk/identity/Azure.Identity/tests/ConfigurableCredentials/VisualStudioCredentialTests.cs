@@ -62,7 +62,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
         protected override TokenCredential CreateCredentialWithTimeout(IProcessService processService, IFileSystemService fileSystem, TimeSpan timeout)
         {
             IConfiguration config = _helper.GetConfiguration();
-            config["MyClient:Credential:CredentialProcessTimeout"] = timeout.ToString();
+            config["MyClient:Credential:ProcessTimeout"] = timeout.ToString();
 
             ConfigurableCredential credential;
             using (new TestEnvVar("AZURE_TENANT_ID", null))

@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     {
         private readonly ClientDiagnostics _serversClientDiagnostics;
         private readonly Servers _serversRestClient;
+        private readonly ClientDiagnostics _replicasClientDiagnostics;
+        private readonly Replicas _replicasRestClient;
         private readonly ClientDiagnostics _backupAndExportClientDiagnostics;
         private readonly BackupAndExport _backupAndExportRestClient;
         private readonly ClientDiagnostics _configurationsClientDiagnostics;
         private readonly Configurations _configurationsRestClient;
         private readonly ClientDiagnostics _logFilesClientDiagnostics;
         private readonly LogFiles _logFilesRestClient;
-        private readonly ClientDiagnostics _replicasClientDiagnostics;
-        private readonly Replicas _replicasRestClient;
         private readonly ClientDiagnostics _serversMigrationClientDiagnostics;
         private readonly ServersMigration _serversMigrationRestClient;
         private readonly MySqlFlexibleServerData _data;
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             TryGetApiVersion(ResourceType, out string mySqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
+            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             _backupAndExportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _backupAndExportRestClient = new BackupAndExport(_backupAndExportClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _logFilesRestClient = new LogFiles(_logFilesClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
-            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             _serversMigrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _serversMigrationRestClient = new ServersMigration(_serversMigrationClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -423,6 +423,82 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List all the replicas for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/replicas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Replicas_ListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MySqlFlexibleServerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlFlexibleServerResource> GetReplicasAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerResource.GetReplicas"), data => new MySqlFlexibleServerResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the replicas for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/replicas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Replicas_ListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-12-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MySqlFlexibleServerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlFlexibleServerResource> GetReplicas(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerResource.GetReplicas"), data => new MySqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -786,7 +862,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new LogFilesGetLogFilesAsyncCollectionResultOfT(_logFilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LogFilesGetLogFilesAsyncCollectionResultOfT(
+                _logFilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerResource.GetLogFiles");
         }
 
         /// <summary>
@@ -818,71 +900,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new LogFilesGetLogFilesCollectionResultOfT(_logFilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-        }
-
-        /// <summary>
-        /// List all the replicas for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/replicas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Replicas_ListByServer. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlFlexibleServerResource> GetReplicasAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all the replicas for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/replicas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Replicas_ListByServer. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlFlexibleServerResource> GetReplicas(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MySqlFlexibleServerData, MySqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerResource(Client, data));
+            return new LogFilesGetLogFilesCollectionResultOfT(
+                _logFilesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerResource.GetLogFiles");
         }
 
         /// <summary>

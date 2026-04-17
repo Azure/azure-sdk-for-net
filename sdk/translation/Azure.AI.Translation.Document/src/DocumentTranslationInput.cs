@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// The source document(s) are translated and written to the location provided
     /// in the <see cref="TranslationTarget"/>.
     /// </summary>
-    [CodeGenModel("BatchRequest")]
+    [CodeGenType("BatchRequest")]
     public partial class DocumentTranslationInput
     {
         /// <summary>

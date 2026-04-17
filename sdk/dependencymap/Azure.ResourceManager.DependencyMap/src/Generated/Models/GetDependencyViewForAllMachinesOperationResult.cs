@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
         {
             get
             {
-                return Properties.LayoutFileSasUri;
+                return Properties is null ? default : Properties.LayoutFileSasUri;
             }
         }
     }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Prepare DataMove Request. </summary>
     public partial class PrepareDataMoveContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrepareDataMoveContent"/>. </summary>
         /// <param name="targetResourceId"> ARM Id of target vault. </param>
@@ -70,33 +42,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// This needs to be populated only if DataMoveLevel is set to container
         /// </param>
         /// <param name="ignoreMoved"> Ignore the artifacts which are already moved. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel, IList<ResourceIdentifier> sourceContainerArmIds, bool? ignoreMoved, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrepareDataMoveContent(ResourceIdentifier targetResourceId, AzureLocation targetRegion, DataMoveLevel dataMoveLevel, IList<ResourceIdentifier> sourceContainerArmIds, bool? ignoreMoved, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
             TargetRegion = targetRegion;
             DataMoveLevel = dataMoveLevel;
             SourceContainerArmIds = sourceContainerArmIds;
             IgnoreMoved = ignoreMoved;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrepareDataMoveContent"/> for deserialization. </summary>
-        internal PrepareDataMoveContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM Id of target vault. </summary>
         public ResourceIdentifier TargetResourceId { get; }
+
         /// <summary> Target Region. </summary>
         public AzureLocation TargetRegion { get; }
+
         /// <summary> DataMove Level. </summary>
         public DataMoveLevel DataMoveLevel { get; }
+
         /// <summary>
         /// Source Container ArmIds
         /// This needs to be populated only if DataMoveLevel is set to container
         /// </summary>
         public IList<ResourceIdentifier> SourceContainerArmIds { get; }
+
         /// <summary> Ignore the artifacts which are already moved. </summary>
         public bool? IgnoreMoved { get; set; }
     }

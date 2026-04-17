@@ -9,8 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
-using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -194,7 +192,7 @@ public class Sample_EvaluationsModel : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         #endregion
         #region Snippet:Sample_CreateData_EvaluationsModel
         object[] testingCriteria = [
@@ -332,7 +330,7 @@ public class Sample_EvaluationsModel : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        EvaluationClient evaluationClient = projectClient.OpenAI.GetEvaluationClient();
+        EvaluationClient evaluationClient = projectClient.ProjectOpenAIClient.GetEvaluationClient();
         object[] testingCriteria = [
             new {
                 type = "azure_ai_evaluator",

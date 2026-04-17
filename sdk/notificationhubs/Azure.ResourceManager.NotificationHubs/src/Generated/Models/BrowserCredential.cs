@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub BrowserCredential. </summary>
     public partial class BrowserCredential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BrowserCredential"/>. </summary>
         /// <param name="subject"> Gets or sets web push subject. </param>
@@ -56,34 +28,70 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Argument.AssertNotNull(vapidPrivateKey, nameof(vapidPrivateKey));
             Argument.AssertNotNull(vapidPublicKey, nameof(vapidPublicKey));
 
-            Subject = subject;
-            VapidPrivateKey = vapidPrivateKey;
-            VapidPublicKey = vapidPublicKey;
+            Properties = new BrowserCredentialProperties(subject, vapidPrivateKey, vapidPublicKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="BrowserCredential"/>. </summary>
-        /// <param name="subject"> Gets or sets web push subject. </param>
-        /// <param name="vapidPrivateKey"> Gets or sets VAPID private key. </param>
-        /// <param name="vapidPublicKey"> Gets or sets VAPID public key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrowserCredential(string subject, string vapidPrivateKey, string vapidPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Description of a NotificationHub BrowserCredential. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BrowserCredential(BrowserCredentialProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Subject = subject;
-            VapidPrivateKey = vapidPrivateKey;
-            VapidPublicKey = vapidPublicKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrowserCredential"/> for deserialization. </summary>
-        internal BrowserCredential()
-        {
-        }
+        /// <summary> Description of a NotificationHub BrowserCredential. </summary>
+        internal BrowserCredentialProperties Properties { get; set; }
 
         /// <summary> Gets or sets web push subject. </summary>
-        public string Subject { get; set; }
+        public string Subject
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subject;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BrowserCredentialProperties();
+                }
+                Properties.Subject = value;
+            }
+        }
+
         /// <summary> Gets or sets VAPID private key. </summary>
-        public string VapidPrivateKey { get; set; }
+        public string VapidPrivateKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VapidPrivateKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BrowserCredentialProperties();
+                }
+                Properties.VapidPrivateKey = value;
+            }
+        }
+
         /// <summary> Gets or sets VAPID public key. </summary>
-        public string VapidPublicKey { get; set; }
+        public string VapidPublicKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VapidPublicKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BrowserCredentialProperties();
+                }
+                Properties.VapidPublicKey = value;
+            }
+        }
     }
 }

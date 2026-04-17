@@ -67,7 +67,7 @@ public class LoggingPolicy : PipelinePolicy
         }
     }
 
-    public LoggingPolicy(){}
+    public LoggingPolicy() { }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
@@ -114,7 +114,7 @@ options.AddPolicy(new LoggingPolicy(), PipelinePosition.PerCall);
 AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new AzureCliCredential(), options: options);
 ```
 
-3. Use the client to create the `AgentVersion` object.
+3. Use the client to create the `ProjectsAgentVersion` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_AgentsLogging_Sync
@@ -122,7 +122,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -134,7 +134,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
 {
     Instructions = "You are a physics teacher with a sense of humor.",
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition)
 );
@@ -145,7 +145,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseBasic_AgentsLogging_Sync
 var agentReference = new AgentReference(name: agentVersion.Name);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 CreateResponseOptions responseOptions = new()
 {
     InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
@@ -157,7 +157,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponseBasic_AgentsLogging_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentReference);
 CreateResponseOptions responseOptions = new()
 {
     InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
@@ -166,14 +166,14 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-7. Delete the `AgentVersion` object created in this sample.
+7. Delete the `ProjectsAgentVersion` object created in this sample.
 
 Synchronous sample:
 ```C# Snippet:CleanUp_AgentsLogging_Sync
-projectClient.Agents.DeleteAgent(agentName: "myAgent");
+projectClient.AgentAdministrationClient.DeleteAgent(agentName: "myAgent");
 ```
 
 Asynchronous sample:
 ```C# Snippet:CleanUp_AgentsLogging_Async
-await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: "myAgent");
 ```

@@ -13,62 +13,105 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The catalog's properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterCatalogPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogPatch"/>. </summary>
         public DevCenterCatalogPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalogPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="gitHub"> Properties for a GitHub catalog type. </param>
-        /// <param name="adoGit"> Properties for an Azure DevOps catalog type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterCatalogPatch(IDictionary<string, string> tags, DevCenterGitCatalog gitHub, DevCenterGitCatalog adoGit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Catalog properties for update. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterCatalogPatch(CatalogUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
-            GitHub = gitHub;
-            AdoGit = adoGit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Catalog properties for update. </summary>
+        internal CatalogUpdateProperties Properties { get; set; }
+
+        /// <summary> Properties for a GitHub catalog type. </summary>
+        public DevCenterGitCatalog GitHub
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GitHub;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CatalogUpdateProperties();
+                }
+                Properties.GitHub = value;
+            }
+        }
+
+        /// <summary> Properties for an Azure DevOps catalog type. </summary>
+        public DevCenterGitCatalog AdoGit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdoGit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CatalogUpdateProperties();
+                }
+                Properties.AdoGit = value;
+            }
+        }
+
+        /// <summary> Indicates the type of sync that is configured for the catalog. </summary>
+        public DevCenterCatalogSyncType? SyncType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CatalogUpdateProperties();
+                }
+                Properties.SyncType = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether the catalog is configured to automatically build image definitions. Defaults to enabled. </summary>
+        public DevCenterCatalogAutoImageBuildEnableStatus? AutoImageBuildEnableStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoImageBuildEnableStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CatalogUpdateProperties();
+                }
+                Properties.AutoImageBuildEnableStatus = value.Value;
+            }
         }
 
         /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Properties for a GitHub catalog type. </summary>
-        public DevCenterGitCatalog GitHub { get; set; }
-        /// <summary> Properties for an Azure DevOps catalog type. </summary>
-        public DevCenterGitCatalog AdoGit { get; set; }
+        public IDictionary<string, string> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CatalogUpdateProperties();
+                }
+                return Properties.Tags;
+            }
+        }
     }
 }

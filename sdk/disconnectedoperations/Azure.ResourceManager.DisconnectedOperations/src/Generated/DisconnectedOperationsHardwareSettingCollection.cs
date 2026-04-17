@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != DisconnectedOperationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DisconnectedOperationResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentAsyncCollectionResultOfT(_hardwareSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DisconnectedOperationsHardwareSettingResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentAsyncCollectionResultOfT(
+                _hardwareSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DisconnectedOperationsHardwareSettingCollection.GetAll"), data => new DisconnectedOperationsHardwareSettingResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentCollectionResultOfT(_hardwareSettingsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DisconnectedOperationsHardwareSettingResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationsHardwareSettingData, DisconnectedOperationsHardwareSettingResource>(new HardwareSettingsGetByParentCollectionResultOfT(
+                _hardwareSettingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DisconnectedOperationsHardwareSettingCollection.GetAll"), data => new DisconnectedOperationsHardwareSettingResource(Client, data));
         }
 
         /// <summary>

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Storage
@@ -22,70 +24,76 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class DeletedAccountCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _deletedAccountClientDiagnostics;
-        private readonly DeletedAccountsRestOperations _deletedAccountRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedAccountCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeletedAccountCollection for mocking. </summary>
         protected DeletedAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeletedAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeletedAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", DeletedAccountResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeletedAccountResource.ResourceType, out string deletedAccountApiVersion);
-            _deletedAccountRestClient = new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedAccountApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", DeletedAccountResource.ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, deletedAccountApiVersion ?? "2025-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get properties of specified deleted account resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DeletedAccountResource>> GetAsync(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeletedAccountData> response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,39 +107,43 @@ namespace Azure.ResourceManager.Storage
         /// Get properties of specified deleted account resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DeletedAccountResource> Get(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.Get");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeletedAccountData> response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,37 +157,51 @@ namespace Azure.ResourceManager.Storage
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeletedAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeletedAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,37 +215,51 @@ namespace Azure.ResourceManager.Storage
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeletedAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeletedAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -233,39 +273,55 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DeletedAccountResource>> GetIfExistsAsync(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeletedAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeletedAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeletedAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -279,39 +335,55 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeletedAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the deleted storage account. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="deletedAccountName"> Name of the deleted storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DeletedAccountResource> GetIfExists(AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedAccountName, nameof(deletedAccountName));
 
-            using var scope = _deletedAccountClientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedAccountsClientDiagnostics.CreateScope("DeletedAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, location, deletedAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, deletedAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeletedAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeletedAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeletedAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeletedAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

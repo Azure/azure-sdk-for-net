@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The ContainerRegistryWebhookAction. </summary>
+    /// <summary></summary>
     public readonly partial struct ContainerRegistryWebhookAction : IEquatable<ContainerRegistryWebhookAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerRegistryWebhookAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PushValue = "push";
         private const string DeleteValue = "delete";
         private const string QuarantineValue = "quarantine";
         private const string ChartPushValue = "chart_push";
         private const string ChartDeleteValue = "chart_delete";
 
-        /// <summary> push. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerRegistryWebhookAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Push. </summary>
         public static ContainerRegistryWebhookAction Push { get; } = new ContainerRegistryWebhookAction(PushValue);
-        /// <summary> delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static ContainerRegistryWebhookAction Delete { get; } = new ContainerRegistryWebhookAction(DeleteValue);
-        /// <summary> quarantine. </summary>
+
+        /// <summary> Gets the Quarantine. </summary>
         public static ContainerRegistryWebhookAction Quarantine { get; } = new ContainerRegistryWebhookAction(QuarantineValue);
-        /// <summary> chart_push. </summary>
+
+        /// <summary> Gets the ChartPush. </summary>
         public static ContainerRegistryWebhookAction ChartPush { get; } = new ContainerRegistryWebhookAction(ChartPushValue);
-        /// <summary> chart_delete. </summary>
+
+        /// <summary> Gets the ChartDelete. </summary>
         public static ContainerRegistryWebhookAction ChartDelete { get; } = new ContainerRegistryWebhookAction(ChartDeleteValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryWebhookAction left, ContainerRegistryWebhookAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryWebhookAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryWebhookAction left, ContainerRegistryWebhookAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryWebhookAction(string value) => new ContainerRegistryWebhookAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryWebhookAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryWebhookAction?(string value) => value == null ? null : new ContainerRegistryWebhookAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryWebhookAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryWebhookAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

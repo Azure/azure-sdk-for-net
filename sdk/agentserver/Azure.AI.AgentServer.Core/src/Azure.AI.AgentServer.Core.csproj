@@ -1,23 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- TODO: Double-check the need for an override after Ignite -->
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <SupportsNetStandard20>false</SupportsNetStandard20>
-    <PackageTags>Azure.AI.AgentServer.Core</PackageTags>
+    <RootNamespace>Azure.AI.AgentServer.Core</RootNamespace>
+    <Version>1.0.0-beta.22</Version>
+    <Description>Shared foundation for Azure AI Agent Server packages — provides port binding, health probes, OpenTelemetry, graceful shutdown, and the composable AgentHostBuilder.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Core ASP.NET Core OpenTelemetry</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
+         AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
+         See AGENTS.md §0.VI for rationale. -->
+    <NoWarn>$(NoWarn);AZC0100;AZC0004</NoWarn>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.AI.AgentServer.Contracts\src\Azure.AI.AgentServer.Contracts.csproj"/>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Projects"/>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore"/>
-    <PackageReference Include="ModelContextProtocol"/>
-    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
-
-    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+  </ItemGroup>
+  <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
+  <ItemGroup>
+    <None Include="build\Azure.AI.AgentServer.Core.props" Pack="true" PackagePath="build\" />
+    <None Include="buildTransitive\Azure.AI.AgentServer.Core.props" Pack="true" PackagePath="buildTransitive\" />
   </ItemGroup>
 </Project>
-

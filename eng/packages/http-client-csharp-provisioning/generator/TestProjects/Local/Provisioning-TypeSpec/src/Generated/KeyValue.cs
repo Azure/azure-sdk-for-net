@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -17,10 +16,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     /// <summary> A key-value pair in a configuration store. </summary>
     public partial class KeyValue : ProvisionableResource
     {
-        private KeyValueProperties _properties;
-        private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
+        private KeyValueProperties _properties;
         private ResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new KeyValue. </summary>
@@ -30,18 +29,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        public KeyValueProperties Properties
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
                 Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return _id;
             }
         }
 
@@ -60,16 +54,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Gets the SystemData. </summary>
         public SystemData SystemData
         {
@@ -77,6 +61,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public KeyValueProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -99,10 +98,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<KeyValueProperties>(nameof(Properties), new string[] { "properties" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<KeyValueProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
@@ -132,9 +131,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             public static readonly string V2024_05_01 = "2024-05-01";
             /// <summary> API version "2024-04-01". </summary>
             public static readonly string V2024_04_01 = "2024-04-01";
-            /// <summary> API version "2024-01-01-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2024_01_01_PREVIEW = "2024-01-01-preview";
         }
     }
 }

@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Taxonomy sub-category definition. </summary>
     public partial class TaxonomySubCategory
@@ -16,16 +17,16 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="TaxonomySubCategory"/>. </summary>
         /// <param name="id"> Unique identifier of the taxonomy sub-category. </param>
         /// <param name="name"> Name of the taxonomy sub-category. </param>
-        /// <param name="enabled"> List of taxonomy items under this sub-category. </param>
+        /// <param name="isEnabled"> List of taxonomy items under this sub-category. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
-        public TaxonomySubCategory(string id, string name, bool enabled)
+        public TaxonomySubCategory(string id, string name, bool isEnabled)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -33,15 +34,15 @@ namespace Azure.AI.Projects
         /// <param name="id"> Unique identifier of the taxonomy sub-category. </param>
         /// <param name="name"> Name of the taxonomy sub-category. </param>
         /// <param name="description"> Description of the taxonomy sub-category. </param>
-        /// <param name="enabled"> List of taxonomy items under this sub-category. </param>
+        /// <param name="isEnabled"> List of taxonomy items under this sub-category. </param>
         /// <param name="properties"> Additional properties for the taxonomy sub-category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaxonomySubCategory(string id, string name, string description, bool enabled, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaxonomySubCategory(string id, string name, string description, bool isEnabled, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +57,7 @@ namespace Azure.AI.Projects
         public string Description { get; set; }
 
         /// <summary> List of taxonomy items under this sub-category. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> Additional properties for the taxonomy sub-category. </summary>
         public IDictionary<string, string> Properties { get; }
