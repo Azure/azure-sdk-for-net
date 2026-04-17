@@ -297,4 +297,7 @@
   </PropertyGroup>
 
   <Import Project="$(_OverridePath)" Condition="'$(_OverridePath)' != '' and Exists('$(_OverridePath)')" />
+
+  <!-- NUnit 3 baseline: temporary pinning for projects not yet migrated to NUnit 4 -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.NUnit3Baseline.Packages.props" />
 </Project>

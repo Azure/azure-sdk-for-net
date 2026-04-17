@@ -3,8 +3,4 @@
   <ItemGroup>
     <PackageVersion Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231107.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageVersion Update="NUnit" Version="3.14.0" />
-    <PackageVersion Update="NUnit3TestAdapter" Version="4.6.0" />
-  </ItemGroup>
 </Project>

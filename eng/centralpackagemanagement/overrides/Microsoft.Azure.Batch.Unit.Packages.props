@@ -2,8 +2,4 @@
   <!-- The unit test project follows a non-standard naming convention.
        Import the main Batch overrides to get the required test packages. -->
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.Azure.Batch.Packages.props" />
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <PackageVersion Update="NUnit" Version="3.14.0" />
-    <PackageVersion Update="NUnit3TestAdapter" Version="4.6.0" />
-  </ItemGroup>
 </Project>
