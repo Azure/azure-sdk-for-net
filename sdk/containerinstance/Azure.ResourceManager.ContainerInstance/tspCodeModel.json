@@ -10785,16 +10785,38 @@
         {
           "$id": "748",
           "kind": "property",
+          "name": "tags",
+          "serializedName": "tags",
+          "doc": "Resource tags.",
+          "type": {
+            "$ref": "243"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.ContainerInstance.NGroup.tags",
+          "serializationOptions": {
+            "json": {
+              "name": "tags"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "749",
+          "kind": "property",
           "name": "location",
           "serializedName": "location",
           "doc": "The geo-location where the resource lives",
           "type": {
-            "$id": "749",
+            "$id": "750",
             "kind": "string",
             "name": "azureLocation",
             "crossLanguageDefinitionId": "Azure.Core.azureLocation",
             "baseType": {
-              "$id": "750",
+              "$id": "751",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -10811,28 +10833,6 @@
           "serializationOptions": {
             "json": {
               "name": "location"
-            }
-          },
-          "isHttpMetadata": false
-        },
-        {
-          "$id": "751",
-          "kind": "property",
-          "name": "tags",
-          "serializedName": "tags",
-          "doc": "Resource tags.",
-          "type": {
-            "$ref": "243"
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Microsoft.ContainerInstance.NGroup.tags",
-          "serializationOptions": {
-            "json": {
-              "name": "tags"
             }
           },
           "isHttpMetadata": false
@@ -11798,16 +11798,38 @@
         {
           "$id": "800",
           "kind": "property",
+          "name": "tags",
+          "serializedName": "tags",
+          "doc": "Resource tags.",
+          "type": {
+            "$ref": "243"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.ContainerInstance.ContainerGroupProfile.tags",
+          "serializationOptions": {
+            "json": {
+              "name": "tags"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "801",
+          "kind": "property",
           "name": "location",
           "serializedName": "location",
           "doc": "The geo-location where the resource lives",
           "type": {
-            "$id": "801",
+            "$id": "802",
             "kind": "string",
             "name": "azureLocation",
             "crossLanguageDefinitionId": "Azure.Core.azureLocation",
             "baseType": {
-              "$id": "802",
+              "$id": "803",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -11824,28 +11846,6 @@
           "serializationOptions": {
             "json": {
               "name": "location"
-            }
-          },
-          "isHttpMetadata": false
-        },
-        {
-          "$id": "803",
-          "kind": "property",
-          "name": "tags",
-          "serializedName": "tags",
-          "doc": "Resource tags.",
-          "type": {
-            "$ref": "243"
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Microsoft.ContainerInstance.ContainerGroupProfile.tags",
-          "serializationOptions": {
-            "json": {
-              "name": "tags"
             }
           },
           "isHttpMetadata": false
@@ -35931,7 +35931,7 @@
                               "$id": "2916",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -36810,7 +36810,7 @@
                                       "$id": "2988",
                                       "kind": "string",
                                       "type": {
-                                        "$ref": "801"
+                                        "$ref": "802"
                                       },
                                       "value": "WestUs"
                                     },
@@ -37728,7 +37728,7 @@
                               "$id": "3062",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -38211,7 +38211,7 @@
                               "$id": "3115",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -39125,7 +39125,7 @@
                               "$id": "3187",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "westeurope"
                             },
@@ -39524,7 +39524,7 @@
                               "$id": "3229",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "westeurope"
                             },
@@ -39885,7 +39885,7 @@
                               "$id": "3269",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "westeurope"
                             },
@@ -40212,7 +40212,7 @@
                               "$id": "3307",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -40584,7 +40584,7 @@
                               "$id": "3346",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -40926,7 +40926,7 @@
                               "$id": "3384",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -41234,7 +41234,7 @@
                               "$id": "3420",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -41679,7 +41679,7 @@
                               "$id": "3467",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -42033,7 +42033,7 @@
                               "$id": "3506",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "eastus2"
                             },
@@ -42353,7 +42353,7 @@
                               "$id": "3543",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "west us"
                             },
@@ -43010,7 +43010,7 @@
                               "$id": "3616",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -43596,7 +43596,7 @@
                               "$id": "3683",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -44777,7 +44777,7 @@
                               "$id": "3783",
                               "kind": "string",
                               "type": {
-                                "$ref": "801"
+                                "$ref": "802"
                               },
                               "value": "WestUs"
                             },
@@ -48094,7 +48094,7 @@
                                       "$id": "4013",
                                       "kind": "string",
                                       "type": {
-                                        "$ref": "801"
+                                        "$ref": "802"
                                       },
                                       "value": "WestUs"
                                     },
@@ -48897,7 +48897,7 @@
                                       "$id": "4082",
                                       "kind": "string",
                                       "type": {
-                                        "$ref": "801"
+                                        "$ref": "802"
                                       },
                                       "value": "WestUs"
                                     },
