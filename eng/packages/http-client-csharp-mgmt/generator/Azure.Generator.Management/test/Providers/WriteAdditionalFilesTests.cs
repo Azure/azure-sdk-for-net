@@ -26,6 +26,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.IsTrue(content.Contains("management client library for .NET"));
             Assert.IsTrue(content.Contains("Getting started"));
             Assert.IsTrue(content.Contains("Install the package"));
+            Assert.IsTrue(content.Contains("Authenticate the Client"));
+            Assert.IsTrue(content.Contains("mgmt_quickstart.md"));
         }
 
         [Test]
