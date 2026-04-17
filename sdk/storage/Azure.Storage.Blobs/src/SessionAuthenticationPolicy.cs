@@ -83,11 +83,23 @@ namespace Azure.Storage.Blobs
 
         private async ValueTask ProcessInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AuthStrategy strategy = AnalyzeRequest(message);
+            AuthState state = AnalyzeRequest(message);
 
-            if (strategy == AuthStrategy.UseBearerToken)
+            // If session-eligible, try to acquire a session, sign, and send.
+            if (state == AuthState.UseSessionToken)
             {
-                // Delegate to the bearer token policy which will authenticate and call ProcessNext.
+                state = await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
+            }
+
+            // If the session-authenticated request was sent, inspect the response.
+            if (state == AuthState.SentWithSession)
+            {
+                state = await HandleSessionResponseAsync(message, pipeline, async).ConfigureAwait(false);
+            }
+
+            // Fallback to bearer-token.
+            if (state == AuthState.UseBearerToken)
+            {
                 if (async)
                 {
                     await _bearerTokenPolicy.ProcessAsync(message, pipeline).ConfigureAwait(false);
@@ -96,19 +108,7 @@ namespace Azure.Storage.Blobs
                 {
                     _bearerTokenPolicy.Process(message, pipeline);
                 }
-                return;
             }
-
-            // Acquire session, sign, and send. Falls back to bearer token if
-            // session acquisition fails with service error (other errors will propagate).
-            if (!await TryGetSessionAndSendAsync(message, pipeline, async).ConfigureAwait(false))
-            {
-                // If fallen back to bearer token
-                return;
-            }
-
-            // Handle the response from the session-authenticated request.
-            await HandleSessionResponseAsync(message, pipeline, async).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -116,55 +116,63 @@ namespace Azure.Storage.Blobs
         /// Session tokens are only used for blob GET operations in <see cref="SessionMode.SingleContainer"/>
         /// mode targeting the configured container.
         /// </summary>
-        private AuthStrategy AnalyzeRequest(HttpMessage message)
+        private AuthState AnalyzeRequest(HttpMessage message)
         {
             // Check if Sessions is disabled.
             if (_sessionOptions.SessionMode == SessionMode.None)
             {
-                return AuthStrategy.UseBearerToken;
+                return AuthState.UseBearerToken;
             }
 
             // Only GET blob requests are eligible for session tokens.
             if (message.Request.Method != RequestMethod.Get)
             {
-                return AuthStrategy.UseBearerToken;
+                return AuthState.UseBearerToken;
             }
 
             BlobUriBuilder uriBuilder = new BlobUriBuilder(message.Request.Uri.ToUri());
 
-            // Service-level request (no container in path).
+            // If Service-level request (no container in path).
             if (string.IsNullOrEmpty(uriBuilder.BlobContainerName))
             {
-                return AuthStrategy.UseBearerToken;
+                return AuthState.UseBearerToken;
             }
 
-            // Container-level request (no blob in path).
+            // If Container-level request (no blob in path).
             if (string.IsNullOrEmpty(uriBuilder.BlobName))
             {
-                return AuthStrategy.UseBearerToken;
+                return AuthState.UseBearerToken;
+            }
+
+            // If request with a "comp" query parameter.
+            if (uriBuilder.Query?.Contains("comp=") == true)
+            {
+                return AuthState.UseBearerToken;
             }
 
             // Only the configured container is eligible for session tokens.
             if (!string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.InvariantCultureIgnoreCase))
             {
-                return AuthStrategy.UseBearerToken;
+                return AuthState.UseBearerToken;
             }
 
-            return AuthStrategy.UseSessionToken;
+            return AuthState.UseSessionToken;
         }
 
         /// <summary>
         /// Acquires a session token from the cache, signs the request, and sends
-        /// it through the pipeline.  If session acquisition fails with a
-        /// service error (5xx, 403, or 400/FeatureNotEnabled), falls back to
-        /// bearer token authentication instead.
+        /// it through the pipeline. If session acquisition fails with a service
+        /// error (5xx, 403, or 400/FeatureNotEnabled), returns
+        /// <see cref="AuthState.UseBearerToken"/> so the caller can re-issue
+        /// the request via the bearer token policy.
         /// </summary>
         /// <returns>
-        /// <c>true</c> if the request was sent with a session token and the
-        /// response should be inspected by the caller; <c>false</c> if bearer
-        /// fallback was used and no further session handling is needed.
+        /// <see cref="AuthState.SentWithSession"/> if the request was sent with a
+        /// session token (response is on <paramref name="message"/>);
+        /// <see cref="AuthState.UseBearerToken"/> if the caller should invoke
+        /// the bearer token policy.
         /// </returns>
-        private async ValueTask<bool> TryGetSessionAndSendAsync(
+        private async ValueTask<AuthState> TryAcquireSignAndSendAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
             bool async)
@@ -176,16 +184,8 @@ namespace Azure.Storage.Blobs
             }
             catch (RequestFailedException ex) when (ShouldFallbackCreateSessionFailure(ex))
             {
-                // Session creation failed with service error — fall back to bearer token.
-                if (async)
-                {
-                    await _bearerTokenPolicy.ProcessAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    _bearerTokenPolicy.Process(message, pipeline);
-                }
-                return false;
+                // Session creation failed with a service error — signal bearer fallback.
+                return AuthState.UseBearerToken;
             }
 
             SignRequestAndSetAuthHeader(message, sessionInfo);
@@ -200,14 +200,19 @@ namespace Azure.Storage.Blobs
                 ProcessNext(message, pipeline);
             }
 
-            return true;
+            return AuthState.SentWithSession;
         }
 
         /// <summary>
         /// Inspects the response after a request was sent with a session token and takes
         /// the appropriate action based on the status code and response headers.
         /// </summary>
-        private async ValueTask HandleSessionResponseAsync(
+        /// <returns>
+        /// <see cref="AuthState.SentWithSession"/> if no further action is required;
+        /// <see cref="AuthState.UseBearerToken"/> if the caller should re-issue
+        /// the request via the bearer token policy.
+        /// </returns>
+        private async ValueTask<AuthState> HandleSessionResponseAsync(
             HttpMessage message,
             ReadOnlyMemory<HttpPipelinePolicy> pipeline,
             bool async)
@@ -220,11 +225,11 @@ namespace Azure.Storage.Blobs
             {
                 if (wwwAuth.IndexOf(CreateNewSession, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    // Invalidate cache and retry
+                    // Invalidate cache and retry.
                     _sessionCache.Invalidate();
-                    await TryGetSessionAndSendAsync(message, pipeline, async).ConfigureAwait(false);
+                    return await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
                 }
-                return;
+                return AuthState.SentWithSession;
             }
 
             // --- 503 SessionOperationsTemporarilyUnavailable ---
@@ -232,15 +237,11 @@ namespace Azure.Storage.Blobs
                 && message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out string errorCode)
                 && string.Equals(errorCode, SessionsUnavailable, StringComparison.OrdinalIgnoreCase))
             {
-                if (async)
-                {
-                    await _bearerTokenPolicy.ProcessAsync(message, pipeline).ConfigureAwait(false);
-                }
-                else
-                {
-                    _bearerTokenPolicy.Process(message, pipeline);
-                }
+                // Fallback to bearer-token.
+                return AuthState.UseBearerToken;
             }
+
+            return AuthState.SentWithSession;
         }
 
         private static bool ShouldFallbackCreateSessionFailure(RequestFailedException ex) =>
@@ -320,10 +321,21 @@ namespace Azure.Storage.Blobs
                 new SessionTokenInfo(SessionToken, SessionKey, ExpiresOn, refreshOn);
         }
 
-        private enum AuthStrategy
+        /// <summary>
+        /// Represents the authentication state of the request as it moves through
+        /// <see cref="ProcessInternal"/>. Each step transitions the state toward
+        /// a final value of <see cref="SentWithSession"/> or <see cref="UseBearerToken"/>.
+        /// </summary>
+        private enum AuthState
         {
+            /// <summary>Request is eligible for session-token auth; not yet attempted.</summary>
+            UseSessionToken,
+
+            /// <summary>Request was sent with a session token; response is on the message.</summary>
+            SentWithSession,
+
+            /// <summary>Caller should invoke the bearer token policy for this request.</summary>
             UseBearerToken,
-            UseSessionToken
         }
     }
 }

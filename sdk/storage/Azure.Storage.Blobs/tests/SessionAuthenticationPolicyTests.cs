@@ -371,6 +371,30 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
         }
 
+        [TestCase("comp=metadata")]
+        [TestCase("comp=tags")]
+        [TestCase("comp=blocklist")]
+        [TestCase("snapshot=2023-01-01T00:00:00.0000000Z&comp=metadata")]
+        [TestCase("comp=metadata&timeout=30")]
+        public async Task CompQueryParameter_DelegatesToBearer(string query)
+        {
+            var mockBearer = CreateMockBearerPolicy();
+            var policy = CreatePolicy(
+                mockBearer,
+                SingleContainerOptions,
+                CreateSessionMockResponse());
+
+            var uriWithComp = new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{BlobName}?{query}");
+
+            await SendBlobGetAsync(
+                policy,
+                uriWithComp,
+                RequestMethod.Get,
+                new MockResponse(200));
+
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
+        }
+
         [Test]
         public async Task MatchingContainerBlobGet_UsesSessionToken()
         {

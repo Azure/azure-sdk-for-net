@@ -8948,7 +8948,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert — verify that Create Sessions was called and Get Blob request used Session authorization
-            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected the download request to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
         }
@@ -9069,6 +9069,60 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no additional CreateSession calls during concurrent downloads");
             Assert.AreEqual(10, countingPolicy.GetSessionAuthCount, "Expected all 10 concurrent downloads to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer during concurrent downloads");
+        }
+
+        [RecordedTest]
+        public async Task GetTagsAsync_Sessions_FallbackToBearer()
+        {
+            var containerName = GetNewContainerName();
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions()
+            {
+                SessionMode = SessionMode.SingleContainer,
+                AccountName = Tenants.TestConfigOAuth.AccountName,
+                ContainerName = containerName
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            {
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
+                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
+            };
+            foreach (BlockBlobClient blob in blobs)
+            {
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+            }
+
+            // Act — GetTags may fail with 403 due to insufficient RBAC permissions,
+            // but the counting policy still observes the auth headers on the request.
+            countingPolicy.Start();
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    await blobs[i].GetTagsAsync();
+                }
+                catch (RequestFailedException ex) when (ex.Status == 403 || ex.Status == 404)
+                {
+                    // Expected when the test identity lacks the required tag permissions.
+                }
+            }
+
+            // Assert — GetTags should fall back to Bearer, not use Session auth
+            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for GetTags operations");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected GetTags requests to not use Session authorization");
+            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no non-GET requests to use Session authorization");
+            Assert.IsTrue(countingPolicy.BearerGetBlobCount >= 3, "Expected GetTags requests to use Bearer authorization");
         }
 
         [RecordedTest]
@@ -9253,7 +9307,7 @@ namespace Azure.Storage.Blobs.Test
             await existingBlob.GetPropertiesAsync();
 
             // Assert
-            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(1, countingPolicy.GetSessionAuthCount, "Expected only the download request to use Session authorization");
             Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected upload and GetProperties requests to not use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected the download request to not use Bearer authorization");
@@ -9305,7 +9359,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
 
             // Assert — verify that Create Session was called and all parallel GET requests used Session auth
-            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.IsTrue(countingPolicy.GetSessionAuthCount > 1, "Expected multiple parallel download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
         }
@@ -9361,7 +9415,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert — verify that Create Session was called and streaming downloads used Session auth
-            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected streaming download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
         }
@@ -9415,7 +9469,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Assert — verify that Create Session was called and content downloads used Session auth
-            Assert.IsTrue(countingPolicy.CreateSessionCount > 0, "Expected create session request to be called");
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(3, countingPolicy.GetSessionAuthCount, "Expected content download requests to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
         }
