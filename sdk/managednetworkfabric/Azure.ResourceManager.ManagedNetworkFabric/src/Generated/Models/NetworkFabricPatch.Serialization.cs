@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string ipv4Prefix = default;
             string ipv6Prefix = default;
             long? fabricAsn = default;
-            TerminalServerPatchConfiguration terminalServerConfiguration = default;
-            ManagementNetworkPatchConfiguration managementNetworkConfiguration = default;
+            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
+            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             StorageAccountPatchConfiguration storageAccountConfiguration = default;
             int? hardwareAlertThreshold = default;
             IList<ResourceIdentifier> controlPlaneAcls = default;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            terminalServerConfiguration = TerminalServerPatchConfiguration.DeserializeTerminalServerPatchConfiguration(property0.Value, options);
+                            terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managementNetworkConfiguration"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            managementNetworkConfiguration = ManagementNetworkPatchConfiguration.DeserializeManagementNetworkPatchConfiguration(property0.Value, options);
+                            managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountConfiguration"u8))

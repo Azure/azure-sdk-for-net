@@ -50,8 +50,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("configurationType"u8);
-            writer.WriteStringValue(ConfigurationType.ToString());
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
             if (Optional.IsDefined(TapRulesUri))
             {
                 writer.WritePropertyName("tapRulesUrl"u8);
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(PollingIntervalInSeconds))
             {
                 writer.WritePropertyName("pollingIntervalInSeconds"u8);
-                writer.WriteNumberValue(PollingIntervalInSeconds.Value);
+                writer.WriteNumberValue(PollingIntervalInSeconds.Value.ToSerialInt32());
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
@@ -183,14 +186,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             SystemData systemData = default;
             string annotation = default;
-            NetworkFabricConfigurationType configurationType = default;
+            NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
             IdentitySelector identitySelector = default;
             IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             ResourceIdentifier networkTapId = default;
             IReadOnlyList<ResourceIdentifier> networkTapIds = default;
-            int? pollingIntervalInSeconds = default;
+            PollingIntervalInSecond? pollingIntervalInSeconds = default;
             DateTimeOffset? lastSyncedTime = default;
             GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default;
             LastOperationProperties lastOperation = default;
@@ -270,6 +273,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("configurationType"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
                             continue;
                         }
@@ -355,7 +362,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            pollingIntervalInSeconds = property0.Value.GetInt32();
+                            pollingIntervalInSeconds = new PollingIntervalInSecond(property0.Value.GetInt32());
                             continue;
                         }
                         if (property0.NameEquals("lastSyncedTime"u8))

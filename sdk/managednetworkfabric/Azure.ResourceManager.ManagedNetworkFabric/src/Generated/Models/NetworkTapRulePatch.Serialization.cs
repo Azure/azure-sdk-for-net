@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             NetworkFabricConfigurationType? configurationType = default;
             Uri tapRulesUrl = default;
-            IList<NetworkTapRuleMatchConfigurationPatch> matchConfigurations = default;
-            IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurations = default;
+            IList<NetworkTapRuleMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             IdentitySelectorPatch identitySelector = default;
             GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<NetworkTapRuleMatchConfigurationPatch> array = new List<NetworkTapRuleMatchConfigurationPatch>();
+                            List<NetworkTapRuleMatchConfiguration> array = new List<NetworkTapRuleMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapRuleMatchConfigurationPatch.DeserializeNetworkTapRuleMatchConfigurationPatch(item, options));
+                                array.Add(NetworkTapRuleMatchConfiguration.DeserializeNetworkTapRuleMatchConfiguration(item, options));
                             }
                             matchConfigurations = array;
                             continue;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<CommonDynamicMatchConfigurationPatch> array = new List<CommonDynamicMatchConfigurationPatch>();
+                            List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfigurationPatch.DeserializeCommonDynamicMatchConfigurationPatch(item, options));
+                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item, options));
                             }
                             dynamicMatchConfigurations = array;
                             continue;
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 annotation,
                 configurationType,
                 tapRulesUrl,
-                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfigurationPatch>(),
-                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>(),
+                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
                 identitySelector,
                 globalNetworkTapRuleActions);
         }

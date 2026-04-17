@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Community patch resource definition. </summary>
-    public partial class NetworkFabricIPCommunityPatch : TagsUpdate
+    public partial class NetworkFabricIPCommunityPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityPatch"/>. </summary>
         public NetworkFabricIPCommunityPatch()

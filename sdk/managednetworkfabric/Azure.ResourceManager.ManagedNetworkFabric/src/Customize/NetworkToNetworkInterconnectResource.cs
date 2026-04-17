@@ -9,6 +9,11 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
+    // The new API version changed action operation return types from generic result types
+    // (StateUpdateCommonPostActionResult) to operation-specific types. The generated methods were renamed
+    // via operationId directives (adding "WithTypedResult" suffix), and these shims preserve the
+    // original v1.1.2 method signatures.
     public partial class NetworkToNetworkInterconnectResource
     {
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use UpdateAdministrativeStateWithTypedResult instead for richer result type. </summary>

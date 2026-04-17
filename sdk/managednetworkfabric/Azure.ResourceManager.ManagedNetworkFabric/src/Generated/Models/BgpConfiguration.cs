@@ -57,11 +57,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             V6OverV4BgpSession = v6OverV4BgpSession;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/> for deserialization. </summary>
-        internal BgpConfiguration()
-        {
-        }
-
         /// <summary> BFD configuration properties. </summary>
         public BfdConfiguration BfdConfiguration { get; set; }
         /// <summary> Originate a defaultRoute. Ex: "True" | "False". </summary>

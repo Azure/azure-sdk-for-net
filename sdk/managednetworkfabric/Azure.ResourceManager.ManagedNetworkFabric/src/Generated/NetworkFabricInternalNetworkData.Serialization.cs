@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier egressAclId = default;
             IsMonitoringEnabled? isMonitoringEnabled = default;
             int vlanId = default;
-            BgpConfiguration bgpConfiguration = default;
-            StaticRouteConfiguration staticRouteConfiguration = default;
+            InternalNetworkBgpConfiguration bgpConfiguration = default;
+            InternalNetworkStaticRouteConfiguration staticRouteConfiguration = default;
             NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
             NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             LastOperationProperties lastOperation = default;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value, options);
+                            bgpConfiguration = InternalNetworkBgpConfiguration.DeserializeInternalNetworkBgpConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value, options);
+                            staticRouteConfiguration = InternalNetworkStaticRouteConfiguration.DeserializeInternalNetworkStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nativeIpv4PrefixLimit"u8))

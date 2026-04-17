@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
             RedistributeStaticRoute? redistributeStaticRoutes = default;
-            AggregateRoutePatchConfiguration aggregateRouteConfiguration = default;
-            ConnectedSubnetRoutePolicyPatch connectedSubnetRoutePolicy = default;
+            AggregateRouteConfiguration aggregateRouteConfiguration = default;
+            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             StaticRoutePolicyPatch staticRouteRoutePolicy = default;
             RoutePrefixLimitPatchProperties v4routePrefixLimit = default;
             RoutePrefixLimitPatchProperties v6routePrefixLimit = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            aggregateRouteConfiguration = AggregateRoutePatchConfiguration.DeserializeAggregateRoutePatchConfiguration(property0.Value, options);
+                            aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectedSubnetRoutePolicy"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicyPatch.DeserializeConnectedSubnetRoutePolicyPatch(property0.Value, options);
+                            connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteRoutePolicy"u8))

@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             BmpConfiguration = bmpConfiguration;
             PrefixLimits = prefixLimits;
         }
-
-        /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/> for deserialization. </summary>
-        internal OptionBLayer3Configuration()
-        {
-        }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
         public long? FabricAsn { get; }
         /// <summary> Provider Edge (PE) Loopback IP Address. </summary>

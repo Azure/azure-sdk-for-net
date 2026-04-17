@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Neighbor Group Patch definition. </summary>
-    public partial class NetworkFabricNeighborGroupPatch : TagsUpdate
+    public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         public NetworkFabricNeighborGroupPatch()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NeighborGroupDestinationPatch destination) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NeighborGroupDestination destination) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestinationPatch Destination { get; set; }
+        public NeighborGroupDestination Destination { get; set; }
     }
 }

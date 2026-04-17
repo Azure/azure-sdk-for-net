@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,15 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(TerminalServerConfiguration)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("username"u8);
-            writer.WriteStringValue(Username);
-            writer.WritePropertyName("password"u8);
-            writer.WriteStringValue(Password);
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("primaryIpv4Prefix"u8);
             writer.WriteStringValue(PrimaryIPv4Prefix);
             if (Optional.IsDefined(PrimaryIPv6Prefix))
@@ -72,21 +64,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         TerminalServerConfiguration IJsonModel<TerminalServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -109,34 +86,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string username = default;
-            string password = default;
-            string serialNumber = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
             ResourceIdentifier networkDeviceId = default;
             IReadOnlyList<SecretRotationStatus> secretRotationStatus = default;
+            string username = default;
+            string password = default;
+            string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"u8))
-                {
-                    username = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"u8))
-                {
-                    password = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serialNumber"u8))
-                {
-                    serialNumber = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
                 {
                     primaryIPv4Prefix = property.Value.GetString();
@@ -180,6 +142,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secretRotationStatus = array;
                     continue;
                 }
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("password"u8))
+                {
+                    password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -190,13 +167,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 username,
                 password,
                 serialNumber,
+                serializedAdditionalRawData,
                 primaryIPv4Prefix,
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
                 networkDeviceId,
-                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>(),
-                serializedAdditionalRawData);
+                secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>());
         }
 
         BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

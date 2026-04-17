@@ -53,10 +53,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
-        public NetworkTapRuleData(AzureLocation location, NetworkFabricConfigurationType configurationType) : base(location)
+        public NetworkTapRuleData(AzureLocation location) : base(location)
         {
-            ConfigurationType = configurationType;
             MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
             NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -88,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri, IdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, int? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IdentitySelector identitySelector, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, IReadOnlyList<ResourceIdentifier> networkTapIds, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions, LastOperationProperties lastOperation, IReadOnlyList<ResourceIdentifier> networkFabricIds, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Annotation = annotation;
@@ -120,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public NetworkFabricConfigurationType ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri { get; set; }
         /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
@@ -134,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
         /// <summary> Polling interval in seconds. </summary>
-        public int? PollingIntervalInSeconds { get; set; }
+        public PollingIntervalInSecond? PollingIntervalInSeconds { get; set; }
         /// <summary> The last sync timestamp. </summary>
         public DateTimeOffset? LastSyncedOn { get; }
         /// <summary> Global network tap rule actions. </summary>

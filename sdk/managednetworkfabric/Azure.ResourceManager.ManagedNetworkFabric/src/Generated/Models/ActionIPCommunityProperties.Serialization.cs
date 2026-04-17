@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,11 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Add))
-            {
-                writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add, options);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
@@ -48,21 +44,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -86,22 +67,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IPCommunityIdList @add = default;
             IPCommunityIdList delete = default;
             IPCommunityIdList @set = default;
+            IPCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("add"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("delete"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,13 +92,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     @set = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("add"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActionIPCommunityProperties(@add, delete, @set, serializedAdditionalRawData);
+            return new ActionIPCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
         }
 
         BinaryData IPersistableModel<ActionIPCommunityProperties>.Write(ModelReaderWriterOptions options)

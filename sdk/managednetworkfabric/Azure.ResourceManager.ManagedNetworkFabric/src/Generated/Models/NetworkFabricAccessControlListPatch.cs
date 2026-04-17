@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
-    public partial class NetworkFabricAccessControlListPatch : TagsUpdate
+    public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
         {
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfigurationPatch>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>();
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
             ControlPlaneAclConfiguration = new ChangeTrackingList<ControlPlaneAclPatchProperties>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="deviceRole"> Device Role. </param>
         /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfigurationPatch> matchConfigurations, IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
             AclsUri = aclsUri;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
         public CommunityActionType? DefaultAction { get; set; }
         /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfigurationPatch> MatchConfigurations { get; }
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations { get; }
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
         /// <summary> Access Control List (ACL) configurations. </summary>
         public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get; }
         /// <summary> Access Control List (ACL) Type. </summary>

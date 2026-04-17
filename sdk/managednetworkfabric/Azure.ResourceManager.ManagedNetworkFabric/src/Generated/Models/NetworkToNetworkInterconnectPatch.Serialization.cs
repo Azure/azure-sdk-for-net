@@ -108,14 +108,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string type = default;
+            string name = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            Layer2ConfigurationPatch layer2Configuration = default;
-            OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration = default;
-            NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration = default;
+            Layer2Configuration layer2Configuration = default;
+            OptionBLayer3Configuration optionBLayer3Configuration = default;
+            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
-            ImportRoutePolicyInformationPatch importRoutePolicy = default;
-            ExportRoutePolicyInformationPatch exportRoutePolicy = default;
+            ImportRoutePolicyInformation importRoutePolicy = default;
+            ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
             MicroBfdState? microBfdState = default;
@@ -125,16 +126,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            layer2Configuration = Layer2ConfigurationPatch.DeserializeLayer2ConfigurationPatch(property0.Value, options);
+                            layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionBLayer3Configuration"u8))
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = OptionBLayer3ConfigurationPatchProperties.DeserializeOptionBLayer3ConfigurationPatchProperties(property0.Value, options);
+                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -179,7 +181,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            npbStaticRouteConfiguration = NpbStaticRouteConfigurationPatch.DeserializeNpbStaticRouteConfigurationPatch(property0.Value, options);
+                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -197,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyInformationPatch.DeserializeImportRoutePolicyInformationPatch(property0.Value, options);
+                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -206,7 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyInformationPatch.DeserializeExportRoutePolicyInformationPatch(property0.Value, options);
+                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("egressAclId"u8))
@@ -247,9 +249,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkToNetworkInterconnectPatch(
                 id,
+                name,
                 type,
                 systemData,
-                serializedAdditionalRawData,
                 layer2Configuration,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
@@ -258,7 +260,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 exportRoutePolicy,
                 egressAclId,
                 ingressAclId,
-                microBfdState);
+                microBfdState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectPatch>.Write(ModelReaderWriterOptions options)

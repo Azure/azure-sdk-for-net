@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkFabric resource definition. </summary>
-    public partial class NetworkTapPatch : TagsUpdate
+    public partial class NetworkTapPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
         public NetworkTapPatch()
         {
-            Destinations = new ChangeTrackingList<DestinationPatchProperties>();
+            Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
-        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NetworkTapPollingType? pollingType, IList<DestinationPatchProperties> destinations) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Polling type. </summary>
         public NetworkTapPollingType? PollingType { get; set; }
         /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<DestinationPatchProperties> Destinations { get; }
+        public IList<NetworkTapPatchableParametersDestinationsItem> Destinations { get; }
     }
 }

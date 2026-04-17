@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             CommunityActionType? defaultAction = default;
-            IList<RoutePolicyStatementPatchProperties> statements = default;
+            IList<RoutePolicyStatementProperties> statements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<RoutePolicyStatementPatchProperties> array = new List<RoutePolicyStatementPatchProperties>();
+                            List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutePolicyStatementPatchProperties.DeserializeRoutePolicyStatementPatchProperties(item, options));
+                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item, options));
                             }
                             statements = array;
                             continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricRoutePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, defaultAction, statements ?? new ChangeTrackingList<RoutePolicyStatementPatchProperties>());
+            return new NetworkFabricRoutePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, defaultAction, statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>());
         }
 
         BinaryData IPersistableModel<NetworkFabricRoutePolicyPatch>.Write(ModelReaderWriterOptions options)

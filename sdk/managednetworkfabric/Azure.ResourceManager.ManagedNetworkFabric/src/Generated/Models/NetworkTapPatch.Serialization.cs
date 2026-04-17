@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IDictionary<string, string> tags = default;
             string annotation = default;
             NetworkTapPollingType? pollingType = default;
-            IList<DestinationPatchProperties> destinations = default;
+            IList<NetworkTapPatchableParametersDestinationsItem> destinations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            List<DestinationPatchProperties> array = new List<DestinationPatchProperties>();
+                            List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DestinationPatchProperties.DeserializeDestinationPatchProperties(item, options));
+                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item, options));
                             }
                             destinations = array;
                             continue;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 identity,
                 annotation,
                 pollingType,
-                destinations ?? new ChangeTrackingList<DestinationPatchProperties>());
+                destinations ?? new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>());
         }
 
         BinaryData IPersistableModel<NetworkTapPatch>.Write(ModelReaderWriterOptions options)

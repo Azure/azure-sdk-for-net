@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, string ipV4Address = null, int? port = null, InternetGatewayType? typePropertiesType = null, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, string ipV4Address = null, int? port = null, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
-        /// <param name="exportRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="staticRouteExportRoutePolicy"> Static Route - route policy. </param>
         /// <param name="uniqueRds"> Unique Route Distinguisher configuration. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, AggregateRouteConfiguration aggregateRouteConfiguration = null, L3ExportRoutePolicy exportRoutePolicy = null, ResourceIdentifier networkFabricId = null, L3ExportRoutePolicy staticRouteExportRoutePolicy = null, IEnumerable<string> uniqueRds = null, RoutePrefixLimitProperties v4RoutePrefixLimit = null, RoutePrefixLimitProperties v6RoutePrefixLimit = null, string lastOperationDetails = null, IEnumerable<BmpExportPolicy> exportPolicies = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, RedistributeConnectedSubnet? redistributeConnectedSubnets = null, RedistributeStaticRoute? redistributeStaticRoutes = null, AggregateRouteConfiguration aggregateRouteConfiguration = null, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = null, ResourceIdentifier networkFabricId = null, L3ExportRoutePolicy staticRouteExportRoutePolicy = null, IEnumerable<string> uniqueRds = null, RoutePrefixLimitProperties v4RoutePrefixLimit = null, RoutePrefixLimitProperties v6RoutePrefixLimit = null, string lastOperationDetails = null, IEnumerable<BmpExportPolicy> exportPolicies = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             uniqueRds ??= new List<string>();
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
                 aggregateRouteConfiguration,
-                exportRoutePolicy != null ? new ConnectedSubnetRoutePolicy(exportRoutePolicy, serializedAdditionalRawData: null) : null,
+                connectedSubnetRoutePolicy,
                 networkFabricId,
                 staticRouteExportRoutePolicy != null ? new StaticRoutePolicy(staticRouteExportRoutePolicy, serializedAdditionalRawData: null) : null,
                 uniqueRds != null ? new L3UniqueRouteDistinguisherProperties(uniqueRds?.ToList(), serializedAdditionalRawData: null) : null,
@@ -829,31 +829,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 username,
                 password,
                 serialNumber,
+                serializedAdditionalRawData: null,
                 primaryIPv4Prefix,
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
                 networkDeviceId,
-                secretRotationStatus?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties. </param>
-        /// <param name="optionAProperties"> option A properties. </param>
-        /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
-        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = null, NetworkFabricAdministrativeState? administrativeState = null, PeeringOption peeringOption = default, VpnOptionBProperties optionBProperties = null, VpnOptionAProperties optionAProperties = null)
-        {
-            return new VpnConfigurationProperties(
-                networkToNetworkInterconnectId,
-                administrativeState,
-                peeringOption,
-                optionBProperties,
-                optionAProperties,
-                serializedAdditionalRawData: null);
+                secretRotationStatus?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BfdConfiguration"/>. </summary>
@@ -1018,7 +1000,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, NetworkFabricConfigurationType configurationType = default, Uri tapRulesUri = null, IdentitySelector identitySelector = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, ResourceIdentifier networkTapId = null, IEnumerable<ResourceIdentifier> networkTapIds = null, int? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri tapRulesUri = null, IdentitySelector identitySelector = null, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, ResourceIdentifier networkTapId = null, IEnumerable<ResourceIdentifier> networkTapIds = null, PollingIntervalInSecond? pollingIntervalInSeconds = null, DateTimeOffset? lastSyncedOn = null, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = null, string lastOperationDetails = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             matchConfigurations ??= new List<NetworkTapRuleMatchConfiguration>();
@@ -1072,11 +1054,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapData"/> instance for mocking. </returns>
-        public static NetworkTapData NetworkTapData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, ResourceIdentifier networkPacketBrokerId = null, ResourceIdentifier sourceTapRuleId = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, IEnumerable<NetworkTapDestinationProperties> destinations = null, NetworkTapPollingType? pollingType = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkTapData NetworkTapData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string annotation = null, ResourceIdentifier networkPacketBrokerId = null, ResourceIdentifier sourceTapRuleId = null, IEnumerable<ResourceIdentifier> networkFabricIds = null, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations = null, NetworkTapPollingType? pollingType = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             networkFabricIds ??= new List<ResourceIdentifier>();
-            destinations ??= new List<NetworkTapDestinationProperties>();
+            destinations ??= new List<NetworkTapPropertiesDestinationsItem>();
 
             return new NetworkTapData(
                 id,
@@ -1299,6 +1281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
                 mtu,
                 vlanId,
                 fabricAsn,
@@ -1310,8 +1293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
                 nativeIPv4PrefixLimits != null ? new NativeIPv4PrefixLimitProperties(nativeIPv4PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null,
-                nativeIPv6PrefixLimits != null ? new NativeIPv6PrefixLimitProperties(nativeIPv6PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                nativeIPv6PrefixLimits != null ? new NativeIPv6PrefixLimitProperties(nativeIPv6PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
@@ -1332,7 +1314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimits"> Native IPv4 prefix limit configuration. </param>
         /// <param name="nativeIPv6PrefixLimits"> Native IPv6 prefix limit configuration. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkPatchOptionAProperties"/> instance for mocking. </returns>
-        public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdPatchConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, BmpConfigurationState? bmpConfigurationState = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv6PrefixLimits = null)
+        public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, BmpConfigurationState? bmpConfigurationState = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitPatchProperties> nativeIPv6PrefixLimits = null)
         {
             nativeIPv4PrefixLimits ??= new List<PrefixLimitPatchProperties>();
             nativeIPv6PrefixLimits ??= new List<PrefixLimitPatchProperties>();
@@ -1342,6 +1324,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
                 mtu,
                 vlanId,
                 fabricAsn,
@@ -1353,8 +1336,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
                 nativeIPv4PrefixLimits != null ? new NativeIPv4PrefixLimitPatchProperties(nativeIPv4PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null,
-                nativeIPv6PrefixLimits != null ? new NativeIPv6PrefixLimitPatchProperties(nativeIPv6PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                nativeIPv6PrefixLimits != null ? new NativeIPv6PrefixLimitPatchProperties(nativeIPv6PrefixLimits?.ToList(), serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BfdPatchConfiguration"/>. </summary>
@@ -1432,7 +1414,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
-        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, StaticRouteConfigurationExtension? extension = null, int? mtu = null, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = null, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = null, ImportRoutePolicy importRoutePolicy = null, ExportRoutePolicy exportRoutePolicy = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, IsMonitoringEnabled? isMonitoringEnabled = null, int vlanId = default, BgpConfiguration bgpConfiguration = null, StaticRouteConfiguration staticRouteConfiguration = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null, string lastOperationDetails = null, ResourceIdentifier networkFabricId = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, StaticRouteConfigurationExtension? extension = null, int? mtu = null, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = null, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = null, ImportRoutePolicy importRoutePolicy = null, ExportRoutePolicy exportRoutePolicy = null, ResourceIdentifier ingressAclId = null, ResourceIdentifier egressAclId = null, IsMonitoringEnabled? isMonitoringEnabled = null, int vlanId = default, InternalNetworkBgpConfiguration bgpConfiguration = null, InternalNetworkStaticRouteConfiguration staticRouteConfiguration = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null, string lastOperationDetails = null, ResourceIdentifier networkFabricId = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             connectedIPv4Subnets ??= new List<ConnectedSubnet>();
             connectedIPv6Subnets ??= new List<ConnectedSubnet>();
@@ -1465,6 +1447,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 provisioningState,
                 administrativeState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
+        /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
+        /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = null, BfdConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddress> ipv4NeighborAddress = null, IEnumerable<NeighborAddress> ipv6NeighborAddress = null, InternalNetworkBmpProperties bmpConfiguration = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null)
+        {
+            ipv4ListenRangePrefixes ??= new List<string>();
+            ipv6ListenRangePrefixes ??= new List<string>();
+            ipv4NeighborAddress ??= new List<NeighborAddress>();
+            ipv6NeighborAddress ??= new List<NeighborAddress>();
+
+            return new InternalNetworkBgpConfiguration(
+                annotation,
+                serializedAdditionalRawData: null,
+                bfdConfiguration,
+                defaultRouteOriginate,
+                allowAS,
+                allowASOverride,
+                fabricAsn,
+                peerAsn,
+                ipv4ListenRangePrefixes?.ToList(),
+                ipv6ListenRangePrefixes?.ToList(),
+                ipv4NeighborAddress?.ToList(),
+                ipv6NeighborAddress?.ToList(),
+                bmpConfiguration,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
@@ -1517,58 +1540,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static NeighborAddress NeighborAddress(string address = null, BfdAdministrativeState? bfdAdministrativeState = null, BgpAdministrativeState? bgpAdministrativeState = null, NetworkFabricConfigurationState? configurationState = null)
         {
             return new NeighborAddress(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BgpPatchConfiguration"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
-        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
-        /// <param name="allowASOverride"> Enable Or Disable state. </param>
-        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
-        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
-        /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
-        /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
-        /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
-        /// <returns> A new <see cref="Models.BgpPatchConfiguration"/> instance for mocking. </returns>
-        public static BgpPatchConfiguration BgpPatchConfiguration(string annotation = null, BfdPatchConfiguration bfdConfiguration = null, NetworkFabricBooleanValue? defaultRouteOriginate = null, int? allowAS = null, AllowASOverride? allowASOverride = null, long? fabricAsn = null, long? peerAsn = null, IEnumerable<string> ipv4ListenRangePrefixes = null, IEnumerable<string> ipv6ListenRangePrefixes = null, IEnumerable<NeighborAddressPatch> ipv4NeighborAddress = null, IEnumerable<NeighborAddressPatch> ipv6NeighborAddress = null, InternalNetworkBmpPatchProperties bmpConfiguration = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null)
-        {
-            ipv4ListenRangePrefixes ??= new List<string>();
-            ipv6ListenRangePrefixes ??= new List<string>();
-            ipv4NeighborAddress ??= new List<NeighborAddressPatch>();
-            ipv6NeighborAddress ??= new List<NeighborAddressPatch>();
-
-            return new BgpPatchConfiguration(
-                annotation,
-                serializedAdditionalRawData: null,
-                bfdConfiguration,
-                defaultRouteOriginate,
-                allowAS,
-                allowASOverride,
-                fabricAsn,
-                peerAsn,
-                ipv4ListenRangePrefixes?.ToList(),
-                ipv6ListenRangePrefixes?.ToList(),
-                ipv4NeighborAddress?.ToList(),
-                ipv6NeighborAddress?.ToList(),
-                bmpConfiguration,
-                v4OverV6BgpSession,
-                v6OverV4BgpSession);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NeighborAddressPatch"/>. </summary>
-        /// <param name="address"> IP Address. </param>
-        /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
-        /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <returns> A new <see cref="Models.NeighborAddressPatch"/> instance for mocking. </returns>
-        public static NeighborAddressPatch NeighborAddressPatch(string address = null, BfdAdministrativeState? bfdAdministrativeState = null, BgpAdministrativeState? bgpAdministrativeState = null, NetworkFabricConfigurationState? configurationState = null)
-        {
-            return new NeighborAddressPatch(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkUpdateBfdAdministrativeStateResult"/>. </summary>
@@ -2310,7 +2281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, IsManagementType? isManagementType = null, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = null, OptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRouteConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NniType? nniType = null, IsManagementType? isManagementType = null, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = null, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRouteConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             return new NetworkToNetworkInterconnectData(
                 id,
@@ -2335,6 +2306,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 provisioningState,
                 administrativeState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
+        /// <param name="bmpConfigurationState"> BGP Monitoring Protocol (BMP) Configuration. </param>
+        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
+        public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long? peerAsn = null, int? vlanId = null, long? fabricAsn = null, IEnumerable<string> peLoopbackIPAddress = null, BmpConfigurationState? bmpConfigurationState = null, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits = null)
+        {
+            peLoopbackIPAddress ??= new List<string>();
+            prefixLimits ??= new List<OptionBLayer3PrefixLimitProperties>();
+
+            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
+                primaryIPv4Prefix,
+                primaryIPv6Prefix,
+                secondaryIPv4Prefix,
+                secondaryIPv6Prefix,
+                serializedAdditionalRawData: null,
+                peerAsn,
+                vlanId,
+                fabricAsn,
+                peLoopbackIPAddress?.ToList(),
+                bmpConfigurationState.HasValue ? new NniBmpProperties(bmpConfigurationState.Value, serializedAdditionalRawData: null) : null,
+                prefixLimits?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
@@ -2369,9 +2371,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="proxyResourceBaseType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
@@ -2382,13 +2385,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = null, string proxyResourceBaseType = null, SystemData systemData = null, Layer2ConfigurationPatch layer2Configuration = null, OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration = null, NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration = null, NniStaticRoutePatchConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformationPatch importRoutePolicy = null, ExportRoutePolicyInformationPatch exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Layer2Configuration layer2Configuration = null, OptionBLayer3Configuration optionBLayer3Configuration = null, NpbStaticRouteConfiguration npbStaticRouteConfiguration = null, NniStaticRoutePatchConfiguration staticRouteConfiguration = null, ImportRoutePolicyInformation importRoutePolicy = null, ExportRoutePolicyInformation exportRoutePolicy = null, ResourceIdentifier egressAclId = null, ResourceIdentifier ingressAclId = null, MicroBfdState? microBfdState = null)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
-                proxyResourceBaseType,
+                name,
+                resourceType,
                 systemData,
-                serializedAdditionalRawData: null,
                 layer2Configuration,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
@@ -2397,48 +2400,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 exportRoutePolicy,
                 egressAclId,
                 ingressAclId,
-                microBfdState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3ConfigurationPatchProperties"/>. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
-        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="peLoopbackIPAddress"> Provider Edge (PE) Loopback IP Address. </param>
-        /// <param name="bmpConfigurationState"> BGP Monitoring Protocol (BMP) Configuration. </param>
-        /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
-        /// <returns> A new <see cref="Models.OptionBLayer3ConfigurationPatchProperties"/> instance for mocking. </returns>
-        public static OptionBLayer3ConfigurationPatchProperties OptionBLayer3ConfigurationPatchProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long? peerAsn = null, int? vlanId = null, long? fabricAsn = null, IEnumerable<string> peLoopbackIPAddress = null, BmpConfigurationState? bmpConfigurationState = null, IEnumerable<OptionBLayer3PrefixLimitPatchProperties> prefixLimits = null)
-        {
-            peLoopbackIPAddress ??= new List<string>();
-            prefixLimits ??= new List<OptionBLayer3PrefixLimitPatchProperties>();
-
-            return new OptionBLayer3ConfigurationPatchProperties(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                serializedAdditionalRawData: null,
-                peerAsn,
-                vlanId,
-                fabricAsn,
-                peLoopbackIPAddress?.ToList(),
-                bmpConfigurationState != null ? new NniBmpPatchProperties(bmpConfigurationState, serializedAdditionalRawData: null) : null,
-                prefixLimits?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProxyResourceBase"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="proxyResourceBaseType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.ProxyResourceBase"/> instance for mocking. </returns>
-        public static ProxyResourceBase ProxyResourceBase(ResourceIdentifier id = null, string proxyResourceBaseType = null, SystemData systemData = null)
-        {
-            return new ProxyResourceBase(id, proxyResourceBaseType, systemData, serializedAdditionalRawData: null);
+                microBfdState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NniUpdateBfdAdministrativeStateResult"/>. </summary>

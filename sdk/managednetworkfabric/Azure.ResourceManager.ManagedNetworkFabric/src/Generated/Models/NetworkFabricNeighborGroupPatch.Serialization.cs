@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
-            NeighborGroupDestinationPatch destination = default;
+            NeighborGroupDestination destination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            destination = NeighborGroupDestinationPatch.DeserializeNeighborGroupDestinationPatch(property0.Value, options);
+                            destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(property0.Value, options);
                             continue;
                         }
                     }

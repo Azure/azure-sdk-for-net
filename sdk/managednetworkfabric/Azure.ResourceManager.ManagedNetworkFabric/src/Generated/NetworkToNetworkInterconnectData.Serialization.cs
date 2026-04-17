@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IsManagementType? isManagementType = default;
             NetworkFabricBooleanValue useOptionB = default;
             Layer2Configuration layer2Configuration = default;
-            OptionBLayer3Configuration optionBLayer3Configuration = default;
+            NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRouteConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(property0.Value, options);
+                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))

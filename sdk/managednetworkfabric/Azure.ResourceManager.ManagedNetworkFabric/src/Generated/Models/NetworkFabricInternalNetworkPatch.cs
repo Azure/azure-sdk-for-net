@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnetPatch>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnetPatch>();
+            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnetPatch> connectedIPv4Subnets, IList<ConnectedSubnetPatch> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpPatchConfiguration bgpConfiguration, StaticRoutePatchConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
         /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnetPatch> ConnectedIPv4Subnets { get; }
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
         /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnetPatch> ConnectedIPv6Subnets { get; }
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
         public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
         /// <summary> BGP configuration properties. </summary>
-        public BgpPatchConfiguration BgpConfiguration { get; set; }
+        public BgpConfiguration BgpConfiguration { get; set; }
         /// <summary> Static Route Configuration properties. </summary>
-        public StaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
         /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
         internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
         /// <summary> Prefix limits. </summary>

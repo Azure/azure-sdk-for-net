@@ -9,10 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// Wraps an <see cref="ArmOperation{TSource}"/> to present it as an <see cref="ArmOperation{TTarget}"/>
-    /// by converting the result value. Used for backward-compatible method shims where the return type changed.
-    /// </summary>
+    // Backward compatibility adapter for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
+    // The new API version changed the return types of resource action operations from generic result types
+    // (e.g. StateUpdateCommonPostActionResult) to operation-specific result types. This adapter enables
+    // the old method signatures to delegate to the new generated methods while converting the result back.
     internal sealed class CompatArmOperation<TSource, TTarget> : ArmOperation<TTarget>
     {
         private readonly ArmOperation<TSource> _inner;

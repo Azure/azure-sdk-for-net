@@ -13,18 +13,50 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
-    public partial class NetworkToNetworkInterconnectPatch : ProxyResourceBase
+    public partial class NetworkToNetworkInterconnectPatch : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         public NetworkToNetworkInterconnectPatch()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="proxyResourceBaseType"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
@@ -34,7 +66,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string proxyResourceBaseType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, Layer2ConfigurationPatch layer2Configuration, OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration, NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformationPatch importRoutePolicy, ExportRoutePolicyInformationPatch exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState) : base(id, proxyResourceBaseType, systemData, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;
@@ -45,20 +78,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             EgressAclId = egressAclId;
             IngressAclId = ingressAclId;
             MicroBfdState = microBfdState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2ConfigurationPatch Layer2Configuration { get; set; }
+        public Layer2Configuration Layer2Configuration { get; set; }
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public OptionBLayer3ConfigurationPatchProperties OptionBLayer3Configuration { get; set; }
+        public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
         /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfigurationPatch NpbStaticRouteConfiguration { get; set; }
+        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
         /// <summary> Static Route Configuration. </summary>
         public NniStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
         /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformationPatch ImportRoutePolicy { get; set; }
+        public ImportRoutePolicyInformation ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformationPatch ExportRoutePolicy { get; set; }
+        public ExportRoutePolicyInformation ExportRoutePolicy { get; set; }
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier EgressAclId { get; set; }
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>

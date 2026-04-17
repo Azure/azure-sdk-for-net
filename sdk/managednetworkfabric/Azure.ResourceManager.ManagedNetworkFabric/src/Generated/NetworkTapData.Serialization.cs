@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier networkPacketBrokerId = default;
             ResourceIdentifier sourceTapRuleId = default;
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
-            IList<NetworkTapDestinationProperties> destinations = default;
+            IList<NetworkTapPropertiesDestinationsItem> destinations = default;
             NetworkTapPollingType? pollingType = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("destinations"u8))
                         {
-                            List<NetworkTapDestinationProperties> array = new List<NetworkTapDestinationProperties>();
+                            List<NetworkTapPropertiesDestinationsItem> array = new List<NetworkTapPropertiesDestinationsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapDestinationProperties.DeserializeNetworkTapDestinationProperties(item, options));
+                                array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item, options));
                             }
                             destinations = array;
                             continue;

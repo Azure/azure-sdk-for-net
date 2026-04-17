@@ -12,55 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-    public partial class TerminalServerConfiguration
+    public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
-        /// <param name="username"> Username for the terminal server connection. </param>
-        /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/>, <paramref name="password"/>, <paramref name="primaryIPv4Prefix"/> or <paramref name="secondaryIPv4Prefix"/> is null. </exception>
-        public TerminalServerConfiguration(string username, string password, string primaryIPv4Prefix, string secondaryIPv4Prefix)
+        /// <exception cref="ArgumentNullException"> <paramref name="primaryIPv4Prefix"/> or <paramref name="secondaryIPv4Prefix"/> is null. </exception>
+        public TerminalServerConfiguration(string primaryIPv4Prefix, string secondaryIPv4Prefix)
         {
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(primaryIPv4Prefix, nameof(primaryIPv4Prefix));
             Argument.AssertNotNull(secondaryIPv4Prefix, nameof(secondaryIPv4Prefix));
 
-            Username = username;
-            Password = password;
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             SecondaryIPv4Prefix = secondaryIPv4Prefix;
             SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
@@ -70,38 +32,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<SecretRotationStatus> secretRotationStatus) : base(username, password, serialNumber, serializedAdditionalRawData)
         {
-            Username = username;
-            Password = password;
-            SerialNumber = serialNumber;
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;
             SecondaryIPv4Prefix = secondaryIPv4Prefix;
             SecondaryIPv6Prefix = secondaryIPv6Prefix;
             NetworkDeviceId = networkDeviceId;
             SecretRotationStatus = secretRotationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/> for deserialization. </summary>
-        internal TerminalServerConfiguration()
-        {
-        }
-
-        /// <summary> Username for the terminal server connection. </summary>
-        public string Username { get; set; }
-        /// <summary> Password for the terminal server connection. </summary>
-        public string Password { get; set; }
-        /// <summary> Serial Number of Terminal server. </summary>
-        public string SerialNumber { get; set; }
         /// <summary> IPv4 Address Prefix. </summary>
         public string PrimaryIPv4Prefix { get; set; }
         /// <summary> IPv6 Address Prefix. </summary>

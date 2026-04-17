@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Prefix of the route. </summary>
-        public string Prefix { get; }
+        public string Prefix { get; set; }
         /// <summary> List of next hop addresses. </summary>
         public IList<string> NextHop { get; }
     }

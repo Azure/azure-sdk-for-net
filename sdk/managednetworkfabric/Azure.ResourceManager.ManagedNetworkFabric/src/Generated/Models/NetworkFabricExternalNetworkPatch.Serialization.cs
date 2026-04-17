@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             ResourceIdentifier networkToNetworkInterconnectId = default;
-            ImportRoutePolicyPatch importRoutePolicy = default;
-            ExportRoutePolicyPatch exportRoutePolicy = default;
+            ImportRoutePolicy importRoutePolicy = default;
+            ExportRoutePolicy exportRoutePolicy = default;
             PeeringOption? peeringOption = default;
-            L3OptionBPatchProperties optionBProperties = default;
+            L3OptionBProperties optionBProperties = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
             ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicyPatch.DeserializeImportRoutePolicyPatch(property0.Value, options);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicyPatch.DeserializeExportRoutePolicyPatch(property0.Value, options);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peeringOption"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            optionBProperties = L3OptionBPatchProperties.DeserializeL3OptionBPatchProperties(property0.Value, options);
+                            optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("optionAProperties"u8))

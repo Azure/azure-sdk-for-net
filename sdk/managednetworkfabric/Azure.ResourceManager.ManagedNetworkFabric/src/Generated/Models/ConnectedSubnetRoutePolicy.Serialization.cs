@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IJsonModel<ConnectedSubnetRoutePolicy>
+    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IJsonModel<ConnectedSubnetRoutePolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedSubnetRoutePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy, options);
+            }
+            if (Optional.IsDefined(ExportRoutePolicyId))
+            {
+                writer.WritePropertyName("exportRoutePolicyId"u8);
+                writer.WriteStringValue(ExportRoutePolicyId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             L3ExportRoutePolicy exportRoutePolicy = default;
+            ResourceIdentifier exportRoutePolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("exportRoutePolicyId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exportRoutePolicyId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectedSubnetRoutePolicy(exportRoutePolicy, serializedAdditionalRawData);
+            return new ConnectedSubnetRoutePolicy(exportRoutePolicy, exportRoutePolicyId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectedSubnetRoutePolicy>.Write(ModelReaderWriterOptions options)

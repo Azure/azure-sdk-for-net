@@ -53,21 +53,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="destinations"> List of destinations to send the filter traffic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinations"/> is null. </exception>
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapDestinationProperties> destinations) : base(location)
-        {
-            Argument.AssertNotNull(networkPacketBrokerId, nameof(networkPacketBrokerId));
-            Argument.AssertNotNull(destinations, nameof(destinations));
-
-            NetworkPacketBrokerId = networkPacketBrokerId;
-            NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
-            Destinations = destinations.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -86,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<NetworkTapDestinationProperties> destinations, NetworkTapPollingType? pollingType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IReadOnlyList<ResourceIdentifier> networkFabricIds, IList<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Annotation = annotation;
@@ -118,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Associated Network Fabric Resource IDs. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
         /// <summary> List of destinations to send the filter traffic. </summary>
-        public IList<NetworkTapDestinationProperties> Destinations { get; }
+        public IList<NetworkTapPropertiesDestinationsItem> Destinations { get; }
         /// <summary> Polling type. </summary>
         public NetworkTapPollingType? PollingType { get; set; }
         /// <summary> Details of the last operation performed on the resource. </summary>

@@ -12,40 +12,8 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties object. </summary>
-    public partial class ExternalNetworkOptionAProperties
+    public partial class ExternalNetworkOptionAProperties : Layer3IPPrefixProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/>. </summary>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
@@ -60,6 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
@@ -72,13 +41,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
         /// <param name="nativeIPv4PrefixLimit"> Native IPv4 prefix limits configuration. </param>
         /// <param name="nativeIPv6PrefixLimit"> Native IPv6 prefix limits configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ExternalNetworkBmpProperties bmpConfiguration, ResourceIdentifier egressAclId, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, IDictionary<string, BinaryData> serializedAdditionalRawData, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ExternalNetworkBmpProperties bmpConfiguration, ResourceIdentifier egressAclId, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, serializedAdditionalRawData)
         {
-            PrimaryIPv4Prefix = primaryIPv4Prefix;
-            PrimaryIPv6Prefix = primaryIPv6Prefix;
-            SecondaryIPv4Prefix = secondaryIPv4Prefix;
-            SecondaryIPv6Prefix = secondaryIPv6Prefix;
             Mtu = mtu;
             VlanId = vlanId;
             FabricAsn = fabricAsn;
@@ -91,22 +55,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             V6OverV4BgpSession = v6OverV4BgpSession;
             NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
             NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/> for deserialization. </summary>
-        internal ExternalNetworkOptionAProperties()
-        {
-        }
-
-        /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIPv4Prefix { get; set; }
-        /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIPv6Prefix { get; set; }
-        /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIPv4Prefix { get; set; }
-        /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIPv6Prefix { get; set; }
         /// <summary> MTU to use for option A peering. </summary>
         public int? Mtu { get; set; }
         /// <summary> Fabric ASN number. Example 65001. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL3IsolationDomainPatch : TagsUpdate
+    public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         public NetworkFabricL3IsolationDomainPatch()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
         /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
         /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
-        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRoutePatchConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicyPatch connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
             Annotation = annotation;
@@ -54,21 +54,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Advertise Static Routes. Ex: "True" | "False". </summary>
         public RedistributeStaticRoute? RedistributeStaticRoutes { get; set; }
         /// <summary> Aggregate route configurations. </summary>
-        public AggregateRoutePatchConfiguration AggregateRouteConfiguration { get; set; }
+        public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        internal ConnectedSubnetRoutePolicyPatch ConnectedSubnetRoutePolicy { get; set; }
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicyPatch ExportRoutePolicy
-        {
-            get => ConnectedSubnetRoutePolicy is null ? default : ConnectedSubnetRoutePolicy.ExportRoutePolicy;
-            set
-            {
-                if (ConnectedSubnetRoutePolicy is null)
-                    ConnectedSubnetRoutePolicy = new ConnectedSubnetRoutePolicyPatch();
-                ConnectedSubnetRoutePolicy.ExportRoutePolicy = value;
-            }
-        }
-
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
         /// <summary> Static Route - route policy. </summary>
         internal StaticRoutePolicyPatch StaticRoutePolicy { get; set; }
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>

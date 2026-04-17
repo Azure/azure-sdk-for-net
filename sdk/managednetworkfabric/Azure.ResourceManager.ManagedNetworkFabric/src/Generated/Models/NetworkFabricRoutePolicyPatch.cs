@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Route Policy patch resource definition. </summary>
-    public partial class NetworkFabricRoutePolicyPatch : TagsUpdate
+    public partial class NetworkFabricRoutePolicyPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         public NetworkFabricRoutePolicyPatch()
         {
-            Statements = new ChangeTrackingList<RoutePolicyStatementPatchProperties>();
+            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="statements"> Route Policy statements. </param>
-        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CommunityActionType? defaultAction, IList<RoutePolicyStatementPatchProperties> statements) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricRoutePolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements) : base(tags, serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             Statements = statements;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
         public CommunityActionType? DefaultAction { get; set; }
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementPatchProperties> Statements { get; }
+        public IList<RoutePolicyStatementProperties> Statements { get; }
     }
 }
