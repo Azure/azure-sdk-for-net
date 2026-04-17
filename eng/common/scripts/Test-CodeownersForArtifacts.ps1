@@ -22,9 +22,10 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
 
     Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
 
-    if (!$pkgProperties.ReleaseStatus) { 
-        LogWarning "  Skipping CODEOWNERS validation for package: $($pkgProperties.Name) because it does not have a ReleaseStatus property."
-         continue
+    if (!$pkgProperties.ReleaseStatus) {
+        LogError "Package $($pkgProperties.Name) at $($pkgProperties.DirectoryPath) is missing a ReleaseStatus property."
+        $failedPackages += $pkgProperties.DirectoryPath
+        continue
     }
 
     # Validate packages with a release date (intended to release)
