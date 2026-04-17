@@ -350,6 +350,7 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
     if ($_.Exception.Response.StatusCode -ne 404)
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }
