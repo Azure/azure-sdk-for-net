@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +351,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>

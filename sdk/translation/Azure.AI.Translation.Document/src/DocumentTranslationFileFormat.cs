@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Possible file formats supported by the Document Translation service.
     /// </summary>
-    [CodeGenModel("FileFormat")]
+    [CodeGenType("FileFormat")]
     public partial class DocumentTranslationFileFormat
     {
         /// <summary> Supported format versions. </summary>

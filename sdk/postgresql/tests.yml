@@ -1,0 +1,10 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: postgresql
+    SDKType: client
+    CloudConfig:
+      Public:
+        Location: 'eastus2'

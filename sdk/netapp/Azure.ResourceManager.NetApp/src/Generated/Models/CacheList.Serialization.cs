@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<CacheData> value = default;
+            IReadOnlyList<NetAppCacheData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CacheData> array = new List<CacheData>();
+                    List<NetAppCacheData> array = new List<NetAppCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CacheData.DeserializeCacheData(item, options));
+                        array.Add(NetAppCacheData.DeserializeNetAppCacheData(item, options));
                     }
                     value = array;
                     continue;

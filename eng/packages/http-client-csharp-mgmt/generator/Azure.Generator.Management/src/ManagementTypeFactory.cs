@@ -87,19 +87,26 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var replacedType))
+            if (inputType is InputModelType model)
+            {
+                if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var inheritableType))
+                {
+                    return inheritableType;
+                }
+                if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var systemType))
+                {
+                    return systemType;
+                }
+            }
+
+            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out var replacedType))
             {
                 return replacedType;
             }
 
-            if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out replacedType))
+            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var primitiveReplacedType))
             {
-                return replacedType;
-            }
-
-            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out replacedType))
-            {
-                return replacedType;
+                return primitiveReplacedType;
             }
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -110,11 +117,22 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+                return InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
                 return null;
+            }
+
+            // For models whose base is an inheritable system type (e.g., TrackedResource → TrackedResourceData),
+            // use a derived InheritableSystemObjectModelProvider which overrides BuildBaseType() to return the
+            // correct framework CSharpType. The default ModelProvider.BuildBaseType() returns
+            // BaseModelProvider.Type, which produces a non-framework CSharpType that gets eagerly cached.
+            if (model.BaseModel is { } baseModel &&
+                KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out var inheritableType))
+            {
+                CreateModel(baseModel);
+                return InheritableSystemObjectModelProvider.CreateDerived(model, inheritableType);
             }
 
             // For custom Azure resource models (root, intermediate, and resource data models),

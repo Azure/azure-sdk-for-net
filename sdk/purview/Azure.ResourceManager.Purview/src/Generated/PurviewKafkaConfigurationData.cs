@@ -13,43 +13,11 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary>
-    /// A class representing the PurviewKafkaConfiguration data model.
-    /// The configuration of the event streaming service resource attached to the Purview account for kafka notifications.
-    /// </summary>
+    /// <summary> The configuration of the event streaming service resource attached to the Purview account for kafka notifications. </summary>
     public partial class PurviewKafkaConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PurviewKafkaConfigurationData"/>. </summary>
         public PurviewKafkaConfigurationData()
@@ -57,43 +25,138 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary> Initializes a new instance of <see cref="PurviewKafkaConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="consumerGroup"> Consumer group for hook event hub. </param>
-        /// <param name="credentials"> Credentials to access the event streaming service attached to the purview account. </param>
-        /// <param name="eventHubPartitionId"> Optional partition Id for notification event hub. If not set, all partitions will be leveraged. </param>
-        /// <param name="eventHubResourceId"></param>
-        /// <param name="eventHubType"> The event hub type. </param>
-        /// <param name="eventStreamingState"> The state of the event streaming service. </param>
-        /// <param name="eventStreamingType"> The event streaming service type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewKafkaConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string consumerGroup, PurviewCredentials credentials, string eventHubPartitionId, ResourceIdentifier eventHubResourceId, PurviewKafkaEventHubType? eventHubType, PurviewEventStreamingState? eventStreamingState, PurviewEventStreamingType? eventStreamingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The kafka configuration properties of the event streaming service attached to the Purview account for kafka notifications. </param>
+        internal PurviewKafkaConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, KafkaConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            ConsumerGroup = consumerGroup;
-            Credentials = credentials;
-            EventHubPartitionId = eventHubPartitionId;
-            EventHubResourceId = eventHubResourceId;
-            EventHubType = eventHubType;
-            EventStreamingState = eventStreamingState;
-            EventStreamingType = eventStreamingType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The kafka configuration properties of the event streaming service attached to the Purview account for kafka notifications. </summary>
+        internal KafkaConfigurationProperties Properties { get; set; }
+
         /// <summary> Consumer group for hook event hub. </summary>
-        public string ConsumerGroup { get; set; }
+        public string ConsumerGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumerGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.ConsumerGroup = value;
+            }
+        }
+
         /// <summary> Credentials to access the event streaming service attached to the purview account. </summary>
-        public PurviewCredentials Credentials { get; set; }
+        public PurviewCredentials Credentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.Credentials = value;
+            }
+        }
+
         /// <summary> Optional partition Id for notification event hub. If not set, all partitions will be leveraged. </summary>
-        public string EventHubPartitionId { get; set; }
-        /// <summary> Gets or sets the event hub resource id. </summary>
-        public ResourceIdentifier EventHubResourceId { get; set; }
+        public string EventHubPartitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubPartitionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.EventHubPartitionId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EventHubResourceId. </summary>
+        public ResourceIdentifier EventHubResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.EventHubResourceId = value;
+            }
+        }
+
         /// <summary> The event hub type. </summary>
-        public PurviewKafkaEventHubType? EventHubType { get; set; }
+        public PurviewKafkaEventHubType? EventHubType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventHubType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.EventHubType = value.Value;
+            }
+        }
+
         /// <summary> The state of the event streaming service. </summary>
-        public PurviewEventStreamingState? EventStreamingState { get; set; }
+        public PurviewEventStreamingState? EventStreamingState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventStreamingState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.EventStreamingState = value.Value;
+            }
+        }
+
         /// <summary> The event streaming service type. </summary>
-        public PurviewEventStreamingType? EventStreamingType { get; set; }
+        public PurviewEventStreamingType? EventStreamingType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventStreamingType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KafkaConfigurationProperties();
+                }
+                Properties.EventStreamingType = value.Value;
+            }
+        }
     }
 }

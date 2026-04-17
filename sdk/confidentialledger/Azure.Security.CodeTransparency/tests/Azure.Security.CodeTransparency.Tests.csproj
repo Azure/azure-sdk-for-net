@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
+    <!-- TODO: Revert to PackageReference after Azure.Core 1.52 ships with Identity types -->
+    <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

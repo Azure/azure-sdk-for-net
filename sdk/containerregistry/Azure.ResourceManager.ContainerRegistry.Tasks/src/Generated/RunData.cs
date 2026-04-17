@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.RunId;
+                return Properties is null ? default : Properties.RunId;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.LastUpdatedOn;
+                return Properties is null ? default : Properties.LastUpdatedOn;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.RunType;
+                return Properties is null ? default : Properties.RunType;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.AgentPoolName;
+                return Properties is null ? default : Properties.AgentPoolName;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.FinishOn;
+                return Properties is null ? default : Properties.FinishOn;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.OutputImages;
+                return Properties is null ? default : Properties.OutputImages;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.Task;
+                return Properties is null ? default : Properties.Task;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.ImageUpdateTrigger;
+                return Properties is null ? default : Properties.ImageUpdateTrigger;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.SourceTrigger;
+                return Properties is null ? default : Properties.SourceTrigger;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.TimerTrigger;
+                return Properties is null ? default : Properties.TimerTrigger;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.Platform;
+                return Properties is null ? default : Properties.Platform;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.SourceRegistryAuth;
+                return Properties is null ? default : Properties.SourceRegistryAuth;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.CustomRegistries;
+                return Properties is null ? default : Properties.CustomRegistries;
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.RunErrorMessage;
+                return Properties is null ? default : Properties.RunErrorMessage;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.UpdateTriggerToken;
+                return Properties is null ? default : Properties.UpdateTriggerToken;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.LogArtifact;
+                return Properties is null ? default : Properties.LogArtifact;
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.IsArchiveEnabled;
+                return Properties is null ? default : Properties.IsArchiveEnabled;
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         {
             get
             {
-                return Properties.AgentCpu;
+                return Properties is null ? default : Properties.AgentCpu;
             }
         }
     }

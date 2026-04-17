@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class DefenderForAISettingCollection : ArmCollection, IEnumerable<DefenderForAISettingResource>, IAsyncEnumerable<DefenderForAISettingResource>
     {
-        private readonly ClientDiagnostics _defenderForAISettingClientDiagnostics;
-        private readonly DefenderForAISettingsRestOperations _defenderForAISettingRestClient;
+        private readonly ClientDiagnostics _defenderForAISettingsClientDiagnostics;
+        private readonly DefenderForAISettings _defenderForAISettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DefenderForAISettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DefenderForAISettingCollection for mocking. </summary>
         protected DefenderForAISettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DefenderForAISettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForAISettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DefenderForAISettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _defenderForAISettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", DefenderForAISettingResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DefenderForAISettingResource.ResourceType, out string defenderForAISettingApiVersion);
-            _defenderForAISettingRestClient = new DefenderForAISettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, defenderForAISettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _defenderForAISettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", DefenderForAISettingResource.ResourceType.Namespace, Diagnostics);
+            _defenderForAISettingsRestClient = new DefenderForAISettings(_defenderForAISettingsClientDiagnostics, Pipeline, Endpoint, defenderForAISettingApiVersion ?? "2026-03-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or Updates the specified Defender for AI setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="data"> Properties describing the Defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DefenderForAISettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string defenderForAISettingName, DefenderForAISettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _defenderForAISettingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _defenderForAISettingRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<DefenderForAISettingResource>(Response.FromValue(new DefenderForAISettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, DefenderForAISettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CognitiveServicesArmOperation<DefenderForAISettingResource> operation = new CognitiveServicesArmOperation<DefenderForAISettingResource>(Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Creates or Updates the specified Defender for AI setting.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="data"> Properties describing the Defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DefenderForAISettingResource> CreateOrUpdate(WaitUntil waitUntil, string defenderForAISettingName, DefenderForAISettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _defenderForAISettingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, data, cancellationToken);
-                var uri = _defenderForAISettingRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CognitiveServicesArmOperation<DefenderForAISettingResource>(Response.FromValue(new DefenderForAISettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, DefenderForAISettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CognitiveServicesArmOperation<DefenderForAISettingResource> operation = new CognitiveServicesArmOperation<DefenderForAISettingResource>(Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the specified Defender for AI setting by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DefenderForAISettingResource>> GetAsync(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.Get");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _defenderForAISettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the specified Defender for AI setting by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DefenderForAISettingResource> Get(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.Get");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _defenderForAISettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Lists the Defender for AI settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefenderForAISettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DefenderForAISettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DefenderForAISettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _defenderForAISettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defenderForAISettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefenderForAISettingResource(Client, DefenderForAISettingData.DeserializeDefenderForAISettingData(e)), _defenderForAISettingClientDiagnostics, Pipeline, "DefenderForAISettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingsGetAllAsyncCollectionResultOfT(
+                _defenderForAISettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DefenderForAISettingCollection.GetAll"), data => new DefenderForAISettingResource(Client, data));
         }
 
         /// <summary>
         /// Lists the Defender for AI settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="DefenderForAISettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DefenderForAISettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _defenderForAISettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defenderForAISettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefenderForAISettingResource(Client, DefenderForAISettingData.DeserializeDefenderForAISettingData(e)), _defenderForAISettingClientDiagnostics, Pipeline, "DefenderForAISettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DefenderForAISettingData, DefenderForAISettingResource>(new DefenderForAISettingsGetAllCollectionResultOfT(
+                _defenderForAISettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DefenderForAISettingCollection.GetAll"), data => new DefenderForAISettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.Exists");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _defenderForAISettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DefenderForAISettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForAISettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.Exists");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _defenderForAISettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DefenderForAISettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForAISettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DefenderForAISettingResource>> GetIfExistsAsync(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.GetIfExists");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _defenderForAISettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DefenderForAISettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForAISettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefenderForAISettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/defenderForAISettings/{defenderForAISettingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefenderForAISettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefenderForAISettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefenderForAISettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="defenderForAISettingName"> The name of the defender for AI setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defenderForAISettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defenderForAISettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DefenderForAISettingResource> GetIfExists(string defenderForAISettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defenderForAISettingName, nameof(defenderForAISettingName));
 
-            using var scope = _defenderForAISettingClientDiagnostics.CreateScope("DefenderForAISettingCollection.GetIfExists");
+            using DiagnosticScope scope = _defenderForAISettingsClientDiagnostics.CreateScope("DefenderForAISettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _defenderForAISettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defenderForAISettingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DefenderForAISettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DefenderForAISettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefenderForAISettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DefenderForAISettingResource> IAsyncEnumerable<DefenderForAISettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

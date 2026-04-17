@@ -13,23 +13,24 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve the status of a deployment assignment operation, call `GetAssignProjectResourcesStatus` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
 
 ```C# Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatus
-string sampleProjectName = "{projectName}";
-ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
+string sampleProjectName = "{projectName}";
 var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
     customDomain: "{customDomain}",
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Submit assignment operation
-Operation sampleAssignOperation = sampleProjectClient.AssignProjectResources(
-    waitUntil: WaitUntil.Started,
-    details: sampleAssignDetails
+Operation sampleAssignOperation = projectClient.AssignProjectResources(
+    WaitUntil.Started,
+    sampleProjectName,
+    sampleAssignDetails
 );
 
 string sampleOperationLocation = sampleAssignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out var location)
@@ -41,7 +42,7 @@ string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call status API
-Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignProjectResourcesStatus(sampleJobId);
+Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = projectClient.GetAssignProjectResourcesStatus(sampleProjectName, sampleJobId);
 
 Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
 ```
@@ -51,9 +52,9 @@ Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.St
 To retrieve the status of a deployment assignment operation asynchronously, call `GetAssignProjectResourcesStatusAsync` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
 
 ```C# Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatusAsync
-string sampleProjectName = "{projectName}";
-ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
 
+string sampleProjectName = "{projectName}";
 // Build resource metadata
 var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     azureResourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
@@ -61,14 +62,15 @@ var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Submit assignment operation
-Operation sampleAssignOperation = await sampleProjectClient.AssignProjectResourcesAsync(
-    waitUntil: WaitUntil.Started,
-    details: sampleAssignDetails
+Operation sampleAssignOperation = await projectClient.AssignProjectResourcesAsync(
+    WaitUntil.Started,
+    sampleProjectName,
+    sampleAssignDetails
 );
 
 string sampleOperationLocation = sampleAssignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
@@ -80,7 +82,7 @@ string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call status API
-Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignProjectResourcesStatusAsync(sampleJobId);
+Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = await projectClient.GetAssignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
 
 Assert.IsNotNull(sampleStatusResponse);
 Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");

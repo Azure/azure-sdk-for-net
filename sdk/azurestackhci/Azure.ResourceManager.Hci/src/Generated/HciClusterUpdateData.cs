@@ -13,177 +13,414 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary>
-    /// A class representing the HciClusterUpdate data model.
-    /// Update details
-    /// </summary>
+    /// <summary> Update details. </summary>
     public partial class HciClusterUpdateData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateData"/>. </summary>
         public HciClusterUpdateData()
         {
-            Prerequisites = new ChangeTrackingList<HciClusterUpdatePrerequisite>();
-            ComponentVersions = new ChangeTrackingList<HciPackageVersionInfo>();
-            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterUpdateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Update properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Updates proxy resource. </param>
-        /// <param name="installedOn"> Date that the update was installed. </param>
-        /// <param name="description"> Description of the update. </param>
-        /// <param name="minSbeVersionRequired"> Minimum Sbe Version of the update. </param>
-        /// <param name="state"> State of the update as it relates to this stamp. </param>
-        /// <param name="prerequisites"> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </param>
-        /// <param name="componentVersions"> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </param>
-        /// <param name="rebootRequired"></param>
-        /// <param name="healthState"> Overall health state for update-specific health checks. </param>
-        /// <param name="healthCheckResult"> An array of PrecheckResult objects. </param>
-        /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
-        /// <param name="packagePath"> Path where the update package is available. </param>
-        /// <param name="packageSizeInMb"> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </param>
-        /// <param name="displayName"> Display name of the Update. </param>
-        /// <param name="version"> Version of the update. </param>
-        /// <param name="publisher"> Publisher of the update package. </param>
-        /// <param name="releaseLink"> Link to release notes for the update. </param>
-        /// <param name="availabilityType"> Indicates the way the update content can be downloaded. </param>
-        /// <param name="packageType"> Customer-visible type of the update. </param>
-        /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
-        /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
-        /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, string minSbeVersionRequired, HciUpdateState? state, IList<HciClusterUpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Location = location;
-            ProvisioningState = provisioningState;
-            InstalledOn = installedOn;
-            Description = description;
-            MinSbeVersionRequired = minSbeVersionRequired;
-            State = state;
-            Prerequisites = prerequisites;
-            ComponentVersions = componentVersions;
-            RebootRequired = rebootRequired;
-            HealthState = healthState;
-            HealthCheckResult = healthCheckResult;
-            HealthCheckOn = healthCheckOn;
-            PackagePath = packagePath;
-            PackageSizeInMb = packageSizeInMb;
-            DisplayName = displayName;
-            Version = version;
-            Publisher = publisher;
-            ReleaseLink = releaseLink;
-            AvailabilityType = availabilityType;
-            PackageType = packageType;
-            AdditionalProperties = additionalProperties;
-            ProgressPercentage = progressPercentage;
-            NotifyMessage = notifyMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Update properties. </summary>
+        [WirePath("properties")]
+        internal UpdateProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> Provisioning state of the Updates proxy resource. </summary>
+
+        /// <summary> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Date that the update was installed. </summary>
         [WirePath("properties.installedDate")]
-        public DateTimeOffset? InstalledOn { get; set; }
+        public DateTimeOffset? InstalledOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstalledOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.InstalledOn = value.Value;
+            }
+        }
+
         /// <summary> Description of the update. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Minimum Sbe Version of the update. </summary>
         [WirePath("properties.minSbeVersionRequired")]
-        public string MinSbeVersionRequired { get; set; }
-        /// <summary> State of the update as it relates to this stamp. </summary>
+        public string MinSbeVersionRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinSbeVersionRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.MinSbeVersionRequired = value;
+            }
+        }
+
+        /// <summary> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </summary>
         [WirePath("properties.state")]
-        public HciUpdateState? State { get; set; }
+        public HciUpdateState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.State = value.Value;
+            }
+        }
+
         /// <summary> If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty. </summary>
         [WirePath("properties.prerequisites")]
-        public IList<HciClusterUpdatePrerequisite> Prerequisites { get; }
-        /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise.  </summary>
+        public IList<HciClusterUpdatePrerequisite> Prerequisites
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                return Properties.Prerequisites;
+            }
+        }
+
+        /// <summary> An array of component versions for a Solution Bundle update, and an empty array otherwise. </summary>
         [WirePath("properties.componentVersions")]
-        public IList<HciPackageVersionInfo> ComponentVersions { get; }
-        /// <summary> Gets or sets the reboot required. </summary>
+        public IList<HciPackageVersionInfo> ComponentVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                return Properties.ComponentVersions;
+            }
+        }
+
+        /// <summary> Indicates whether a reboot is required after the update or operation. Helps determine if a system restart is necessary to complete the process. </summary>
         [WirePath("properties.rebootRequired")]
-        public HciNodeRebootRequirement? RebootRequired { get; set; }
+        public HciNodeRebootRequirement? RebootRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RebootRequired;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.RebootRequired = value.Value;
+            }
+        }
+
         /// <summary> Overall health state for update-specific health checks. </summary>
         [WirePath("properties.healthState")]
-        public HciHealthState? HealthState { get; set; }
+        public HciHealthState? HealthState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.HealthState = value.Value;
+            }
+        }
+
         /// <summary> An array of PrecheckResult objects. </summary>
         [WirePath("properties.healthCheckResult")]
-        public IList<HciPrecheckResult> HealthCheckResult { get; }
+        public IList<HciPrecheckResult> HealthCheckResult
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                return Properties.HealthCheckResult;
+            }
+        }
+
         /// <summary> Last time the package-specific checks were run. </summary>
         [WirePath("properties.healthCheckDate")]
-        public DateTimeOffset? HealthCheckOn { get; set; }
+        public DateTimeOffset? HealthCheckOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthCheckOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.HealthCheckOn = value.Value;
+            }
+        }
+
         /// <summary> Path where the update package is available. </summary>
         [WirePath("properties.packagePath")]
-        public string PackagePath { get; set; }
+        public string PackagePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackagePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.PackagePath = value;
+            }
+        }
+
         /// <summary> Size of the package. This value is a combination of the size from update metadata and size of the payload that results from the live scan operation for OS update content. </summary>
         [WirePath("properties.packageSizeInMb")]
-        public float? PackageSizeInMb { get; set; }
+        public float? PackageSizeInMb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageSizeInMb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.PackageSizeInMb = value.Value;
+            }
+        }
+
         /// <summary> Display name of the Update. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Version of the update. </summary>
         [WirePath("properties.version")]
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
         /// <summary> Publisher of the update package. </summary>
         [WirePath("properties.publisher")]
-        public string Publisher { get; set; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.Publisher = value;
+            }
+        }
+
         /// <summary> Link to release notes for the update. </summary>
         [WirePath("properties.releaseLink")]
-        public string ReleaseLink { get; set; }
-        /// <summary> Indicates the way the update content can be downloaded. </summary>
+        public string ReleaseLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.ReleaseLink = value;
+            }
+        }
+
+        /// <summary> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </summary>
         [WirePath("properties.availabilityType")]
-        public HciAvailabilityType? AvailabilityType { get; set; }
+        public HciAvailabilityType? AvailabilityType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.AvailabilityType = value.Value;
+            }
+        }
+
         /// <summary> Customer-visible type of the update. </summary>
         [WirePath("properties.packageType")]
-        public string PackageType { get; set; }
+        public string PackageType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PackageType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.PackageType = value;
+            }
+        }
+
         /// <summary> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </summary>
         [WirePath("properties.additionalProperties")]
-        public string AdditionalProperties { get; set; }
+        public string AdditionalProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.AdditionalProperties = value;
+            }
+        }
+
         /// <summary> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </summary>
-        [WirePath("properties.progressPercentage")]
-        public float? ProgressPercentage { get; set; }
+        [WirePath("properties.updateStateProperties.progressPercentage")]
+        public float? ProgressPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProgressPercentage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.ProgressPercentage = value.Value;
+            }
+        }
+
         /// <summary> Brief message with instructions for updates of AvailabilityType Notify. </summary>
-        [WirePath("properties.notifyMessage")]
-        public string NotifyMessage { get; set; }
+        [WirePath("properties.updateStateProperties.notifyMessage")]
+        public string NotifyMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotifyMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateProperties();
+                }
+                Properties.NotifyMessage = value;
+            }
+        }
     }
 }

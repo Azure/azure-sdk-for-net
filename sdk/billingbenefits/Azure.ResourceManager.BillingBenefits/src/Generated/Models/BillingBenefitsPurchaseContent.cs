@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The BillingBenefitsPurchaseContent. </summary>
     public partial class BillingBenefitsPurchaseContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         public BillingBenefitsPurchaseContent()
@@ -53,62 +24,181 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsPurchaseContent"/>. </summary>
         /// <param name="sku"> The SKU to be applied for this resource. </param>
-        /// <param name="displayName"> Friendly name of the savings plan. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
-        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="effectOn"> DateTime of the savings plan starts providing benefit from. </param>
-        /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsPurchaseContent(BillingBenefitsSku sku, string displayName, ResourceIdentifier billingScopeId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, bool? isRenewed, BillingBenefitsAppliedScopeProperties appliedScopeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsPurchaseContent(ResourceSku sku, PurchaseRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
-            DisplayName = displayName;
-            BillingScopeId = billingScopeId;
-            Term = term;
-            BillingPlan = billingPlan;
-            AppliedScopeType = appliedScopeType;
-            Commitment = commitment;
-            EffectOn = effectOn;
-            IsRenewed = isRenewed;
-            AppliedScopeProperties = appliedScopeProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The SKU to be applied for this resource. </summary>
-        internal BillingBenefitsSku Sku { get; set; }
-        /// <summary> Name of the SKU to be applied. </summary>
+        internal ResourceSku Sku { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal PurchaseRequestProperties Properties { get; set; }
+
+        /// <summary> Gets or sets the Name. </summary>
         public string SkuName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
             set
             {
                 if (Sku is null)
-                    Sku = new BillingBenefitsSku();
+                {
+                    Sku = new ResourceSku();
+                }
                 Sku.Name = value;
             }
         }
 
         /// <summary> Friendly name of the savings plan. </summary>
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Subscription that will be charged for purchasing the benefit. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
         /// <summary> Represent benefit term in ISO 8601 format. </summary>
-        public BillingBenefitsTerm? Term { get; set; }
+        public BillingBenefitsTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.Term = value.Value;
+            }
+        }
+
         /// <summary> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </summary>
-        public BillingBenefitsBillingPlan? BillingPlan { get; set; }
+        public BillingBenefitsBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.BillingPlan = value.Value;
+            }
+        }
+
         /// <summary> Type of the Applied Scope. </summary>
-        public BillingBenefitsAppliedScopeType? AppliedScopeType { get; set; }
+        public BillingBenefitsAppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.AppliedScopeType = value.Value;
+            }
+        }
+
         /// <summary> Commitment towards the benefit. </summary>
-        public BillingBenefitsCommitment Commitment { get; set; }
+        public BillingBenefitsCommitment Commitment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Commitment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.Commitment = value;
+            }
+        }
+
         /// <summary> DateTime of the savings plan starts providing benefit from. </summary>
-        public DateTimeOffset? EffectOn { get; }
+        public DateTimeOffset? EffectOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectOn;
+            }
+        }
+
         /// <summary> Setting this to true will automatically purchase a new benefit on the expiration date time. </summary>
-        public bool? IsRenewed { get; set; }
+        public bool? IsRenewed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRenewed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.IsRenewed = value.Value;
+            }
+        }
+
         /// <summary> Properties specific to applied scope type. Not required if not applicable. </summary>
-        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties { get; set; }
+        public BillingBenefitsAppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
     }
 }

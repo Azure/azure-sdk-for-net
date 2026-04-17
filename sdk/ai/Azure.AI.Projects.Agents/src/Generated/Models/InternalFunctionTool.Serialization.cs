@@ -10,7 +10,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalFunctionTool : AgentTool, IJsonModel<InternalFunctionTool>
+    internal partial class InternalFunctionTool : ProjectsAgentTool, IJsonModel<InternalFunctionTool>
     {
         /// <summary> Initializes a new instance of <see cref="InternalFunctionTool"/> for deserialization. </summary>
         internal InternalFunctionTool()
@@ -19,7 +19,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -119,6 +119,11 @@ namespace OpenAI
             {
                 writer.WriteNull("strict"u8);
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -127,7 +132,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -152,6 +157,7 @@ namespace OpenAI
             string description = default;
             IDictionary<string, BinaryData> parameters = default;
             bool? strict = default;
+            bool? deferLoading = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -206,6 +212,15 @@ namespace OpenAI
                     strict = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -217,7 +232,8 @@ namespace OpenAI
                 name,
                 description,
                 parameters,
-                strict);
+                strict,
+                deferLoading);
         }
     }
 }

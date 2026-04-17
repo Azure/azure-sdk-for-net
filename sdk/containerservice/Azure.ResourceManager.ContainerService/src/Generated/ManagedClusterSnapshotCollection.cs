@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupAsyncCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ManagedClusterSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupAsyncCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ManagedClusterSnapshotResource(Client, data));
+            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>

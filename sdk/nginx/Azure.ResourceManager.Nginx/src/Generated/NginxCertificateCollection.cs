@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != NginxDeploymentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), nameof(id));
             }
         }
 
@@ -291,7 +291,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllAsyncCollectionResultOfT(_nginxCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxCertificateResource(Client, data));
+            return new AsyncPageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllAsyncCollectionResultOfT(
+                _nginxCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxCertificateCollection.GetAll"), data => new NginxCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -319,7 +325,13 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllCollectionResultOfT(_nginxCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new NginxCertificateResource(Client, data));
+            return new PageableWrapper<NginxCertificateData, NginxCertificateResource>(new NginxCertificatesGetAllCollectionResultOfT(
+                _nginxCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NginxCertificateCollection.GetAll"), data => new NginxCertificateResource(Client, data));
         }
 
         /// <summary>

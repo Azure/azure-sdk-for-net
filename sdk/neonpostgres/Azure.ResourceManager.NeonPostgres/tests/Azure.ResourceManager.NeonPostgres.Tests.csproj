@@ -1,5 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.NeonPostgres.csproj" />
-  </ItemGroup>
-</Project>

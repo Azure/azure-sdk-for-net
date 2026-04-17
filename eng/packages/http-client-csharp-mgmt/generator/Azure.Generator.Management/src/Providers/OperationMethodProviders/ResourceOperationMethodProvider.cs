@@ -30,6 +30,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         public bool IsLongRunningOperation { get; }
         public bool IsFakeLongRunningOperation { get; }
 
+        /// <summary>
+        /// Determines whether LRO handling should be applied in the method body.
+        /// Subclasses like Exists/GetIfExists override this to false since they should never be LROs.
+        /// </summary>
+        protected virtual bool ShouldApplyLroHandling => IsLongRunningOperation || IsFakeLongRunningOperation;
+
         protected readonly TypeProvider _enclosingType;
         protected readonly OperationContext _operationContext;
         protected readonly ClientProvider _restClient;
@@ -210,9 +216,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ];
         }
 
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        protected virtual IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, IsFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: ShouldApplyLroHandling);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -248,7 +254,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || IsFakeLongRunningOperation)
+            if (ShouldApplyLroHandling)
             {
                 tryStatements.AddRange(
                     IsFakeLongRunningOperation ?
@@ -426,6 +432,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
+
+            // TODO: Temporary workaround - pass skipApiVersionOverride: true to prevent LRO polling from
+            // overriding the api-version. Remove once the issue is properly resolved in Azure.Core.
+            if (ManagementClientGenerator.Instance.IsSkipApiVersionOverrideEnabled())
+            {
+                commonArmOperationArguments = [.. commonArmOperationArguments, Literal(true)];
+            }
 
             ValueExpression? operationSourceInstance = null;
             if (_returnBodyResourceClient != null)

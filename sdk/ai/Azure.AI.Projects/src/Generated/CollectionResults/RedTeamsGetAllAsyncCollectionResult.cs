@@ -6,9 +6,8 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     internal partial class RedTeamsGetAllAsyncCollectionResult : AsyncCollectionResult
     {

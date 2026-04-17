@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Support
         {
             if (id.ResourceType != SubscriptionSupportTicketResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionSupportTicketResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionSupportTicketResource.ResourceType), nameof(id));
             }
         }
 
@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.Support
                 Id.Name,
                 top,
                 filter,
-                context), data => new SupportTicketCommunicationResource(Client, data));
+                context,
+                "SupportTicketCommunicationCollection.GetAll"), data => new SupportTicketCommunicationResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.Support
                 Id.Name,
                 top,
                 filter,
-                context), data => new SupportTicketCommunicationResource(Client, data));
+                context,
+                "SupportTicketCommunicationCollection.GetAll"), data => new SupportTicketCommunicationResource(Client, data));
         }
 
         /// <summary>

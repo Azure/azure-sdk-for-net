@@ -10,7 +10,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : AgentTool, IJsonModel<InternalMCPTool>
+    internal partial class InternalMCPTool : ProjectsAgentTool, IJsonModel<InternalMCPTool>
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/> for deserialization. </summary>
         internal InternalMCPTool()
@@ -19,7 +19,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -138,6 +138,11 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
             if (Optional.IsDefined(ProjectConnectionId))
             {
                 writer.WritePropertyName("project_connection_id"u8);
@@ -151,7 +156,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalMCPTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -180,6 +185,7 @@ namespace OpenAI
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
             BinaryData requireApproval = default;
+            bool? deferLoading = default;
             string projectConnectionId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,6 +268,15 @@ namespace OpenAI
                     requireApproval = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
@@ -283,6 +298,7 @@ namespace OpenAI
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
                 requireApproval,
+                deferLoading,
                 projectConnectionId);
         }
     }

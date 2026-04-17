@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The category of the evaluator. </summary>
     public readonly partial struct EvaluatorCategory : IEquatable<EvaluatorCategory>

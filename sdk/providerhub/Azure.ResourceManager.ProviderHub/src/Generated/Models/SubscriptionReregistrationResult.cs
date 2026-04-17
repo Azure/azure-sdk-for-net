@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct SubscriptionReregistrationResult : IEquatable<SubscriptionReregistrationResult>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SubscriptionReregistrationResult"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SubscriptionReregistrationResult(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotApplicableValue = "NotApplicable";
         private const string ConditionalUpdateValue = "ConditionalUpdate";
         private const string ForcedUpdateValue = "ForcedUpdate";
         private const string FailedValue = "Failed";
 
-        /// <summary> NotApplicable. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionReregistrationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SubscriptionReregistrationResult(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotApplicable. </summary>
         public static SubscriptionReregistrationResult NotApplicable { get; } = new SubscriptionReregistrationResult(NotApplicableValue);
-        /// <summary> ConditionalUpdate. </summary>
+
+        /// <summary> Gets the ConditionalUpdate. </summary>
         public static SubscriptionReregistrationResult ConditionalUpdate { get; } = new SubscriptionReregistrationResult(ConditionalUpdateValue);
-        /// <summary> ForcedUpdate. </summary>
+
+        /// <summary> Gets the ForcedUpdate. </summary>
         public static SubscriptionReregistrationResult ForcedUpdate { get; } = new SubscriptionReregistrationResult(ForcedUpdateValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static SubscriptionReregistrationResult Failed { get; } = new SubscriptionReregistrationResult(FailedValue);
+
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionReregistrationResult"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionReregistrationResult left, SubscriptionReregistrationResult right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionReregistrationResult"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionReregistrationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionReregistrationResult(string value) => new SubscriptionReregistrationResult(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionReregistrationResult"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionReregistrationResult?(string value) => value == null ? null : new SubscriptionReregistrationResult(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionReregistrationResult other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionReregistrationResult other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

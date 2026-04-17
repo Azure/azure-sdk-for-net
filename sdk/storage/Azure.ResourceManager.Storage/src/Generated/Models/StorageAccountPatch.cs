@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters that can be provided when updating the storage account properties. </summary>
     public partial class StorageAccountPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountPatch"/>. </summary>
         public StorageAccountPatch()
@@ -57,202 +29,498 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sku"> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </param>
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </param>
         /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="properties"> The parameters used when updating a storage account. </param>
         /// <param name="kind"> Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server. </param>
         /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
-        /// <param name="customDomain"> Custom domain assigned to the storage account by the user. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </param>
-        /// <param name="encryption"> Not applicable. Azure Storage encryption at rest is enabled by default for all storage accounts and cannot be disabled. </param>
-        /// <param name="sasPolicy"> SasPolicy assigned to the storage account. </param>
-        /// <param name="keyPolicy"> KeyPolicy assigned to the storage account. </param>
-        /// <param name="accessTier"> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </param>
-        /// <param name="azureFilesIdentityBasedAuthentication"> Provides the identity based authentication settings for Azure Files. </param>
-        /// <param name="enableHttpsTrafficOnly"> Allows https traffic only to storage service if sets to true. </param>
-        /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
-        /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
-        /// <param name="networkRuleSet"> Network rule set. </param>
-        /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
-        /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
-        /// <param name="dualStackEndpointPreference"> Maintains information about the Internet protocol opted by the user. </param>
-        /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
-        /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
-        /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
-        /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
-        /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
-        /// <param name="publicNetworkAccess"> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. Value is optional but if passed in, must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
-        /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
-        /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
-        /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
-        /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageKind? kind, IList<string> zones, Placement placement, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountSasPolicy sasPolicy, StorageAccountKeyPolicy keyPolicy, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, StorageAccountNetworkRuleSet networkRuleSet, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageDnsEndpointType? dnsEndpointType, GeoPriorityReplicationStatus geoPriorityReplicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesUpdateParameters properties, StorageKind? kind, IList<string> zones, Placement placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Tags = tags;
             Identity = identity;
+            Properties = properties;
             Kind = kind;
             Zones = zones;
             Placement = placement;
-            CustomDomain = customDomain;
-            Encryption = encryption;
-            SasPolicy = sasPolicy;
-            KeyPolicy = keyPolicy;
-            AccessTier = accessTier;
-            AzureFilesIdentityBasedAuthentication = azureFilesIdentityBasedAuthentication;
-            EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
-            IsSftpEnabled = isSftpEnabled;
-            IsLocalUserEnabled = isLocalUserEnabled;
-            IsExtendedGroupEnabled = isExtendedGroupEnabled;
-            NetworkRuleSet = networkRuleSet;
-            LargeFileSharesState = largeFileSharesState;
-            RoutingPreference = routingPreference;
-            DualStackEndpointPreference = dualStackEndpointPreference;
-            AllowBlobPublicAccess = allowBlobPublicAccess;
-            MinimumTlsVersion = minimumTlsVersion;
-            AllowSharedKeyAccess = allowSharedKeyAccess;
-            AllowCrossTenantReplication = allowCrossTenantReplication;
-            IsDefaultToOAuthAuthentication = isDefaultToOAuthAuthentication;
-            PublicNetworkAccess = publicNetworkAccess;
-            ImmutableStorageWithVersioning = immutableStorageWithVersioning;
-            AllowedCopyScope = allowedCopyScope;
-            DnsEndpointType = dnsEndpointType;
-            GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </summary>
         [WirePath("sku")]
         public StorageSku Sku { get; set; }
+
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The parameters used when updating a storage account. </summary>
+        [WirePath("properties")]
+        internal StorageAccountPropertiesUpdateParameters Properties { get; set; }
+
         /// <summary> Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server. </summary>
         [WirePath("kind")]
         public StorageKind? Kind { get; set; }
+
         /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
+        [WirePath("placement")]
         internal Placement Placement { get; set; }
-        /// <summary> The availability zone pinning policy for the storage account. </summary>
-        [WirePath("placement.zonePlacementPolicy")]
-        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
-        {
-            get => Placement is null ? default : Placement.ZonePlacementPolicy;
-            set
-            {
-                if (Placement is null)
-                    Placement = new Placement();
-                Placement.ZonePlacementPolicy = value;
-            }
-        }
 
         /// <summary> Custom domain assigned to the storage account by the user. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         [WirePath("properties.customDomain")]
-        public StorageCustomDomain CustomDomain { get; set; }
-        /// <summary> Not applicable. Azure Storage encryption at rest is enabled by default for all storage accounts and cannot be disabled. </summary>
-        [WirePath("properties.encryption")]
-        public StorageAccountEncryption Encryption { get; set; }
-        /// <summary> SasPolicy assigned to the storage account. </summary>
-        [WirePath("properties.sasPolicy")]
-        public StorageAccountSasPolicy SasPolicy { get; set; }
-        /// <summary> KeyPolicy assigned to the storage account. </summary>
-        internal StorageAccountKeyPolicy KeyPolicy { get; set; }
-        /// <summary> The key expiration period in days. </summary>
-        [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
-        public int? KeyExpirationPeriodInDays
+        public StorageCustomDomain CustomDomain
         {
-            get => KeyPolicy is null ? default(int?) : KeyPolicy.KeyExpirationPeriodInDays;
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomain;
+            }
             set
             {
-                KeyPolicy = value.HasValue ? new StorageAccountKeyPolicy(value.Value) : null;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.CustomDomain = value;
+            }
+        }
+
+        /// <summary> Not applicable. Azure Storage encryption at rest is enabled by default for all storage accounts and cannot be disabled. </summary>
+        [WirePath("properties.encryption")]
+        public StorageAccountEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> SasPolicy assigned to the storage account. </summary>
+        [WirePath("properties.sasPolicy")]
+        public StorageAccountSasPolicy SasPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SasPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.SasPolicy = value;
             }
         }
 
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         [WirePath("properties.accessTier")]
-        public StorageAccountAccessTier? AccessTier { get; set; }
-        /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
-        [WirePath("properties.azureFilesIdentityBasedAuthentication")]
-        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
-        /// <summary> Allows https traffic only to storage service if sets to true. </summary>
-        [WirePath("properties.supportsHttpsTrafficOnly")]
-        public bool? EnableHttpsTrafficOnly { get; set; }
-        /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
-        [WirePath("properties.isSftpEnabled")]
-        public bool? IsSftpEnabled { get; set; }
-        /// <summary> Enables local users feature, if set to true. </summary>
-        [WirePath("properties.isLocalUserEnabled")]
-        public bool? IsLocalUserEnabled { get; set; }
-        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
-        [WirePath("properties.enableExtendedGroups")]
-        public bool? IsExtendedGroupEnabled { get; set; }
-        /// <summary> Network rule set. </summary>
-        [WirePath("properties.networkAcls")]
-        public StorageAccountNetworkRuleSet NetworkRuleSet { get; set; }
-        /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
-        [WirePath("properties.largeFileSharesState")]
-        public LargeFileSharesState? LargeFileSharesState { get; set; }
-        /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
-        [WirePath("properties.routingPreference")]
-        public StorageRoutingPreference RoutingPreference { get; set; }
-        /// <summary> Maintains information about the Internet protocol opted by the user. </summary>
-        internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
-        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
-        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? IsIPv6EndpointToBePublished
+        public StorageAccountAccessTier? AccessTier
         {
-            get => DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
+            get
+            {
+                return Properties is null ? default : Properties.AccessTier;
+            }
             set
             {
-                if (DualStackEndpointPreference is null)
-                    DualStackEndpointPreference = new DualStackEndpointPreference();
-                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AccessTier = value.Value;
+            }
+        }
+
+        /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
+        [WirePath("properties.azureFilesIdentityBasedAuthentication")]
+        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureFilesIdentityBasedAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AzureFilesIdentityBasedAuthentication = value;
+            }
+        }
+
+        /// <summary> Allows https traffic only to storage service if sets to true. </summary>
+        [WirePath("properties.supportsHttpsTrafficOnly")]
+        public bool? EnableHttpsTrafficOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableHttpsTrafficOnly;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.EnableHttpsTrafficOnly = value.Value;
+            }
+        }
+
+        /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
+        [WirePath("properties.isSftpEnabled")]
+        public bool? IsSftpEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSftpEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsSftpEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Enables local users feature, if set to true. </summary>
+        [WirePath("properties.isLocalUserEnabled")]
+        public bool? IsLocalUserEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalUserEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsLocalUserEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
+        [WirePath("properties.enableExtendedGroups")]
+        public bool? IsExtendedGroupEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExtendedGroupEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsExtendedGroupEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Network rule set. </summary>
+        [WirePath("properties.networkAcls")]
+        public StorageAccountNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.NetworkRuleSet = value;
+            }
+        }
+
+        /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
+        [WirePath("properties.largeFileSharesState")]
+        public LargeFileSharesState? LargeFileSharesState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LargeFileSharesState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.LargeFileSharesState = value.Value;
+            }
+        }
+
+        /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
+        [WirePath("properties.routingPreference")]
+        public StorageRoutingPreference RoutingPreference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingPreference;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.RoutingPreference = value;
             }
         }
 
         /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </summary>
         [WirePath("properties.allowBlobPublicAccess")]
-        public bool? AllowBlobPublicAccess { get; set; }
+        public bool? AllowBlobPublicAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowBlobPublicAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AllowBlobPublicAccess = value.Value;
+            }
+        }
+
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
         [WirePath("properties.minimumTlsVersion")]
-        public StorageMinimumTlsVersion? MinimumTlsVersion { get; set; }
+        public StorageMinimumTlsVersion? MinimumTlsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
         [WirePath("properties.allowSharedKeyAccess")]
-        public bool? AllowSharedKeyAccess { get; set; }
+        public bool? AllowSharedKeyAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSharedKeyAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AllowSharedKeyAccess = value.Value;
+            }
+        }
+
         /// <summary> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </summary>
         [WirePath("properties.allowCrossTenantReplication")]
-        public bool? AllowCrossTenantReplication { get; set; }
+        public bool? AllowCrossTenantReplication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowCrossTenantReplication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AllowCrossTenantReplication = value.Value;
+            }
+        }
+
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
         [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? IsDefaultToOAuthAuthentication { get; set; }
+        public bool? IsDefaultToOAuthAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsDefaultToOAuthAuthentication = value.Value;
+            }
+        }
+
         /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. Value is optional but if passed in, must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public StoragePublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
         [WirePath("properties.immutableStorageWithVersioning")]
-        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+        public ImmutableStorageAccount ImmutableStorageWithVersioning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImmutableStorageWithVersioning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.ImmutableStorageWithVersioning = value;
+            }
+        }
+
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         [WirePath("properties.allowedCopyScope")]
-        public AllowedCopyScope? AllowedCopyScope { get; set; }
+        public AllowedCopyScope? AllowedCopyScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowedCopyScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.AllowedCopyScope = value.Value;
+            }
+        }
+
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
         [WirePath("properties.dnsEndpointType")]
-        public StorageDnsEndpointType? DnsEndpointType { get; set; }
-        /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
-        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
+        public StorageDnsEndpointType? DnsEndpointType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsEndpointType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.DnsEndpointType = value.Value;
+            }
+        }
+
+        /// <summary> The key expiration period in days. </summary>
+        [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
+        public int? KeyExpirationPeriodInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyExpirationPeriodInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.KeyExpirationPeriodInDays = value.Value;
+            }
+        }
+
+        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
+        public bool? IsIPv6EndpointToBePublished
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsIPv6EndpointToBePublished = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
         [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
         public bool? IsBlobEnabled
         {
-            get => GeoPriorityReplicationStatus is null ? default : GeoPriorityReplicationStatus.IsBlobEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsBlobEnabled;
+            }
             set
             {
-                if (GeoPriorityReplicationStatus is null)
-                    GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus();
-                GeoPriorityReplicationStatus.IsBlobEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsBlobEnabled = value.Value;
+            }
+        }
+
+        /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("placement.zonePlacementPolicy")]
+        public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
+        {
+            get
+            {
+                return Placement is null ? default : Placement.ZonePlacementPolicy;
+            }
+            set
+            {
+                if (Placement is null)
+                {
+                    Placement = new Placement();
+                }
+                Placement.ZonePlacementPolicy = value;
             }
         }
     }
