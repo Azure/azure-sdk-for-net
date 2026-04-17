@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private CGProfiles _cgProfilesRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private Location _locationRestClient;
-        private ClientDiagnostics _subnetServiceAssociationLinkClientDiagnostics;
-        private SubnetServiceAssociationLink _subnetServiceAssociationLinkRestClient;
 
         /// <summary> Initializes a new instance of MockableContainerInstanceSubscriptionResource for mocking. </summary>
         protected MockableContainerInstanceSubscriptionResource()
@@ -58,10 +56,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
-
-        private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary>
         /// Get a list of container groups in the specified subscription. This operation returns properties of each container group including containers, image registry credentials, restart policy, IP address type, OS type, state, and volumes.
