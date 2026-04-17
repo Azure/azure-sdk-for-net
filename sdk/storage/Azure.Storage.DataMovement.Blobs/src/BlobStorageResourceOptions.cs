@@ -227,7 +227,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_versionId))
                 {
-                    throw Errors.SnapshotVersionSet();
+                    throw Errors.SnapshotVersionSet(nameof(Snapshot));
                 }
                 _snapshot = value;
             }
@@ -244,7 +244,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 if (!string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(_snapshot))
                 {
-                    throw Errors.SnapshotVersionSet();
+                    throw Errors.SnapshotVersionSet(nameof(VersionId));
                 }
                 _versionId = value;
             }

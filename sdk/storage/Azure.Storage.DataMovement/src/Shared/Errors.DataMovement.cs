@@ -137,7 +137,7 @@ namespace Azure.Storage
             => new ArgumentException(
                 $"VersionId mismatch: URI contains versionId '{uriVersionId}' but options contains versionId '{optionsVersionId}'.");
 
-        public static ArgumentException SnapshotVersionSet()
-            => new ArgumentException("Cannot have both snapshot and versionId are set. Only one of them should be set.");
+        public static ArgumentException SnapshotVersionSet(string paramName)
+            => new ArgumentException($"Cannot set both snapshot and versionId. '{paramName}' was set when the other was already specified.", paramName);
     }
 }
