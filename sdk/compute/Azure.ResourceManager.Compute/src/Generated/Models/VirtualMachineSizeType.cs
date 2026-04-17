@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardA2V2Value = "Standard_A2_v2";
         private const string StandardA4V2Value = "Standard_A4_v2";
         private const string StandardA8V2Value = "Standard_A8_v2";
-        private const string StandardA2mV2Value = "Standard_A2m_v2";
-        private const string StandardA4mV2Value = "Standard_A4m_v2";
-        private const string StandardA8mV2Value = "Standard_A8m_v2";
-        private const string StandardB1sValue = "Standard_B1s";
-        private const string StandardB1msValue = "Standard_B1ms";
-        private const string StandardB2sValue = "Standard_B2s";
-        private const string StandardB2msValue = "Standard_B2ms";
-        private const string StandardB4msValue = "Standard_B4ms";
-        private const string StandardB8msValue = "Standard_B8ms";
+        private const string StandardA2MV2Value = "Standard_A2m_v2";
+        private const string StandardA4MV2Value = "Standard_A4m_v2";
+        private const string StandardA8MV2Value = "Standard_A8m_v2";
+        private const string StandardB1SValue = "Standard_B1s";
+        private const string StandardB1MsValue = "Standard_B1ms";
+        private const string StandardB2SValue = "Standard_B2s";
+        private const string StandardB2MsValue = "Standard_B2ms";
+        private const string StandardB4MsValue = "Standard_B4ms";
+        private const string StandardB8MsValue = "Standard_B8ms";
         private const string StandardD1Value = "Standard_D1";
         private const string StandardD2Value = "Standard_D2";
         private const string StandardD3Value = "Standard_D3";
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardD16V3Value = "Standard_D16_v3";
         private const string StandardD32V3Value = "Standard_D32_v3";
         private const string StandardD64V3Value = "Standard_D64_v3";
-        private const string StandardD2sV3Value = "Standard_D2s_v3";
-        private const string StandardD4sV3Value = "Standard_D4s_v3";
-        private const string StandardD8sV3Value = "Standard_D8s_v3";
-        private const string StandardD16sV3Value = "Standard_D16s_v3";
-        private const string StandardD32sV3Value = "Standard_D32s_v3";
-        private const string StandardD64sV3Value = "Standard_D64s_v3";
+        private const string StandardD2SV3Value = "Standard_D2s_v3";
+        private const string StandardD4SV3Value = "Standard_D4s_v3";
+        private const string StandardD8SV3Value = "Standard_D8s_v3";
+        private const string StandardD16SV3Value = "Standard_D16s_v3";
+        private const string StandardD32SV3Value = "Standard_D32s_v3";
+        private const string StandardD64SV3Value = "Standard_D64s_v3";
         private const string StandardD11V2Value = "Standard_D11_v2";
         private const string StandardD12V2Value = "Standard_D12_v2";
         private const string StandardD13V2Value = "Standard_D13_v2";
@@ -103,33 +103,33 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardE16V3Value = "Standard_E16_v3";
         private const string StandardE32V3Value = "Standard_E32_v3";
         private const string StandardE64V3Value = "Standard_E64_v3";
-        private const string StandardE2sV3Value = "Standard_E2s_v3";
-        private const string StandardE4sV3Value = "Standard_E4s_v3";
-        private const string StandardE8sV3Value = "Standard_E8s_v3";
-        private const string StandardE16sV3Value = "Standard_E16s_v3";
-        private const string StandardE32sV3Value = "Standard_E32s_v3";
-        private const string StandardE64sV3Value = "Standard_E64s_v3";
+        private const string StandardE2SV3Value = "Standard_E2s_v3";
+        private const string StandardE4SV3Value = "Standard_E4s_v3";
+        private const string StandardE8SV3Value = "Standard_E8s_v3";
+        private const string StandardE16SV3Value = "Standard_E16s_v3";
+        private const string StandardE32SV3Value = "Standard_E32s_v3";
+        private const string StandardE64SV3Value = "Standard_E64s_v3";
         private const string StandardE3216V3Value = "Standard_E32-16_v3";
-        private const string StandardE328sV3Value = "Standard_E32-8s_v3";
-        private const string StandardE6432sV3Value = "Standard_E64-32s_v3";
-        private const string StandardE6416sV3Value = "Standard_E64-16s_v3";
+        private const string StandardE328SV3Value = "Standard_E32-8s_v3";
+        private const string StandardE6432SV3Value = "Standard_E64-32s_v3";
+        private const string StandardE6416SV3Value = "Standard_E64-16s_v3";
         private const string StandardF1Value = "Standard_F1";
         private const string StandardF2Value = "Standard_F2";
         private const string StandardF4Value = "Standard_F4";
         private const string StandardF8Value = "Standard_F8";
         private const string StandardF16Value = "Standard_F16";
-        private const string StandardF1sValue = "Standard_F1s";
-        private const string StandardF2sValue = "Standard_F2s";
-        private const string StandardF4sValue = "Standard_F4s";
-        private const string StandardF8sValue = "Standard_F8s";
-        private const string StandardF16sValue = "Standard_F16s";
-        private const string StandardF2sV2Value = "Standard_F2s_v2";
-        private const string StandardF4sV2Value = "Standard_F4s_v2";
-        private const string StandardF8sV2Value = "Standard_F8s_v2";
-        private const string StandardF16sV2Value = "Standard_F16s_v2";
-        private const string StandardF32sV2Value = "Standard_F32s_v2";
-        private const string StandardF64sV2Value = "Standard_F64s_v2";
-        private const string StandardF72sV2Value = "Standard_F72s_v2";
+        private const string StandardF1SValue = "Standard_F1s";
+        private const string StandardF2SValue = "Standard_F2s";
+        private const string StandardF4SValue = "Standard_F4s";
+        private const string StandardF8SValue = "Standard_F8s";
+        private const string StandardF16SValue = "Standard_F16s";
+        private const string StandardF2SV2Value = "Standard_F2s_v2";
+        private const string StandardF4SV2Value = "Standard_F4s_v2";
+        private const string StandardF8SV2Value = "Standard_F8s_v2";
+        private const string StandardF16SV2Value = "Standard_F16s_v2";
+        private const string StandardF32SV2Value = "Standard_F32s_v2";
+        private const string StandardF64SV2Value = "Standard_F64s_v2";
+        private const string StandardF72SV2Value = "Standard_F72s_v2";
         private const string StandardG1Value = "Standard_G1";
         private const string StandardG2Value = "Standard_G2";
         private const string StandardG3Value = "Standard_G3";
@@ -146,38 +146,38 @@ namespace Azure.ResourceManager.Compute.Models
         private const string StandardGS58Value = "Standard_GS5-8";
         private const string StandardH8Value = "Standard_H8";
         private const string StandardH16Value = "Standard_H16";
-        private const string StandardH8mValue = "Standard_H8m";
-        private const string StandardH16mValue = "Standard_H16m";
-        private const string StandardH16rValue = "Standard_H16r";
-        private const string StandardH16mrValue = "Standard_H16mr";
-        private const string StandardL4sValue = "Standard_L4s";
-        private const string StandardL8sValue = "Standard_L8s";
-        private const string StandardL16sValue = "Standard_L16s";
-        private const string StandardL32sValue = "Standard_L32s";
-        private const string StandardM64sValue = "Standard_M64s";
-        private const string StandardM64msValue = "Standard_M64ms";
-        private const string StandardM128sValue = "Standard_M128s";
-        private const string StandardM128msValue = "Standard_M128ms";
-        private const string StandardM6432msValue = "Standard_M64-32ms";
-        private const string StandardM6416msValue = "Standard_M64-16ms";
-        private const string StandardM12864msValue = "Standard_M128-64ms";
-        private const string StandardM12832msValue = "Standard_M128-32ms";
+        private const string StandardH8MValue = "Standard_H8m";
+        private const string StandardH16MValue = "Standard_H16m";
+        private const string StandardH16RValue = "Standard_H16r";
+        private const string StandardH16MrValue = "Standard_H16mr";
+        private const string StandardL4SValue = "Standard_L4s";
+        private const string StandardL8SValue = "Standard_L8s";
+        private const string StandardL16SValue = "Standard_L16s";
+        private const string StandardL32SValue = "Standard_L32s";
+        private const string StandardM64SValue = "Standard_M64s";
+        private const string StandardM64MsValue = "Standard_M64ms";
+        private const string StandardM128SValue = "Standard_M128s";
+        private const string StandardM128MsValue = "Standard_M128ms";
+        private const string StandardM6432MsValue = "Standard_M64-32ms";
+        private const string StandardM6416MsValue = "Standard_M64-16ms";
+        private const string StandardM12864MsValue = "Standard_M128-64ms";
+        private const string StandardM12832MsValue = "Standard_M128-32ms";
         private const string StandardNC6Value = "Standard_NC6";
         private const string StandardNC12Value = "Standard_NC12";
         private const string StandardNC24Value = "Standard_NC24";
-        private const string StandardNC24rValue = "Standard_NC24r";
-        private const string StandardNC6sV2Value = "Standard_NC6s_v2";
-        private const string StandardNC12sV2Value = "Standard_NC12s_v2";
-        private const string StandardNC24sV2Value = "Standard_NC24s_v2";
-        private const string StandardNC24rsV2Value = "Standard_NC24rs_v2";
-        private const string StandardNC6sV3Value = "Standard_NC6s_v3";
-        private const string StandardNC12sV3Value = "Standard_NC12s_v3";
-        private const string StandardNC24sV3Value = "Standard_NC24s_v3";
-        private const string StandardNC24rsV3Value = "Standard_NC24rs_v3";
-        private const string StandardND6sValue = "Standard_ND6s";
-        private const string StandardND12sValue = "Standard_ND12s";
-        private const string StandardND24sValue = "Standard_ND24s";
-        private const string StandardND24rsValue = "Standard_ND24rs";
+        private const string StandardNC24RValue = "Standard_NC24r";
+        private const string StandardNC6SV2Value = "Standard_NC6s_v2";
+        private const string StandardNC12SV2Value = "Standard_NC12s_v2";
+        private const string StandardNC24SV2Value = "Standard_NC24s_v2";
+        private const string StandardNC24RsV2Value = "Standard_NC24rs_v2";
+        private const string StandardNC6SV3Value = "Standard_NC6s_v3";
+        private const string StandardNC12SV3Value = "Standard_NC12s_v3";
+        private const string StandardNC24SV3Value = "Standard_NC24s_v3";
+        private const string StandardNC24RsV3Value = "Standard_NC24rs_v3";
+        private const string StandardND6SValue = "Standard_ND6s";
+        private const string StandardND12SValue = "Standard_ND12s";
+        private const string StandardND24SValue = "Standard_ND24s";
+        private const string StandardND24RsValue = "Standard_ND24rs";
         private const string StandardNV6Value = "Standard_NV6";
         private const string StandardNV12Value = "Standard_NV12";
         private const string StandardNV24Value = "Standard_NV24";
@@ -255,32 +255,32 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardA8V2. </summary>
         public static VirtualMachineSizeType StandardA8V2 { get; } = new VirtualMachineSizeType(StandardA8V2Value);
 
-        /// <summary> Gets the StandardA2mV2. </summary>
-        public static VirtualMachineSizeType StandardA2mV2 { get; } = new VirtualMachineSizeType(StandardA2mV2Value);
+        /// <summary> Gets the StandardA2MV2. </summary>
+        public static VirtualMachineSizeType StandardA2MV2 { get; } = new VirtualMachineSizeType(StandardA2MV2Value);
 
-        /// <summary> Gets the StandardA4mV2. </summary>
-        public static VirtualMachineSizeType StandardA4mV2 { get; } = new VirtualMachineSizeType(StandardA4mV2Value);
+        /// <summary> Gets the StandardA4MV2. </summary>
+        public static VirtualMachineSizeType StandardA4MV2 { get; } = new VirtualMachineSizeType(StandardA4MV2Value);
 
-        /// <summary> Gets the StandardA8mV2. </summary>
-        public static VirtualMachineSizeType StandardA8mV2 { get; } = new VirtualMachineSizeType(StandardA8mV2Value);
+        /// <summary> Gets the StandardA8MV2. </summary>
+        public static VirtualMachineSizeType StandardA8MV2 { get; } = new VirtualMachineSizeType(StandardA8MV2Value);
 
-        /// <summary> Gets the StandardB1s. </summary>
-        public static VirtualMachineSizeType StandardB1s { get; } = new VirtualMachineSizeType(StandardB1sValue);
+        /// <summary> Gets the StandardB1S. </summary>
+        public static VirtualMachineSizeType StandardB1S { get; } = new VirtualMachineSizeType(StandardB1SValue);
 
-        /// <summary> Gets the StandardB1ms. </summary>
-        public static VirtualMachineSizeType StandardB1ms { get; } = new VirtualMachineSizeType(StandardB1msValue);
+        /// <summary> Gets the StandardB1Ms. </summary>
+        public static VirtualMachineSizeType StandardB1Ms { get; } = new VirtualMachineSizeType(StandardB1MsValue);
 
-        /// <summary> Gets the StandardB2s. </summary>
-        public static VirtualMachineSizeType StandardB2s { get; } = new VirtualMachineSizeType(StandardB2sValue);
+        /// <summary> Gets the StandardB2S. </summary>
+        public static VirtualMachineSizeType StandardB2S { get; } = new VirtualMachineSizeType(StandardB2SValue);
 
-        /// <summary> Gets the StandardB2ms. </summary>
-        public static VirtualMachineSizeType StandardB2ms { get; } = new VirtualMachineSizeType(StandardB2msValue);
+        /// <summary> Gets the StandardB2Ms. </summary>
+        public static VirtualMachineSizeType StandardB2Ms { get; } = new VirtualMachineSizeType(StandardB2MsValue);
 
-        /// <summary> Gets the StandardB4ms. </summary>
-        public static VirtualMachineSizeType StandardB4ms { get; } = new VirtualMachineSizeType(StandardB4msValue);
+        /// <summary> Gets the StandardB4Ms. </summary>
+        public static VirtualMachineSizeType StandardB4Ms { get; } = new VirtualMachineSizeType(StandardB4MsValue);
 
-        /// <summary> Gets the StandardB8ms. </summary>
-        public static VirtualMachineSizeType StandardB8ms { get; } = new VirtualMachineSizeType(StandardB8msValue);
+        /// <summary> Gets the StandardB8Ms. </summary>
+        public static VirtualMachineSizeType StandardB8Ms { get; } = new VirtualMachineSizeType(StandardB8MsValue);
 
         /// <summary> Gets the StandardD1. </summary>
         public static VirtualMachineSizeType StandardD1 { get; } = new VirtualMachineSizeType(StandardD1Value);
@@ -339,23 +339,23 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardD64V3. </summary>
         public static VirtualMachineSizeType StandardD64V3 { get; } = new VirtualMachineSizeType(StandardD64V3Value);
 
-        /// <summary> Gets the StandardD2sV3. </summary>
-        public static VirtualMachineSizeType StandardD2sV3 { get; } = new VirtualMachineSizeType(StandardD2sV3Value);
+        /// <summary> Gets the StandardD2SV3. </summary>
+        public static VirtualMachineSizeType StandardD2SV3 { get; } = new VirtualMachineSizeType(StandardD2SV3Value);
 
-        /// <summary> Gets the StandardD4sV3. </summary>
-        public static VirtualMachineSizeType StandardD4sV3 { get; } = new VirtualMachineSizeType(StandardD4sV3Value);
+        /// <summary> Gets the StandardD4SV3. </summary>
+        public static VirtualMachineSizeType StandardD4SV3 { get; } = new VirtualMachineSizeType(StandardD4SV3Value);
 
-        /// <summary> Gets the StandardD8sV3. </summary>
-        public static VirtualMachineSizeType StandardD8sV3 { get; } = new VirtualMachineSizeType(StandardD8sV3Value);
+        /// <summary> Gets the StandardD8SV3. </summary>
+        public static VirtualMachineSizeType StandardD8SV3 { get; } = new VirtualMachineSizeType(StandardD8SV3Value);
 
-        /// <summary> Gets the StandardD16sV3. </summary>
-        public static VirtualMachineSizeType StandardD16sV3 { get; } = new VirtualMachineSizeType(StandardD16sV3Value);
+        /// <summary> Gets the StandardD16SV3. </summary>
+        public static VirtualMachineSizeType StandardD16SV3 { get; } = new VirtualMachineSizeType(StandardD16SV3Value);
 
-        /// <summary> Gets the StandardD32sV3. </summary>
-        public static VirtualMachineSizeType StandardD32sV3 { get; } = new VirtualMachineSizeType(StandardD32sV3Value);
+        /// <summary> Gets the StandardD32SV3. </summary>
+        public static VirtualMachineSizeType StandardD32SV3 { get; } = new VirtualMachineSizeType(StandardD32SV3Value);
 
-        /// <summary> Gets the StandardD64sV3. </summary>
-        public static VirtualMachineSizeType StandardD64sV3 { get; } = new VirtualMachineSizeType(StandardD64sV3Value);
+        /// <summary> Gets the StandardD64SV3. </summary>
+        public static VirtualMachineSizeType StandardD64SV3 { get; } = new VirtualMachineSizeType(StandardD64SV3Value);
 
         /// <summary> Gets the StandardD11V2. </summary>
         public static VirtualMachineSizeType StandardD11V2 { get; } = new VirtualMachineSizeType(StandardD11V2Value);
@@ -456,35 +456,35 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardE64V3. </summary>
         public static VirtualMachineSizeType StandardE64V3 { get; } = new VirtualMachineSizeType(StandardE64V3Value);
 
-        /// <summary> Gets the StandardE2sV3. </summary>
-        public static VirtualMachineSizeType StandardE2sV3 { get; } = new VirtualMachineSizeType(StandardE2sV3Value);
+        /// <summary> Gets the StandardE2SV3. </summary>
+        public static VirtualMachineSizeType StandardE2SV3 { get; } = new VirtualMachineSizeType(StandardE2SV3Value);
 
-        /// <summary> Gets the StandardE4sV3. </summary>
-        public static VirtualMachineSizeType StandardE4sV3 { get; } = new VirtualMachineSizeType(StandardE4sV3Value);
+        /// <summary> Gets the StandardE4SV3. </summary>
+        public static VirtualMachineSizeType StandardE4SV3 { get; } = new VirtualMachineSizeType(StandardE4SV3Value);
 
-        /// <summary> Gets the StandardE8sV3. </summary>
-        public static VirtualMachineSizeType StandardE8sV3 { get; } = new VirtualMachineSizeType(StandardE8sV3Value);
+        /// <summary> Gets the StandardE8SV3. </summary>
+        public static VirtualMachineSizeType StandardE8SV3 { get; } = new VirtualMachineSizeType(StandardE8SV3Value);
 
-        /// <summary> Gets the StandardE16sV3. </summary>
-        public static VirtualMachineSizeType StandardE16sV3 { get; } = new VirtualMachineSizeType(StandardE16sV3Value);
+        /// <summary> Gets the StandardE16SV3. </summary>
+        public static VirtualMachineSizeType StandardE16SV3 { get; } = new VirtualMachineSizeType(StandardE16SV3Value);
 
-        /// <summary> Gets the StandardE32sV3. </summary>
-        public static VirtualMachineSizeType StandardE32sV3 { get; } = new VirtualMachineSizeType(StandardE32sV3Value);
+        /// <summary> Gets the StandardE32SV3. </summary>
+        public static VirtualMachineSizeType StandardE32SV3 { get; } = new VirtualMachineSizeType(StandardE32SV3Value);
 
-        /// <summary> Gets the StandardE64sV3. </summary>
-        public static VirtualMachineSizeType StandardE64sV3 { get; } = new VirtualMachineSizeType(StandardE64sV3Value);
+        /// <summary> Gets the StandardE64SV3. </summary>
+        public static VirtualMachineSizeType StandardE64SV3 { get; } = new VirtualMachineSizeType(StandardE64SV3Value);
 
         /// <summary> Gets the StandardE3216V3. </summary>
         public static VirtualMachineSizeType StandardE3216V3 { get; } = new VirtualMachineSizeType(StandardE3216V3Value);
 
-        /// <summary> Gets the StandardE328sV3. </summary>
-        public static VirtualMachineSizeType StandardE328sV3 { get; } = new VirtualMachineSizeType(StandardE328sV3Value);
+        /// <summary> Gets the StandardE328SV3. </summary>
+        public static VirtualMachineSizeType StandardE328SV3 { get; } = new VirtualMachineSizeType(StandardE328SV3Value);
 
-        /// <summary> Gets the StandardE6432sV3. </summary>
-        public static VirtualMachineSizeType StandardE6432sV3 { get; } = new VirtualMachineSizeType(StandardE6432sV3Value);
+        /// <summary> Gets the StandardE6432SV3. </summary>
+        public static VirtualMachineSizeType StandardE6432SV3 { get; } = new VirtualMachineSizeType(StandardE6432SV3Value);
 
-        /// <summary> Gets the StandardE6416sV3. </summary>
-        public static VirtualMachineSizeType StandardE6416sV3 { get; } = new VirtualMachineSizeType(StandardE6416sV3Value);
+        /// <summary> Gets the StandardE6416SV3. </summary>
+        public static VirtualMachineSizeType StandardE6416SV3 { get; } = new VirtualMachineSizeType(StandardE6416SV3Value);
 
         /// <summary> Gets the StandardF1. </summary>
         public static VirtualMachineSizeType StandardF1 { get; } = new VirtualMachineSizeType(StandardF1Value);
@@ -501,41 +501,41 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardF16. </summary>
         public static VirtualMachineSizeType StandardF16 { get; } = new VirtualMachineSizeType(StandardF16Value);
 
-        /// <summary> Gets the StandardF1s. </summary>
-        public static VirtualMachineSizeType StandardF1s { get; } = new VirtualMachineSizeType(StandardF1sValue);
+        /// <summary> Gets the StandardF1S. </summary>
+        public static VirtualMachineSizeType StandardF1S { get; } = new VirtualMachineSizeType(StandardF1SValue);
 
-        /// <summary> Gets the StandardF2s. </summary>
-        public static VirtualMachineSizeType StandardF2s { get; } = new VirtualMachineSizeType(StandardF2sValue);
+        /// <summary> Gets the StandardF2S. </summary>
+        public static VirtualMachineSizeType StandardF2S { get; } = new VirtualMachineSizeType(StandardF2SValue);
 
-        /// <summary> Gets the StandardF4s. </summary>
-        public static VirtualMachineSizeType StandardF4s { get; } = new VirtualMachineSizeType(StandardF4sValue);
+        /// <summary> Gets the StandardF4S. </summary>
+        public static VirtualMachineSizeType StandardF4S { get; } = new VirtualMachineSizeType(StandardF4SValue);
 
-        /// <summary> Gets the StandardF8s. </summary>
-        public static VirtualMachineSizeType StandardF8s { get; } = new VirtualMachineSizeType(StandardF8sValue);
+        /// <summary> Gets the StandardF8S. </summary>
+        public static VirtualMachineSizeType StandardF8S { get; } = new VirtualMachineSizeType(StandardF8SValue);
 
-        /// <summary> Gets the StandardF16s. </summary>
-        public static VirtualMachineSizeType StandardF16s { get; } = new VirtualMachineSizeType(StandardF16sValue);
+        /// <summary> Gets the StandardF16S. </summary>
+        public static VirtualMachineSizeType StandardF16S { get; } = new VirtualMachineSizeType(StandardF16SValue);
 
-        /// <summary> Gets the StandardF2sV2. </summary>
-        public static VirtualMachineSizeType StandardF2sV2 { get; } = new VirtualMachineSizeType(StandardF2sV2Value);
+        /// <summary> Gets the StandardF2SV2. </summary>
+        public static VirtualMachineSizeType StandardF2SV2 { get; } = new VirtualMachineSizeType(StandardF2SV2Value);
 
-        /// <summary> Gets the StandardF4sV2. </summary>
-        public static VirtualMachineSizeType StandardF4sV2 { get; } = new VirtualMachineSizeType(StandardF4sV2Value);
+        /// <summary> Gets the StandardF4SV2. </summary>
+        public static VirtualMachineSizeType StandardF4SV2 { get; } = new VirtualMachineSizeType(StandardF4SV2Value);
 
-        /// <summary> Gets the StandardF8sV2. </summary>
-        public static VirtualMachineSizeType StandardF8sV2 { get; } = new VirtualMachineSizeType(StandardF8sV2Value);
+        /// <summary> Gets the StandardF8SV2. </summary>
+        public static VirtualMachineSizeType StandardF8SV2 { get; } = new VirtualMachineSizeType(StandardF8SV2Value);
 
-        /// <summary> Gets the StandardF16sV2. </summary>
-        public static VirtualMachineSizeType StandardF16sV2 { get; } = new VirtualMachineSizeType(StandardF16sV2Value);
+        /// <summary> Gets the StandardF16SV2. </summary>
+        public static VirtualMachineSizeType StandardF16SV2 { get; } = new VirtualMachineSizeType(StandardF16SV2Value);
 
-        /// <summary> Gets the StandardF32sV2. </summary>
-        public static VirtualMachineSizeType StandardF32sV2 { get; } = new VirtualMachineSizeType(StandardF32sV2Value);
+        /// <summary> Gets the StandardF32SV2. </summary>
+        public static VirtualMachineSizeType StandardF32SV2 { get; } = new VirtualMachineSizeType(StandardF32SV2Value);
 
-        /// <summary> Gets the StandardF64sV2. </summary>
-        public static VirtualMachineSizeType StandardF64sV2 { get; } = new VirtualMachineSizeType(StandardF64sV2Value);
+        /// <summary> Gets the StandardF64SV2. </summary>
+        public static VirtualMachineSizeType StandardF64SV2 { get; } = new VirtualMachineSizeType(StandardF64SV2Value);
 
-        /// <summary> Gets the StandardF72sV2. </summary>
-        public static VirtualMachineSizeType StandardF72sV2 { get; } = new VirtualMachineSizeType(StandardF72sV2Value);
+        /// <summary> Gets the StandardF72SV2. </summary>
+        public static VirtualMachineSizeType StandardF72SV2 { get; } = new VirtualMachineSizeType(StandardF72SV2Value);
 
         /// <summary> Gets the StandardG1. </summary>
         public static VirtualMachineSizeType StandardG1 { get; } = new VirtualMachineSizeType(StandardG1Value);
@@ -585,53 +585,53 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardH16. </summary>
         public static VirtualMachineSizeType StandardH16 { get; } = new VirtualMachineSizeType(StandardH16Value);
 
-        /// <summary> Gets the StandardH8m. </summary>
-        public static VirtualMachineSizeType StandardH8m { get; } = new VirtualMachineSizeType(StandardH8mValue);
+        /// <summary> Gets the StandardH8M. </summary>
+        public static VirtualMachineSizeType StandardH8M { get; } = new VirtualMachineSizeType(StandardH8MValue);
 
-        /// <summary> Gets the StandardH16m. </summary>
-        public static VirtualMachineSizeType StandardH16m { get; } = new VirtualMachineSizeType(StandardH16mValue);
+        /// <summary> Gets the StandardH16M. </summary>
+        public static VirtualMachineSizeType StandardH16M { get; } = new VirtualMachineSizeType(StandardH16MValue);
 
-        /// <summary> Gets the StandardH16r. </summary>
-        public static VirtualMachineSizeType StandardH16r { get; } = new VirtualMachineSizeType(StandardH16rValue);
+        /// <summary> Gets the StandardH16R. </summary>
+        public static VirtualMachineSizeType StandardH16R { get; } = new VirtualMachineSizeType(StandardH16RValue);
 
-        /// <summary> Gets the StandardH16mr. </summary>
-        public static VirtualMachineSizeType StandardH16mr { get; } = new VirtualMachineSizeType(StandardH16mrValue);
+        /// <summary> Gets the StandardH16Mr. </summary>
+        public static VirtualMachineSizeType StandardH16Mr { get; } = new VirtualMachineSizeType(StandardH16MrValue);
 
-        /// <summary> Gets the StandardL4s. </summary>
-        public static VirtualMachineSizeType StandardL4s { get; } = new VirtualMachineSizeType(StandardL4sValue);
+        /// <summary> Gets the StandardL4S. </summary>
+        public static VirtualMachineSizeType StandardL4S { get; } = new VirtualMachineSizeType(StandardL4SValue);
 
-        /// <summary> Gets the StandardL8s. </summary>
-        public static VirtualMachineSizeType StandardL8s { get; } = new VirtualMachineSizeType(StandardL8sValue);
+        /// <summary> Gets the StandardL8S. </summary>
+        public static VirtualMachineSizeType StandardL8S { get; } = new VirtualMachineSizeType(StandardL8SValue);
 
-        /// <summary> Gets the StandardL16s. </summary>
-        public static VirtualMachineSizeType StandardL16s { get; } = new VirtualMachineSizeType(StandardL16sValue);
+        /// <summary> Gets the StandardL16S. </summary>
+        public static VirtualMachineSizeType StandardL16S { get; } = new VirtualMachineSizeType(StandardL16SValue);
 
-        /// <summary> Gets the StandardL32s. </summary>
-        public static VirtualMachineSizeType StandardL32s { get; } = new VirtualMachineSizeType(StandardL32sValue);
+        /// <summary> Gets the StandardL32S. </summary>
+        public static VirtualMachineSizeType StandardL32S { get; } = new VirtualMachineSizeType(StandardL32SValue);
 
-        /// <summary> Gets the StandardM64s. </summary>
-        public static VirtualMachineSizeType StandardM64s { get; } = new VirtualMachineSizeType(StandardM64sValue);
+        /// <summary> Gets the StandardM64S. </summary>
+        public static VirtualMachineSizeType StandardM64S { get; } = new VirtualMachineSizeType(StandardM64SValue);
 
-        /// <summary> Gets the StandardM64ms. </summary>
-        public static VirtualMachineSizeType StandardM64ms { get; } = new VirtualMachineSizeType(StandardM64msValue);
+        /// <summary> Gets the StandardM64Ms. </summary>
+        public static VirtualMachineSizeType StandardM64Ms { get; } = new VirtualMachineSizeType(StandardM64MsValue);
 
-        /// <summary> Gets the StandardM128s. </summary>
-        public static VirtualMachineSizeType StandardM128s { get; } = new VirtualMachineSizeType(StandardM128sValue);
+        /// <summary> Gets the StandardM128S. </summary>
+        public static VirtualMachineSizeType StandardM128S { get; } = new VirtualMachineSizeType(StandardM128SValue);
 
-        /// <summary> Gets the StandardM128ms. </summary>
-        public static VirtualMachineSizeType StandardM128ms { get; } = new VirtualMachineSizeType(StandardM128msValue);
+        /// <summary> Gets the StandardM128Ms. </summary>
+        public static VirtualMachineSizeType StandardM128Ms { get; } = new VirtualMachineSizeType(StandardM128MsValue);
 
-        /// <summary> Gets the StandardM6432ms. </summary>
-        public static VirtualMachineSizeType StandardM6432ms { get; } = new VirtualMachineSizeType(StandardM6432msValue);
+        /// <summary> Gets the StandardM6432Ms. </summary>
+        public static VirtualMachineSizeType StandardM6432Ms { get; } = new VirtualMachineSizeType(StandardM6432MsValue);
 
-        /// <summary> Gets the StandardM6416ms. </summary>
-        public static VirtualMachineSizeType StandardM6416ms { get; } = new VirtualMachineSizeType(StandardM6416msValue);
+        /// <summary> Gets the StandardM6416Ms. </summary>
+        public static VirtualMachineSizeType StandardM6416Ms { get; } = new VirtualMachineSizeType(StandardM6416MsValue);
 
-        /// <summary> Gets the StandardM12864ms. </summary>
-        public static VirtualMachineSizeType StandardM12864ms { get; } = new VirtualMachineSizeType(StandardM12864msValue);
+        /// <summary> Gets the StandardM12864Ms. </summary>
+        public static VirtualMachineSizeType StandardM12864Ms { get; } = new VirtualMachineSizeType(StandardM12864MsValue);
 
-        /// <summary> Gets the StandardM12832ms. </summary>
-        public static VirtualMachineSizeType StandardM12832ms { get; } = new VirtualMachineSizeType(StandardM12832msValue);
+        /// <summary> Gets the StandardM12832Ms. </summary>
+        public static VirtualMachineSizeType StandardM12832Ms { get; } = new VirtualMachineSizeType(StandardM12832MsValue);
 
         /// <summary> Gets the StandardNC6. </summary>
         public static VirtualMachineSizeType StandardNC6 { get; } = new VirtualMachineSizeType(StandardNC6Value);
@@ -642,44 +642,44 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the StandardNC24. </summary>
         public static VirtualMachineSizeType StandardNC24 { get; } = new VirtualMachineSizeType(StandardNC24Value);
 
-        /// <summary> Gets the StandardNC24r. </summary>
-        public static VirtualMachineSizeType StandardNC24r { get; } = new VirtualMachineSizeType(StandardNC24rValue);
+        /// <summary> Gets the StandardNC24R. </summary>
+        public static VirtualMachineSizeType StandardNC24R { get; } = new VirtualMachineSizeType(StandardNC24RValue);
 
-        /// <summary> Gets the StandardNC6sV2. </summary>
-        public static VirtualMachineSizeType StandardNC6sV2 { get; } = new VirtualMachineSizeType(StandardNC6sV2Value);
+        /// <summary> Gets the StandardNC6SV2. </summary>
+        public static VirtualMachineSizeType StandardNC6SV2 { get; } = new VirtualMachineSizeType(StandardNC6SV2Value);
 
-        /// <summary> Gets the StandardNC12sV2. </summary>
-        public static VirtualMachineSizeType StandardNC12sV2 { get; } = new VirtualMachineSizeType(StandardNC12sV2Value);
+        /// <summary> Gets the StandardNC12SV2. </summary>
+        public static VirtualMachineSizeType StandardNC12SV2 { get; } = new VirtualMachineSizeType(StandardNC12SV2Value);
 
-        /// <summary> Gets the StandardNC24sV2. </summary>
-        public static VirtualMachineSizeType StandardNC24sV2 { get; } = new VirtualMachineSizeType(StandardNC24sV2Value);
+        /// <summary> Gets the StandardNC24SV2. </summary>
+        public static VirtualMachineSizeType StandardNC24SV2 { get; } = new VirtualMachineSizeType(StandardNC24SV2Value);
 
-        /// <summary> Gets the StandardNC24rsV2. </summary>
-        public static VirtualMachineSizeType StandardNC24rsV2 { get; } = new VirtualMachineSizeType(StandardNC24rsV2Value);
+        /// <summary> Gets the StandardNC24RsV2. </summary>
+        public static VirtualMachineSizeType StandardNC24RsV2 { get; } = new VirtualMachineSizeType(StandardNC24RsV2Value);
 
-        /// <summary> Gets the StandardNC6sV3. </summary>
-        public static VirtualMachineSizeType StandardNC6sV3 { get; } = new VirtualMachineSizeType(StandardNC6sV3Value);
+        /// <summary> Gets the StandardNC6SV3. </summary>
+        public static VirtualMachineSizeType StandardNC6SV3 { get; } = new VirtualMachineSizeType(StandardNC6SV3Value);
 
-        /// <summary> Gets the StandardNC12sV3. </summary>
-        public static VirtualMachineSizeType StandardNC12sV3 { get; } = new VirtualMachineSizeType(StandardNC12sV3Value);
+        /// <summary> Gets the StandardNC12SV3. </summary>
+        public static VirtualMachineSizeType StandardNC12SV3 { get; } = new VirtualMachineSizeType(StandardNC12SV3Value);
 
-        /// <summary> Gets the StandardNC24sV3. </summary>
-        public static VirtualMachineSizeType StandardNC24sV3 { get; } = new VirtualMachineSizeType(StandardNC24sV3Value);
+        /// <summary> Gets the StandardNC24SV3. </summary>
+        public static VirtualMachineSizeType StandardNC24SV3 { get; } = new VirtualMachineSizeType(StandardNC24SV3Value);
 
-        /// <summary> Gets the StandardNC24rsV3. </summary>
-        public static VirtualMachineSizeType StandardNC24rsV3 { get; } = new VirtualMachineSizeType(StandardNC24rsV3Value);
+        /// <summary> Gets the StandardNC24RsV3. </summary>
+        public static VirtualMachineSizeType StandardNC24RsV3 { get; } = new VirtualMachineSizeType(StandardNC24RsV3Value);
 
-        /// <summary> Gets the StandardND6s. </summary>
-        public static VirtualMachineSizeType StandardND6s { get; } = new VirtualMachineSizeType(StandardND6sValue);
+        /// <summary> Gets the StandardND6S. </summary>
+        public static VirtualMachineSizeType StandardND6S { get; } = new VirtualMachineSizeType(StandardND6SValue);
 
-        /// <summary> Gets the StandardND12s. </summary>
-        public static VirtualMachineSizeType StandardND12s { get; } = new VirtualMachineSizeType(StandardND12sValue);
+        /// <summary> Gets the StandardND12S. </summary>
+        public static VirtualMachineSizeType StandardND12S { get; } = new VirtualMachineSizeType(StandardND12SValue);
 
-        /// <summary> Gets the StandardND24s. </summary>
-        public static VirtualMachineSizeType StandardND24s { get; } = new VirtualMachineSizeType(StandardND24sValue);
+        /// <summary> Gets the StandardND24S. </summary>
+        public static VirtualMachineSizeType StandardND24S { get; } = new VirtualMachineSizeType(StandardND24SValue);
 
-        /// <summary> Gets the StandardND24rs. </summary>
-        public static VirtualMachineSizeType StandardND24rs { get; } = new VirtualMachineSizeType(StandardND24rsValue);
+        /// <summary> Gets the StandardND24Rs. </summary>
+        public static VirtualMachineSizeType StandardND24Rs { get; } = new VirtualMachineSizeType(StandardND24RsValue);
 
         /// <summary> Gets the StandardNV6. </summary>
         public static VirtualMachineSizeType StandardNV6 { get; } = new VirtualMachineSizeType(StandardNV6Value);
