@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public static partial class ContainerInstanceExtensions
     {
-        public static Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -323,6 +323,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
     public partial class MockableContainerInstanceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableContainerInstanceResourceGroupResource() { }
+        public virtual Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroup(string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> GetContainerGroupAsync(string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupProfileResource> GetContainerGroupProfile(string containerGroupProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -336,8 +338,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
     public partial class MockableContainerInstanceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableContainerInstanceSubscriptionResource() { }
-        public virtual Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(Azure.WaitUntil waitUntil, string resourceGroupName, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesWithLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -418,6 +418,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupContainerGroupProperties NGroupContainerGroupProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> subnetIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.NGroupContainerGroupPropertyVolume> volumes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.NGroupContainerGroupPropertyContainer> containers = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.NGroupData NGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupElasticProfile elasticProfile = null, int? placementFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileStub> containerGroupProfiles = null, Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState?), Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile updateProfile = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.NGroupPatch NGroupPatch(Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.ContainerInstance.Models.ContainerGroupElasticProfile elasticProfile = null, int? placementFaultDomainCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupProfileStub> containerGroupProfiles = null, Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerInstance.Models.NGroupProvisioningState?), Azure.ResourceManager.ContainerInstance.Models.NGroupUpdateProfile updateProfile = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutoGeneratedDomainNameLabelScope(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope NoReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope ResourceGroupReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope SubscriptionReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope Unsecure { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum AzureFileShareAccessTier
     {
@@ -726,6 +745,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerGroupImageRegistryCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupImageRegistryCredential>
     {
         public ContainerGroupImageRegistryCredential(string server) { }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
+        public ContainerGroupImageRegistryCredential(string server, string username) { }
         public string Identity { get { throw null; } set { } }
         public System.Uri IdentityUri { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
@@ -763,6 +784,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupIPAddressType AddressType { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.DnsNameLabelReusePolicy? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
         public string DnsNameLabel { get { throw null; } set { } }
+        [System.ObsoleteAttribute("DnsNameLabelReusePolicy is deprecated, use AutoGeneratedDnsNameLabelScope instead", false)]
+        public Azure.ResourceManager.ContainerInstance.Models.AutoGeneratedDomainNameLabelScope? DnsNameLabelReusePolicy { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Net.IPAddress IP { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPort> Ports { get { throw null; } }
@@ -1118,6 +1141,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerInstanceContainer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer>
     {
         public ContainerInstanceContainer(string name) { }
+        public ContainerInstanceContainer(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements resources) { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ConfigMapKeyValuePairs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerEnvironmentVariable> EnvironmentVariables { get { throw null; } }
