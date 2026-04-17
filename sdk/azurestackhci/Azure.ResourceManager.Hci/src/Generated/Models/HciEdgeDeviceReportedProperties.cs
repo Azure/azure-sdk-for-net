@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return ExtensionProfile.Extensions;
+                return ExtensionProfile is null ? default : ExtensionProfile.Extensions;
             }
         }
     }

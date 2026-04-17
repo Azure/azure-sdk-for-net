@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Represents the networkAdapter on a device. </summary>
     public partial class DataBoxEdgeNetworkAdapter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
-        internal DataBoxEdgeNetworkAdapter()
+        public DataBoxEdgeNetworkAdapter()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
@@ -63,12 +35,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Value indicating whether this adapter is valid. </param>
         /// <param name="rdmaStatus"> Value indicating whether this adapter is RDMA capable. </param>
         /// <param name="dhcpStatus"> Value indicating whether this adapter has DHCP enabled. </param>
-        /// <param name="ipv4Configuration"> The IPv4 configuration of the network adapter. </param>
-        /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
-        /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
+        /// <param name="iPv4Configuration"> The IPv4 configuration of the network adapter. </param>
+        /// <param name="iPv6Configuration"> The IPv6 configuration of the network adapter. </param>
+        /// <param name="iPv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config iPv4Configuration, DataBoxEdgeIPv6Config iPv6Configuration, string iPv6LinkLocalAddress, IReadOnlyList<string> dnsServers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdapterId = adapterId;
             AdapterPosition = adapterPosition;
@@ -81,41 +53,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Status = status;
             RdmaStatus = rdmaStatus;
             DhcpStatus = dhcpStatus;
-            IPv4Configuration = ipv4Configuration;
-            IPv6Configuration = ipv6Configuration;
-            IPv6LinkLocalAddress = ipv6LinkLocalAddress;
+            IPv4Configuration = iPv4Configuration;
+            IPv6Configuration = iPv6Configuration;
+            IPv6LinkLocalAddress = iPv6LinkLocalAddress;
             DnsServers = dnsServers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Instance ID of network adapter. </summary>
         public string AdapterId { get; }
+
         /// <summary> Hardware position of network adapter. </summary>
         public DataBoxEdgeNetworkAdapterPosition AdapterPosition { get; }
+
         /// <summary> Logical index of the adapter. </summary>
         public int? Index { get; }
+
         /// <summary> Node ID of the network adapter. </summary>
         public Guid? NodeId { get; }
+
         /// <summary> Network adapter name. </summary>
         public string NetworkAdapterName { get; }
+
         /// <summary> Hardware label for the adapter. </summary>
         public string Label { get; }
+
         /// <summary> MAC address. </summary>
         public string MacAddress { get; }
+
         /// <summary> Link speed. </summary>
         public long? LinkSpeed { get; }
+
         /// <summary> Value indicating whether this adapter is valid. </summary>
         public DataBoxEdgeNetworkAdapterStatus? Status { get; }
+
         /// <summary> Value indicating whether this adapter is RDMA capable. </summary>
-        public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; }
+        public DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get; set; }
+
         /// <summary> Value indicating whether this adapter has DHCP enabled. </summary>
-        public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; }
+        public DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get; set; }
+
         /// <summary> The IPv4 configuration of the network adapter. </summary>
         public DataBoxEdgeIPv4Config IPv4Configuration { get; }
+
         /// <summary> The IPv6 configuration of the network adapter. </summary>
         public DataBoxEdgeIPv6Config IPv6Configuration { get; }
+
         /// <summary> The IPv6 local address. </summary>
         public string IPv6LinkLocalAddress { get; }
+
         /// <summary> The list of DNS Servers of the device. </summary>
         public IReadOnlyList<string> DnsServers { get; }
     }

@@ -26,11 +26,12 @@ public class CancelResponseTests : IDisposable
     [Test]
     public async Task Cancel_UnknownId_Returns404()
     {
-        var response = await _client.PostAsync("/responses/resp_unknown/cancel", null);
+        var response = await _client.PostAsync($"/responses/{IdGenerator.NewResponseId()}/cancel", null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
         Assert.That(body.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(body.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     [Test]
@@ -48,6 +49,7 @@ public class CancelResponseTests : IDisposable
 
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         var cancelBody = await cancelResponse.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.That(cancelBody.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", cancelBody.GetProperty("error").GetProperty("message").GetString());
     }
 

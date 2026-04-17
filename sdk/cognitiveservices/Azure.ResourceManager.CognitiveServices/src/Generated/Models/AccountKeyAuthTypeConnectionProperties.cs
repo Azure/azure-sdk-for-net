@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,9 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class AccountKeyAuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="AccountKeyAuthTypeConnectionProperties"/>. </summary>
-        public AccountKeyAuthTypeConnectionProperties()
+        public AccountKeyAuthTypeConnectionProperties() : base(ConnectionAuthType.AccountKey)
         {
-            AuthType = ConnectionAuthType.AccountKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountKeyAuthTypeConnectionProperties"/>. </summary>
@@ -34,25 +34,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Account key object for connection credential. </param>
-        internal AccountKeyAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionAccountKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal AccountKeyAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionAccountKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
         {
             Credentials = credentials;
-            AuthType = authType;
         }
 
         /// <summary> Account key object for connection credential. </summary>
+        [WirePath("credentials")]
         internal ConnectionAccountKey Credentials { get; set; }
-        /// <summary> Gets or sets the credentials key. </summary>
+
+        /// <summary> Gets or sets the Key. </summary>
         [WirePath("credentials.key")]
         public string CredentialsKey
         {
-            get => Credentials is null ? default : Credentials.Key;
+            get
+            {
+                return Credentials is null ? default : Credentials.Key;
+            }
             set
             {
                 if (Credentials is null)
+                {
                     Credentials = new ConnectionAccountKey();
+                }
                 Credentials.Key = value;
             }
         }

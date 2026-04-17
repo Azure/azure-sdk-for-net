@@ -7,46 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A Class representing a CognitiveServicesProject along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesProjectResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCognitiveServicesProjectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesProject method.
+    /// A class representing a CognitiveServicesProject along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesProjects method.
     /// </summary>
     public partial class CognitiveServicesProjectResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesProjectResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="projectName"> The projectName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cognitiveServicesProjectProjectsClientDiagnostics;
-        private readonly ProjectsRestOperations _cognitiveServicesProjectProjectsRestClient;
+        private readonly ClientDiagnostics _projectsClientDiagnostics;
+        private readonly Projects _projectsRestClient;
         private readonly CognitiveServicesProjectData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/projects";
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesProjectResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CognitiveServicesProjectResource for mocking. </summary>
         protected CognitiveServicesProjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CognitiveServicesProjectResource(ArmClient client, CognitiveServicesProjectData data) : this(client, data.Id)
@@ -55,209 +45,93 @@ namespace Azure.ResourceManager.CognitiveServices
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CognitiveServicesProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cognitiveServicesProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cognitiveServicesProjectProjectsApiVersion);
-            _cognitiveServicesProjectProjectsRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectProjectsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cognitiveServicesProjectApiVersion);
+            _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CognitiveServicesProjectData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string projectName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of CognitiveServicesProjectConnectionResources in the CognitiveServicesProject. </summary>
-        /// <returns> An object representing collection of CognitiveServicesProjectConnectionResources and their operations over a CognitiveServicesProjectConnectionResource. </returns>
-        public virtual CognitiveServicesProjectConnectionCollection GetCognitiveServicesProjectConnections()
-        {
-            return GetCachedClient(client => new CognitiveServicesProjectConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Lists Cognitive Services project connection by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionName"> Friendly name of the connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> GetCognitiveServicesProjectConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetCognitiveServicesProjectConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists Cognitive Services project connection by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionName"> Friendly name of the connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesProjectConnectionResource> GetCognitiveServicesProjectConnection(string connectionName, CancellationToken cancellationToken = default)
-        {
-            return GetCognitiveServicesProjectConnections().Get(connectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CognitiveServicesProjectCapabilityHostResources in the CognitiveServicesProject. </summary>
-        /// <returns> An object representing collection of CognitiveServicesProjectCapabilityHostResources and their operations over a CognitiveServicesProjectCapabilityHostResource. </returns>
-        public virtual CognitiveServicesProjectCapabilityHostCollection GetCognitiveServicesProjectCapabilityHosts()
-        {
-            return GetCachedClient(client => new CognitiveServicesProjectCapabilityHostCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get project capabilityHost.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/capabilityHosts/{capabilityHostName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectCapabilityHosts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectCapabilityHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CognitiveServicesProjectCapabilityHostResource>> GetCognitiveServicesProjectCapabilityHostAsync(string capabilityHostName, CancellationToken cancellationToken = default)
-        {
-            return await GetCognitiveServicesProjectCapabilityHosts().GetAsync(capabilityHostName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get project capabilityHost.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}/capabilityHosts/{capabilityHostName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectCapabilityHosts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectCapabilityHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CognitiveServicesProjectCapabilityHostResource> GetCognitiveServicesProjectCapabilityHost(string capabilityHostName, CancellationToken cancellationToken = default)
-        {
-            return GetCognitiveServicesProjectCapabilityHosts().Get(capabilityHostName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns a Cognitive Services project specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesProjectResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Get");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,118 +145,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Returns a Cognitive Services project specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesProjectResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Get");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a Cognitive Services project from the resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _cognitiveServicesProjectProjectsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation(_cognitiveServicesProjectProjectsClientDiagnostics, Pipeline, _cognitiveServicesProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a Cognitive Services project from the resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _cognitiveServicesProjectProjectsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CognitiveServicesArmOperation(_cognitiveServicesProjectProjectsClientDiagnostics, Pipeline, _cognitiveServicesProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -395,20 +193,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Updates a Cognitive Services Project
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,14 +218,27 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Update");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectProjectsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(new CognitiveServicesProjectOperationSource(Client), _cognitiveServicesProjectProjectsClientDiagnostics, Pipeline, _cognitiveServicesProjectProjectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesProjectData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation<CognitiveServicesProjectResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(
+                    new CognitiveServicesProjectOperationSource(Client),
+                    _projectsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -441,20 +252,20 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Updates a Cognitive Services Project
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,14 +277,27 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Update");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectProjectsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(new CognitiveServicesProjectOperationSource(Client), _cognitiveServicesProjectProjectsClientDiagnostics, Pipeline, _cognitiveServicesProjectProjectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesProjectData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation<CognitiveServicesProjectResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(
+                    new CognitiveServicesProjectOperationSource(Client),
+                    _projectsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -484,26 +308,104 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Deletes a Cognitive Services project from the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a Cognitive Services project from the resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CognitiveServicesProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -513,28 +415,34 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.AddTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cognitiveServicesProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
-                    foreach (var tag in current.Tags)
+                    CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -545,27 +453,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -575,28 +463,34 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.AddTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cognitiveServicesProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
-                    foreach (var tag in current.Tags)
+                    CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -607,53 +501,39 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CognitiveServicesProjectResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.SetTags");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cognitiveServicesProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
+                    CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -664,53 +544,39 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CognitiveServicesProjectResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.SetTags");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cognitiveServicesProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
+                    CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -721,27 +587,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -749,28 +595,34 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.RemoveTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _cognitiveServicesProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
-                    foreach (var tag in current.Tags)
+                    CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -781,27 +633,7 @@ namespace Azure.ResourceManager.CognitiveServices
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CognitiveServicesProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -809,28 +641,34 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cognitiveServicesProjectProjectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.RemoveTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("CognitiveServicesProjectResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _cognitiveServicesProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new CognitiveServicesProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<CognitiveServicesProjectData> response = Response.FromValue(CognitiveServicesProjectData.FromResponse(result), result);
+                    return Response.FromValue(new CognitiveServicesProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new CognitiveServicesProjectData(current.Location);
-                    foreach (var tag in current.Tags)
+                    CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -839,6 +677,105 @@ namespace Azure.ResourceManager.CognitiveServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesProjectConnections in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesProjectConnections and their operations over a CognitiveServicesProjectConnectionResource. </returns>
+        public virtual CognitiveServicesProjectConnectionCollection GetCognitiveServicesProjectConnections()
+        {
+            return GetCachedClient(client => new CognitiveServicesProjectConnectionCollection(client, Id));
+        }
+
+        /// <summary> Lists Cognitive Services project connection by name. </summary>
+        /// <param name="connectionName"> Friendly name of the connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> GetCognitiveServicesProjectConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return await GetCognitiveServicesProjectConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Lists Cognitive Services project connection by name. </summary>
+        /// <param name="connectionName"> Friendly name of the connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesProjectConnectionResource> GetCognitiveServicesProjectConnection(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return GetCognitiveServicesProjectConnections().Get(connectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesProjectScopedCapabilityHosts in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesProjectScopedCapabilityHosts and their operations over a CognitiveServicesProjectScopedCapabilityHostResource. </returns>
+        public virtual CognitiveServicesProjectScopedCapabilityHostCollection GetCognitiveServicesProjectScopedCapabilityHosts()
+        {
+            return GetCachedClient(client => new CognitiveServicesProjectScopedCapabilityHostCollection(client, Id));
+        }
+
+        /// <summary> Get project capabilityHost. </summary>
+        /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesProjectScopedCapabilityHostResource>> GetCognitiveServicesProjectScopedCapabilityHostAsync(string capabilityHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
+
+            return await GetCognitiveServicesProjectScopedCapabilityHosts().GetAsync(capabilityHostName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get project capabilityHost. </summary>
+        /// <param name="capabilityHostName"> The name of the capability host associated with the Cognitive Services Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesProjectScopedCapabilityHostResource> GetCognitiveServicesProjectScopedCapabilityHost(string capabilityHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityHostName, nameof(capabilityHostName));
+
+            return GetCognitiveServicesProjectScopedCapabilityHosts().Get(capabilityHostName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesAgentApplications in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesAgentApplications and their operations over a CognitiveServicesAgentApplicationResource. </returns>
+        public virtual CognitiveServicesAgentApplicationCollection GetCognitiveServicesAgentApplications()
+        {
+            return GetCachedClient(client => new CognitiveServicesAgentApplicationCollection(client, Id));
+        }
+
+        /// <summary> Gets an Agent Application by name. </summary>
+        /// <param name="name"> Name for the Agent Application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesAgentApplicationResource>> GetCognitiveServicesAgentApplicationAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetCognitiveServicesAgentApplications().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an Agent Application by name. </summary>
+        /// <param name="name"> Name for the Agent Application. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesAgentApplicationResource> GetCognitiveServicesAgentApplication(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetCognitiveServicesAgentApplications().Get(name, cancellationToken);
         }
     }
 }

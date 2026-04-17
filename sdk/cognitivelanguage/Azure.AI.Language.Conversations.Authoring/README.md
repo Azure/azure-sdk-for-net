@@ -198,7 +198,7 @@ try
         Description = "This is a test for invalid configuration."
     };
     using RequestContent content = RequestContent.Create(projectData);
-    Response response = client.CreateProject(invalidProjectName, content);
+    Response response = projectClient.CreateProject(invalidProjectName, content);
 }
 catch (RequestFailedException ex)
 {

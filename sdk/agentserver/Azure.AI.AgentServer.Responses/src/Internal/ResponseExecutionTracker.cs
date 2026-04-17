@@ -67,14 +67,17 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
     }
 
     /// <summary>
-    /// Marks an execution as completed, recording the completion timestamp.
+    /// Evicts a completed execution from the tracker so that subsequent API calls
+    /// (GET, DELETE, Cancel) fall through to the durable <see cref="ResponsesProvider"/>.
+    /// Unlike <see cref="TryRemove"/>, this does <b>not</b> dispose the execution —
+    /// callers such as <see cref="ResponseOrchestrator.CancelAsync"/> may still hold
+    /// a reference and read <see cref="ResponseExecution.Response"/> after the
+    /// <see cref="ResponseExecution.FinalizedSignal"/> fires.
     /// </summary>
-    public void MarkCompleted(string responseId)
+    /// <returns><c>true</c> if the execution was found and evicted; otherwise <c>false</c>.</returns>
+    public bool TryEvict(string responseId)
     {
-        if (_executions.TryGetValue(responseId, out var execution))
-        {
-            execution.CompletedAt = DateTimeOffset.UtcNow;
-        }
+        return _executions.TryRemove(responseId, out _);
     }
 
     /// <inheritdoc/>
@@ -85,21 +88,19 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
     {
         foreach (var execution in _executions.Values)
         {
-            if (execution.CompletedAt is null)
+            // All tracked executions are in-flight (completed ones are eagerly evicted).
+            // Signal shutdown BEFORE cancelling so handlers see IsShutdownRequested == true
+            execution.ShutdownRequested = true;
+            if (execution.Context is not null)
             {
-                // Signal shutdown BEFORE cancelling so handlers see IsShutdownRequested == true
-                execution.ShutdownRequested = true;
-                if (execution.Context is not null)
-                {
-                    execution.Context.IsShutdownRequested = true;
-                }
-
-                try
-                {
-                    await execution.CancellationTokenSource.CancelAsync();
-                }
-                catch (ObjectDisposedException) { }
+                execution.Context.IsShutdownRequested = true;
             }
+
+            try
+            {
+                await execution.CancellationTokenSource.CancelAsync();
+            }
+            catch (ObjectDisposedException) { }
         }
 
         var backgroundTasks = _executions.Values

@@ -1,14 +1,16 @@
 # Release History
 
-## 1.0.0-beta.22 (Unreleased)
+## 1.0.0-beta.22 (2026-04-17)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `HttpClient` instrumentation (`AddHttpClientInstrumentation`) for both tracing and metrics
+  in the OTLP-only telemetry path. This exports outbound HTTP client spans, enabling end-to-end
+  distributed trace correlation through Foundry storage and other downstream services.
+- Added inbound request logging middleware that logs all incoming HTTP requests with method, path,
+  status code, duration, correlation headers (`x-request-id`, `x-ms-client-request-id`), and
+  OpenTelemetry trace ID. Successful requests log at `Information` level; 4xx/5xx responses log at
+  `Warning` level. Request start is logged at `Information` level.
 
 ## 1.0.0-beta.21 (2026-04-14)
 
