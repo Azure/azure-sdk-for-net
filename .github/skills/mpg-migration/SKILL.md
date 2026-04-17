@@ -56,6 +56,20 @@ Fix errors **spec-side** (decorators in `client.tsp` with `"csharp"` scope) or *
 
 After each fix: regenerate if spec changed → rebuild → check remaining errors → repeat until clean.
 
+Before fixing an issue, **categorize it first** so the mitigation goes to the right layer and we do not paper over the real cause.
+
+### Categorize build errors and breaking changes
+
+| Category | Typical symptoms | Preferred fix |
+|---------|-------------------|---------------|
+| **Spec-shape issue** | Wrong names, types, visibility, paging shape, inheritance, or operation grouping | Fix in `client.tsp` using decorators first |
+| **SDK compatibility gap** | ApiCompat failures such as missing types/members, signature changes, or lost convenience entry points | Add targeted compatibility shims in SDK custom code |
+| **Customization drift** | Existing custom code no longer compiles after regeneration because generated symbols moved or changed shape | Update or re-home the customization, then rebuild |
+| **Generated-code drift** | `Verify Generated Code` or local regen changes files after a clean build | Regenerate, export API, and commit the produced output |
+| **Generator bug** | Emitted code is structurally wrong and cannot be safely corrected with decorators or normal customizations | Stop, minimize the repro, and file a generator issue |
+
+During the loop, keep a running list of remaining issues grouped by category. This makes it clear which items are real migration breaks, which are compatibility shims, and which must be fixed in the generator.
+
 For **SDK-side custom code**, prefer MCP tools for deterministic edits:
 - `add_using_directive` / `remove_using_directive`
 - `regex_replacement`
@@ -94,7 +108,7 @@ Every file needs a justification comment.
 
 1. Export API: `pwsh eng/scripts/Export-API.ps1 <service>`
 2. Diff with `origin/main` API file.
-3. Fix each break using the tables from Phase 2 — **never** suppress with `ApiCompatBaseline.txt`.
+3. Categorize each break (shape issue vs compatibility gap vs generator bug), then fix it using the tables from Phase 2 — **never** suppress with `ApiCompatBaseline.txt`.
 
 ## Phase 4 — Self-Review
 
