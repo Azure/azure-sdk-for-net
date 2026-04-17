@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="imageIdentifier"> This is the community gallery image definition identifier. </param>
-        internal CommunityGalleryImageProperties(OperatingSystemTypes osType, OperatingSystemStateType osState, CommunityGalleryImageIdentifier imageIdentifier)
+        internal CommunityGalleryImageProperties(SupportedOperatingSystemType osType, OperatingSystemStateType osState, CommunityGalleryImageIdentifier imageIdentifier)
         {
             OSType = osType;
             OSState = osState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryImageProperties(OperatingSystemTypes osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, Architecture? architecture, Uri privacyStatementUri, string eula, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityGalleryImageProperties(SupportedOperatingSystemType osType, OperatingSystemStateType osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, Architecture? architecture, Uri privacyStatementUri, string eula, string disclaimer, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             OSState = osState;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemTypes OSType { get; }
+        public SupportedOperatingSystemType OSType { get; }
 
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
         public OperatingSystemStateType OSState { get; }

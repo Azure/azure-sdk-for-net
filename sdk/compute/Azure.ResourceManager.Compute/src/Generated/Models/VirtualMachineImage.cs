@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemTypes? OSDiskImageOperatingSystem
+        public SupportedOperatingSystemType? OSDiskImageOperatingSystem
         {
             get
             {

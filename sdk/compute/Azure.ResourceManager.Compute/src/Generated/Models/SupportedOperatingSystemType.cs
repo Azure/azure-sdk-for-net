@@ -5,65 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-using Azure.ResourceManager.Compute;
-
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Gets the Operating System type. </summary>
-    public readonly partial struct SupportedOperatingSystemType : IEquatable<SupportedOperatingSystemType>
+    /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+    public enum SupportedOperatingSystemType
     {
-        private readonly string _value;
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
-
-        /// <summary> Initializes a new instance of <see cref="SupportedOperatingSystemType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SupportedOperatingSystemType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Windows. </summary>
-        public static SupportedOperatingSystemType Windows { get; } = new SupportedOperatingSystemType(WindowsValue);
-
-        /// <summary> Gets the Linux. </summary>
-        public static SupportedOperatingSystemType Linux { get; } = new SupportedOperatingSystemType(LinuxValue);
-
-        /// <summary> Determines if two <see cref="SupportedOperatingSystemType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SupportedOperatingSystemType left, SupportedOperatingSystemType right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="SupportedOperatingSystemType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SupportedOperatingSystemType left, SupportedOperatingSystemType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SupportedOperatingSystemType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SupportedOperatingSystemType(string value) => new SupportedOperatingSystemType(value);
-
-        /// <summary> Converts a string to a <see cref="SupportedOperatingSystemType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SupportedOperatingSystemType?(string value) => value == null ? null : new SupportedOperatingSystemType(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SupportedOperatingSystemType other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(SupportedOperatingSystemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
+        /// <summary> Windows. </summary>
+        Windows,
+        /// <summary> Linux. </summary>
+        Linux
     }
 }

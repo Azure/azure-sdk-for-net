@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Models
             string eula = default;
             Uri privacyStatementUri = default;
             Uri releaseNoteUri = default;
-            OperatingSystemTypes osType = default;
+            SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             HyperVGeneration? hyperVGeneration = default;
             DateTimeOffset? endOfLifeOn = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString().ToOperatingSystemTypes();
+                    osType = prop.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
                 if (prop.NameEquals("osState"u8))

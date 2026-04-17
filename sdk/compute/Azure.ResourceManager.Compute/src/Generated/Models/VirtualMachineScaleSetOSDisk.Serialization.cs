@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskCreateOptionType createOption = default;
             DiffDiskSettings diffDiskSettings = default;
             int? diskSizeGB = default;
-            OperatingSystemTypes? osType = default;
+            SupportedOperatingSystemType? osType = default;
             VirtualHardDisk image = default;
             IList<string> vhdContainers = default;
             VirtualMachineScaleSetManagedDisk managedDisk = default;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osType = prop.Value.GetString().ToOperatingSystemTypes();
+                    osType = prop.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
                 if (prop.NameEquals("image"u8))

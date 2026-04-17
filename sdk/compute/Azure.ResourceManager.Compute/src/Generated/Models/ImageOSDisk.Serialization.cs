@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             StorageAccountType? storageAccountType = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OperatingSystemTypes osType = default;
+            SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString().ToOperatingSystemTypes();
+                    osType = prop.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
                 if (prop.NameEquals("osState"u8))

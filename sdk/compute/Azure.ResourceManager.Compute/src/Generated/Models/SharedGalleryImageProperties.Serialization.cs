@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            OperatingSystemTypes osType = default;
+            SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             DateTimeOffset? endOfLifeOn = default;
             GalleryImageIdentifier imageIdentifier = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (prop.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString().ToOperatingSystemTypes();
+                    osType = prop.Value.GetString().ToSupportedOperatingSystemType();
                     continue;
                 }
                 if (prop.NameEquals("osState"u8))

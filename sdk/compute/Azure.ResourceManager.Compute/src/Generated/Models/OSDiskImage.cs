@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="OSDiskImage"/>. </summary>
         /// <param name="operatingSystem"> The operating system of the osDiskImage. </param>
-        internal OSDiskImage(OperatingSystemTypes operatingSystem)
+        internal OSDiskImage(SupportedOperatingSystemType operatingSystem)
         {
             OperatingSystem = operatingSystem;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="OSDiskImage"/>. </summary>
         /// <param name="operatingSystem"> The operating system of the osDiskImage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSDiskImage(OperatingSystemTypes operatingSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSDiskImage(SupportedOperatingSystemType operatingSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatingSystem = operatingSystem;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operating system of the osDiskImage. </summary>
-        public OperatingSystemTypes OperatingSystem { get; }
+        public SupportedOperatingSystemType OperatingSystem { get; }
     }
 }

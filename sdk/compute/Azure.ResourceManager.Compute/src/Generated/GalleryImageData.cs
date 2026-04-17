@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
-        public OperatingSystemTypes OSType
+        public SupportedOperatingSystemType OSType
         {
             get
             {
