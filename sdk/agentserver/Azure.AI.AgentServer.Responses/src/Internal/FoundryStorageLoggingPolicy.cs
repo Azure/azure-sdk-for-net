@@ -30,12 +30,68 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         _logger = logger;
     }
 
+    /// <summary>
+    /// Masks a Foundry storage URL for safe logging.
+    /// Everything before <c>/storage</c> (scheme, host, project path) is replaced
+    /// with <c>"***"</c>. Query parameters are stripped except <c>api-version</c>.
+    /// </summary>
+    internal static string MaskStorageUrl(string? url)
+    {
+        if (string.IsNullOrEmpty(url))
+        {
+            return "(redacted)";
+        }
+
+        try
+        {
+            // Separate query string from the path portion.
+            string path;
+            string? apiVersion = null;
+
+            var queryIndex = url.IndexOf('?');
+            if (queryIndex >= 0)
+            {
+                var query = url.AsSpan(queryIndex + 1);
+                path = url.Substring(0, queryIndex);
+
+                // Extract api-version if present.
+                foreach (var segment in query.ToString().Split('&'))
+                {
+                    if (segment.StartsWith("api-version=", StringComparison.OrdinalIgnoreCase))
+                    {
+                        apiVersion = segment;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                path = url;
+            }
+
+            // Find the /storage segment and keep only from there.
+            var storageIndex = path.IndexOf("/storage", StringComparison.Ordinal);
+            if (storageIndex >= 0)
+            {
+                var masked = "***" + path.Substring(storageIndex);
+                return apiVersion is not null ? $"{masked}?{apiVersion}" : masked;
+            }
+
+            // Fallback: no /storage segment — redact the whole URL.
+            return "(redacted)";
+        }
+        catch
+        {
+            return "(redacted)";
+        }
+    }
+
     /// <inheritdoc/>
     public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
     {
         var sw = Stopwatch.StartNew();
         var clientRequestId = message.Request.ClientRequestId;
-        LogRequestStarted(message.Request.Method.ToString(), message.Request.Uri.ToString(), clientRequestId);
+        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId);
 
         try
         {
@@ -53,7 +109,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     {
         var sw = Stopwatch.StartNew();
         var clientRequestId = message.Request.ClientRequestId;
-        LogRequestStarted(message.Request.Method.ToString(), message.Request.Uri.ToString(), clientRequestId);
+        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId);
 
         try
         {
@@ -74,7 +130,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
             return;
         }
 
-        var uri = message.Request.Uri.ToString();
+        var uri = MaskStorageUrl(message.Request.Uri.ToString());
 
         // Extract service-side correlation headers.
         response.Headers.TryGetValue("x-ms-request-id", out var serviceRequestId);
