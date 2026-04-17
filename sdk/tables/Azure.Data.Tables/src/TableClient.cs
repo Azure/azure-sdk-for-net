@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -796,8 +795,9 @@ namespace Azure.Data.Tables
 
                 if (response.ContentStream is null)
                 {
-                    response.ContentStream = new MemoryStream();
-                    throw new RequestFailedException(response);
+                    throw new RequestFailedException(
+                        response.Status,
+                        $"Response body was null or empty. HTTP {response.Status} ({response.ReasonPhrase}).");
                 }
 
                 var dictionary = SerializationHelpers.ResponseToDictionary(response);
