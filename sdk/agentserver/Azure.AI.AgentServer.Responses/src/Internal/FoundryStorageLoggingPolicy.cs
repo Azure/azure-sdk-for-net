@@ -63,6 +63,8 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
             return;
         }
 
+        var uri = message.Request.Uri.ToString();
+
         // Extract service-side correlation headers.
         response.Headers.TryGetValue("x-ms-request-id", out var serviceRequestId);
         response.Headers.TryGetValue("x-request-id", out var xRequestId);
@@ -72,6 +74,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         {
             LogRequestFailed(
                 message.Request.Method.ToString(),
+                uri,
                 response.Status,
                 durationMs,
                 clientRequestId,
@@ -83,6 +86,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
         {
             LogRequestSucceeded(
                 message.Request.Method.ToString(),
+                uri,
                 response.Status,
                 durationMs,
                 clientRequestId,
@@ -97,9 +101,9 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     [LoggerMessage(Level = LogLevel.Debug, Message = "Foundry storage {Method} {Uri} starting (x-ms-client-request-id: {ClientRequestId})")]
     private partial void LogRequestStarted(string method, string uri, string clientRequestId);
 
-    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId})")]
-    private partial void LogRequestSucceeded(string method, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId);
+    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} {Uri} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId})")]
+    private partial void LogRequestSucceeded(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId);
 
-    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId})")]
-    private partial void LogRequestFailed(string method, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId);
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} {Uri} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId})")]
+    private partial void LogRequestFailed(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId);
 }
