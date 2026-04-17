@@ -24159,7 +24159,8 @@
                 "scope": {
                   "$id": "1791",
                   "kind": "Tenant",
-                  "scopeIdPattern": ""
+                  "scopeIdPattern": "",
+                  "scopeResourceType": "Microsoft.Resources/tenants"
                 },
                 "resourceName": "BestPractice",
                 "nameConstraints": {},
@@ -24218,7 +24219,8 @@
                 "scope": {
                   "$id": "1797",
                   "kind": "Tenant",
-                  "scopeIdPattern": ""
+                  "scopeIdPattern": "",
+                  "scopeResourceType": "Microsoft.Resources/tenants"
                 },
                 "parentResourceId": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                 "resourceName": "BestPracticeVersion",
