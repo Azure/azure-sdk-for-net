@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.KeyVaultUri;
+                return Properties is null ? default : Properties.KeyVaultUri;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.KeyName;
+                return Properties is null ? default : Properties.KeyName;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.KeyVaultResourceId;
+                return Properties is null ? default : Properties.KeyVaultResourceId;
             }
         }
     }

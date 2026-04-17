@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.Path;
+                return Properties is null ? default : Properties.Path;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.ParentPath;
+                return Properties is null ? default : Properties.ParentPath;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.Size;
+                return Properties is null ? default : Properties.Size;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.BytesUsed;
+                return Properties is null ? default : Properties.BytesUsed;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.Permissions;
+                return Properties is null ? default : Properties.Permissions;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.AccessedOn;
+                return Properties is null ? default : Properties.AccessedOn;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.ModifiedOn;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.ChangedOn;
+                return Properties is null ? default : Properties.ChangedOn;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
     }

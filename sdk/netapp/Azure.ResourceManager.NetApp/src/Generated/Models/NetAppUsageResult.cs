@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.CurrentValue;
+                return Properties is null ? default : Properties.CurrentValue;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.Limit;
+                return Properties is null ? default : Properties.Limit;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.Unit;
+                return Properties is null ? default : Properties.Unit;
             }
         }
     }

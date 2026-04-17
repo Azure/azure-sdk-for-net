@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
-                return Properties.Current;
+                return Properties is null ? default : Properties.Current;
             }
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
-                return Properties.Default;
+                return Properties is null ? default : Properties.Default;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
         {
             get
             {
-                return Properties.Usage;
+                return Properties is null ? default : Properties.Usage;
             }
         }
     }

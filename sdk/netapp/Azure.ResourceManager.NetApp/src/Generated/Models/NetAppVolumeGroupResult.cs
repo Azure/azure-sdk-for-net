@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             get
             {
-                return Properties.GroupMetaData;
+                return Properties is null ? default : Properties.GroupMetaData;
             }
         }
     }
