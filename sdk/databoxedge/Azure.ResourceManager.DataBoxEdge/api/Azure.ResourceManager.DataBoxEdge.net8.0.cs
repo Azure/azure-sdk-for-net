@@ -256,9 +256,6 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobCollection GetDataBoxEdgeJobs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource> GetDataBoxEdgeOperationsStatus(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource>> GetDataBoxEdgeOperationsStatusAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusCollection GetDataBoxEdgeOperationsStatuses() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrder() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> GetDataBoxEdgeRole(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>> GetDataBoxEdgeRoleAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -387,7 +384,6 @@ namespace Azure.ResourceManager.DataBoxEdge
         public static Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource GetDataBoxEdgeJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource GetDataBoxEdgeOperationsStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -446,31 +442,6 @@ namespace Azure.ResourceManager.DataBoxEdge
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DataBoxEdgeOperationsStatusCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected DataBoxEdgeOperationsStatusCollection() { }
-        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class DataBoxEdgeOperationsStatusResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected DataBoxEdgeOperationsStatusResource() { }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1066,7 +1037,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource GetDataBoxEdgeJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOperationsStatusResource GetDataBoxEdgeOperationsStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(Azure.Core.ResourceIdentifier id) { throw null; }

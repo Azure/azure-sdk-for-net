@@ -72,7 +72,6 @@ namespace Azure.ResourceManager.DataBoxEdge
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeNetworkAdapterPosition))]
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeNode))]
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeNodeList))]
-    [ModelReaderWriterBuildable(typeof(DataBoxEdgeOperationsStatusResource))]
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeOrderData))]
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeOrderResource))]
     [ModelReaderWriterBuildable(typeof(DataBoxEdgeOrderStatus))]

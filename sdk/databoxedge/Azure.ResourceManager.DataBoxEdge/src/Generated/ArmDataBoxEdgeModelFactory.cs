@@ -20,61 +20,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDataBoxEdgeModelFactory
     {
-
-        /// <summary> Details about the download progress of update. </summary>
-        /// <param name="downloadPhase"> The download phase. </param>
-        /// <param name="percentComplete"> Percentage of completion. </param>
-        /// <param name="totalBytesToDownload"> Total bytes to download. </param>
-        /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
-        /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
-        /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
-        /// <returns> A new <see cref="Models.UpdateDownloadProgress"/> instance for mocking. </returns>
-        public static UpdateDownloadProgress UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase = default, int? percentComplete = default, double? totalBytesToDownload = default, double? totalBytesDownloaded = default, int? numberOfUpdatesToDownload = default, int? numberOfUpdatesDownloaded = default)
-        {
-            return new UpdateDownloadProgress(
-                downloadPhase,
-                percentComplete,
-                totalBytesToDownload,
-                totalBytesDownloaded,
-                numberOfUpdatesToDownload,
-                numberOfUpdatesDownloaded,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Progress details during installation of updates. </summary>
-        /// <param name="percentComplete"> Percentage completed. </param>
-        /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
-        /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
-        /// <returns> A new <see cref="Models.UpdateInstallProgress"/> instance for mocking. </returns>
-        public static UpdateInstallProgress UpdateInstallProgress(int? percentComplete = default, int? numberOfUpdatesToInstall = default, int? numberOfUpdatesInstalled = default)
-        {
-            return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The job error information containing the list of job errors. </summary>
-        /// <param name="errorDetails"> The error details. </param>
-        /// <param name="code"> The code intended for programmatic access. </param>
-        /// <param name="message"> The message that describes the error in detail. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeJobErrorDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeJobErrorDetails DataBoxEdgeJobErrorDetails(IEnumerable<DataBoxEdgeJobErrorItem> errorDetails = default, string code = default, string message = default)
-        {
-            errorDetails ??= new ChangeTrackingList<DataBoxEdgeJobErrorItem>();
-
-            return new DataBoxEdgeJobErrorDetails(errorDetails.ToList(), code, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The job error items. </summary>
-        /// <param name="recommendations"> The recommended actions. </param>
-        /// <param name="code"> The code intended for programmatic access. </param>
-        /// <param name="message"> The message that describes the error in detail. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeJobErrorItem"/> instance for mocking. </returns>
-        public static DataBoxEdgeJobErrorItem DataBoxEdgeJobErrorItem(IEnumerable<string> recommendations = default, string code = default, string message = default)
-        {
-            recommendations ??= new ChangeTrackingList<string>();
-
-            return new DataBoxEdgeJobErrorItem(recommendations.ToList(), code, message, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -468,6 +413,60 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 remoteSupportSettingsList is null ? default : new DiagnosticRemoteSupportSettingsProperties((remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>()).ToList(), null));
+        }
+
+        /// <summary> Details about the download progress of update. </summary>
+        /// <param name="downloadPhase"> The download phase. </param>
+        /// <param name="percentComplete"> Percentage of completion. </param>
+        /// <param name="totalBytesToDownload"> Total bytes to download. </param>
+        /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
+        /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
+        /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
+        /// <returns> A new <see cref="Models.UpdateDownloadProgress"/> instance for mocking. </returns>
+        public static UpdateDownloadProgress UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase = default, int? percentComplete = default, double? totalBytesToDownload = default, double? totalBytesDownloaded = default, int? numberOfUpdatesToDownload = default, int? numberOfUpdatesDownloaded = default)
+        {
+            return new UpdateDownloadProgress(
+                downloadPhase,
+                percentComplete,
+                totalBytesToDownload,
+                totalBytesDownloaded,
+                numberOfUpdatesToDownload,
+                numberOfUpdatesDownloaded,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Progress details during installation of updates. </summary>
+        /// <param name="percentComplete"> Percentage completed. </param>
+        /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
+        /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
+        /// <returns> A new <see cref="Models.UpdateInstallProgress"/> instance for mocking. </returns>
+        public static UpdateInstallProgress UpdateInstallProgress(int? percentComplete = default, int? numberOfUpdatesToInstall = default, int? numberOfUpdatesInstalled = default)
+        {
+            return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The job error information containing the list of job errors. </summary>
+        /// <param name="errorDetails"> The error details. </param>
+        /// <param name="code"> The code intended for programmatic access. </param>
+        /// <param name="message"> The message that describes the error in detail. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeJobErrorDetails"/> instance for mocking. </returns>
+        public static DataBoxEdgeJobErrorDetails DataBoxEdgeJobErrorDetails(IEnumerable<DataBoxEdgeJobErrorItem> errorDetails = default, string code = default, string message = default)
+        {
+            errorDetails ??= new ChangeTrackingList<DataBoxEdgeJobErrorItem>();
+
+            return new DataBoxEdgeJobErrorDetails(errorDetails.ToList(), code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The job error items. </summary>
+        /// <param name="recommendations"> The recommended actions. </param>
+        /// <param name="code"> The code intended for programmatic access. </param>
+        /// <param name="message"> The message that describes the error in detail. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeJobErrorItem"/> instance for mocking. </returns>
+        public static DataBoxEdgeJobErrorItem DataBoxEdgeJobErrorItem(IEnumerable<string> recommendations = default, string code = default, string message = default)
+        {
+            recommendations ??= new ChangeTrackingList<string>();
+
+            return new DataBoxEdgeJobErrorItem(recommendations.ToList(), code, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains all the contact details of the customer. </summary>

@@ -1767,39 +1767,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             }
         }
 
-        /// <summary> Gets a collection of DataBoxEdgeOperationsStatuses in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeOperationsStatuses and their operations over a DataBoxEdgeOperationsStatusResource. </returns>
-        public virtual DataBoxEdgeOperationsStatusCollection GetDataBoxEdgeOperationsStatuses()
-        {
-            return GetCachedClient(client => new DataBoxEdgeOperationsStatusCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of a specified job on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="name"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataBoxEdgeOperationsStatusResource>> GetDataBoxEdgeOperationsStatusAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetDataBoxEdgeOperationsStatuses().GetAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the details of a specified job on a Data Box Edge/Data Box Gateway device. </summary>
-        /// <param name="name"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataBoxEdgeOperationsStatusResource> GetDataBoxEdgeOperationsStatus(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetDataBoxEdgeOperationsStatuses().Get(name, cancellationToken);
-        }
-
         /// <summary> Gets an object representing a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="DataBoxEdgeDeviceResource"/>. </summary>
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettings()

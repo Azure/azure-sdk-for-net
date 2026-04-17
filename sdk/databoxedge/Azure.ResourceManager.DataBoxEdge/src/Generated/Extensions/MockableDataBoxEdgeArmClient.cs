@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DataBoxEdgeOperationsStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeOperationsStatusResource"/> object. </returns>
-        public virtual DataBoxEdgeOperationsStatusResource GetDataBoxEdgeOperationsStatusResource(ResourceIdentifier id)
-        {
-            DataBoxEdgeOperationsStatusResource.ValidateResourceId(id);
-            return new DataBoxEdgeOperationsStatusResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
