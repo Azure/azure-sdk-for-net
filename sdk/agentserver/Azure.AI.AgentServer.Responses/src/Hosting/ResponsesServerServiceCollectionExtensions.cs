@@ -87,6 +87,7 @@ public static class ResponsesServerServiceCollectionExtensions
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
             // distributed tracing, logging, and token caching.
+            // The ServerVersionPolicy prepends the AgentServer service version to User-Agent.
             // The FoundryStorageLoggingPolicy is added as a per-retry policy so each
             // attempt (including retries) is logged with correlation headers.
             services.TryAddSingleton(sp =>
@@ -94,7 +95,13 @@ public static class ResponsesServerServiceCollectionExtensions
                 var credential = sp.GetRequiredService<TokenCredential>();
                 var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
                 var options = new FoundryStorageClientOptions();
+
+                var serverVersion = ServerVersionRegistry.BuildIdentityString(
+                    "azure-ai-agentserver-responses",
+                    typeof(ResponsesServerServiceCollectionExtensions).Assembly);
+                options.AddPolicy(new ServerVersionPolicy(serverVersion), HttpPipelinePosition.PerCall);
                 options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
+
                 return HttpPipelineBuilder.Build(
                     options,
                     new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
