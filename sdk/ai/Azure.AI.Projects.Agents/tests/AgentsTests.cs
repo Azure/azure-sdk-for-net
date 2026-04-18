@@ -101,7 +101,7 @@ public class AgentsTests : AgentsTestBase
         ));
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: "mcp1",
+            name: "mcp1",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -109,7 +109,7 @@ public class AgentsTests : AgentsTestBase
             }
         );
         ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: "mcp2",
+            name: "mcp2",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -117,14 +117,14 @@ public class AgentsTests : AgentsTestBase
             }
         );
         ToolboxVersion toolBox3 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: "mcp2",
+            name: "mcp2",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
                 {"team", "Engineers"}
             }
         );
-        ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox2.Name);
+        ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox2.Name);
         Assert.That(record.Name, Is.EqualTo(toolBox3.Name));
         string newVersion = string.Equals(record.DefaultVersion, "1") ? "2" : "1";
         // Update
@@ -167,7 +167,7 @@ public class AgentsTests : AgentsTestBase
         ));
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: "mcp",
+            name: "mcp",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -179,7 +179,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox1.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox1.Metadata["team"], Is.EqualTo("Engineers"));
         ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: "mcp",
+            name: "mcp",
             tools: [tool],
             description: "Example toolbox created by the azure-ai-projects sample.",
             metadata: new Dictionary<string, string> {
@@ -191,7 +191,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox2.Metadata, Does.ContainKey("team"));
         Assert.That(toolBox2.Metadata["team"], Is.EqualTo("Data Scientists"));
         // Get
-        ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(toolboxName: "mcp", version: "1");
+        ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(name: "mcp", version: "1");
         Assert.That(toolBox.Name, Is.EqualTo("mcp"));
         Assert.That(toolBox.Version, Is.EqualTo("1"));
         Assert.That(toolBox.Metadata, Does.ContainKey("team"));
@@ -220,11 +220,11 @@ public class AgentsTests : AgentsTestBase
         // Delete
         ToolboxRecord record = await toolboxClient.GetToolboxAsync("mcp");
         string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-        await toolboxClient.DeleteToolboxVersionAsync(toolboxName: "mcp", version: deleteVersion);
+        await toolboxClient.DeleteToolboxVersionAsync(name: "mcp", version: deleteVersion);
         HashSet<string> versionNumbers = [.. await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").Select(x => x.Version).ToListAsync()];
         Assert.That(versionNumbers, Does.Not.Contains(deleteVersion));
         Assert.That(versionNumbers, Does.Contain(string.Equals(deleteVersion, "2") ? "1" : "2"));
-        await toolboxClient.DeleteToolboxAsync(toolboxName: record.Name);
+        await toolboxClient.DeleteToolboxAsync(name: record.Name);
         Assert.ThrowsAsync<ClientResultException>(async () => await toolboxClient.GetToolboxVersionsAsync(toolboxName: "mcp").ToListAsync());
     }
 
@@ -255,7 +255,7 @@ public class AgentsTests : AgentsTestBase
         ResponseTool oaiTool = GetAgentToolDefinition(toolType);
         ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(oaiTool);
         ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
-            toolboxName: TOOLBOX,
+            name: TOOLBOX,
             tools: [tool],
             description: $"{toolType}"
         );
@@ -263,7 +263,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
         Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
         Assert.That(toolBox.Tools[0].GetType(), Is.EqualTo(tool.GetType()));
-        toolBox = await toolboxClient.GetToolboxVersionAsync(toolboxName: TOOLBOX, version: toolBox.Version);
+        toolBox = await toolboxClient.GetToolboxVersionAsync(name: TOOLBOX, version: toolBox.Version);
         Assert.That(toolBox.Name, Is.EqualTo(TOOLBOX));
         Assert.That(toolBox.Description, Is.EqualTo($"{toolType}"));
         Assert.That(toolBox.Tools.Count, Is.EqualTo(1));
@@ -300,7 +300,7 @@ public class AgentsTests : AgentsTestBase
         while (records.Count + created <= PAGE_SIZE)
         {
             await toolboxClient.CreateToolboxVersionAsync(
-                toolboxName: $"{TOOLBOX}_{created}",
+                name: $"{TOOLBOX}_{created}",
                 tools: [tool],
                 description: "Example toolbox created by the azure-ai-projects sample.",
                 metadata: new Dictionary<string, string> {
@@ -349,7 +349,7 @@ public class AgentsTests : AgentsTestBase
         while (records.Count + created <= PAGE_SIZE)
         {
             await toolboxClient.CreateToolboxVersionAsync(
-                toolboxName: TOOLBOX,
+                name: TOOLBOX,
                 tools: [tool],
                 description: "Example toolbox created by the azure-ai-projects sample.",
                 metadata: new Dictionary<string, string> {
@@ -545,7 +545,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("Blocked by ADO Item 5195112.")]
+    [Ignore("Blocked by ADO Item 5205120.")]
     public async Task TestSessionFilesCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
@@ -682,7 +682,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(skillFromCode2.Name, Is.EqualTo(codeSkillName2));
         Assert.That(skillFromCode2.Description, Is.EqualTo("Divides one number by the other."));
         // Update
-        AgentsSkill skill = await skillsClient.UpdateSkillAsync(skillName: codeSkillName, description: "Calculates the product of two numbers.", instructions: """
+        AgentsSkill skill = await skillsClient.UpdateSkillAsync(name: codeSkillName, description: "Calculates the product of two numbers.", instructions: """
             To calculate the multiplication run
             ```bash
             echo $((<first> * <second>))
@@ -695,7 +695,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(skill.Name, Is.EqualTo(codeSkillName));
         Assert.That(skill.Description, Is.EqualTo("Calculates the product of two numbers."));
         // Get
-        skillFromCode = await skillsClient.GetSkillAsync(skillName: codeSkillName);
+        skillFromCode = await skillsClient.GetSkillAsync(name: codeSkillName);
         Assert.That(skillFromCode.Name, Is.EqualTo(codeSkillName));
         Assert.That(skillFromCode.Description, Is.EqualTo("Calculates the product of two numbers."));
         // List
@@ -703,11 +703,11 @@ public class AgentsTests : AgentsTestBase
         Assert.That(skills, Does.Contain(codeSkillName));
         Assert.That(skills, Does.Contain(codeSkillName2));
         // Delete
-        await skillsClient.DeleteSkillAsync(skillName: codeSkillName);
+        await skillsClient.DeleteSkillAsync(name: codeSkillName);
         skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(skills, Does.Not.Contain(codeSkillName));
         Assert.That(skills, Does.Contain(codeSkillName2));
-        await skillsClient.DeleteSkillAsync(skillName: codeSkillName2);
+        await skillsClient.DeleteSkillAsync(name: codeSkillName2);
         skills = [.. await skillsClient.GetSkillsAsync().Select(x => x.Name).ToListAsync()];
         Assert.That(skills, Does.Not.Contain(codeSkillName));
         Assert.That(skills, Does.Not.Contain(codeSkillName2));
@@ -800,9 +800,16 @@ public class AgentsTests : AgentsTestBase
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
-        return await agentsClient.CreateAgentVersionAsync(
+        ProjectsAgentVersion agent = await agentsClient.CreateAgentVersionAsync(
             agentName: HOSTED_AGENT,
             options: creationOptions);
+        while (agent.Status != AgentVersionStatus.Active && agent.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agent = await agentsClient.GetAgentVersionAsync(agentName: agent.Name, agentVersion: agent.Version);
+        }
+        Assert.That(agent.Status, Is.EqualTo(AgentVersionStatus.Active), $"Agent deployment failed status: {agent.Status}");
+        return agent;
     }
     #endregion
 }

@@ -70,7 +70,7 @@ public class Sample_Skills_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_GetSkill_SkillsCRUD_Async
-        AgentsSkill skill = await skillsClient.GetSkillAsync(skillName: skillFromFile.Name);
+        AgentsSkill skill = await skillsClient.GetSkillAsync(name: skillFromFile.Name);
         Console.WriteLine($"Retrieved skill: {skill.Name}, Id: {skill.Description}");
         #endregion
         if (Directory.Exists(Path.GetFullPath("saved_skill")))
@@ -86,7 +86,7 @@ public class Sample_Skills_CRUD : SamplesBase
         #region Snippet:Sample_UpdateToolbox_SkillsCRUD_Async
         try
         {
-            skill = await skillsClient.UpdateSkillAsync(skillName: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
+            skill = await skillsClient.UpdateSkillAsync(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
             To calculate the sum  run
             ```bash
             echo $((<first> * <second>))
@@ -158,7 +158,7 @@ public class Sample_Skills_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_GetSkill_SkillsCRUD_Sync
-        AgentsSkill skill = skillsClient.GetSkill(skillName: skillFromFile.Name);
+        AgentsSkill skill = skillsClient.GetSkill(name: skillFromFile.Name);
         Console.WriteLine($"Retrieved skill: {skill.Name}, Id: {skill.Description}");
         #endregion
         if (Directory.Exists(Path.GetFullPath("saved_skill")))
@@ -174,7 +174,7 @@ public class Sample_Skills_CRUD : SamplesBase
         #region Snippet:Sample_UpdateToolbox_SkillsCRUD_Sync
         try
         {
-            skill = skillsClient.UpdateSkill(skillName: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
+            skill = skillsClient.UpdateSkill(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
             To calculate the sum  run
             ```bash
             echo $((<first> * <second>))

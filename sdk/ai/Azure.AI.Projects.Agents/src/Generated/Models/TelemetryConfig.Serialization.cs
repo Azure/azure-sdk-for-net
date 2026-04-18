@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The UpdateToolboxRequest. </summary>
-    public partial class UpdateToolboxRequest : IJsonModel<UpdateToolboxRequest>
+    /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
+    public partial class TelemetryConfig : IJsonModel<TelemetryConfig>
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateToolboxRequest"/> for deserialization. </summary>
-        internal UpdateToolboxRequest()
+        /// <summary> Initializes a new instance of <see cref="TelemetryConfig"/> for deserialization. </summary>
+        internal TelemetryConfig()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateToolboxRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TelemetryConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateToolboxRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpdateToolboxRequest(document.RootElement, options);
+                        return DeserializeTelemetryConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateToolboxRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelemetryConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateToolboxRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateToolboxRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelemetryConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateToolboxRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TelemetryConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateToolboxRequest IPersistableModel<UpdateToolboxRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TelemetryConfig IPersistableModel<TelemetryConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateToolboxRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TelemetryConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpdateToolboxRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TelemetryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,13 +70,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateToolboxRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateToolboxRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TelemetryConfig)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("default_version"u8);
-            writer.WriteStringValue(DefaultVersion);
+            writer.WritePropertyName("endpoints"u8);
+            writer.WriteStartArray();
+            foreach (TelemetryEndpoint item in Endpoints)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -96,37 +101,41 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateToolboxRequest IJsonModel<UpdateToolboxRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TelemetryConfig IJsonModel<TelemetryConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateToolboxRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TelemetryConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateToolboxRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TelemetryConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateToolboxRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TelemetryConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateToolboxRequest(document.RootElement, options);
+            return DeserializeTelemetryConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateToolboxRequest DeserializeUpdateToolboxRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static TelemetryConfig DeserializeTelemetryConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            string defaultVersion = default;
+            IList<TelemetryEndpoint> endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("default_version"u8))
+                if (prop.NameEquals("endpoints"u8))
                 {
-                    defaultVersion = prop.Value.GetString();
+                    List<TelemetryEndpoint> array = new List<TelemetryEndpoint>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(TelemetryEndpoint.DeserializeTelemetryEndpoint(item, options));
+                    }
+                    endpoints = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -134,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties);
+            return new TelemetryConfig(endpoints, additionalBinaryDataProperties);
         }
     }
 }

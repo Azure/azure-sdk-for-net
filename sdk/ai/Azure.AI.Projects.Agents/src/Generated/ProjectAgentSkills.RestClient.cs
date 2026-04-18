@@ -53,12 +53,12 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSkillRequest(string skillName, RequestOptions options)
+        internal PipelineMessage CreateGetSkillRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skills/", false);
-            uri.AppendPath(skillName, true);
+            uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -70,12 +70,12 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadSkillRequest(string skillName, RequestOptions options)
+        internal PipelineMessage CreateDownloadSkillRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skills/", false);
-            uri.AppendPath(skillName, true);
+            uri.AppendPath(name, true);
             uri.AppendPath(":download", false);
             if (_apiVersion != null)
             {
@@ -120,12 +120,12 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateUpdateSkillRequest(string skillName, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUpdateSkillRequest(string name, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skills/", false);
-            uri.AppendPath(skillName, true);
+            uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -139,12 +139,12 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSkillRequest(string skillName, RequestOptions options)
+        internal PipelineMessage CreateDeleteSkillRequest(string name, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/skills/", false);
-            uri.AppendPath(skillName, true);
+            uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

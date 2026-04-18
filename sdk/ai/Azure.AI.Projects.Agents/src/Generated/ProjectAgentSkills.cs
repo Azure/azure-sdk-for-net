@@ -202,17 +202,17 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetSkill(string skillName, RequestOptions options)
+        public virtual ClientResult GetSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(skillName, options);
+            using PipelineMessage message = CreateGetSkillRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -224,45 +224,45 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetSkillAsync(string skillName, RequestOptions options)
+        public virtual async Task<ClientResult> GetSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(skillName, options);
+            using PipelineMessage message = CreateGetSkillRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Retrieves a skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> GetSkill(string skillName, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> GetSkill(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = GetSkill(skillName, cancellationToken.ToRequestOptions());
+            ClientResult result = GetSkill(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Retrieves a skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> GetSkillAsync(string skillName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> GetSkillAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetSkillAsync(skillName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
@@ -274,17 +274,17 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DownloadSkill(string skillName, RequestOptions options)
+        public virtual ClientResult DownloadSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDownloadSkillRequest(skillName, options);
+            using PipelineMessage message = CreateDownloadSkillRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -296,45 +296,45 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DownloadSkillAsync(string skillName, RequestOptions options)
+        public virtual async Task<ClientResult> DownloadSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDownloadSkillRequest(skillName, options);
+            using PipelineMessage message = CreateDownloadSkillRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Downloads a skill package. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> DownloadSkill(string skillName, CancellationToken cancellationToken = default)
+        public virtual ClientResult<BinaryData> DownloadSkill(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = DownloadSkill(skillName, cancellationToken.ToRequestOptions());
+            ClientResult result = DownloadSkill(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary> Downloads a skill package. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> DownloadSkillAsync(string skillName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<BinaryData>> DownloadSkillAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await DownloadSkillAsync(skillName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DownloadSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -458,19 +458,19 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateSkill(string skillName, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult UpdateSkill(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(skillName, content, options);
+            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -482,24 +482,24 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateSkillAsync(string skillName, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> UpdateSkillAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(skillName, content, options);
+            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Updates an existing skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
         /// <param name="instructions"> Instructions that define the behavior of the skill. </param>
         /// <param name="metadata">
@@ -510,20 +510,20 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentsSkill> UpdateSkill(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentsSkill> UpdateSkill(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            ClientResult result = UpdateSkill(skillName, spreadModel, cancellationToken.ToRequestOptions());
+            ClientResult result = UpdateSkill(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
         /// <summary> Updates an existing skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
         /// <param name="instructions"> Instructions that define the behavior of the skill. </param>
         /// <param name="metadata">
@@ -534,15 +534,15 @@ namespace Azure.AI.Projects.Agents
         /// with a maximum length of 512 characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentsSkill>> UpdateSkillAsync(string skillName, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentsSkill>> UpdateSkillAsync(string name, string description = default, string instructions = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             UpdateSkillRequest spreadModel = new UpdateSkillRequest(description, instructions, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            ClientResult result = await UpdateSkillAsync(skillName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UpdateSkillAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
 
@@ -554,17 +554,17 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult DeleteSkill(string skillName, RequestOptions options)
+        public virtual ClientResult DeleteSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(skillName, options);
+            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -576,45 +576,45 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> DeleteSkillAsync(string skillName, RequestOptions options)
+        public virtual async Task<ClientResult> DeleteSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(skillName, options);
+            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Deletes a skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<DeleteSkillResponse> DeleteSkill(string skillName, CancellationToken cancellationToken = default)
+        public virtual ClientResult<DeleteSkillResponse> DeleteSkill(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = DeleteSkill(skillName, cancellationToken.ToRequestOptions());
+            ClientResult result = DeleteSkill(name, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
         }
 
         /// <summary> Deletes a skill. </summary>
-        /// <param name="skillName"> The unique name of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="skillName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<DeleteSkillResponse>> DeleteSkillAsync(string skillName, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<DeleteSkillResponse>> DeleteSkillAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await DeleteSkillAsync(skillName, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DeleteSkillAsync(name, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DeleteSkillResponse)result, result.GetRawResponse());
         }
     }

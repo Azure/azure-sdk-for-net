@@ -173,7 +173,7 @@ internal class FeaturePolicy(string feature) : PipelinePolicy
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId)
 {
     HostedAgentDefinition agentDefinition = new(
         versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
@@ -223,7 +223,7 @@ ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpT
     toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 ));
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -231,7 +231,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     }
 );
 ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -247,7 +247,7 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
@@ -352,6 +352,15 @@ AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDi
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
 AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
 To calculate the sum  run
+```bash
+echo $((<first> + <second>))
+```
+```powershell
+(<first> + <second>)
+```
+Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```bash
 echo $((<first> + <second>))
 ```
@@ -504,6 +513,14 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
     To calculate the sum  run
     ```bash
+    echo $((<first> + <second>))
+    ```
+    ```powershell
+    (<first> + <second>)
+    ```
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+```bash
     echo $((<first> + <second>))
     ```
     ```powershell
