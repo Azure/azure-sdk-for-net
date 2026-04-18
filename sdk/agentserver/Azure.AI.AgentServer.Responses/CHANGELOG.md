@@ -31,6 +31,12 @@
   endpoint handler logs and outbound Foundry storage request logs. Key values are never logged.
 - Added startup configuration logging: storage provider type, default model, fetch history count,
   and event stream TTL are logged at `Information` level when the host starts.
+- Added server version `User-Agent` header on all outbound Foundry storage API requests. The
+  composed identity from `ServerVersionRegistry` (including developer-registered segments) is
+  prepended to the standard Azure.Core user-agent, read lazily per-request.
+- Added Foundry storage URL masking in diagnostic logs: everything before `/storage` is redacted
+  and query parameters are stripped (except `api-version`) to prevent leaking account and project
+  information.
 - Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
   `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
   code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
