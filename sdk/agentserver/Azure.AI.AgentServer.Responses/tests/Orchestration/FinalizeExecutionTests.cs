@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Orchestration;
 
 /// <summary>
 /// Tests for <see cref="ResponseOrchestrator.FinalizeExecutionAsync"/> covering the shared
-/// finally-block logic: publisher completion, conditional persistence, and MarkCompleted.
+/// finally-block logic: publisher completion, conditional persistence, and eager tracker eviction.
 /// This logic was previously duplicated in the endpoint handler (bg branch, default branch) and SseResult.
 /// </summary>
 public class FinalizeExecutionTests : IDisposable
@@ -116,7 +116,7 @@ public class FinalizeExecutionTests : IDisposable
     }
 
     [Test]
-    public async Task FinalizeExecution_MarkCompleted_SetsCompletedAt()
+    public async Task FinalizeExecution_EvictsFromTracker()
     {
         var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_06");
         execution.Response = new Models.ResponseObject("resp_fin_06", "test") { Status = ResponseStatus.InProgress };
@@ -124,7 +124,20 @@ public class FinalizeExecutionTests : IDisposable
 
         await _orchestrator.FinalizeExecutionAsync(execution, publisher);
 
-        Assert.That(execution.CompletedAt, Is.Not.Null);
+        Assert.That(_tracker.TryGet("resp_fin_06", out _), Is.False,
+            "Completed execution should be evicted from tracker");
+    }
+
+    [Test]
+    public async Task FinalizeExecution_SignalsFinalizedAfterEviction()
+    {
+        var (execution, publisher) = await CreateExecutionWithPublisher("resp_fin_08");
+        execution.Response = new Models.ResponseObject("resp_fin_08", "test") { Status = ResponseStatus.InProgress };
+        execution.Response.SetCompleted();
+
+        await _orchestrator.FinalizeExecutionAsync(execution, publisher);
+
+        Assert.That(execution.FinalizedSignal.Task.IsCompletedSuccessfully, Is.True);
     }
 
     [Test]

@@ -154,5 +154,92 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 }
             }
         }
+
+        [Test]
+        public void Ctor_SnapshotFromOptions_AppliedToClient()
+        {
+            // Arrange - client without snapshot, options with snapshot
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            Uri uri = new Uri("https://myaccount.file.core.windows.net/myshare/mydir");
+            ShareDirectoryClient client = new(uri, new ShareClientOptions());
+            ShareFileStorageResourceOptions options = new() { Snapshot = snapshot };
+
+            // Act
+            ShareDirectoryStorageResourceContainer container = new(client, options);
+
+            // Assert - snapshot should be in the client URI
+            ShareUriBuilder resultUri = new(container.ShareDirectoryClient.Uri);
+            Assert.That(resultUri.Snapshot, Is.EqualTo(snapshot));
+        }
+
+        [Test]
+        public void Ctor_SnapshotFromOptions_ClientAlreadyHasMatchingSnapshot()
+        {
+            // Arrange - client already has the snapshot
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            Uri uri = new Uri($"https://myaccount.file.core.windows.net/myshare/mydir?sharesnapshot={snapshot}");
+            ShareDirectoryClient client = new(uri, new ShareClientOptions());
+            ShareFileStorageResourceOptions options = new() { Snapshot = snapshot };
+
+            // Act
+            ShareDirectoryStorageResourceContainer container = new(client, options);
+
+            // Assert - snapshot should still be present
+            ShareUriBuilder resultUri = new(container.ShareDirectoryClient.Uri);
+            Assert.That(resultUri.Snapshot, Is.EqualTo(snapshot));
+        }
+
+        [Test]
+        public void Ctor_NoSnapshot_ClientUnchanged()
+        {
+            // Arrange - no snapshot in options or client
+            Uri uri = new Uri("https://myaccount.file.core.windows.net/myshare/mydir");
+            ShareDirectoryClient client = new(uri, new ShareClientOptions());
+
+            // Act
+            ShareDirectoryStorageResourceContainer container = new(client, default);
+
+            // Assert - no snapshot in URI
+            ShareUriBuilder resultUri = new(container.ShareDirectoryClient.Uri);
+            Assert.That(resultUri.Snapshot, Is.Empty);
+        }
+
+        [Test]
+        public void GetChildStorageResourceContainer_PreservesSnapshot()
+        {
+            // Arrange - container with snapshot
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            Uri uri = new Uri("https://myaccount.file.core.windows.net/myshare/mydir");
+            ShareDirectoryClient client = new(uri, new ShareClientOptions());
+            ShareFileStorageResourceOptions options = new() { Snapshot = snapshot };
+            ShareDirectoryStorageResourceContainer container = new(client, options);
+
+            // Act
+            StorageResourceContainer child = container.GetChildStorageResourceContainerInternal("subdir");
+
+            // Assert - child should have the snapshot
+            ShareUriBuilder resultUri = new(child.Uri);
+            Assert.That(resultUri.Snapshot, Is.EqualTo(snapshot));
+        }
+
+        [Test]
+        public void GetStorageResourceReference_PreservesSnapshot()
+        {
+            // Arrange - container with snapshot
+            string snapshot = "2024-01-01T00:00:00.0000000Z";
+            Uri uri = new Uri("https://myaccount.file.core.windows.net/myshare/mydir");
+            ShareDirectoryClient client = new(uri, new ShareClientOptions());
+            ShareFileStorageResourceOptions options = new() { Snapshot = snapshot };
+            ShareDirectoryStorageResourceContainer container = new(client, options);
+
+            // Act
+            StorageResourceItem resource = container.GetStorageResourceReferenceInternal("subdir/file.txt", "ShareFile");
+
+            // Assert - file resource should have the snapshot
+            Assert.That(resource, Is.TypeOf(typeof(ShareFileStorageResource)));
+            ShareFileStorageResource fileResource = resource as ShareFileStorageResource;
+            ShareUriBuilder resultUri = new(fileResource.ShareFileClient.Uri);
+            Assert.That(resultUri.Snapshot, Is.EqualTo(snapshot));
+        }
     }
 }
