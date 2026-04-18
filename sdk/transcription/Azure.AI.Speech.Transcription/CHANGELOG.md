@@ -2,12 +2,6 @@
 
 ## 1.0.0-beta.2 (2026-04-20)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Fixed broken links and corrected sample code in the README.
