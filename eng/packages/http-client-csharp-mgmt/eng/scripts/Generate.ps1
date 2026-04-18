@@ -83,7 +83,7 @@ if ($null -eq $filter) {
 
 if (-not $LaunchOnly) {
     Write-Host "Regenerating emitter docs" -ForegroundColor Cyan
-    Invoke "npm run regen-docs" $mgmtPackageRoot
+    Invoke "npm run regen-docs:only" $mgmtPackageRoot
 
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
