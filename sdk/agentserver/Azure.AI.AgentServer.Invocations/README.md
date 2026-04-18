@@ -66,7 +66,7 @@ Provides request metadata to the handler. All properties are read-only and resol
 | Property | Type | Description |
 |----------|------|-------------|
 | `InvocationId` | `string` | Unique identifier for this invocation. Passed as the first argument to `GetAsync` and `CancelAsync`. Use as a key when storing per-invocation state. |
-| `SessionId` | `string` | Resolved multi-turn session identifier (extracted from `agent_session_id` query parameter, `FOUNDRY_AGENT_SESSION_ID` env var, or a generated UUID — in that order). |
+| `SessionId` | `string` | Resolved multi-turn session identifier. For `POST /invocations`, resolved from the `agent_session_id` query parameter, `FOUNDRY_AGENT_SESSION_ID` env var, or a generated UUID — in that order. For `GET` and `Cancel`, the query parameter is not used; the value comes from the env var or a generated UUID. |
 | `ClientHeaders` | `IReadOnlyDictionary<string, string>` | Forwarded `x-client-*` headers from the original request — useful for propagating tracing context and client metadata. |
 | `QueryParameters` | `IReadOnlyDictionary<string, StringValues>` | All query parameters from the incoming request. Per the invocation protocol spec, all query parameters are forwarded unchanged. |
 | `Isolation` | `IsolationContext` | Isolation context extracted from `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` headers. Useful for multi-tenant scenarios where per-user or per-chat data must be isolated. `IsolationContext.Empty` indicates no isolation headers were present. |

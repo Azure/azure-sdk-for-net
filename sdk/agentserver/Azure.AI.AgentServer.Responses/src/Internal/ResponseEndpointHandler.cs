@@ -206,7 +206,10 @@ internal sealed class ResponseEndpointHandler
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
 
-        // Record the creation-time chat isolation key for enforcement on subsequent operations
+        // Record the creation-time session ID and chat isolation key on the execution
+        // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
+        // the handler yields response.created (when execution.Response is still null).
+        execution.AgentSessionId = request.AgentSessionId;
         execution.ChatIsolationKey = isolation.ChatIsolationKey;
 
         var context = new ResponseContextImpl(
@@ -348,8 +351,11 @@ internal sealed class ResponseEndpointHandler
                 // Chat isolation enforcement for in-flight responses
                 execution.EnforceChatIsolation(isolation);
 
-                // Store resolved session ID for the response header filter
-                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.Response?.AgentSessionId;
+                // Store resolved session ID for the response header filter.
+                // Use execution.AgentSessionId (set at creation time) instead of
+                // execution.Response?.AgentSessionId, which can be null before
+                // the handler yields response.created.
+                httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
 
                 // In-flight: mode flags are available on the execution.
                 if (!execution.Store)
@@ -460,8 +466,10 @@ internal sealed class ResponseEndpointHandler
             // Chat isolation enforcement for in-flight responses
             execution.EnforceChatIsolation(isolation);
 
-            // Store resolved session ID for the response header filter (error paths)
-            httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.Response?.AgentSessionId;
+            // Store resolved session ID for the response header filter (error paths).
+            // Use execution.AgentSessionId (set at creation time) — execution.Response
+            // can be null before handler yields response.created.
+            httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
 
             if (!execution.Store)
             {
