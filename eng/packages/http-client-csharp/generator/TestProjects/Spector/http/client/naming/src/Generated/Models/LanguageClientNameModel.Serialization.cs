@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Client.Naming._Property
+namespace Client.Naming.Property
 {
     public partial class LanguageClientNameModel : IJsonModel<LanguageClientNameModel>
     {

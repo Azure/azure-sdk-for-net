@@ -1281,16 +1281,21 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accept"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accept"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUnknownValue(RequestContext context)
+        public virtual Response GetUnknownValue(string accept, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnknownValueRequest(context);
+                Argument.AssertNotNullOrEmpty(accept, nameof(accept));
+
+                using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1308,16 +1313,21 @@ namespace BasicTypeSpec
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="accept"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accept"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUnknownValueAsync(RequestContext context)
+        public virtual async Task<Response> GetUnknownValueAsync(string accept, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetUnknownValue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUnknownValueRequest(context);
+                Argument.AssertNotNullOrEmpty(accept, nameof(accept));
+
+                using HttpMessage message = CreateGetUnknownValueRequest(accept, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1328,20 +1338,30 @@ namespace BasicTypeSpec
         }
 
         /// <summary> get extensible enum. </summary>
+        /// <param name="accept"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accept"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<string> GetUnknownValue(CancellationToken cancellationToken = default)
+        public virtual Response<string> GetUnknownValue(string accept, CancellationToken cancellationToken = default)
         {
-            Response result = GetUnknownValue(cancellationToken.ToRequestContext());
+            Argument.AssertNotNullOrEmpty(accept, nameof(accept));
+
+            Response result = GetUnknownValue(accept, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content.ToString(), result);
         }
 
         /// <summary> get extensible enum. </summary>
+        /// <param name="accept"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accept"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<string>> GetUnknownValueAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetUnknownValueAsync(string accept, CancellationToken cancellationToken = default)
         {
-            Response result = await GetUnknownValueAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(accept, nameof(accept));
+
+            Response result = await GetUnknownValueAsync(accept, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToString(), result);
         }
 
