@@ -21,7 +21,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal ShareDirectoryClient ShareDirectoryClient { get; }
 
-        public override Uri Uri => ShareDirectoryClient.Uri;
+        private Uri _uri;
+
+        public override Uri Uri => _uri ??= ShareDirectoryClient.Uri.BuildSanitizedUri();
 
         public override string ProviderId => "share";
 
@@ -29,8 +31,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal ShareDirectoryStorageResourceContainer(ShareDirectoryClient shareDirectoryClient, ShareFileStorageResourceOptions options)
         {
-            ShareDirectoryClient = shareDirectoryClient;
             ResourceOptions = options ?? new ShareFileStorageResourceOptions();
+
+            shareDirectoryClient = shareDirectoryClient.ValidateAndApplySnapshotAndVersionId(
+                shareDirectoryClient.Uri,
+                options,
+                (c, s) => c.WithSnapshot(s));
+
+            ShareDirectoryClient = shareDirectoryClient;
         }
 
         internal ShareDirectoryStorageResourceContainer(

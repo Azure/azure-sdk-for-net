@@ -19,37 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// </summary>
     public partial class DataBoxEdgeNode : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNode"/>. </summary>
         public DataBoxEdgeNode()
@@ -57,43 +28,82 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNode"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="nodeStatus"> The current status of the individual node. </param>
-        /// <param name="nodeChassisSerialNumber"> Serial number of the Chassis. </param>
-        /// <param name="nodeSerialNumber"> Serial number of the individual node. </param>
-        /// <param name="nodeDisplayName"> Display Name of the individual node. </param>
-        /// <param name="nodeFriendlySoftwareVersion"> Friendly software version name that is currently installed on the node. </param>
-        /// <param name="nodeHcsVersion"> HCS version that is currently installed on the node. </param>
-        /// <param name="nodeInstanceId"> Guid instance id of the node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeNodeStatus? nodeStatus, string nodeChassisSerialNumber, string nodeSerialNumber, string nodeDisplayName, string nodeFriendlySoftwareVersion, string nodeHcsVersion, Guid? nodeInstanceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the node. </param>
+        internal DataBoxEdgeNode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NodeProperties properties) : base(id, name, resourceType, systemData)
         {
-            NodeStatus = nodeStatus;
-            NodeChassisSerialNumber = nodeChassisSerialNumber;
-            NodeSerialNumber = nodeSerialNumber;
-            NodeDisplayName = nodeDisplayName;
-            NodeFriendlySoftwareVersion = nodeFriendlySoftwareVersion;
-            NodeHcsVersion = nodeHcsVersion;
-            NodeInstanceId = nodeInstanceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the node. </summary>
+        internal NodeProperties Properties { get; }
+
         /// <summary> The current status of the individual node. </summary>
-        public DataBoxEdgeNodeStatus? NodeStatus { get; }
+        public DataBoxEdgeNodeStatus? NodeStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeStatus;
+            }
+        }
+
         /// <summary> Serial number of the Chassis. </summary>
-        public string NodeChassisSerialNumber { get; }
+        public string NodeChassisSerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeChassisSerialNumber;
+            }
+        }
+
         /// <summary> Serial number of the individual node. </summary>
-        public string NodeSerialNumber { get; }
+        public string NodeSerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeSerialNumber;
+            }
+        }
+
         /// <summary> Display Name of the individual node. </summary>
-        public string NodeDisplayName { get; }
+        public string NodeDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeDisplayName;
+            }
+        }
+
         /// <summary> Friendly software version name that is currently installed on the node. </summary>
-        public string NodeFriendlySoftwareVersion { get; }
+        public string NodeFriendlySoftwareVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeFriendlySoftwareVersion;
+            }
+        }
+
         /// <summary> HCS version that is currently installed on the node. </summary>
-        public string NodeHcsVersion { get; }
+        public string NodeHcsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeHcsVersion;
+            }
+        }
+
         /// <summary> Guid instance id of the node. </summary>
-        public Guid? NodeInstanceId { get; }
+        public Guid? NodeInstanceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeInstanceId;
+            }
+        }
     }
 }

@@ -57,14 +57,12 @@ public class Sample_Skills_CRUD : SamplesBase
         AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
         Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
         AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-        To calculate the sum  run
-        ```bash
-        echo $((<first> + <second>))
-        ```
-        ```powershell
-        (<first> + <second>)
-        ```
-        Replace <first> and <second> by the actual summation arguments.
+            To calculate the sum  run
+            bash:
+            echo $((<first> + <second>))
+            powershell:
+            (<first> + <second>)
+            Replace <first> and <second> by the actual summation arguments.
         """);
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
@@ -84,27 +82,14 @@ public class Sample_Skills_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_UpdateToolbox_SkillsCRUD_Async
-        try
-        {
-            skill = await skillsClient.UpdateSkillAsync(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
+        skill = await skillsClient.UpdateSkillAsync(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
             To calculate the sum  run
-            ```bash
+            bash:
             echo $((<first> * <second>))
-            ```
-            ```powershell
+            powershell:
             (<first> * <second>)
-            ```
             Replace <first> and <second> by the actual summation arguments.
-            """);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            skill = await skillsClient.GetSkillAsync("simpleSkill");
-        }
+        """);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 
@@ -136,7 +121,6 @@ public class Sample_Skills_CRUD : SamplesBase
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         DeleteSkillMaybe(skillsClient, "roll-dice");
@@ -146,14 +130,12 @@ public class Sample_Skills_CRUD : SamplesBase
         Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
         AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
             To calculate the sum  run
-            ```bash
+            bash:
             echo $((<first> + <second>))
-            ```
-            ```powershell
+            powershell:
             (<first> + <second>)
-            ```
             Replace <first> and <second> by the actual summation arguments.
-            """);
+        """);
         Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
         #endregion
 
@@ -172,27 +154,14 @@ public class Sample_Skills_CRUD : SamplesBase
         #endregion
 
         #region Snippet:Sample_UpdateToolbox_SkillsCRUD_Sync
-        try
-        {
-            skill = skillsClient.UpdateSkill(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
+        skill = skillsClient.UpdateSkill(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
             To calculate the sum  run
-            ```bash
+            bash:
             echo $((<first> * <second>))
-            ```
-            ```powershell
+            powershell
             (<first> * <second>)
-            ```
             Replace <first> and <second> by the actual summation arguments.
-            """);
-        }
-        catch (ClientResultException e)
-        {
-            if (e.Status != 201)
-            {
-                throw;
-            }
-            skill = skillsClient.GetSkill("simpleSkill");
-        }
+        """);
         Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
         #endregion
 

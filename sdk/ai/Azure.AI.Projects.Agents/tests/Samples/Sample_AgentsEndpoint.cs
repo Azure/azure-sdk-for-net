@@ -56,12 +56,10 @@ public class Sample_AgentsEndpoint : SamplesBase
         #region Snippet:Sample_CreateSkill_AgentsEndpoint_Async
         AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
             To calculate the sum  run
-            ```bash
+            bash:
             echo $((<first> + <second>))
-            ```
-            ```powershell
+            powershell:
             (<first> + <second>)
-            ```
             Replace <first> and <second> by the actual summation arguments.
             """);
         #endregion
@@ -113,12 +111,10 @@ public class Sample_AgentsEndpoint : SamplesBase
 
         AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
             To calculate the sum  run
-            ```bash
+            bash:
             echo $((<first> + <second>))
-            ```
-            ```powershell
+            powershell:
             (<first> + <second>)
-            ```
             Replace <first> and <second> by the actual summation arguments.
             """);
 

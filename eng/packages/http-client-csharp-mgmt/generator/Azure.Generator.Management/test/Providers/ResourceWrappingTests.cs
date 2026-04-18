@@ -363,8 +363,8 @@ namespace Azure.Generator.Management.Tests.Providers
             var serverDecorator = BuildArmProviderSchema(
                 serverModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Read, getServerMethod, getServerOp.Path, ResourceScope.ResourceGroup, serverResourceIdPattern, null!),
-                    new ResourceMethod(operationKind, listConfigsMethod, listConfigsPath, ResourceScope.ResourceGroup, serverResourceIdPattern, null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getServerMethod, new RequestPathPattern(getServerOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null!),
+                    new ResourceMethod(operationKind, listConfigsMethod, new RequestPathPattern(listConfigsPath), ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null!),
                 ],
                 serverResourceIdPattern,
                 "Microsoft.Test/servers",
@@ -375,7 +375,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var configDecorator = BuildArmProviderSchema(
                 configModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Read, getConfigMethod, getConfigOp.Path, ResourceScope.ResourceGroup, configResourceIdPattern, null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getConfigMethod, new RequestPathPattern(getConfigOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(configResourceIdPattern), null!),
                 ],
                 configResourceIdPattern,
                 "Microsoft.Test/servers/configurations",
@@ -412,7 +412,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 var altConfigDecorator = BuildArmProviderSchema(
                     configModel,
                     [
-                        new ResourceMethod(ResourceOperationKind.Read, getAltConfigMethod, getAltConfigOp.Path, ResourceScope.ResourceGroup, altConfigResourceIdPattern, null!),
+                        new ResourceMethod(ResourceOperationKind.Read, getAltConfigMethod, new RequestPathPattern(getAltConfigOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(altConfigResourceIdPattern), null!),
                     ],
                     altConfigResourceIdPattern,
                     "Microsoft.Test/servers/altConfigurations",
@@ -455,7 +455,18 @@ namespace Azure.Generator.Management.Tests.Providers
                 ["resourceModelId"] = resourceModel.CrossLanguageDefinitionId,
                 ["resourceIdPattern"] = resourceIdPattern,
                 ["resourceType"] = resourceType,
-                ["resourceScope"] = resourceScope.ToString(),
+                ["scope"] = new Dictionary<string, string?>
+                {
+                    ["kind"] = resourceScope.ToString(),
+                    ["scopeIdPattern"] = resourceScope switch
+                    {
+                        ResourceScope.ResourceGroup => "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                        ResourceScope.Subscription => "/subscriptions/{subscriptionId}",
+                        ResourceScope.Tenant => "",
+                        ResourceScope.ManagementGroup => "/providers/Microsoft.Management/managementGroups/{managementGroupId}",
+                        _ => ""
+                    }
+                },
                 ["methods"] = methods.Select(SerializeResourceMethod).ToList(),
                 ["singletonResourceName"] = singletonResourceName,
                 ["resourceName"] = resourceName,
@@ -480,7 +491,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 };
                 if (m.ResourceScopeIdPattern != null)
                 {
-                    result["resourceScope"] = m.ResourceScopeIdPattern;
+                    result["resourceScopeIdPattern"] = m.ResourceScopeIdPattern;
                 }
                 return result;
             }

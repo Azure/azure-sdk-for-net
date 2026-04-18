@@ -1314,7 +1314,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary)
         {
-            return EvaluatorMetric(@type, desirableDirection, minValue, maxValue, threshold: default, isPrimary);
+            return EvaluatorMetric(type: @type, desirableDirection: desirableDirection, minValue: minValue, maxValue: maxValue, threshold: default, isPrimary: isPrimary);
         }
 
         /// <summary> Code-based evaluator definition using python code. </summary>
@@ -1326,7 +1326,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
         {
-            return CodeBasedEvaluatorDefinition(initParameters, dataSchema, metrics, codeText, entryPoint: default, imageTag: default, blobUri: default);
+            return CodeBasedEvaluatorDefinition(initParameters: initParameters, dataSchema: dataSchema, metrics: metrics, codeText: codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>
