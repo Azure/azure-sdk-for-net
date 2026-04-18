@@ -100,13 +100,7 @@ public static class ResponsesServerServiceCollectionExtensions
                 var registry = sp.GetService<ServerVersionRegistry>();
                 if (registry is not null)
                 {
-                    var segments = registry.GetSegments();
-                    if (segments.Count > 0)
-                    {
-                        options.AddPolicy(
-                            new ServerVersionPolicy(string.Join(" ", segments)),
-                            HttpPipelinePosition.PerCall);
-                    }
+                    options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
                 }
 
                 options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
