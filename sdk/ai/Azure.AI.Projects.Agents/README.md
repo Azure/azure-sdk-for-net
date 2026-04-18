@@ -173,7 +173,7 @@ internal class FeaturePolicy(string feature) : PipelinePolicy
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
         versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
@@ -181,10 +181,6 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage, stri
         memory: "1Gi"
     )
     {
-        EnvironmentVariables = {
-            { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName }
-        },
         Image = dockerImage,
     };
     return agentDefinition;

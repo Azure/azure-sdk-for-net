@@ -971,6 +971,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ProjectOpenAIClientOptions : OpenAI.OpenAIClientOptions
     {
         public ProjectOpenAIClientOptions() { }
+        public string AgentName { get { throw null; } set { } }
         public string ApiVersion { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]

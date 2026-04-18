@@ -34,7 +34,7 @@ internal class FeaturePolicy(string feature) : PipelinePolicy
 public class Sample_HostedAgent : SamplesBase
 {
     #region Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId)
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
     {
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
@@ -42,10 +42,6 @@ public class Sample_HostedAgent : SamplesBase
             memory: "1Gi"
         )
         {
-            EnvironmentVariables = {
-                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName }
-            },
             Image = dockerImage,
         };
         return agentDefinition;
@@ -59,25 +55,18 @@ public class Sample_HostedAgent : SamplesBase
 #if SNIPPET
         var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId
+            dockerImage: dockerImage
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
@@ -103,31 +92,26 @@ public class Sample_HostedAgent : SamplesBase
     public void HostedAgentCreate()
     {
 #if SNIPPET
+        var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
+        var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId
+            dockerImage: dockerImage
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
-            agentName: "myHostedAgent",
+            agentName: hostedAgentName,
             options: creationOptions);
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
         {

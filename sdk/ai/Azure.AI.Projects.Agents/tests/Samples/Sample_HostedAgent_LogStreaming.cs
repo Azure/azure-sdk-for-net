@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -14,7 +13,7 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 
 public class Sample_HostedAgentLogStreaming : SamplesBase
 {
-    private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId)
+    private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
     {
         HostedAgentDefinition agentDefinition = new(
             versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
@@ -22,10 +21,6 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
             memory: "1Gi"
         )
         {
-            EnvironmentVariables = {
-                { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-                { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName }
-            },
             Image = dockerImage,
         };
         return agentDefinition;
@@ -47,16 +42,11 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId
+            dockerImage: dockerImage
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
@@ -93,16 +83,11 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
-        string[] pathParts = uriEndpoint.AbsolutePath.Split('/');
-        string projectName = pathParts[pathParts.Length - 1];
-        string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage,
-            modelDeploymentName: modelDeploymentName,
-            accountId: accountId
+            dockerImage: dockerImage
         );
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
