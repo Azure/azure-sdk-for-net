@@ -101,8 +101,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("status"u8);
+            }
             writer.WritePropertyName("viewId"u8);
             writer.WriteStringValue(ViewId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             string notificationEmail = default;
             ScheduleProperties schedule = default;
             ResourceIdentifier scope = default;
-            ScheduledActionStatus status = default;
+            ScheduledActionStatus? status = default;
             ResourceIdentifier viewId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,6 +205,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        status = null;
+                        continue;
+                    }
                     status = new ScheduledActionStatus(prop.Value.GetString());
                     continue;
                 }

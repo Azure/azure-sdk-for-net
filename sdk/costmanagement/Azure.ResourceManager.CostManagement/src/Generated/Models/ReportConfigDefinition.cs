@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of <see cref="ReportConfigDefinition"/>. </summary>
         /// <param name="typePropertiesQueryType"> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </param>
         /// <param name="timeframe"> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </param>
-        public ReportConfigDefinition(ViewReportType typePropertiesQueryType, ReportTimeframeType timeframe)
+        public ReportConfigDefinition(ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe)
         {
             TypePropertiesQueryType = typePropertiesQueryType;
             Timeframe = timeframe;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportConfigDefinition(ViewReportType typePropertiesQueryType, ReportTimeframeType timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportConfigDefinition(ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TypePropertiesQueryType = typePropertiesQueryType;
             Timeframe = timeframe;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
-        public ViewReportType TypePropertiesQueryType { get; set; }
+        public ViewReportType? TypePropertiesQueryType { get; set; }
 
         /// <summary> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </summary>
-        public ReportTimeframeType Timeframe { get; set; }
+        public ReportTimeframeType? Timeframe { get; set; }
 
         /// <summary> Has time period for pulling data for the report. </summary>
         public ReportConfigTimePeriod TimePeriod { get; set; }

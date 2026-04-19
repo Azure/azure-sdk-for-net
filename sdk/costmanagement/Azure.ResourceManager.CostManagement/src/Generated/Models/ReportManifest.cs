@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return RequestContext.RequestScope;
+                return RequestContext is null ? default : RequestContext.RequestScope;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return RequestContext.RequestBody;
+                return RequestContext is null ? default : RequestContext.RequestBody;
             }
         }
     }

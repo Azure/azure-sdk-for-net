@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public IList<ViewPivotProperties> Pivots { get; } = new ChangeTrackingList<ViewPivotProperties>();
 
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
-        public ViewReportType TypePropertiesQueryType
+        public ViewReportType? TypePropertiesQueryType
         {
             get
             {
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Query = new ReportConfigDefinition();
                 }
-                Query.TypePropertiesQueryType = value;
+                Query.TypePropertiesQueryType = value.Value;
             }
         }
 
         /// <summary> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </summary>
-        public ReportTimeframeType Timeframe
+        public ReportTimeframeType? Timeframe
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Query = new ReportConfigDefinition();
                 }
-                Query.Timeframe = value;
+                Query.Timeframe = value.Value;
             }
         }
 

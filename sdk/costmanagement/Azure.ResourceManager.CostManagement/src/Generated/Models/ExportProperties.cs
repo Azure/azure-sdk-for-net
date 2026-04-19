@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class ExportProperties : CommonExportProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExportProperties"/>. </summary>
-        /// <param name="deliveryInfo"> Has delivery information for the export. </param>
+        /// <param name="deliveryInfoDestination"> Has destination for the export being delivered. </param>
         /// <param name="definition"> Has the definition for the export. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
-        public ExportProperties(ExportDeliveryInfo deliveryInfo, ExportDefinition definition) : base(deliveryInfo, definition)
+        /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfoDestination"/> or <paramref name="definition"/> is null. </exception>
+        public ExportProperties(ExportDeliveryDestination deliveryInfoDestination, ExportDefinition definition) : base(deliveryInfoDestination, definition)
         {
-            Argument.AssertNotNull(deliveryInfo, nameof(deliveryInfo));
+            Argument.AssertNotNull(deliveryInfoDestination, nameof(deliveryInfoDestination));
             Argument.AssertNotNull(definition, nameof(definition));
 
         }

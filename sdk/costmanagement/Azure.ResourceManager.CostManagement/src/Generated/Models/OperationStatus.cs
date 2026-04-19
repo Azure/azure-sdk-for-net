@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.ReportUri;
+                return Properties is null ? default : Properties.ReportUri;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.ValidUntil;
+                return Properties is null ? default : Properties.ValidUntil;
             }
         }
     }

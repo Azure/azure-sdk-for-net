@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Properties.ExpiryOn;
+                return Properties is null ? default : Properties.ExpiryOn;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Properties.ValidTill;
+                return Properties is null ? default : Properties.ValidTill;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Properties.DownloadUri;
+                return Properties is null ? default : Properties.DownloadUri;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             get
             {
-                return Status.StatusValue;
+                return Status is null ? default : Status.StatusValue;
             }
         }
     }

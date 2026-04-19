@@ -79,10 +79,24 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 throw new FormatException($"The model {nameof(ReportConfigDefinition)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TypePropertiesQueryType.ToString());
-            writer.WritePropertyName("timeframe"u8);
-            writer.WriteStringValue(Timeframe.ToString());
+            if (Optional.IsDefined(TypePropertiesQueryType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypePropertiesQueryType.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("type"u8);
+            }
+            if (Optional.IsDefined(Timeframe))
+            {
+                writer.WritePropertyName("timeframe"u8);
+                writer.WriteStringValue(Timeframe.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("timeframe"u8);
+            }
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
@@ -140,8 +154,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            ViewReportType typePropertiesQueryType = default;
-            ReportTimeframeType timeframe = default;
+            ViewReportType? typePropertiesQueryType = default;
+            ReportTimeframeType? timeframe = default;
             ReportConfigTimePeriod timePeriod = default;
             ReportConfigDataset dataSet = default;
             bool? includeMonetaryCommitment = default;
@@ -150,11 +164,21 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        typePropertiesQueryType = null;
+                        continue;
+                    }
                     typePropertiesQueryType = new ViewReportType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeframe"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeframe = null;
+                        continue;
+                    }
                     timeframe = new ReportTimeframeType(prop.Value.GetString());
                     continue;
                 }

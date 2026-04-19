@@ -136,6 +136,23 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        /// <summary> Status of the scheduled action. </summary>
+        public ScheduledActionStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduledActionProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </summary>
         public ResourceIdentifier ViewId
         {

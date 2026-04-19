@@ -151,5 +151,241 @@ namespace Azure.ResourceManager.CostManagement
                 throw;
             }
         }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _generateDetailedCostReportOperationResultsClientDiagnostics.CreateScope("GenerateDetailedCostReportOperationResultCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GenerateDetailedCostReportOperationResultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GenerateDetailedCostReportOperationResultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GenerateDetailedCostReportOperationResultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _generateDetailedCostReportOperationResultsClientDiagnostics.CreateScope("GenerateDetailedCostReportOperationResultCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GenerateDetailedCostReportOperationResultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GenerateDetailedCostReportOperationResultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GenerateDetailedCostReportOperationResultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<GenerateDetailedCostReportOperationResultResource>> GetIfExistsAsync(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _generateDetailedCostReportOperationResultsClientDiagnostics.CreateScope("GenerateDetailedCostReportOperationResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GenerateDetailedCostReportOperationResultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GenerateDetailedCostReportOperationResultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GenerateDetailedCostReportOperationResultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<GenerateDetailedCostReportOperationResultResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new GenerateDetailedCostReportOperationResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GenerateDetailedCostReportOperationResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The target operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<GenerateDetailedCostReportOperationResultResource> GetIfExists(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = _generateDetailedCostReportOperationResultsClientDiagnostics.CreateScope("GenerateDetailedCostReportOperationResultCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _generateDetailedCostReportOperationResultsRestClient.CreateGetRequest(Id, operationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GenerateDetailedCostReportOperationResultData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GenerateDetailedCostReportOperationResultData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GenerateDetailedCostReportOperationResultData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<GenerateDetailedCostReportOperationResultResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new GenerateDetailedCostReportOperationResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

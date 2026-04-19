@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.NextLink;
+                return Properties is null ? default : Properties.NextLink;
             }
         }
     }

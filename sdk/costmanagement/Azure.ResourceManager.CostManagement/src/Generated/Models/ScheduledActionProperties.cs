@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> Status of the scheduled action. </param>
         /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="notification"/>, <paramref name="schedule"/> or <paramref name="viewId"/> is null. </exception>
-        public ScheduledActionProperties(string displayName, NotificationProperties notification, ScheduleProperties schedule, ScheduledActionStatus status, ResourceIdentifier viewId)
+        public ScheduledActionProperties(string displayName, NotificationProperties notification, ScheduleProperties schedule, ScheduledActionStatus? status, ResourceIdentifier viewId)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(notification, nameof(notification));
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="status"> Status of the scheduled action. </param>
         /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(string displayName, FileDestination fileDestination, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus status, ResourceIdentifier viewId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionProperties(string displayName, FileDestination fileDestination, NotificationProperties notification, string notificationEmail, ScheduleProperties schedule, ResourceIdentifier scope, ScheduledActionStatus? status, ResourceIdentifier viewId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             FileDestination = fileDestination;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ResourceIdentifier Scope { get; set; }
 
         /// <summary> Status of the scheduled action. </summary>
-        public ScheduledActionStatus Status { get; set; }
+        public ScheduledActionStatus? Status { get; set; }
 
         /// <summary> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </summary>
         public ResourceIdentifier ViewId { get; set; }

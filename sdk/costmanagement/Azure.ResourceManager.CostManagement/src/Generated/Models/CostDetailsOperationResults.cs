@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.ManifestVersion;
+                return Manifest is null ? default : Manifest.ManifestVersion;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.DataFormat;
+                return Manifest is null ? default : Manifest.DataFormat;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.ByteCount;
+                return Manifest is null ? default : Manifest.ByteCount;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.BlobCount;
+                return Manifest is null ? default : Manifest.BlobCount;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.CompressData;
+                return Manifest is null ? default : Manifest.CompressData;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.Blobs;
+                return Manifest is null ? default : Manifest.Blobs;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.RequestScope;
+                return Manifest is null ? default : Manifest.RequestScope;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Manifest.RequestBody;
+                return Manifest is null ? default : Manifest.RequestBody;
             }
         }
     }

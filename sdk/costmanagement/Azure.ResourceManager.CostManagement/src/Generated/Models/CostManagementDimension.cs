@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.IsFilterEnabled;
+                return Properties is null ? default : Properties.IsFilterEnabled;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.IsGroupingEnabled;
+                return Properties is null ? default : Properties.IsGroupingEnabled;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.Total;
+                return Properties is null ? default : Properties.Total;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.Category;
+                return Properties is null ? default : Properties.Category;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.UsageStart;
+                return Properties is null ? default : Properties.UsageStart;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.UsageEnd;
+                return Properties is null ? default : Properties.UsageEnd;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties.NextLink;
+                return Properties is null ? default : Properties.NextLink;
             }
         }
     }

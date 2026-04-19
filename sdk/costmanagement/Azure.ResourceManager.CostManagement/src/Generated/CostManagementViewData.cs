@@ -209,6 +209,40 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>
+        public ViewReportType? TypePropertiesQueryType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypePropertiesQueryType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ViewProperties();
+                }
+                Properties.TypePropertiesQueryType = value.Value;
+            }
+        }
+
+        /// <summary> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </summary>
+        public ReportTimeframeType? Timeframe
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Timeframe;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ViewProperties();
+                }
+                Properties.Timeframe = value.Value;
+            }
+        }
+
         /// <summary> Has time period for pulling data for the report. </summary>
         public ReportConfigTimePeriod TimePeriod
         {
