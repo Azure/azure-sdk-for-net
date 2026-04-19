@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             BudgetTimePeriod timePeriod = default;
             BudgetFilter filter = default;
             CurrentSpend currentSpend = default;
-            IDictionary<string, Notification> notifications = default;
+            IDictionary<string, BudgetNotification> notifications = default;
             ForecastSpend forecastSpend = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    Dictionary<string, Notification> dictionary = new Dictionary<string, Notification>();
+                    Dictionary<string, BudgetNotification> dictionary = new Dictionary<string, BudgetNotification>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, Notification.DeserializeNotification(prop0.Value, options));
+                        dictionary.Add(prop0.Name, BudgetNotification.DeserializeBudgetNotification(prop0.Value, options));
                     }
                     notifications = dictionary;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 timePeriod,
                 filter,
                 currentSpend,
-                notifications ?? new ChangeTrackingDictionary<string, Notification>(),
+                notifications ?? new ChangeTrackingDictionary<string, BudgetNotification>(),
                 forecastSpend,
                 additionalBinaryDataProperties);
         }

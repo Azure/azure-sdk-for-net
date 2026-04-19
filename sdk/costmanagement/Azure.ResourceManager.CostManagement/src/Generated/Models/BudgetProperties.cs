@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Category = category;
             TimeGrain = timeGrain;
             TimePeriod = timePeriod;
-            Notifications = new ChangeTrackingDictionary<string, Notification>();
+            Notifications = new ChangeTrackingDictionary<string, BudgetNotification>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BudgetProperties"/>. </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BudgetProperties(CategoryType category, float? amount, TimeGrainType timeGrain, BudgetTimePeriod timePeriod, BudgetFilter filter, CurrentSpend currentSpend, IDictionary<string, Notification> notifications, ForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BudgetProperties(CategoryType category, float? amount, TimeGrainType timeGrain, BudgetTimePeriod timePeriod, BudgetFilter filter, CurrentSpend currentSpend, IDictionary<string, BudgetNotification> notifications, ForecastSpend forecastSpend, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Amount = amount;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Budget can have up to 5 notifications with thresholdType: Actual and 5 notifications with thresholdType: Forecasted.</description></item><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Only one notification allowed. thresholdType is not applicable.</description></item></list>
         /// </summary>
-        public IDictionary<string, Notification> Notifications { get; } = new ChangeTrackingDictionary<string, Notification>();
+        public IDictionary<string, BudgetNotification> Notifications { get; } = new ChangeTrackingDictionary<string, BudgetNotification>();
 
         /// <summary>
         /// The forecasted cost which is being tracked for a budget.

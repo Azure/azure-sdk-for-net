@@ -605,46 +605,46 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CostManagementSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetSettingResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SettingResource"/> object. </returns>
-        public static SettingResource GetSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementSettingResource"/> object. </returns>
+        public static CostManagementSettingResource GetCostManagementSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetSettingResource(id);
+            return GetMockableCostManagementArmClient(client).GetCostManagementSettingResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="SettingCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="CostManagementSettingCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetSettings(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementSettings(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="SettingResource"/> objects. </returns>
-        public static SettingCollection GetSettings(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="CostManagementSettingResource"/> objects. </returns>
+        public static CostManagementSettingCollection GetCostManagementSettings(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetSettings(scope);
+            return GetMockableCostManagementArmClient(client).GetCostManagementSettings(scope);
         }
 
         /// <summary>
         /// Get the setting from the given scope by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetSetting(ResourceIdentifier, SettingType, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementSetting(ResourceIdentifier, CostManagementSettingType, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -653,18 +653,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SettingResource> GetSetting(this ArmClient client, ResourceIdentifier scope, SettingType @type, CancellationToken cancellationToken = default)
+        public static Response<CostManagementSettingResource> GetCostManagementSetting(this ArmClient client, ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCostManagementArmClient(client).GetSetting(scope, @type, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetCostManagementSetting(scope, @type, cancellationToken);
         }
 
         /// <summary>
         /// Get the setting from the given scope by name.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetSettingAsync(ResourceIdentifier, SettingType, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementSettingAsync(ResourceIdentifier, CostManagementSettingType, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -673,11 +673,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SettingResource>> GetSettingAsync(this ArmClient client, ResourceIdentifier scope, SettingType @type, CancellationToken cancellationToken = default)
+        public static async Task<Response<CostManagementSettingResource>> GetCostManagementSettingAsync(this ArmClient client, ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableCostManagementArmClient(client).GetSettingAsync(scope, @type, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetCostManagementSettingAsync(scope, @type, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<ArmOperation<PricesheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static ArmOperation<PricesheetDownloadProperties> DownloadByBillingProfilePriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public static ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(this ArmClient client, WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 

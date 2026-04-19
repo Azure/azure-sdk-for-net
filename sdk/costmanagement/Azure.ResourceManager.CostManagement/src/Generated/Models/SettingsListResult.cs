@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of <see cref="SettingsListResult"/>. </summary>
         internal SettingsListResult()
         {
-            Value = new ChangeTrackingList<SettingData>();
+            Value = new ChangeTrackingList<CostManagementSettingData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SettingsListResult"/>. </summary>
         /// <param name="value"> The list of settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SettingsListResult(IReadOnlyList<SettingData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SettingsListResult(IReadOnlyList<CostManagementSettingData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of settings. </summary>
-        public IReadOnlyList<SettingData> Value { get; }
+        public IReadOnlyList<CostManagementSettingData> Value { get; }
     }
 }

@@ -15,58 +15,58 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The URL to download the generated report. </summary>
-    public partial class PricesheetDownloadProperties : IJsonModel<PricesheetDownloadProperties>
+    public partial class PriceSheetDownloadProperties : IJsonModel<PriceSheetDownloadProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PricesheetDownloadProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PriceSheetDownloadProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PricesheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePricesheetDownloadProperties(document.RootElement, options);
+                        return DeserializePriceSheetDownloadProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PricesheetDownloadProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetDownloadProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PricesheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PricesheetDownloadProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetDownloadProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PricesheetDownloadProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PriceSheetDownloadProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PricesheetDownloadProperties IPersistableModel<PricesheetDownloadProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PriceSheetDownloadProperties IPersistableModel<PriceSheetDownloadProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PricesheetDownloadProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PriceSheetDownloadProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PricesheetDownloadProperties"/> from. </param>
-        internal static PricesheetDownloadProperties FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PriceSheetDownloadProperties"/> from. </param>
+        internal static PriceSheetDownloadProperties FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePricesheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PricesheetDownloadProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PriceSheetDownloadProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PricesheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PricesheetDownloadProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetDownloadProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PricesheetDownloadProperties IJsonModel<PricesheetDownloadProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PriceSheetDownloadProperties IJsonModel<PriceSheetDownloadProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PricesheetDownloadProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PriceSheetDownloadProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PricesheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetDownloadProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PricesheetDownloadProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetDownloadProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePricesheetDownloadProperties(document.RootElement, options);
+            return DeserializePriceSheetDownloadProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PricesheetDownloadProperties DeserializePricesheetDownloadProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PriceSheetDownloadProperties DeserializePriceSheetDownloadProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             DateTimeOffset? expiryOn = default;
             string downloadUri = default;
-            MCAPriceSheetProperties downloadFileProperties = default;
+            McaPriceSheetProperties downloadFileProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    downloadFileProperties = MCAPriceSheetProperties.DeserializeMCAPriceSheetProperties(prop.Value, options);
+                    downloadFileProperties = McaPriceSheetProperties.DeserializeMcaPriceSheetProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PricesheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, additionalBinaryDataProperties);
+            return new PriceSheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, additionalBinaryDataProperties);
         }
     }
 }

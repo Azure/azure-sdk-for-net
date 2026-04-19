@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CostManagement
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Budget can have up to 5 notifications with thresholdType: Actual and 5 notifications with thresholdType: Forecasted.</description></item><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Only one notification allowed. thresholdType is not applicable.</description></item></list>
         /// </summary>
-        public IDictionary<string, Notification> Notifications
+        public IDictionary<string, BudgetNotification> Notifications
         {
             get
             {

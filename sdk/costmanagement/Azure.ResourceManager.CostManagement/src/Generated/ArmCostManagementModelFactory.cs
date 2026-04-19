@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
-        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, Notification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
+        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
         {
             return new BudgetData(
                 id,
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// Language in which the recipient will receive the notification,
         /// Supported for CategoryType(s): Cost, ReservationUtilization.
         /// </param>
-        /// <returns> A new <see cref="Models.Notification"/> instance for mocking. </returns>
-        public static Notification Notification(bool enabled = default, BudgetNotificationOperatorType @operator = default, float threshold = default, Frequency? frequency = default, IEnumerable<string> contactEmails = default, IEnumerable<string> contactRoles = default, IEnumerable<string> contactGroups = default, ThresholdType? thresholdType = default, CultureCode? locale = default)
+        /// <returns> A new <see cref="Models.BudgetNotification"/> instance for mocking. </returns>
+        public static BudgetNotification BudgetNotification(bool enabled = default, BudgetNotificationOperatorType @operator = default, float threshold = default, Frequency? frequency = default, IEnumerable<string> contactEmails = default, IEnumerable<string> contactRoles = default, IEnumerable<string> contactGroups = default, ThresholdType? thresholdType = default, CultureCode? locale = default)
         {
             contactEmails ??= new ChangeTrackingList<string>();
             contactRoles ??= new ChangeTrackingList<string>();
             contactGroups ??= new ChangeTrackingList<string>();
 
-            return new Notification(
+            return new BudgetNotification(
                 enabled,
                 @operator,
                 threshold,
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementExportData"/> instance for mocking. </returns>
-        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExportFormatType? format = default, ExportDefinition definition = default, bool? partitionData = default, DataOverwriteBehaviorType? dataOverwriteBehavior = default, CompressionModeType? compressionMode = default, string exportDescription = default, DateTimeOffset? nextRunTimeEstimate = default, ExportSuspensionContext systemSuspensionContext = default, ExportDeliveryDestination deliveryInfoDestination = default, IEnumerable<ExportRun> runHistoryValue = default, ExportSchedule schedule = default, SystemAssignedServiceIdentity identity = default, string location = default, ETag? etag = default)
+        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExportFormatType? format = default, ExportDefinition definition = default, bool? partitionData = default, DataOverwriteBehaviorType? dataOverwriteBehavior = default, CompressionModeType? compressionMode = default, string exportDescription = default, DateTimeOffset? nextRunTimeEstimate = default, ExportSuspensionContext systemSuspensionContext = default, ExportDeliveryDestination deliveryInfoDestination = default, IEnumerable<ExportRun> runHistoryValue = default, ExportSchedule schedule = default, ManagedServiceIdentity identity = default, string location = default, ETag? etag = default)
         {
             return new CostManagementExportData(
                 id,
@@ -403,16 +403,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                     error,
                     null),
                 etag);
-        }
-
-        /// <summary> Managed service identity (either system assigned, or none). </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
-        {
-            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -746,10 +736,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <returns> A new <see cref="CostManagement.SettingData"/> instance for mocking. </returns>
-        public static SettingData SettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
+        /// <returns> A new <see cref="CostManagement.CostManagementSettingData"/> instance for mocking. </returns>
+        public static CostManagementSettingData CostManagementSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default)
         {
-            return new UnknownSetting(
+            return new UnknownCostManagementSetting(
                 id,
                 name,
                 resourceType,
@@ -791,7 +781,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="error"> The details of the error. </param>
         /// <returns> A new <see cref="Models.CostDetailsOperationResults"/> instance for mocking. </returns>
-        public static CostDetailsOperationResults CostDetailsOperationResults(string id = default, string name = default, string @type = default, CostDetailsStatusType? status = default, string manifestVersion = default, CostDetailsDataFormat? dataFormat = default, long? byteCount = default, int? blobCount = default, bool? compressData = default, IEnumerable<BlobInfo> blobs = default, string requestScope = default, GenerateCostDetailsReportContent requestBody = default, DateTimeOffset? validTill = default, ExportRunErrorDetails error = default)
+        public static CostDetailsOperationResults CostDetailsOperationResults(string id = default, string name = default, string @type = default, CostDetailsStatusType? status = default, string manifestVersion = default, CostDetailsDataFormat? dataFormat = default, long? byteCount = default, int? blobCount = default, bool? compressData = default, IEnumerable<ExportBlobInfo> blobs = default, string requestScope = default, GenerateCostDetailsReportContent requestBody = default, DateTimeOffset? validTill = default, ExportRunErrorDetails error = default)
         {
             return new CostDetailsOperationResults(
                 id,
@@ -805,7 +795,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     blobCount,
                     compressData,
                     new RequestContext(requestScope, requestBody, null),
-                    (blobs ?? new ChangeTrackingList<BlobInfo>()).ToList(),
+                    (blobs ?? new ChangeTrackingList<ExportBlobInfo>()).ToList(),
                     null),
                 validTill,
                 error,
@@ -815,10 +805,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> The blob information generated by this operation. </summary>
         /// <param name="blobLink"> Link to the blob to download file. </param>
         /// <param name="byteCount"> Bytes in the blob. </param>
-        /// <returns> A new <see cref="Models.BlobInfo"/> instance for mocking. </returns>
-        public static BlobInfo BlobInfo(string blobLink = default, long? byteCount = default)
+        /// <returns> A new <see cref="Models.ExportBlobInfo"/> instance for mocking. </returns>
+        public static ExportBlobInfo ExportBlobInfo(string blobLink = default, long? byteCount = default)
         {
-            return new BlobInfo(blobLink, byteCount, additionalBinaryDataProperties: null);
+            return new ExportBlobInfo(blobLink, byteCount, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The cost allocation rule model definition. </summary>
@@ -1472,10 +1462,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>
         /// <param name="downloadFileProperties"> The properties in downloaded file. </param>
-        /// <returns> A new <see cref="Models.PricesheetDownloadProperties"/> instance for mocking. </returns>
-        public static PricesheetDownloadProperties PricesheetDownloadProperties(DateTimeOffset? expiryOn = default, string downloadUri = default, MCAPriceSheetProperties downloadFileProperties = default)
+        /// <returns> A new <see cref="Models.PriceSheetDownloadProperties"/> instance for mocking. </returns>
+        public static PriceSheetDownloadProperties PriceSheetDownloadProperties(DateTimeOffset? expiryOn = default, string downloadUri = default, McaPriceSheetProperties downloadFileProperties = default)
         {
-            return new PricesheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, additionalBinaryDataProperties: null);
+            return new PriceSheetDownloadProperties(expiryOn, downloadUri, downloadFileProperties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties of the price sheet. </summary>
@@ -1521,10 +1511,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="billingCurrency"> Currency in which charges are posted. </param>
         /// <param name="term"> Term length for Azure Savings Plan or Reservation term – one year or three years (P1Y or P3Y). </param>
         /// <param name="priceType"> Price type for a product. For example, an Azure resource with a pay-as-you-go rate with priceType as Consumption. Other price types include ReservedInstance and Savings Plan. </param>
-        /// <returns> A new <see cref="Models.MCAPriceSheetProperties"/> instance for mocking. </returns>
-        public static MCAPriceSheetProperties MCAPriceSheetProperties(string billingAccountID = default, string billingAccountName = default, string billingProfileId = default, string billingProfileName = default, string productOrderName = default, float? serviceFamily = default, string product = default, string productId = default, string skuId = default, string unitOfMeasure = default, string meterId = default, string meterName = default, string meterType = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, string tierMinimumUnits = default, DateTimeOffset? effectiveStartOn = default, DateTimeOffset? effectiveEndOn = default, string unitPrice = default, string basePrice = default, string marketPrice = default, string currency = default, string billingCurrency = default, string term = default, string priceType = default)
+        /// <returns> A new <see cref="Models.McaPriceSheetProperties"/> instance for mocking. </returns>
+        public static McaPriceSheetProperties McaPriceSheetProperties(string billingAccountID = default, string billingAccountName = default, string billingProfileId = default, string billingProfileName = default, string productOrderName = default, float? serviceFamily = default, string product = default, string productId = default, string skuId = default, string unitOfMeasure = default, string meterId = default, string meterName = default, string meterType = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, string tierMinimumUnits = default, DateTimeOffset? effectiveStartOn = default, DateTimeOffset? effectiveEndOn = default, string unitPrice = default, string basePrice = default, string marketPrice = default, string currency = default, string billingCurrency = default, string term = default, string priceType = default)
         {
-            return new MCAPriceSheetProperties(
+            return new McaPriceSheetProperties(
                 billingAccountID,
                 billingAccountName,
                 billingProfileId,

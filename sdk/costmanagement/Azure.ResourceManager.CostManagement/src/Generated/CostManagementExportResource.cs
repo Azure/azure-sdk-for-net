@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Parameters supplied to the Execute Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ExecuteAsync(ExportRunRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ExecuteAsync(ExportRunContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportResource.Execute");
             scope.Start();
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent, Id.Name, ExportRunRequest.ToRequestContent(content), context);
+                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent, Id.Name, ExportRunContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="content"> Parameters supplied to the Execute Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Execute(ExportRunRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response Execute(ExportRunContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportResource.Execute");
             scope.Start();
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent, Id.Name, ExportRunRequest.ToRequestContent(content), context);
+                HttpMessage message = _exportsRestClient.CreateExecuteRequest(Id.Parent, Id.Name, ExportRunContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

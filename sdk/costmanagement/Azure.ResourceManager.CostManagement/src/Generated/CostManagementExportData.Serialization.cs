@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CostManagement
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ExportProperties properties = default;
-            Models.SystemAssignedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             string location = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    identity = Models.SystemAssignedServiceIdentity.DeserializeSystemAssignedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCostManagementContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))

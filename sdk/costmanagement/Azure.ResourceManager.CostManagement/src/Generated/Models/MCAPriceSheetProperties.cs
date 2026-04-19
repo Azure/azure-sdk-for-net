@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The properties of the price sheet. </summary>
-    public partial class MCAPriceSheetProperties
+    public partial class McaPriceSheetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MCAPriceSheetProperties"/>. </summary>
-        internal MCAPriceSheetProperties()
+        /// <summary> Initializes a new instance of <see cref="McaPriceSheetProperties"/>. </summary>
+        internal McaPriceSheetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MCAPriceSheetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="McaPriceSheetProperties"/>. </summary>
         /// <param name="billingAccountID"> Unique identifier for the billing account. </param>
         /// <param name="billingAccountName"> Name of the billing profile that is set up to receive invoices. The prices in the price sheet are associated with this billing profile. </param>
         /// <param name="billingProfileId"> Unique identifier for the billing profile. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="term"> Term length for Azure Savings Plan or Reservation term – one year or three years (P1Y or P3Y). </param>
         /// <param name="priceType"> Price type for a product. For example, an Azure resource with a pay-as-you-go rate with priceType as Consumption. Other price types include ReservedInstance and Savings Plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MCAPriceSheetProperties(string billingAccountID, string billingAccountName, string billingProfileId, string billingProfileName, string productOrderName, float? serviceFamily, string product, string productId, string skuId, string unitOfMeasure, string meterId, string meterName, string meterType, string meterCategory, string meterSubCategory, string meterRegion, string tierMinimumUnits, DateTimeOffset? effectiveStartOn, DateTimeOffset? effectiveEndOn, string unitPrice, string basePrice, string marketPrice, string currency, string billingCurrency, string term, string priceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McaPriceSheetProperties(string billingAccountID, string billingAccountName, string billingProfileId, string billingProfileName, string productOrderName, float? serviceFamily, string product, string productId, string skuId, string unitOfMeasure, string meterId, string meterName, string meterType, string meterCategory, string meterSubCategory, string meterRegion, string tierMinimumUnits, DateTimeOffset? effectiveStartOn, DateTimeOffset? effectiveEndOn, string unitPrice, string basePrice, string marketPrice, string currency, string billingCurrency, string term, string priceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountID = billingAccountID;
             BillingAccountName = billingAccountName;

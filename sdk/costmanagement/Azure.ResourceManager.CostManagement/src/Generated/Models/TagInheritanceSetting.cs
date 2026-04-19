@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Tag Inheritance Setting definition. </summary>
-    public partial class TagInheritanceSetting : SettingData
+    public partial class TagInheritanceSetting : CostManagementSettingData
     {
         /// <summary> Initializes a new instance of <see cref="TagInheritanceSetting"/>. </summary>
         public TagInheritanceSetting() : base(SettingsKind.Taginheritance)

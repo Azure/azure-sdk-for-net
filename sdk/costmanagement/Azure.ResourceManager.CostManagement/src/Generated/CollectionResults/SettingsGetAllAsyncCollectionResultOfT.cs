@@ -15,7 +15,7 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal partial class SettingsGetAllAsyncCollectionResultOfT : AsyncPageable<SettingData>
+    internal partial class SettingsGetAllAsyncCollectionResultOfT : AsyncPageable<CostManagementSettingData>
     {
         private readonly Settings _client;
         private readonly string _scope;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SettingsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SettingData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CostManagementSettingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             SettingsListResult result = SettingsListResult.FromResponse(response);
-            yield return Page<SettingData>.FromValues(result.Value, null, response);
+            yield return Page<CostManagementSettingData>.FromValues(result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>

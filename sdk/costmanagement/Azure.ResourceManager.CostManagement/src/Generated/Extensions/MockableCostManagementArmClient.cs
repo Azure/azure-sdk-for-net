@@ -436,31 +436,21 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await GetScheduledActions(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="SettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CostManagementSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SettingResource"/> object. </returns>
-        public virtual SettingResource GetSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CostManagementSettingResource"/> object. </returns>
+        public virtual CostManagementSettingResource GetCostManagementSettingResource(ResourceIdentifier id)
         {
-            SettingResource.ValidateResourceId(id);
-            return new SettingResource(Client, id);
+            CostManagementSettingResource.ValidateResourceId(id);
+            return new CostManagementSettingResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="SettingCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="CostManagementSettingCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="SettingResource"/> objects. </returns>
-        public virtual SettingCollection GetSettings(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="CostManagementSettingResource"/> objects. </returns>
+        public virtual CostManagementSettingCollection GetCostManagementSettings(ResourceIdentifier scope)
         {
-            return new SettingCollection(Client, scope);
-        }
-
-        /// <summary> Get the setting from the given scope by name. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="type"> Setting type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<SettingResource> GetSetting(ResourceIdentifier scope, SettingType @type, CancellationToken cancellationToken = default)
-        {
-            return GetSettings(scope).Get(@type, cancellationToken);
+            return new CostManagementSettingCollection(Client, scope);
         }
 
         /// <summary> Get the setting from the given scope by name. </summary>
@@ -468,9 +458,19 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="type"> Setting type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SettingResource>> GetSettingAsync(ResourceIdentifier scope, SettingType @type, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementSettingResource> GetCostManagementSetting(ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
         {
-            return await GetSettings(scope).GetAsync(@type, cancellationToken).ConfigureAwait(false);
+            return GetCostManagementSettings(scope).Get(@type, cancellationToken);
+        }
+
+        /// <summary> Get the setting from the given scope by name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="type"> Setting type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CostManagementSettingResource>> GetCostManagementSettingAsync(ResourceIdentifier scope, CostManagementSettingType @type, CancellationToken cancellationToken = default)
+        {
+            return await GetCostManagementSettings(scope).GetAsync(@type, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -2787,7 +2787,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PricesheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PriceSheetDownloadProperties>> DownloadByBillingProfilePriceSheetAsync(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -2802,8 +2802,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 };
                 HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.ToString(), billingProfileName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CostManagementArmOperation<PricesheetDownloadProperties> operation = new CostManagementArmOperation<PricesheetDownloadProperties>(
-                    new PricesheetDownloadPropertiesOperationSource(),
+                CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
+                    new PriceSheetDownloadPropertiesOperationSource(),
                     PriceSheetClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -2847,7 +2847,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PricesheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PriceSheetDownloadProperties> DownloadByBillingProfilePriceSheet(WaitUntil waitUntil, ResourceIdentifier scope, string billingProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
@@ -2862,8 +2862,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 };
                 HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.ToString(), billingProfileName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CostManagementArmOperation<PricesheetDownloadProperties> operation = new CostManagementArmOperation<PricesheetDownloadProperties>(
-                    new PricesheetDownloadPropertiesOperationSource(),
+                CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
+                    new PriceSheetDownloadPropertiesOperationSource(),
                     PriceSheetClientDiagnostics,
                     Pipeline,
                     message.Request,

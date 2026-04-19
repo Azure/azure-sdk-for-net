@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("blobs"u8);
                 writer.WriteStartArray();
-                foreach (BlobInfo item in Blobs)
+                foreach (ExportBlobInfo item in Blobs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             int? blobCount = default;
             bool? compressData = default;
             RequestContext requestContext = default;
-            IList<BlobInfo> blobs = default;
+            IList<ExportBlobInfo> blobs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<BlobInfo> array = new List<BlobInfo>();
+                    List<ExportBlobInfo> array = new List<ExportBlobInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BlobInfo.DeserializeBlobInfo(item, options));
+                        array.Add(ExportBlobInfo.DeserializeExportBlobInfo(item, options));
                     }
                     blobs = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 blobCount,
                 compressData,
                 requestContext,
-                blobs ?? new ChangeTrackingList<BlobInfo>(),
+                blobs ?? new ChangeTrackingList<ExportBlobInfo>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SettingData item in Value)
+                foreach (CostManagementSettingData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<SettingData> value = default;
+            IReadOnlyList<CostManagementSettingData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<SettingData> array = new List<SettingData>();
+                    List<CostManagementSettingData> array = new List<CostManagementSettingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SettingData.DeserializeSettingData(item, options));
+                        array.Add(CostManagementSettingData.DeserializeCostManagementSettingData(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SettingsListResult(value ?? new ChangeTrackingList<SettingData>(), additionalBinaryDataProperties);
+            return new SettingsListResult(value ?? new ChangeTrackingList<CostManagementSettingData>(), additionalBinaryDataProperties);
         }
     }
 }

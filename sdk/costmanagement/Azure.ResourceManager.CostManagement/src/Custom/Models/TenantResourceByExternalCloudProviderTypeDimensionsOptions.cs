@@ -5,8 +5,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    // Backward-compat: baseline exposed ByExternalCloudProviderTypeDimensions(options, cancellationToken)
-    // using this options bag. The new generated API uses flat parameters. This class is kept for backward compatibility.
+    // ApiCompat: the previous shipped API surface (see baseline Azure.ResourceManager.CostManagement.net8.0.cs)
+    // exposed TenantResourceExtensions.ByExternalCloudProviderTypeDimensions(..., TenantResourceByExternalCloudProviderTypeDimensionsOptions options, ...)
+    // using this options-bag type. The regenerated TypeSpec API uses flat parameters instead, so this type is
+    // preserved solely to keep the baseline API surface binary/source-compatible and is hidden from IntelliSense
+    // via [EditorBrowsable(EditorBrowsableState.Never)]. The name is intentionally unchanged (despite being
+    // unwieldy) because renaming it would itself be an ApiCompat break. Plan: remove this type (and the
+    // corresponding shim overload in TenantResourceExtensions) in the next major version bump, at which point
+    // consumers should migrate to the flat-parameter overload on the generated extension methods.
     /// <summary> Options bag for the backward-compatible ByExternalCloudProviderTypeDimensions overload. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class TenantResourceByExternalCloudProviderTypeDimensionsOptions

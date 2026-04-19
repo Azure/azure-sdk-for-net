@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CostManagement
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Execute(CancellationToken cancellationToken)
         {
-            return Execute(default(ExportRunRequest), cancellationToken);
+            return Execute(default(ExportRunContent), cancellationToken);
         }
 
         /// <summary> The operation to execute an export. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return await ExecuteAsync(default(ExportRunRequest), cancellationToken).ConfigureAwait(false);
+            return await ExecuteAsync(default(ExportRunContent), cancellationToken).ConfigureAwait(false);
         }
     }
 }

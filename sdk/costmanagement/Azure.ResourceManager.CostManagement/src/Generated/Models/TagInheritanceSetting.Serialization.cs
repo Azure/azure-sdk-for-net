@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Tag Inheritance Setting definition. </summary>
-    public partial class TagInheritanceSetting : SettingData, IJsonModel<TagInheritanceSetting>
+    public partial class TagInheritanceSetting : CostManagementSettingData, IJsonModel<TagInheritanceSetting>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

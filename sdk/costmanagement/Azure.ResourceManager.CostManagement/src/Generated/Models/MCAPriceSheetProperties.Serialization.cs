@@ -14,51 +14,51 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The properties of the price sheet. </summary>
-    public partial class MCAPriceSheetProperties : IJsonModel<MCAPriceSheetProperties>
+    public partial class McaPriceSheetProperties : IJsonModel<McaPriceSheetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MCAPriceSheetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual McaPriceSheetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCAPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McaPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMCAPriceSheetProperties(document.RootElement, options);
+                        return DeserializeMcaPriceSheetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MCAPriceSheetProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McaPriceSheetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCAPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McaPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MCAPriceSheetProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(McaPriceSheetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MCAPriceSheetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<McaPriceSheetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCAPriceSheetProperties IPersistableModel<MCAPriceSheetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        McaPriceSheetProperties IPersistableModel<McaPriceSheetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MCAPriceSheetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<McaPriceSheetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MCAPriceSheetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<McaPriceSheetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCAPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McaPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCAPriceSheetProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(McaPriceSheetProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountID))
             {
@@ -223,24 +223,24 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MCAPriceSheetProperties IJsonModel<MCAPriceSheetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        McaPriceSheetProperties IJsonModel<McaPriceSheetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MCAPriceSheetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual McaPriceSheetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MCAPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McaPriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MCAPriceSheetProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(McaPriceSheetProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMCAPriceSheetProperties(document.RootElement, options);
+            return DeserializeMcaPriceSheetProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MCAPriceSheetProperties DeserializeMCAPriceSheetProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static McaPriceSheetProperties DeserializeMcaPriceSheetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MCAPriceSheetProperties(
+            return new McaPriceSheetProperties(
                 billingAccountID,
                 billingAccountName,
                 billingProfileId,

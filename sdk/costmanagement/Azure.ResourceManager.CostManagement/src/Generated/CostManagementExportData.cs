@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="identity"> The managed identity associated with Export. </param>
         /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportProperties properties, Models.SystemAssignedServiceIdentity identity, string location, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportProperties properties, ManagedServiceIdentity identity, string location, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement
         internal ExportProperties Properties { get; set; }
 
         /// <summary> The managed identity associated with Export. </summary>
-        public Models.SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The location of the Export's managed identity. Only required when utilizing managed identity. </summary>
         public string Location { get; set; }

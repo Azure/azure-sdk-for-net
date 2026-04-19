@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The URL to download the generated report. </summary>
-    public partial class PricesheetDownloadProperties
+    public partial class PriceSheetDownloadProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PricesheetDownloadProperties"/>. </summary>
-        internal PricesheetDownloadProperties()
+        /// <summary> Initializes a new instance of <see cref="PriceSheetDownloadProperties"/>. </summary>
+        internal PriceSheetDownloadProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PricesheetDownloadProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PriceSheetDownloadProperties"/>. </summary>
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>
         /// <param name="downloadFileProperties"> The properties in downloaded file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PricesheetDownloadProperties(DateTimeOffset? expiryOn, string downloadUri, MCAPriceSheetProperties downloadFileProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PriceSheetDownloadProperties(DateTimeOffset? expiryOn, string downloadUri, McaPriceSheetProperties downloadFileProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpiryOn = expiryOn;
             DownloadUri = downloadUri;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string DownloadUri { get; }
 
         /// <summary> The properties in downloaded file. </summary>
-        public MCAPriceSheetProperties DownloadFileProperties { get; }
+        public McaPriceSheetProperties DownloadFileProperties { get; }
     }
 }

@@ -15,30 +15,30 @@ using Azure.ResourceManager.CostManagement.Models;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary></summary>
-    internal partial class PricesheetDownloadPropertiesOperationSource : IOperationSource<PricesheetDownloadProperties>
+    internal partial class PriceSheetDownloadPropertiesOperationSource : IOperationSource<PriceSheetDownloadProperties>
     {
         /// <summary></summary>
-        internal PricesheetDownloadPropertiesOperationSource()
+        internal PriceSheetDownloadPropertiesOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PricesheetDownloadProperties IOperationSource<PricesheetDownloadProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        PriceSheetDownloadProperties IOperationSource<PriceSheetDownloadProperties>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PricesheetDownloadProperties result = PricesheetDownloadProperties.DeserializePricesheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            PriceSheetDownloadProperties result = PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PricesheetDownloadProperties> IOperationSource<PricesheetDownloadProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PriceSheetDownloadProperties> IOperationSource<PriceSheetDownloadProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PricesheetDownloadProperties result = PricesheetDownloadProperties.DeserializePricesheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            PriceSheetDownloadProperties result = PriceSheetDownloadProperties.DeserializePriceSheetDownloadProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
     }
