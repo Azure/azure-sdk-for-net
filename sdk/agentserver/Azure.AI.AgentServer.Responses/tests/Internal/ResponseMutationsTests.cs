@@ -484,4 +484,92 @@ public class ResponseMutationsTests
         XAssert.Single(output);
         Assert.That(output[0], Is.SameAs(item2));
     }
+
+    // ── EnsureCompletedAtConsistency ──────────────────────────────
+
+    [Test]
+    public void EnsureCompletedAtConsistency_Completed_NullCompletedAt_StampsCreatedAt()
+    {
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            CompletedAt = null,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.Not.Null);
+        Assert.That(response.CompletedAt, Is.EqualTo(response.CreatedAt));
+    }
+
+    [Test]
+    public void EnsureCompletedAtConsistency_Completed_WithCompletedAt_PreservesExisting()
+    {
+        var existing = DateTimeOffset.UtcNow.AddMinutes(-5);
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            CompletedAt = existing,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.EqualTo(existing));
+    }
+
+    [Test]
+    public void EnsureCompletedAtConsistency_Failed_ClearsCompletedAt()
+    {
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.Failed,
+            CompletedAt = DateTimeOffset.UtcNow,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.Null);
+    }
+
+    [Test]
+    public void EnsureCompletedAtConsistency_Cancelled_ClearsCompletedAt()
+    {
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.Cancelled,
+            CompletedAt = DateTimeOffset.UtcNow,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.Null);
+    }
+
+    [Test]
+    public void EnsureCompletedAtConsistency_Incomplete_ClearsCompletedAt()
+    {
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.Incomplete,
+            CompletedAt = DateTimeOffset.UtcNow,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.Null);
+    }
+
+    [Test]
+    public void EnsureCompletedAtConsistency_InProgress_NullCompletedAt_NoChange()
+    {
+        var response = new Models.ResponseObject("resp_test", "gpt-4o")
+        {
+            Status = ResponseStatus.InProgress,
+            CompletedAt = null,
+        };
+
+        response.EnsureCompletedAtConsistency();
+
+        Assert.That(response.CompletedAt, Is.Null);
+    }
 }

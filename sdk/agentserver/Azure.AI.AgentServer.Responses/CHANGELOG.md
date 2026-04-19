@@ -8,6 +8,11 @@
 
 ### Bugs Fixed
 
+- Fixed `completed_at` being absent on completed responses retrieved from durable storage.
+  Some providers (e.g. Foundry storage) strip `completed_at` during round-trip serialization;
+  the SDK now defensively re-stamps it on `GET` and `Cancel` paths.
+  ([azure-sdk-for-python#46393](https://github.com/Azure/azure-sdk-for-python/pull/46393))
+
 ### Other Changes
 
 ## 1.0.0-beta.2 (2026-04-17)

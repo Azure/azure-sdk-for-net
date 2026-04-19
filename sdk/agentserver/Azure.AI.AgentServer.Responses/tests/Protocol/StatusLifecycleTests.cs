@@ -167,7 +167,48 @@ public class StatusLifecycleTests : ProtocolTestBase
         Assert.That(getDoc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
     }
 
+    // ── B6: Foundry storage defense — completed_at recovery on GET ────
+
+    [Test]
+    public async Task Background_Completed_ManualEvent_GETHasCompletedAt()
+    {
+        // Background mode: handler manually constructs completed event without CompletedAt.
+        // Foundry storage may also strip completed_at during round-trip.
+        // The GET path defensively re-stamps completed_at before returning.
+        Handler.EventFactory = (req, ctx, ct) => ManualCompletedStream(ctx);
+
+        var responseId = await CreateBackgroundResponseAsync();
+        await WaitForBackgroundCompletionAsync(responseId);
+
+        var getResponse = await GetResponseAsync(responseId);
+        using var doc = await ParseJsonAsync(getResponse);
+        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("completed"));
+        Assert.That(doc.RootElement.TryGetProperty("completed_at", out var completedAt), Is.True,
+            "completed_at must be present on GET after background completion");
+        Assert.That(completedAt.ValueKind, Is.Not.EqualTo(JsonValueKind.Null));
+    }
+
     // ── Helper event factories ─────────────────────────────────
+
+    /// <summary>
+    /// Handler that manually constructs events without using ResponseEventStream.EmitCompleted(),
+    /// which means CompletedAt is never set. Used to test Foundry storage defense on GET path.
+    /// </summary>
+    private static async IAsyncEnumerable<ResponseStreamEvent> ManualCompletedStream(
+        ResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        var response = new Models.ResponseObject(ctx.ResponseId, "test")
+        {
+            Status = ResponseStatus.InProgress,
+        };
+        yield return new ResponseCreatedEvent(0, response);
+
+        // Manually set status to completed but DON'T set CompletedAt
+        response.Status = ResponseStatus.Completed;
+        yield return new ResponseCompletedEvent(1, response);
+        await Task.CompletedTask;
+    }
 
     private static async IAsyncEnumerable<ResponseStreamEvent> ThrowingStream(
         ResponseContext ctx,

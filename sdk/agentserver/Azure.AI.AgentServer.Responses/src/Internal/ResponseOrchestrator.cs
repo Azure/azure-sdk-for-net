@@ -165,7 +165,14 @@ internal sealed class ResponseOrchestrator
 
         // Not in-flight — fall through to the durable store.
         // Provider throws ResourceNotFoundException if the ID doesn't exist.
-        return await _provider.GetResponseAsync(responseId, isolation);
+        var persisted = await _provider.GetResponseAsync(responseId, isolation);
+
+        // Foundry storage defense: some providers strip completed_at during
+        // round-trip serialization (see Azure/azure-sdk-for-python#46393).
+        // Re-stamp before returning to callers.
+        persisted.EnsureCompletedAtConsistency();
+
+        return persisted;
     }
 
     /// <summary>
@@ -186,6 +193,9 @@ internal sealed class ResponseOrchestrator
             // If it exists and is already terminal, return as-is (idempotent).
             // If it doesn't exist, provider throws ResourceNotFoundException.
             var persisted = await _provider.GetResponseAsync(responseId, isolation);
+
+            // Foundry storage defense: re-stamp completed_at after provider round-trip.
+            persisted.EnsureCompletedAtConsistency();
 
             // B1: background check comes first — non-bg responses always get the
             // "synchronous" message regardless of terminal status (spec line 485).

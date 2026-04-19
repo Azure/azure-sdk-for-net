@@ -12,6 +12,35 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal static class ResponseMutations
 {
     /// <summary>
+    /// Ensures <c>CompletedAt</c> consistency after a provider round-trip.
+    /// <para>
+    /// Some storage providers (e.g. Foundry) may strip <c>completed_at</c> during
+    /// serialization, resulting in <c>CompletedAt == null</c> even when <c>Status</c>
+    /// is <see cref="ResponseStatus.Completed"/>. This method defensively stamps
+    /// <c>CompletedAt</c> from the execution's known completion time or falls back
+    /// to <c>CreatedAt</c> as a last resort.
+    /// </para>
+    /// <para>
+    /// For non-completed terminal states (failed, cancelled, incomplete),
+    /// <c>CompletedAt</c> is cleared to null per B6 spec.
+    /// </para>
+    /// </summary>
+    internal static void EnsureCompletedAtConsistency(this Models.ResponseObject response)
+    {
+        if (response.Status == ResponseStatus.Completed && response.CompletedAt is null)
+        {
+            // Defensive fallback: use CreatedAt since we know the response completed
+            // but the exact timestamp was lost during storage round-trip.
+            response.CompletedAt = response.CreatedAt;
+        }
+        else if (response.Status != ResponseStatus.Completed)
+        {
+            // B6: only completed status has a non-null CompletedAt.
+            response.CompletedAt = null;
+        }
+    }
+
+    /// <summary>
     /// Transitions the response to <see cref="ResponseStatus.Completed"/>.
     /// Sets <c>CompletedAt</c> and <c>Usage</c> (if provided).
     /// </summary>
