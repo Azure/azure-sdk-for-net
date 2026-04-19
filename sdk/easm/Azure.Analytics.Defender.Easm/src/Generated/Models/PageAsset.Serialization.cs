@@ -1408,7 +1408,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SslServerConfig> array = new List<SslServerConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Easm.SslServerConfig.DeserializeSslServerConfig(item, options));
+                        array.Add(SslServerConfig.DeserializeSslServerConfig(item, options));
                     }
                     sslServerConfig = array;
                     continue;

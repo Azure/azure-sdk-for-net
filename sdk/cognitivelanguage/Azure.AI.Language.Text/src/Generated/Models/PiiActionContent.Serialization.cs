@@ -282,7 +282,7 @@ namespace Azure.AI.Language.Text
                     List<EntitySynonyms> array = new List<EntitySynonyms>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Text.EntitySynonyms.DeserializeEntitySynonyms(item, options));
+                        array.Add(EntitySynonyms.DeserializeEntitySynonyms(item, options));
                     }
                     entitySynonyms = array;
                     continue;

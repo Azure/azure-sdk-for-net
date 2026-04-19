@@ -331,7 +331,7 @@ namespace Azure.Compute.Batch
                     List<MountConfiguration> array = new List<MountConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Batch.MountConfiguration.DeserializeMountConfiguration(item, options));
+                        array.Add(MountConfiguration.DeserializeMountConfiguration(item, options));
                     }
                     mountConfiguration = array;
                     continue;

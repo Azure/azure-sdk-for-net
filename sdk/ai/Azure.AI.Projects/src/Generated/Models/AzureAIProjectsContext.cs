@@ -126,9 +126,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentContainerReferenceParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
+#pragma warning disable AAIP001 // HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
+#pragma warning restore AAIP001 // HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]

@@ -220,7 +220,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     List<KnowledgeSourceParams> array = new List<KnowledgeSourceParams>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.KnowledgeSourceParams.DeserializeKnowledgeSourceParams(item, options));
+                        array.Add(KnowledgeSourceParams.DeserializeKnowledgeSourceParams(item, options));
                     }
                     knowledgeSourceParams = array;
                     continue;

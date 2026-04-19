@@ -558,7 +558,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ScanMetadata> array = new List<ScanMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Easm.ScanMetadata.DeserializeScanMetadata(item, options));
+                        array.Add(ScanMetadata.DeserializeScanMetadata(item, options));
                     }
                     scanMetadata = array;
                     continue;
@@ -642,7 +642,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SslServerConfig> array = new List<SslServerConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Easm.SslServerConfig.DeserializeSslServerConfig(item, options));
+                        array.Add(SslServerConfig.DeserializeSslServerConfig(item, options));
                     }
                     sslServerConfig = array;
                     continue;

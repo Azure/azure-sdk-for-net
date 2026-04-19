@@ -301,7 +301,7 @@ namespace Azure.Developer.LoadTesting
                     List<ErrorDetails> array = new List<ErrorDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LoadTesting.ErrorDetails.DeserializeErrorDetails(item, options));
+                        array.Add(ErrorDetails.DeserializeErrorDetails(item, options));
                     }
                     errorDetails = array;
                     continue;

@@ -458,7 +458,7 @@ namespace Azure.Developer.LoadTesting
                     List<ErrorDetails> array = new List<ErrorDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LoadTesting.ErrorDetails.DeserializeErrorDetails(item, options));
+                        array.Add(ErrorDetails.DeserializeErrorDetails(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -472,7 +472,7 @@ namespace Azure.Developer.LoadTesting
                     Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
+                        dictionary.Add(prop0.Name, TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     testRunStatistics = dictionary;
                     continue;
@@ -486,7 +486,7 @@ namespace Azure.Developer.LoadTesting
                     Dictionary<string, TestRunStatistics> dictionary = new Dictionary<string, TestRunStatistics>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, LoadTesting.TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
+                        dictionary.Add(prop0.Name, TestRunStatistics.DeserializeTestRunStatistics(prop0.Value, options));
                     }
                     regionalStatistics = dictionary;
                     continue;
