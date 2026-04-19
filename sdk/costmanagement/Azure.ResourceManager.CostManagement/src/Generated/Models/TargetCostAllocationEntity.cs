@@ -13,15 +13,15 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Target resources for cost allocation. </summary>
-    public partial class TargetCostAllocationResource : CostAllocationResource
+    public partial class TargetCostAllocationEntity : CostAllocationEntity
     {
-        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationEntity"/>. </summary>
         /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <param name="values"> Target resources for cost allocation. This list cannot contain more than 25 values. </param>
         /// <param name="policyType"> Method of cost allocation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
-        public TargetCostAllocationResource(CostAllocationResourceType resourceType, string name, IEnumerable<CostAllocationProportion> values, CostAllocationPolicyType policyType) : base(resourceType, name)
+        public TargetCostAllocationEntity(CostAllocationResourceType resourceType, string name, IEnumerable<CostAllocationProportion> values, CostAllocationPolicyType policyType) : base(resourceType, name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(values, nameof(values));
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             PolicyType = policyType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationEntity"/>. </summary>
         /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> Target resources for cost allocation. This list cannot contain more than 25 values. </param>
         /// <param name="policyType"> Method of cost allocation for the rule. </param>
-        internal TargetCostAllocationResource(CostAllocationResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CostAllocationProportion> values, CostAllocationPolicyType policyType) : base(resourceType, name, additionalBinaryDataProperties)
+        internal TargetCostAllocationEntity(CostAllocationResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CostAllocationProportion> values, CostAllocationPolicyType policyType) : base(resourceType, name, additionalBinaryDataProperties)
         {
             Values = values;
             PolicyType = policyType;

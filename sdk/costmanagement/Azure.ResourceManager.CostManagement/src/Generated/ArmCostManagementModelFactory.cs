@@ -851,10 +851,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="sourceResources"> Source resources for cost allocation. At this time, this list can contain no more than one element. </param>
         /// <param name="targetResources"> Target resources for cost allocation. At this time, this list can contain no more than one element. </param>
         /// <returns> A new <see cref="Models.CostAllocationRuleDetails"/> instance for mocking. </returns>
-        public static CostAllocationRuleDetails CostAllocationRuleDetails(IEnumerable<SourceCostAllocationResource> sourceResources = default, IEnumerable<TargetCostAllocationResource> targetResources = default)
+        public static CostAllocationRuleDetails CostAllocationRuleDetails(IEnumerable<SourceCostAllocationEntity> sourceResources = default, IEnumerable<TargetCostAllocationEntity> targetResources = default)
         {
-            sourceResources ??= new ChangeTrackingList<SourceCostAllocationResource>();
-            targetResources ??= new ChangeTrackingList<TargetCostAllocationResource>();
+            sourceResources ??= new ChangeTrackingList<SourceCostAllocationEntity>();
+            targetResources ??= new ChangeTrackingList<TargetCostAllocationEntity>();
 
             return new CostAllocationRuleDetails(sourceResources.ToList(), targetResources.ToList(), additionalBinaryDataProperties: null);
         }
@@ -863,12 +863,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <param name="values"> Source Resources for cost allocation. This list cannot contain more than 25 values. </param>
-        /// <returns> A new <see cref="Models.SourceCostAllocationResource"/> instance for mocking. </returns>
-        public static SourceCostAllocationResource SourceCostAllocationResource(CostAllocationResourceType resourceType = default, string name = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.SourceCostAllocationEntity"/> instance for mocking. </returns>
+        public static SourceCostAllocationEntity SourceCostAllocationEntity(CostAllocationResourceType resourceType = default, string name = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new SourceCostAllocationResource(resourceType, name, additionalBinaryDataProperties: null, values.ToList());
+            return new SourceCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList());
         }
 
         /// <summary> Target resources for cost allocation. </summary>
@@ -876,12 +876,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <param name="values"> Target resources for cost allocation. This list cannot contain more than 25 values. </param>
         /// <param name="policyType"> Method of cost allocation for the rule. </param>
-        /// <returns> A new <see cref="Models.TargetCostAllocationResource"/> instance for mocking. </returns>
-        public static TargetCostAllocationResource TargetCostAllocationResource(CostAllocationResourceType resourceType = default, string name = default, IEnumerable<CostAllocationProportion> values = default, CostAllocationPolicyType policyType = default)
+        /// <returns> A new <see cref="Models.TargetCostAllocationEntity"/> instance for mocking. </returns>
+        public static TargetCostAllocationEntity TargetCostAllocationEntity(CostAllocationResourceType resourceType = default, string name = default, IEnumerable<CostAllocationProportion> values = default, CostAllocationPolicyType policyType = default)
         {
             values ??= new ChangeTrackingList<CostAllocationProportion>();
 
-            return new TargetCostAllocationResource(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
+            return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties: null, values.ToList(), policyType);
         }
 
         /// <summary>
@@ -1045,10 +1045,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
-        /// <returns> A new <see cref="Models.BenefitResource"/> instance for mocking. </returns>
-        public static BenefitResource BenefitResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountBenefitKind? kind = default)
+        /// <returns> A new <see cref="Models.BenefitDetails"/> instance for mocking. </returns>
+        public static BenefitDetails BenefitDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountBenefitKind? kind = default)
         {
-            return new BenefitResource(
+            return new BenefitDetails(
                 id,
                 name,
                 resourceType,

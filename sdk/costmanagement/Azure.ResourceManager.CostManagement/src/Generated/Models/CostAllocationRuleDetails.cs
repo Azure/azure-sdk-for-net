@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of <see cref="CostAllocationRuleDetails"/>. </summary>
         public CostAllocationRuleDetails()
         {
-            SourceResources = new ChangeTrackingList<SourceCostAllocationResource>();
-            TargetResources = new ChangeTrackingList<TargetCostAllocationResource>();
+            SourceResources = new ChangeTrackingList<SourceCostAllocationEntity>();
+            TargetResources = new ChangeTrackingList<TargetCostAllocationEntity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CostAllocationRuleDetails"/>. </summary>
         /// <param name="sourceResources"> Source resources for cost allocation. At this time, this list can contain no more than one element. </param>
         /// <param name="targetResources"> Target resources for cost allocation. At this time, this list can contain no more than one element. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationRuleDetails(IList<SourceCostAllocationResource> sourceResources, IList<TargetCostAllocationResource> targetResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostAllocationRuleDetails(IList<SourceCostAllocationEntity> sourceResources, IList<TargetCostAllocationEntity> targetResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResources = sourceResources;
             TargetResources = targetResources;
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Source resources for cost allocation. At this time, this list can contain no more than one element. </summary>
-        public IList<SourceCostAllocationResource> SourceResources { get; }
+        public IList<SourceCostAllocationEntity> SourceResources { get; }
 
         /// <summary> Target resources for cost allocation. At this time, this list can contain no more than one element. </summary>
-        public IList<TargetCostAllocationResource> TargetResources { get; }
+        public IList<TargetCostAllocationEntity> TargetResources { get; }
     }
 }

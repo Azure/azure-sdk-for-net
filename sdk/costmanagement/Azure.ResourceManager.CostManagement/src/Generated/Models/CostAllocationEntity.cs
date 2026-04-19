@@ -12,16 +12,16 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Common values for resources for cost allocation. </summary>
-    public partial class CostAllocationResource
+    public partial class CostAllocationEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostAllocationEntity"/>. </summary>
         /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CostAllocationResource(CostAllocationResourceType resourceType, string name)
+        public CostAllocationEntity(CostAllocationResourceType resourceType, string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostAllocationEntity"/>. </summary>
         /// <param name="resourceType"> Type of resources contained in this cost allocation rule. </param>
         /// <param name="name"> If resource type is dimension, this must be either ResourceGroupName or SubscriptionId. If resource type is tag, this must be a valid Azure tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostAllocationResource(CostAllocationResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CostAllocationEntity(CostAllocationResourceType resourceType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Name = name;

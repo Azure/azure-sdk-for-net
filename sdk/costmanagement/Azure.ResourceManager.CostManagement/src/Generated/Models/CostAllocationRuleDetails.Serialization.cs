@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("sourceResources"u8);
                 writer.WriteStartArray();
-                foreach (SourceCostAllocationResource item in SourceResources)
+                foreach (SourceCostAllocationEntity item in SourceResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (TargetCostAllocationResource item in TargetResources)
+                foreach (TargetCostAllocationEntity item in TargetResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            IList<SourceCostAllocationResource> sourceResources = default;
-            IList<TargetCostAllocationResource> targetResources = default;
+            IList<SourceCostAllocationEntity> sourceResources = default;
+            IList<TargetCostAllocationEntity> targetResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<SourceCostAllocationResource> array = new List<SourceCostAllocationResource>();
+                    List<SourceCostAllocationEntity> array = new List<SourceCostAllocationEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceCostAllocationResource.DeserializeSourceCostAllocationResource(item, options));
+                        array.Add(SourceCostAllocationEntity.DeserializeSourceCostAllocationEntity(item, options));
                     }
                     sourceResources = array;
                     continue;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<TargetCostAllocationResource> array = new List<TargetCostAllocationResource>();
+                    List<TargetCostAllocationEntity> array = new List<TargetCostAllocationEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TargetCostAllocationResource.DeserializeTargetCostAllocationResource(item, options));
+                        array.Add(TargetCostAllocationEntity.DeserializeTargetCostAllocationEntity(item, options));
                     }
                     targetResources = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CostAllocationRuleDetails(sourceResources ?? new ChangeTrackingList<SourceCostAllocationResource>(), targetResources ?? new ChangeTrackingList<TargetCostAllocationResource>(), additionalBinaryDataProperties);
+            return new CostAllocationRuleDetails(sourceResources ?? new ChangeTrackingList<SourceCostAllocationEntity>(), targetResources ?? new ChangeTrackingList<TargetCostAllocationEntity>(), additionalBinaryDataProperties);
         }
     }
 }

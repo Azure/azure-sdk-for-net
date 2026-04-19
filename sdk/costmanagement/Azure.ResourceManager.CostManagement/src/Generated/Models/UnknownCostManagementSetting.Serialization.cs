@@ -16,52 +16,56 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The benefit resource model definition. </summary>
-    public partial class BenefitResource : ResourceData, IJsonModel<BenefitResource>
+    internal partial class UnknownCostManagementSetting : CostManagementSettingData, IJsonModel<CostManagementSettingData>
     {
+        /// <summary> Initializes a new instance of <see cref="UnknownCostManagementSetting"/> for deserialization. </summary>
+        internal UnknownCostManagementSetting()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementSettingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBenefitResource(document.RootElement, options);
+                        return DeserializeCostManagementSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementSettingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BenefitResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostManagementSettingData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitResource IPersistableModel<BenefitResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (BenefitResource)PersistableModelCreateCore(data, options);
+        CostManagementSettingData IPersistableModel<CostManagementSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CostManagementSettingData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BenefitResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CostManagementSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BenefitResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostManagementSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,39 +76,34 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementSettingData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitResource IJsonModel<BenefitResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BenefitResource)JsonModelCreateCore(ref reader, options);
+        CostManagementSettingData IJsonModel<CostManagementSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CostManagementSettingData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostManagementSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementSettingData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBenefitResource(document.RootElement, options);
+            return DeserializeCostManagementSettingData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BenefitResource DeserializeBenefitResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownCostManagementSetting DeserializeUnknownCostManagementSetting(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BillingAccountBenefitKind? kind = default;
+            SettingsKind kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -152,11 +151,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kind = new BillingAccountBenefitKind(prop.Value.GetString());
+                    kind = new SettingsKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +159,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BenefitResource(
+            return new UnknownCostManagementSetting(
                 id,
                 name,
                 resourceType,

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> benefit plan recommendation details. </summary>
-    public partial class BenefitRecommendationModel : BenefitResource
+    public partial class BenefitRecommendationModel : BenefitDetails
     {
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationModel"/>. </summary>
         public BenefitRecommendationModel()

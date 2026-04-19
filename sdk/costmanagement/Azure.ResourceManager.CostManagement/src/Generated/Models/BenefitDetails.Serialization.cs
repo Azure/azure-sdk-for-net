@@ -16,52 +16,52 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> benefit plan recommendation details. </summary>
-    public partial class BenefitRecommendationModel : BenefitDetails, IJsonModel<BenefitRecommendationModel>
+    /// <summary> The benefit resource model definition. </summary>
+    public partial class BenefitDetails : ResourceData, IJsonModel<BenefitDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBenefitRecommendationModel(document.RootElement, options);
+                        return DeserializeBenefitDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BenefitRecommendationModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BenefitDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitRecommendationModel IPersistableModel<BenefitRecommendationModel>.Create(BinaryData data, ModelReaderWriterOptions options) => (BenefitRecommendationModel)PersistableModelCreateCore(data, options);
+        BenefitDetails IPersistableModel<BenefitDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (BenefitDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BenefitRecommendationModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BenefitDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BenefitRecommendationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BenefitDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,39 +72,39 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitRecommendationModel IJsonModel<BenefitRecommendationModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BenefitRecommendationModel)JsonModelCreateCore(ref reader, options);
+        BenefitDetails IJsonModel<BenefitDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BenefitDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BenefitDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBenefitRecommendationModel(document.RootElement, options);
+            return DeserializeBenefitDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BenefitRecommendationModel DeserializeBenefitRecommendationModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static BenefitDetails DeserializeBenefitDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BillingAccountBenefitKind? kind = default;
-            BenefitRecommendationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -160,28 +159,18 @@ namespace Azure.ResourceManager.CostManagement.Models
                     kind = new BillingAccountBenefitKind(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BenefitRecommendationProperties.DeserializeBenefitRecommendationProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BenefitRecommendationModel(
+            return new BenefitDetails(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                kind,
-                properties);
+                kind);
         }
     }
 }

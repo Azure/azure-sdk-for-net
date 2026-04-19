@@ -14,56 +14,56 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Target resources for cost allocation. </summary>
-    public partial class TargetCostAllocationResource : CostAllocationResource, IJsonModel<TargetCostAllocationResource>
+    public partial class TargetCostAllocationEntity : CostAllocationEntity, IJsonModel<TargetCostAllocationEntity>
     {
-        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationResource"/> for deserialization. </summary>
-        internal TargetCostAllocationResource()
+        /// <summary> Initializes a new instance of <see cref="TargetCostAllocationEntity"/> for deserialization. </summary>
+        internal TargetCostAllocationEntity()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CostAllocationResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CostAllocationEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTargetCostAllocationResource(document.RootElement, options);
+                        return DeserializeTargetCostAllocationEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetCostAllocationResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetCostAllocationEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TargetCostAllocationResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetCostAllocationEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TargetCostAllocationResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TargetCostAllocationEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetCostAllocationResource IPersistableModel<TargetCostAllocationResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TargetCostAllocationResource)PersistableModelCreateCore(data, options);
+        TargetCostAllocationEntity IPersistableModel<TargetCostAllocationEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => (TargetCostAllocationEntity)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TargetCostAllocationResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TargetCostAllocationEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TargetCostAllocationResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TargetCostAllocationEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetCostAllocationResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetCostAllocationEntity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("values"u8);
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TargetCostAllocationResource IJsonModel<TargetCostAllocationResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TargetCostAllocationResource)JsonModelCreateCore(ref reader, options);
+        TargetCostAllocationEntity IJsonModel<TargetCostAllocationEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TargetCostAllocationEntity)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CostAllocationResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CostAllocationEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetCostAllocationEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetCostAllocationResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetCostAllocationEntity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetCostAllocationResource(document.RootElement, options);
+            return DeserializeTargetCostAllocationEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TargetCostAllocationResource DeserializeTargetCostAllocationResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static TargetCostAllocationEntity DeserializeTargetCostAllocationEntity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TargetCostAllocationResource(resourceType, name, additionalBinaryDataProperties, values, policyType);
+            return new TargetCostAllocationEntity(resourceType, name, additionalBinaryDataProperties, values, policyType);
         }
     }
 }
