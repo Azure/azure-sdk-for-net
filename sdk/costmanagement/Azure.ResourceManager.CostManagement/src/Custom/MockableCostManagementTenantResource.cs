@@ -14,8 +14,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
     // generated ArmClient-based extension methods. See also: Custom/CostManagementExtensions.cs.
     public partial class MockableCostManagementTenantResource
     {
-        // ===== BenefitUtilizationSummaries =====
-
         /// <summary> List benefit utilization summaries by billing account ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(string billingAccountId, GrainContent? grainParameter = default, string filter = null, CancellationToken cancellationToken = default)
@@ -79,8 +77,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             var scope = new ResourceIdentifier($"/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}");
             return CostManagementExtensions.GetBenefitUtilizationSummariesBySavingsPlanIdAsync(Client, scope, savingsPlanId, filter, grainParameter, cancellationToken);
         }
-
-        // ===== GenerateBenefitUtilizationSummariesReport =====
 
         /// <summary> Triggers generation of a benefit utilization summaries report for the provided billing account. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -211,8 +207,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             throw new System.NotSupportedException("This backward-compat overload returns DownloadURL but the underlying operation now returns PricesheetDownloadProperties. Use the ArmClient extension method instead.");
         }
 
-        // ===== GenerateReservationDetailsReport =====
-
         /// <summary> Generate reservation details report by billing account ID. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
@@ -244,8 +238,6 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             var scope = new ResourceIdentifier($"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}");
             return await CostManagementExtensions.ByBillingProfileIdGenerateReservationDetailsReportAsync(Client, waitUntil, scope, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
-
-        // ===== ByExternalCloudProviderTypeDimensions (options bag backward compat) =====
 
         /// <summary> List dimensions by external cloud provider type using options bag. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

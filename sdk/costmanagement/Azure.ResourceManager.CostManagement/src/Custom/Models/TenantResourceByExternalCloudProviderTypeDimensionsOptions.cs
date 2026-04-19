@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    // ApiCompat shim: baseline (v1.0.2) exposed ByExternalCloudProviderTypeDimensions(options, cancellationToken)
+    // Backward-compat: baseline exposed ByExternalCloudProviderTypeDimensions(options, cancellationToken)
     // using this options bag. The new generated API uses flat parameters. This class is kept for backward compatibility.
     /// <summary> Options bag for the backward-compatible ByExternalCloudProviderTypeDimensions overload. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]

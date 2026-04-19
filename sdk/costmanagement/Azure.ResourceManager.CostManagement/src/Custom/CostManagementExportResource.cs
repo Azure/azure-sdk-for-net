@@ -8,7 +8,7 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary> Backward-compat: Execute without ExportRunRequest param. </summary>
+    // Backward-compat: Execute without ExportRunRequest param.
     public partial class CostManagementExportResource
     {
         /// <summary> The operation to execute an export. </summary>

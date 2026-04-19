@@ -3,7 +3,7 @@
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    // ApiCompat: restore Complete enum value (renamed to Completed in new spec).
+    // Backward-compat: restore Complete enum value (renamed to Completed in new spec).
     public partial struct OperationStatusType
     {
         private const string CompleteValue = "Complete";
