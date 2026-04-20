@@ -223,6 +223,15 @@ internal sealed class ResponseEndpointHandler
             isolation);
         execution.Context = context;
 
+        // Eager history validation: if previous_response_id or conversation_id is present,
+        // resolve history item IDs now to validate they exist before the handler runs.
+        // The provider throws ResourceNotFoundException (404) for invalid references.
+        // The Lazy<Task<>> cache means the handler and persistence can reuse the result.
+        if (!string.IsNullOrEmpty(request.PreviousResponseId) || !string.IsNullOrEmpty(conversationId))
+        {
+            await context.GetHistoryItemIdsAsync();
+        }
+
         // Get cancellation token from provider (supports external cancel)
         var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(responseId);
 

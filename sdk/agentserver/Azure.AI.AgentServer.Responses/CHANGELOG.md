@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- `previous_response_id` and `conversation.id` are now validated against the provider before
+  the handler is invoked. Invalid references return HTTP 404/400 immediately instead of being
+  silently ignored. The resolved history item IDs are cached — handlers calling
+  `GetHistoryAsync()` reuse the prefetched result without a second storage lookup.
+
 ### Breaking Changes
 
 ### Bugs Fixed
