@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
         {
             get
             {
-                return Metadata.IsRequired;
+                return Metadata is null ? default : Metadata.IsRequired;
             }
         }
     }

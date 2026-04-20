@@ -23,9 +23,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To retrieve a model evaluation summary, call GetModelEvaluationSummary on the `ConversationAuthoringTrainedModel` client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = client.GetModelEvaluationSummary(projectName, trainedModelLabel);
+Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = trainedModelClient.GetModelEvaluationSummary(projectName, trainedModelLabel);
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;
@@ -59,9 +61,11 @@ foreach (KeyValuePair<string, IntentEvaluationSummary> intent in intentsEval.Int
 To asynchronously retrieve a model evaluation summary, call GetModelEvaluationSummaryAsync on the `ConversationAuthoringTrainedModel` client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummaryAsync
+ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
+
 string projectName = "{projectName}";
 string trainedModelLabel = "{trainedModelLabel}";
-Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await client.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
+Response<ConversationAuthoringEvalSummary> evaluationSummaryResponse = await trainedModelClient.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
 
 // Print entities evaluation summary
 EntitiesEvaluationSummary entitiesEval = evaluationSummaryResponse.Value.EntitiesEvaluation;

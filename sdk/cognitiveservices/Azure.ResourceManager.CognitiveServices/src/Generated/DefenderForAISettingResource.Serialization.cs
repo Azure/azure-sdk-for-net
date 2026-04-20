@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class DefenderForAISettingResource : IJsonModel<DefenderForAISettingData>
     {
-        private static DefenderForAISettingData s_dataDeserializationInstance;
-        private static DefenderForAISettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DefenderForAISettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DefenderForAISettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DefenderForAISettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefenderForAISettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)Data).Write(writer, options);
 
-        DefenderForAISettingData IJsonModel<DefenderForAISettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DefenderForAISettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DefenderForAISettingData IJsonModel<DefenderForAISettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DefenderForAISettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DefenderForAISettingData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DefenderForAISettingData IPersistableModel<DefenderForAISettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DefenderForAISettingData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<DefenderForAISettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DefenderForAISettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DefenderForAISettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

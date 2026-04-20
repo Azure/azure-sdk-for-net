@@ -18,6 +18,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
@@ -337,6 +338,42 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
             }
+        }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            ShareClient containerClient,
+            ShareFileClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<ShareSnapshotInfo> snapshotResponse = await containerClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override ShareFileClient GetSnapshotObjectClient(
+            ShareFileClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override Task<string> CreateVersionAsync(
+            ShareClient containerClient,
+            ShareFileClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("ShareFiles do not support versioning");
+        }
+
+        protected override ShareFileClient GetVersionObjectClient(
+            ShareFileClient objectClient,
+            string versionId)
+        {
+            throw new NotSupportedException("ShareFiles do not support versioning");
+        }
+
+        [Test]
+        [Ignore("ShareFiles do not support versioning")]
+        public override async Task StartTransfer_FromVersion_Copy()
+        {
+            await Task.CompletedTask;
         }
     }
 }

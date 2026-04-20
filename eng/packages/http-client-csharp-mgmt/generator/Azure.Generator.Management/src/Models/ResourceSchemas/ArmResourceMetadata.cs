@@ -13,37 +13,35 @@ namespace Azure.Generator.Management.Models;
 /// <param name="ResourceName"> The resource name. </param>
 /// <param name="ResourceType"> The ARM resource type. </param>
 /// <param name="ResourceModel"> The input model type for the resource. </param>
-/// <param name="ResourceScope"> The scope of the resource. </param>
+/// <param name="Scope"> The scope information for the resource. </param>
 /// <param name="Methods"> The list of methods associated with the resource. </param>
 /// <param name="SingletonResourceName"> The singleton resource name, if applicable. </param>
 /// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
-/// <param name="ParentResourceType"> The expected parent resource type for extension resources with specific parent types (e.g., "Microsoft.Compute/virtualMachines"), if applicable. </param>
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
 /// <param name="ApiVersions"> The API versions that this resource is available in. </param>
 /// <param name="RbacRoles"> The RBAC roles defined for this resource. </param>
 public record ArmResourceMetadata(
-    string ResourceIdPattern,
+    RequestPathPattern ResourceIdPattern,
     string ResourceName,
     string ResourceType,
     InputModelType ResourceModel,
-    ResourceScope ResourceScope,
+    ArmResourceScopeInfo Scope,
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
-    string? ParentResourceId,
-    string? ParentResourceType,
-    IReadOnlyList<string> ChildResourceIds,
+    RequestPathPattern? ParentResourceId,
+    IReadOnlyList<RequestPathPattern> ChildResourceIds,
     ArmResourceNameConstraints NameConstraints,
     IReadOnlyList<string> ApiVersions,
     IReadOnlyList<ArmResourceRbacRole> RbacRoles)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
-    internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
+    internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<RequestPathPattern> childResourceIds)
     {
         string? resourceIdPattern = null;
         string? resourceType = null;
         string? singletonResourceName = null;
-        ResourceScope? resourceScope = null;
+        ArmResourceScopeInfo? scope = null;
         var methods = new List<ResourceMethod>();
         string? parentResource = null;
         string? resourceName = null;
@@ -60,19 +58,9 @@ public record ArmResourceMetadata(
         {
             singletonResourceName = singletonResourceElement.GetString();
         }
-        if (element.TryGetProperty("resourceScope", out var scopeElement))
+        if (element.TryGetProperty("scope", out var scopeElement))
         {
-            var scopeString = scopeElement.GetString();
-            if (scopeString != null && Enum.TryParse<ResourceScope>(scopeString, true, out var scope))
-            {
-                resourceScope = scope;
-            }
-
-            //TODO: handle Extension resource in emitter
-            if (resourceIdPattern is not null && (resourceIdPattern.StartsWith("/{resourceUri}/") || resourceIdPattern.StartsWith("/{scope}/")))
-            {
-                resourceScope = ResourceScope.Extension;
-            }
+            scope = ArmResourceScopeInfo.Deserialize(scopeElement);
         }
         if (element.TryGetProperty("methods", out var methodsElement))
         {
@@ -84,11 +72,6 @@ public record ArmResourceMetadata(
         if (element.TryGetProperty("parentResourceId", out var parentResourceElement))
         {
             parentResource = parentResourceElement.GetString();
-        }
-        string? parentResourceType = null;
-        if (element.TryGetProperty("parentResourceType", out var parentResourceTypeElement))
-        {
-            parentResourceType = parentResourceTypeElement.GetString();
         }
         if (element.TryGetProperty("resourceName", out var resourceNameElement))
         {
@@ -124,15 +107,14 @@ public record ArmResourceMetadata(
         }
 
         return new(
-            resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
+            new RequestPathPattern(resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null")),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
             resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
             inputModel,
-            resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
+            scope ?? throw new InvalidOperationException("scope cannot be null"),
             methods,
             singletonResourceName,
-            parentResource,
-            parentResourceType,
+            parentResource is not null ? new RequestPathPattern(parentResource) : null,
             childResourceIds,
             nameConstraints,
             apiVersions,

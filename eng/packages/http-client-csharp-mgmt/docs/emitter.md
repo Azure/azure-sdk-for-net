@@ -2,7 +2,7 @@
 title: 'Emitter usage'
 ---
 
-## Usage
+## Emitter usage
 
 1. Via the command line
 
@@ -29,6 +29,13 @@ options:
 
 ## Emitter options
 
+### `emitter-output-dir`
+
+**Type:** `absolutePath`
+
+Defines the emitter output directory. Defaults to `{output-dir}/@azure-typespec/http-client-csharp-mgmt`
+See [Configuring output directory for more info](https://typespec.io/docs/handbook/configuration/configuration/#configuring-output-directory)
+
 ### `api-version`
 
 **Type:** `string`
@@ -39,9 +46,13 @@ For TypeSpec files using the [`@versioned`](https://typespec.io/docs/libraries/v
 
 **Type:** `boolean`
 
+Set to `false` to skip generation of protocol methods. The default value is `true`.
+
 ### `generate-convenience-methods`
 
 **Type:** `boolean`
+
+Set to `false` to skip generation of convenience methods. The default value is `true`.
 
 ### `unreferenced-types-handling`
 
@@ -77,7 +88,7 @@ Set to `true` to automatically attempt to attach to a debugger when executing th
 
 **Type:** `"info" | "debug" | "verbose"`
 
-Set the log level. The default value is `info`.
+Set the log level for which to collect traces. The default value is `info`.
 
 ### `disable-xml-docs`
 
@@ -97,11 +108,11 @@ The name of the generator. By default this is set to `ScmCodeModelGenerator`. Ge
 
 Allows emitter authors to specify the path to a custom emitter package, allowing you to extend the emitter behavior. This should be set to `import.meta.url` if you are using a custom emitter.
 
-### `update-code-model`
+### `plugins`
 
-**Type:** `object`
+**Type:** `array`
 
-Allows emitter authors to specify a custom function to modify the generated code model before emitting. This is useful for modifying the code model before it is passed to the generator.
+Paths to generator plugin assemblies (DLLs) or directories containing plugin assemblies. Each plugin must contain a class that extends GeneratorPlugin.
 
 ### `license`
 
@@ -126,3 +137,21 @@ The C# namespace to use for the generated code. This will override the TypeSpec 
 **Type:** `boolean`
 
 Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'false'.
+
+### `enable-wire-path-attribute`
+
+**Type:** `boolean`
+
+Whether to enable the WirePathAttribute on model properties. The default value is 'false'.
+
+### `use-legacy-resource-detection`
+
+**Type:** `boolean`
+
+Whether to use the legacy custom resource detection logic instead of the standardized resolveArmResources API from @azure-tools/typespec-azure-resource-manager. When true, uses the legacy logic. When false, uses the resolveArmResources API.
+
+### `skip-api-version-override`
+
+**Type:** `boolean`
+
+Temporary workaround: Whether to pass skipApiVersionOverride: true when instantiating ArmOperation types in generated LRO methods. When true, the LRO polling will not override the api-version from the initial request URI. This option will be removed once the api-version override issue is properly resolved in Azure.Core. The default value is 'false'.
