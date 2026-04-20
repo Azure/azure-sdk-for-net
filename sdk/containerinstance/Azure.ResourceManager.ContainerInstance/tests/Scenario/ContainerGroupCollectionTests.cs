@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         {
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task CreateOrUpdate_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Get_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Get_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Get_ConfidentialContainerGroup()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task List()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup2.Data, containerGroup2FromList.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task ListBySubscription()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

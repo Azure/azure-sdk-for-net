@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         {
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retrievedContainerGroupProfile.Data);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Delete_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyOperationCompletionStatus(deletedContainerGroupProfile);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Delete_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyOperationCompletionStatus(deletedContainerGroupProfile);
         }
 
-        [TestCase]
+        [RecordedTest]
         public async Task Delete_ConfidentialContainer()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
