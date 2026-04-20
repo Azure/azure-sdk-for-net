@@ -307,28 +307,59 @@ for block in blocks:
     filtered.append(block)
 
 # Detect if scoping is needed by checking for duplicate variable declarations across snippets.
-# Samples like Sample02 have multiple independent snippets declaring the same variables (uriSource, result, etc.)
-# and need { } scope blocks. Samples like Sample01 have sequential snippets that share variables and must NOT be scoped.
+# When duplicates are found, use variable hoisting: pre-declare duplicated variables at the top
+# and convert all their declarations to assignments. This matches the ps1 logic.
 def get_declared_vars(block):
     import re as _re
+    # Exclude C# 'using' statements from variable detection
+    lines = [l for l in block.split('\n') if not l.strip().startswith('using ')]
+    text = '\n'.join(lines)
     pat = r'\b(?:var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+>|AnalyzeResult|MediaContent|DocumentContent|AudioVisualContent|ContentUnderstandingClient|[A-Z]\w*)\s+(\w+)\s*='
-    return set(_re.findall(pat, block))
+    return _re.findall(pat, text)
 
-all_declared = [get_declared_vars(b) for b in filtered]
-needs_scoping = False
-seen_vars = set()
-for var_set in all_declared:
-    if seen_vars & var_set:
-        needs_scoping = True
-        break
-    seen_vars |= var_set
+def get_var_type(block, var_name):
+    import re as _re
+    lines = [l for l in block.split('\n') if not l.strip().startswith('using ')]
+    text = '\n'.join(lines)
+    pat = r'\b(var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+>|AnalyzeResult|MediaContent|DocumentContent|AudioVisualContent|ContentUnderstandingClient|[A-Z]\w*)\s+' + re.escape(var_name) + r'\s*='
+    m = _re.search(pat, text)
+    if m:
+        t = m.group(1)
+        return 'dynamic' if t == 'var' else t
+    return 'dynamic'
 
+# Count var declarations across blocks
+from collections import Counter
+var_counter = Counter()
+var_type_map = {}
+for b in filtered:
+    block_vars = set()
+    for v in get_declared_vars(b):
+        if v not in block_vars:
+            block_vars.add(v)
+            var_counter[v] += 1
+            if v not in var_type_map:
+                var_type_map[v] = get_var_type(b, v)
+
+# Variables that need hoisting (appear in 2+ blocks)
+hoisted = {v for v, c in var_counter.items() if c >= 2}
+
+# Emit hoisted declarations
+if hoisted:
+    for v in sorted(hoisted):
+        print(f'{var_type_map[v]} {v} = default;')
+    print()
+
+# Emit code blocks with duplicate declarations converted to assignments
+strip_pat = r'^\s*(?:var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+>|AnalyzeResult|MediaContent|DocumentContent|AudioVisualContent|ContentUnderstandingClient|[A-Z]\w*)\s+'
 for i, b in enumerate(filtered):
-    if needs_scoping:
-        print('{')
-    print(b)
-    if needs_scoping:
-        print('}')
+    for line in b.split('\n'):
+        # For hoisted variables, strip the type prefix (but not for C# using statements)
+        if hoisted and not line.strip().startswith('using '):
+            m = re.search(r'\b(?:var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+>|AnalyzeResult|MediaContent|DocumentContent|AudioVisualContent|ContentUnderstandingClient|[A-Z]\w*)\s+(\w+)\s*=', line)
+            if m and m.group(1) in hoisted:
+                line = re.sub(strip_pat, '', line)
+        print(line)
     if i < len(filtered) - 1:
         print()
 " 2>/dev/null)
@@ -503,6 +534,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using System.ClientModel.Primitives;
+using System.Drawing;
 using Azure.AI.ContentUnderstanding;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -575,6 +609,45 @@ PROGRAM_HEADER
     done
 
 } >> "$RUNNER_DIR/Program.cs"
+
+# ─── Post-process: fix unmatched braces and inject fallback variables ─────────
+
+# Fix unmatched braces: some snippets include 'try {' without the closing '} catch/finally'.
+OPEN_COUNT=$(grep -o '{' "$RUNNER_DIR/Program.cs" | wc -l)
+CLOSE_COUNT=$(grep -o '}' "$RUNNER_DIR/Program.cs" | wc -l)
+MISSING=$((OPEN_COUNT - CLOSE_COUNT))
+if [ "$MISSING" -gt 0 ]; then
+    # Check for unclosed try blocks
+    TRY_COUNT=$(grep -cE '\btry\s*\{' "$RUNNER_DIR/Program.cs" || true)
+    CATCH_FINALLY_COUNT=$(grep -cE '\b(catch|finally)\s*(\([^)]*\))?\s*\{' "$RUNNER_DIR/Program.cs" || true)
+    UNCLOSED_TRY=$((TRY_COUNT - CATCH_FINALLY_COUNT))
+    if [ "$UNCLOSED_TRY" -gt 0 ]; then
+        for ((i=0; i<UNCLOSED_TRY; i++)); do
+            echo '} catch (Exception ex) { Console.WriteLine($"Cleanup error: {ex.Message}"); }' >> "$RUNNER_DIR/Program.cs"
+            MISSING=$((MISSING - 2))
+        done
+    fi
+    # Close remaining unmatched braces
+    for ((i=0; i<MISSING && i>=0; i++)); do
+        echo '}' >> "$RUNNER_DIR/Program.cs"
+    done
+fi
+
+# Inject fallback variable declarations for variables only defined in test setup code
+# outside the #region snippet boundaries.
+inject_fallback_var() {
+    local var_name="$1"
+    local var_decl="$2"
+    if grep -q "\b${var_name}\b" "$RUNNER_DIR/Program.cs" && \
+       ! grep -qE "(string|var)\s+${var_name}\s*=" "$RUNNER_DIR/Program.cs"; then
+        # Prepend after the PROGRAM_HEADER (after the auth block)
+        sed -i "/^Console\.WriteLine();$/a\\${var_decl}" "$RUNNER_DIR/Program.cs"
+    fi
+}
+
+inject_fallback_var "analyzerId" 'string analyzerId = $"my_sample_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
+inject_fallback_var "sourceAnalyzerId" 'string sourceAnalyzerId = $"copy_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
+inject_fallback_var "targetAnalyzerId" 'string targetAnalyzerId = $"copy_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
 
 # Post-process Program.cs to replace placeholders
 if [ -n "$LOCAL_FILE" ]; then

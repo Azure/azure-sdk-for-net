@@ -479,12 +479,15 @@ Set-Content -Path (Join-Path $runnerDir "$SampleName.csproj") -Value $csproj
 $programHeader = @'
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using System.ClientModel.Primitives;
 using Azure.AI.ContentUnderstanding;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -545,7 +548,10 @@ $declPattern = '\b(?:var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+
 $needsScoping = $false
 $seenVars = @{}
 foreach ($block in $filteredBlocks) {
-    $declMatches = [regex]::Matches($block, $declPattern)
+    # Split block into lines and filter out C# 'using' statements before matching
+    $blockLines = ($block -split "`n") | Where-Object { $_ -notmatch '^\s*using\b' }
+    $blockText = $blockLines -join "`n"
+    $declMatches = [regex]::Matches($blockText, $declPattern)
     foreach ($m in $declMatches) {
         $varName = $m.Groups[1].Value
         if ($seenVars.ContainsKey($varName)) {
@@ -558,19 +564,106 @@ foreach ($block in $filteredBlocks) {
 }
 
 # Build code body from filtered snippets (skip client creation lines)
-# Only wrap in { } scope blocks when duplicate variable declarations are detected
+# When duplicate variable declarations exist across blocks, hoist duplicated variables
+# to the top of the method as pre-declarations, then convert ALL occurrences to
+# re-assignments. This avoids both CS0103 (undefined variable) and CS0136 (duplicate
+# declaration in enclosing/nested scope) errors when snippets are concatenated.
 $codeBody = ""
+$hoistedVars = ""
+if ($needsScoping) {
+    # Collect all variable names that appear in multiple blocks and need hoisting
+    $varFirstType = @{}   # varName -> first type string seen
+    $varCount = @{}       # varName -> count of blocks declaring it
+    foreach ($block in $filteredBlocks) {
+        $blockVars = @{}
+        # Filter out C# 'using' statements before matching declarations
+        $blockLines = ($block -split "`n") | Where-Object { $_ -notmatch '^\s*using\b' }
+        $blockText = $blockLines -join "`n"
+        $declMatches = [regex]::Matches($blockText, $declPattern)
+        foreach ($m in $declMatches) {
+            $varName = $m.Groups[1].Value
+            if (-not $blockVars.ContainsKey($varName)) {
+                $blockVars[$varName] = $true
+                if (-not $varCount.ContainsKey($varName)) {
+                    $varCount[$varName] = 1
+                    # Extract the type from the match (everything before the variable name)
+                    $fullMatch = $m.Groups[0].Value
+                    $typeStr = ($fullMatch -replace "\s+$varName\s*=.*$", '').Trim()
+                    # Resolve 'var' to 'dynamic' for hoisted declarations
+                    if ($typeStr -eq 'var') { $typeStr = 'dynamic' }
+                    $varFirstType[$varName] = $typeStr
+                } else {
+                    $varCount[$varName]++
+                }
+            }
+        }
+    }
+    # Build hoisted declarations for variables appearing in 2+ blocks
+    foreach ($varName in $varCount.Keys) {
+        if ($varCount[$varName] -ge 2) {
+            $typeStr = $varFirstType[$varName]
+            $hoistedVars += "$typeStr $varName = default;`n"
+        }
+    }
+    # The set of variable names to convert from declaration to assignment
+    $hoistedVarNames = $varCount.Keys | Where-Object { $varCount[$_] -ge 2 }
+}
+
 foreach ($block in $filteredBlocks) {
-    if ($needsScoping) { $codeBody += "{`n" }
     $lines = $block -split "`n"
     foreach ($line in $lines) {
         # Skip client creation lines already handled
         if ($line -match '^\s*(string endpoint|string apiKey|var credential|var client)\s*=') { continue }
         if ($line -match '^\s*//.*Example:.*your-foundry') { continue }
+
+        # For hoisted variables, strip the type prefix everywhere (all depths)
+        # But skip C# 'using' statements (using var x = ... or using (Type x = ...)) 
+        if ($needsScoping -and $hoistedVarNames -and $line -match $declPattern -and $line -notmatch '^\s*using\b') {
+            $varName = ([regex]::Match($line, $declPattern)).Groups[1].Value
+            if ($varName -in $hoistedVarNames) {
+                $line = $line -replace '^\s*(?:var|string|int|bool|byte\[\]|BinaryData|Uri|Operation<[^>]+>|AnalyzeResult|MediaContent|DocumentContent|AudioVisualContent|ContentUnderstandingClient|[A-Z]\w+)\s+' , ''
+            }
+        }
+
         $codeBody += $line + "`n"
     }
-    if ($needsScoping) { $codeBody += "}`n" }
     $codeBody += "`n"
+}
+
+# Prepend hoisted declarations
+if ($hoistedVars) { $codeBody = $hoistedVars + "`n" + $codeBody }
+
+# Fix unmatched braces: some snippets include 'try {' without the closing '} catch/finally'.
+# Count opens/closes and append missing closing braces so the program compiles.
+# If the code has an unclosed 'try' block, append '} catch { }' instead of just '}'.
+$openCount = ([regex]::Matches($codeBody, '\{')).Count
+$closeCount = ([regex]::Matches($codeBody, '\}')).Count
+if ($openCount -gt $closeCount) {
+    $missing = $openCount - $closeCount
+    # Check if there's an unclosed try block (try without matching catch/finally)
+    $tryCount = ([regex]::Matches($codeBody, '\btry\s*\{')).Count
+    $catchFinallyCount = ([regex]::Matches($codeBody, '\b(?:catch|finally)\s*(?:\([^)]*\))?\s*\{')).Count
+    $unclosedTry = $tryCount - $catchFinallyCount
+    if ($unclosedTry -gt 0) {
+        # Close the try block(s) with catch
+        for ($i = 0; $i -lt $unclosedTry; $i++) { $codeBody += "} catch (Exception ex) { Console.WriteLine(`$`"Cleanup error: {ex.Message}`"); }`n"; $missing -= 2 }
+    }
+    # Close any remaining unmatched braces
+    for ($i = 0; $i -lt [Math]::Max(0, $missing); $i++) { $codeBody += "}`n" }
+}
+
+# Inject fallback variable declarations for variables that snippets reference but only
+# define in test setup code outside the #region. These use sample-friendly default values.
+$fallbackVars = @{
+    'analyzerId' = 'string analyzerId = $"my_sample_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
+    'sourceAnalyzerId' = 'string sourceAnalyzerId = $"copy_source_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
+    'targetAnalyzerId' = 'string targetAnalyzerId = $"copy_target_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";'
+}
+foreach ($varName in $fallbackVars.Keys) {
+    # Only inject if the variable is used but never declared in the code body
+    if ($codeBody -match "\b$varName\b" -and $codeBody -notmatch "(?:string|var)\s+$varName\s*=") {
+        $codeBody = $fallbackVars[$varName] + "`n" + $codeBody
+    }
 }
 
 $fullProgram = $programHeader + $codeBody
