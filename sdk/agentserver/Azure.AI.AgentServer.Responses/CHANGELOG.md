@@ -13,7 +13,7 @@
 
 - Foundry storage error responses now preserve the full error body (`code`, `message`, `param`, `type`)
   when returned to the client. Previously only the `message` field was forwarded; `param` was lost.
-- Non-400/404 error status codes from Foundry storage are no longer proxied as-is; they are
+- Non-400/404/409 error status codes from Foundry storage are no longer proxied as-is; they are
   normalized to HTTP 500 to avoid leaking upstream infrastructure details.
 
 ## 1.0.0-beta.2 (2026-04-17)
