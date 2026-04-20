@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="targetName"> The name of the target Endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="targetName"/> is null. </exception>
-        public JobDefinitionData(StorageMoverCopyMode copyMode, string sourceName, string targetName)
+        public JobDefinitionData(StorageMoverCopyMode? copyMode, string sourceName, string targetName)
         {
             Argument.AssertNotNull(sourceName, nameof(sourceName));
             Argument.AssertNotNull(targetName, nameof(targetName));
 
-            Properties = new JobDefinitionProperties(copyMode, sourceName, targetName);
+            Properties = copyMode is null ? default : new JobDefinitionProperties(copyMode.Value, sourceName, targetName);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     Properties = new JobDefinitionProperties();
                 }
-                Properties.JobType = value.Value;
+                Properties.JobType = value;
             }
         }
 
         /// <summary> Strategy to use for copy. </summary>
-        public StorageMoverCopyMode CopyMode
+        public StorageMoverCopyMode? CopyMode
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     Properties = new JobDefinitionProperties();
                 }
-                Properties.CopyMode = value;
+                Properties.CopyMode = value.Value;
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     Properties = new JobDefinitionProperties();
                 }
-                Properties.DataIntegrityValidation = value.Value;
+                Properties.DataIntegrityValidation = value;
             }
         }
 

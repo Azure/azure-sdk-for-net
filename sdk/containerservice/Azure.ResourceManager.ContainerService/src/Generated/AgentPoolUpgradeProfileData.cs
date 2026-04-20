@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> The operating system type. The default is Linux. </summary>
         [WirePath("properties.osType")]
-        public ContainerServiceOSType OSType
+        public ContainerServiceOSType? OSType
         {
             get
             {

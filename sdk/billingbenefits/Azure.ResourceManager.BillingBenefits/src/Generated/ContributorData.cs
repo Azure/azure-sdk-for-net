@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> Represents type of the object being operated on. Possible values are primary or contributor. </summary>
-        public MaccEntityType EntityType
+        public MaccEntityType? EntityType
         {
             get
             {

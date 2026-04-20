@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, long collectionInterval, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, long? collectionInterval, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new ClusterMetricsConfigurationProperties(collectionInterval);
+            Properties = collectionInterval is null ? default : new ClusterMetricsConfigurationProperties(collectionInterval.Value);
             ExtendedLocation = extendedLocation;
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The interval in minutes by which metrics will be collected. </summary>
-        public long CollectionInterval
+        public long? CollectionInterval
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ClusterMetricsConfigurationProperties();
                 }
-                Properties.CollectionInterval = value;
+                Properties.CollectionInterval = value.Value;
             }
         }
 

@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolId"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolId"/> is null. </exception>
-        public VirtualApplicationGroupData(AzureLocation location, ResourceIdentifier hostPoolId, VirtualApplicationGroupType applicationGroupType) : base(location)
+        public VirtualApplicationGroupData(AzureLocation location, ResourceIdentifier hostPoolId, VirtualApplicationGroupType? applicationGroupType) : base(location)
         {
             Argument.AssertNotNull(hostPoolId, nameof(hostPoolId));
 
-            Properties = new ApplicationGroupProperties(hostPoolId, applicationGroupType);
+            Properties = applicationGroupType is null ? default : new ApplicationGroupProperties(hostPoolId, applicationGroupType.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Resource Type of ApplicationGroup. </summary>
         [WirePath("properties.applicationGroupType")]
-        public VirtualApplicationGroupType ApplicationGroupType
+        public VirtualApplicationGroupType? ApplicationGroupType
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationGroupProperties();
                 }
-                Properties.ApplicationGroupType = value;
+                Properties.ApplicationGroupType = value.Value;
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationGroupProperties();
                 }
-                Properties.ShowInFeed = value.Value;
+                Properties.ShowInFeed = value;
             }
         }
 

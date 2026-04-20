@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         internal AADProfileProperties AadProfile { get; }
 
         /// <summary> The arc ingress gateway server app id. </summary>
-        public Guid ServerId
+        public Guid? ServerId
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> The target resource home tenant id. </summary>
-        public Guid TenantId
+        public Guid? TenantId
         {
             get
             {

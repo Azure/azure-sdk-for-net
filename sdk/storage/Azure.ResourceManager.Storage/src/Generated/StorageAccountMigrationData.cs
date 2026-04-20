@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationData"/>. </summary>
         /// <param name="targetSkuName"> Target sku name for the account. </param>
-        public StorageAccountMigrationData(StorageSkuName targetSkuName)
+        public StorageAccountMigrationData(StorageSkuName? targetSkuName)
         {
 
-            StorageAccountMigrationDetails = new StorageAccountMigrationProperties(targetSkuName);
+            StorageAccountMigrationDetails = targetSkuName is null ? default : new StorageAccountMigrationProperties(targetSkuName.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationData"/>. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Target sku name for the account. </summary>
         [WirePath("properties.targetSkuName")]
-        public StorageSkuName TargetSkuName
+        public StorageSkuName? TargetSkuName
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     StorageAccountMigrationDetails = new StorageAccountMigrationProperties();
                 }
-                StorageAccountMigrationDetails.TargetSkuName = value;
+                StorageAccountMigrationDetails.TargetSkuName = value.Value;
             }
         }
 

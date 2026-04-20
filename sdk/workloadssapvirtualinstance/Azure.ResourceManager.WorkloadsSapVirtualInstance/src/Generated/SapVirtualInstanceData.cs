@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         public SapVirtualInstanceIdentity Identity { get; set; }
 
         /// <summary> Defines the environment type - Production/Non Production. </summary>
-        public SapEnvironmentType Environment
+        public SapEnvironmentType? Environment
         {
             get
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     Properties = new SapVirtualInstanceProperties();
                 }
-                Properties.Environment = value;
+                Properties.Environment = value.Value;
             }
         }
 
         /// <summary> Defines the SAP Product type. </summary>
-        public SapProductType SapProduct
+        public SapProductType? SapProduct
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     Properties = new SapVirtualInstanceProperties();
                 }
-                Properties.SapProduct = value;
+                Properties.SapProduct = value.Value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     Properties = new SapVirtualInstanceProperties();
                 }
-                Properties.ManagedResourcesNetworkAccessType = value.Value;
+                Properties.ManagedResourcesNetworkAccessType = value;
             }
         }
 

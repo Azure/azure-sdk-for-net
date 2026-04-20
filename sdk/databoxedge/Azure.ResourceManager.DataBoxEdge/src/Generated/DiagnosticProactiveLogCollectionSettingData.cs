@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
         /// <param name="userConsent"> Proactive diagnostic collection consent flag. </param>
-        public DiagnosticProactiveLogCollectionSettingData(ProactiveDiagnosticsConsent userConsent)
+        public DiagnosticProactiveLogCollectionSettingData(ProactiveDiagnosticsConsent? userConsent)
         {
 
-            Properties = new ProactiveLogCollectionSettingsProperties(userConsent);
+            Properties = userConsent is null ? default : new ProactiveLogCollectionSettingsProperties(userConsent.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticProactiveLogCollectionSettingData"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         internal ProactiveLogCollectionSettingsProperties Properties { get; set; }
 
         /// <summary> Proactive diagnostic collection consent flag. </summary>
-        public ProactiveDiagnosticsConsent UserConsent
+        public ProactiveDiagnosticsConsent? UserConsent
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ProactiveLogCollectionSettingsProperties();
                 }
-                Properties.UserConsent = value;
+                Properties.UserConsent = value.Value;
             }
         }
     }

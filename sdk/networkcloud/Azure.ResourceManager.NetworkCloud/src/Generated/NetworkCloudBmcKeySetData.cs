@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureGroupId"/>, <paramref name="userList"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudBmcKeySetData(AzureLocation location, string azureGroupId, DateTimeOffset expireOn, BmcKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudBmcKeySetData(AzureLocation location, string azureGroupId, DateTimeOffset? expireOn, BmcKeySetPrivilegeLevel? privilegeLevel, IEnumerable<KeySetUser> userList, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
             Argument.AssertNotNull(userList, nameof(userList));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new BmcKeySetProperties(azureGroupId, expireOn, privilegeLevel, userList);
+            Properties = expireOn is null && privilegeLevel is null ? default : new BmcKeySetProperties(azureGroupId, expireOn.Value, privilegeLevel.Value, userList);
             ExtendedLocation = extendedLocation;
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The date and time after which the users in this key set will be removed from the baseboard management controllers. </summary>
-        public DateTimeOffset ExpireOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new BmcKeySetProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpireOn = value.Value;
             }
         }
 
         /// <summary> The access level allowed for the users in this key set. </summary>
-        public BmcKeySetPrivilegeLevel PrivilegeLevel
+        public BmcKeySetPrivilegeLevel? PrivilegeLevel
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new BmcKeySetProperties();
                 }
-                Properties.PrivilegeLevel = value;
+                Properties.PrivilegeLevel = value.Value;
             }
         }
 

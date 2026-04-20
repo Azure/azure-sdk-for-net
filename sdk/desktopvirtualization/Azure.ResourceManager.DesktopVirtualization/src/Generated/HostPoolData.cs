@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="hostPoolType"> HostPool type for desktop. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
-        public HostPoolData(AzureLocation location, HostPoolType hostPoolType, HostPoolLoadBalancerType loadBalancerType, PreferredAppGroupType preferredAppGroupType) : base(location)
+        public HostPoolData(AzureLocation location, HostPoolType? hostPoolType, HostPoolLoadBalancerType? loadBalancerType, PreferredAppGroupType? preferredAppGroupType) : base(location)
         {
 
-            Properties = new HostPoolProperties(hostPoolType, loadBalancerType, preferredAppGroupType);
+            Properties = hostPoolType is null && loadBalancerType is null && preferredAppGroupType is null ? default : new HostPoolProperties(hostPoolType.Value, loadBalancerType.Value, preferredAppGroupType.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="HostPoolData"/>. </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> HostPool type for desktop. </summary>
         [WirePath("properties.hostPoolType")]
-        public HostPoolType HostPoolType
+        public HostPoolType? HostPoolType
         {
             get
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.HostPoolType = value;
+                Properties.HostPoolType = value.Value;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.PersonalDesktopAssignmentType = value.Value;
+                Properties.PersonalDesktopAssignmentType = value;
             }
         }
 
@@ -200,13 +200,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.MaxSessionLimit = value.Value;
+                Properties.MaxSessionLimit = value;
             }
         }
 
         /// <summary> The type of the load balancer. </summary>
         [WirePath("properties.loadBalancerType")]
-        public HostPoolLoadBalancerType LoadBalancerType
+        public HostPoolLoadBalancerType? LoadBalancerType
         {
             get
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.LoadBalancerType = value;
+                Properties.LoadBalancerType = value.Value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.Ring = value.Value;
+                Properties.Ring = value;
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.IsValidationEnvironment = value.Value;
+                Properties.IsValidationEnvironment = value;
             }
         }
 
@@ -390,13 +390,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.SsoSecretType = value.Value;
+                Properties.SsoSecretType = value;
             }
         }
 
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
         [WirePath("properties.preferredAppGroupType")]
-        public PreferredAppGroupType PreferredAppGroupType
+        public PreferredAppGroupType? PreferredAppGroupType
         {
             get
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.PreferredAppGroupType = value;
+                Properties.PreferredAppGroupType = value.Value;
             }
         }
 
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.StartVmOnConnect = value.Value;
+                Properties.StartVmOnConnect = value;
             }
         }
 
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.ManagedPrivateUdp = value.Value;
+                Properties.ManagedPrivateUdp = value;
             }
         }
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.DirectUdp = value.Value;
+                Properties.DirectUdp = value;
             }
         }
 
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.PublicUdp = value.Value;
+                Properties.PublicUdp = value;
             }
         }
 
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.RelayUdp = value.Value;
+                Properties.RelayUdp = value;
             }
         }
 
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.ManagementType = value.Value;
+                Properties.ManagementType = value;
             }
         }
 
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.DeploymentScope = value.Value;
+                Properties.DeploymentScope = value;
             }
         }
 
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new HostPoolProperties();
                 }
-                Properties.AllowRdpShortPathWithPrivateLink = value.Value;
+                Properties.AllowRdpShortPathWithPrivateLink = value;
             }
         }
     }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         }
 
         /// <summary> Gets or sets the PrincipalType. </summary>
-        public PrincipalType PrincipalType
+        public PrincipalType? PrincipalType
         {
             get
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 {
                     ExternalIdentity = new RolePropertiesExternalIdentity();
                 }
-                ExternalIdentity.PrincipalType = value;
+                ExternalIdentity.PrincipalType = value.Value;
             }
         }
 

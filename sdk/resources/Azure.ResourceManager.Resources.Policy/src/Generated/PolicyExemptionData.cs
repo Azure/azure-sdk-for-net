@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary> The policy exemption category. Possible values are Waiver and Mitigated. </summary>
-        public PolicyExemptionCategory ExemptionCategory
+        public PolicyExemptionCategory? ExemptionCategory
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyExemptionProperties();
                 }
-                Properties.ExemptionCategory = value;
+                Properties.ExemptionCategory = value.Value;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyExemptionProperties();
                 }
-                Properties.ExpiresOn = value.Value;
+                Properties.ExpiresOn = value;
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     Properties = new PolicyExemptionProperties();
                 }
-                Properties.AssignmentScopeValidation = value.Value;
+                Properties.AssignmentScopeValidation = value;
             }
         }
     }

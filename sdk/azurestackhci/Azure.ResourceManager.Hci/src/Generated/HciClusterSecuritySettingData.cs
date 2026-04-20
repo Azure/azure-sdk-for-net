@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new SecurityProperties();
                 }
-                Properties.SecuredCoreComplianceAssignment = value.Value;
+                Properties.SecuredCoreComplianceAssignment = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new SecurityProperties();
                 }
-                Properties.WdacComplianceAssignment = value.Value;
+                Properties.WdacComplianceAssignment = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new SecurityProperties();
                 }
-                Properties.SmbEncryptionForIntraClusterTrafficComplianceAssignment = value.Value;
+                Properties.SmbEncryptionForIntraClusterTrafficComplianceAssignment = value;
             }
         }
 

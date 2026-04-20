@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.Disabled = value.Value;
+                Properties.Disabled = value;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.LongTermSupport = value.Value;
+                Properties.LongTermSupport = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.SelectionType = value.Value;
+                Properties.SelectionType = value;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 {
                     Properties = new AutoUpgradeProfileProperties();
                 }
-                Properties.Channel = value.Value;
+                Properties.Channel = value;
             }
         }
     }

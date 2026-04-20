@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSkuName"/> is null. </exception>
-        public NetworkCloudAgentPoolData(AzureLocation location, long count, NetworkCloudAgentPoolMode mode, string vmSkuName) : base(location)
+        public NetworkCloudAgentPoolData(AzureLocation location, long? count, NetworkCloudAgentPoolMode? mode, string vmSkuName) : base(location)
         {
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
-            Properties = new AgentPoolProperties(count, mode, vmSkuName);
+            Properties = count is null && mode is null ? default : new AgentPoolProperties(count.Value, mode.Value, vmSkuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolData"/>. </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The number of virtual machines that use this configuration. </summary>
-        public long Count
+        public long? Count
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AgentPoolProperties();
                 }
-                Properties.Count = value;
+                Properties.Count = value.Value;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </summary>
-        public NetworkCloudAgentPoolMode Mode
+        public NetworkCloudAgentPoolMode? Mode
         {
             get
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AgentPoolProperties();
                 }
-                Properties.Mode = value;
+                Properties.Mode = value.Value;
             }
         }
 

@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType? clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType, clusterVersion, networkFabricId);
+            Properties = clusterType is null ? default : new ClusterProperties(aggregatorOrSingleRackDefinition, clusterType.Value, clusterVersion, networkFabricId);
             ExtendedLocation = extendedLocation;
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The type of rack configuration for the cluster. </summary>
-        public ClusterType ClusterType
+        public ClusterType? ClusterType
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.ClusterType = value;
+                Properties.ClusterType = value.Value;
             }
         }
 
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.VulnerabilityScanningContainerScan = value.Value;
+                Properties.VulnerabilityScanningContainerScan = value;
             }
         }
     }

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="shareStatus"> Current status of the share. </param>
         /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
         /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
-        public DataBoxEdgeShareData(ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, ShareAccessProtocol accessProtocol)
+        public DataBoxEdgeShareData(ShareStatus? shareStatus, DataBoxEdgeShareMonitoringStatus? monitoringStatus, ShareAccessProtocol? accessProtocol)
         {
 
-            Properties = new ShareProperties(shareStatus, monitoringStatus, accessProtocol);
+            Properties = shareStatus is null && monitoringStatus is null && accessProtocol is null ? default : new ShareProperties(shareStatus.Value, monitoringStatus.Value, accessProtocol.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Current status of the share. </summary>
-        public ShareStatus ShareStatus
+        public ShareStatus? ShareStatus
         {
             get
             {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ShareProperties();
                 }
-                Properties.ShareStatus = value;
+                Properties.ShareStatus = value.Value;
             }
         }
 
         /// <summary> Current monitoring status of the share. </summary>
-        public DataBoxEdgeShareMonitoringStatus MonitoringStatus
+        public DataBoxEdgeShareMonitoringStatus? MonitoringStatus
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ShareProperties();
                 }
-                Properties.MonitoringStatus = value;
+                Properties.MonitoringStatus = value.Value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Access protocol to be used by the share. </summary>
-        public ShareAccessProtocol AccessProtocol
+        public ShareAccessProtocol? AccessProtocol
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ShareProperties();
                 }
-                Properties.AccessProtocol = value;
+                Properties.AccessProtocol = value.Value;
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ShareProperties();
                 }
-                Properties.DataPolicy = value.Value;
+                Properties.DataPolicy = value;
             }
         }
     }

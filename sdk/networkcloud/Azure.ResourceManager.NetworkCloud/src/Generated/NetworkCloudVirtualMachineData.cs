@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/>, <paramref name="cloudServicesNetworkAttachment"/>, <paramref name="storageProfile"/>, <paramref name="vmImage"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudVirtualMachineData(AzureLocation location, string adminUsername, NetworkAttachment cloudServicesNetworkAttachment, long? cpuCores, long? memorySizeInGB, NetworkCloudStorageProfile storageProfile, string vmImage, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(adminUsername, nameof(adminUsername));
             Argument.AssertNotNull(cloudServicesNetworkAttachment, nameof(cloudServicesNetworkAttachment));
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(vmImage, nameof(vmImage));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new VirtualMachineProperties(
+            Properties = cpuCores is null && memorySizeInGB is null ? default : new VirtualMachineProperties(
                 adminUsername,
                 cloudServicesNetworkAttachment,
-                cpuCores,
-                memorySizeInGB,
+                cpuCores.Value,
+                memorySizeInGB.Value,
                 storageProfile,
                 vmImage);
             ExtendedLocation = extendedLocation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.BootMethod = value.Value;
+                Properties.BootMethod = value;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The number of CPU cores in the virtual machine. </summary>
-        public long CpuCores
+        public long? CpuCores
         {
             get
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.CpuCores = value;
+                Properties.CpuCores = value.Value;
             }
         }
 
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.IsolateEmulatorThread = value.Value;
+                Properties.IsolateEmulatorThread = value;
             }
         }
 
         /// <summary> The memory size of the virtual machine. Allocations are measured in gibibytes. </summary>
-        public long MemorySizeInGB
+        public long? MemorySizeInGB
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.MemorySizeInGB = value;
+                Properties.MemorySizeInGB = value.Value;
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.VirtioInterface = value.Value;
+                Properties.VirtioInterface = value;
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VirtualMachineProperties();
                 }
-                Properties.VmDeviceModel = value.Value;
+                Properties.VmDeviceModel = value;
             }
         }
 

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="keyData"> The SSH public key data. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled enabled, string keyData, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudVirtualMachineConsoleData(AzureLocation location, ConsoleEnabled? enabled, string keyData, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(keyData, nameof(keyData));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new ConsoleProperties(enabled, keyData);
+            Properties = enabled is null ? default : new ConsoleProperties(enabled.Value, keyData);
             ExtendedLocation = extendedLocation;
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The indicator of whether the console access is enabled. </summary>
-        public ConsoleEnabled Enabled
+        public ConsoleEnabled? Enabled
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ConsoleProperties();
                 }
-                Properties.Enabled = value;
+                Properties.Enabled = value.Value;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new ConsoleProperties();
                 }
-                Properties.ExpireOn = value.Value;
+                Properties.ExpireOn = value;
             }
         }
 

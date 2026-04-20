@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
         /// <param name="certificateSelfSigned"> use certificate self signed. </param>
-        public LocalRulestackCertificateObjectData(FirewallBooleanType certificateSelfSigned)
+        public LocalRulestackCertificateObjectData(FirewallBooleanType? certificateSelfSigned)
         {
 
-            Properties = new CertificateObject(certificateSelfSigned);
+            Properties = certificateSelfSigned is null ? default : new CertificateObject(certificateSelfSigned.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectData"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary> use certificate self signed. </summary>
-        public FirewallBooleanType CertificateSelfSigned
+        public FirewallBooleanType? CertificateSelfSigned
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new CertificateObject();
                 }
-                Properties.CertificateSelfSigned = value;
+                Properties.CertificateSelfSigned = value.Value;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     Properties = new CertificateObject();
                 }
-                Properties.ETag = value.Value;
+                Properties.ETag = value;
             }
         }
 

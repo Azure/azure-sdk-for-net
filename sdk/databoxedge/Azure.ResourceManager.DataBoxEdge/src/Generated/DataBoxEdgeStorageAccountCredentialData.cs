@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="sslStatus"> Signifies whether SSL needs to be enabled or not. </param>
         /// <param name="accountType"> Type of storage accessed on the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        public DataBoxEdgeStorageAccountCredentialData(string @alias, DataBoxEdgeStorageAccountSslStatus sslStatus, DataBoxEdgeStorageAccountType accountType)
+        public DataBoxEdgeStorageAccountCredentialData(string @alias, DataBoxEdgeStorageAccountSslStatus? sslStatus, DataBoxEdgeStorageAccountType? accountType)
         {
             Argument.AssertNotNull(@alias, nameof(@alias));
 
-            Properties = new StorageAccountCredentialProperties(@alias, sslStatus, accountType);
+            Properties = sslStatus is null && accountType is null ? default : new StorageAccountCredentialProperties(@alias, sslStatus.Value, accountType.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Signifies whether SSL needs to be enabled or not. </summary>
-        public DataBoxEdgeStorageAccountSslStatus SslStatus
+        public DataBoxEdgeStorageAccountSslStatus? SslStatus
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new StorageAccountCredentialProperties();
                 }
-                Properties.SslStatus = value;
+                Properties.SslStatus = value.Value;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Type of storage accessed on the storage account. </summary>
-        public DataBoxEdgeStorageAccountType AccountType
+        public DataBoxEdgeStorageAccountType? AccountType
         {
             get
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new StorageAccountCredentialProperties();
                 }
-                Properties.AccountType = value;
+                Properties.AccountType = value.Value;
             }
         }
 

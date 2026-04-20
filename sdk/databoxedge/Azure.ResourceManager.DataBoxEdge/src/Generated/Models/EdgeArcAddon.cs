@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceName"> Arc resource Name. </param>
         /// <param name="resourceLocation"> Arc resource location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, AzureLocation resourceLocation) : base(AddonType.ArcForKubernetes)
+        public EdgeArcAddon(string subscriptionId, string resourceGroupName, string resourceName, AzureLocation? resourceLocation) : base(AddonType.ArcForKubernetes)
         {
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(resourceName, nameof(resourceName));
 
-            Properties = new ArcAddonProperties(subscriptionId, resourceGroupName, resourceName, resourceLocation);
+            Properties = resourceLocation is null ? default : new ArcAddonProperties(subscriptionId, resourceGroupName, resourceName, resourceLocation.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeArcAddon"/>. </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> Arc resource location. </summary>
-        public AzureLocation ResourceLocation
+        public AzureLocation? ResourceLocation
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new ArcAddonProperties();
                 }
-                Properties.ResourceLocation = value;
+                Properties.ResourceLocation = value.Value;
             }
         }
 

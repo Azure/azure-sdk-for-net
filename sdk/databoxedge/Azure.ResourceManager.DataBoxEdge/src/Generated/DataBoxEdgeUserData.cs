@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
         /// <param name="userType"> Type of the user. </param>
-        public DataBoxEdgeUserData(DataBoxEdgeUserType userType)
+        public DataBoxEdgeUserData(DataBoxEdgeUserType? userType)
         {
 
-            Properties = new UserProperties(userType);
+            Properties = userType is null ? default : new UserProperties(userType.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> Type of the user. </summary>
-        public DataBoxEdgeUserType UserType
+        public DataBoxEdgeUserType? UserType
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new UserProperties();
                 }
-                Properties.UserType = value;
+                Properties.UserType = value.Value;
             }
         }
     }

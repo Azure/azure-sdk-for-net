@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     Properties = new JobDefinitionUpdateProperties();
                 }
-                Properties.CopyMode = value.Value;
+                Properties.CopyMode = value;
             }
         }
 

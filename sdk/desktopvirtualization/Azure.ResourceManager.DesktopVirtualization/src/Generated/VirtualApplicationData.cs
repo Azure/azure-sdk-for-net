@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
-        public VirtualApplicationData(VirtualApplicationCommandLineSetting commandLineSetting)
+        public VirtualApplicationData(VirtualApplicationCommandLineSetting? commandLineSetting)
         {
 
-            Properties = new ApplicationProperties(commandLineSetting);
+            Properties = commandLineSetting is null ? default : new ApplicationProperties(commandLineSetting.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.ApplicationType = value.Value;
+                Properties.ApplicationType = value;
             }
         }
 
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
         [WirePath("properties.commandLineSetting")]
-        public VirtualApplicationCommandLineSetting CommandLineSetting
+        public VirtualApplicationCommandLineSetting? CommandLineSetting
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.CommandLineSetting = value;
+                Properties.CommandLineSetting = value.Value;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.ShowInPortal = value.Value;
+                Properties.ShowInPortal = value;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ApplicationProperties();
                 }
-                Properties.IconIndex = value.Value;
+                Properties.IconIndex = value;
             }
         }
 

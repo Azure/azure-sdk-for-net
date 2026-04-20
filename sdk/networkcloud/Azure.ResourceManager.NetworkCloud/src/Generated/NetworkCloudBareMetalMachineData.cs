@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudBareMetalMachineData(AzureLocation location, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long? rackSlot, string serialNumber, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(bmcConnectionString, nameof(bmcConnectionString));
             Argument.AssertNotNull(bmcCredentials, nameof(bmcCredentials));
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new BareMetalMachineProperties(
+            Properties = rackSlot is null ? default : new BareMetalMachineProperties(
                 bmcConnectionString,
                 bmcCredentials,
                 bmcMacAddress,
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 machineName,
                 machineSkuId,
                 rackId,
-                rackSlot,
+                rackSlot.Value,
                 serialNumber);
             ExtendedLocation = extendedLocation;
         }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The rack slot in which this bare metal machine is located, ordered from the bottom up i.e. the lowest slot is 1. </summary>
-        public long RackSlot
+        public long? RackSlot
         {
             get
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new BareMetalMachineProperties();
                 }
-                Properties.RackSlot = value;
+                Properties.RackSlot = value.Value;
             }
         }
 

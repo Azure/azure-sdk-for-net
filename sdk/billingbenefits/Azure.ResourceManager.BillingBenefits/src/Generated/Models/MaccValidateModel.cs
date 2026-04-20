@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
         /// <summary> Represents type of the object being operated on. Possible values are primary or contributor. </summary>
-        public MaccEntityType EntityType
+        public MaccEntityType? EntityType
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.EntityType = value;
+                Properties.EntityType = value.Value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.AutomaticShortfall = value.Value;
+                Properties.AutomaticShortfall = value;
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.IsAllowContributors = value.Value;
+                Properties.IsAllowContributors = value;
             }
         }
 

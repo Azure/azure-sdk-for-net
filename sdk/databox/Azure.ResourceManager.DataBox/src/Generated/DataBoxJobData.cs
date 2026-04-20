@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="sku"> The sku type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public DataBoxJobData(AzureLocation location, DataBoxJobTransferType transferType, DataBoxSku sku) : base(location)
+        public DataBoxJobData(AzureLocation location, DataBoxJobTransferType? transferType, DataBoxSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Properties = new JobProperties(transferType);
+            Properties = transferType is null ? default : new JobProperties(transferType.Value);
             Sku = sku;
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Type of the data transfer. </summary>
-        public DataBoxJobTransferType TransferType
+        public DataBoxJobTransferType? TransferType
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     Properties = new JobProperties();
                 }
-                Properties.TransferType = value;
+                Properties.TransferType = value.Value;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     Properties = new JobProperties();
                 }
-                Properties.DeliveryType = value.Value;
+                Properties.DeliveryType = value;
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataBox
                 {
                     Properties = new JobProperties();
                 }
-                Properties.DeliveryInfoScheduledOn = value.Value;
+                Properties.DeliveryInfoScheduledOn = value;
             }
         }
     }

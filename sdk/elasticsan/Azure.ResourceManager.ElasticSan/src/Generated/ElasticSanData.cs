@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB) : base(location)
+        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long? baseSizeTiB, long? extendedCapacitySizeTiB) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Properties = new ElasticSanProperties(sku, baseSizeTiB, extendedCapacitySizeTiB);
+            Properties = baseSizeTiB is null && extendedCapacitySizeTiB is null ? default : new ElasticSanProperties(sku, baseSizeTiB.Value, extendedCapacitySizeTiB.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
-        public long BaseSizeTiB
+        public long? BaseSizeTiB
         {
             get
             {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new ElasticSanProperties();
                 }
-                Properties.BaseSizeTiB = value;
+                Properties.BaseSizeTiB = value.Value;
             }
         }
 
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
-        public long ExtendedCapacitySizeTiB
+        public long? ExtendedCapacitySizeTiB
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new ElasticSanProperties();
                 }
-                Properties.ExtendedCapacitySizeTiB = value;
+                Properties.ExtendedCapacitySizeTiB = value.Value;
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new ElasticSanProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

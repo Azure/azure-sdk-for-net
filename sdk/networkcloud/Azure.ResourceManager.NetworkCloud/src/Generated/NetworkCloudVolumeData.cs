@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudVolumeData(AzureLocation location, long sizeInMiB, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudVolumeData(AzureLocation location, long? sizeInMiB, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new VolumeProperties(sizeInMiB);
+            Properties = sizeInMiB is null ? default : new VolumeProperties(sizeInMiB.Value);
             ExtendedLocation = extendedLocation;
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
 
         /// <summary> The requested storage allocation for the volume in Mebibytes. </summary>
-        public long SizeInMiB
+        public long? SizeInMiB
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SizeInMiB = value;
+                Properties.SizeInMiB = value.Value;
             }
         }
 

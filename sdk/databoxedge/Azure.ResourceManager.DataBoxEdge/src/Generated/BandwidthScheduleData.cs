@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
-        public BandwidthScheduleData(TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
+        public BandwidthScheduleData(TimeSpan? startOn, TimeSpan? stopOn, int? rateInMbps, IEnumerable<DataBoxEdgeDayOfWeek> days)
         {
             Argument.AssertNotNull(days, nameof(days));
 
-            Properties = new BandwidthScheduleProperties(startOn, stopOn, rateInMbps, days);
+            Properties = startOn is null && stopOn is null && rateInMbps is null ? default : new BandwidthScheduleProperties(startOn.Value, stopOn.Value, rateInMbps.Value, days);
         }
 
         /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         internal BandwidthScheduleProperties Properties { get; set; }
 
         /// <summary> The start time of the schedule in UTC. </summary>
-        public TimeSpan StartOn
+        public TimeSpan? StartOn
         {
             get
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new BandwidthScheduleProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartOn = value.Value;
             }
         }
 
         /// <summary> The stop time of the schedule in UTC. </summary>
-        public TimeSpan StopOn
+        public TimeSpan? StopOn
         {
             get
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new BandwidthScheduleProperties();
                 }
-                Properties.StopOn = value;
+                Properties.StopOn = value.Value;
             }
         }
 
         /// <summary> The bandwidth rate in Mbps. </summary>
-        public int RateInMbps
+        public int? RateInMbps
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new BandwidthScheduleProperties();
                 }
-                Properties.RateInMbps = value;
+                Properties.RateInMbps = value.Value;
             }
         }
 

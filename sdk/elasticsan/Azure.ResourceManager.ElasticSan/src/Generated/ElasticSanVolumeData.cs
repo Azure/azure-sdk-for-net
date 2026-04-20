@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
-        public ElasticSanVolumeData(long sizeGiB)
+        public ElasticSanVolumeData(long? sizeGiB)
         {
 
-            Properties = new VolumeProperties(sizeGiB);
+            Properties = sizeGiB is null ? default : new VolumeProperties(sizeGiB.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Volume size. </summary>
-        public long SizeGiB
+        public long? SizeGiB
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new VolumeProperties();
                 }
-                Properties.SizeGiB = value;
+                Properties.SizeGiB = value.Value;
             }
         }
 

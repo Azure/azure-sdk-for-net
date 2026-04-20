@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="title"> Title of the support ticket. </param>
         /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="problemClassificationId"/>, <paramref name="contactDetails"/>, <paramref name="title"/> or <paramref name="serviceId"/> is null. </exception>
-        public SupportTicketData(string description, string problemClassificationId, SupportSeverityLevel severity, AdvancedDiagnosticConsent advancedDiagnosticConsent, SupportContactProfile contactDetails, string title, string serviceId)
+        public SupportTicketData(string description, string problemClassificationId, SupportSeverityLevel? severity, AdvancedDiagnosticConsent? advancedDiagnosticConsent, SupportContactProfile contactDetails, string title, string serviceId)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(problemClassificationId, nameof(problemClassificationId));
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Support
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(serviceId, nameof(serviceId));
 
-            Properties = new SupportTicketDetailsProperties(
+            Properties = severity is null && advancedDiagnosticConsent is null ? default : new SupportTicketDetailsProperties(
                 description,
                 problemClassificationId,
-                severity,
-                advancedDiagnosticConsent,
+                severity.Value,
+                advancedDiagnosticConsent.Value,
                 contactDetails,
                 title,
                 serviceId);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
-        public SupportSeverityLevel Severity
+        public SupportSeverityLevel? Severity
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.Severity = value;
+                Properties.Severity = value.Value;
             }
         }
 
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.Require24X7Response = value.Value;
+                Properties.Require24X7Response = value;
             }
         }
 
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
-        public AdvancedDiagnosticConsent AdvancedDiagnosticConsent
+        public AdvancedDiagnosticConsent? AdvancedDiagnosticConsent
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.AdvancedDiagnosticConsent = value;
+                Properties.AdvancedDiagnosticConsent = value.Value;
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.ProblemStartOn = value.Value;
+                Properties.ProblemStartOn = value;
             }
         }
 

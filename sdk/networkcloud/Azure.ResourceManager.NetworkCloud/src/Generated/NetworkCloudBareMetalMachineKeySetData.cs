@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureGroupId"/>, <paramref name="jumpHostsAllowed"/>, <paramref name="userList"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, string azureGroupId, DateTimeOffset expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel privilegeLevel, IEnumerable<KeySetUser> userList, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudBareMetalMachineKeySetData(AzureLocation location, string azureGroupId, DateTimeOffset? expireOn, IEnumerable<IPAddress> jumpHostsAllowed, BareMetalMachineKeySetPrivilegeLevel? privilegeLevel, IEnumerable<KeySetUser> userList, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(azureGroupId, nameof(azureGroupId));
             Argument.AssertNotNull(jumpHostsAllowed, nameof(jumpHostsAllowed));
             Argument.AssertNotNull(userList, nameof(userList));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new BareMetalMachineKeySetProperties(azureGroupId, expireOn, jumpHostsAllowed, privilegeLevel, userList);
+            Properties = expireOn is null && privilegeLevel is null ? default : new BareMetalMachineKeySetProperties(azureGroupId, expireOn.Value, jumpHostsAllowed, privilegeLevel.Value, userList);
             ExtendedLocation = extendedLocation;
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The date and time after which the users in this key set will be removed from the bare metal machines. </summary>
-        public DateTimeOffset ExpireOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new BareMetalMachineKeySetProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpireOn = value.Value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The access level allowed for the users in this key set. </summary>
-        public BareMetalMachineKeySetPrivilegeLevel PrivilegeLevel
+        public BareMetalMachineKeySetPrivilegeLevel? PrivilegeLevel
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new BareMetalMachineKeySetProperties();
                 }
-                Properties.PrivilegeLevel = value;
+                Properties.PrivilegeLevel = value.Value;
             }
         }
 

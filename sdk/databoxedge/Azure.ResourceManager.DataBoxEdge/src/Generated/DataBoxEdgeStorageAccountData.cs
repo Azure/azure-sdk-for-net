@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="dataPolicy"> Data policy of the storage Account. </param>
-        public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
+        public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy? dataPolicy)
         {
 
-            Properties = new StorageAccountProperties(dataPolicy);
+            Properties = dataPolicy is null ? default : new StorageAccountProperties(dataPolicy.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new StorageAccountProperties();
                 }
-                Properties.StorageAccountStatus = value.Value;
+                Properties.StorageAccountStatus = value;
             }
         }
 
         /// <summary> Data policy of the storage Account. </summary>
-        public DataBoxEdgeDataPolicy DataPolicy
+        public DataBoxEdgeDataPolicy? DataPolicy
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new StorageAccountProperties();
                 }
-                Properties.DataPolicy = value;
+                Properties.DataPolicy = value.Value;
             }
         }
 

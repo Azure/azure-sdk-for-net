@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="dataFormat"> DataFormat for Container. </param>
-        public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
+        public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat? dataFormat)
         {
 
-            Properties = new ContainerProperties(dataFormat);
+            Properties = dataFormat is null ? default : new ContainerProperties(dataFormat.Value);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary> DataFormat for Container. </summary>
-        public DataBoxEdgeStorageContainerDataFormat DataFormat
+        public DataBoxEdgeStorageContainerDataFormat? DataFormat
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new ContainerProperties();
                 }
-                Properties.DataFormat = value;
+                Properties.DataFormat = value.Value;
             }
         }
 

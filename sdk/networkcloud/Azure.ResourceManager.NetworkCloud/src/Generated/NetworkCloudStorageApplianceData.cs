@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long? rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            Properties = rackSlot is null ? default : new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot.Value, serialNumber, administratorCredentials);
             ExtendedLocation = extendedLocation;
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The slot the storage appliance is in the rack based on the BOM configuration. </summary>
-        public long RackSlot
+        public long? RackSlot
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new StorageApplianceProperties();
                 }
-                Properties.RackSlot = value;
+                Properties.RackSlot = value.Value;
             }
         }
 

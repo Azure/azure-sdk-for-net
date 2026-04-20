@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long vlan, ExtendedLocation extendedLocation) : base(location)
+        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long? vlan, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new L3NetworkProperties(l3IsolationDomainId, vlan);
+            Properties = vlan is null ? default : new L3NetworkProperties(l3IsolationDomainId, vlan.Value);
             ExtendedLocation = extendedLocation;
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new L3NetworkProperties();
                 }
-                Properties.HybridAksIpamEnabled = value.Value;
+                Properties.HybridAksIpamEnabled = value;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new L3NetworkProperties();
                 }
-                Properties.HybridAksPluginType = value.Value;
+                Properties.HybridAksPluginType = value;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new L3NetworkProperties();
                 }
-                Properties.IPAllocationType = value.Value;
+                Properties.IPAllocationType = value;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The VLAN from the l3IsolationDomain that is used for this network. </summary>
-        public long Vlan
+        public long? Vlan
         {
             get
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new L3NetworkProperties();
                 }
-                Properties.Vlan = value;
+                Properties.Vlan = value.Value;
             }
         }
 
