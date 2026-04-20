@@ -5,18 +5,17 @@
 ### Features Added
 
 - Upgraded API version to 2025-05-25-preview.
-- Added tenant-level alert operations: `GetAllTenant`, `GetByIdTenant`, `GetHistoryTenant`, `ChangeStateTenant`.
+- Added tenant-level alert operations via `TenantResource` extension.
 - Added alert enrichments support via `GetEnrichments` operation.
-- Added `customProperties` field to Alert type.
 
 ### Breaking Changes
 
 - Migrated from AutoRest/Swagger to TypeSpec-based code generation using Azure Management Generator.
-- Removed `AlertProcessingRule*` types and operations (moved to separate TypeSpec project).
-- Removed `SmartGroup*` types and operations (deprecated, moved to Legacy).
-- Renamed `ServiceAlertResource` to `AlertResource`.
-- Renamed `ServiceAlertCollection` remains but `GetServiceAlerts()` extension method replaced by `GetAlerts()` on `ArmClient`.
-- The `GetServiceAlertSummary` extension methods moved from `SubscriptionResource` to `ArmClient` as `GetSummary`.
+- Removed `AlertProcessingRule*` types and operations (moved to separate TypeSpec project `AlertProcessingRules`).
+- Removed `SmartGroup*` types and operations (deprecated in the service). Backward-compatible stubs remain with `[Obsolete]` attributes.
+- `GetServiceAlerts()` extension method on `SubscriptionResource` is now `[EditorBrowsable(Never)]`; prefer `GetServiceAlerts(ResourceIdentifier)` on `ArmClient`.
+- `GetServiceAlertSummary` extension methods moved from `SubscriptionResource` to `ArmClient` as `GetSummary`. The old `SubscriptionResource` extension methods remain as backward-compatible overloads.
+- `GetServiceAlertResource` renamed to `GetAlertResource` on `ArmClient` extension.
 
 ### Other Changes
 

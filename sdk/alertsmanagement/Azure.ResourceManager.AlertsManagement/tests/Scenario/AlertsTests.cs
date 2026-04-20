@@ -74,8 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             // Get alerts summary grouped by severity and state
             string groupBy = "severity,alertState";
-            var options = new SubscriptionResourceGetServiceAlertSummaryOptions(new AlertsSummaryGroupByField(groupBy));
-            var summary = await Client.GetSummaryAsync(subscription.Id, options);
+            var summary = await Client.GetSummaryAsync(subscription.Id, new AlertsSummaryGroupByField(groupBy));
             //summary.GetRawResponse().Content
             Assert.NotNull(summary.Value.Properties.Total);
             Assert.AreEqual("severity", summary.Value.Properties.GroupedBy);
