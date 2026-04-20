@@ -9,6 +9,10 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsForwardingRulesetVirtualNetworkLinkData
     {
+        // Justification: the pre-migration SDK exposed both this constructor and the
+        // VirtualNetworkId convenience property directly on the data model. The TypeSpec-
+        // generated shape now routes through the VirtualNetwork property on an internal
+        // Properties bag, so this partial preserves the previous public API surface.
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/> class.
         /// </summary>
