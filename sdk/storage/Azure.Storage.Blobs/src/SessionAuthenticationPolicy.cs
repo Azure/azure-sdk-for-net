@@ -55,19 +55,19 @@ namespace Azure.Storage.Blobs
                 acquire: AcquireSessionAsync,
                 backgroundAcquireTimeout: BackgroundAcquireTimeout);
 
-            if (_sessionOptions.SessionMode == SessionMode.SingleContainer
+            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
                 && string.IsNullOrEmpty(_sessionOptions.AccountName))
             {
                 throw new ArgumentException(
-                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleContainer)}.",
+                    $"{nameof(SessionOptions.AccountName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
                     nameof(sessionOptions));
             }
 
-            if (_sessionOptions.SessionMode == SessionMode.SingleContainer
+            if (_sessionOptions.SessionMode == SessionMode.SingleSpecifiedContainer
                 && string.IsNullOrEmpty(_sessionOptions.ContainerName))
             {
                 throw new ArgumentException(
-                    $"{nameof(SessionOptions.ContainerName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleContainer)}.",
+                    $"{nameof(SessionOptions.ContainerName)} must be set when {nameof(SessionOptions.SessionMode)} is {nameof(SessionMode.SingleSpecifiedContainer)}.",
                     nameof(sessionOptions));
             }
         }
@@ -112,13 +112,13 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Analyzes the request to determine whether a session token or bearer token should be used.
-        /// Session tokens are only used for blob GET operations in <see cref="SessionMode.SingleContainer"/>
+        /// Session tokens are only used for blob GET operations in <see cref="SessionMode.SingleSpecifiedContainer"/>
         /// mode targeting the configured container.
         /// </summary>
         /// <returns>
         /// <see cref="AuthState.UseSessionToken"/> if the request is eligible for session-token
         /// authentication (a GET against a blob in the configured container, with no comp
-        /// query parameter, while in <see cref="SessionMode.SingleContainer"/> mode);
+        /// query parameter, while in <see cref="SessionMode.SingleSpecifiedContainer"/> mode);
         /// <see cref="AuthState.UseBearerToken"/> otherwise.
         /// </returns>
         private AuthState AnalyzeRequest(HttpMessage message)
@@ -156,7 +156,7 @@ namespace Azure.Storage.Blobs
             }
 
             // Only the configured container is eligible for session tokens.
-            if (!string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.InvariantCultureIgnoreCase))
+            if (!string.Equals(uriBuilder.BlobContainerName, _sessionOptions.ContainerName, StringComparison.OrdinalIgnoreCase))
             {
                 return AuthState.UseBearerToken;
             }
@@ -248,7 +248,7 @@ namespace Azure.Storage.Blobs
             ex.Status >= (int)HttpStatusCode.InternalServerError
             || ex.Status == (int)HttpStatusCode.Forbidden
             || (ex.Status == (int)HttpStatusCode.BadRequest
-                && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.InvariantCultureIgnoreCase));
+                && string.Equals(ex.ErrorCode, FeatureNotEnabled, StringComparison.OrdinalIgnoreCase));
 
         /// <summary>
         /// Acquire delegate called by <see cref="AutoRefreshingCache{TValue}"/> to create

@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// The container name to cache for Session Authentication.
-        /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.SingleContainer"/>.
+        /// Must be set if <see cref="Models.SessionMode"/> is <see cref="SessionMode.SingleSpecifiedContainer"/>.
         /// </summary>
         public string ContainerName { get; set; }
     }
@@ -44,8 +44,9 @@ namespace Azure.Storage.Blobs.Models
         Auto = None,
 
         /// <summary>
-        /// Opt in to session token authentication scoped to a single container.
+        /// Opt in to session token authentication scoped to a single container
+        /// that is specified in <see cref="SessionOptions.ContainerName"/>.
         /// </summary>
-        SingleContainer = 1
+        SingleSpecifiedContainer = 1
     }
 }

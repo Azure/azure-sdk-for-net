@@ -8906,7 +8906,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9017,7 +9017,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9079,7 +9079,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9133,7 +9133,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9168,7 +9168,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9215,7 +9215,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = sessionContainerName
             };
@@ -9271,7 +9271,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9323,7 +9323,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9373,7 +9373,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };
@@ -9429,7 +9429,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.SingleContainer,
+                SessionMode = SessionMode.SingleSpecifiedContainer,
                 AccountName = Tenants.TestConfigOAuth.AccountName,
                 ContainerName = containerName
             };

@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Tests
 
         private static SessionOptions SingleContainerOptions => new SessionOptions
         {
-            SessionMode = SessionMode.SingleContainer,
+            SessionMode = SessionMode.SingleSpecifiedContainer,
             AccountName = AccountName,
             ContainerName = ContainerName
         };
@@ -224,7 +224,7 @@ namespace Azure.Storage.Blobs.Tests
                 blobServiceClientFactory: () => CreateMockServiceClient(),
                 sessionOptions: new SessionOptions
                 {
-                    SessionMode = SessionMode.SingleContainer,
+                    SessionMode = SessionMode.SingleSpecifiedContainer,
                     AccountName = AccountName,
                     ContainerName = null
                 }));
@@ -239,7 +239,7 @@ namespace Azure.Storage.Blobs.Tests
                 blobServiceClientFactory: () => CreateMockServiceClient(),
                 sessionOptions: new SessionOptions
                 {
-                    SessionMode = SessionMode.SingleContainer,
+                    SessionMode = SessionMode.SingleSpecifiedContainer,
                     AccountName = null,
                     ContainerName = ContainerName
                 }));
@@ -254,7 +254,7 @@ namespace Azure.Storage.Blobs.Tests
                 blobServiceClientFactory: () => CreateMockServiceClient(),
                 sessionOptions: new SessionOptions
                 {
-                    SessionMode = SessionMode.SingleContainer,
+                    SessionMode = SessionMode.SingleSpecifiedContainer,
                     AccountName = null,
                     ContainerName = null
                 }));
