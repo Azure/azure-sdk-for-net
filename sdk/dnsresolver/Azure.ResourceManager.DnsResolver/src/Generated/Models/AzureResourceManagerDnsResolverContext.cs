@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(OutboundEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SubResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetDnsServer))]

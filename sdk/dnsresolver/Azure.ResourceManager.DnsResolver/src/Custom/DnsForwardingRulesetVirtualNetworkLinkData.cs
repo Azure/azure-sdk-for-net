@@ -3,16 +3,18 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsForwardingRulesetVirtualNetworkLinkData
     {
-        // Justification: the pre-migration SDK exposed both this constructor and the
-        // VirtualNetworkId convenience property directly on the data model. The TypeSpec-
-        // generated shape now routes through the VirtualNetwork property on an internal
-        // Properties bag, so this partial preserves the previous public API surface.
+        // Justification: the released SDK exposed both this WritableSubResource-based
+        // constructor and the top-level VirtualNetworkId convenience property directly
+        // on the data model. The current generated shape already restores the scalar
+        // ResourceIdentifier plumbing, so this partial only preserves those legacy
+        // entry points as thin compatibility forwards.
         // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
         // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.DnsResolver
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
             Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
-            VirtualNetwork = virtualNetwork;
+            Properties = new VirtualNetworkLinkProperties(virtualNetwork.Id);
         }
 
         /// <summary>
@@ -31,14 +33,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public ResourceIdentifier VirtualNetworkId
         {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
+            get => Properties is null ? default : Properties.VirtualNetwork?.Id;
             set
             {
-                if (VirtualNetwork is null)
+                if (value is null)
                 {
-                    VirtualNetwork = new WritableSubResource();
+                    if (Properties is not null)
+                    {
+                        Properties.VirtualNetwork = null;
+                    }
+                    return;
                 }
-                VirtualNetwork.Id = value;
+
+                Properties ??= new VirtualNetworkLinkProperties(value);
+                Properties.VirtualNetwork = new global::Azure.ResourceManager.DnsResolver.Models.SubResource(value);
             }
         }
     }

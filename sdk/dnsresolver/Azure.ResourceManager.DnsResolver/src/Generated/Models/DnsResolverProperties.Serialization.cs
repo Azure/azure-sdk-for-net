@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.DnsResolver;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -82,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 throw new FormatException($"The model {nameof(DnsResolverProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("virtualNetwork"u8);
-            ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
+            writer.WriteObjectValue(VirtualNetwork, options);
             if (options.Format != "W" && Optional.IsDefined(DnsResolverState))
             {
                 writer.WritePropertyName("dnsResolverState"u8);
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            WritableSubResource virtualNetwork = default;
+            SubResource virtualNetwork = default;
             DnsResolverState? dnsResolverState = default;
             DnsResolverProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
@@ -149,7 +147,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (prop.NameEquals("virtualNetwork"u8))
                 {
-                    virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
+                    virtualNetwork = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsResolverState"u8))

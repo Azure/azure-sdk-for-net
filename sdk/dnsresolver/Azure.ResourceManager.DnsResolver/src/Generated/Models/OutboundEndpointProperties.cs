@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OutboundEndpointProperties"/>. </summary>
-        /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
-        public OutboundEndpointProperties(WritableSubResource subnet)
+        /// <param name="subnetId"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
+        public OutboundEndpointProperties(ResourceIdentifier subnetId)
         {
-            Argument.AssertNotNull(subnet, nameof(subnet));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
-            Subnet = subnet;
+            Subnet = new SubResource(subnetId);
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundEndpointProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundEndpointProperties(WritableSubResource subnet, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundEndpointProperties(SubResource subnet, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             ProvisioningState = provisioningState;
@@ -42,12 +42,25 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The reference to the subnet used for the outbound endpoint. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal SubResource Subnet { get; set; }
 
         /// <summary> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resourceGuid property of the outbound endpoint resource. </summary>
         public Guid? ResourceGuid { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                Subnet = new SubResource(value);
+            }
+        }
     }
 }

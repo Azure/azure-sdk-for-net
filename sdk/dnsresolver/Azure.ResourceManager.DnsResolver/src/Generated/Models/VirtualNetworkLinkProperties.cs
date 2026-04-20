@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkProperties"/>. </summary>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
-        public VirtualNetworkLinkProperties(WritableSubResource virtualNetwork)
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
+        public VirtualNetworkLinkProperties(ResourceIdentifier virtualNetworkId)
         {
-            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
+            Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
 
-            VirtualNetwork = virtualNetwork;
+            VirtualNetwork = new SubResource(virtualNetworkId);
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkLinkProperties(WritableSubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkLinkProperties(SubResource virtualNetwork, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetwork = virtualNetwork;
             Metadata = metadata;
@@ -43,12 +43,25 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
-        public WritableSubResource VirtualNetwork { get; set; }
+        internal SubResource VirtualNetwork { get; set; }
 
         /// <summary> Metadata attached to the virtual network link. </summary>
         public IDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return VirtualNetwork is null ? default : VirtualNetwork.Id;
+            }
+            set
+            {
+                VirtualNetwork = new SubResource(value);
+            }
+        }
     }
 }

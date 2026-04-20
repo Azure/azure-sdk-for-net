@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -39,14 +38,5 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Properties of the virtual network link sub-resource reference. </summary>
         internal VirtualNetworkLinkSubResourceProperties Properties { get; }
-
-        /// <summary> The reference to the virtual network link. </summary>
-        public WritableSubResource VirtualNetworkLink
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VirtualNetworkLink;
-            }
-        }
     }
 }

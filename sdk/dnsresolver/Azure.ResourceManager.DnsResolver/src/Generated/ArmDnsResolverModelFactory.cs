@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
-        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WritableSubResource virtualNetwork = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
+        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                virtualNetwork is null && dnsResolverState is null && provisioningState is null && resourceGuid is null ? default : new DnsResolverProperties(virtualNetwork, dnsResolverState, provisioningState, resourceGuid, null),
+                dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null ? default : new DnsResolverProperties(new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -103,13 +102,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
+        /// <param name="subnetId"> Resource ID. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
-        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WritableSubResource subnet = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
+        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier subnetId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                subnet is null && provisioningState is null && resourceGuid is null ? default : new OutboundEndpointProperties(subnet, provisioningState, resourceGuid, null),
+                provisioningState is null && resourceGuid is null && subnetId is null ? default : new OutboundEndpointProperties(new SubResource(subnetId, null), provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -178,11 +177,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
-        /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
+        /// <param name="virtualNetworkLinkId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
-        public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = default, WritableSubResource virtualNetworkLink = default)
+        public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = default, ResourceIdentifier virtualNetworkLinkId = default)
         {
-            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLink is null ? default : new VirtualNetworkLinkSubResourceProperties(virtualNetworkLink, null), additionalBinaryDataProperties: null);
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId is null ? default : new VirtualNetworkLinkSubResourceProperties(new SubResource(virtualNetworkLinkId, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -219,13 +218,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WritableSubResource virtualNetwork = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, ETag? etag = default)
+        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             return new DnsForwardingRulesetVirtualNetworkLinkData(
                 id,
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                virtualNetwork is null && metadata is null && provisioningState is null ? default : new VirtualNetworkLinkProperties(virtualNetwork, metadata, provisioningState, null),
+                metadata is null && provisioningState is null && virtualNetworkId is null ? default : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
                 etag);
         }
 
@@ -336,12 +335,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WritableSubResource virtualNetwork = default, DnsResolverProvisioningState? provisioningState = default, ETag? etag = default)
+        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                virtualNetwork is null && provisioningState is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(virtualNetwork, provisioningState, null),
+                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), provisioningState, null),
                 etag);
         }
 
@@ -411,16 +410,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction? action = default)
         {
             return new DnsResolverDomainListBulk(storageUri is null && action is null ? default : new DnsResolverDomainListBulkProperties(storageUri, action.Value, null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkDnsForwardingRuleset"/>. </summary>
-        /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
-        /// <param name="virtualNetworkLinkId"> The reference to the virtual network link. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, ResourceIdentifier virtualNetworkLinkId)
-        {
-            return new VirtualNetworkDnsForwardingRuleset(id, default, additionalBinaryDataProperties: null);
         }
     }
 }

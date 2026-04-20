@@ -7,14 +7,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class VirtualNetworkDnsForwardingRuleset
     {
-        // Justification: the pre-migration SDK exposed VirtualNetworkLinkId directly on this
-        // wrapper model. The TypeSpec-generated shape now exposes VirtualNetworkLink instead,
-        // so this partial preserves the previous convenience property for backward compatibility.
+        // Justification: the released SDK exposed VirtualNetworkLinkId directly on this
+        // wrapper model. The generated shape keeps the nested Properties bag, so this
+        // partial preserves the previous convenience property for backward compatibility.
         // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
         // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
         /// Gets the virtual network link resource identifier.
         /// </summary>
-        public ResourceIdentifier VirtualNetworkLinkId => VirtualNetworkLink is null ? default : VirtualNetworkLink.Id;
+        public ResourceIdentifier VirtualNetworkLinkId => Properties is null ? default : Properties.VirtualNetworkLinkId;
     }
 }

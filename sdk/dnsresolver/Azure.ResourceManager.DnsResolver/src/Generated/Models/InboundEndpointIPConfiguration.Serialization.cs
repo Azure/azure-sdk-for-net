@@ -9,10 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.DnsResolver;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -83,7 +81,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("subnet"u8);
-            ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
+            writer.WriteObjectValue(Subnet, options);
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
@@ -136,7 +134,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            WritableSubResource subnet = default;
+            SubResource subnet = default;
             IPAddress privateIPAddress = default;
             InboundEndpointIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (prop.NameEquals("subnet"u8))
                 {
-                    subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
+                    subnet = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))

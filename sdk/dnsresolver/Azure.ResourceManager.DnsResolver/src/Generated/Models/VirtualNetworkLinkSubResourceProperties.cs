@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -25,13 +25,22 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkSubResourceProperties"/>. </summary>
         /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkLinkSubResourceProperties(WritableSubResource virtualNetworkLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkLinkSubResourceProperties(SubResource virtualNetworkLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkLink = virtualNetworkLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The reference to the virtual network link. </summary>
-        public WritableSubResource VirtualNetworkLink { get; }
+        internal SubResource VirtualNetworkLink { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkLinkId
+        {
+            get
+            {
+                return VirtualNetworkLink is null ? default : VirtualNetworkLink.Id;
+            }
+        }
     }
 }

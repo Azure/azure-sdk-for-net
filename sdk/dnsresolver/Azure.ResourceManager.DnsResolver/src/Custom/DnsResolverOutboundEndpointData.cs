@@ -3,16 +3,18 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverOutboundEndpointData
     {
-        // Justification: the pre-migration SDK exposed both this constructor and the
-        // SubnetId convenience property directly on the data model. The TypeSpec-generated
-        // shape now routes through the Subnet property on an internal Properties bag, so
-        // this partial preserves the previous public API surface.
+        // Justification: the released SDK exposed both this WritableSubResource-based
+        // constructor and the top-level SubnetId convenience property directly on the
+        // data model. The current generated shape already restores the scalar
+        // ResourceIdentifier plumbing, so this partial only preserves those legacy
+        // entry points as thin compatibility forwards.
         // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
         // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.DnsResolver
         public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
             Argument.AssertNotNull(subnet, nameof(subnet));
-            Subnet = subnet;
+            Properties = new OutboundEndpointProperties(subnet.Id);
         }
 
         /// <summary>
@@ -32,14 +34,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get => Properties is null ? default : Properties.Subnet?.Id;
             set
             {
-                if (Subnet is null)
+                if (value is null)
                 {
-                    Subnet = new WritableSubResource();
+                    if (Properties is not null)
+                    {
+                        Properties.Subnet = null;
+                    }
+                    return;
                 }
-                Subnet.Id = value;
+
+                Properties ??= new OutboundEndpointProperties(value);
+                Properties.Subnet = new global::Azure.ResourceManager.DnsResolver.Models.SubResource(value);
             }
         }
     }

@@ -8,10 +8,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class InboundEndpointIPConfiguration
     {
-        // Justification: the pre-migration SDK exposed both this constructor and the
-        // SubnetId convenience property directly on the model. The TypeSpec-generated
-        // shape now routes through the Subnet property, so this partial preserves the
-        // previous public API surface for backward compatibility.
+        // Justification: the released SDK exposed both this WritableSubResource-based
+        // constructor and the top-level SubnetId convenience property directly on the
+        // model. The current generated shape already restores the scalar
+        // ResourceIdentifier plumbing, so this partial only preserves those legacy
+        // entry points as thin compatibility forwards.
         // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
         // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
         {
             Argument.AssertNotNull(subnet, nameof(subnet));
-            Subnet = subnet;
+            Subnet = new SubResource(subnet.Id);
         }
 
         /// <summary>
@@ -32,11 +33,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
             get => Subnet is null ? default : Subnet.Id;
             set
             {
-                if (Subnet is null)
+                if (value is null)
                 {
-                    Subnet = new WritableSubResource();
+                    Subnet = null;
+                    return;
                 }
-                Subnet.Id = value;
+                Subnet = new SubResource(value);
             }
         }
     }

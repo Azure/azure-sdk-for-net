@@ -95,8 +95,17 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 metadata is null && provisioningState is null && virtualNetworkId is null
                     ? default
-                    : new VirtualNetworkLinkProperties(new WritableSubResource { Id = virtualNetworkId }, metadata, provisioningState, null),
+                    : new VirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
                 etag);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverData"/> instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, WritableSubResource virtualNetwork = default, ETag? etag = default)
+        {
+            return DnsResolverData(id, name, resourceType, systemData, tags, location, etag, virtualNetwork?.Id, dnsResolverState, provisioningState, resourceGuid);
         }
 
         /// <summary>
@@ -117,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null
                     ? default
-                    : new DnsResolverProperties(new WritableSubResource { Id = virtualNetworkId }, dnsResolverState, provisioningState, resourceGuid, null),
+                    : new DnsResolverProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -169,6 +178,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData"/> instance.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, WritableSubResource subnet = default, ETag? etag = default)
+        {
+            return DnsResolverOutboundEndpointData(id, name, resourceType, systemData, tags, location, etag, subnet?.Id, provisioningState, resourceGuid);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverOutboundEndpointData"/> instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier subnetId, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -183,7 +201,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 provisioningState is null && resourceGuid is null && subnetId is null
                     ? default
-                    : new OutboundEndpointProperties(new WritableSubResource { Id = subnetId }, provisioningState, resourceGuid, null),
+                    : new OutboundEndpointProperties(subnetId is null ? default : new SubResource(subnetId, null), provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -211,6 +229,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, WritableSubResource virtualNetwork = default, ETag? etag = default)
+        {
+            return DnsResolverPolicyVirtualNetworkLinkData(id, name, resourceType, systemData, tags, location, etag, virtualNetwork?.Id, provisioningState);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Azure.ResourceManager.DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier virtualNetworkId, DnsResolverProvisioningState? provisioningState)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -223,7 +250,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new WritableSubResource { Id = virtualNetworkId }, provisioningState, null),
+                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(virtualNetworkId is null ? default : new SubResource(virtualNetworkId, null), provisioningState, null),
                 etag);
         }
 
