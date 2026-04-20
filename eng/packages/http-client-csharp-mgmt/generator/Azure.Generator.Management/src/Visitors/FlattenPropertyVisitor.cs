@@ -727,18 +727,58 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryGetSinglePropertyFromFrameworkType(CSharpType type, [NotNullWhen(true)] out FrameworkSinglePropertyInfo? singleProperty)
         {
             singleProperty = null;
-            if (!KnownManagementTypes.TryGetFlattenableSystemProperty(type, out var propertyInfo))
+            if (!KnownManagementTypes.TryGetSystemTypeDefinitionIds(type, out var definitionIds))
             {
                 return false;
             }
 
-            singleProperty = new FrameworkSinglePropertyInfo(
-                propertyInfo.Name,
-                propertyInfo.Type,
-                propertyInfo.HasPublicSetter,
-                propertyInfo.CanInstantiate,
-                propertyInfo.SerializedName);
-            return true;
+            foreach (var definitionId in definitionIds)
+            {
+                if (!ManagementClientGenerator.Instance.InputLibrary.ModelsByCrossLanguageDefinitionId.TryGetValue(definitionId, out var inputModel))
+                {
+                    continue;
+                }
+
+                var flattenableProperties = inputModel.Properties
+                    .Where(p => !p.IsDiscriminator)
+                    .ToArray();
+
+                if (flattenableProperties.Length != 1)
+                {
+                    continue;
+                }
+
+                var inputProperty = flattenableProperties[0];
+                var propertyType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputProperty.Type);
+                if (propertyType is null)
+                {
+                    continue;
+                }
+
+                var propertyName = inputProperty.Name.ToIdentifierName();
+                var serializedName = inputProperty.SerializedName;
+                var hasPublicSetter = !inputProperty.IsReadOnly;
+                var canInstantiate = !inputProperty.IsReadOnly;
+
+                if (KnownManagementTypes.TryGetFlattenableSystemPropertyOverride(type, out var propertyOverride))
+                {
+                    propertyName = propertyOverride.Name;
+                    propertyType = propertyOverride.Type;
+                    serializedName = propertyOverride.SerializedName;
+                    hasPublicSetter = propertyOverride.HasPublicSetter;
+                    canInstantiate = propertyOverride.CanInstantiate;
+                }
+
+                singleProperty = new FrameworkSinglePropertyInfo(
+                    propertyName,
+                    propertyType,
+                    hasPublicSetter,
+                    canInstantiate,
+                    serializedName);
+                return true;
+            }
+
+            return false;
         }
 
         private bool SafeFlattenFrameworkSingleProperty(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, FrameworkSinglePropertyInfo singleProperty)
