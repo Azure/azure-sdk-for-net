@@ -198,12 +198,64 @@ function Get-ResourceProviderNamespace {
 
     try {
         $content = Get-Content $assemblyInfoPath -Raw -ErrorAction SilentlyContinue
-        if ($content -match 'Azure\.Core\.AzureResourceProviderNamespace\("(?<provider>[^"]+)"\)') {
+        if ($content -match '(?:Azure\.Core\.)?AzureResourceProviderNamespace\("(?<provider>[^"]+)"\)') {
             return $matches['provider'].Trim()
         }
     }
     catch {
         # Continue
+    }
+
+    return $null
+}
+
+function Invoke-WebRequestWithRetry {
+    param(
+        [string]$Uri,
+        [hashtable]$Headers,
+        [int]$TimeoutSec = 10,
+        [int]$MaxRetries = 3
+    )
+
+    for ($attempt = 1; $attempt -le $MaxRetries; $attempt++) {
+        try {
+            return Invoke-WebRequest -Uri $Uri -UseBasicParsing -Headers $Headers -TimeoutSec $TimeoutSec -ErrorAction Stop
+        }
+        catch {
+            $response = $_.Exception.Response
+            $statusCode = if ($response -and $response.StatusCode) { [int]$response.StatusCode } else { $null }
+            $isRetriable = $statusCode -in @(429, 500, 502, 503, 504)
+
+            if (-not $isRetriable -or $attempt -eq $MaxRetries) {
+                Write-Verbose "Request failed for ${Uri}: $($_.Exception.Message)"
+                return $null
+            }
+
+            $retryAfterSeconds = 2
+            if ($response) {
+                $retryAfterHeader = $response.Headers['Retry-After']
+                if ($retryAfterHeader) {
+                    $parsedRetryAfter = 0
+                    if ([int]::TryParse($retryAfterHeader, [ref]$parsedRetryAfter)) {
+                        $retryAfterSeconds = $parsedRetryAfter
+                    }
+                }
+                elseif ($response.Headers['X-RateLimit-Reset']) {
+                    $resetEpoch = 0L
+                    if ([long]::TryParse($response.Headers['X-RateLimit-Reset'], [ref]$resetEpoch)) {
+                        $resetTime = [DateTimeOffset]::FromUnixTimeSeconds($resetEpoch)
+                        $secondsUntilReset = [math]::Ceiling(($resetTime - [DateTimeOffset]::UtcNow).TotalSeconds)
+                        if ($secondsUntilReset -gt 0) {
+                            $retryAfterSeconds = $secondsUntilReset
+                        }
+                    }
+                }
+            }
+
+            $sleepSeconds = [Math]::Min([Math]::Max([int]$retryAfterSeconds, 1), 15)
+            Write-Verbose "Retrying $Uri in $sleepSeconds second(s) after HTTP $statusCode."
+            Start-Sleep -Seconds $sleepSeconds
+        }
     }
 
     return $null
@@ -230,40 +282,58 @@ function Get-ServiceMainTspContents {
 
     $headers = @{
         'User-Agent' = 'PowerShell'
+        'Accept' = 'application/vnd.github+json'
+        'X-GitHub-Api-Version' = '2022-11-28'
     }
 
     $providerPath = "specification/$ServiceDirectory/resource-manager/$ProviderNamespace"
     $candidatePaths = [System.Collections.Generic.List[string]]::new()
     $candidatePaths.Add($providerPath)
 
-    try {
-        $directoryPage = Invoke-WebRequest -Uri "https://github.com/Azure/azure-rest-api-specs/tree/main/$providerPath" -UseBasicParsing -Headers $headers -TimeoutSec 10 -ErrorAction Stop
-        $escapedProviderPath = [regex]::Escape("/Azure/azure-rest-api-specs/tree/main/$providerPath/")
-        $pattern = 'href="' + $escapedProviderPath + '(?<name>[^"#/]+)"'
-        $directoryMatches = [regex]::Matches($directoryPage.Content, $pattern)
-
-        foreach ($match in $directoryMatches) {
-            $name = $match.Groups['name'].Value
-            if ($name) {
-                $candidatePaths.Add("$providerPath/$name")
+    $directoryEnumerationSucceeded = $false
+    $contentsApiUrl = "https://api.github.com/repos/Azure/azure-rest-api-specs/contents/${providerPath}?ref=main"
+    $directoryResponse = Invoke-WebRequestWithRetry -Uri $contentsApiUrl -Headers $headers -TimeoutSec 10
+    if ($directoryResponse -and $directoryResponse.Content) {
+        try {
+            $directoryItems = @($directoryResponse.Content | ConvertFrom-Json)
+            foreach ($item in $directoryItems) {
+                if ($item.type -eq 'dir' -and $item.path) {
+                    $candidatePaths.Add($item.path)
+                }
             }
+            $directoryEnumerationSucceeded = $true
+        }
+        catch {
+            Write-Verbose "Unable to parse GitHub contents response for $providerPath."
         }
     }
-    catch {
-        # Continue with the direct provider path probe
+
+    if (-not $directoryEnumerationSucceeded) {
+        Write-Verbose "GitHub Contents API unavailable for $providerPath; falling back to directory page discovery."
+        $htmlResponse = Invoke-WebRequestWithRetry -Uri "https://github.com/Azure/azure-rest-api-specs/tree/main/$providerPath" -Headers @{ 'User-Agent' = 'PowerShell' } -TimeoutSec 10
+        if ($htmlResponse -and $htmlResponse.Content) {
+            $escapedProviderPath = [regex]::Escape("/Azure/azure-rest-api-specs/tree/main/$providerPath/")
+            $pattern = 'href="' + $escapedProviderPath + '(?<name>[^"#/]+)"'
+            $directoryMatches = [regex]::Matches($htmlResponse.Content, $pattern)
+
+            foreach ($match in $directoryMatches) {
+                $name = $match.Groups['name'].Value
+                if ($name) {
+                    $candidatePaths.Add("$providerPath/$name")
+                }
+            }
+        }
+        else {
+            Write-Verbose "Unable to enumerate nested TypeSpec directories for $providerPath; probing the direct provider path only."
+        }
     }
 
     $mainTspContents = New-Object System.Collections.Generic.List[string]
     foreach ($candidatePath in ($candidatePaths | Select-Object -Unique)) {
         $rawUrl = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/$candidatePath/main.tsp"
-        try {
-            $content = Invoke-WebRequest -Uri $rawUrl -UseBasicParsing -Headers $headers -TimeoutSec 10 -ErrorAction Stop
-            if ($content.Content) {
-                $mainTspContents.Add($content.Content)
-            }
-        }
-        catch {
-            # Continue
+        $content = Invoke-WebRequestWithRetry -Uri $rawUrl -Headers $headers -TimeoutSec 10
+        if ($content -and $content.Content) {
+            $mainTspContents.Add($content.Content)
         }
     }
 
