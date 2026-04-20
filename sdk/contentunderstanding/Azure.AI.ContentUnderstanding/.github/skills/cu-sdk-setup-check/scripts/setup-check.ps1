@@ -7,6 +7,8 @@
 #   -Verbose          Show full HTTP responses
 #   -Help             Show help
 
+# Note: -Verbose is provided by [CmdletBinding()] as a built-in common parameter.
+# Use ($VerbosePreference -eq 'Continue') to check if the user passed -Verbose.
 [CmdletBinding()]
 param(
     [string]$Endpoint = "",
