@@ -1244,4 +1244,4 @@
 
 # Add owners for NPM configuration
 /**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
-/**/package.lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
