@@ -803,7 +803,7 @@ namespace Azure.Data.Tables
                 {
                     throw new RequestFailedException(
                         response.Status,
-                        $"The response body was unexpectedly missing, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
+                        $"The response body was unexpectedly missing or malformed, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
                         ex);
                 }
 
