@@ -794,23 +794,16 @@ namespace Azure.Data.Tables
                     return new NoValueResponse<T>(response);
                 }
 
-                if (response.ContentStream is null || (response.ContentStream.CanSeek && response.ContentStream.Length == 0))
-                {
-                    throw new RequestFailedException(
-                        response.Status,
-                        $"The response body was unexpectedly missing, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).");
-                }
-
                 Dictionary<string, object> dictionary;
                 try
                 {
                     dictionary = SerializationHelpers.ResponseToDictionary(response);
                 }
-                catch (JsonException ex)
+                catch (Exception ex) when (ex is ArgumentNullException or JsonException)
                 {
                     throw new RequestFailedException(
                         response.Status,
-                        $"The response body was unexpectedly missing or malformed, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
+                        $"The response body was unexpectedly missing, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
                         ex);
                 }
 
