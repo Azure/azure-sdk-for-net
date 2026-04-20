@@ -52,6 +52,12 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
+        private static readonly IReadOnlyDictionary<CSharpType, FlattenableSystemPropertyInfo> _flattenableSystemPropertyMap = new Dictionary<CSharpType, FlattenableSystemPropertyInfo>(new CSharpFullNameComparer())
+        {
+            [typeof(SubResource)] = new("Id", typeof(ResourceIdentifier), "id", HasPublicSetter: false, CanInstantiate: false),
+            [typeof(WritableSubResource)] = new("Id", typeof(ResourceIdentifier), "id", HasPublicSetter: true, CanInstantiate: true),
+        };
+
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
         {
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
@@ -97,6 +103,9 @@ namespace Azure.Generator.Management.Primitives
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
+        public static bool TryGetFlattenableSystemProperty(CSharpType type, [MaybeNullWhen(false)] out FlattenableSystemPropertyInfo propertyInfo)
+            => _flattenableSystemPropertyMap.TryGetValue(type.WithNullable(false), out propertyInfo);
+
         // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
         // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match
         // Then, the default Equals of CSharpType doesn't apply here
@@ -129,5 +138,7 @@ namespace Azure.Generator.Management.Primitives
 
         public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
             => _typeToDeserializationExpression.TryGetValue(type.WithNullable(false), out expression);
+
+        internal sealed record FlattenableSystemPropertyInfo(string Name, CSharpType Type, string SerializedName, bool HasPublicSetter, bool CanInstantiate);
     }
 }

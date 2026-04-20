@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -728,28 +727,17 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryGetSinglePropertyFromFrameworkType(CSharpType type, [NotNullWhen(true)] out FrameworkSinglePropertyInfo? singleProperty)
         {
             singleProperty = null;
-            if (!type.IsFrameworkType || type.FrameworkType is null || !KnownManagementTypes.IsKnownManagementType(type))
+            if (!KnownManagementTypes.TryGetFlattenableSystemProperty(type, out var propertyInfo))
             {
                 return false;
             }
 
-            var properties = type.FrameworkType
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Where(p => p.GetMethod is not null && p.GetIndexParameters().Length == 0 && p.GetCustomAttribute<ObsoleteAttribute>() is null)
-                .ToList();
-
-            if (properties.Count != 1)
-            {
-                return false;
-            }
-
-            var property = properties[0];
-            bool canInstantiate = type.FrameworkType.IsValueType || type.FrameworkType.GetConstructor(Type.EmptyTypes) is not null;
             singleProperty = new FrameworkSinglePropertyInfo(
-                property.Name,
-                new CSharpType(property.PropertyType),
-                property.SetMethod?.IsPublic == true,
-                canInstantiate);
+                propertyInfo.Name,
+                propertyInfo.Type,
+                propertyInfo.HasPublicSetter,
+                propertyInfo.CanInstantiate,
+                propertyInfo.SerializedName);
             return true;
         }
 
@@ -763,7 +751,7 @@ namespace Azure.Generator.Management.Visitors
                     internalProperty.WireInfo.IsReadOnly,
                     internalProperty.WireInfo.IsNullable,
                     false,
-                    singleProperty.Name.ToVariableName(),
+                    singleProperty.SerializedName,
                     false,
                     false);
             var idProperty = new PropertyProvider(
@@ -1170,7 +1158,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private sealed record FrameworkSinglePropertyInfo(string Name, CSharpType Type, bool HasPublicSetter, bool CanInstantiate)
+        private sealed record FrameworkSinglePropertyInfo(string Name, CSharpType Type, bool HasPublicSetter, bool CanInstantiate, string SerializedName)
         {
             internal bool IsReadOnly => !HasPublicSetter;
         }
