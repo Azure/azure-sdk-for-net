@@ -146,12 +146,12 @@ public class StorageErrorMapperTests
     private sealed class MockResponse : Response
     {
         private readonly int _status;
-        private readonly BinaryData? _content;
+        private readonly BinaryData _content;
 
         public MockResponse(int status, string body)
         {
             _status = status;
-            _content = string.IsNullOrEmpty(body) ? null : BinaryData.FromString(body);
+            _content = BinaryData.FromString(body);
         }
 
         public override int Status => _status;
@@ -164,7 +164,7 @@ public class StorageErrorMapperTests
             500 => "Internal Server Error",
             _ => "Error",
         };
-        public override BinaryData Content => _content!;
+        public override BinaryData Content => _content;
         public override bool IsError => _status >= 400;
 
         public override Stream? ContentStream { get => null; set { } }
