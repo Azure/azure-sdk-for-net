@@ -8,8 +8,6 @@ This package is automatically included in all Azure SDK libraries in this reposi
 
 `Azure.SdkAnalyzers` provides Roslyn (compile-time) analyzers and code fixers that enforce patterns required by the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet_introduction.html). Diagnostics fire as warnings during `dotnet build` and are visible in the IDE editor.
 
-For the full list of rules, see [docs/list-of-diagnostics.md](docs/list-of-diagnostics.md).
-
 ## Implemented Rules
 
 | Rule | Description | Fix |
