@@ -1545,7 +1545,7 @@ namespace Azure.Storage.Blobs.Models
     {
         Auto = 0,
         None = 0,
-        SingleContainer = 1,
+        SingleSpecifiedContainer = 1,
     }
     public partial class SessionOptions
     {
