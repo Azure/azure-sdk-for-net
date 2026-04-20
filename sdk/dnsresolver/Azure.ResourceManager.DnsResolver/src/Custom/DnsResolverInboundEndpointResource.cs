@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -15,12 +13,18 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsResolverInboundEndpointResource
     {
         // Backward-compat: old Delete/DeleteAsync took string ifMatch, new takes ETag? ifMatch.
+        /// <summary>
+        /// Deletes the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
             return Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken);
         }
 
+        /// <summary>
+        /// Asynchronously deletes the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken = default)
         {
@@ -28,12 +32,18 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         // Backward-compat: old Update/UpdateAsync took string ifMatch, new takes ETag? ifMatch.
+        /// <summary>
+        /// Updates the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsResolverInboundEndpointResource> Update(WaitUntil waitUntil, DnsResolverInboundEndpointPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
             return Update(waitUntil, patch, ifMatch != null ? new ETag(ifMatch) : default(ETag?), cancellationToken);
         }
 
+        /// <summary>
+        /// Asynchronously updates the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsResolverInboundEndpointResource>> UpdateAsync(WaitUntil waitUntil, DnsResolverInboundEndpointPatch patch, string ifMatch, CancellationToken cancellationToken = default)
         {
@@ -41,5 +51,3 @@ namespace Azure.ResourceManager.DnsResolver
         }
     }
 }
-
-#pragma warning restore CS1591

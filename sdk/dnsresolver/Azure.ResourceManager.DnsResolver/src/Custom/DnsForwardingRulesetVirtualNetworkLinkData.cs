@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -11,6 +9,10 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsForwardingRulesetVirtualNetworkLinkData
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DnsForwardingRulesetVirtualNetworkLinkData"/> class.
+        /// </summary>
+        /// <param name="virtualNetwork">The virtual network associated with the link.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DnsForwardingRulesetVirtualNetworkLinkData(WritableSubResource virtualNetwork)
         {
@@ -18,6 +20,9 @@ namespace Azure.ResourceManager.DnsResolver
             VirtualNetwork = virtualNetwork;
         }
 
+        /// <summary>
+        /// Gets or sets the virtual network resource identifier.
+        /// </summary>
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -32,5 +37,3 @@ namespace Azure.ResourceManager.DnsResolver
         }
     }
 }
-
-#pragma warning restore CS1591

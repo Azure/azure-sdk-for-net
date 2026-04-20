@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
-
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -15,12 +13,18 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsForwardingRuleCollection
     {
         // Backward-compat: old CreateOrUpdate took string ifMatch + string ifNoneMatch, new takes MatchConditions.
+        /// <summary>
+        /// Creates or updates the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsForwardingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             return CreateOrUpdate(waitUntil, forwardingRuleName, data, default(MatchConditions), cancellationToken);
         }
 
+        /// <summary>
+        /// Asynchronously creates or updates the resource.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsForwardingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
@@ -28,5 +32,3 @@ namespace Azure.ResourceManager.DnsResolver
         }
     }
 }
-
-#pragma warning restore CS1591
