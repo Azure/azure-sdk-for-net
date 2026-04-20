@@ -9,8 +9,6 @@ using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using DnsSubResource = Azure.ResourceManager.DnsResolver.Models.SubResource;
-
 namespace Azure.ResourceManager.DnsResolver
 {
     // Justification: this synthetic wrapper type existed in the shipped AutoRest SDK for the
@@ -73,9 +71,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public virtual AsyncPageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(CancellationToken cancellationToken = default)
         {
-            return new AsyncPageableWrapper<DnsSubResource, WritableSubResource>(
-                GetResourceGroupResource().GetDnsResolverPoliciesByVirtualNetworkAsync(Id.Name, cancellationToken),
-                ToWritableSubResource);
+            return GetResourceGroupResource().GetDnsResolverPoliciesByVirtualNetworkAsync(Id.Name, cancellationToken);
         }
 
         /// <summary>
@@ -83,9 +79,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public virtual Pageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(CancellationToken cancellationToken = default)
         {
-            return new PageableWrapper<DnsSubResource, WritableSubResource>(
-                GetResourceGroupResource().GetDnsResolverPoliciesByVirtualNetwork(Id.Name, cancellationToken),
-                ToWritableSubResource);
+            return GetResourceGroupResource().GetDnsResolverPoliciesByVirtualNetwork(Id.Name, cancellationToken);
         }
 
         /// <summary>
@@ -93,9 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public virtual AsyncPageable<WritableSubResource> GetDnsResolversAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            return new AsyncPageableWrapper<DnsSubResource, WritableSubResource>(
-                GetResourceGroupResource().GetDnsResolversByVirtualNetworkAsync(Id.Name, top, cancellationToken),
-                ToWritableSubResource);
+            return GetResourceGroupResource().GetDnsResolversByVirtualNetworkAsync(Id.Name, top, cancellationToken);
         }
 
         /// <summary>
@@ -103,27 +95,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         public virtual Pageable<WritableSubResource> GetDnsResolvers(int? top = default, CancellationToken cancellationToken = default)
         {
-            return new PageableWrapper<DnsSubResource, WritableSubResource>(
-                GetResourceGroupResource().GetDnsResolversByVirtualNetwork(Id.Name, top, cancellationToken),
-                ToWritableSubResource);
+            return GetResourceGroupResource().GetDnsResolversByVirtualNetwork(Id.Name, top, cancellationToken);
         }
 
         private ResourceGroupResource GetResourceGroupResource()
         {
             ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName);
             return Client.GetResourceGroupResource(resourceGroupId);
-        }
-
-        private static WritableSubResource ToWritableSubResource(DnsSubResource subResource)
-        {
-            if (subResource is null)
-            {
-                return null;
-            }
-
-            WritableSubResource writableSubResource = new WritableSubResource();
-            writableSubResource.Id = subResource.Id;
-            return writableSubResource;
         }
     }
 }

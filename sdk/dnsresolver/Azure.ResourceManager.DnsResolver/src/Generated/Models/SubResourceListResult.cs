@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Initializes a new instance of <see cref="SubResourceListResult"/>. </summary>
         /// <param name="value"> The SubResource items on this page. </param>
-        internal SubResourceListResult(IEnumerable<SubResource> value)
+        internal SubResourceListResult(IEnumerable<WritableSubResource> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="value"> The SubResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResourceListResult(IList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResourceListResult(IList<WritableSubResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The SubResource items on this page. </summary>
-        public IList<SubResource> Value { get; }
+        public IList<WritableSubResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

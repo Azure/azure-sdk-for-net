@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 metadata is null && provisioningState is null && virtualNetworkId is null
                     ? default
-                    : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), metadata, provisioningState, null),
+                    : new VirtualNetworkLinkProperties(new WritableSubResource { Id = virtualNetworkId }, metadata, provisioningState, null),
                 etag);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 dnsResolverState is null && provisioningState is null && resourceGuid is null && virtualNetworkId is null
                     ? default
-                    : new DnsResolverProperties(new SubResource(virtualNetworkId, null), dnsResolverState, provisioningState, resourceGuid, null),
+                    : new DnsResolverProperties(new WritableSubResource { Id = virtualNetworkId }, dnsResolverState, provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 location,
                 provisioningState is null && resourceGuid is null && subnetId is null
                     ? default
-                    : new OutboundEndpointProperties(new SubResource(subnetId, null), provisioningState, resourceGuid, null),
+                    : new OutboundEndpointProperties(new WritableSubResource { Id = subnetId }, provisioningState, resourceGuid, null),
                 etag);
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, null), provisioningState, null),
+                provisioningState is null && virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new WritableSubResource { Id = virtualNetworkId }, provisioningState, null),
                 etag);
         }
 

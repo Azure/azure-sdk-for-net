@@ -9,12 +9,26 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    // Backward-compatibility shim for the pre-migration WritableSubResource constructor.
     public partial class DnsResolverOutboundEndpointData
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : this(location, subnet?.Id)
+        public DnsResolverOutboundEndpointData(AzureLocation location, WritableSubResource subnet) : base(location)
         {
+            Argument.AssertNotNull(subnet, nameof(subnet));
+            Subnet = subnet;
+        }
+
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                {
+                    Subnet = new WritableSubResource();
+                }
+                Subnet.Id = value;
+            }
         }
     }
 }

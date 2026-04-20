@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverProperties"/>. </summary>
-        /// <param name="virtualNetworkId"> Resource ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
-        public DnsResolverProperties(ResourceIdentifier virtualNetworkId)
+        /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
+        public DnsResolverProperties(WritableSubResource virtualNetwork)
         {
-            Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
+            Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
 
-            VirtualNetwork = new SubResource(virtualNetworkId);
+            VirtualNetwork = virtualNetwork;
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverProperties"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverProperties(SubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsResolverProperties(WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetwork = virtualNetwork;
             DnsResolverState = dnsResolverState;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
-        internal SubResource VirtualNetwork { get; set; }
+        public WritableSubResource VirtualNetwork { get; set; }
 
         /// <summary> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverState? DnsResolverState { get; }
@@ -54,18 +54,5 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> The resourceGuid property of the DNS resolver resource. </summary>
         public Guid? ResourceGuid { get; }
-
-        /// <summary> Resource ID. </summary>
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get
-            {
-                return VirtualNetwork is null ? default : VirtualNetwork.Id;
-            }
-            set
-            {
-                VirtualNetwork = new SubResource(value);
-            }
-        }
     }
 }

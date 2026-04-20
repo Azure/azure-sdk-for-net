@@ -15,6 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
@@ -334,8 +335,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubResource> GetDnsResolversByVirtualNetworkAsync(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WritableSubResource> GetDnsResolversByVirtualNetworkAsync(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
@@ -375,8 +376,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubResource> GetDnsResolversByVirtualNetwork(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WritableSubResource> GetDnsResolversByVirtualNetwork(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
@@ -497,8 +498,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 
@@ -536,8 +537,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubResource> GetDnsResolverPoliciesByVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
 

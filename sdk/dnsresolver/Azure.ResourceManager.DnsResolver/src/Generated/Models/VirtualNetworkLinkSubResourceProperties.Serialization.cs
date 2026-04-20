@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.DnsResolver;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             if (Optional.IsDefined(VirtualNetworkLink))
             {
                 writer.WritePropertyName("virtualNetworkLink"u8);
-                writer.WriteObjectValue(VirtualNetworkLink, options);
+                ((IJsonModel<WritableSubResource>)VirtualNetworkLink).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            SubResource virtualNetworkLink = default;
+            WritableSubResource virtualNetworkLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     {
                         continue;
                     }
-                    virtualNetworkLink = SubResource.DeserializeSubResource(prop.Value, options);
+                    virtualNetworkLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

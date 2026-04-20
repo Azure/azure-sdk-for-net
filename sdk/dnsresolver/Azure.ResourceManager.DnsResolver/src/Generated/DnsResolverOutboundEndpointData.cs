@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -19,17 +20,6 @@ namespace Azure.ResourceManager.DnsResolver
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="subnetId"> Resource ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public DnsResolverOutboundEndpointData(AzureLocation location, ResourceIdentifier subnetId) : base(location)
-        {
-            Argument.AssertNotNull(subnetId, nameof(subnetId));
-
-            Properties = new OutboundEndpointProperties(subnetId);
-        }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -54,6 +44,23 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
 
+        /// <summary> The reference to the subnet used for the outbound endpoint. </summary>
+        public WritableSubResource Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundEndpointProperties();
+                }
+                Properties.Subnet = value;
+            }
+        }
+
         /// <summary> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState
         {
@@ -69,23 +76,6 @@ namespace Azure.ResourceManager.DnsResolver
             get
             {
                 return Properties is null ? default : Properties.ResourceGuid;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SubnetId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OutboundEndpointProperties();
-                }
-                Properties.SubnetId = value;
             }
         }
     }

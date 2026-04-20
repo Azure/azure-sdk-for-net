@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.DnsResolver;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 throw new FormatException($"The model {nameof(VirtualNetworkLinkProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("virtualNetwork"u8);
-            writer.WriteObjectValue(VirtualNetwork, options);
+            ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -144,7 +146,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            SubResource virtualNetwork = default;
+            WritableSubResource virtualNetwork = default;
             IDictionary<string, string> metadata = default;
             DnsResolverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (prop.NameEquals("virtualNetwork"u8))
                 {
-                    virtualNetwork = SubResource.DeserializeSubResource(prop.Value, options);
+                    virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))

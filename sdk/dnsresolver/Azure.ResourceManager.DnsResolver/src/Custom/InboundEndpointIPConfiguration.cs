@@ -3,17 +3,30 @@
 
 #pragma warning disable CS1591
 
-using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    // Backward-compatibility shim for the pre-migration WritableSubResource constructor.
     public partial class InboundEndpointIPConfiguration
     {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public InboundEndpointIPConfiguration(WritableSubResource subnet) : this(subnet?.Id)
+        public InboundEndpointIPConfiguration(WritableSubResource subnet)
         {
+            Argument.AssertNotNull(subnet, nameof(subnet));
+            Subnet = subnet;
+        }
+
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                {
+                    Subnet = new WritableSubResource();
+                }
+                Subnet.Id = value;
+            }
         }
     }
 }

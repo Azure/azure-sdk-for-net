@@ -12,10 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal partial class DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT : AsyncPageable<SubResource>
+    internal partial class DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT : AsyncPageable<WritableSubResource>
     {
         private readonly DnsResolverPolicies _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SubResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<WritableSubResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 SubResourceListResult result = SubResourceListResult.FromResponse(response);
-                yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<WritableSubResource>.FromValues((IReadOnlyList<WritableSubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -14,6 +14,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Mocking;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -450,8 +451,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubResource> GetDnsResolversByVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WritableSubResource> GetDnsResolversByVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -470,8 +471,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubResource> GetDnsResolversByVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WritableSubResource> GetDnsResolversByVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -529,8 +530,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -548,8 +549,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubResource> GetDnsResolverPoliciesByVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
