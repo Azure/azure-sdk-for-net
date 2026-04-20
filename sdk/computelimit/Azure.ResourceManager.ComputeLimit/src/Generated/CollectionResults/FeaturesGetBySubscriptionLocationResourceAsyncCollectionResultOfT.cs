@@ -15,7 +15,7 @@ using Azure.ResourceManager.ComputeLimit.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    internal partial class FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT : AsyncPageable<FeatureData>
+    internal partial class FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT : AsyncPageable<ComputeLimitFeatureData>
     {
         private readonly Features _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FeaturesGetBySubscriptionLocationResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FeatureData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ComputeLimitFeatureData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 FeatureListResult result = FeatureListResult.FromResponse(response);
-                yield return Page<FeatureData>.FromValues((IReadOnlyList<FeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ComputeLimitFeatureData>.FromValues((IReadOnlyList<ComputeLimitFeatureData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -1,10 +1,24 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded API version to 2026-04-30.
+- Added `ComputeLimitVmFamilyResource`, `ComputeLimitVmFamilyCollection`, and `ComputeLimitVmFamilyData` for managing VM family resources.
+- Added `Disable` operation on `ComputeLimitFeatureResource`.
+
 ### Breaking Changes
+
+- Renamed `FeatureResource` to `ComputeLimitFeatureResource`.
+- Renamed `FeatureData` to `ComputeLimitFeatureData`.
+- Renamed `FeatureCollection` to `ComputeLimitFeatureCollection`.
+- Renamed `FeatureProperties` to `ComputeLimitFeatureProperties`.
+- Renamed `FeatureState` to `ComputeLimitFeatureState`.
+- Renamed `VmFamilyResource` to `ComputeLimitVmFamilyResource`.
+- Renamed `VmFamilyData` to `ComputeLimitVmFamilyData`.
+- Renamed `VmFamilyCollection` to `ComputeLimitVmFamilyCollection`.
+- Renamed `VmFamilyProperties` to `ComputeLimitVmFamilyProperties`.
 
 ### Bugs Fixed
 

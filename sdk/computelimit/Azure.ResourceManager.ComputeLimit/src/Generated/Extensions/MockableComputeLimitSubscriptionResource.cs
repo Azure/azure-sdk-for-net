@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
             return GetComputeLimitSharedLimits(location).Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Features in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of ComputeLimitFeatures in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of Features and their operations over a FeatureResource. </returns>
-        public virtual FeatureCollection GetFeatures(AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitFeatures and their operations over a ComputeLimitFeatureResource. </returns>
+        public virtual ComputeLimitFeatureCollection GetComputeLimitFeatures(AzureLocation location)
         {
-            return GetCachedClient(client => new FeatureCollection(client, Id, location));
+            return GetCachedClient(client => new ComputeLimitFeatureCollection(client, Id, location));
         }
 
         /// <summary>
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FeatureResource>> GetFeatureAsync(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitFeatureResource>> GetComputeLimitFeatureAsync(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            return await GetFeatures(location).GetAsync(featureName, cancellationToken).ConfigureAwait(false);
+            return await GetComputeLimitFeatures(location).GetAsync(featureName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,49 +228,19 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FeatureResource> GetFeature(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitFeatureResource> GetComputeLimitFeature(AzureLocation location, string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
-            return GetFeatures(location).Get(featureName, cancellationToken);
+            return GetComputeLimitFeatures(location).Get(featureName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VmFamilies in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of ComputeLimitVmFamilies in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of VmFamilies and their operations over a VmFamilyResource. </returns>
-        public virtual VmFamilyCollection GetVmFamilies(AzureLocation location)
+        /// <returns> An object representing collection of ComputeLimitVmFamilies and their operations over a ComputeLimitVmFamilyResource. </returns>
+        public virtual ComputeLimitVmFamilyCollection GetComputeLimitVmFamilies(AzureLocation location)
         {
-            return GetCachedClient(client => new VmFamilyCollection(client, Id, location));
-        }
-
-        /// <summary>
-        /// Gets the properties of a VM family.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/vmFamilies/{vmFamilyName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VmFamilies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-30. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="vmFamilyName"> The name of the VmFamily. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VmFamilyResource>> GetVmFamilyAsync(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
-
-            return await GetVmFamilies(location).GetAsync(vmFamilyName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ComputeLimitVmFamilyCollection(client, Id, location));
         }
 
         /// <summary>
@@ -296,11 +266,41 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VmFamilyResource> GetVmFamily(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitVmFamilyResource>> GetComputeLimitVmFamilyAsync(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            return GetVmFamilies(location).Get(vmFamilyName, cancellationToken);
+            return await GetComputeLimitVmFamilies(location).GetAsync(vmFamilyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of a VM family.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/vmFamilies/{vmFamilyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VmFamilies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-30. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="vmFamilyName"> The name of the VmFamily. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ComputeLimitVmFamilyResource> GetComputeLimitVmFamily(AzureLocation location, string vmFamilyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
+
+            return GetComputeLimitVmFamilies(location).Get(vmFamilyName, cancellationToken);
         }
     }
 }

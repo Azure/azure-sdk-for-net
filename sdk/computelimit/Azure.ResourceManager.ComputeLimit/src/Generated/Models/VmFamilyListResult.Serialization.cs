@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (VmFamilyData item in Value)
+            foreach (ComputeLimitVmFamilyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ComputeLimit.Models
             {
                 return null;
             }
-            IList<VmFamilyData> value = default;
+            IList<ComputeLimitVmFamilyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<VmFamilyData> array = new List<VmFamilyData>();
+                    List<ComputeLimitVmFamilyData> array = new List<ComputeLimitVmFamilyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmFamilyData.DeserializeVmFamilyData(item, options));
+                        array.Add(ComputeLimitVmFamilyData.DeserializeComputeLimitVmFamilyData(item, options));
                     }
                     value = array;
                     continue;

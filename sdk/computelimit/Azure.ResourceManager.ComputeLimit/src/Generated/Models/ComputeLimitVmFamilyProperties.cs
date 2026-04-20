@@ -10,30 +10,30 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
-    /// <summary> Properties of the compute limit feature. </summary>
-    public partial class FeatureProperties
+    /// <summary> Properties of a VM family resource. </summary>
+    public partial class ComputeLimitVmFamilyProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
-        internal FeatureProperties()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitVmFamilyProperties"/>. </summary>
+        internal ComputeLimitVmFamilyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
-        /// <param name="state"> The current state of the feature (for example, Enabled, Disabled). </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitVmFamilyProperties"/>. </summary>
+        /// <param name="category"> The category of the VM family (for example, GeneralPurpose, ComputeOptimized). </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureProperties(FeatureState? state, ComputeLimitResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeLimitVmFamilyProperties(string category, ComputeLimitResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            State = state;
+            Category = category;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The current state of the feature (for example, Enabled, Disabled). </summary>
-        public FeatureState? State { get; }
+        /// <summary> The category of the VM family (for example, GeneralPurpose, ComputeOptimized). </summary>
+        public string Category { get; }
 
         /// <summary> The provisioning state of the resource. </summary>
         public ComputeLimitResourceProvisioningState? ProvisioningState { get; }

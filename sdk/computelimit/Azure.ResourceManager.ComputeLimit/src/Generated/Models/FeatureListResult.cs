@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
 
         /// <summary> Initializes a new instance of <see cref="FeatureListResult"/>. </summary>
         /// <param name="value"> The Feature items on this page. </param>
-        internal FeatureListResult(IEnumerable<FeatureData> value)
+        internal FeatureListResult(IEnumerable<ComputeLimitFeatureData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <param name="value"> The Feature items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureListResult(IList<FeatureData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureListResult(IList<ComputeLimitFeatureData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         }
 
         /// <summary> The Feature items on this page. </summary>
-        public IList<FeatureData> Value { get; }
+        public IList<ComputeLimitFeatureData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

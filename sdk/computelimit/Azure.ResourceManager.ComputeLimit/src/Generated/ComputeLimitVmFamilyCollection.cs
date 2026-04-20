@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VmFamilyResource"/> and their operations.
-    /// Each <see cref="VmFamilyResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="VmFamilyCollection"/> instance call the GetVmFamilies method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ComputeLimitVmFamilyResource"/> and their operations.
+    /// Each <see cref="ComputeLimitVmFamilyResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ComputeLimitVmFamilyCollection"/> instance call the GetComputeLimitVmFamilies method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class VmFamilyCollection : ArmCollection, IEnumerable<VmFamilyResource>, IAsyncEnumerable<VmFamilyResource>
+    public partial class ComputeLimitVmFamilyCollection : ArmCollection, IEnumerable<ComputeLimitVmFamilyResource>, IAsyncEnumerable<ComputeLimitVmFamilyResource>
     {
         private readonly ClientDiagnostics _vmFamiliesClientDiagnostics;
         private readonly VmFamilies _vmFamiliesRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of VmFamilyCollection for mocking. </summary>
-        protected VmFamilyCollection()
+        /// <summary> Initializes a new instance of ComputeLimitVmFamilyCollection for mocking. </summary>
+        protected ComputeLimitVmFamilyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmFamilyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitVmFamilyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal VmFamilyCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ComputeLimitVmFamilyCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            TryGetApiVersion(VmFamilyResource.ResourceType, out string vmFamilyApiVersion);
+            TryGetApiVersion(ComputeLimitVmFamilyResource.ResourceType, out string computeLimitVmFamilyApiVersion);
             _location = location;
-            _vmFamiliesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", VmFamilyResource.ResourceType.Namespace, Diagnostics);
-            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Endpoint, vmFamilyApiVersion ?? "2026-04-30");
+            _vmFamiliesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ComputeLimitVmFamilyResource.ResourceType.Namespace, Diagnostics);
+            _vmFamiliesRestClient = new VmFamilies(_vmFamiliesClientDiagnostics, Pipeline, Endpoint, computeLimitVmFamilyApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VmFamilyResource>> GetAsync(string vmFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeLimitVmFamilyResource>> GetAsync(string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.Get");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.Get");
             scope.Start();
             try
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmFamilyData> response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VmFamilyResource> Get(string vmFamilyName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeLimitVmFamilyResource> Get(string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.Get");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.Get");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 };
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmFamilyData> response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                Response<ComputeLimitVmFamilyData> response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,20 +176,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </summary>
         /// <param name="filter"> The filter to apply to the list operation. Filter can be applied to the 'category' property. Example: $filter=category eq 'generalPurposeCategory'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmFamilyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VmFamilyResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeLimitVmFamilyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeLimitVmFamilyResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VmFamilyData, VmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceAsyncCollectionResultOfT(
                 _vmFamiliesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
                 filter,
                 context,
-                "VmFamilyCollection.GetAll"), data => new VmFamilyResource(Client, data));
+                "ComputeLimitVmFamilyCollection.GetAll"), data => new ComputeLimitVmFamilyResource(Client, data));
         }
 
         /// <summary>
@@ -211,20 +211,20 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </summary>
         /// <param name="filter"> The filter to apply to the list operation. Filter can be applied to the 'category' property. Example: $filter=category eq 'generalPurposeCategory'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VmFamilyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VmFamilyResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeLimitVmFamilyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeLimitVmFamilyResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VmFamilyData, VmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT(
+            return new PageableWrapper<ComputeLimitVmFamilyData, ComputeLimitVmFamilyResource>(new VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT(
                 _vmFamiliesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 _location,
                 filter,
                 context,
-                "VmFamilyCollection.GetAll"), data => new VmFamilyResource(Client, data));
+                "ComputeLimitVmFamilyCollection.GetAll"), data => new ComputeLimitVmFamilyResource(Client, data));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.Exists");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.Exists");
             scope.Start();
             try
             {
@@ -263,14 +263,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<VmFamilyData> response = default;
+                Response<ComputeLimitVmFamilyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmFamilyData)null, result);
+                        response = Response.FromValue((ComputeLimitVmFamilyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.Exists");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.Exists");
             scope.Start();
             try
             {
@@ -320,14 +320,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<VmFamilyData> response = default;
+                Response<ComputeLimitVmFamilyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmFamilyData)null, result);
+                        response = Response.FromValue((ComputeLimitVmFamilyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -362,11 +362,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VmFamilyResource>> GetIfExistsAsync(string vmFamilyName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ComputeLimitVmFamilyResource>> GetIfExistsAsync(string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.GetIfExists");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -377,23 +377,23 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<VmFamilyData> response = default;
+                Response<ComputeLimitVmFamilyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmFamilyData)null, result);
+                        response = Response.FromValue((ComputeLimitVmFamilyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VmFamilyResource>(response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitVmFamilyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmFamilyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vmFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VmFamilyResource> GetIfExists(string vmFamilyName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ComputeLimitVmFamilyResource> GetIfExists(string vmFamilyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmFamilyName, nameof(vmFamilyName));
 
-            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("VmFamilyCollection.GetIfExists");
+            using DiagnosticScope scope = _vmFamiliesClientDiagnostics.CreateScope("ComputeLimitVmFamilyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -438,23 +438,23 @@ namespace Azure.ResourceManager.ComputeLimit
                 HttpMessage message = _vmFamiliesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, vmFamilyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<VmFamilyData> response = default;
+                Response<ComputeLimitVmFamilyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(VmFamilyData.FromResponse(result), result);
+                        response = Response.FromValue(ComputeLimitVmFamilyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((VmFamilyData)null, result);
+                        response = Response.FromValue((ComputeLimitVmFamilyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<VmFamilyResource>(response.GetRawResponse());
+                    return new NoValueResponse<ComputeLimitVmFamilyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new VmFamilyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputeLimitVmFamilyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ComputeLimit
             }
         }
 
-        IEnumerator<VmFamilyResource> IEnumerable<VmFamilyResource>.GetEnumerator()
+        IEnumerator<ComputeLimitVmFamilyResource> IEnumerable<ComputeLimitVmFamilyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<VmFamilyResource> IAsyncEnumerable<VmFamilyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ComputeLimitVmFamilyResource> IAsyncEnumerable<ComputeLimitVmFamilyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

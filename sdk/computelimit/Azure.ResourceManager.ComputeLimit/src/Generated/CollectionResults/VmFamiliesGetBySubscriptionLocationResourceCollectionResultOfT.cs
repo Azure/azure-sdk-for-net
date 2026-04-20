@@ -14,7 +14,7 @@ using Azure.ResourceManager.ComputeLimit.Models;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
-    internal partial class VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<VmFamilyData>
+    internal partial class VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT : Pageable<ComputeLimitVmFamilyData>
     {
         private readonly VmFamilies _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VmFamiliesGetBySubscriptionLocationResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VmFamilyData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ComputeLimitVmFamilyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 VmFamilyListResult result = VmFamilyListResult.FromResponse(response);
-                yield return Page<VmFamilyData>.FromValues((IReadOnlyList<VmFamilyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ComputeLimitVmFamilyData>.FromValues((IReadOnlyList<ComputeLimitVmFamilyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
