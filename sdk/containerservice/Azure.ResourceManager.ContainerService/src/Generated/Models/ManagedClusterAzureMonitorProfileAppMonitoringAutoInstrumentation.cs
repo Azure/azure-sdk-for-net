@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Auto Instrumentation for Kubernetes Application Container. Deploys web hook to auto-instrument Azure Monitor OpenTelemetry based SDKs to collect OpenTelemetry metrics, logs and traces of the application. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring auto-instrumentation for AKS. Deploys a webhook that auto-instruments workloads with Microsoft OpenTelemetry Distros to collect OpenTelemetry metrics, logs, and traces. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
     internal partial class ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation"/>. </summary>
-        /// <param name="isAppMonitoringAutoInstrumentationEnabled"> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </param>
+        /// <param name="isAppMonitoringAutoInstrumentationEnabled"> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation(bool? isAppMonitoringAutoInstrumentationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </summary>
+        /// <summary> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </summary>
         [WirePath("enabled")]
         public bool? IsAppMonitoringAutoInstrumentationEnabled { get; set; }
     }

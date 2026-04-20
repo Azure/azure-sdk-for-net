@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ContainerServiceAgentPoolResource.ResourceType, out string containerServiceAgentPoolApiVersion);
             _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceAgentPoolResource.ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-01-02-preview");
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, containerServiceAgentPoolApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
