@@ -4,9 +4,16 @@
 
 ### Features Added
 
+- Foundry storage logging now includes the `traceparent` header (W3C distributed trace ID) in all
+  log messages, enabling correlation between SDK log entries and backend distributed traces.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
+  a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
+  response is received. Transport failures are now logged at Error level instead of throwing.
 
 ### Other Changes
 
