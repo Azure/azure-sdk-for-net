@@ -266,7 +266,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #endif
             ledgerClient.CreateOrUpdateLedgerUser(
                 newUserAadObjectId,
-                RequestContent.Create(new { assignedRole = "Reader" }));
+                RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
 
             #endregion
 

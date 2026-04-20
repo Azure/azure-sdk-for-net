@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -37,8 +38,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             _resourceGroupName = _testResourceGroupPrefix + _testFixtureName;
-            await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
-                _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
+
+            // Retry if the resource group from a previous run is still being deprovisioned.
+            bool created = false;
+            while (!created)
+            {
+                try
+                {
+                    await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed,
+                        _resourceGroupName, new ResourceGroupData(s_defaultTestLocation));
+                    created = true;
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceGroupBeingDeleted")
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(15));
+                }
+            }
 
             await StopSessionRecordingAsync();
         }

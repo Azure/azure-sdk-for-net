@@ -52,6 +52,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestRemoveUserFromLedger()
         {
+            Assume.That(!string.IsNullOrEmpty(TestEnvironment.TestUserObjectId),
+                "Skipping: CONFIDENTIALLEDGER_CLIENT_OBJECTID environment variable is not set.");
+
             // Create Ledger
             await CreateLedger(LedgerName);
             _ledgerResource = await GetLedgerByName(LedgerName);
