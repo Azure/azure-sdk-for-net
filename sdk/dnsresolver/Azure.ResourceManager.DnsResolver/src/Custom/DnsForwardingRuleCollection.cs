@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsForwardingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return CreateOrUpdate(waitUntil, forwardingRuleName, data, default(MatchConditions), cancellationToken);
+            return CreateOrUpdate(waitUntil, forwardingRuleName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsForwardingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string forwardingRuleName, DnsForwardingRuleData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return await CreateOrUpdateAsync(waitUntil, forwardingRuleName, data, default(MatchConditions), cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, forwardingRuleName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
     }
 }

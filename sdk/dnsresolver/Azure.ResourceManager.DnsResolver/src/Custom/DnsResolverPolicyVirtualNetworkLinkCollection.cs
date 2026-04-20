@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> CreateOrUpdate(WaitUntil waitUntil, string dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return CreateOrUpdate(waitUntil, dnsResolverPolicyVirtualNetworkLinkName, data, default(MatchConditions), cancellationToken);
+            return CreateOrUpdate(waitUntil, dnsResolverPolicyVirtualNetworkLinkName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsResolverPolicyVirtualNetworkLinkName, DnsResolverPolicyVirtualNetworkLinkData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return await CreateOrUpdateAsync(waitUntil, dnsResolverPolicyVirtualNetworkLinkName, data, default(MatchConditions), cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, dnsResolverPolicyVirtualNetworkLinkName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
     }
 }

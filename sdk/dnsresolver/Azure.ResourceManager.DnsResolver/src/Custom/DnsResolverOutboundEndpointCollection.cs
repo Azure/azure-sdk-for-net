@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsResolverOutboundEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string outboundEndpointName, DnsResolverOutboundEndpointData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return CreateOrUpdate(waitUntil, outboundEndpointName, data, default(MatchConditions), cancellationToken);
+            return CreateOrUpdate(waitUntil, outboundEndpointName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsResolverOutboundEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string outboundEndpointName, DnsResolverOutboundEndpointData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return await CreateOrUpdateAsync(waitUntil, outboundEndpointName, data, default(MatchConditions), cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, outboundEndpointName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DnsResolverDomainListResource> Bulk(WaitUntil waitUntil, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return Bulk(waitUntil, dnsResolverDomainListBulk, default(MatchConditions), cancellationToken);
+            return Bulk(waitUntil, dnsResolverDomainListBulk, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DnsResolver
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DnsResolverDomainListResource>> BulkAsync(WaitUntil waitUntil, DnsResolverDomainListBulk dnsResolverDomainListBulk, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return await BulkAsync(waitUntil, dnsResolverDomainListBulk, default(MatchConditions), cancellationToken).ConfigureAwait(false);
+            return await BulkAsync(waitUntil, dnsResolverDomainListBulk, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -18,17 +17,17 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class DnsForwardingRulesetPatch
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeDnsResolverOutboundEndpoints(JsonProperty property, ref IList<WritableSubResource> dnsResolverOutboundEndpoints)
+        private static void DeserializeDnsResolverOutboundEndpoints(global::System.Text.Json.JsonProperty property, ref IList<WritableSubResource> dnsResolverOutboundEndpoints)
         {
-            if (property.Value.ValueKind == JsonValueKind.Null)
+            if (property.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null)
             {
                 return;
             }
 
             List<WritableSubResource> array = new List<WritableSubResource>();
-            foreach (JsonElement item in property.Value.EnumerateArray())
+            foreach (global::System.Text.Json.JsonElement item in property.Value.EnumerateArray())
             {
-                if (item.ValueKind == JsonValueKind.Null)
+                if (item.ValueKind == global::System.Text.Json.JsonValueKind.Null)
                 {
                     array.Add(null);
                 }
