@@ -559,6 +559,9 @@ namespace Azure.AI.AgentServer.Responses
     {
         public ResourceNotFoundException(string message) { }
         public ResourceNotFoundException(string message, System.Exception innerException) { }
+        public ResourceNotFoundException(string message, string? code, string? param) { }
+        public string? Code { get { throw null; } }
+        public string? Param { get { throw null; } }
     }
     public partial class ResponseContext
     {
