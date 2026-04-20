@@ -4,14 +4,14 @@
 # Usage: .\setup-check.ps1 [options]
 #   -Endpoint URL     Override endpoint
 #   -ApiKey KEY       Override API key
-#   -Verbose          Show full HTTP responses
+#   -ShowVerbose      Show full HTTP responses
 #   -Help             Show help
 
 [CmdletBinding()]
 param(
     [string]$Endpoint = "",
     [string]$ApiKey = "",
-    [switch]$Verbose,
+    [switch]$ShowVerbose,
     [Alias("h")]
     [switch]$Help
 )
@@ -37,7 +37,7 @@ if ($Help) {
     Write-Host "Options:"
     Write-Host "  -Endpoint URL    Override endpoint (instead of appsettings.json / env)"
     Write-Host "  -ApiKey KEY      Override API key"
-    Write-Host "  -Verbose         Show full HTTP responses"
+    Write-Host "  -ShowVerbose     Show full HTTP responses"
     Write-Host "  -Help            Show this help"
     Write-Host ""
     Write-Host "Reads credentials from (in priority order):"
@@ -198,7 +198,7 @@ if (-not $script:AuthMethod) {
     $defaultsUrl = "$($script:ResolvedEndpoint)/contentunderstanding/defaults?api-version=$ApiVersion"
     $resp = Invoke-ApiGet -Url $defaultsUrl
 
-    if ($Verbose) {
+    if ($ShowVerbose) {
         Write-Info "GET $defaultsUrl"
         Write-Info "HTTP $($resp.StatusCode) ($($resp.TimeMs)ms)"
         Write-Info $resp.Body
@@ -276,7 +276,7 @@ if (-not $script:AuthMethod) {
     $analyzersUrl = "$($script:ResolvedEndpoint)/contentunderstanding/analyzers?api-version=$ApiVersion"
     $resp = Invoke-ApiGet -Url $analyzersUrl
 
-    if ($Verbose) {
+    if ($ShowVerbose) {
         Write-Info "GET $analyzersUrl"
         Write-Info "HTTP $($resp.StatusCode) ($($resp.TimeMs)ms)"
     }
@@ -317,7 +317,7 @@ if (-not $script:AuthMethod) {
     $smokeUrl = "$($script:ResolvedEndpoint)/contentunderstanding/analyzers/prebuilt-read?api-version=$ApiVersion"
     $resp = Invoke-ApiGet -Url $smokeUrl
 
-    if ($Verbose) {
+    if ($ShowVerbose) {
         Write-Info "GET $smokeUrl"
         Write-Info "HTTP $($resp.StatusCode) ($($resp.TimeMs)ms)"
     }
