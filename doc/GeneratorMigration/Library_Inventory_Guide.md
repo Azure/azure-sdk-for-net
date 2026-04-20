@@ -8,7 +8,7 @@ The library inventory helps us:
 
 1. Track all Azure.* libraries in the repository (legacy non-Azure.* libraries are excluded)
 2. Categorize them as data plane or management plane
-3. Identify which generator (New Emitter, Autorest, or Old TypeSpec) they use
+3. Identify which generator (New Emitter, Autorest, Old TypeSpec, or Incomplete) they use
 4. Plan migrations to newer generators
 
 ## Generating the Inventory
@@ -80,20 +80,24 @@ The inventory markdown file provides:
      - Migration status shows: migrated / total TypeSpec libraries (e.g., "24 / 66 (36.4%)")
      - **Only includes libraries with tsp-location.yaml file**
      - Shows ✅ for libraries using new emitters, blank for old TypeSpec
-4. Two separate tables for libraries still on Swagger:
+4. A separate table for management-plane libraries with incomplete migration:
+   - **Management Plane Libraries (MPG) - Incomplete**: Libraries whose specs have already migrated to TypeSpec, but whose SDK generation is still Swagger-based
+     - Columns: Service, Library
+     - Detection uses the service name from the spec path plus the resource provider namespace from AssemblyInfo, with a small exclusion list for intentional exceptions
+5. Two separate tables for libraries still on Swagger:
    - **Data Plane Libraries (DPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
      - Columns: Service, Library
-   - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
+   - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries whose corresponding specs are still Swagger-based
      - Columns: Service, Library
-5. Libraries with no generator (listed separately)
+6. Libraries with no generator (listed separately)
 
 The migration tables use ✅ emoji to indicate the generator type:
 - **New Emitter** column: ✅ for libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
 - **No checkmark**: Libraries using old TypeSpec (TSP-Old) with tsp-location.yaml but not yet migrated to new emitter
 
 **Important**: 
-- Migration tables only include libraries that have a `tsp-location.yaml` file. Libraries without this file are not included in the migration tracking tables.
-- Migration status percentages are calculated as: (libraries with new emitter) / (total libraries with tsp-location.yaml in that table) × 100
+- Data-plane migration tables only include libraries that have a `tsp-location.yaml` file. For management-plane libraries, the migration status also includes incomplete libraries whose specs have already migrated to TypeSpec even if the SDK is still Swagger-based.
+- Migration status percentages are calculated as: (libraries with new emitter) / (total libraries participating in migration tracking for that table) × 100
 
 Libraries still on Swagger/Autorest are listed in separate "Still on Swagger" tables and are not included in the migration tables.
 
