@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.DnsResolver
         // VirtualNetworkId convenience property directly on the data model. The TypeSpec-
         // generated shape now routes through the VirtualNetwork property on an internal
         // Properties bag, so this partial preserves the previous public API surface.
+        // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
+        // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsResolverPolicyVirtualNetworkLinkData"/> class.
         /// </summary>

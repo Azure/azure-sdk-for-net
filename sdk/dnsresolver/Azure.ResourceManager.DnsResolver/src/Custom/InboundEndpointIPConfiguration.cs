@@ -12,6 +12,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         // SubnetId convenience property directly on the model. The TypeSpec-generated
         // shape now routes through the Subnet property, so this partial preserves the
         // previous public API surface for backward compatibility.
+        // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
+        // generator preserves WritableSubResource-based ...Id projections automatically.
         /// <summary>
         /// Initializes a new instance of the <see cref="InboundEndpointIPConfiguration"/> class.
         /// </summary>
