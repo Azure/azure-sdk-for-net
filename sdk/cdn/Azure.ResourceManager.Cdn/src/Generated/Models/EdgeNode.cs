@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.IPAddressGroups;
+                return Properties is null ? default : Properties.IPAddressGroups;
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.HostName;
+                return Properties is null ? default : Properties.HostName;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.ValidationData;
+                return Properties is null ? default : Properties.ValidationData;
             }
         }
     }

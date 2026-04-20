@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.DeploymentStatus;
+                return Properties is null ? default : Properties.DeploymentStatus;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ProfileName;
+                return Properties is null ? default : Properties.ProfileName;
             }
         }
     }

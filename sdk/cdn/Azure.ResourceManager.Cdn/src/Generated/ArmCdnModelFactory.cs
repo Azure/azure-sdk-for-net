@@ -2023,39 +2023,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicyId is null ? default : new ResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Options for the GetLogAnalyticsMetrics operation. </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="continents"></param>
-        /// <param name="countryOrRegions"></param>
-        /// <param name="customDomains"></param>
-        /// <param name="protocols"></param>
-        /// <returns> A new <see cref="Models.ProfileResourceGetLogAnalyticsMetricsOptions"/> instance for mocking. </returns>
-        public static ProfileResourceGetLogAnalyticsMetricsOptions ProfileResourceGetLogAnalyticsMetricsOptions(IEnumerable<LogMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, LogMetricsGranularity granularity = default, IEnumerable<LogMetricsGroupBy> groupBy = default, IEnumerable<string> continents = default, IEnumerable<string> countryOrRegions = default, IEnumerable<string> customDomains = default, IEnumerable<string> protocols = default)
-        {
-            metrics ??= new ChangeTrackingList<LogMetric>();
-            groupBy ??= new ChangeTrackingList<LogMetricsGroupBy>();
-            continents ??= new ChangeTrackingList<string>();
-            countryOrRegions ??= new ChangeTrackingList<string>();
-            customDomains ??= new ChangeTrackingList<string>();
-            protocols ??= new ChangeTrackingList<string>();
-
-            return new ProfileResourceGetLogAnalyticsMetricsOptions(
-                metrics.ToList(),
-                dateTimeBegin,
-                dateTimeEnd,
-                granularity,
-                groupBy.ToList(),
-                continents.ToList(),
-                countryOrRegions.ToList(),
-                customDomains.ToList(),
-                protocols.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Metrics Response. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
@@ -2099,30 +2066,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = default, float? value = default)
         {
             return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Options for the GetLogAnalyticsRankings operation. </summary>
-        /// <param name="rankings"></param>
-        /// <param name="metrics"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="customDomains"></param>
-        /// <returns> A new <see cref="Models.ProfileResourceGetLogAnalyticsRankingsOptions"/> instance for mocking. </returns>
-        public static ProfileResourceGetLogAnalyticsRankingsOptions ProfileResourceGetLogAnalyticsRankingsOptions(IEnumerable<LogRanking> rankings = default, IEnumerable<LogRankingMetric> metrics = default, int maxRanking = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, IEnumerable<string> customDomains = default)
-        {
-            rankings ??= new ChangeTrackingList<LogRanking>();
-            metrics ??= new ChangeTrackingList<LogRankingMetric>();
-            customDomains ??= new ChangeTrackingList<string>();
-
-            return new ProfileResourceGetLogAnalyticsRankingsOptions(
-                rankings.ToList(),
-                metrics.ToList(),
-                maxRanking,
-                dateTimeBegin,
-                dateTimeEnd,
-                customDomains.ToList(),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Rankings Response. </summary>
@@ -2245,33 +2188,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ResourcesResponseCustomDomainsItem(id, name, endpointId, history, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Options for the GetWafLogAnalyticsMetrics operation. </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="granularity"></param>
-        /// <param name="actions"></param>
-        /// <param name="groupBy"></param>
-        /// <param name="ruleTypes"></param>
-        /// <returns> A new <see cref="Models.ProfileResourceGetWafLogAnalyticsMetricsOptions"/> instance for mocking. </returns>
-        public static ProfileResourceGetWafLogAnalyticsMetricsOptions ProfileResourceGetWafLogAnalyticsMetricsOptions(IEnumerable<WafMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, WafGranularity granularity = default, IEnumerable<WafAction> actions = default, IEnumerable<WafRankingGroupBy> groupBy = default, IEnumerable<WafRuleType> ruleTypes = default)
-        {
-            metrics ??= new ChangeTrackingList<WafMetric>();
-            actions ??= new ChangeTrackingList<WafAction>();
-            groupBy ??= new ChangeTrackingList<WafRankingGroupBy>();
-            ruleTypes ??= new ChangeTrackingList<WafRuleType>();
-
-            return new ProfileResourceGetWafLogAnalyticsMetricsOptions(
-                metrics.ToList(),
-                dateTimeBegin,
-                dateTimeEnd,
-                granularity,
-                actions.ToList(),
-                groupBy.ToList(),
-                ruleTypes.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Waf Metrics Response. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
@@ -2315,33 +2231,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(DateTimeOffset? dateOn = default, float? value = default)
         {
             return new Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(dateOn, value, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Options for the GetWafLogAnalyticsRankings operation. </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="rankings"></param>
-        /// <param name="actions"></param>
-        /// <param name="ruleTypes"></param>
-        /// <returns> A new <see cref="Models.ProfileResourceGetWafLogAnalyticsRankingsOptions"/> instance for mocking. </returns>
-        public static ProfileResourceGetWafLogAnalyticsRankingsOptions ProfileResourceGetWafLogAnalyticsRankingsOptions(IEnumerable<WafMetric> metrics = default, DateTimeOffset dateTimeBegin = default, DateTimeOffset dateTimeEnd = default, int maxRanking = default, IEnumerable<WafRankingType> rankings = default, IEnumerable<WafAction> actions = default, IEnumerable<WafRuleType> ruleTypes = default)
-        {
-            metrics ??= new ChangeTrackingList<WafMetric>();
-            rankings ??= new ChangeTrackingList<WafRankingType>();
-            actions ??= new ChangeTrackingList<WafAction>();
-            ruleTypes ??= new ChangeTrackingList<WafRuleType>();
-
-            return new ProfileResourceGetWafLogAnalyticsRankingsOptions(
-                metrics.ToList(),
-                dateTimeBegin,
-                dateTimeEnd,
-                maxRanking,
-                rankings.ToList(),
-                actions.ToList(),
-                ruleTypes.ToList(),
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Waf Rankings Response. </summary>

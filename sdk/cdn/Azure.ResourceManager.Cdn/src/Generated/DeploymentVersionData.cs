@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.DeploymentStatus;
+                return Properties is null ? default : Properties.DeploymentStatus;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ApprovedOn;
+                return Properties is null ? default : Properties.ApprovedOn;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.ApprovalStatus;
+                return Properties is null ? default : Properties.ApprovalStatus;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties.Stages;
+                return Properties is null ? default : Properties.Stages;
             }
         }
     }

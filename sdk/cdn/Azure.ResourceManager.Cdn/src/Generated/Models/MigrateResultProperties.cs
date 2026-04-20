@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return MigratedProfileResourceId.Id;
+                return MigratedProfileResourceId is null ? default : MigratedProfileResourceId.Id;
             }
         }
     }

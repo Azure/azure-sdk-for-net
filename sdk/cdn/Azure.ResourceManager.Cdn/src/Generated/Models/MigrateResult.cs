@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.MigratedProfileResourceIdId;
+                return Properties is null ? default : Properties.MigratedProfileResourceIdId;
             }
         }
     }

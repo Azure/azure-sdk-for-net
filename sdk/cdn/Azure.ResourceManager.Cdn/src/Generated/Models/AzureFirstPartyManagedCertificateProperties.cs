@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return SecretSource.Id;
+                return SecretSource is null ? default : SecretSource.Id;
             }
         }
     }

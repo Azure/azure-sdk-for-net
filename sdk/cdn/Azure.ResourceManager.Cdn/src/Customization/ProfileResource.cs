@@ -563,5 +563,101 @@ namespace Azure.ResourceManager.Cdn
                 throw;
             }
         }
+
+        /// <summary>
+        /// Get log report for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return await GetLogAnalyticsMetricsDirectAsync(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.Granularity, options.CustomDomains, options.Protocols, options.GroupBy, options.Continents, options.CountryOrRegions, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get log report for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(ProfileResourceGetLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return GetLogAnalyticsMetricsDirect(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.Granularity, options.CustomDomains, options.Protocols, options.GroupBy, options.Continents, options.CountryOrRegions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get log analytics ranking report for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return await GetLogAnalyticsRankingsDirectAsync(options.Rankings, options.Metrics, options.MaxRanking, options.DateTimeBegin, options.DateTimeEnd, options.CustomDomains, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get log analytics ranking report for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<RankingsResponse> GetLogAnalyticsRankings(ProfileResourceGetLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return GetLogAnalyticsRankingsDirect(options.Rankings, options.Metrics, options.MaxRanking, options.DateTimeBegin, options.DateTimeEnd, options.CustomDomains, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Waf related log analytics report for AFD profile.
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return await GetWafLogAnalyticsMetricsDirectAsync(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.Granularity, options.Actions, options.GroupBy, options.RuleTypes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Waf related log analytics report for AFD profile.
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(ProfileResourceGetWafLogAnalyticsMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return GetWafLogAnalyticsMetricsDirect(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.Granularity, options.Actions, options.GroupBy, options.RuleTypes, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get WAF log analytics charts for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return await GetWafLogAnalyticsRankingsDirectAsync(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.MaxRanking, options.Rankings, options.Actions, options.RuleTypes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get WAF log analytics charts for AFD profile
+        /// </summary>
+        /// <param name="options"> The options parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(ProfileResourceGetWafLogAnalyticsRankingsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            return GetWafLogAnalyticsRankingsDirect(options.Metrics, options.DateTimeBegin, options.DateTimeEnd, options.MaxRanking, options.Rankings, options.Actions, options.RuleTypes, cancellationToken);
+        }
     }
 }

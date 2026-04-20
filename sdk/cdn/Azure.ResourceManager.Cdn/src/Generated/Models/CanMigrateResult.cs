@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.CanMigrate;
+                return Properties is null ? default : Properties.CanMigrate;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.DefaultSku;
+                return Properties is null ? default : Properties.DefaultSku;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             get
             {
-                return Properties.Errors;
+                return Properties is null ? default : Properties.Errors;
             }
         }
     }
