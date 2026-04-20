@@ -135,13 +135,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
@@ -167,13 +168,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
