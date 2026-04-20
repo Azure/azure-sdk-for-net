@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummary))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummaryGroup))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummaryGroupItemInfo))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionResourceGetServiceAlertSummaryOptions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsManagementBaseDetails))]

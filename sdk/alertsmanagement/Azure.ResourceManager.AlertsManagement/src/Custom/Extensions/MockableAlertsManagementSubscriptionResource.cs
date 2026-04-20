@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
-            return await GetMockableAlertsManagementArmClient().GetSummaryAsync(Id, options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementArmClient().GetSummaryAsync(Id, options.Groupby, options.IncludeSmartGroupsCount, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.TimeRange, options.CustomTimeRange, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
-            return GetMockableAlertsManagementArmClient().GetSummary(Id, options, cancellationToken);
+            return GetMockableAlertsManagementArmClient().GetSummary(Id, options.Groupby, options.IncludeSmartGroupsCount, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.TimeRange, options.CustomTimeRange, cancellationToken);
         }
     }
 }
