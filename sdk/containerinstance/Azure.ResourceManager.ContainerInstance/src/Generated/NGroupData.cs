@@ -13,109 +13,118 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary>
-    /// A class representing the NGroup data model.
-    /// Describes the NGroups resource.
-    /// </summary>
+    /// <summary> Describes the NGroups resource. </summary>
     public partial class NGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public NGroupData(AzureLocation location) : base(location)
         {
-            ContainerGroupProfiles = new ChangeTrackingList<ContainerGroupProfileStub>();
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of the NGroups resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
-        /// <param name="elasticProfile"> The elastic profile. </param>
-        /// <param name="placementProfile"> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </param>
-        /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupElasticProfile elasticProfile, ContainerGroupPlacementProfile placementProfile, IList<ContainerGroupProfileStub> containerGroupProfiles, NGroupProvisioningState? provisioningState, NGroupUpdateProfile updateProfile, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, NGroupProperties properties, IDictionary<string, string> tags, IList<string> zones, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
-            ElasticProfile = elasticProfile;
-            PlacementProfile = placementProfile;
-            ContainerGroupProfiles = containerGroupProfiles;
-            ProvisioningState = provisioningState;
-            UpdateProfile = updateProfile;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGroupData"/> for deserialization. </summary>
-        internal NGroupData()
-        {
-        }
+        /// <summary> Describes the properties of the NGroups resource. </summary>
+        internal NGroupProperties Properties { get; set; }
+
+        /// <summary> The availability zones. </summary>
+        public IList<string> Zones { get; }
 
         /// <summary> The identity of the NGroup, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The elastic profile. </summary>
-        public ContainerGroupElasticProfile ElasticProfile { get; set; }
-        /// <summary> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </summary>
-        internal ContainerGroupPlacementProfile PlacementProfile { get; set; }
-        /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
-        public int? PlacementFaultDomainCount
+        public ContainerGroupElasticProfile ElasticProfile
         {
-            get => PlacementProfile is null ? default : PlacementProfile.FaultDomainCount;
+            get
+            {
+                return Properties is null ? default : Properties.ElasticProfile;
+            }
             set
             {
-                if (PlacementProfile is null)
-                    PlacementProfile = new ContainerGroupPlacementProfile();
-                PlacementProfile.FaultDomainCount = value;
+                if (Properties is null)
+                {
+                    Properties = new NGroupProperties();
+                }
+                Properties.ElasticProfile = value;
             }
         }
 
         /// <summary> The Container Group Profiles that could be used in the NGroups resource. </summary>
-        public IList<ContainerGroupProfileStub> ContainerGroupProfiles { get; }
+        public IList<ContainerGroupProfileStub> ContainerGroupProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NGroupProperties();
+                }
+                return Properties.ContainerGroupProfiles;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public NGroupProvisioningState? ProvisioningState { get; }
+        public NGroupProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
-        public NGroupUpdateProfile UpdateProfile { get; set; }
-        /// <summary> The zones for the container group. </summary>
-        public IList<string> Zones { get; }
+        public NGroupUpdateProfile UpdateProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdateProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NGroupProperties();
+                }
+                Properties.UpdateProfile = value;
+            }
+        }
+
+        /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
+        public int? PlacementFaultDomainCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlacementFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NGroupProperties();
+                }
+                Properties.PlacementFaultDomainCount = value.Value;
+            }
+        }
     }
 }

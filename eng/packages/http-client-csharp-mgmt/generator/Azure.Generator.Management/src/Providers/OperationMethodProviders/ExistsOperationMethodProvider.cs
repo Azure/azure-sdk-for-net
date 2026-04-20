@@ -29,6 +29,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             methodName: isAsync ? "ExistsAsync" : "Exists",
             description: $"Checks to see if the resource exists in azure.")
     {
+        protected override bool ShouldApplyLroHandling => false;
+
         protected override CSharpType BuildReturnType()
         {
             return new CSharpType(typeof(Response<>), typeof(bool))

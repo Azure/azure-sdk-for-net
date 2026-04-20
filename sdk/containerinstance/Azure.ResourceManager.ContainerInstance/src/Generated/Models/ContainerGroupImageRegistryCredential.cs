@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="passwordReference"> The reference for the private registry password. </param>
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string passwordReference, string identity, Uri identityUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string passwordReference, string identity, Uri identityUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             Username = username;
@@ -71,24 +43,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             PasswordReference = passwordReference;
             Identity = identity;
             IdentityUri = identityUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/> for deserialization. </summary>
-        internal ContainerGroupImageRegistryCredential()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Docker image registry server without a protocol such as "http" and "https". </summary>
         public string Server { get; set; }
+
         /// <summary> The username for the private registry. </summary>
         public string Username { get; set; }
+
         /// <summary> The password for the private registry. </summary>
         public string Password { get; set; }
+
         /// <summary> The reference for the private registry password. </summary>
         public string PasswordReference { get; set; }
+
         /// <summary> The identity for the private registry. </summary>
         public string Identity { get; set; }
+
         /// <summary> The identity URL for the private registry. </summary>
         public Uri IdentityUri { get; set; }
     }

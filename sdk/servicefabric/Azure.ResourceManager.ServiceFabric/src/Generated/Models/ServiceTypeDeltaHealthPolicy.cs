@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Represents the delta health policy used to evaluate the health of services belonging to a service type when upgrading the cluster.
-    ///
-    /// </summary>
+    /// <summary> Represents the delta health policy used to evaluate the health of services belonging to a service type when upgrading the cluster. </summary>
     public partial class ServiceTypeDeltaHealthPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceTypeDeltaHealthPolicy"/>. </summary>
         public ServiceTypeDeltaHealthPolicy()
@@ -58,20 +26,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The maximum allowed percentage of services health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the services at the beginning of upgrade and the state of the services at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
-        ///
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTypeDeltaHealthPolicy(int? maxPercentDeltaUnhealthyServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTypeDeltaHealthPolicy(int? maxPercentDeltaUnhealthyServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxPercentDeltaUnhealthyServices = maxPercentDeltaUnhealthyServices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The maximum allowed percentage of services health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the services at the beginning of upgrade and the state of the services at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
-        ///
         /// </summary>
         public int? MaxPercentDeltaUnhealthyServices { get; set; }
     }

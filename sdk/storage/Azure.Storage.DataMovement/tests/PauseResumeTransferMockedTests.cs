@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -1702,5 +1703,273 @@ public class PauseResumeTransferMockedTests
     {
         PauseProcessHalfway,
         PauseProcessStart
+    }
+
+    /// <summary>
+    /// A checkpointer wrapper that tracks whether <see cref="GetJobStatusAsync"/> is called
+    /// while <see cref="SetJobStatusAsync"/> is still executing for a Paused status transition.
+    /// Before the fix, <c>CompletionSource.TrySetResult</c> was signaled before
+    /// <c>SetCheckpointerStatusAsync</c> completed, allowing a resume to race with the
+    /// ongoing checkpointer cleanup.
+    /// </summary>
+    private class OrderTrackingCheckpointer : MemoryTransferCheckpointer
+    {
+        private volatile bool _insideSetJobStatusPaused;
+
+        /// <summary>
+        /// Set to true if <see cref="GetJobStatusAsync"/> is called while
+        /// <see cref="SetJobStatusAsync"/> is still executing for a Paused status.
+        /// </summary>
+        public bool RaceDetected { get; private set; }
+
+        /// <summary>
+        /// Set to true once <see cref="SetJobStatusAsync"/> completes for Paused status.
+        /// </summary>
+        public bool SetStatusPausedCompleted { get; private set; }
+
+        public override async Task SetJobStatusAsync(string transferId, TransferStatus status, CancellationToken cancellationToken = default)
+        {
+            if (status.State == TransferState.Paused)
+            {
+                _insideSetJobStatusPaused = true;
+                try
+                {
+                    // Simulate slow I/O to widen the race window.
+                    // Do NOT pass cancellationToken—it is already cancelled during pause.
+                    await Task.Delay(200);
+                    await base.SetJobStatusAsync(transferId, status, cancellationToken);
+                }
+                finally
+                {
+                    _insideSetJobStatusPaused = false;
+                    SetStatusPausedCompleted = true;
+                }
+            }
+            else
+            {
+                await base.SetJobStatusAsync(transferId, status, cancellationToken);
+            }
+        }
+
+        public override Task<TransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
+        {
+            if (_insideSetJobStatusPaused)
+            {
+                RaceDetected = true;
+            }
+            return base.GetJobStatusAsync(transferId, cancellationToken);
+        }
+    }
+
+    /// <summary>
+    /// Verifies the ordering guarantee: when a transfer is paused, the checkpointer's
+    /// <see cref="ITransferCheckpointer.SetJobStatusAsync"/> for Paused state completes
+    /// before <c>CompletionSource.TrySetResult</c> is signaled.
+    ///
+    /// The test uses <see cref="OrderTrackingCheckpointer"/> which injects a 200ms delay
+    /// into <c>SetJobStatusAsync(Paused)</c>. After stepping through all processors and
+    /// waiting for the pause to complete, the test resumes the transfer and verifies that
+    /// <see cref="OrderTrackingCheckpointer.RaceDetected"/> is <c>false</c>.
+    ///
+    /// Before the fix, <c>CompletionSource.TrySetResult</c> was called inside
+    /// <c>SetTransferState</c> BEFORE <c>SetCheckpointerStatusAsync</c>, allowing resume
+    /// to call <c>GetJobStatusAsync</c> while the checkpointer was still cleaning up,
+    /// which could lead to <see cref="ObjectDisposedException"/> with
+    /// <c>LocalTransferCheckpointer</c>.
+    /// </summary>
+    [Test]
+    [Combinatorial]
+    public async Task PauseCompletesAfterCheckpointerStatusSet(
+        [Values(2, 6)] int items,
+        [Values(1024)] int itemSize,
+        [Values(1024)] int chunkSize)
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+
+        var checkpointer = new OrderTrackingCheckpointer();
+
+        var resources = Enumerable.Range(0, items).Select(_ =>
+        {
+            Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri, itemSize);
+            return (Source: srcResource, Destination: dstResource);
+        }).ToList();
+
+        List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            resumeProviders);
+
+        List<TransferOperation> transfers = new();
+
+        // Queue jobs
+        foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
+        {
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                srcResource.Object,
+                dstResource.Object,
+                new()
+                {
+                    InitialTransferSize = chunkSize,
+                    MaximumTransferChunkSize = chunkSize,
+                });
+            transfers.Add(transfer);
+        }
+        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items));
+
+        // Issue Pause for all transfers (fire-and-forget as in existing tests)
+        foreach (TransferOperation transfer in transfers)
+        {
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State));
+        }
+
+        // Process jobs — cancellation is already triggered, so jobs should pause
+        await jobsProcessor.StepAll();
+
+        int pausedJobsCount = 0;
+        DateTime pauseWaitDeadline = DateTime.UtcNow.AddSeconds(5);
+        while (DateTime.UtcNow < pauseWaitDeadline)
+        {
+            pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+            if (pausedJobsCount == items)
+            {
+                break;
+            }
+
+            await Task.Delay(50);
+        }
+        Assert.That(pausedJobsCount, Is.EqualTo(items), "All jobs should be Paused");
+
+        // Verify the checkpointer recorded the Paused status
+        Assert.IsTrue(checkpointer.SetStatusPausedCompleted,
+            "SetJobStatusAsync(Paused) should have completed before the transfer reached Paused state");
+
+        // Resume all transfers — this calls GetJobStatusAsync internally
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync(new()
+        {
+            InitialTransferSize = chunkSize,
+            MaximumTransferChunkSize = chunkSize,
+        });
+
+        // Verify no race was detected (GetJobStatusAsync was not called while SetJobStatusAsync was still running)
+        Assert.IsFalse(checkpointer.RaceDetected,
+            "GetJobStatusAsync was called while SetJobStatusAsync(Paused) was still running. " +
+            "This indicates CompletionSource.TrySetResult fires before the checkpointer finishes.");
+
+        // Finish the resumed transfer
+        await AssertResumeTransfer(items, items, items, 1, resumedTransfers, checkpointer,
+            jobsProcessor, partsProcessor, chunksProcessor);
+    }
+
+    /// <summary>
+    /// Regression test: performs multiple pause-resume cycles using the pattern from
+    /// <see cref="MultiplePauseResumeDuringJobProcessing_ItemTransfer"/>. Each cycle
+    /// pauses all transfers before job processing, steps through processors, then resumes.
+    /// Before the fix, the <c>CompletionSource</c> was set before the checkpointer finished
+    /// cleanup, which could cause <see cref="ObjectDisposedException"/> on
+    /// <c>LocalTransferCheckpointer</c>'s <c>SemaphoreSlim</c>.
+    /// </summary>
+    [Test]
+    public async Task MultiplePauseResumeCycles_NoRaceCondition()
+    {
+        int items = 2;
+        int itemSize = Constants.KB;
+        int chunkSize = Constants.KB;
+
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        var resources = Enumerable.Range(0, items).Select(_ =>
+        {
+            Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri, itemSize);
+            return (Source: srcResource, Destination: dstResource);
+        }).ToList();
+
+        List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            resumeProviders);
+
+        List<TransferOperation> transfers = new();
+
+        // Queue jobs
+        foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
+        {
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                srcResource.Object,
+                dstResource.Object,
+                new()
+                {
+                    InitialTransferSize = chunkSize,
+                    MaximumTransferChunkSize = chunkSize,
+                });
+            transfers.Add(transfer);
+        }
+
+        // === Pause-Resume Cycle #1 ===
+        foreach (TransferOperation transfer in transfers)
+        {
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State));
+        }
+
+        await jobsProcessor.StepAll();
+        await Task.Delay(50);
+        Assert.That(GetJobsStateCount(transfers, checkpointer)[TransferState.Paused],
+            Is.EqualTo(items), "All jobs should be Paused after cycle #1");
+
+        // Resume #1
+        List<TransferOperation> resumed1 = await transferManager.ResumeAllTransfersAsync(new()
+        {
+            InitialTransferSize = chunkSize,
+            MaximumTransferChunkSize = chunkSize,
+        });
+        Assert.That(resumed1.Count, Is.EqualTo(items));
+
+        // === Pause-Resume Cycle #2 ===
+        foreach (TransferOperation transfer in resumed1)
+        {
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State));
+        }
+
+        await jobsProcessor.StepAll();
+        await Task.Delay(50);
+        Assert.That(GetJobsStateCount(resumed1, checkpointer)[TransferState.Paused],
+            Is.EqualTo(items), "All jobs should be Paused after cycle #2");
+
+        // Resume #2
+        List<TransferOperation> resumed2 = await transferManager.ResumeAllTransfersAsync(new()
+        {
+            InitialTransferSize = chunkSize,
+            MaximumTransferChunkSize = chunkSize,
+        });
+        Assert.That(resumed2.Count, Is.EqualTo(items));
+
+        // Complete the final resumed transfer
+        await AssertResumeTransfer(items, items, items, 1, resumed2, checkpointer,
+            jobsProcessor, partsProcessor, chunksProcessor);
     }
 }

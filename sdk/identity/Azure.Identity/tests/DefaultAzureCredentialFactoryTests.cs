@@ -761,6 +761,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("Broker is now available via TestFramework dependency. See https://github.com/Azure/azure-sdk-for-net/issues/58160")]
         public void BrokerCredentialThrowsWithoutBrokerPackage()
         {
             var options = new DefaultAzureCredentialOptions
