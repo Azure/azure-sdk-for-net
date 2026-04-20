@@ -24,6 +24,35 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
+### Create a Cost Management Export
+
+This example demonstrates how to create a Cost Management export that delivers actual cost data to a storage container on a weekly schedule, based on the [Azure Bicep reference](https://learn.microsoft.com/en-us/azure/templates/microsoft.costmanagement/exports).
+
+```C# Snippet:CostManagementExportBasic
+Infrastructure infra = new();
+
+CostManagementExport export =
+    new(nameof(export))
+    {
+        Definition = new ExportDefinition
+        {
+            ExportType = ExportType.ActualCost,
+            Timeframe = TimeframeType.MonthToDate,
+        },
+        DeliveryInfoDestination = new ExportDeliveryDestination
+        {
+            Container = "exports",
+            RootFolderPath = "cost-data",
+        },
+        Schedule = new ExportSchedule
+        {
+            Status = ExportScheduleStatusType.Active,
+            Recurrence = ExportScheduleRecurrenceType.Weekly,
+        },
+    };
+infra.Add(export);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
