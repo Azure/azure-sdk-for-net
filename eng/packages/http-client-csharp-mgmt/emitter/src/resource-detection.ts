@@ -1042,11 +1042,21 @@ function getSingletonResource(
  * Builds an ArmScopeInfo from an operation path.
  * Extracts the scope ID pattern and resource type from the path's scope portion.
  */
-function buildScopeInfoFromPath(operationPath: RequestPath): ArmScopeInfo {
-  const scopePath = operationPath.scopePath;
+export function buildScopeInfoFromPath(operationPath: RequestPath): ArmScopeInfo {
+  return buildScopeInfo(operationPath.operationScope, operationPath.scopePath);
+}
+
+/**
+ * Builds an ArmScopeInfo from a scope kind and scope path.
+ * Computes scopeResourceType from the scope path when it's concrete (no variable segments).
+ */
+export function buildScopeInfo(
+  kind: ResourceScopeKind,
+  scopePath: RequestPath
+): ArmScopeInfo {
   const resourceType = scopePath.resourceType;
   return {
-    kind: operationPath.operationScope,
+    kind,
     scopeIdPattern: scopePath,
     // Only include scopeResourceType when it's concrete (no variable segments)
     scopeResourceType:
