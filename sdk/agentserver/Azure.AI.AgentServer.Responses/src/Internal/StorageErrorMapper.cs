@@ -14,6 +14,9 @@ internal static class StorageErrorMapper
     /// <summary>
     /// Reads the HTTP status code of <paramref name="response"/> and throws the appropriate
     /// SDK exception if the response indicates an error condition.
+    /// All structured error fields (code, message, param, type) from the upstream
+    /// response are preserved in the thrown exception so that they can be forwarded to
+    /// the client without loss.
     /// </summary>
     /// <param name="response">The Azure.Core HTTP response to check.</param>
     /// <exception cref="ResourceNotFoundException">Thrown for 404 responses.</exception>
@@ -25,26 +28,31 @@ internal static class StorageErrorMapper
             return;
 
         var status = response.Status;
-        var message = ExtractMessage(response);
+        var errorInfo = ExtractErrorInfo(response);
 
         switch (status)
         {
             case 404:
-                throw new ResourceNotFoundException(message);
+                throw new ResourceNotFoundException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             case 400:
             case 409:
-                throw new BadRequestException(message);
+                throw new BadRequestException(errorInfo.Message, errorInfo.Code, errorInfo.Param);
             default:
-                throw new ResponsesApiException(new Error("storage_error", message), status);
+                var error = new Error(errorInfo.Code ?? "storage_error", errorInfo.Message)
+                {
+                    Param = errorInfo.Param,
+                    Type = errorInfo.Type ?? "server_error",
+                };
+                throw new ResponsesApiException(error, 500);
         }
     }
 
     /// <summary>
-    /// Extracts an error message from the response body.
+    /// Extracts structured error information from the response body.
     /// Falls back to a generic message including the HTTP status code if parsing fails.
     /// Authorization header values are never included in error messages.
     /// </summary>
-    private static string ExtractMessage(Response response)
+    private static (string Message, string? Code, string? Param, string? Type) ExtractErrorInfo(Response response)
     {
         try
         {
@@ -57,12 +65,25 @@ internal static class StorageErrorMapper
                     using var doc = JsonDocument.Parse(body);
                     if (doc.RootElement.TryGetProperty("error", out var errorElement))
                     {
+                        string? message = null;
+                        string? code = null;
+                        string? param = null;
+                        string? type = null;
+
                         if (errorElement.TryGetProperty("message", out var msgElement))
-                        {
-                            var msg = msgElement.GetString();
-                            if (!string.IsNullOrEmpty(msg))
-                                return msg;
-                        }
+                            message = msgElement.GetString();
+
+                        if (errorElement.TryGetProperty("code", out var codeElement))
+                            code = codeElement.GetString();
+
+                        if (errorElement.TryGetProperty("param", out var paramElement) && paramElement.ValueKind != JsonValueKind.Null)
+                            param = paramElement.GetString();
+
+                        if (errorElement.TryGetProperty("type", out var typeElement))
+                            type = typeElement.GetString();
+
+                        if (!string.IsNullOrEmpty(message))
+                            return (message, code, param, type);
                     }
                 }
             }
@@ -72,6 +93,6 @@ internal static class StorageErrorMapper
             // Parsing failed — fall through to generic message
         }
 
-        return $"Foundry storage request failed with HTTP {response.Status}.";
+        return ($"Foundry storage request failed with HTTP {response.Status}.", null, null, null);
     }
 }
