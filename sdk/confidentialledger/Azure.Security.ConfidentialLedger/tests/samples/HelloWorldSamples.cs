@@ -264,7 +264,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 #else
             string newUserAadObjectId = Guid.NewGuid().ToString();
 #endif
-            ledgerClient.CreateOrUpdateUser(
+            ledgerClient.CreateOrUpdateLedgerUser(
                 newUserAadObjectId,
                 RequestContent.Create(new { assignedRole = "Reader" }));
 

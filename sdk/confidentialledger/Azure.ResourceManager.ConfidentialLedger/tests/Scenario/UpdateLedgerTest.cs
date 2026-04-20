@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         public UpdateLedgerTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
         {
-            SaveDebugRecordingsOnFailure = true;
         }
 
         [Test, Order(1)]

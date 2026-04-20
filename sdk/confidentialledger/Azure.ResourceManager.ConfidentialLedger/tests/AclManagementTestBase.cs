@@ -46,7 +46,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests
         [SetUp]
         public void Setup()
         {
-            ArmClient armClient = GetArmClient();
+            var options = new ArmClientOptions();
+            options.SetApiVersion(ConfidentialLedgerResource.ResourceType, "2025-06-10-preview");
+            ArmClient armClient = GetArmClient(options);
             Subscription = armClient.GetSubscriptionResource(
                 new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
             ResourceGroupCollection resourceGroups = Subscription.GetResourceGroups();
