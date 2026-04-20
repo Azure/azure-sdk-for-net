@@ -14,9 +14,11 @@ internal static class StorageErrorMapper
     /// <summary>
     /// Reads the HTTP status code of <paramref name="response"/> and throws the appropriate
     /// SDK exception if the response indicates an error condition.
-    /// All structured error fields (code, message, param, type) from the upstream
-    /// response are preserved in the thrown exception so that they can be forwarded to
-    /// the client without loss.
+    /// Structured upstream error information is preserved in the thrown exception where
+    /// supported by the exception type. For 400, 404, and 409 responses, the thrown
+    /// exception preserves the upstream message, code, and param values. For other
+    /// non-success responses, the thrown <see cref="ResponsesApiException"/> also includes
+    /// the upstream error type when present.
     /// </summary>
     /// <param name="response">The Azure.Core HTTP response to check.</param>
     /// <exception cref="ResourceNotFoundException">Thrown for 404 responses.</exception>
@@ -82,8 +84,10 @@ internal static class StorageErrorMapper
                         if (errorElement.TryGetProperty("type", out var typeElement))
                             type = typeElement.GetString();
 
-                        if (!string.IsNullOrEmpty(message))
-                            return (message, code, param, type);
+                        if (!string.IsNullOrEmpty(message) || !string.IsNullOrEmpty(code) || !string.IsNullOrEmpty(param) || !string.IsNullOrEmpty(type))
+                        {
+                            return (message ?? $"Foundry storage request failed with HTTP {response.Status}.", code, param, type);
+                        }
                     }
                 }
             }
