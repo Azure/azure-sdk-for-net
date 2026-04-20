@@ -602,7 +602,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task Response401_CreateNewSession_InvalidatesAndRetries()
+        public async Task Response401_InvalidatesAndRetries()
         {
             string expiredToken = "expired-token";
             string freshToken = "fresh-token";
@@ -619,9 +619,10 @@ namespace Azure.Storage.Blobs.Tests
             // Capture Authorization header values at send time to avoid shared-reference issue.
             var capturedAuthHeaders = new System.Collections.Generic.List<string>();
             var responseIndex = 0;
+            // Any 401 triggers one retry with a fresh session.
             MockResponse[] outerResponses = new[]
             {
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""),
+                CreateBlobGetResponse(401),
                 CreateBlobGetResponse(200)
             };
 
@@ -648,7 +649,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public async Task Response401_CreateNewSession_ReacquireFails_FallsBackToBearer()
+        public async Task Response401_ReacquireFails_FallsBackToBearer()
         {
             var mockBearer = CreateMockBearerPolicy();
             var serviceClient = CreateMockServiceClient(
@@ -664,7 +665,7 @@ namespace Azure.Storage.Blobs.Tests
                 policy,
                 BlobUri,
                 RequestMethod.Get,
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""));
+                CreateBlobGetResponse(401));
 
             // Only 1 outer request — the 500 was on the inner CreateSession transport.
             Assert.AreEqual(1, outerTransport.Requests.Count);
@@ -674,7 +675,7 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [Test]
-        public void Response401_CreateNewSession_ReacquireFails_NonFallbackError_Propagates()
+        public void Response401_ReacquireFails_NonFallbackError_Propagates()
         {
             var mockBearer = CreateMockBearerPolicy();
             var serviceClient = CreateMockServiceClient(
@@ -691,14 +692,14 @@ namespace Azure.Storage.Blobs.Tests
                 policy,
                 BlobUri,
                 RequestMethod.Get,
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\"")));
+                CreateBlobGetResponse(401)));
 
             // Bearer was never invoked — the error propagated before reaching fallback.
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
 
         [Test]
-        public async Task Response401_CreateNewSession_RetryAlso401_DoesNotLoopInfinitely()
+        public async Task Response401_RetryAlso401_DoesNotLoopInfinitely()
         {
             var mockBearer = CreateMockBearerPolicy();
             var serviceClient = CreateMockServiceClient(
@@ -712,11 +713,11 @@ namespace Azure.Storage.Blobs.Tests
 
             var capturedAuthHeaders = new System.Collections.Generic.List<string>();
             var responseIndex = 0;
-            // Both the original and retry return 401 "Please create a new session"
+            // Both the original and the retry return 401 — the second 401 is propagated as-is.
             MockResponse[] outerResponses = new[]
             {
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\""),
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"Please create a new session\"")
+                CreateBlobGetResponse(401),
+                CreateBlobGetResponse(401)
             };
 
             var outerTransport = MockTransport.FromMessageCallback(msg =>
@@ -738,26 +739,6 @@ namespace Azure.Storage.Blobs.Tests
             // Final response is still 401 — not retried further.
             Assert.AreEqual(401, message.Response.Status);
             // Bearer was never invoked — second 401 doesn't trigger fallback.
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
-        }
-
-        [Test]
-        public async Task Response401_OtherError_NoRetry()
-        {
-            var mockBearer = CreateMockBearerPolicy();
-            var policy = CreatePolicy(
-                mockBearer,
-                SingleContainerOptions,
-                CreateSessionMockResponse());
-
-            var (message, outerTransport) = await SendBlobGetAsync(
-                policy,
-                BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(401, wwwAuthenticateHeader: "Bearer error=\"invalid_token\""));
-
-            Assert.AreEqual(1, outerTransport.Requests.Count);
-            Assert.AreEqual(401, message.Response.Status);
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
 

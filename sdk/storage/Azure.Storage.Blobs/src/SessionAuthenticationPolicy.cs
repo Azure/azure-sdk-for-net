@@ -39,7 +39,6 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private static readonly TimeSpan BackgroundAcquireTimeout = TimeSpan.FromSeconds(30);
 
-        private const string CreateNewSession = "Please create a new session";
         private const string SessionsUnavailable = "SessionOperationsTemporarilyUnavailable";
         private const string FeatureNotEnabled = "FeatureNotEnabled";
 
@@ -116,6 +115,12 @@ namespace Azure.Storage.Blobs
         /// Session tokens are only used for blob GET operations in <see cref="SessionMode.SingleContainer"/>
         /// mode targeting the configured container.
         /// </summary>
+        /// <returns>
+        /// <see cref="AuthState.UseSessionToken"/> if the request is eligible for session-token
+        /// authentication (a GET against a blob in the configured container, with no comp
+        /// query parameter, while in <see cref="SessionMode.SingleContainer"/> mode);
+        /// <see cref="AuthState.UseBearerToken"/> otherwise.
+        /// </returns>
         private AuthState AnalyzeRequest(HttpMessage message)
         {
             // Check if Sessions is disabled.
@@ -219,17 +224,12 @@ namespace Azure.Storage.Blobs
         {
             int statusCode = message.Response.Status;
 
-            // --- 401 Unauthorized ("Please create a new session") ---
-            if (statusCode == (int)HttpStatusCode.Unauthorized
-                && message.Response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out string wwwAuth))
+            // --- 401 Unauthorized ---
+            if (statusCode == (int)HttpStatusCode.Unauthorized)
             {
-                if (wwwAuth.IndexOf(CreateNewSession, StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    // Invalidate cache and retry.
-                    _sessionCache.Invalidate();
-                    return await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
-                }
-                return AuthState.SentWithSession;
+                // Invalidate cache and retry.
+                _sessionCache.Invalidate();
+                return await TryAcquireSignAndSendAsync(message, pipeline, async).ConfigureAwait(false);
             }
 
             // --- 503 SessionOperationsTemporarilyUnavailable ---
