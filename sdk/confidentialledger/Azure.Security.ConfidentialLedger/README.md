@@ -327,7 +327,7 @@ Users are managed directly with the confidential ledger instead of through Azure
 
 ```C# Snippet:NewUser
 string newUserAadObjectId = "<some AAD user or service princpal object Id>";
-ledgerClient.CreateOrUpdateUser(
+ledgerClient.CreateOrUpdateLedgerUser(
     newUserAadObjectId,
     RequestContent.Create(new { assignedRole = "Reader" }));
 ```
