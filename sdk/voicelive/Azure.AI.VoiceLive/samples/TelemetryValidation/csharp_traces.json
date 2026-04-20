@@ -1,0 +1,702 @@
+{
+  "name": "send session.update",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x9054c6c133857095",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.7092822Z",
+  "end_time": "2026-04-20T23:11:19.7180568Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "send",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.event_type": "session.update",
+    "gen_ai.voice.message_size": 142,
+    "gen_ai.system_instructions": "You are a helpful assistant. Keep replies short."
+  },
+  "events": [
+    {
+      "name": "session.update",
+      "timestamp": "2026-04-20T23:11:19.7135502\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022type\u0022:\u0022session.update\u0022,\u0022session\u0022:{\u0022model\u0022:\u0022gpt-4o\u0022,\u0022modalities\u0022:[\u0022text\u0022],\u0022instructions\u0022:\u0022You are a helpful assistant. Keep replies short.\u0022}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv session.created",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x360e6cb02d7cfa99",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.7577068Z",
+  "end_time": "2026-04-20T23:11:19.7581400Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.event_type": "session.created",
+    "gen_ai.voice.message_size": 1835,
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.response.model": "gpt-4o-2024-11-20",
+    "gen_ai.voice.input_audio_format": "pcm16",
+    "gen_ai.voice.output_audio_format": "pcm16"
+  },
+  "events": [
+    {
+      "name": "session.created",
+      "timestamp": "2026-04-20T23:11:19.7581058\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_45QOckriek8ZfBeM5Z40WF\u0022,\u0022type\u0022:\u0022session.created\u0022,\u0022session\u0022:{\u0022id\u0022:\u0022sess_3MMJuJ2KW7iNEwYxfYwGTo\u0022,\u0022model\u0022:\u0022gpt-4o-2024-11-20\u0022,\u0022modalities\u0022:[\u0022text\u0022,\u0022audio\u0022],\u0022instructions\u0022:\u0022You are a speech chat assistant.\\nYour personality is: The AI is engaging, informative, and empathetic.\\nThe AI is curious and is always interested in learning more about the human.\\nThe AI is calm and polite. You are great at asking questions and is a sensitive listener.\\nYou are relentlessly curious, but always polite and never probes too much.\\nYou are pretty smart but humble, and tries to keep things informal. Overall, You are pretty Zen.\\nYou are also: Relaxed, informal, chatty. Fun, and sometimes funny. Occasionally cheeky, and light-hearted.\\nDo not use markdown format, plain text is preferred.\u0022,\u0022voice\u0022:{\u0022name\u0022:\u0022en-US-AvaNeural\u0022,\u0022type\u0022:\u0022azure-standard\u0022,\u0022temperature\u0022:null,\u0022custom_lexicon_url\u0022:null,\u0022custom_text_normalization_url\u0022:null,\u0022prefer_locales\u0022:null,\u0022locale\u0022:null,\u0022style\u0022:null,\u0022pitch\u0022:null,\u0022rate\u0022:null,\u0022volume\u0022:null},\u0022input_audio_format\u0022:\u0022pcm16\u0022,\u0022output_audio_format\u0022:\u0022pcm16\u0022,\u0022input_audio_transcription\u0022:{\u0022model\u0022:\u0022azure-speech\u0022,\u0022language\u0022:null,\u0022prompt\u0022:null,\u0022custom_speech\u0022:null,\u0022phrase_list\u0022:null},\u0022input_audio_noise_reduction\u0022:null,\u0022turn_detection\u0022:{\u0022type\u0022:\u0022server_vad\u0022,\u0022threshold\u0022:0.5,\u0022prefix_padding_ms\u0022:300,\u0022silence_duration_ms\u0022:200,\u0022create_response\u0022:true,\u0022interrupt_response\u0022:true,\u0022idle_timeout_ms\u0022:null,\u0022speech_duration_ms\u0022:null,\u0022end_of_utterance_detection\u0022:null,\u0022auto_truncate\u0022:false,\u0022appended_text_after_truncation\u0022:null},\u0022tools\u0022:[],\u0022tool_choice\u0022:\u0022auto\u0022,\u0022temperature\u0022:0.8,\u0022max_response_output_tokens\u0022:\u0022inf\u0022,\u0022object\u0022:\u0022realtime.session\u0022,\u0022input_audio_sampling_rate\u0022:24000,\u0022animation\u0022:null,\u0022input_audio_echo_cancellation\u0022:null,\u0022avatar\u0022:null,\u0022output_audio_timestamp_types\u0022:null,\u0022truncation_strategy\u0022:null,\u0022include\u0022:null}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "send conversation.item.create",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x45dbb564145e27d3",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.7794867Z",
+  "end_time": "2026-04-20T23:11:19.7796953Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "send",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "conversation.item.create",
+    "gen_ai.voice.message_size": 152
+  },
+  "events": [
+    {
+      "name": "conversation.item.create",
+      "timestamp": "2026-04-20T23:11:19.7795066\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022type\u0022:\u0022conversation.item.create\u0022,\u0022item\u0022:{\u0022type\u0022:\u0022message\u0022,\u0022role\u0022:\u0022user\u0022,\u0022content\u0022:[{\u0022type\u0022:\u0022input_text\u0022,\u0022text\u0022:\u0022Say hello in exactly three words.\u0022}]}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "send response.create",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x94f487fe08a09eb8",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.7840140Z",
+  "end_time": "2026-04-20T23:11:19.7841508Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "send",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.create",
+    "gen_ai.voice.message_size": 26
+  },
+  "events": [
+    {
+      "name": "response.create",
+      "timestamp": "2026-04-20T23:11:19.7840293\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022type\u0022:\u0022response.create\u0022}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv session.updated",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x37d44a320e632302",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.8004356Z",
+  "end_time": "2026-04-20T23:11:19.8004921Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "session.updated",
+    "gen_ai.voice.message_size": 1265,
+    "gen_ai.response.model": "gpt-4o-2024-11-20",
+    "gen_ai.voice.input_audio_format": "pcm16",
+    "gen_ai.voice.output_audio_format": "pcm16"
+  },
+  "events": [
+    {
+      "name": "session.updated",
+      "timestamp": "2026-04-20T23:11:19.8004874\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_6LgpDGKnlL22LnCeoxt7eI\u0022,\u0022type\u0022:\u0022session.updated\u0022,\u0022session\u0022:{\u0022id\u0022:\u0022sess_3MMJuJ2KW7iNEwYxfYwGTo\u0022,\u0022model\u0022:\u0022gpt-4o-2024-11-20\u0022,\u0022modalities\u0022:[\u0022text\u0022],\u0022instructions\u0022:\u0022You are a helpful assistant. Keep replies short.\u0022,\u0022voice\u0022:{\u0022name\u0022:\u0022en-US-AvaNeural\u0022,\u0022type\u0022:\u0022azure-standard\u0022,\u0022temperature\u0022:null,\u0022custom_lexicon_url\u0022:null,\u0022custom_text_normalization_url\u0022:null,\u0022prefer_locales\u0022:null,\u0022locale\u0022:null,\u0022style\u0022:null,\u0022pitch\u0022:null,\u0022rate\u0022:null,\u0022volume\u0022:null},\u0022input_audio_format\u0022:\u0022pcm16\u0022,\u0022output_audio_format\u0022:\u0022pcm16\u0022,\u0022input_audio_transcription\u0022:{\u0022model\u0022:\u0022azure-speech\u0022,\u0022language\u0022:\u0022\u0022,\u0022prompt\u0022:null,\u0022custom_speech\u0022:null,\u0022phrase_list\u0022:null},\u0022input_audio_noise_reduction\u0022:null,\u0022turn_detection\u0022:{\u0022type\u0022:\u0022server_vad\u0022,\u0022threshold\u0022:0.5,\u0022prefix_padding_ms\u0022:300,\u0022silence_duration_ms\u0022:200,\u0022create_response\u0022:true,\u0022interrupt_response\u0022:true,\u0022idle_timeout_ms\u0022:null,\u0022speech_duration_ms\u0022:null,\u0022end_of_utterance_detection\u0022:null,\u0022auto_truncate\u0022:false,\u0022appended_text_after_truncation\u0022:null},\u0022tools\u0022:[],\u0022tool_choice\u0022:\u0022auto\u0022,\u0022temperature\u0022:0.8,\u0022max_response_output_tokens\u0022:\u0022inf\u0022,\u0022object\u0022:\u0022realtime.session\u0022,\u0022input_audio_sampling_rate\u0022:24000,\u0022animation\u0022:null,\u0022input_audio_echo_cancellation\u0022:null,\u0022avatar\u0022:null,\u0022output_audio_timestamp_types\u0022:null,\u0022truncation_strategy\u0022:null,\u0022include\u0022:null}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv conversation.item.created",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x5cad0a4a16739ae6",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.8519900Z",
+  "end_time": "2026-04-20T23:11:19.8527342Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "conversation.item.created",
+    "gen_ai.voice.message_size": 297,
+    "gen_ai.voice.item_id": "item_33zHBnwAStZeSl3lNY4OP7"
+  },
+  "events": [
+    {
+      "name": "conversation.item.created",
+      "timestamp": "2026-04-20T23:11:19.8527274\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_jDhIZSzvdvApEYc9bbPmQ\u0022,\u0022type\u0022:\u0022conversation.item.created\u0022,\u0022previous_item_id\u0022:\u0022\u0022,\u0022item\u0022:{\u0022id\u0022:\u0022item_33zHBnwAStZeSl3lNY4OP7\u0022,\u0022object\u0022:\u0022realtime.item\u0022,\u0022type\u0022:\u0022message\u0022,\u0022status\u0022:\u0022completed\u0022,\u0022role\u0022:\u0022user\u0022,\u0022content\u0022:[{\u0022type\u0022:\u0022input_text\u0022,\u0022text\u0022:\u0022Say hello in exactly three words.\u0022}]}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.created",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x2e6d09afa15bfb29",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:19.8621823Z",
+  "end_time": "2026-04-20T23:11:19.8622107Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.created",
+    "gen_ai.voice.message_size": 574
+  },
+  "events": [
+    {
+      "name": "response.created",
+      "timestamp": "2026-04-20T23:11:19.8622064\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_5SHm1WIXj9YpDjdPLHUbZh\u0022,\u0022type\u0022:\u0022response.created\u0022,\u0022response\u0022:{\u0022object\u0022:\u0022realtime.response\u0022,\u0022id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022status\u0022:\u0022in_progress\u0022,\u0022status_details\u0022:null,\u0022output\u0022:[],\u0022usage\u0022:null,\u0022conversation_id\u0022:\u0022\u0022,\u0022modalities\u0022:[\u0022text\u0022],\u0022voice\u0022:{\u0022name\u0022:\u0022en-US-AvaNeural\u0022,\u0022type\u0022:\u0022azure-standard\u0022,\u0022temperature\u0022:null,\u0022custom_lexicon_url\u0022:null,\u0022custom_text_normalization_url\u0022:null,\u0022prefer_locales\u0022:null,\u0022locale\u0022:null,\u0022style\u0022:null,\u0022pitch\u0022:null,\u0022rate\u0022:null,\u0022volume\u0022:null},\u0022output_audio_format\u0022:null,\u0022temperature\u0022:0.8,\u0022max_output_tokens\u0022:null,\u0022metadata\u0022:null}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.output_item.added",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0xb0f22d89fce7717a",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1227532Z",
+  "end_time": "2026-04-20T23:11:20.1228268Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.output_item.added",
+    "gen_ai.voice.message_size": 279,
+    "gen_ai.voice.item_id": "msg_4StzZ38x1TfYcXrg5LuZbN",
+    "gen_ai.voice.output_index": 0
+  },
+  "events": [
+    {
+      "name": "response.output_item.added",
+      "timestamp": "2026-04-20T23:11:20.1228179\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_3tUc03Q2ctNhS8sYNRKKyG\u0022,\u0022type\u0022:\u0022response.output_item.added\u0022,\u0022response_id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022output_index\u0022:0,\u0022item\u0022:{\u0022id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022object\u0022:\u0022realtime.item\u0022,\u0022type\u0022:\u0022message\u0022,\u0022status\u0022:\u0022incomplete\u0022,\u0022role\u0022:\u0022assistant\u0022,\u0022content\u0022:[]}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv conversation.item.created",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x9e8736a94e9784eb",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1305294Z",
+  "end_time": "2026-04-20T23:11:20.1305622Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "conversation.item.created",
+    "gen_ai.voice.message_size": 239,
+    "gen_ai.voice.item_id": "msg_4StzZ38x1TfYcXrg5LuZbN"
+  },
+  "events": [
+    {
+      "name": "conversation.item.created",
+      "timestamp": "2026-04-20T23:11:20.1305578\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_2dn5AipApmFfVlgt75Lqhg\u0022,\u0022type\u0022:\u0022conversation.item.created\u0022,\u0022previous_item_id\u0022:\u0022\u0022,\u0022item\u0022:{\u0022id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022object\u0022:\u0022realtime.item\u0022,\u0022type\u0022:\u0022message\u0022,\u0022status\u0022:\u0022incomplete\u0022,\u0022role\u0022:\u0022assistant\u0022,\u0022content\u0022:[]}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.content_part.added",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x77b1aa10ddf1b042",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1352384Z",
+  "end_time": "2026-04-20T23:11:20.1352653Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.content_part.added",
+    "gen_ai.voice.message_size": 230
+  },
+  "events": [
+    {
+      "name": "response.content_part.added",
+      "timestamp": "2026-04-20T23:11:20.1352609\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_qmXPqIG5EzL4dai6kFQM3\u0022,\u0022type\u0022:\u0022response.content_part.added\u0022,\u0022response_id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022item_id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022output_index\u0022:0,\u0022content_index\u0022:0,\u0022part\u0022:{\u0022type\u0022:\u0022text\u0022,\u0022text\u0022:\u0022\u0022}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.text.done",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x74b16f9e3040114b",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1594259Z",
+  "end_time": "2026-04-20T23:11:20.1594666Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.text.done",
+    "gen_ai.voice.message_size": 216
+  },
+  "events": [
+    {
+      "name": "response.text.done",
+      "timestamp": "2026-04-20T23:11:20.1594606\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_2XT2tuZhfjkoYuYjKJGRbF\u0022,\u0022type\u0022:\u0022response.text.done\u0022,\u0022response_id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022item_id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022output_index\u0022:0,\u0022content_index\u0022:0,\u0022text\u0022:\u0022Hello, my friend!\u0022}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.content_part.done",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x990588ff29a45197",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1647865Z",
+  "end_time": "2026-04-20T23:11:20.1648160Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.content_part.done",
+    "gen_ai.voice.message_size": 246
+  },
+  "events": [
+    {
+      "name": "response.content_part.done",
+      "timestamp": "2026-04-20T23:11:20.1648116\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_8ze0nOwoQDE8RdrS0it3H\u0022,\u0022type\u0022:\u0022response.content_part.done\u0022,\u0022response_id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022item_id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022output_index\u0022:0,\u0022content_index\u0022:0,\u0022part\u0022:{\u0022type\u0022:\u0022text\u0022,\u0022text\u0022:\u0022Hello, my friend!\u0022}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.output_item.done",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x17bab6b45860f491",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.1696195Z",
+  "end_time": "2026-04-20T23:11:20.1696889Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.output_item.done",
+    "gen_ai.voice.message_size": 319,
+    "gen_ai.voice.item_id": "msg_4StzZ38x1TfYcXrg5LuZbN",
+    "gen_ai.voice.output_index": 0
+  },
+  "events": [
+    {
+      "name": "response.output_item.done",
+      "timestamp": "2026-04-20T23:11:20.1696829\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_4eeUVIQmegWpFKwRvklCsu\u0022,\u0022type\u0022:\u0022response.output_item.done\u0022,\u0022response_id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022output_index\u0022:0,\u0022item\u0022:{\u0022id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022object\u0022:\u0022realtime.item\u0022,\u0022type\u0022:\u0022message\u0022,\u0022status\u0022:\u0022completed\u0022,\u0022role\u0022:\u0022assistant\u0022,\u0022content\u0022:[{\u0022type\u0022:\u0022text\u0022,\u0022text\u0022:\u0022Hello, my friend!\u0022}]}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "recv response.done",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0x535a23fbec1dbbc7",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "parent_id": "0xd0c1bd3d6972ca75",
+  "start_time": "2026-04-20T23:11:20.2184249Z",
+  "end_time": "2026-04-20T23:11:20.2213471Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "recv",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo",
+    "gen_ai.voice.event_type": "response.done",
+    "gen_ai.voice.message_size": 1037,
+    "gen_ai.response.id": "resp_3gKdS20yXRfLPQtGBqXolq",
+    "gen_ai.response.finish_reasons": "completed",
+    "gen_ai.usage.input_tokens": 0,
+    "gen_ai.usage.output_tokens": 6
+  },
+  "events": [
+    {
+      "name": "response.done",
+      "timestamp": "2026-04-20T23:11:20.2212897\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "Hello, my friend!"
+      }
+    },
+    {
+      "name": "response.done",
+      "timestamp": "2026-04-20T23:11:20.2213007\u002B00:00",
+      "attributes": {
+        "gen_ai.event.content": "{\u0022event_id\u0022:\u0022event_5sQnJi5QOxZWwJR7cYQKNt\u0022,\u0022type\u0022:\u0022response.done\u0022,\u0022response\u0022:{\u0022object\u0022:\u0022realtime.response\u0022,\u0022id\u0022:\u0022resp_3gKdS20yXRfLPQtGBqXolq\u0022,\u0022status\u0022:\u0022completed\u0022,\u0022status_details\u0022:null,\u0022output\u0022:[{\u0022id\u0022:\u0022msg_4StzZ38x1TfYcXrg5LuZbN\u0022,\u0022object\u0022:\u0022realtime.item\u0022,\u0022type\u0022:\u0022message\u0022,\u0022status\u0022:\u0022completed\u0022,\u0022role\u0022:\u0022assistant\u0022,\u0022content\u0022:[{\u0022type\u0022:\u0022text\u0022,\u0022text\u0022:\u0022Hello, my friend!\u0022}]}],\u0022usage\u0022:{\u0022total_tokens\u0022:6,\u0022input_tokens\u0022:0,\u0022output_tokens\u0022:6,\u0022input_token_details\u0022:{\u0022cached_tokens\u0022:0,\u0022text_tokens\u0022:0,\u0022audio_tokens\u0022:0,\u0022image_tokens\u0022:0,\u0022cached_tokens_details\u0022:{\u0022text_tokens\u0022:0,\u0022audio_tokens\u0022:0,\u0022image_tokens\u0022:0}},\u0022output_token_details\u0022:{\u0022text_tokens\u0022:6,\u0022audio_tokens\u0022:0,\u0022reasoning_tokens\u0022:0}},\u0022conversation_id\u0022:\u0022\u0022,\u0022modalities\u0022:[\u0022text\u0022],\u0022voice\u0022:{\u0022name\u0022:\u0022en-US-AvaNeural\u0022,\u0022type\u0022:\u0022azure-standard\u0022,\u0022temperature\u0022:null,\u0022custom_lexicon_url\u0022:null,\u0022custom_text_normalization_url\u0022:null,\u0022prefer_locales\u0022:null,\u0022locale\u0022:null,\u0022style\u0022:null,\u0022pitch\u0022:null,\u0022rate\u0022:null,\u0022volume\u0022:null},\u0022output_audio_format\u0022:null,\u0022temperature\u0022:0.8,\u0022max_output_tokens\u0022:null,\u0022metadata\u0022:null}}"
+      }
+    }
+  ],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+},
+{
+  "name": "connect",
+  "context": {
+    "trace_id": "0x0e004014ecfac4906f4b37f811c85348",
+    "span_id": "0xd0c1bd3d6972ca75",
+    "trace_state": "[]"
+  },
+  "kind": "SpanKind.CLIENT",
+  "start_time": "2026-04-20T23:11:19.3020866Z",
+  "end_time": "2026-04-20T23:11:21.3266244Z",
+  "status": {
+    "status_code": "UNSET"
+  },
+  "attributes": {
+    "az.namespace": "Microsoft.CognitiveServices",
+    "gen_ai.provider.name": "microsoft.foundry",
+    "gen_ai.system": "az.ai.voicelive",
+    "gen_ai.operation.name": "connect",
+    "server.address": "emilyjiji-ai.services.ai.azure.com",
+    "server.port": 443,
+    "gen_ai.request.model": "gpt-4o",
+    "gen_ai.voice.session_id": "sess_3MMJuJ2KW7iNEwYxfYwGTo"
+  },
+  "events": [],
+  "links": [],
+  "resource": {
+    "attributes": {
+      "telemetry.sdk.language": "dotnet",
+      "telemetry.sdk.name": "opentelemetry",
+      "telemetry.sdk.version": "1.15.1",
+      "service.name": "unknown_service"
+    },
+    "schema_url": ""
+  }
+}

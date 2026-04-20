@@ -192,6 +192,8 @@ namespace Azure.AI.VoiceLive
                 _tracer?.OnSendResponseCancel();
 
             Activity sendActivity = _tracer?.StartSendActivity(eventType);
+            if (sendActivity?.IsAllDataRequested == true)
+                sendActivity.SetTag(VoiceLiveTelemetryAttributeKeys.GenAiVoiceMessageSize, (long)data.ToMemory().Length);
             try
             {
                 if (sendActivity != null)

@@ -130,7 +130,7 @@ namespace Azure.AI.VoiceLive
 
             // Instrument the recv span synchronously. The span starts and stops before yielding
             // so it only covers message parsing/enrichment, not the caller's processing time.
-            InstrumentRecvEvent(eventType, root);
+            InstrumentRecvEvent(eventType, root, message.ToString(), message.ToMemory().Length);
 
             // Deserialize as a server event
             sessionUpdate = SessionUpdate.DeserializeSessionUpdate(root, ModelSerializationExtensions.WireOptions);
@@ -145,7 +145,7 @@ namespace Azure.AI.VoiceLive
         /// Creates a short-lived recv span for the given event type, enriches it with typed attributes,
         /// and stops it synchronously. Telemetry errors are swallowed to never break message processing.
         /// </summary>
-        private void InstrumentRecvEvent(string eventType, JsonElement root)
+        private void InstrumentRecvEvent(string eventType, JsonElement root, string rawJson, int messageSize = 0)
         {
             if (_tracer == null || !_tracer.IsEnabled || string.IsNullOrEmpty(eventType))
                 return;
@@ -158,6 +158,8 @@ namespace Azure.AI.VoiceLive
             try
             {
                 activity = _tracer.StartRecvActivity(eventType);
+                if (activity?.IsAllDataRequested == true && messageSize > 0)
+                    activity.SetTag(VoiceLiveTelemetryAttributeKeys.GenAiVoiceMessageSize, (long)messageSize);
 
                 switch (eventType)
                 {
@@ -201,6 +203,8 @@ namespace Azure.AI.VoiceLive
                         _tracer.EnrichWithItemIds(activity, root);
                         break;
                 }
+
+                _tracer.AddRecvContentEvent(activity, eventType, rawJson);
             }
             catch
             {

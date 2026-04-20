@@ -68,6 +68,7 @@ namespace Azure.AI.VoiceLive.Telemetry
 
         // --- Per-message attributes ---
         public const string GenAiVoiceMessageSize = "gen_ai.voice.message_size";
+        public const string GenAiVoiceEventType = "gen_ai.voice.event_type";
         public const string GenAiVoiceFirstTokenLatencyMs = "gen_ai.voice.first_token_latency_ms";
 
         // --- Error attributes ---

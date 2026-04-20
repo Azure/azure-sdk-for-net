@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive.Telemetry
             if (endpoint != null)
             {
                 _serverAddress = endpoint.Host;
-                _serverPort = endpoint.IsDefaultPort ? 0 : endpoint.Port;
+                _serverPort = endpoint.Port;
 
                 // Extract model or agent parameters from the WebSocket endpoint query string.
                 // Model session:  ?model=gpt-4o-realtime-preview
@@ -114,8 +114,7 @@ namespace Azure.AI.VoiceLive.Telemetry
             _connectActivity = ActivitySource.StartActivity(Keys.OperationNameConnect, ActivityKind.Client);
             if (_connectActivity?.IsAllDataRequested == true)
             {
-                SetCommonAttributes(_connectActivity);
-                _connectActivity.SetTag(Keys.GenAiOperationName, Keys.OperationNameConnect);
+                SetCommonAttributes(_connectActivity, Keys.OperationNameConnect);
 
                 if (!string.IsNullOrEmpty(_model))
                     _connectActivity.SetTag(Keys.GenAiRequestModel, _model);
@@ -187,13 +186,13 @@ namespace Azure.AI.VoiceLive.Telemetry
 
             if (activity?.IsAllDataRequested == true)
             {
-                SetCommonAttributes(activity);
-                activity.SetTag(Keys.GenAiOperationName, Keys.OperationNameSend);
+                SetCommonAttributes(activity, Keys.OperationNameSend);
 
                 if (!string.IsNullOrEmpty(_model))
                     activity.SetTag(Keys.GenAiRequestModel, _model);
                 if (!string.IsNullOrEmpty(_sessionId))
                     activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                activity.SetTag(Keys.GenAiVoiceEventType, eventType);
             }
 
             return activity;
@@ -218,13 +217,13 @@ namespace Azure.AI.VoiceLive.Telemetry
 
             if (activity?.IsAllDataRequested == true)
             {
-                SetCommonAttributes(activity);
-                activity.SetTag(Keys.GenAiOperationName, Keys.OperationNameRecv);
+                SetCommonAttributes(activity, Keys.OperationNameRecv);
 
                 if (!string.IsNullOrEmpty(_model))
                     activity.SetTag(Keys.GenAiRequestModel, _model);
                 if (!string.IsNullOrEmpty(_sessionId))
                     activity.SetTag(Keys.GenAiVoiceSessionId, _sessionId);
+                activity.SetTag(Keys.GenAiVoiceEventType, eventType);
             }
 
             return activity;
@@ -280,18 +279,42 @@ namespace Azure.AI.VoiceLive.Telemetry
         }
 
         /// <summary>
-        /// Adds a content event to the send activity if content recording is enabled.
+        /// Adds a gen_ai.input.messages event to the send activity. Always emits gen_ai.system and
+        /// gen_ai.voice.event_type; conditionally adds gen_ai.event.content when content recording is on.
         /// Only call for non-audio commands (audio content would be excessively large).
         /// </summary>
         public void AddSendContentEvent(Activity activity, string eventType, string jsonContent)
         {
-            if (!_enableContentRecording || activity?.IsAllDataRequested != true || string.IsNullOrEmpty(jsonContent))
+            if (activity?.IsAllDataRequested != true)
                 return;
 
-            activity.AddEvent(new ActivityEvent(eventType, tags: new ActivityTagsCollection
+            var tags = new ActivityTagsCollection
             {
-                { Keys.GenAiEventContent, jsonContent }
-            }));
+                { Keys.GenAiSystem, Keys.GenAiSystemValue },
+                { Keys.GenAiVoiceEventType, eventType }
+            };
+            if (_enableContentRecording && !string.IsNullOrEmpty(jsonContent))
+                tags.Add(Keys.GenAiEventContent, jsonContent);
+            activity.AddEvent(new ActivityEvent("gen_ai.input.messages", tags: tags));
+        }
+
+        /// <summary>
+        /// Adds a gen_ai.output.messages event to the recv activity. Always emits gen_ai.system and
+        /// gen_ai.voice.event_type; conditionally adds gen_ai.event.content when content recording is on.
+        /// </summary>
+        public void AddRecvContentEvent(Activity activity, string eventType, string jsonContent)
+        {
+            if (activity?.IsAllDataRequested != true)
+                return;
+
+            var tags = new ActivityTagsCollection
+            {
+                { Keys.GenAiSystem, Keys.GenAiSystemValue },
+                { Keys.GenAiVoiceEventType, eventType }
+            };
+            if (_enableContentRecording && !string.IsNullOrEmpty(jsonContent))
+                tags.Add(Keys.GenAiEventContent, jsonContent);
+            activity.AddEvent(new ActivityEvent("gen_ai.output.messages", tags: tags));
         }
 
         // ─── Recv-side enrichment ────────────────────────────────────────────────────
@@ -361,17 +384,18 @@ namespace Azure.AI.VoiceLive.Telemetry
                     activity.SetTag(Keys.GenAiUsageOutputTokens, outputTokens.GetInt32());
             }
 
+            var eventTags = new ActivityTagsCollection
+            {
+                { Keys.GenAiSystem, Keys.GenAiSystemValue },
+                { Keys.GenAiVoiceEventType, "response.done" }
+            };
             if (_enableContentRecording)
             {
                 string content = ExtractResponseDoneContent(response);
                 if (!string.IsNullOrEmpty(content))
-                {
-                    activity.AddEvent(new ActivityEvent("response.done", tags: new ActivityTagsCollection
-                    {
-                        { Keys.GenAiEventContent, content }
-                    }));
-                }
+                    eventTags.Add(Keys.GenAiEventContent, content);
             }
+            activity.AddEvent(new ActivityEvent("gen_ai.output.messages", tags: eventTags));
         }
 
         /// <summary>
@@ -471,11 +495,12 @@ namespace Azure.AI.VoiceLive.Telemetry
 
         // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-        private void SetCommonAttributes(Activity activity)
+        private void SetCommonAttributes(Activity activity, string operationName)
         {
             activity.SetTag(Keys.AzNamespace, Keys.AzNamespaceValue);
-            activity.SetTag(Keys.GenAiSystem, Keys.GenAiSystemValue);
             activity.SetTag(Keys.GenAiProviderName, Keys.GenAiProviderValue);
+            activity.SetTag(Keys.GenAiSystem, Keys.GenAiSystemValue);
+            activity.SetTag(Keys.GenAiOperationName, operationName);
 
             if (!string.IsNullOrEmpty(_serverAddress))
                 activity.SetTag(Keys.ServerAddress, _serverAddress);
