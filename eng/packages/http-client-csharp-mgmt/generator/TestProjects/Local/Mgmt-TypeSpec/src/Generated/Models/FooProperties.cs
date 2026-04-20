@@ -118,7 +118,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
         [WirePath("writableSubResourceProp")]
-        public WritableSubResource WritableSubResourceProp { get; set; }
+        internal WritableSubResource WritableSubResourceProp { get; set; }
 
         /// <summary> Test case for multi-layer safe flatten. </summary>
         [WirePath("computeFleetVmProfile")]
@@ -163,6 +163,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     VmProfile = new VmProfile();
                 }
                 return VmProfile.GalleryApplications;
+            }
+        }
+
+        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
+        [WirePath("writableSubResourceProp.id")]
+        public ResourceIdentifier WritableSubResourcePropId
+        {
+            get
+            {
+                return WritableSubResourceProp is null ? default : WritableSubResourceProp.Id;
+            }
+            set
+            {
+                if (WritableSubResourceProp is null)
+                {
+                    WritableSubResourceProp = new WritableSubResource();
+                }
+                WritableSubResourceProp.Id = value;
             }
         }
 

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
@@ -164,6 +165,89 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Match(@"\breturn\s+(?:this\.)?Data\.Errors;"));
         }
 
+        [Test]
+        public void TestFlattenPropertyProjectsWritableSubResourceToLegacyIdShape()
+        {
+            var writableSubResourceModel = CreateKnownManagementModel("WritableSubResource", "Azure.ResourceManager.Models.WritableSubResource");
+
+            var virtualNetworkLinkProperty = InputFactory.Property(
+                "virtualNetworkLink",
+                writableSubResourceModel,
+                isRequired: false,
+                serializedName: "virtualNetworkLink");
+            var linkPropertiesModel = InputFactory.Model(
+                "LinkProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [virtualNetworkLinkProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", linkPropertiesModel, isRequired: false, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+
+            var rulesetModel = InputFactory.Model(
+                "VirtualNetworkDnsForwardingRuleset",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [rulesetModel, linkPropertiesModel, writableSubResourceModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(rulesetModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var projectedProperty = model!.Properties.FirstOrDefault(p => p.Name == "VirtualNetworkLinkId");
+            Assert.IsNotNull(projectedProperty, "Flattened WritableSubResource should project to a legacy ...Id property");
+            Assert.AreEqual(typeof(ResourceIdentifier), projectedProperty!.Type.FrameworkType);
+            Assert.IsTrue(projectedProperty.Body.HasSetter, "WritableSubResource Id projection should preserve a setter");
+            Assert.IsNull(model.Properties.FirstOrDefault(p => p.Name == "VirtualNetworkLink"));
+        }
+
+        [Test]
+        public void TestSafeFlattenProjectsSubResourceToReadOnlyLegacyIdShape()
+        {
+            var subResourceModel = CreateKnownManagementModel("SubResource", "Azure.ResourceManager.Models.SubResource");
+            var privateEndpointProperty = InputFactory.Property(
+                "privateEndpoint",
+                subResourceModel,
+                isRequired: false,
+                isReadOnly: true,
+                serializedName: "privateEndpoint");
+            var connectionPropertiesModel = InputFactory.Model(
+                "PrivateEndpointConnectionProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [privateEndpointProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [connectionPropertiesModel, subResourceModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(connectionPropertiesModel);
+            Assert.IsNotNull(model);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(visitTypeCore, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            var projectedProperty = model!.Properties.FirstOrDefault(p => p.Name == "PrivateEndpointId");
+            Assert.IsNotNull(projectedProperty, "Flattened SubResource should project to a legacy ...Id property");
+            Assert.AreEqual(typeof(ResourceIdentifier), projectedProperty!.Type.FrameworkType);
+            Assert.IsFalse(projectedProperty.Body.HasSetter, "SubResource Id projection should remain read-only");
+        }
+
         /// <summary>
         /// Verifies that FixBackwardCompatOverloads correctly reorders arguments in
         /// backward-compat overloads when the primary method's parameter order has changed
@@ -275,6 +359,29 @@ namespace Azure.Generator.Mgmt.Tests
                 BindingFlags.Public | BindingFlags.Instance);
             Assert.IsNotNull(decoratorsProperty, "Could not find InputModelProperty.Decorators property");
             decoratorsProperty!.SetValue(property, new[] { decorator });
+        }
+
+        private static InputModelType CreateKnownManagementModel(string name, string crossLanguageDefinitionId)
+        {
+            return new InputModelType(
+                name,
+                "Azure.ResourceManager.Models",
+                crossLanguageDefinitionId,
+                "public",
+                null,
+                null,
+                $"{name} description",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("id", InputPrimitiveType.String, serializedName: "id")],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>().AsReadOnly(),
+                null,
+                false,
+                new(),
+                false);
         }
 
         /// <summary>

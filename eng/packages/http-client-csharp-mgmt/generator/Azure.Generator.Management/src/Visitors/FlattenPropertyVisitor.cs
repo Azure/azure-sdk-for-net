@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -578,6 +580,12 @@ namespace Azure.Generator.Management.Visitors
             {
                 // only flatten complex type properties
                 var propertyType = internalProperty.Type;
+                if (IsResourceIdentifierWrapperType(propertyType))
+                {
+                    isSafeFlatten = SafeFlattenResourceIdentifierWrapper(model, propertyMap, internalProperty) || isSafeFlatten;
+                    continue;
+                }
+
                 if (!TryGetModelProvider(propertyType, out var modelProvider))
                 {
                     continue;
@@ -717,6 +725,90 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.SerializedName,
                 innerPropertyWireInfo.IsHttpMetadata,
                 innerPropertyWireInfo.IsApiVersion);
+        }
+
+        private static bool IsResourceIdentifierWrapperType(CSharpType type)
+        {
+            var nonNullableType = type.WithNullable(false);
+            return nonNullableType.AreNamesEqual(typeof(WritableSubResource))
+                || nonNullableType.AreNamesEqual(typeof(SubResource));
+        }
+
+        private static bool IsWritableResourceIdentifierWrapperType(CSharpType type)
+            => type.WithNullable(false).AreNamesEqual(typeof(WritableSubResource));
+
+        private bool SafeFlattenResourceIdentifierWrapper(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
+        {
+            var idWireInfo = internalProperty.WireInfo is null
+                ? null
+                : new PropertyWireInformation(
+                    internalProperty.WireInfo.SerializationFormat,
+                    internalProperty.WireInfo.IsRequired,
+                    internalProperty.WireInfo.IsReadOnly,
+                    internalProperty.WireInfo.IsNullable,
+                    false,
+                    "id",
+                    false,
+                    false);
+            var idProperty = new PropertyProvider(
+                internalProperty.Description,
+                internalProperty.Modifiers,
+                typeof(ResourceIdentifier),
+                "Id",
+                new AutoPropertyBody(false),
+                model,
+                explicitInterface: internalProperty.ExplicitInterface,
+                wireInfo: idWireInfo,
+                isRef: internalProperty.IsRef,
+                attributes: internalProperty.Attributes);
+
+            var flattenedProperty = new FlattenedPropertyProvider(
+                internalProperty.Description,
+                internalProperty.Modifiers,
+                typeof(ResourceIdentifier),
+                PropertyHelpers.GetCombinedPropertyName(idProperty, internalProperty),
+                new MethodPropertyBody(
+                    BuildResourceIdentifierWrapperGetter(internalProperty),
+                    !internalProperty.Body.HasSetter || !IsWritableResourceIdentifierWrapperType(internalProperty.Type) ? null : BuildResourceIdentifierWrapperSetter(internalProperty)),
+                model,
+                internalProperty,
+                idProperty,
+                internalProperty.ExplicitInterface,
+                ConstructFlattenPropertyWireInfo(internalProperty, idProperty),
+                internalProperty.IsRef,
+                internalProperty.Attributes);
+
+            internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
+            if (propertyMap.TryGetValue(internalProperty, out var value))
+            {
+                value.Add(new(flattenedProperty, internalProperty));
+            }
+            else
+            {
+                propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
+            }
+            return true;
+        }
+
+        private static MethodBodyStatement BuildResourceIdentifierWrapperGetter(PropertyProvider internalProperty)
+        {
+            var internalPropertyExpression = This.Property(internalProperty.Name);
+            return Return(new TernaryConditionalExpression(
+                internalPropertyExpression.Is(Null),
+                Default,
+                internalPropertyExpression.Property("Id")));
+        }
+
+        private static MethodBodyStatement BuildResourceIdentifierWrapperSetter(PropertyProvider internalProperty)
+        {
+            var internalPropertyExpression = This.Property(internalProperty.Name);
+            return new MethodBodyStatements([
+                new IfStatement(internalPropertyExpression.Is(Null))
+                {
+                    internalPropertyExpression.Assign(New.Instance(internalProperty.Type)).Terminate()
+                },
+                internalPropertyExpression.Property("Id").Assign(Value).Terminate()
+            ]);
         }
 
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)

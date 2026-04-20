@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Resources.Models;
 
@@ -50,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The private endpoint resource. </summary>
         [WirePath("privateEndpoint")]
-        public SubResource PrivateEndpoint { get; set; }
+        internal SubResource PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
@@ -59,5 +60,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("provisioningState")]
         public AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The private endpoint resource. </summary>
+        [WirePath("privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+        }
     }
 }

@@ -209,24 +209,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
-        [WirePath("properties.writableSubResourceProp")]
-        public WritableSubResource WritableSubResourceProp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WritableSubResourceProp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FooProperties();
-                }
-                Properties.WritableSubResourceProp = value;
-            }
-        }
-
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties.nestedProperty.properties")]
         public FooProperties NestedPropertyProperties
@@ -270,6 +252,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new FooProperties();
                 }
                 return Properties.VmGalleryApplications;
+            }
+        }
+
+        /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
+        [WirePath("properties.writableSubResourceProp.id")]
+        public ResourceIdentifier WritableSubResourcePropId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableSubResourcePropId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                Properties.WritableSubResourcePropId = value;
             }
         }
 
