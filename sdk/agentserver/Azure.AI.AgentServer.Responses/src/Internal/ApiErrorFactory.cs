@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
@@ -33,7 +32,7 @@ internal static class ApiErrorFactory
     /// Creates an <see cref="IResult"/> that serializes an <see cref="ApiErrorResponse"/>
     /// with the given parameters.
     /// </summary>
-    internal static IResult CreateErrorResult(
+    internal static ApiErrorResult CreateErrorResult(
         int statusCode,
         string type,
         string message,
@@ -41,39 +40,39 @@ internal static class ApiErrorFactory
         string? param = null)
     {
         var error = ModelFactory.Error(code: code, message: message, param: param, type: type);
-        return Results.Json(ModelFactory.ApiErrorResponse(error), SharedJsonOptions.Instance, statusCode: statusCode);
+        return new ApiErrorResult(ModelFactory.ApiErrorResponse(error), statusCode);
     }
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a 400 <c>invalid_request_error</c>.
     /// </summary>
-    internal static IResult InvalidRequest(string message, string? code = null, string? param = null)
+    internal static ApiErrorResult InvalidRequest(string message, string? code = null, string? param = null)
         => CreateErrorResult(400, "invalid_request_error", message, code ?? "invalid_request_error", param);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a 404 <c>invalid_request_error</c>.
     /// </summary>
-    internal static IResult NotFound(string message, string? code = null, string? param = null)
+    internal static ApiErrorResult NotFound(string message, string? code = null, string? param = null)
         => CreateErrorResult(404, "invalid_request_error", message, code ?? "invalid_request_error", param);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a 500 <c>server_error</c>
     /// with the generic safe message.
     /// </summary>
-    internal static IResult ServerError()
+    internal static ApiErrorResult ServerError()
         => CreateErrorResult(500, "server_error", GenericServerErrorMessage, code: "server_error");
 
     /// <summary>
     /// Creates an <see cref="IResult"/> wrapping a pre-built <see cref="ResponsesApiException"/>.
     /// </summary>
-    internal static IResult FromApiException(ResponsesApiException ex)
-        => Results.Json(ModelFactory.ApiErrorResponse(ex.Error), SharedJsonOptions.Instance, statusCode: ex.StatusCode);
+    internal static ApiErrorResult FromApiException(ResponsesApiException ex)
+        => new(ModelFactory.ApiErrorResponse(ex.Error), ex.StatusCode);
 
     /// <summary>
     /// Creates an <see cref="IResult"/> for a <see cref="PayloadValidationException"/>
     /// with per-field detail errors.
     /// </summary>
-    internal static IResult PayloadValidation(PayloadValidationException ex)
+    internal static ApiErrorResult PayloadValidation(PayloadValidationException ex)
     {
         var detailsList = new List<Models.Error>();
         foreach (var validationError in ex.Errors)
@@ -90,7 +89,7 @@ internal static class ApiErrorFactory
             type: "invalid_request_error",
             details: detailsList);
 
-        return Results.Json(ModelFactory.ApiErrorResponse(topLevelError), SharedJsonOptions.Instance, statusCode: 400);
+        return new ApiErrorResult(ModelFactory.ApiErrorResponse(topLevelError), 400);
     }
 
     // --- Standalone Error model (for ResponsesApiException construction) ---

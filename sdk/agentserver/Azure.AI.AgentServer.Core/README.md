@@ -81,7 +81,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Inbound request logging is enabled automatically for Tier 1 and Tier 2 setups; for Tier 3, call `AddAgentServerLogging()` and `UseAgentServerLogging()` to enable it. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Inbound request logging is enabled automatically for Tier 1 and Tier 2 setups; for Tier 3, call `AddAgentServerCore()` and `UseAgentServerCore()` to enable it. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
 
 ## Next steps
 
