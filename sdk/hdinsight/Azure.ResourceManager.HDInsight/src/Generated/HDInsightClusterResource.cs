@@ -1475,9 +1475,9 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DisableAzureMonitorAgentAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DisableAzureMonitorAgentExtensionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgent");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgentExtension");
             scope.Start();
             try
             {
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1524,9 +1524,9 @@ namespace Azure.ResourceManager.HDInsight
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DisableAzureMonitorAgent(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DisableAzureMonitorAgentExtension(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgent");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.DisableAzureMonitorAgentExtension");
             scope.Start();
             try
             {
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1779,11 +1779,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="content"> The Log Analytics workspace parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> EnableAzureMonitorAgentAsync(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> EnableAzureMonitorAgentExtensionAsync(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgent");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgentExtension");
             scope.Start();
             try
             {
@@ -1791,7 +1791,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1832,11 +1832,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="content"> The Log Analytics workspace parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation EnableAzureMonitorAgent(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation EnableAzureMonitorAgentExtension(WaitUntil waitUntil, HDInsightAzureMonitorExtensionEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgent");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.EnableAzureMonitorAgentExtension");
             scope.Start();
             try
             {
@@ -1844,7 +1844,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1988,9 +1988,9 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorAgentStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HDInsightAzureMonitorExtensionStatus>> GetAzureMonitorAgentStatusExtensionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatus");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatusExtension");
             scope.Start();
             try
             {
@@ -1998,7 +1998,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2036,9 +2036,9 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HDInsightAzureMonitorExtensionStatus> GetAzureMonitorAgentStatus(CancellationToken cancellationToken = default)
+        public virtual Response<HDInsightAzureMonitorExtensionStatus> GetAzureMonitorAgentStatusExtension(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatus");
+            using DiagnosticScope scope = _extensionsClientDiagnostics.CreateScope("HDInsightClusterResource.GetAzureMonitorAgentStatusExtension");
             scope.Start();
             try
             {
@@ -2046,7 +2046,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
