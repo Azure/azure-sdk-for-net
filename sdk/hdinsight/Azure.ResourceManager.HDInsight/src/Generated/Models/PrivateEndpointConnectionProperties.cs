@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
     }

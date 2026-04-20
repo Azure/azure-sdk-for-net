@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         }
 
         [RecordedTest]
-        public async Task TestCreateClusterWithPublicIpTag()
+        public async Task TestCreateClusterWithPublicIPTag()
         {
             string clusterName = "hdi-iptag";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
