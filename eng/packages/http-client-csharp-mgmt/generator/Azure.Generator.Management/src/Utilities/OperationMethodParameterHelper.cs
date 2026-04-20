@@ -24,7 +24,8 @@ namespace Azure.Generator.Management.Utilities
             MethodProvider convenienceMethod,
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
-            bool shouldApplyLroHandling = false)
+            bool shouldApplyLroHandling = false,
+            ParameterProvider? scopeParameter = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
@@ -34,6 +35,13 @@ namespace Azure.Generator.Management.Utilities
             if (shouldApplyLroHandling)
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
+            }
+
+            // Add scope parameter for extension-scoped non-resource methods on ArmClient
+            if (scopeParameter != null)
+            {
+                requiredParameters.Add(scopeParameter);
+                scopeParameterTransformed = true;
             }
 
             // Iterate through the convenience method parameters directly
@@ -77,12 +85,13 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 // Apply name transformations as needed
-                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope
+                // For extension-scoped operations in MockableArmClient, transform the first string parameter to ResourceIdentifier scope.
+                // Override validation to AssertNotNull because the original string-based AssertNotNullOrEmpty no longer applies.
                 if (enclosingTypeProvider is MockableArmClientProvider &&
                     !scopeParameterTransformed &&
                     convenienceParam.Type.Equals(typeof(string)))
                 {
-                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                    outputParameter = RenameWithNewInstance(outputParameter, "scope", description: $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
                     scopeParameterTransformed = true;
                 }
 
@@ -109,7 +118,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -125,6 +134,6 @@ namespace Azure.Generator.Management.Utilities
                     initializationValue: outputParameter.InitializationValue,
                     location: outputParameter.Location,
                     wireInfo: outputParameter.WireInfo,
-                    validation: outputParameter.Validation);
+                    validation: validation ?? outputParameter.Validation);
     }
 }

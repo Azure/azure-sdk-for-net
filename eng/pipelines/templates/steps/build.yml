@@ -50,6 +50,13 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
+  - ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+    # Run CODEOWNERS verification before artifacts are produced and uploaded to
+    # prevent artifact collisions.
+    - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+
   - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml

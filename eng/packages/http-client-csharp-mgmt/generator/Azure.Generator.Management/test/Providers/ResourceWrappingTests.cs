@@ -363,8 +363,8 @@ namespace Azure.Generator.Management.Tests.Providers
             var serverDecorator = BuildArmProviderSchema(
                 serverModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Read, getServerMethod, new RequestPathPattern(getServerOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null!),
-                    new ResourceMethod(operationKind, listConfigsMethod, new RequestPathPattern(listConfigsPath), ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getServerMethod, new RequestPathPattern(getServerOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null), null!),
+                    new ResourceMethod(operationKind, listConfigsMethod, new RequestPathPattern(listConfigsPath), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(serverResourceIdPattern), null), null!),
                 ],
                 serverResourceIdPattern,
                 "Microsoft.Test/servers",
@@ -375,7 +375,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var configDecorator = BuildArmProviderSchema(
                 configModel,
                 [
-                    new ResourceMethod(ResourceOperationKind.Read, getConfigMethod, new RequestPathPattern(getConfigOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(configResourceIdPattern), null!),
+                    new ResourceMethod(ResourceOperationKind.Read, getConfigMethod, new RequestPathPattern(getConfigOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(configResourceIdPattern), null), null!),
                 ],
                 configResourceIdPattern,
                 "Microsoft.Test/servers/configurations",
@@ -412,7 +412,7 @@ namespace Azure.Generator.Management.Tests.Providers
                 var altConfigDecorator = BuildArmProviderSchema(
                     configModel,
                     [
-                        new ResourceMethod(ResourceOperationKind.Read, getAltConfigMethod, new RequestPathPattern(getAltConfigOp.Path), ResourceScope.ResourceGroup, new RequestPathPattern(altConfigResourceIdPattern), null!),
+                        new ResourceMethod(ResourceOperationKind.Read, getAltConfigMethod, new RequestPathPattern(getAltConfigOp.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, new RequestPathPattern(altConfigResourceIdPattern), null), null!),
                     ],
                     altConfigResourceIdPattern,
                     "Microsoft.Test/servers/altConfigurations",
@@ -480,19 +480,20 @@ namespace Azure.Generator.Management.Tests.Providers
 
             return new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
 
-            static Dictionary<string, string> SerializeResourceMethod(ResourceMethod m)
+            static Dictionary<string, object> SerializeResourceMethod(ResourceMethod m)
             {
-                var result = new Dictionary<string, string>
+                var result = new Dictionary<string, object>
                 {
                     ["methodId"] = m.InputMethod.CrossLanguageDefinitionId,
                     ["kind"] = m.Kind.ToString(),
-                    ["operationPath"] = m.OperationPath,
-                    ["operationScope"] = m.OperationScope.ToString()
+                    ["operationPath"] = (string)m.OperationPath,
+                    ["scope"] = new Dictionary<string, string?>
+                    {
+                        ["kind"] = m.Scope.Kind.ToString(),
+                        ["scopeIdPattern"] = (string)m.Scope.ScopeIdPattern,
+                        ["scopeResourceType"] = m.Scope.ScopeResourceType
+                    }
                 };
-                if (m.ResourceScopeIdPattern != null)
-                {
-                    result["resourceScopeIdPattern"] = m.ResourceScopeIdPattern;
-                }
                 return result;
             }
         }

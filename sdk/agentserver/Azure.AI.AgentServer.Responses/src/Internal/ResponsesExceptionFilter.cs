@@ -60,7 +60,7 @@ internal sealed class ResponsesExceptionFilter : IEndpointFilter
         {
             _logger.LogWarning(ex, "Resource not found");
             RecordException(Activity.Current, ex);
-            return ApiErrorFactory.NotFound(ex.Message);
+            return ApiErrorFactory.NotFound(ex.Message, code: ex.Code, param: ex.Param);
         }
         catch (ResponsesApiException ex)
         {
