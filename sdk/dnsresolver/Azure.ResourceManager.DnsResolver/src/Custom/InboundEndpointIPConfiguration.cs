@@ -8,6 +8,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class InboundEndpointIPConfiguration
     {
+        // Justification: the pre-migration SDK exposed both this constructor and the
+        // SubnetId convenience property directly on the model. The TypeSpec-generated
+        // shape now routes through the Subnet property, so this partial preserves the
+        // previous public API surface for backward compatibility.
         /// <summary>
         /// Initializes a new instance of the <see cref="InboundEndpointIPConfiguration"/> class.
         /// </summary>
