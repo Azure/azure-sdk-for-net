@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ModelCapacityCalculatorWorkloadRequestParam : IUtf8JsonSerializable, IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>
+    /// <summary> Dictionary, Model Capacity Calculator Workload Parameters. </summary>
+    public partial class ModelCapacityCalculatorWorkloadRequestParam : IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ModelCapacityCalculatorWorkloadRequestParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeModelCapacityCalculatorWorkloadRequestParam(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelCapacityCalculatorWorkloadRequestParam IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AvgPromptTokens))
             {
                 writer.WritePropertyName("avgPromptTokens"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("avgGeneratedTokens"u8);
                 writer.WriteNumberValue(AvgGeneratedTokens.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,88 +101,60 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        ModelCapacityCalculatorWorkloadRequestParam IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelCapacityCalculatorWorkloadRequestParam IJsonModel<ModelCapacityCalculatorWorkloadRequestParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ModelCapacityCalculatorWorkloadRequestParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeModelCapacityCalculatorWorkloadRequestParam(document.RootElement, options);
         }
 
-        internal static ModelCapacityCalculatorWorkloadRequestParam DeserializeModelCapacityCalculatorWorkloadRequestParam(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ModelCapacityCalculatorWorkloadRequestParam DeserializeModelCapacityCalculatorWorkloadRequestParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long? avgPromptTokens = default;
             long? avgGeneratedTokens = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("avgPromptTokens"u8))
+                if (prop.NameEquals("avgPromptTokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    avgPromptTokens = property.Value.GetInt64();
+                    avgPromptTokens = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("avgGeneratedTokens"u8))
+                if (prop.NameEquals("avgGeneratedTokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    avgGeneratedTokens = property.Value.GetInt64();
+                    avgGeneratedTokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ModelCapacityCalculatorWorkloadRequestParam(avgPromptTokens, avgGeneratedTokens, serializedAdditionalRawData);
+            return new ModelCapacityCalculatorWorkloadRequestParam(avgPromptTokens, avgGeneratedTokens, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ModelCapacityCalculatorWorkloadRequestParam IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeModelCapacityCalculatorWorkloadRequestParam(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ModelCapacityCalculatorWorkloadRequestParam)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ModelCapacityCalculatorWorkloadRequestParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

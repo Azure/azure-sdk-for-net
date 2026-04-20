@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class HciClusterIdentityResultOperationSource : IOperationSource<HciClusterIdentityResult>
+    /// <summary></summary>
+    internal partial class HciClusterIdentityResultOperationSource : IOperationSource<HciClusterIdentityResult>
     {
-        HciClusterIdentityResult IOperationSource<HciClusterIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal HciClusterIdentityResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        HciClusterIdentityResult IOperationSource<HciClusterIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciClusterIdentityResult result = HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciClusterIdentityResult> IOperationSource<HciClusterIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciClusterIdentityResult result = HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

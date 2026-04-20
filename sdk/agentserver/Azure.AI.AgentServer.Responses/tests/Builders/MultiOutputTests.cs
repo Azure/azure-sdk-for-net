@@ -29,8 +29,8 @@ public class MultiOutputTests
         events.Add(msg0.EmitAdded());          // 2
         var text0 = msg0.AddTextContent();
         events.Add(text0.EmitAdded());         // 3
-        events.Add(text0.EmitDone("First"));   // 4
-        events.Add(msg0.EmitContentDone(text0)); // 5
+        events.Add(text0.EmitTextDone("First"));   // 4
+        events.Add(text0.EmitDone()); // 5
         events.Add(msg0.EmitDone());           // 6
 
         // Second message
@@ -38,8 +38,8 @@ public class MultiOutputTests
         events.Add(msg1.EmitAdded());          // 7
         var text1 = msg1.AddTextContent();
         events.Add(text1.EmitAdded());         // 8
-        events.Add(text1.EmitDone("Second"));  // 9
-        events.Add(msg1.EmitContentDone(text1)); // 10
+        events.Add(text1.EmitTextDone("Second"));  // 9
+        events.Add(text1.EmitDone()); // 10
         events.Add(msg1.EmitDone());           // 11
 
         events.Add(stream.EmitCompleted());    // 12
@@ -90,8 +90,8 @@ public class MultiOutputTests
         events.Add(msg.EmitAdded());           // 2
         var text = msg.AddTextContent();
         events.Add(text.EmitAdded());          // 3
-        events.Add(text.EmitDone("Hello"));    // 4
-        events.Add(msg.EmitContentDone(text)); // 5
+        events.Add(text.EmitTextDone("Hello"));    // 4
+        events.Add(text.EmitDone()); // 5
         events.Add(msg.EmitDone());            // 6
 
         // Function call (outputIndex=1)

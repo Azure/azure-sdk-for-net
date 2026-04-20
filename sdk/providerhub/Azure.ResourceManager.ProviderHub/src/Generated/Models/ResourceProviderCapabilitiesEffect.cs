@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceProviderCapabilitiesEffect : IEquatable<ResourceProviderCapabilitiesEffect>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceProviderCapabilitiesEffect(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string AllowValue = "Allow";
         private const string DisallowValue = "Disallow";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceProviderCapabilitiesEffect(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceProviderCapabilitiesEffect NotSpecified { get; } = new ResourceProviderCapabilitiesEffect(NotSpecifiedValue);
-        /// <summary> Allow. </summary>
+
+        /// <summary> Gets the Allow. </summary>
         public static ResourceProviderCapabilitiesEffect Allow { get; } = new ResourceProviderCapabilitiesEffect(AllowValue);
-        /// <summary> Disallow. </summary>
+
+        /// <summary> Gets the Disallow. </summary>
         public static ResourceProviderCapabilitiesEffect Disallow { get; } = new ResourceProviderCapabilitiesEffect(DisallowValue);
+
         /// <summary> Determines if two <see cref="ResourceProviderCapabilitiesEffect"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceProviderCapabilitiesEffect left, ResourceProviderCapabilitiesEffect right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceProviderCapabilitiesEffect"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceProviderCapabilitiesEffect left, ResourceProviderCapabilitiesEffect right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceProviderCapabilitiesEffect(string value) => new ResourceProviderCapabilitiesEffect(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceProviderCapabilitiesEffect"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceProviderCapabilitiesEffect?(string value) => value == null ? null : new ResourceProviderCapabilitiesEffect(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceProviderCapabilitiesEffect other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceProviderCapabilitiesEffect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

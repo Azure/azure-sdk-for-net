@@ -23,8 +23,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProject
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = client.GetProject(projectName);
+            Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject(projectName);
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -48,8 +50,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = await client.GetProjectAsync(projectName);
+            Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync(projectName);
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

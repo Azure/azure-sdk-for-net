@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the DataBoxEdgeShare data model.
-    /// Represents a share on the  Data Box Edge/Gateway device.
-    /// </summary>
+    /// <summary> Represents a share on the  Data Box Edge/Gateway device. </summary>
     public partial class DataBoxEdgeShareData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
         /// <param name="shareStatus"> Current status of the share. </param>
@@ -57,69 +25,182 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
         public DataBoxEdgeShareData(ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, ShareAccessProtocol accessProtocol)
         {
-            ShareStatus = shareStatus;
-            MonitoringStatus = monitoringStatus;
-            AccessProtocol = accessProtocol;
-            UserAccessRights = new ChangeTrackingList<UserAccessRight>();
-            ClientAccessRights = new ChangeTrackingList<ClientAccessRight>();
-            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
+
+            Properties = new ShareProperties(shareStatus, monitoringStatus, accessProtocol);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description for the share. </param>
-        /// <param name="shareStatus"> Current status of the share. </param>
-        /// <param name="monitoringStatus"> Current monitoring status of the share. </param>
-        /// <param name="azureContainerInfo"> Azure container mapping for the share. </param>
-        /// <param name="accessProtocol"> Access protocol to be used by the share. </param>
-        /// <param name="userAccessRights"> Mapping of users and corresponding access rights on the share (required for SMB protocol). </param>
-        /// <param name="clientAccessRights"> List of IP addresses and corresponding access rights on the share(required for NFS protocol). </param>
-        /// <param name="refreshDetails"> Details of the refresh job on this share. </param>
-        /// <param name="shareMappings"> Share mount point to the role. </param>
-        /// <param name="dataPolicy"> Data policy of the share. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ShareStatus shareStatus, DataBoxEdgeShareMonitoringStatus monitoringStatus, DataBoxEdgeStorageContainerInfo azureContainerInfo, ShareAccessProtocol accessProtocol, IList<UserAccessRight> userAccessRights, IList<ClientAccessRight> clientAccessRights, DataBoxEdgeRefreshDetails refreshDetails, IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings, DataBoxEdgeDataPolicy? dataPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The share properties. </param>
+        internal DataBoxEdgeShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ShareProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            ShareStatus = shareStatus;
-            MonitoringStatus = monitoringStatus;
-            AzureContainerInfo = azureContainerInfo;
-            AccessProtocol = accessProtocol;
-            UserAccessRights = userAccessRights;
-            ClientAccessRights = clientAccessRights;
-            RefreshDetails = refreshDetails;
-            ShareMappings = shareMappings;
-            DataPolicy = dataPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShareData"/> for deserialization. </summary>
-        internal DataBoxEdgeShareData()
-        {
-        }
+        /// <summary> The share properties. </summary>
+        internal ShareProperties Properties { get; set; }
 
         /// <summary> Description for the share. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Current status of the share. </summary>
-        public ShareStatus ShareStatus { get; set; }
+        public ShareStatus ShareStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShareStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.ShareStatus = value;
+            }
+        }
+
         /// <summary> Current monitoring status of the share. </summary>
-        public DataBoxEdgeShareMonitoringStatus MonitoringStatus { get; set; }
+        public DataBoxEdgeShareMonitoringStatus MonitoringStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.MonitoringStatus = value;
+            }
+        }
+
         /// <summary> Azure container mapping for the share. </summary>
-        public DataBoxEdgeStorageContainerInfo AzureContainerInfo { get; set; }
+        public DataBoxEdgeStorageContainerInfo AzureContainerInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureContainerInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.AzureContainerInfo = value;
+            }
+        }
+
         /// <summary> Access protocol to be used by the share. </summary>
-        public ShareAccessProtocol AccessProtocol { get; set; }
+        public ShareAccessProtocol AccessProtocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessProtocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.AccessProtocol = value;
+            }
+        }
+
         /// <summary> Mapping of users and corresponding access rights on the share (required for SMB protocol). </summary>
-        public IList<UserAccessRight> UserAccessRights { get; }
+        public IList<UserAccessRight> UserAccessRights
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                return Properties.UserAccessRights;
+            }
+        }
+
         /// <summary> List of IP addresses and corresponding access rights on the share(required for NFS protocol). </summary>
-        public IList<ClientAccessRight> ClientAccessRights { get; }
+        public IList<ClientAccessRight> ClientAccessRights
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                return Properties.ClientAccessRights;
+            }
+        }
+
         /// <summary> Details of the refresh job on this share. </summary>
-        public DataBoxEdgeRefreshDetails RefreshDetails { get; set; }
+        public DataBoxEdgeRefreshDetails RefreshDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RefreshDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.RefreshDetails = value;
+            }
+        }
+
         /// <summary> Share mount point to the role. </summary>
-        public IReadOnlyList<DataBoxEdgeMountPointMap> ShareMappings { get; }
+        public IReadOnlyList<DataBoxEdgeMountPointMap> ShareMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                return Properties.ShareMappings;
+            }
+        }
+
         /// <summary> Data policy of the share. </summary>
-        public DataBoxEdgeDataPolicy? DataPolicy { get; set; }
+        public DataBoxEdgeDataPolicy? DataPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ShareProperties();
+                }
+                Properties.DataPolicy = value.Value;
+            }
+        }
     }
 }

@@ -28,8 +28,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hello");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Hello");
+        text.EmitDone();
 
         msg.EmitDone();
 
@@ -62,8 +62,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Hi");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Hi");
+        text.EmitDone();
         msg.EmitDone();
 
         var fc = stream.AddOutputItemFunctionCall("fn", "c1");
@@ -85,8 +85,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Result");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Result");
+        text.EmitDone();
         msg.EmitDone();
 
         var completed = stream.EmitCompleted();
@@ -104,16 +104,16 @@ public class BuilderAccumulationTests
         msg1.EmitAdded();
         var t1 = msg1.AddTextContent();
         t1.EmitAdded();
-        t1.EmitDone("Hello ");
-        msg1.EmitContentDone(t1);
+        t1.EmitTextDone("Hello ");
+        t1.EmitDone();
         msg1.EmitDone();
 
         var msg2 = stream.AddOutputItemMessage();
         msg2.EmitAdded();
         var t2 = msg2.AddTextContent();
         t2.EmitAdded();
-        t2.EmitDone("World");
-        msg2.EmitContentDone(t2);
+        t2.EmitTextDone("World");
+        t2.EmitDone();
         msg2.EmitDone();
 
         var completed = stream.EmitCompleted();
@@ -136,8 +136,8 @@ public class BuilderAccumulationTests
         msg.EmitAdded();
         var text = msg.AddTextContent();
         text.EmitAdded();
-        text.EmitDone("Only this");
-        msg.EmitContentDone(text);
+        text.EmitTextDone("Only this");
+        text.EmitDone();
         msg.EmitDone();
 
         var completed = stream.EmitCompleted();

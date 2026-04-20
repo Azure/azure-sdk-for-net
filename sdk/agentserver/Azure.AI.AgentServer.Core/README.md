@@ -19,6 +19,10 @@ dotnet add package Azure.AI.AgentServer.Core --prerelease
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
 - [.NET 8](https://dotnet.microsoft.com/download) or later
 
+> **Upgrading from a version prior to beta.21?** The package has been redesigned as a lightweight hosting
+> foundation. Protocol logic has moved to [`Azure.AI.AgentServer.Responses`][responses] and
+> [`Azure.AI.AgentServer.Invocations`][invocations]. See the [Migration Guide][migration] for details.
+
 ### Start a server (recommended)
 
 Use the builder pattern to create a server. Protocol packages provide extension methods (`AddResponses<T>()`, `AddInvocations<T>()`) to register their endpoints:
@@ -46,7 +50,7 @@ The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder
 
 ### AgentHostBuilder
 
-Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` user-agent header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerUserAgentRegistry`.
+Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` version header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerVersionRegistry`.
 
 ### AgentHostApp
 
@@ -58,7 +62,7 @@ Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_I
 
 ### Telemetry
 
-OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The `AgentHostTelemetry` class exposes the shared activity source and meter names (`ResponsesSourceName`, `InvocationsSourceName`, `ResponsesMeterName`, `InvocationsMeterName`) for the Responses and Invocations protocols. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
+OpenTelemetry is configured automatically via `Azure.Monitor.OpenTelemetry.AspNetCore`. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. OTLP export is enabled when the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable is set.
 
 ### Health endpoint
 
@@ -77,7 +81,7 @@ You can familiarise yourself with different APIs using [Samples](https://github.
 
 ### Logging
 
-The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
+The library emits OpenTelemetry traces via the `Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations` activity sources. Inbound request logging is enabled automatically for Tier 1 and Tier 2 setups; for Tier 3, call `AddAgentServerLogging()` and `UseAgentServerLogging()` to enable it. Enable ASP.NET Core logging in your application configuration to diagnose startup issues.
 
 ## Next steps
 
@@ -95,3 +99,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core/src
 [nuget]: https://www.nuget.org/packages/Azure.AI.AgentServer.Core
 [product_doc]: https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents
+[migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
+[responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
+[invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
