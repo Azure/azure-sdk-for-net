@@ -5,7 +5,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Responses</RootNamespace>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.3</Version>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI Responses API.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Responses API SSE Streaming</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

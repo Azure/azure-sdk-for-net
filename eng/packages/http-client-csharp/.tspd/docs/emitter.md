@@ -108,11 +108,11 @@ The name of the generator. By default this is set to `ScmCodeModelGenerator`. Ge
 
 Allows emitter authors to specify the path to a custom emitter package, allowing you to extend the emitter behavior. This should be set to `import.meta.url` if you are using a custom emitter.
 
-### `update-code-model`
+### `plugins`
 
-**Type:** `object`
+**Type:** `array`
 
-Allows emitter authors to specify a custom function to modify the generated code model before emitting. This is useful for modifying the code model before it is passed to the generator.
+Paths to generator plugin assemblies (DLLs) or directories containing plugin assemblies. Each plugin must contain a class that extends GeneratorPlugin.
 
 ### `license`
 

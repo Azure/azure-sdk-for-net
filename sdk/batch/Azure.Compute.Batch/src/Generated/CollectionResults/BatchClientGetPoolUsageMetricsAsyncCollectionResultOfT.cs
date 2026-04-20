@@ -17,8 +17,8 @@ namespace Azure.Compute.Batch
     internal partial class BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT : AsyncPageable<BatchPoolUsageMetrics>
     {
         private readonly BatchClient _client;
-        private readonly TimeSpan? _timeOutInSeconds;
-        private readonly DateTimeOffset? _ocpDate;
+        private readonly TimeSpan? _timeout;
+        private readonly DateTimeOffset? _requestDate;
         private readonly int? _maxresults;
         private readonly DateTimeOffset? _starttime;
         private readonly DateTimeOffset? _endtime;
@@ -28,8 +28,8 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BatchClient client used to send requests. </param>
-        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="ocpDate">
+        /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="requestDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -54,11 +54,11 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetPoolUsageMetricsAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _timeOutInSeconds = timeOutInSeconds;
-            _ocpDate = ocpDate;
+            _timeout = timeout;
+            _requestDate = requestDate;
             _maxresults = maxresults;
             _starttime = starttime;
             _endtime = endtime;
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeOutInSeconds, _ocpDate, _maxresults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeOutInSeconds, _ocpDate, _maxresults, _starttime, _endtime, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPoolUsageMetricsRequest(nextLink, _timeout, _requestDate, _maxresults, _starttime, _endtime, _filter, _context) : _client.CreateGetPoolUsageMetricsRequest(_timeout, _requestDate, _maxresults, _starttime, _endtime, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
