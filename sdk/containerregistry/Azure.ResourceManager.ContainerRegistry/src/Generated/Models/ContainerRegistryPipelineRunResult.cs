@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Progress.Percentage;
+                return Progress is null ? default : Progress.Percentage;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Trigger.SourceTriggerTimestamp;
+                return Trigger is null ? default : Trigger.SourceTriggerTimestamp;
             }
         }
     }

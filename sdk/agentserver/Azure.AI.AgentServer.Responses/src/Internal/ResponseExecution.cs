@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -46,6 +47,22 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>Gets whether the response should be stored for later retrieval.</summary>
     public bool Store { get; }
+
+    /// <summary>
+    /// Gets or sets the resolved session ID that was determined when this response was created.
+    /// Stored at creation time so that subsequent operations (GET SSE replay, Cancel, DELETE)
+    /// can emit the <c>x-agent-session-id</c> response header even before the handler yields
+    /// <c>response.created</c> (when <see cref="Response"/> is still <c>null</c>).
+    /// </summary>
+    public string? AgentSessionId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the chat isolation key that was present when this response was created.
+    /// When non-null, all subsequent operations (GET, Cancel, DELETE, InputItems) must
+    /// provide the same key; mismatches are treated as "not found" (404) to prevent
+    /// information leakage across chat partitions.
+    /// </summary>
+    public string? ChatIsolationKey { get; set; }
 
     /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
@@ -116,11 +133,6 @@ internal sealed class ResponseExecution : IDisposable
     public ResponseContext? Context { get; set; }
 
     /// <summary>
-    /// Gets or sets the completion timestamp. Null when in-flight; set on completion for TTL eviction.
-    /// </summary>
-    public DateTimeOffset? CompletedAt { get; set; }
-
-    /// <summary>
     /// Signal that completes when the handler yields <c>response.created</c> (with the
     /// handler-provided <see cref="Response"/>), or faults if the handler fails before
     /// emitting it. Used by the background non-streaming path to wait for the handler's
@@ -136,6 +148,25 @@ internal sealed class ResponseExecution : IDisposable
     /// regardless of streaming vs non-streaming mode.
     /// </summary>
     public TaskCompletionSource FinalizedSignal { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>
+    /// Enforces chat isolation key for in-flight responses.
+    /// If this execution was created with a chat isolation key, the caller must
+    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// cross-chat information leakage.
+    /// </summary>
+    /// <param name="isolation">The caller's isolation context.</param>
+    /// <exception cref="ResourceNotFoundException">
+    /// Thrown when the execution has a chat isolation key and the caller's key does not match.
+    /// </exception>
+    public void EnforceChatIsolation(IsolationContext isolation)
+    {
+        if (ChatIsolationKey is not null
+            && !string.Equals(ChatIsolationKey, isolation.ChatIsolationKey, StringComparison.Ordinal))
+        {
+            throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
+        }
+    }
 
     /// <inheritdoc />
     public void Dispose()

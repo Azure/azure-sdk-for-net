@@ -13,140 +13,188 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary>
-    /// A class representing the ArcSetting data model.
-    /// ArcSetting details.
-    /// </summary>
+    /// <summary> ArcSetting details. </summary>
     public partial class ArcSettingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
         public ArcSettingData()
         {
-            PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
-            DefaultExtensions = new ChangeTrackingList<ArcDefaultExtensionDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
-        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
-        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
-        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
-        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
-        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
-        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
-        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
-        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> ArcSetting properties. </param>
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArcSettingProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            ArcInstanceResourceGroup = arcInstanceResourceGroup;
-            ArcApplicationClientId = arcApplicationClientId;
-            ArcApplicationTenantId = arcApplicationTenantId;
-            ArcServicePrincipalObjectId = arcServicePrincipalObjectId;
-            ArcApplicationObjectId = arcApplicationObjectId;
-            AggregateState = aggregateState;
-            PerNodeDetails = perNodeDetails;
-            ConnectivityProperties = connectivityProperties;
-            DefaultExtensions = defaultExtensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> ArcSetting properties. </summary>
+        [WirePath("properties")]
+        internal ArcSettingProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the ArcSetting proxy resource. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </summary>
         [WirePath("properties.arcInstanceResourceGroup")]
-        public string ArcInstanceResourceGroup { get; set; }
+        public string ArcInstanceResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcInstanceResourceGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ArcInstanceResourceGroup = value;
+            }
+        }
+
         /// <summary> App id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationClientId")]
-        public Guid? ArcApplicationClientId { get; set; }
+        public Guid? ArcApplicationClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcApplicationClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ArcApplicationClientId = value.Value;
+            }
+        }
+
         /// <summary> Tenant id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationTenantId")]
-        public Guid? ArcApplicationTenantId { get; set; }
+        public Guid? ArcApplicationTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcApplicationTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ArcApplicationTenantId = value.Value;
+            }
+        }
+
         /// <summary> Object id of arc AAD service principal. </summary>
         [WirePath("properties.arcServicePrincipalObjectId")]
-        public Guid? ArcServicePrincipalObjectId { get; set; }
+        public Guid? ArcServicePrincipalObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcServicePrincipalObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ArcServicePrincipalObjectId = value.Value;
+            }
+        }
+
         /// <summary> Object id of arc AAD identity. </summary>
         [WirePath("properties.arcApplicationObjectId")]
-        public Guid? ArcApplicationObjectId { get; set; }
+        public Guid? ArcApplicationObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArcApplicationObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ArcApplicationObjectId = value.Value;
+            }
+        }
+
         /// <summary> Aggregate state of Arc agent across the nodes in this HCI cluster. </summary>
         [WirePath("properties.aggregateState")]
-        public ArcSettingAggregateState? AggregateState { get; }
+        public ArcSettingAggregateState? AggregateState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AggregateState;
+            }
+        }
+
         /// <summary> State of Arc agent in each of the nodes. </summary>
         [WirePath("properties.perNodeDetails")]
-        public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; }
-        /// <summary>
-        /// contains connectivity related configuration for ARC resources
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public IReadOnlyList<PerNodeArcState> PerNodeDetails
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                return Properties.PerNodeDetails;
+            }
+        }
+
+        /// <summary> contains connectivity related configuration for ARC resources. </summary>
         [WirePath("properties.connectivityProperties")]
-        public BinaryData ConnectivityProperties { get; set; }
+        public BinaryData ConnectivityProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectivityProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                Properties.ConnectivityProperties = value;
+            }
+        }
+
         /// <summary> Properties for each of the default extensions category. </summary>
         [WirePath("properties.defaultExtensions")]
-        public IReadOnlyList<ArcDefaultExtensionDetails> DefaultExtensions { get; }
+        public IReadOnlyList<ArcDefaultExtensionDetails> DefaultExtensions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ArcSettingProperties();
+                }
+                return Properties.DefaultExtensions;
+            }
+        }
     }
 }

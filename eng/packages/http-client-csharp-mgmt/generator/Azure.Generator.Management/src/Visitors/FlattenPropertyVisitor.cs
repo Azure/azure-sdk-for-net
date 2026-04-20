@@ -637,6 +637,14 @@ namespace Azure.Generator.Management.Visitors
                 _flattenedModelTypes.Add(model.Type, propertyNameMap);
                 UpdatePublicConstructor(model, propertyNameMap);
             }
+            else if (model.BaseModelProvider is ModelProvider flattenedBase && _flattenedModelTypes.TryGetValue(flattenedBase.Type, out var basePropertyNameMap))
+            {
+                // This model has no flattenable properties of its own, but its base model was
+                // safe-flattened. The base's public constructor signature changed (e.g. an
+                // ExportDeliveryInfo param became ExportDeliveryDestination), so update this
+                // model's public constructor params and base initializer call to match.
+                UpdatePublicConstructor(model, basePropertyNameMap);
+            }
         }
 
         private void PropertyFlatten(ModelProvider model, ModelProvider propertyModel, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
@@ -833,6 +841,53 @@ namespace Azure.Generator.Management.Visitors
                     publicConstructor.Signature.Update(parameters: updateParameters);
                     publicConstructor.Update(signature: publicConstructor.Signature); // workaround to update the xml docs
                 }
+
+                // If this constructor delegates to a base constructor, update the base initializer
+                // arguments to reference the new flattened parameters instead of the old ones.
+                UpdatePublicConstructorBaseInitializer(publicConstructor, map);
+            }
+        }
+
+        /// <summary>
+        /// Updates the base constructor initializer arguments when the base model's public
+        /// constructor signature was changed by property flattening. Replaces each argument
+        /// that corresponded to a now-flattened parameter with the new flattened parameter.
+        /// </summary>
+        private static void UpdatePublicConstructorBaseInitializer(ConstructorProvider publicConstructor, Dictionary<string, List<FlattenPropertyInfo>> map)
+        {
+            var sig = publicConstructor.Signature;
+            var initializer = sig.Initializer;
+            if (initializer is null || !initializer.IsBase)
+            {
+                return;
+            }
+
+            var updatedArgs = new List<ValueExpression>();
+            var changed = false;
+            foreach (var arg in initializer.Arguments)
+            {
+                if (arg is VariableExpression variable && map.TryGetValue(variable.Declaration.RequestedName, out var flattenInfoList))
+                {
+                    changed = true;
+                    foreach (var (flattenedProperty, _) in flattenInfoList)
+                    {
+                        if (ShouldIncludeFlattenedPropertyInPublicConstructor(flattenedProperty))
+                        {
+                            updatedArgs.Add(flattenedProperty.AsParameter);
+                        }
+                    }
+                }
+                else
+                {
+                    updatedArgs.Add(arg);
+                }
+            }
+
+            if (changed)
+            {
+                var newInitializer = new ConstructorInitializer(initializer.IsBase, updatedArgs);
+                var newSig = new ConstructorSignature(sig.Type, sig.Description, sig.Modifiers, sig.Parameters, sig.Attributes, newInitializer);
+                publicConstructor.Update(signature: newSig);
             }
         }
 

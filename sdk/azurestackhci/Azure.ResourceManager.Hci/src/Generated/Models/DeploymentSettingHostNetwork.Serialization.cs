@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DeploymentSettingHostNetwork : IUtf8JsonSerializable, IJsonModel<DeploymentSettingHostNetwork>
+    /// <summary> The HostNetwork of a cluster. </summary>
+    public partial class DeploymentSettingHostNetwork : IJsonModel<DeploymentSettingHostNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingHostNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingHostNetwork PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentSettingHostNetwork(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentSettingHostNetwork>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingHostNetwork IPersistableModel<DeploymentSettingHostNetwork>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentSettingHostNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingHostNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Intents))
             {
                 writer.WritePropertyName("intents"u8);
                 writer.WriteStartArray();
-                foreach (var item in Intents)
+                foreach (DeploymentSettingIntents item in Intents)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,11 +88,16 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("storageNetworks"u8);
                 writer.WriteStartArray();
-                foreach (var item in StorageNetworks)
+                foreach (DeploymentSettingStorageNetworks item in StorageNetworks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SanNetworks))
+            {
+                writer.WritePropertyName("sanNetworks"u8);
+                writer.WriteObjectValue(SanNetworks, options);
             }
             if (Optional.IsDefined(StorageConnectivitySwitchless))
             {
@@ -66,15 +109,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("enableStorageAutoIp"u8);
                 writer.WriteBooleanValue(EnableStorageAutoIP.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,213 +126,106 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DeploymentSettingHostNetwork IJsonModel<DeploymentSettingHostNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingHostNetwork IJsonModel<DeploymentSettingHostNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingHostNetwork JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingHostNetwork(document.RootElement, options);
         }
 
-        internal static DeploymentSettingHostNetwork DeserializeDeploymentSettingHostNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentSettingHostNetwork DeserializeDeploymentSettingHostNetwork(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<DeploymentSettingIntents> intents = default;
             IList<DeploymentSettingStorageNetworks> storageNetworks = default;
+            SanNetworks sanNetworks = default;
             bool? storageConnectivitySwitchless = default;
             bool? enableStorageAutoIP = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("intents"u8))
+                if (prop.NameEquals("intents"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeploymentSettingIntents> array = new List<DeploymentSettingIntents>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeploymentSettingIntents.DeserializeDeploymentSettingIntents(item, options));
                     }
                     intents = array;
                     continue;
                 }
-                if (property.NameEquals("storageNetworks"u8))
+                if (prop.NameEquals("storageNetworks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DeploymentSettingStorageNetworks> array = new List<DeploymentSettingStorageNetworks>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeploymentSettingStorageNetworks.DeserializeDeploymentSettingStorageNetworks(item, options));
                     }
                     storageNetworks = array;
                     continue;
                 }
-                if (property.NameEquals("storageConnectivitySwitchless"u8))
+                if (prop.NameEquals("sanNetworks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageConnectivitySwitchless = property.Value.GetBoolean();
+                    sanNetworks = SanNetworks.DeserializeSanNetworks(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enableStorageAutoIp"u8))
+                if (prop.NameEquals("storageConnectivitySwitchless"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableStorageAutoIP = property.Value.GetBoolean();
+                    storageConnectivitySwitchless = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableStorageAutoIp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableStorageAutoIP = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentSettingHostNetwork(intents ?? new ChangeTrackingList<DeploymentSettingIntents>(), storageNetworks ?? new ChangeTrackingList<DeploymentSettingStorageNetworks>(), storageConnectivitySwitchless, enableStorageAutoIP, serializedAdditionalRawData);
+            return new DeploymentSettingHostNetwork(
+                intents ?? new ChangeTrackingList<DeploymentSettingIntents>(),
+                storageNetworks ?? new ChangeTrackingList<DeploymentSettingStorageNetworks>(),
+                sanNetworks,
+                storageConnectivitySwitchless,
+                enableStorageAutoIP,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Intents), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  intents: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Intents))
-                {
-                    if (Intents.Any())
-                    {
-                        builder.Append("  intents: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Intents)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  intents: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageNetworks), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storageNetworks: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StorageNetworks))
-                {
-                    if (StorageNetworks.Any())
-                    {
-                        builder.Append("  storageNetworks: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StorageNetworks)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  storageNetworks: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageConnectivitySwitchless), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storageConnectivitySwitchless: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageConnectivitySwitchless))
-                {
-                    builder.Append("  storageConnectivitySwitchless: ");
-                    var boolValue = StorageConnectivitySwitchless.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableStorageAutoIP), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableStorageAutoIp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableStorageAutoIP))
-                {
-                    builder.Append("  enableStorageAutoIp: ");
-                    var boolValue = EnableStorageAutoIP.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentSettingHostNetwork>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeploymentSettingHostNetwork IPersistableModel<DeploymentSettingHostNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingHostNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentSettingHostNetwork(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingHostNetwork)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeploymentSettingHostNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

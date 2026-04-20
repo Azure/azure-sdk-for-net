@@ -4,7 +4,6 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Dns.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
   <ItemGroup>
