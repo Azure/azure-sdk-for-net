@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(CommitmentPlanResource.ResourceType, out string commitmentPlanApiVersion);
             _commitmentPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanResource.ResourceType.Namespace, Diagnostics);
-            _commitmentPlansRestClient = new CommitmentPlans(_commitmentPlansClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-03-01");
+            _commitmentPlansRestClient = new CommitmentPlans(_commitmentPlansClientDiagnostics, Pipeline, Endpoint, commitmentPlanApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

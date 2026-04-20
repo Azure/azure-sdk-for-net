@@ -27,13 +27,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="skuName"></param>
         /// <param name="availableCapacity"> The available capacity for deployment with this model and sku. </param>
         /// <param name="availableFinetuneCapacity"> The available capacity for deployment with a fine-tune version of this model and sku. </param>
+        /// <param name="scopeId"> The scope identifier for model SKU capacity. </param>
+        /// <param name="scopeType"> The scope type for model SKU capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelSkuCapacityProperties(CognitiveServicesAccountDeploymentModel model, string skuName, float? availableCapacity, float? availableFinetuneCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelSkuCapacityProperties(CognitiveServicesAccountDeploymentModel model, string skuName, float? availableCapacity, float? availableFinetuneCapacity, string scopeId, CognitiveServicesQuotaScopeType? scopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             SkuName = skuName;
             AvailableCapacity = availableCapacity;
             AvailableFinetuneCapacity = availableFinetuneCapacity;
+            ScopeId = scopeId;
+            ScopeType = scopeType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +56,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The available capacity for deployment with a fine-tune version of this model and sku. </summary>
         [WirePath("availableFinetuneCapacity")]
         public float? AvailableFinetuneCapacity { get; set; }
+
+        /// <summary> The scope identifier for model SKU capacity. </summary>
+        [WirePath("scopeId")]
+        public string ScopeId { get; set; }
+
+        /// <summary> The scope type for model SKU capacity. </summary>
+        [WirePath("scopeType")]
+        public CognitiveServicesQuotaScopeType? ScopeType { get; set; }
     }
 }

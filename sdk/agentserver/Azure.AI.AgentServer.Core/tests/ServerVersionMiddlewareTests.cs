@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests;
 
 [TestFixture]
-public class ServerUserAgentMiddlewareTests
+public class ServerVersionMiddlewareTests
 {
     [Test]
     public async Task InvokeAsync_SetsXPlatformServerHeader()
@@ -23,10 +23,10 @@ public class ServerUserAgentMiddlewareTests
         // Use TestServer to actually run the middleware pipeline
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerUserAgent();
+        builder.Services.AddAgentServerVersion();
 
         var app = builder.Build();
-        app.UseAgentServerUserAgent();
+        app.UseAgentServerVersion();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -46,17 +46,17 @@ public class ServerUserAgentMiddlewareTests
     public async Task InvokeAsync_IncludesRegisteredProtocolIdentity()
     {
         // Create a shared registry instance and register a protocol identity
-        var registry = new ServerUserAgentRegistry();
+        var registry = new ServerVersionRegistry();
         registry.Register("my-protocol/1.0.0 (dotnet/10.0)");
 
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddSingleton(registry);
-        builder.Services.AddSingleton<ServerUserAgentMiddleware>();
+        builder.Services.AddSingleton<ServerVersionMiddleware>();
         builder.Services.Configure<AgentHostOptions>(_ => { });
 
         var app = builder.Build();
-        app.UseAgentServerUserAgent();
+        app.UseAgentServerVersion();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -76,11 +76,11 @@ public class ServerUserAgentMiddlewareTests
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerUserAgent();
+        builder.Services.AddAgentServerVersion();
         builder.Services.Configure<AgentHostOptions>(o => o.AdditionalServerIdentity = "custom/2.0");
 
         var app = builder.Build();
-        app.UseAgentServerUserAgent();
+        app.UseAgentServerVersion();
         app.MapGet("/test", () => Results.Ok());
         await app.StartAsync();
 
@@ -100,10 +100,10 @@ public class ServerUserAgentMiddlewareTests
     {
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
-        builder.Services.AddAgentServerUserAgent();
+        builder.Services.AddAgentServerVersion();
 
         var app = builder.Build();
-        app.UseAgentServerUserAgent();
+        app.UseAgentServerVersion();
         app.MapGet("/test", () => Results.Ok("next was called"));
         await app.StartAsync();
 

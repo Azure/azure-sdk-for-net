@@ -31,14 +31,15 @@
     "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --write --config .prettierrc.json ./**/*.ts package.json",
     "prettier": "prettier --check --config .prettierrc.json ./**/*.ts package.json",
-    "regen-docs": "npm run build:emitter && tspd doc . --output-dir .tspd/docs --enable-experimental --skip-js"
+    "regen-docs": "npm run build:emitter && npm run regen-docs:only",
+    "regen-docs:only": "tspd doc . --output-dir .tspd/docs --enable-experimental --skip-js"
   },
   "files": [
     "dist/emitter/src/**",
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260414.6"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260417.10"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.39",

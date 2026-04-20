@@ -10,22 +10,22 @@ namespace Azure.AI.AgentServer.Core.Internal;
 /// <summary>
 /// Middleware that injects the <c>x-platform-server</c> header on all HTTP responses,
 /// identifying the server SDK stack — hosting version, protocol versions, language, and runtime.
-/// Protocol packages register their identity segments via <see cref="ServerUserAgentRegistry"/>
+/// Protocol packages register their identity segments via <see cref="ServerVersionRegistry"/>
 /// during route mapping, and this middleware composes the final header value.
 /// </summary>
-internal sealed class ServerUserAgentMiddleware : IMiddleware
+internal sealed class ServerVersionMiddleware : IMiddleware
 {
     private const string HeaderName = "x-platform-server";
     private readonly string _headerValue;
 
     /// <summary>
-    /// Initializes a new instance of <see cref="ServerUserAgentMiddleware"/>.
+    /// Initializes a new instance of <see cref="ServerVersionMiddleware"/>.
     /// </summary>
-    public ServerUserAgentMiddleware(
+    public ServerVersionMiddleware(
         IOptions<AgentHostOptions> options,
-        ServerUserAgentRegistry registry)
+        ServerVersionRegistry registry)
     {
-        var version = typeof(ServerUserAgentMiddleware).Assembly
+        var version = typeof(ServerVersionMiddleware).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion ?? "0.0.0";
 

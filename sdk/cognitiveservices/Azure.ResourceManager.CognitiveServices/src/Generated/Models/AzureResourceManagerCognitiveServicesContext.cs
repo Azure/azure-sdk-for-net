@@ -164,6 +164,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(DeploymentSkuListResult))]
     [ModelReaderWriterBuildable(typeof(EncryptionScopeListResult))]
+    [ModelReaderWriterBuildable(typeof(FoundryAutoUpgrade))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]

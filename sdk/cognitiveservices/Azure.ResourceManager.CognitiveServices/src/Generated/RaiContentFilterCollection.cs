@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(RaiContentFilterResource.ResourceType, out string raiContentFilterApiVersion);
             _location = location;
             _raiContentFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", RaiContentFilterResource.ResourceType.Namespace, Diagnostics);
-            _raiContentFiltersRestClient = new RaiContentFilters(_raiContentFiltersClientDiagnostics, Pipeline, Endpoint, raiContentFilterApiVersion ?? "2026-03-01");
+            _raiContentFiltersRestClient = new RaiContentFilters(_raiContentFiltersClientDiagnostics, Pipeline, Endpoint, raiContentFilterApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

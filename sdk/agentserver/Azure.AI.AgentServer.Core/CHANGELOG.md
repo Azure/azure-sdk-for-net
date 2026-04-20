@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.23 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.22 (2026-04-17)
 
 ### Features Added
@@ -11,6 +21,21 @@
   status code, duration, correlation headers (`x-request-id`, `x-ms-client-request-id`), and
   OpenTelemetry trace ID. Successful requests log at `Information` level; 4xx/5xx responses log at
   `Warning` level. Request start is logged at `Information` level.
+- Added `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for Tier 3 setups to
+  independently enable the inbound request logging middleware.
+- Added startup configuration logging: platform environment, connectivity, host options, and
+  registered protocols are logged at `Information` level when the host starts.
+
+### Breaking Changes
+
+- Renamed `ServerUserAgentRegistry` to `ServerVersionRegistry`.
+- Renamed `AgentHostBuilder.UserAgentRegistry` property to `VersionRegistry`.
+- Renamed `AddAgentServerUserAgent()` to `AddAgentServerVersion()` and
+  `UseAgentServerUserAgent()` to `UseAgentServerVersion()`. The version middleware
+  no longer bundles the inbound request logging registration — use the new
+  `AddAgentServerLogging()` / `UseAgentServerLogging()` pair separately.
+- Made `AgentHostTelemetry` internal. The telemetry source and meter name constants
+  are implementation details; use the string values directly if needed for OTel filtering.
 
 ## 1.0.0-beta.21 (2026-04-14)
 
@@ -36,8 +61,9 @@ for upgrading from earlier beta versions.
 - Multi-protocol composition via `AgentHostBuilder.RegisterProtocol()`. Protocol packages provide extension methods (e.g., `AddResponses<T>()`, `AddInvocations<T>()`) built on top of this API.
 - Graceful shutdown with configurable drain period.
 - Server user-agent `x-platform-server` header on every response with SDK version info.
-- `ServerUserAgentRegistry` for protocol packages to register user-agent identity segments.
-- `AddAgentServerUserAgent()` and `UseAgentServerUserAgent()` extensions for standalone (Tier 3) setups.
+- `ServerVersionRegistry` for protocol packages to register version identity segments.
+- `AddAgentServerVersion()` and `UseAgentServerVersion()` extensions for standalone (Tier 3) setups.
+- `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for standalone inbound request logging.
 - `FoundryEnvironment` for Azure AI Foundry platform variable resolution.
 - Distributed tracing context propagation via request ID baggage.
 

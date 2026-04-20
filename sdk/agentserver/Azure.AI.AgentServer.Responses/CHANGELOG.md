@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.2 (2026-04-17)
 
 ### Features Added
@@ -8,6 +18,9 @@
   `x-agent-chat-isolation-key`, all subsequent GET, Cancel, DELETE, and InputItems calls must
   include the same key. Mismatched or missing keys return 404 (indistinguishable from not-found)
   to ensure tenant isolation.
+- Added `x-agent-session-id` response header on all protocol endpoints (POST, GET, Cancel,
+  Delete, InputItems). The resolved session ID is echoed as a response header per spec §8,
+  with fallback to the `FOUNDRY_AGENT_SESSION_ID` environment variable for error responses.
 - Added validation for malformed response IDs in both the `response_id` path parameter and the
   `previous_response_id` request body field. IDs that do not match the expected format (prefix
   and length) are rejected with 400 and a descriptive error message.
@@ -24,6 +37,26 @@
 - Added structured `Information`-level logging to all Responses API endpoints (GET, Cancel, Delete,
   InputItems) with response ID context. The POST `/responses` creation log now includes response ID,
   conversation ID, previous response ID, and store flag for full request traceability.
+- Added isolation key presence logging (`HasUserIsolationKey`, `HasChatIsolationKey`) to all
+  endpoint handler logs and outbound Foundry storage request logs. Key values are never logged.
+- Added startup configuration logging: storage provider type, default model, fetch history count,
+  and event stream TTL are logged at `Information` level when the host starts.
+- Added server version `User-Agent` header on all outbound Foundry storage API requests. The
+  composed identity from `ServerVersionRegistry` (including developer-registered segments) is
+  prepended to the standard Azure.Core user-agent, read lazily per-request.
+- Added Foundry storage URL masking in diagnostic logs: everything before `/storage` is redacted
+  and query parameters are stripped (except `api-version`) to prevent leaking account and project
+  information.
+- Added inbound request logging for Tier 1 and Tier 2 setups (via `ResponsesServer.Run()` or
+  `AgentHost.CreateBuilder()`). All incoming HTTP requests are logged with method, path, status
+  code, duration, and correlation headers (`x-request-id`, `x-ms-client-request-id`).
+
+### Breaking Changes
+
+- Made `ResponsesActivitySource` internal. The activity source is managed by
+  the framework; handlers do not need to create tracing activities directly.
+- Made `ResponsesTracingConstants` internal. The tracing tag, baggage, and log scope
+  constants are implementation details not needed by handler authors.
 
 ### Bugs Fixed
 
@@ -60,7 +93,7 @@
 - Built-in in-memory response provider and execution tracking.
 - Support for default, streaming, background, and streaming+background response modes.
 - `AgentHostBuilder` convenience methods for zero-config server startup via `ResponsesServer.Run<T>()`.
-- Protocol identity registration with `ServerUserAgentRegistry` during route mapping.
+- Protocol identity registration with `ServerVersionRegistry` during route mapping.
 - `x-agent-response-id` header validation matching the Responses API specification.
 - Conversation ID round-trip support in both synchronous and SSE streaming modes.
 - OpenTelemetry distributed tracing via `Azure.AI.AgentServer.Responses` activity source.

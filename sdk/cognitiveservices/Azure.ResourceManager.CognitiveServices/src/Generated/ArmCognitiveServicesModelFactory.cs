@@ -199,11 +199,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
         /// <param name="aiFoundryNetworkInjections"></param>
+        /// <param name="foundryAutoUpgrade"> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -246,6 +247,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections.ToList(),
+                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects.ToList(),
@@ -392,8 +394,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <param name="scopeType"> The scope type of the quota usage. </param>
+        /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default)
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default, CognitiveServicesQuotaScopeType? scopeType = default, string scopeId = default)
         {
             return new ServiceAccountUsage(
                 unit,
@@ -403,6 +407,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 currentValue,
                 nextResetTime,
                 status,
+                scopeType,
+                scopeId,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2251,6 +2257,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 default,
+                default,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects.ToList(),
@@ -2327,7 +2334,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IEnumerable<string> associatedProjects)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections, allowProjectManagement, defaultProject, associatedProjects);
+            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections, foundryAutoUpgrade: default, allowProjectManagement, defaultProject, associatedProjects);
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/>. </summary>
@@ -2365,6 +2372,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountThrottlingMatchPattern ServiceAccountThrottlingMatchPattern(string path, string @method)
         {
             return new ServiceAccountThrottlingMatchPattern(path, @method, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsage"/>. </summary>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
+        /// <param name="limit"> Maximum value for this metric. </param>
+        /// <param name="currentValue"> Current value for this metric. </param>
+        /// <param name="nextResetTime"> Next reset time for current quota. </param>
+        /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status)
+        {
+            return ServiceAccountUsage(unit, name, quotaPeriod, limit, currentValue, nextResetTime, status, scopeType: default, scopeId: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
@@ -2704,7 +2726,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
@@ -2759,7 +2781,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IEnumerable<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty)
         {
-            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace: default, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig: default, aiFoundryNetworkInjections: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
+            return CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities, isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage, amlWorkspace: default, privateEndpointConnections, publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, storedCompletionsDisabled: default, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList, disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations, abusePenalty, raiMonitorConfig: default, aiFoundryNetworkInjections: default, foundryAutoUpgrade: default, allowProjectManagement: default, defaultProject: default, associatedProjects: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
