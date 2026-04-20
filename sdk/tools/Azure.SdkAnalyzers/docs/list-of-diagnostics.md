@@ -1,5 +1,144 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## Unsuppressible Rules (Error severity)
+
+These rules enforce internal implementation correctness and cannot be disabled via `#pragma`, `<NoWarn>`, or `.editorconfig`. They exist to prevent deadlocks, threading issues, and other runtime problems in Azure SDK libraries.
+
+### AZC0013
+
+**Use TaskCreationOptions.RunContinuationsAsynchronously when instantiating TaskCompletionSource**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+
+#### Cause
+
+A `TaskCompletionSource<T>` is created without `TaskCreationOptions.RunContinuationsAsynchronously`, which can cause deadlocks and thread starvation.
+
+#### How to fix violation
+
+```diff
+- var tcs = new TaskCompletionSource<string>();
++ var tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+```
+
+See [AZC0013 documentation](AZC0013.md) for details.
+
+---
+
+### AZC0101
+
+**Do not use ConfigureAwait(true)**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+| **Code fix** | Yes |
+
+#### Cause
+
+An awaitable expression uses `ConfigureAwait(true)` instead of `ConfigureAwait(false)`.
+
+#### How to fix violation
+
+Replace `true` with `false`. A code fix is available:
+
+```diff
+- await task.ConfigureAwait(true);
++ await task.ConfigureAwait(false);
+```
+
+See [AZC0101 documentation](AZC0101.md) for details.
+
+---
+
+### AZC0108
+
+**Incorrect 'async' parameter value**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+
+#### Cause
+
+A `bool async` method is called with the wrong literal value — `false` in async scope or `true` in sync scope.
+
+#### How to fix violation
+
+Pass the correct literal or forward the `async` parameter:
+
+```diff
+  if (async)
+  {
+-     await BarAsync(false).ConfigureAwait(false);
++     await BarAsync(async).ConfigureAwait(false);
+  }
+```
+
+See [AZC0108 documentation](AZC0108.md) for details.
+
+---
+
+### AZC0109
+
+**Misuse of 'async' parameter**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+
+#### Cause
+
+The `bool async` parameter is assigned, read into a variable, or combined with other conditions instead of being used as an exclusive branch condition.
+
+#### How to fix violation
+
+Use `async` only as the sole condition in `if`/`else` or `? :`:
+
+```diff
+- if (async && someCondition) { ... }
++ if (async) { ... }
+```
+
+See [AZC0109 documentation](AZC0109.md) for details.
+
+---
+
+### AZC0111
+
+**Do not use EnsureCompleted in possibly asynchronous scope**
+
+| Property | Value |
+|----------|-------|
+| **Severity** | Error |
+| **Suppressible** | No |
+
+#### Cause
+
+`EnsureCompleted()` is called in a method with `bool async` parameter outside of a guaranteed sync scope (`if (!async) { ... }`).
+
+#### How to fix violation
+
+Move the call inside a sync-guarded block:
+
+```diff
+- task.EnsureCompleted();
++ if (!async) { task.EnsureCompleted(); }
++ else { await task.ConfigureAwait(false); }
+```
+
+See [AZC0111 documentation](AZC0111.md) for details.
+
+---
+
+## Suppressible Rules (Warning severity)
+
 ## AZC0012
 
 ### Cause
@@ -69,7 +208,7 @@ A method that accepts a `CancellationToken` parameter calls an Azure SDK API wit
 
 ### How to fix violation
 
-Set the `CancellationToken` property on the `RequestContext` object to the incoming cancellation token.
+A **code fix** is available. Set the `CancellationToken` property on the `RequestContext` object to the incoming cancellation token.
 
 ### Example of a violation
 
