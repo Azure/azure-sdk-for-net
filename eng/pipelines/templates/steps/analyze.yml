@@ -14,8 +14,8 @@ parameters:
 
 steps:
   - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
-      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-        parameters:
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
           Paths:
             - "/*"
             - "!SessionRecords"
@@ -25,18 +25,18 @@ steps:
   - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          artifact: BuildPackagesArtifact
-          path: $(Build.ArtifactStagingDirectory)/PackageInfo
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: BuildPackagesArtifact
+        path: $(Build.ArtifactStagingDirectory)/PackageInfo
   - ${{ else }}:
-      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+      parameters:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
     parameters:
-      PackageInfo: "$(Build.ArtifactStagingDirectory)/PackageInfo"
+      PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
       Artifacts: ${{ parameters.Artifacts }}
 
   - template: /eng/common/pipelines/templates/steps/verify-samples.yml
@@ -44,32 +44,32 @@ steps:
       ServiceDirectories: "$(ChangedServices)"
 
   - task: UsePythonVersion@0
-    displayName: "Use Python 3.11"
+    displayName: 'Use Python 3.11'
     inputs:
-      versionSpec: "3.11"
+      versionSpec: '3.11'
 
   - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
     parameters:
-      PackagePropertiesFolder: "$(Build.ArtifactStagingDirectory)/PackageInfo"
+      PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: NodeTool@0
     inputs:
       versionSpec: 20.x
-    displayName: "Use Node 20.x"
+    displayName: 'Use Node 20.x'
 
   # Authenticate npm to Azure Artifacts
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
     parameters:
       npmrcPath: $(Agent.TempDirectory)/analyze-job/.npmrc
-      registryUrl: "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/"
+      registryUrl: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
 
   - task: DotNetCoreCLI@2
-    displayName: "Install Snippet Generator Tool"
+    displayName: 'Install Snippet Generator Tool'
     inputs:
       command: custom
-      custom: "tool"
-      arguments: "restore"
-      workingDirectory: "$(Agent.BuildDirectory)"
+      custom: 'tool'
+      arguments: 'restore'
+      workingDirectory: '$(Agent.BuildDirectory)'
 
   - pwsh: |
       $failed = $false
@@ -138,12 +138,11 @@ steps:
         -BuildConfiguration "$(BuildConfiguration)"
       pwsh: true
 
-  # Publish the analyze output via the shared helper so retry/failed attempts use unique artifact names.
   - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
     parameters:
-      ArtifactPath: "$(Build.ArtifactStagingDirectory)"
+      ArtifactPath: '$(Build.ArtifactStagingDirectory)'
       ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-        ArtifactName: "verify_$(System.JobName)"
+        ArtifactName: 'verify_$(System.JobName)'
       ${{ else }}:
-        ArtifactName: "verify"
+        ArtifactName: 'verify'
       SbomEnabled: false
