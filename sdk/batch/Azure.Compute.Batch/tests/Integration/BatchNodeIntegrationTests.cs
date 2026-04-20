@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // reboot node
-                RebootNodeOperation rebootNodeOperation = await client.RebootNodeAsync(poolID, batchNodeID);
+                RebootNodeOperation rebootNodeOperation = await client.RebootNodeAsync(WaitUntil.Started, poolID, batchNodeID);
 
                 BatchNode node = await rebootNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(rebootNodeOperation.HasCompleted);
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // reboot node
-                ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(poolID, batchNodeID);
+                ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(WaitUntil.Started, poolID, batchNodeID);
 
                 BatchNode node = await reImageNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
 
@@ -171,7 +171,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // Deallocate node
-                DeallocateNodeOperation deallocateNodeOperation = await client.DeallocateNodeAsync(poolID, batchNodeID);
+                DeallocateNodeOperation deallocateNodeOperation = await client.DeallocateNodeAsync(WaitUntil.Started, poolID, batchNodeID);
                 await deallocateNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(deallocateNodeOperation.HasCompleted);
                 Assert.IsTrue(deallocateNodeOperation.HasValue);
@@ -203,7 +203,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(BatchNodeState.Deallocated, deallocateNodeOperation.Value.State);
 
                 // start node
-                StartNodeOperation startNodeOperation = await client.StartNodeAsync(poolID, batchNodeID);
+                StartNodeOperation startNodeOperation = await client.StartNodeAsync(WaitUntil.Started, poolID, batchNodeID);
                 await startNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
                 Assert.IsTrue(startNodeOperation.HasCompleted);
                 Assert.IsTrue(startNodeOperation.HasValue);
@@ -212,7 +212,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -229,8 +229,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 VMExtension vMExtension = new VMExtension("CustomExtension", "Microsoft.Azure.Geneva", "GenevaMonitoring")
                 {
                     TypeHandlerVersion = "2.16",
-                    AutoUpgradeMinorVersion = true,
-                    EnableAutomaticUpgrade = true,
+                    ShouldAutoUpgradeMinorVersion = true,
+                    IsAutomaticUpgradeEnabled = true,
                     ProtectedSettings = { },
                     Settings = { },
                 };
@@ -260,7 +260,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -307,7 +307,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
     }

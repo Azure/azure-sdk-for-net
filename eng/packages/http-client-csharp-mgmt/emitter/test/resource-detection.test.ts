@@ -165,9 +165,9 @@ interface Employees2 {
       getMethod.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(getMethod.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(getMethod.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      getMethod.resourceScopeIdPattern?.path,
+      getMethod.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -178,9 +178,9 @@ interface Employees2 {
       createEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(createEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(createEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      createEntry.resourceScopeIdPattern?.path,
+      createEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -191,9 +191,9 @@ interface Employees2 {
       updateEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(updateEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(updateEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScopeIdPattern?.path,
+      updateEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -204,9 +204,9 @@ interface Employees2 {
       deleteEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(deleteEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(deleteEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScopeIdPattern?.path,
+      deleteEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -221,16 +221,16 @@ interface Employees2 {
       listByRgEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listByRgEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(listByRgEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScopeIdPattern?.path,
+      listByRgEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationScope === ResourceScopeKind.Subscription
+        m.kind === "List" && m.scope.kind === ResourceScopeKind.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
@@ -238,8 +238,11 @@ interface Employees2 {
       listBySubEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listBySubEntry.operationScope, ResourceScopeKind.Subscription);
-    strictEqual(listBySubEntry.resourceScopeIdPattern, undefined);
+    strictEqual(listBySubEntry.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      listBySubEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -982,7 +985,7 @@ interface Employees {
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Read");
-    strictEqual(getMethodEntry.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(getMethodEntry.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1237,7 +1240,7 @@ interface ScheduledActionExtension {
       methodEntry,
       "getAssociatedScheduledActions should be in non-resource methods"
     );
-    strictEqual(methodEntry.operationScope, ResourceScopeKind.ResourceGroup);
+    strictEqual(methodEntry.scope.kind, ResourceScopeKind.ResourceGroup);
 
     // Verify getPostgresVersions is also a non-resource method
     const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
@@ -1248,7 +1251,7 @@ interface ScheduledActionExtension {
       "getPostgresVersions should be in non-resource methods"
     );
     strictEqual(
-      getPostgresVersionsEntry.operationScope,
+      getPostgresVersionsEntry.scope.kind,
       ResourceScopeKind.ResourceGroup
     );
 
@@ -1849,7 +1852,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { operationScope: unknown }).operationScope =
+          (method as { scope: { kind: unknown } }).scope.kind =
             "<normalized>";
         }
       }
@@ -2825,7 +2828,7 @@ interface TenantTranscripts {
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScopeIdPattern?.path,
+      tenantTranscriptList.scope.scopeIdPattern?.path,
       tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );

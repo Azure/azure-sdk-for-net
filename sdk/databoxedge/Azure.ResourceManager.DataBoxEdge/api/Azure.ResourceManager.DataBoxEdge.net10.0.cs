@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public int RateInMbps { get { throw null; } set { } }
         public System.TimeSpan StartOn { get { throw null; } set { } }
         public System.TimeSpan StopOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -81,7 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string Recommendation { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? Severity { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -102,6 +108,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceCapacityInfoData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>
+    {
+        public DataBoxEdgeDeviceCapacityInfoData() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> NodeCapacityInfos { get { throw null; } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceCapacityInfoResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeDeviceCapacityInfoResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataBoxEdgeDeviceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>, System.Collections.IEnumerable
     {
@@ -126,6 +164,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> ConfiguredRoleTypes { get { throw null; } }
         public string Culture { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData DataBoxEdgeSystemData { get { throw null; } }
         public string Description { get { throw null; } }
         public string DeviceHcsVersion { get { throw null; } }
         public long? DeviceLocalCapacity { get { throw null; } }
@@ -137,6 +176,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string FriendlyName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? Kind { get { throw null; } }
+        public string KubernetesWorkloadProfile { get { throw null; } }
         public string ModelDescription { get { throw null; } }
         public int? NodeCount { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? ResidencyType { get { throw null; } set { } }
@@ -144,12 +184,44 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku Sku { get { throw null; } set { } }
         public string TimeZone { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceNetworkSettingsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>
+    {
+        public DataBoxEdgeDeviceNetworkSettingsData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> NetworkAdapters { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceNetworkSettingsResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeDeviceNetworkSettingsResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataBoxEdgeDeviceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData>
     {
@@ -178,6 +250,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource> GetDataBoxEdgeAlert(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource>> GetDataBoxEdgeAlertAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertCollection GetDataBoxEdgeAlerts() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfo() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettings() { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummary() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource> GetDataBoxEdgeJob(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource>> GetDataBoxEdgeJobAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobCollection GetDataBoxEdgeJobs() { throw null; }
@@ -200,7 +275,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource> GetDataBoxEdgeUser(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserResource>> GetDataBoxEdgeUserAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserCollection GetDataBoxEdgeUsers() { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceCapacityInfo().Get().Data instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo> GetDeviceCapacityInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceCapacityInfo().GetAsync().Data instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>> GetDeviceCapacityInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSetting() { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSetting() { throw null; }
@@ -208,9 +285,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode> GetEdgeNodesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo> GetExtendedInformation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>> GetExtendedInformationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceNetworkSettings().Get().Data instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings> GetNetworkSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceNetworkSettings().GetAsync().Data instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>> GetNetworkSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceUpdateSummary().Get().Data instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary> GetUpdateSummary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use GetDataBoxEdgeDeviceUpdateSummary().GetAsync().Data instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>> GetUpdateSummaryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation InstallUpdates(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> InstallUpdatesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -234,6 +315,59 @@ namespace Azure.ResourceManager.DataBoxEdge
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse> UploadCertificate(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>> UploadCertificateAsync(Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class DataBoxEdgeDeviceUpdateSummaryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>
+    {
+        public DataBoxEdgeDeviceUpdateSummaryData() { }
+        public System.DateTimeOffset? DeviceLastScannedOn { get { throw null; } set { } }
+        public string DeviceVersionNumber { get { throw null; } set { } }
+        public string FriendlyDeviceVersionName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InProgressDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressDownloadJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier InProgressInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? InProgressInstallJobStartedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedDownloadJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedDownloadJobOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier LastCompletedInstallJobId { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedInstallJobOn { get { throw null; } }
+        public System.DateTimeOffset? LastCompletedScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastDownloadJobStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? LastInstallJobStatus { get { throw null; } }
+        public System.DateTimeOffset? LastSuccessfulInstallJobOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastSuccessfulScanJobOn { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? OngoingUpdateOperation { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
+        public int? TotalNumberOfUpdatesAvailable { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingDownload { get { throw null; } }
+        public int? TotalNumberOfUpdatesPendingInstall { get { throw null; } }
+        public int? TotalTimeInMinutes { get { throw null; } }
+        public double? TotalUpdateSizeInBytes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> Updates { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> UpdateTitles { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DataBoxEdgeDeviceUpdateSummaryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected DataBoxEdgeDeviceUpdateSummaryResource() { }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class DataBoxEdgeExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku> GetAvailableSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -242,10 +376,13 @@ namespace Azure.ResourceManager.DataBoxEdge
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettingsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource GetDataBoxEdgeJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -286,7 +423,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? Status { get { throw null; } }
         public int? TotalRefreshErrors { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -321,7 +461,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? ShipmentType { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress ShippingAddress { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -369,7 +512,11 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeRoleAddonData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>
     {
         public DataBoxEdgeRoleAddonData() { }
+        public DataBoxEdgeRoleAddonData(Azure.ResourceManager.DataBoxEdge.Models.AddonType kind) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -415,7 +562,11 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeRoleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>
     {
         public DataBoxEdgeRoleData() { }
+        public DataBoxEdgeRoleData(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType kind) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -475,7 +626,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareStatus ShareStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> UserAccessRights { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -548,7 +702,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus SslStatus { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -583,7 +740,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public string Description { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -636,7 +796,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails RefreshDetails { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -684,7 +847,11 @@ namespace Azure.ResourceManager.DataBoxEdge
     public partial class DataBoxEdgeTriggerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>
     {
         public DataBoxEdgeTriggerData() { }
+        public DataBoxEdgeTriggerData(Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType kind) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -733,7 +900,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedPassword { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> ShareAccessRights { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType UserType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -763,7 +933,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public DiagnosticProactiveLogCollectionSettingData(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent) { }
         public Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent UserConsent { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -791,7 +964,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public DiagnosticRemoteSupportSettingData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> RemoteSupportSettingsList { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -819,7 +995,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         public MonitoringMetricConfigurationData(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> metricConfigurations) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> MetricConfigurations { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -853,7 +1032,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         protected MockableDataBoxEdgeArmClient() { }
         public virtual Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource GetBandwidthScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettingsResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobResource GetDataBoxEdgeJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -886,30 +1068,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
 }
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AddonType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.AddonType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AddonType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.AddonType ArcForKubernetes { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.AddonType IotEdge { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.AddonType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.AddonType left, Azure.ResourceManager.DataBoxEdge.Models.AddonType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.AddonType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.AddonType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.AddonType left, Azure.ResourceManager.DataBoxEdge.Models.AddonType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmDataBoxEdgeModelFactory
     {
         public static Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku AvailableDataBoxEdgeSku(string resourceType = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? name = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName?), string kind = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? tier = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier?), string size = null, string family = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost> costs = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption? signupOption = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion? version = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability? availability = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType> shipmentTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability> capabilities = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData BandwidthScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.TimeSpan startOn = default(System.TimeSpan), System.TimeSpan stopOn = default(System.TimeSpan), int rateInMbps = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData BandwidthScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.TimeSpan? startOn = default(System.TimeSpan?), System.TimeSpan? stopOn = default(System.TimeSpan?), int? rateInMbps = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.BandwidthScheduleData BandwidthScheduleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.TimeSpan startOn, System.TimeSpan stopOn, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole CloudEdgeManagementRole(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? localManagementStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus?), Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription edgeSubscription = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? roleStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.CniConfig CniConfig(string cniConfigType = null, string version = null, string podSubnet = null, string serviceSubnet = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertData DataBoxEdgeAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string alertType = null, System.DateTimeOffset? appearedOn = default(System.DateTimeOffset?), string recommendation = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? severity = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails errorDetails = null, System.Collections.Generic.IReadOnlyDictionary<string, string> detailedInformation = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails DataBoxEdgeAlertErrorDetails(string errorCode = null, string errorMessage = null, int? occurrences = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails DataBoxEdgeContactDetails(string contactPerson = null, string companyName = null, string phone = null, System.Collections.Generic.IEnumerable<string> emailList = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode DataBoxEdgeDataCenterAccessCode(string authCode = null) { throw null; }
+        [System.ObsoleteAttribute("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceCapacityInfoData instead.", false)]
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo DataBoxEdgeDeviceCapacityInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo clusterStorageCapacityInfo = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> nodeCapacityInfos = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData DataBoxEdgeDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku sku = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? kind = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus?), string serialNumber = null, string description = null, string modelDescription = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? deviceType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType?), string friendlyName = null, string culture = null, string deviceModel = null, string deviceSoftwareVersion = null, long? deviceLocalCapacity = default(long?), string timeZone = null, string deviceHcsVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> configuredRoleTypes = null, int? nodeCount = default(int?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails resourceMoveDetails = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription edgeSubscription = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? residencyType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData DataBoxEdgeDeviceCapacityInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo clusterStorageCapacityInfo = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.HostCapacity> nodeCapacityInfos = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData DataBoxEdgeDeviceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku sku, Azure.ETag? etag, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? kind, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails resourceMoveDetails, Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription edgeSubscription, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? residencyType) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceData DataBoxEdgeDeviceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.SystemData dataBoxEdgeSystemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus?), string serialNumber = null, string description = null, string modelDescription = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? deviceType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType?), string friendlyName = null, string culture = null, string deviceModel = null, string deviceSoftwareVersion = null, long? deviceLocalCapacity = default(long?), string timeZone = null, string deviceHcsVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> configuredRoleTypes = null, int? nodeCount = default(int?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails resourceMoveDetails = null, string kubernetesWorkloadProfile = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription edgeSubscription = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? residencyType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku sku = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? kind = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string encryptionKeyThumbprint = null, string encryptionKey = null, string resourceKey = null, Azure.Core.ResourceIdentifier clientSecretStoreId = null, System.Uri clientSecretStoreUri = null, string channelIntegrityKeyName = null, string channelIntegrityKeyVersion = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default(Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret> deviceSecrets = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType? clusterWitnessType = default(Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType?), string fileShareWitnessLocation = null, string fileShareWitnessUsername = null, string cloudWitnessStorageAccountName = null, string cloudWitnessContainerName = null, string cloudWitnessStorageEndpoint = null) { throw null; }
+        [System.ObsoleteAttribute("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceNetworkSettingsData instead.", false)]
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings DataBoxEdgeDeviceNetworkSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> networkAdapters = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret DataBoxEdgeDeviceSecret(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedSecret = null, string keyVaultId = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData DataBoxEdgeDeviceNetworkSettingsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter> networkAdapters = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch DataBoxEdgeDevicePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier subscriptionId = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret DataBoxEdgeDeviceSecret(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedSecret, string keyVaultId) { throw null; }
+        [System.ObsoleteAttribute("Use ArmDataBoxEdgeModelFactory.DataBoxEdgeDeviceUpdateSummaryData instead.", false)]
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary DataBoxEdgeDeviceUpdateSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceVersionNumber = null, string friendlyDeviceVersionName = null, System.DateTimeOffset? deviceLastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSuccessfulScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedDownloadJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedDownloadJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastDownloadJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), System.DateTimeOffset? lastSuccessfulInstallJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedInstallJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedInstallJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastInstallJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation?), Azure.Core.ResourceIdentifier inProgressDownloadJobId = null, Azure.Core.ResourceIdentifier inProgressInstallJobId = null, System.DateTimeOffset? inProgressDownloadJobStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? inProgressInstallJobStartedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> updateTitles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> updates = null, double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceUpdateSummaryData DataBoxEdgeDeviceUpdateSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deviceVersionNumber = null, string friendlyDeviceVersionName = null, System.DateTimeOffset? deviceLastScannedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSuccessfulScanJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedDownloadJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedDownloadJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastDownloadJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), System.DateTimeOffset? lastSuccessfulInstallJobOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastCompletedInstallJobOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier lastCompletedInstallJobId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? lastInstallJobStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), int? totalNumberOfUpdatesAvailable = default(int?), int? totalNumberOfUpdatesPendingDownload = default(int?), int? totalNumberOfUpdatesPendingInstall = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? ongoingUpdateOperation = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation?), Azure.Core.ResourceIdentifier inProgressDownloadJobId = null, Azure.Core.ResourceIdentifier inProgressInstallJobId = null, System.DateTimeOffset? inProgressDownloadJobStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? inProgressInstallJobStartedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> updateTitles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails> updates = null, double? totalUpdateSizeInBytes = default(double?), int? totalTimeInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo DataBoxEdgeEtcdInfo(string etcdInfoType = null, string version = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config DataBoxEdgeIPv4Config(System.Net.IPAddress ipAddress = null, string subnet = null, string gateway = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config DataBoxEdgeIPv6Config(string ipAddress = null, int? prefixLength = default(int?), string gateway = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeJobData DataBoxEdgeJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? status = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? percentComplete = default(int?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails error = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType? jobType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType?), Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? currentStage = default(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage?), Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress downloadProgress = null, Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress installProgress = null, int? totalRefreshErrors = default(int?), string errorManifestFile = null, Azure.Core.ResourceIdentifier refreshedEntityId = null, string folder = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails DataBoxEdgeJobErrorDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem> errorDetails = null, string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem DataBoxEdgeJobErrorItem(System.Collections.Generic.IEnumerable<string> recommendations = null, string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType = null, string version = null, System.Collections.Generic.IEnumerable<string> ipRange = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration DataBoxEdgeMetricConfiguration(Azure.Core.ResourceIdentifier resourceId = null, string mdmAccount = null, string metricNameSpace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet> counterSets = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter DataBoxEdgeMetricCounter(string name = null, string instance = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> dimensionFilter = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> additionalDimensions = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet DataBoxEdgeMetricCounterSet(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter> counters = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap DataBoxEdgeMountPointMap(Azure.Core.ResourceIdentifier shareId = null, Azure.Core.ResourceIdentifier roleId = null, string mountPoint = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType? mountType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType? roleType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType?)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter DataBoxEdgeNetworkAdapter(string adapterId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition adapterPosition = null, int? index = default(int?), System.Guid? nodeId = default(System.Guid?), string networkAdapterName = null, string label = null, string macAddress = null, long? linkSpeed = default(long?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? status = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config ipv4Configuration = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config ipv6Configuration = null, string ipv6LinkLocalAddress = null, System.Collections.Generic.IEnumerable<string> dnsServers = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter DataBoxEdgeNetworkAdapter(string adapterId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition adapterPosition = null, int? index = default(int?), System.Guid? nodeId = default(System.Guid?), string networkAdapterName = null, string label = null, string macAddress = null, long? linkSpeed = default(long?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? status = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config iPv4Configuration = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config iPv6Configuration = null, string iPv6LinkLocalAddress = null, System.Collections.Generic.IEnumerable<string> dnsServers = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition DataBoxEdgeNetworkAdapterPosition(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup? networkGroup = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup?), int? port = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode DataBoxEdgeNode(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? nodeStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus?), string nodeChassisSerialNumber = null, string nodeSerialNumber = null, string nodeDisplayName = null, string nodeFriendlySoftwareVersion = null, string nodeHcsVersion = null, System.Guid? nodeInstanceId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeOrderData DataBoxEdgeOrderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, string orderId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails contactInformation = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress shippingAddress = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus currentStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus> orderHistory = null, string serialNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> deliveryTrackingInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo> returnTrackingInfo = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? shipmentType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType?)) { throw null; }
@@ -918,20 +1131,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleData DataBoxEdgeRoleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings DataBoxEdgeSecuritySettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret deviceAdminPassword = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData DataBoxEdgeShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus = default(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus monitoringStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo azureContainerInfo = null, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol = default(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> userAccessRights = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> clientAccessRights = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> shareMappings = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? dataPolicy = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData DataBoxEdgeShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus shareStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus monitoringStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo azureContainerInfo, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol accessProtocol, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> userAccessRights, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> clientAccessRights, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> shareMappings, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? dataPolicy) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeShareData DataBoxEdgeShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus? shareStatus = default(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo azureContainerInfo = null, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol? accessProtocol = default(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight> userAccessRights = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight> clientAccessRights = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> shareMappings = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? dataPolicy = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability DataBoxEdgeSkuCapability(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost DataBoxEdgeSkuCost(string meterId = null, long? quantity = default(long?), string extendedUnit = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo DataBoxEdgeSkuLocationInfo(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<string> sites = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData DataBoxEdgeStorageAccountCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string alias = null, string userName = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret accountKey = null, string connectionString = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus sslStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus), string blobDomainName = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType accountType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType), Azure.Core.ResourceIdentifier storageAccountId = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData DataBoxEdgeStorageAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? storageAccountStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy dataPolicy = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy), Azure.Core.ResourceIdentifier storageAccountCredentialId = null, string blobEndpoint = null, int? containerCount = default(int?)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? containerStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat dataFormat = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData DataBoxEdgeStorageAccountCredentialData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string alias, string userName, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret accountKey, string connectionString, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus sslStatus, string blobDomainName, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType accountType, Azure.Core.ResourceIdentifier storageAccountId) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountCredentialData DataBoxEdgeStorageAccountCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string alias = null, string userName = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret accountKey = null, string connectionString = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus? sslStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus?), string blobDomainName = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType? accountType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType?), Azure.Core.ResourceIdentifier storageAccountId = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData DataBoxEdgeStorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? storageAccountStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy dataPolicy, Azure.Core.ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageAccountData DataBoxEdgeStorageAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? storageAccountStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? dataPolicy = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy?), Azure.Core.ResourceIdentifier storageAccountCredentialId = null, string blobEndpoint = null, int? containerCount = default(int?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? containerStatus, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat dataFormat, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails, System.DateTimeOffset? createdOn) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeStorageContainerData DataBoxEdgeStorageContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? containerStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat? dataFormat = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails refreshDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo DataBoxEdgeTrackingInfo(string serialNumber = null, string carrierName = null, string trackingId = null, System.Uri trackingUri = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData DataBoxEdgeTriggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle = null, double? updateSizeInBytes = default(double?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? updateType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType?), string targetVersion = null, string friendlyVersionNumber = null, int? estimatedInstallTimeInMins = default(int?), Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior = default(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior?), Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? installationImpact = default(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? status = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus?)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData DataBoxEdgeUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedPassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> shareAccessRights = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType userType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData DiagnosticProactiveLogCollectionSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent = default(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle, double? updateSizeInBytes, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? updateType, string targetVersion, string friendlyVersionNumber, int? estimatedInstallTimeInMins, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? rebootBehavior, Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? installationImpact, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? status) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData DataBoxEdgeUserData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedPassword, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> shareAccessRights, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType userType) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DataBoxEdgeUserData DataBoxEdgeUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret encryptedPassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight> shareAccessRights = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType? userType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent DeviceCapacityRequestContent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> vmPlacementResults = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData DiagnosticProactiveLogCollectionSettingData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent userConsent) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.DiagnosticProactiveLogCollectionSettingData DiagnosticProactiveLogCollectionSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent? userConsent = default(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingData DiagnosticRemoteSupportSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings> remoteSupportSettingsList = null) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon EdgeArcAddon(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string subscriptionId = null, string resourceGroupName = null, string resourceName = null, Azure.Core.AzureLocation resourceLocation = default(Azure.Core.AzureLocation), string version = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? hostPlatform = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? hostPlatformType = default(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? provisioningState = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon EdgeArcAddon(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string subscriptionId, string resourceGroupName, string resourceName, Azure.Core.AzureLocation resourceLocation, string version, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? hostPlatform, Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? hostPlatformType, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon EdgeArcAddon(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string subscriptionId = null, string resourceGroupName = null, string resourceName = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), string version = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? hostPlatform = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? hostPlatformType = default(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? provisioningState = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger EdgeFileEventTrigger(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier sourceInfoShareId = null, Azure.Core.ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon EdgeIotAddon(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotDeviceDetails = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotEdgeDeviceDetails = null, string version = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? hostPlatform = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? hostPlatformType = default(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? provisioningState = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole EdgeIotRole(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? hostPlatform = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotDeviceDetails = null, Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo iotEdgeDeviceDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> shareMappings = null, Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo iotEdgeAgentInfo = null, Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? hostPlatformType = default(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType?), Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo computeResource = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? roleStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus?)) { throw null; }
@@ -946,16 +1167,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo EdgeKubernetesRoleStorageClassInfo(string name = null, string kubernetesRoleStorageClassInfoType = null, Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus? posixCompliant = default(Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeProfileSubscription(System.Guid? registrationId = default(System.Guid?), Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? state = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState?), string registrationDate = null, string subscriptionId = null, System.Guid? tenantId = default(System.Guid?), string locationPlacementId = null, string quotaId = null, string serializedDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures> registeredFeatures = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult GenerateCertResult(string publicKey = null, string privateKey = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.HostCapacity HostCapacity(string hostName = null, long? effectiveAvailableMemoryInMBOnHost = default(long?), int? availableGpuCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory> vmUsedMemory = null, string gpuType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo> numaNodesData = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.MecRole MecRole(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret connectionString = null, string controllerEndpoint = null, string resourceUniqueId = null, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? roleStatus = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationData MonitoringMetricConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration> metricConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo NumaNodeInfo(int? numaNodeIndex = default(int?), long? totalMemoryInMB = default(long?), int? logicalCoreCountPerCore = default(int?), long? effectiveAvailableMemoryInMB = default(long?), System.Collections.Generic.IEnumerable<int> freeVCpuIndexesForHpn = null, System.Collections.Generic.IEnumerable<int> vCpuIndexesForHpn = null, System.Collections.Generic.IEnumerable<int> vCpuIndexesForRoot = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger PeriodicTimerEventTrigger(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo = null, Azure.Core.ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight ShareAccessRight(Azure.Core.ResourceIdentifier shareId = null, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType accessType = default(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures SubscriptionRegisteredFeatures(string name = null, string state = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent TriggerSupportPackageContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? minimumTimeStamp = default(System.DateTimeOffset?), System.DateTimeOffset? maximumTimeStamp = default(System.DateTimeOffset?), string include = null) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress UpdateDownloadProgress(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase? downloadPhase = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase?), int? percentComplete = default(int?), double? totalBytesToDownload = default(double?), double? totalBytesDownloaded = default(double?), int? numberOfUpdatesToDownload = default(int?), int? numberOfUpdatesDownloaded = default(int?)) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress UpdateInstallProgress(int? percentComplete = default(int?), int? numberOfUpdatesToInstall = default(int?), int? numberOfUpdatesInstalled = default(int?)) { throw null; }
-        public static Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent UploadCertificateContent(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? authenticationType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType?), string certificate = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent UploadCertificateContent(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? authenticationType, string certificate) { throw null; }
         public static Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse UploadCertificateResponse(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? authType = default(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType?), string resourceId = null, string aadAuthority = null, System.Guid? aadTenantId = default(System.Guid?), System.Guid? servicePrincipalClientId = default(System.Guid?), System.Guid? servicePrincipalObjectId = default(System.Guid?), string azureManagementEndpointAudience = null, string aadAudience = null) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult VmPlacementRequestResult(System.Collections.Generic.IEnumerable<string> vmSize = null, bool? isFeasible = default(bool?), string messageCode = null, string message = null) { throw null; }
     }
     public partial class AsymmetricEncryptedSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>
     {
@@ -963,7 +1187,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
         public string EncryptionCertThumbprint { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -988,7 +1215,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? Tier { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion? Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1000,7 +1230,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public ClientAccessRight(string client, Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType accessPermission) { }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType AccessPermission { get { throw null; } set { } }
         public string Client { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ClientAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1013,7 +1246,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription EdgeSubscription { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? LocalManagementStatus { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.CloudEdgeManagementRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1027,7 +1263,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string PodSubnet { get { throw null; } }
         public string ServiceSubnet { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.CniConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.CniConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.CniConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.CniConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.CniConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1036,11 +1275,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeAlertErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>
     {
-        internal DataBoxEdgeAlertErrorDetails() { }
+        public DataBoxEdgeAlertErrorDetails() { }
         public string ErrorCode { get { throw null; } }
         public string ErrorMessage { get { throw null; } }
         public int? Occurrences { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1061,6 +1303,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1077,6 +1320,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1087,7 +1331,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ContactPerson { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmailList { get { throw null; } }
         public string Phone { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeContactDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1098,7 +1345,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal DataBoxEdgeDataCenterAccessCode() { }
         public string AuthCode { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataCenterAccessCode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1118,6 +1368,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1134,6 +1385,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDataResidencyType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1155,9 +1407,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("Use DataBoxEdgeDeviceCapacityInfoData via GetDataBoxEdgeDeviceCapacityInfo().Get().Data instead.", false)]
     public partial class DataBoxEdgeDeviceCapacityInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceCapacityInfo>
     {
         public DataBoxEdgeDeviceCapacityInfo() { }
@@ -1190,7 +1444,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string FileShareWitnessUsername { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? KeyVaultSyncStatus { get { throw null; } set { } }
         public string ResourceKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1205,7 +1462,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier ClientSecretStoreId { get { throw null; } set { } }
         public System.Uri ClientSecretStoreUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? SyncStatus { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceExtendedInfoPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1227,9 +1487,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("Use DataBoxEdgeDeviceNetworkSettingsData via GetDataBoxEdgeDeviceNetworkSettings().Get().Data instead.", false)]
     public partial class DataBoxEdgeDeviceNetworkSettings : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceNetworkSettings>
     {
         public DataBoxEdgeDeviceNetworkSettings() { }
@@ -1247,7 +1509,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDevicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1256,10 +1521,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeDeviceSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>
     {
-        internal DataBoxEdgeDeviceSecret() { }
-        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } }
-        public string KeyVaultId { get { throw null; } }
+        public DataBoxEdgeDeviceSecret() { }
+        public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret EncryptedSecret { get { throw null; } set { } }
+        public string KeyVaultId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1284,6 +1552,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1299,9 +1568,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("Use DataBoxEdgeDeviceUpdateSummaryData via GetDataBoxEdgeDeviceUpdateSummary().Get().Data instead.", false)]
     public partial class DataBoxEdgeDeviceUpdateSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceUpdateSummary>
     {
         public DataBoxEdgeDeviceUpdateSummary() { }
@@ -1352,6 +1623,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDownloadPhase right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1369,6 +1641,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEncryptionAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1377,7 +1650,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeEtcdInfo() { }
         public string EtcdInfoType { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1386,11 +1662,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeIPv4Config : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>
     {
-        internal DataBoxEdgeIPv4Config() { }
+        public DataBoxEdgeIPv4Config() { }
         public string Gateway { get { throw null; } }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public string Subnet { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1399,11 +1678,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeIPv6Config : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>
     {
-        internal DataBoxEdgeIPv6Config() { }
+        public DataBoxEdgeIPv6Config() { }
         public string Gateway { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public int? PrefixLength { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv6Config>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1416,7 +1698,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem> ErrorDetails { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1429,7 +1714,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobErrorItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1454,6 +1742,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1477,15 +1766,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeJobType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DataBoxEdgeLoadBalancerConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>
     {
         internal DataBoxEdgeLoadBalancerConfig() { }
+        public System.Collections.Generic.IList<string> IpRange { get { throw null; } }
         public string LoadBalancerConfigType { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1499,7 +1793,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string MdmAccount { get { throw null; } set { } }
         public string MetricNameSpace { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1513,7 +1810,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension> DimensionFilter { get { throw null; } }
         public string Instance { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1524,7 +1824,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeMetricCounterSet(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter> counters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounter> Counters { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1536,7 +1839,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeMetricDimension(string sourceType, string sourceName) { }
         public string SourceName { get { throw null; } set { } }
         public string SourceType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricDimension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1551,7 +1857,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier RoleId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType? RoleType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1571,15 +1880,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DataBoxEdgeNetworkAdapter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>
     {
-        internal DataBoxEdgeNetworkAdapter() { }
+        public DataBoxEdgeNetworkAdapter() { }
         public string AdapterId { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition AdapterPosition { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? DhcpStatus { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> DnsServers { get { throw null; } }
         public int? Index { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeIPv4Config IPv4Configuration { get { throw null; } }
@@ -1590,9 +1900,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string MacAddress { get { throw null; } }
         public string NetworkAdapterName { get { throw null; } }
         public System.Guid? NodeId { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? RdmaStatus { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1612,15 +1925,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterDhcpStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class DataBoxEdgeNetworkAdapterPosition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>
     {
-        internal DataBoxEdgeNetworkAdapterPosition() { }
+        public DataBoxEdgeNetworkAdapterPosition() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup? NetworkGroup { get { throw null; } }
         public int? Port { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterPosition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1640,6 +1957,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterRdmaStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1656,6 +1974,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkAdapterStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1673,6 +1992,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNetworkGroup right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1686,7 +2006,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Guid? NodeInstanceId { get { throw null; } }
         public string NodeSerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? NodeStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1709,6 +2032,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeNodeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1740,6 +2064,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1751,7 +2076,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderState Status { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo TrackingInformation { get { throw null; } }
         public System.DateTimeOffset? UpdateOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOrderStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1771,6 +2099,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeOSPlatformType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1781,7 +2110,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.ResourceIdentifier InProgressRefreshJobId { get { throw null; } set { } }
         public System.DateTimeOffset? LastCompletedRefreshJobTimeInUtc { get { throw null; } set { } }
         public string LastJob { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRefreshDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1793,7 +2125,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeResourceMoveDetails() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus? OperationInProgress { get { throw null; } }
         public System.DateTimeOffset? OperationInProgressLockTimeoutInUtc { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1814,6 +2149,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeResourceMoveStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1835,6 +2171,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1842,7 +2179,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeRoleSinkInfo(Azure.Core.ResourceIdentifier roleId) { }
         public Azure.Core.ResourceIdentifier RoleId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1862,6 +2202,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1883,6 +2224,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1890,7 +2232,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public DataBoxEdgeSecuritySettings(Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret deviceAdminPassword) { }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret DeviceAdminPassword { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSecuritySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1910,6 +2255,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShareMonitoringStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1927,6 +2273,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShipmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1940,7 +2287,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Country { get { throw null; } set { } }
         public string PostalCode { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeShippingAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1952,7 +2302,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeSku() { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? Name { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? Tier { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1972,6 +2325,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuAvailability right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1980,7 +2334,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1993,7 +2350,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ExtendedUnit { get { throw null; } }
         public string MeterId { get { throw null; } }
         public long? Quantity { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2006,7 +2366,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Sites { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuLocationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2053,6 +2416,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2069,6 +2433,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuSignupOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2084,6 +2449,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2100,6 +2466,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSkuVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2116,6 +2483,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountSslStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2135,6 +2503,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2151,6 +2520,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageAccountType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2168,6 +2538,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2177,7 +2548,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ContainerName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerDataFormat DataFormat { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountCredentialId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2200,6 +2574,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeStorageContainerStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2219,6 +2594,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2229,7 +2605,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string SerialNumber { get { throw null; } }
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeTrackingInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2238,17 +2617,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeUpdateDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>
     {
-        internal DataBoxEdgeUpdateDetails() { }
-        public int? EstimatedInstallTimeInMins { get { throw null; } }
-        public string FriendlyVersionNumber { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? InstallationImpact { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? Status { get { throw null; } }
-        public string TargetVersion { get { throw null; } }
-        public double? UpdateSizeInBytes { get { throw null; } }
-        public string UpdateTitle { get { throw null; } }
-        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? UpdateType { get { throw null; } }
+        public DataBoxEdgeUpdateDetails() { }
+        public int? EstimatedInstallTimeInMins { get { throw null; } set { } }
+        public string FriendlyVersionNumber { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? InstallationImpact { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? RebootBehavior { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? Status { get { throw null; } set { } }
+        public string TargetVersion { get { throw null; } set { } }
+        public double? UpdateSizeInBytes { get { throw null; } set { } }
+        public string UpdateTitle { get { throw null; } set { } }
+        public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? UpdateType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2270,6 +2652,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2289,6 +2672,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2306,6 +2690,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUpdateType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2323,6 +2708,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType left, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeUserType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2331,7 +2717,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DataBoxEdgeVmMemory() { }
         public long? CurrentMemoryUsageInMB { get { throw null; } set { } }
         public long? StartupMemoryInMB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2343,7 +2732,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public DeviceCapacityRequestContent(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> vmPlacementQuery) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> VmPlacementQuery { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult> VmPlacementResults { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.DeviceCapacityRequestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2361,7 +2753,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ResourceName { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeArcAddon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2382,6 +2777,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClientPermissionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2393,7 +2789,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.DateTimeOffset? LastRefreshedOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity MemoryCapacity { get { throw null; } set { } }
         public long? TotalProvisionedNonHpnCores { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterCapacityViewInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2408,7 +2807,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? GpuTotalUnitsCount { get { throw null; } set { } }
         public string GpuType { get { throw null; } set { } }
         public int? GpuUsedUnitsCount { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterGpuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2427,7 +2829,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public double? ClusterNonFailoverVmInMB { get { throw null; } set { } }
         public double? ClusterTotalMemoryInMB { get { throw null; } set { } }
         public double? ClusterUsedMemoryInMB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterMemoryCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2439,7 +2844,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeClusterStorageViewInfo() { }
         public double? ClusterFreeStorageInMB { get { throw null; } set { } }
         public double? ClusterTotalStorageInMB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterStorageViewInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2460,6 +2868,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeClusterWitnessType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2468,7 +2877,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeComputeResourceInfo(int processorCount, long memoryInGB) { }
         public long MemoryInGB { get { throw null; } set { } }
         public int ProcessorCount { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeComputeResourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2477,11 +2889,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class EdgeFileEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>
     {
+        public EdgeFileEventTrigger(Azure.Core.ResourceIdentifier sourceInfoShareId, Azure.Core.ResourceIdentifier sinkInfoRoleId) { }
         public EdgeFileEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
         public string CustomContextTag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceInfoShareId { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileEventTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2492,7 +2908,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public EdgeFileSourceInfo(Azure.Core.ResourceIdentifier shareId) { }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeFileSourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2508,7 +2927,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleAddonProvisioningState? ProvisioningState { get { throw null; } }
         public string Version { get { throw null; } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotAddon>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2522,7 +2944,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string IotHostHub { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IotHostHubId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret SymmetricKeyConnectionString { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2540,7 +2965,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeIotDeviceInfo IotEdgeDeviceDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> ShareMappings { get { throw null; } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeIotRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2564,6 +2992,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKeyVaultSyncStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2573,7 +3002,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeEtcdInfo EtcdInfo { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo> Nodes { get { throw null; } }
         public string Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesClusterInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2585,7 +3017,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeKubernetesIPConfiguration() { }
         public string IPAddress { get { throw null; } }
         public string Port { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2598,7 +3033,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesIPConfiguration> IPConfiguration { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType? NodeType { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2619,6 +3057,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesNodeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2631,7 +3070,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources KubernetesRoleResources { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2644,7 +3086,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? MemoryInBytes { get { throw null; } }
         public int? ProcessorCount { get { throw null; } }
         public string VmProfile { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2656,7 +3101,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal EdgeKubernetesRoleNetwork() { }
         public Azure.ResourceManager.DataBoxEdge.Models.CniConfig CniConfig { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeLoadBalancerConfig LoadBalancerConfig { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2669,7 +3117,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleCompute Compute { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleNetwork Network { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage Storage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2681,7 +3132,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public EdgeKubernetesRoleStorage() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMountPointMap> Endpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo> StorageClasses { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2694,7 +3148,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string KubernetesRoleStorageClassInfoType { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus? PosixCompliant { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesRoleStorageClassInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2719,6 +3176,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState left, Azure.ResourceManager.DataBoxEdge.Models.EdgeKubernetesState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2735,7 +3193,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeSubscriptionState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeProfileSubscription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2757,6 +3218,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2775,6 +3237,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType left, Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2784,7 +3247,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationAccessLevel? AccessLevel { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteApplicationType? RemoteApplicationType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.EdgeRemoteSupportSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2797,7 +3263,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.GenerateCertResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2813,7 +3282,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string HostName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo> NumaNodesData { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeVmMemory> VmUsedMemory { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.HostCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.HostCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.HostCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.HostCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.HostCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2833,6 +3305,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType left, Azure.ResourceManager.DataBoxEdge.Models.HostPlatformType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2842,7 +3315,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Uri ImageRepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.AsymmetricEncryptedSecret Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2863,6 +3339,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact left, Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact left, Azure.ResourceManager.DataBoxEdge.Models.InstallationImpact right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2880,6 +3357,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior left, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior left, Azure.ResourceManager.DataBoxEdge.Models.InstallRebootBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2889,7 +3367,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ImageName { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.ImageRepositoryCredential ImageRepository { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.IotEdgeAgentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2903,7 +3384,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ControllerEndpoint { get { throw null; } set { } }
         public string ResourceUniqueId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleStatus? RoleStatus { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.MecRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.MecRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.MecRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2920,7 +3404,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public long? TotalMemoryInMB { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } }
         public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.NumaNodeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2929,11 +3416,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class PeriodicTimerEventTrigger : Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>
     {
+        public PeriodicTimerEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo, Azure.Core.ResourceIdentifier sinkInfoRoleId) { }
         public PeriodicTimerEventTrigger(Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo sourceInfo, Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleSinkInfo sinkInfo) { }
         public string CustomContextTag { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SinkInfoRoleId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo SourceInfo { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerEventTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2946,7 +3437,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Schedule { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public string Topic { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.PeriodicTimerSourceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2967,6 +3461,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus left, Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus left, Azure.ResourceManager.DataBoxEdge.Models.PosixComplianceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2983,6 +3478,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent left, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent left, Azure.ResourceManager.DataBoxEdge.Models.ProactiveDiagnosticsConsent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2999,6 +3495,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3007,7 +3504,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal ShareAccessRight() { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ShareId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.ShareAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3028,6 +3528,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType left, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3047,6 +3548,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus left, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.ShareStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.ShareStatus left, Azure.ResourceManager.DataBoxEdge.Models.ShareStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3055,12 +3557,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal SubscriptionRegisteredFeatures() { }
         public string Name { get { throw null; } }
         public string State { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.SubscriptionRegisteredFeatures>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TriggerEventType : System.IEquatable<Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TriggerEventType(string value) { throw null; }
+        public static Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType FileEvent { get { throw null; } }
+        public static Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType PeriodicTimerEvent { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType left, Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType left, Azure.ResourceManager.DataBoxEdge.Models.TriggerEventType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TriggerSupportPackageContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>
     {
@@ -3068,7 +3590,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Include { get { throw null; } set { } }
         public System.DateTimeOffset? MaximumTimeStamp { get { throw null; } set { } }
         public System.DateTimeOffset? MinimumTimeStamp { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.TriggerSupportPackageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3084,7 +3609,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? PercentComplete { get { throw null; } }
         public double? TotalBytesDownloaded { get { throw null; } }
         public double? TotalBytesToDownload { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateDownloadProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3097,7 +3625,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public int? NumberOfUpdatesInstalled { get { throw null; } }
         public int? NumberOfUpdatesToInstall { get { throw null; } }
         public int? PercentComplete { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UpdateInstallProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3132,6 +3663,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage left, Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage left, Azure.ResourceManager.DataBoxEdge.Models.UpdateOperationStage right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3139,8 +3671,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         public UploadCertificateContent(string certificate) { }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public string Certificate { get { throw null; } }
+        public string Certificate { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3158,7 +3693,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string ResourceId { get { throw null; } }
         public System.Guid? ServicePrincipalClientId { get { throw null; } }
         public System.Guid? ServicePrincipalObjectId { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UploadCertificateResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3170,7 +3708,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public UserAccessRight(Azure.Core.ResourceIdentifier userId, Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType accessType) { }
         public Azure.ResourceManager.DataBoxEdge.Models.ShareAccessType AccessType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.UserAccessRight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3184,7 +3725,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public string Message { get { throw null; } set { } }
         public string MessageCode { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VmSize { get { throw null; } }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBoxEdge.Models.VmPlacementRequestResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

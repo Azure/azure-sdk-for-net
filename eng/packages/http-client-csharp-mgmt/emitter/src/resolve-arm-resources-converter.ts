@@ -66,6 +66,7 @@ import {
   legacyResourceOperationName,
   builtInResourceOperationName
 } from "./sdk-context-options.js";
+import { buildScopeInfo, buildScopeInfoFromPath } from "./resource-detection.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -255,10 +256,7 @@ export function resolveArmResources(
         methodId,
         operationPath: opPath,
         // TODO: this is also temporary because resolveArmResources does not have the scope of a provider operation
-        scope: {
-          kind: opPath.operationScope,
-          scopeIdPattern: opPath.scopePath
-        }
+        scope: buildScopeInfoFromPath(opPath)
       });
     }
   }
@@ -298,10 +296,7 @@ export function resolveArmResources(
       nonResourceMethods.push({
         methodId: methodId,
         operationPath: opPath,
-        scope: {
-          kind: opPath.operationScope,
-          scopeIdPattern: opPath.scopePath
-        }
+        scope: buildScopeInfoFromPath(opPath)
       });
     }
   }
@@ -338,9 +333,6 @@ function convertResolvedResourceToMetadata(
   resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
-  const operationScopeKind = convertScopeToResourceScope(
-    resolvedResource.scope
-  );
   let resourceIdPattern = "";
 
   // Convert lifecycle operations
@@ -351,17 +343,12 @@ function convertResolvedResourceToMetadata(
       for (const readOp of lifecycle.read) {
         const methodId = getMethodIdFromOperation(sdkContext, readOp.operation);
         if (methodId) {
+          const opPath = new RequestPath(readOp.path);
           methods.push({
             methodId,
             kind: ResourceOperationKind.Read,
-            operationPath: new RequestPath(readOp.path),
-            scope: {
-              kind: operationScopeKind,
-              scopeIdPattern: findResourceScopeIdPattern(
-                readOp.path,
-                resolvedResource
-              ) ?? RequestPath.empty
-            }
+            operationPath: opPath,
+            scope: buildScopeInfoFromPath(opPath)
           });
           // Use the first read operation's path as the resource ID pattern
           if (!resourceIdPattern) {
@@ -378,17 +365,12 @@ function convertResolvedResourceToMetadata(
           createOp.operation
         );
         if (methodId) {
+          const opPath = new RequestPath(createOp.path);
           methods.push({
             methodId,
             kind: ResourceOperationKind.Create,
-            operationPath: new RequestPath(createOp.path),
-            scope: {
-              kind: operationScopeKind,
-              scopeIdPattern: findResourceScopeIdPattern(
-                createOp.path,
-                resolvedResource
-              ) ?? RequestPath.empty
-            }
+            operationPath: opPath,
+            scope: buildScopeInfoFromPath(opPath)
           });
         }
       }
@@ -401,17 +383,12 @@ function convertResolvedResourceToMetadata(
           updateOp.operation
         );
         if (methodId) {
+          const opPath = new RequestPath(updateOp.path);
           methods.push({
             methodId,
             kind: ResourceOperationKind.Update,
-            operationPath: new RequestPath(updateOp.path),
-            scope: {
-              kind: operationScopeKind,
-              scopeIdPattern: findResourceScopeIdPattern(
-                updateOp.path,
-                resolvedResource
-              ) ?? RequestPath.empty
-            }
+            operationPath: opPath,
+            scope: buildScopeInfoFromPath(opPath)
           });
         }
       }
@@ -424,17 +401,12 @@ function convertResolvedResourceToMetadata(
           deleteOp.operation
         );
         if (methodId) {
+          const opPath = new RequestPath(deleteOp.path);
           methods.push({
             methodId,
             kind: ResourceOperationKind.Delete,
-            operationPath: new RequestPath(deleteOp.path),
-            scope: {
-              kind: operationScopeKind,
-              scopeIdPattern: findResourceScopeIdPattern(
-                deleteOp.path,
-                resolvedResource
-              ) ?? RequestPath.empty
-            }
+            operationPath: opPath,
+            scope: buildScopeInfoFromPath(opPath)
           });
         }
       }
@@ -455,19 +427,14 @@ function convertResolvedResourceToMetadata(
           sdkMethodKind === "paging" &&
           resourceModelIds !== undefined &&
           resourceModelIds.has(responseModelId!);
+        const opPath = new RequestPath(actionOp.path);
         methods.push({
           methodId,
           kind: isResourceList
             ? ResourceOperationKind.List
             : ResourceOperationKind.Action,
-          operationPath: new RequestPath(actionOp.path),
-          scope: {
-            kind: operationScopeKind,
-            scopeIdPattern: findResourceScopeIdPattern(
-              actionOp.path,
-              resolvedResource
-            ) ?? RequestPath.empty
-          }
+          operationPath: opPath,
+          scope: buildScopeInfoFromPath(opPath)
         });
       }
     }
@@ -518,12 +485,12 @@ function convertResolvedResourceToMetadata(
       : undefined,
     resourceType,
     methods,
-    scope: {
-      kind: resourceScopeValue,
-      scopeIdPattern: resourceIdPattern
+    scope: buildScopeInfo(
+      resourceScopeValue,
+      resourceIdPattern
         ? new RequestPath(resourceIdPattern).scopePath
         : RequestPath.empty
-    },
+    ),
     parentResourceId: undefined,
     parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
@@ -591,28 +558,6 @@ function convertScopeToResourceScope(
  */
 function formatResourceType(resourceType: ResourceType): string {
   return `${resourceType.provider}/${resourceType.types.join("/")}`;
-}
-
-function findResourceScopeIdPattern(
-  operationPath: string,
-  resolvedResource: ResolvedResource
-): RequestPath | undefined {
-  const opPath = new RequestPath(operationPath);
-  const instancePath = new RequestPath(resolvedResource.resourceInstancePath);
-  if (instancePath.isPrefixOf(opPath)) {
-    return instancePath;
-  }
-
-  let parent = resolvedResource.parent;
-  while (parent) {
-    const parentPath = new RequestPath(parent.resourceInstancePath);
-    if (parentPath.isPrefixOf(opPath)) {
-      return parentPath;
-    }
-    parent = parent.parent;
-  }
-
-  return undefined;
 }
 
 /**
@@ -749,10 +694,7 @@ function assignListOperationsToResources(
         methodId,
         kind: ResourceOperationKind.List,
         operationPath: listPath,
-        scope: {
-          kind: listPath.operationScope,
-          scopeIdPattern: RequestPath.empty
-        }
+        scope: buildScopeInfoFromPath(listPath)
       });
     }
   }

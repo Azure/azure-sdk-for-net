@@ -57,6 +57,8 @@ namespace Azure.Storage.DataMovement.Blobs
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
+        public string VersionId { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {
