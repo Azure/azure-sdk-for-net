@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void DeserializeKeyVaultId(JsonProperty property, ref string keyVaultId)
+        private static void DeserializeKeyVaultId(JsonProperty property, ref ResourceIdentifier keyVaultId)
         {
             if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
             {
