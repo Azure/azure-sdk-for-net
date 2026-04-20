@@ -4,7 +4,6 @@
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
-using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -16,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -580,14 +580,12 @@ namespace Azure.Generator.Management.Visitors
             {
                 // only flatten complex type properties
                 var propertyType = internalProperty.Type;
-                if (IsResourceIdentifierWrapperType(propertyType))
-                {
-                    isSafeFlatten = SafeFlattenResourceIdentifierWrapper(model, propertyMap, internalProperty) || isSafeFlatten;
-                    continue;
-                }
-
                 if (!TryGetModelProvider(propertyType, out var modelProvider))
                 {
+                    if (TryGetSinglePropertyFromFrameworkType(propertyType, out var singleProperty))
+                    {
+                        isSafeFlatten = SafeFlattenFrameworkSingleProperty(model, propertyMap, internalProperty, singleProperty) || isSafeFlatten;
+                    }
                     continue;
                 }
 
@@ -727,17 +725,35 @@ namespace Azure.Generator.Management.Visitors
                 innerPropertyWireInfo.IsApiVersion);
         }
 
-        private static bool IsResourceIdentifierWrapperType(CSharpType type)
+        private static bool TryGetSinglePropertyFromFrameworkType(CSharpType type, [NotNullWhen(true)] out FrameworkSinglePropertyInfo? singleProperty)
         {
-            var nonNullableType = type.WithNullable(false);
-            return nonNullableType.AreNamesEqual(typeof(WritableSubResource))
-                || nonNullableType.AreNamesEqual(typeof(SubResource));
+            singleProperty = null;
+            if (!type.IsFrameworkType || type.FrameworkType is null || !KnownManagementTypes.IsKnownManagementType(type))
+            {
+                return false;
+            }
+
+            var properties = type.FrameworkType
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(p => p.GetMethod is not null && p.GetIndexParameters().Length == 0 && p.GetCustomAttribute<ObsoleteAttribute>() is null)
+                .ToList();
+
+            if (properties.Count != 1)
+            {
+                return false;
+            }
+
+            var property = properties[0];
+            bool canInstantiate = type.FrameworkType.IsValueType || type.FrameworkType.GetConstructor(Type.EmptyTypes) is not null;
+            singleProperty = new FrameworkSinglePropertyInfo(
+                property.Name,
+                new CSharpType(property.PropertyType),
+                property.SetMethod?.IsPublic == true,
+                canInstantiate);
+            return true;
         }
 
-        private static bool IsWritableResourceIdentifierWrapperType(CSharpType type)
-            => type.WithNullable(false).AreNamesEqual(typeof(WritableSubResource));
-
-        private bool SafeFlattenResourceIdentifierWrapper(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty)
+        private bool SafeFlattenFrameworkSingleProperty(ModelProvider model, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, FrameworkSinglePropertyInfo singleProperty)
         {
             var idWireInfo = internalProperty.WireInfo is null
                 ? null
@@ -747,29 +763,33 @@ namespace Azure.Generator.Management.Visitors
                     internalProperty.WireInfo.IsReadOnly,
                     internalProperty.WireInfo.IsNullable,
                     false,
-                    "id",
+                    singleProperty.Name.ToVariableName(),
                     false,
                     false);
             var idProperty = new PropertyProvider(
                 internalProperty.Description,
                 internalProperty.Modifiers,
-                typeof(ResourceIdentifier),
-                "Id",
-                new AutoPropertyBody(false),
+                singleProperty.Type,
+                singleProperty.Name,
+                new AutoPropertyBody(!singleProperty.IsReadOnly),
                 model,
                 explicitInterface: internalProperty.ExplicitInterface,
                 wireInfo: idWireInfo,
                 isRef: internalProperty.IsRef,
                 attributes: internalProperty.Attributes);
 
+            var isOverriddenValueType = singleProperty.Type.IsValueType && !singleProperty.Type.IsNullable;
+            var flattenedType = isOverriddenValueType
+                ? singleProperty.Type.WithNullable(true)
+                : singleProperty.Type;
             var flattenedProperty = new FlattenedPropertyProvider(
                 internalProperty.Description,
                 internalProperty.Modifiers,
-                typeof(ResourceIdentifier),
+                flattenedType,
                 PropertyHelpers.GetCombinedPropertyName(idProperty, internalProperty),
                 new MethodPropertyBody(
-                    BuildResourceIdentifierWrapperGetter(internalProperty),
-                    !internalProperty.Body.HasSetter || !IsWritableResourceIdentifierWrapperType(internalProperty.Type) ? null : BuildResourceIdentifierWrapperSetter(internalProperty)),
+                    BuildFrameworkSinglePropertyGetter(internalProperty, singleProperty),
+                    !internalProperty.Body.HasSetter || singleProperty.IsReadOnly || !singleProperty.CanInstantiate ? null : BuildFrameworkSinglePropertySetter(internalProperty, singleProperty, isOverriddenValueType)),
                 model,
                 internalProperty,
                 idProperty,
@@ -790,25 +810,29 @@ namespace Azure.Generator.Management.Visitors
             return true;
         }
 
-        private static MethodBodyStatement BuildResourceIdentifierWrapperGetter(PropertyProvider internalProperty)
+        private static MethodBodyStatement BuildFrameworkSinglePropertyGetter(PropertyProvider internalProperty, FrameworkSinglePropertyInfo singleProperty)
         {
             var internalPropertyExpression = This.Property(internalProperty.Name);
             return Return(new TernaryConditionalExpression(
                 internalPropertyExpression.Is(Null),
                 Default,
-                internalPropertyExpression.Property("Id")));
+                internalPropertyExpression.Property(singleProperty.Name)));
         }
 
-        private static MethodBodyStatement BuildResourceIdentifierWrapperSetter(PropertyProvider internalProperty)
+        private static MethodBodyStatement BuildFrameworkSinglePropertySetter(PropertyProvider internalProperty, FrameworkSinglePropertyInfo singleProperty, bool isOverriddenValueType)
         {
             var internalPropertyExpression = This.Property(internalProperty.Name);
-            return new MethodBodyStatements([
-                new IfStatement(internalPropertyExpression.Is(Null))
+            var statements = new List<MethodBodyStatement>();
+            if (!internalProperty.Type.IsValueType)
+            {
+                statements.Add(new IfStatement(internalPropertyExpression.Is(Null))
                 {
                     internalPropertyExpression.Assign(New.Instance(internalProperty.Type)).Terminate()
-                },
-                internalPropertyExpression.Property("Id").Assign(Value).Terminate()
-            ]);
+                });
+            }
+            statements.Add(internalPropertyExpression.Property(singleProperty.Name).Assign(
+                isOverriddenValueType ? Value.Property(nameof(Nullable<int>.Value)) : Value).Terminate());
+            return new MethodBodyStatements(statements);
         }
 
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
@@ -1144,6 +1168,11 @@ namespace Azure.Generator.Management.Visitors
                 hashCode.Add(obj.Name);
                 return hashCode.ToHashCode();
             }
+        }
+
+        private sealed record FrameworkSinglePropertyInfo(string Name, CSharpType Type, bool HasPublicSetter, bool CanInstantiate)
+        {
+            internal bool IsReadOnly => !HasPublicSetter;
         }
 
         private record FlattenPropertyInfo(PropertyProvider FlattenedProperty, PropertyProvider InternalProperty);
