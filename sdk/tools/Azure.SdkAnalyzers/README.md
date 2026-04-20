@@ -36,8 +36,3 @@ public class Format { }
 #pragma warning restore AZC0012
 ```
 
-> **Note:** AZC0101 is a **Warning** and can be suppressed. In the rare case where `ConfigureAwait(true)` is intentional, prefer omitting the `ConfigureAwait` call entirely.
-
-### Build output shows no diagnostics
-
-Ensure the package is referenced in your `.csproj` and that the project targets a framework compatible with Roslyn analyzers (net6.0 or later is recommended).
