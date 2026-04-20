@@ -87,7 +87,7 @@ model ValidationResponse {
       method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration"
     );
-    strictEqual(method.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -171,7 +171,7 @@ model GlobalSettings {
     // All tenant-scope methods should have Tenant scope
     nonResourceMethods.forEach((method: any) => {
       strictEqual(
-        method.operationScope,
+        method.scope.kind,
         ResourceScopeKind.Tenant,
         `Method ${method.operationPath.path} should have Tenant scope`
       );
@@ -370,7 +370,7 @@ model MigrationResponse {
     );
     ok(bulkImportMethod, "Should find bulk import method");
     strictEqual(
-      bulkImportMethod.operationScope,
+      bulkImportMethod.scope.kind,
       ResourceScopeKind.Subscription
     );
 
@@ -380,7 +380,7 @@ model MigrationResponse {
         "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
     );
     ok(migrateMethod, "Should find migrate method");
-    strictEqual(migrateMethod.operationScope, ResourceScopeKind.Tenant);
+    strictEqual(migrateMethod.scope.kind, ResourceScopeKind.Tenant);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -455,7 +455,7 @@ model WorkspaceValidationResponse {
       method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace"
     );
-    strictEqual(method.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -540,7 +540,7 @@ model SearchResult {
       method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
-    strictEqual(method.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -608,7 +608,7 @@ model FooPreviewAction {
       method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
-    strictEqual(method.operationScope, ResourceScopeKind.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -855,10 +855,12 @@ interface ChildResources {
               operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               ),
-              operationScope: ResourceScopeKind.ResourceGroup,
-              resourceScopeIdPattern: new RequestPath(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
-              )
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+                )
+              }
             }
           ]
         }
@@ -875,7 +877,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments"
         ),
-        operationScope: ResourceScopeKind.ResourceGroup,
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        },
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
       },
       {
@@ -883,7 +888,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates"
         ),
-        operationScope: ResourceScopeKind.ResourceGroup,
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        },
         resourceModelId: "Microsoft.Maintenance.Update"
       }
     ];
@@ -949,10 +957,12 @@ interface ChildResources {
               operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
               ),
-              operationScope: ResourceScopeKind.ResourceGroup,
-              resourceScopeIdPattern: new RequestPath(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
-              )
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+                )
+              }
             }
           ]
         }
@@ -971,7 +981,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments"
         ),
-        operationScope: ResourceScopeKind.ResourceGroup
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set
       },
       {
@@ -979,7 +992,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates"
         ),
-        operationScope: ResourceScopeKind.ResourceGroup
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set
       }
     ];
@@ -1049,10 +1065,12 @@ interface ChildResources {
               operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
               ),
-              operationScope: ResourceScopeKind.ResourceGroup,
-              resourceScopeIdPattern: new RequestPath(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
-              )
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
+                )
+              }
             },
             {
               methodId:
@@ -1061,8 +1079,10 @@ interface ChildResources {
               operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments"
               ),
-              operationScope: ResourceScopeKind.ResourceGroup,
-              resourceScopeIdPattern: undefined
+              scope: {
+                kind: ResourceScopeKind.ResourceGroup,
+                scopeIdPattern: RequestPath.empty
+              }
             }
           ]
         }
@@ -1079,7 +1099,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments"
         ),
-        operationScope: ResourceScopeKind.ResourceGroup
+        scope: {
+          kind: ResourceScopeKind.ResourceGroup,
+          scopeIdPattern: RequestPath.empty
+        }
         // resourceModelId intentionally NOT set — the list path uses a different model
       }
     ];
@@ -1140,10 +1163,12 @@ interface ChildResources {
               operationPath: new RequestPath(
                 "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
               ),
-              operationScope: ResourceScopeKind.Subscription,
-              resourceScopeIdPattern: new RequestPath(
-                "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
-              )
+              scope: {
+                kind: ResourceScopeKind.Subscription,
+                scopeIdPattern: new RequestPath(
+                  "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
+                )
+              }
             }
           ]
         }
@@ -1160,7 +1185,10 @@ interface ChildResources {
         operationPath: new RequestPath(
           "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults"
         ),
-        operationScope: ResourceScopeKind.Subscription
+        scope: {
+          kind: ResourceScopeKind.Subscription,
+          scopeIdPattern: RequestPath.empty
+        }
       }
     ];
 

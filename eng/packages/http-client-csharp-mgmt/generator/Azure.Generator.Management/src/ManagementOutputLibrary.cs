@@ -196,7 +196,7 @@ namespace Azure.Generator.Management
                     // the resource methods
                     foreach (var resourceMethod in category.MethodsInExtension)
                     {
-                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.OperationScope];
+                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.Scope.Kind];
                         if (!resourcesAndMethodsInThisScope.ResourceMethods.TryGetValue(resource, out var methods))
                         {
                             methods = new List<ResourceMethod>();
@@ -208,7 +208,7 @@ namespace Azure.Generator.Management
                 }
                 foreach (var nonResourceMethod in nonResourceMethods)
                 {
-                    resourcesAndMethodsPerScope[nonResourceMethod.OperationScope].NonResourceMethods.Add(nonResourceMethod);
+                    resourcesAndMethodsPerScope[nonResourceMethod.Scope.Kind].NonResourceMethods.Add(nonResourceMethod);
                 }
                 return resourcesAndMethodsPerScope;
             }

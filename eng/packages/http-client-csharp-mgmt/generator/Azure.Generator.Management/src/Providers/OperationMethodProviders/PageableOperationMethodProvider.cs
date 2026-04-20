@@ -33,6 +33,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly ParameterContextRegistry _parameterMappings;
+        private readonly ParameterProvider? _scopeParameter;
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
@@ -41,10 +42,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputPagingServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
@@ -114,7 +117,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation()),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_method, _convenienceMethod, _parameterMappings, _enclosingType, shouldApplyLroHandling: _method.IsLongRunningOperation(), scopeParameter: _scopeParameter),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -139,7 +142,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientInfo.RestClient,
             };
 
-            arguments.AddRange(_parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMappings.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
             arguments.Add(Literal(diagnosticScope));
 
             // Handle ResourceData type conversion if needed

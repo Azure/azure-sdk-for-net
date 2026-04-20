@@ -12,9 +12,9 @@ namespace Azure.Generator.Management.Models;
 /// <param name="Kind"> The kind of scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension). </param>
 /// <param name="ScopeIdPattern"> The scope's ID pattern as a parsed request path. </param>
 /// <param name="ScopeResourceType"> The ARM resource type of the scope (e.g., "Microsoft.Compute/virtualMachines"). Null when the scope is empty (tenant scope), or when the resource type contains variable segments. </param>
-public record ArmResourceScopeInfo(ResourceScope Kind, RequestPathPattern ScopeIdPattern, string? ScopeResourceType)
+public record ArmScopeInfo(ResourceScope Kind, RequestPathPattern ScopeIdPattern, string? ScopeResourceType)
 {
-    internal static ArmResourceScopeInfo Deserialize(JsonElement element)
+    internal static ArmScopeInfo Deserialize(JsonElement element)
     {
         ResourceScope? kind = null;
         string? resourceType = null;
