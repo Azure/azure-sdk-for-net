@@ -449,7 +449,6 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 else
                 {
-                    // hello
                     if (async)
                     {
                         response = await _serviceRestClient.SubmitBatchAsync(

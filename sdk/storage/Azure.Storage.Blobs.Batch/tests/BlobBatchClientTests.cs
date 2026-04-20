@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Test
         private static Regex pattern = new Regex(@"sig=\S+\s", RegexOptions.Compiled);
 
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // Batch delimiters are random so disable body comparison
             CompareBodies = false;
