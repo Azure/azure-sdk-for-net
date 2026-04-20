@@ -55,25 +55,32 @@ namespace Azure.ResourceManager.Cdn.Models
         [WirePath("customDomains")]
         public IList<string> CustomDomains { get; }
 
-        /// <inheritdoc />
+        /// <summary> Writes the model to the provided <see cref="Utf8JsonWriter"/>. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
+        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> from the provided <see cref="Utf8JsonReader"/>. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProfileResourceGetLogAnalyticsRankingsOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
+        /// <summary> Writes the model into a <see cref="BinaryData"/>. </summary>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
+        /// <summary> Reads and creates a <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> from the provided <see cref="BinaryData"/>. </summary>
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProfileResourceGetLogAnalyticsRankingsOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             throw new NotImplementedException();
