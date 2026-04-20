@@ -10,13 +10,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverOutboundEndpointData
     {
-        // Justification: the released SDK exposed both this WritableSubResource-based
-        // constructor and the top-level SubnetId convenience property directly on the
-        // data model. The current generated shape already restores the scalar
-        // ResourceIdentifier plumbing, so this partial only preserves those legacy
-        // entry points as thin compatibility forwards.
-        // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
-        // generator preserves WritableSubResource-based ...Id projections automatically.
+        // Justification: the released SDK exposed a WritableSubResource-based constructor.
+        // The generated model now restores the flattened SubnetId property directly, so
+        // this partial only preserves the legacy constructor overload.
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsResolverOutboundEndpointData"/> class.
         /// </summary>
@@ -27,28 +23,6 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Argument.AssertNotNull(subnet, nameof(subnet));
             Properties = new OutboundEndpointProperties(subnet.Id);
-        }
-
-        /// <summary>
-        /// Gets or sets the subnet resource identifier.
-        /// </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get => Properties is null ? default : Properties.Subnet?.Id;
-            set
-            {
-                if (value is null)
-                {
-                    if (Properties is not null)
-                    {
-                        Properties.Subnet = null;
-                    }
-                    return;
-                }
-
-                Properties ??= new OutboundEndpointProperties(value);
-                Properties.Subnet = new global::Azure.ResourceManager.DnsResolver.Models.SubResource(value);
-            }
         }
     }
 }

@@ -50,5 +50,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Private IP address allocation method. </summary>
         public InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                Subnet = new SubResource(value);
+            }
+        }
     }
 }

@@ -80,5 +80,22 @@ namespace Azure.ResourceManager.DnsResolver
                 return Properties is null ? default : Properties.ResourceGuid;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsResolverProperties();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
     }
 }

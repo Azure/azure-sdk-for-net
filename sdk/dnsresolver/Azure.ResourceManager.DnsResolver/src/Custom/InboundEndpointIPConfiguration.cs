@@ -8,13 +8,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class InboundEndpointIPConfiguration
     {
-        // Justification: the released SDK exposed both this WritableSubResource-based
-        // constructor and the top-level SubnetId convenience property directly on the
-        // model. The current generated shape already restores the scalar
-        // ResourceIdentifier plumbing, so this partial only preserves those legacy
-        // entry points as thin compatibility forwards.
-        // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
-        // generator preserves WritableSubResource-based ...Id projections automatically.
+        // Justification: the released SDK exposed a WritableSubResource-based constructor.
+        // The generated model now restores the flattened SubnetId property directly, so
+        // this partial only preserves the legacy constructor overload.
         /// <summary>
         /// Initializes a new instance of the <see cref="InboundEndpointIPConfiguration"/> class.
         /// </summary>
@@ -23,23 +19,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             Argument.AssertNotNull(subnet, nameof(subnet));
             Subnet = new SubResource(subnet.Id);
-        }
-
-        /// <summary>
-        /// Gets or sets the subnet resource identifier.
-        /// </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (value is null)
-                {
-                    Subnet = null;
-                    return;
-                }
-                Subnet = new SubResource(value);
-            }
         }
     }
 }

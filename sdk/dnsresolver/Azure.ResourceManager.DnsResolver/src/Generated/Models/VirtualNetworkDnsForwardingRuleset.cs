@@ -38,5 +38,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <summary> Properties of the virtual network link sub-resource reference. </summary>
         internal VirtualNetworkLinkSubResourceProperties Properties { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkLinkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkLinkId;
+            }
+        }
     }
 }

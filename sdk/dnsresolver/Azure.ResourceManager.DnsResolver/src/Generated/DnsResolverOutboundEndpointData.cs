@@ -71,5 +71,22 @@ namespace Azure.ResourceManager.DnsResolver
                 return Properties is null ? default : Properties.ResourceGuid;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundEndpointProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

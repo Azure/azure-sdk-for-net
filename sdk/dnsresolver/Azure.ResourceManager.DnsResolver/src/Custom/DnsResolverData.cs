@@ -10,13 +10,9 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverData
     {
-        // Justification: the released SDK exposed both this WritableSubResource-based
-        // constructor and the top-level VirtualNetworkId convenience property directly
-        // on the data model. The current generated shape already restores the scalar
-        // ResourceIdentifier plumbing, so this partial only preserves those legacy
-        // entry points as thin compatibility forwards.
-        // TODO: Remove this compatibility shim when issue #58357 is fixed and the mgmt
-        // generator preserves WritableSubResource-based ...Id projections automatically.
+        // Justification: the released SDK exposed a WritableSubResource-based constructor.
+        // The generated model now restores the flattened VirtualNetworkId property directly,
+        // so this partial only preserves the legacy constructor overload.
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsResolverData"/> class.
         /// </summary>
@@ -27,28 +23,6 @@ namespace Azure.ResourceManager.DnsResolver
         {
             Argument.AssertNotNull(virtualNetwork, nameof(virtualNetwork));
             Properties = new DnsResolverProperties(virtualNetwork.Id);
-        }
-
-        /// <summary>
-        /// Gets or sets the virtual network resource identifier.
-        /// </summary>
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get => Properties is null ? default : Properties.VirtualNetwork?.Id;
-            set
-            {
-                if (value is null)
-                {
-                    if (Properties is not null)
-                    {
-                        Properties.VirtualNetwork = null;
-                    }
-                    return;
-                }
-
-                Properties ??= new DnsResolverProperties(value);
-                Properties.VirtualNetwork = new global::Azure.ResourceManager.DnsResolver.Models.SubResource(value);
-            }
         }
     }
 }
