@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
         protected async Task<HDInsightClusterResource> CreateDefaultHadoopCluster(ResourceGroupResource resourceGroup, string clusterName, string storageAccountName, string containerName, string accessKey)
         {
             var properties = PrepareClusterCreateParams(storageAccountName, containerName, accessKey);
-            var data = new ClusterCreateParametersExtended()
+            var data = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
-                Location = DefaultLocation.ToString(),
+                Location = DefaultLocation,
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await resourceGroup.GetHDInsightClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
         protected HDInsightClusterCreateOrUpdateProperties PrepareClusterCreateParams(string storageAccountName, string containerName, string accessKey)
         {
-            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin\",             \"restAuthCredential.password\": \"Password\"         }     } ";
+            string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": true,             \"restAuthCredential.username\": \"admin\",             \"restAuthCredential.password\": \"Password\"         }     } ";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
                 ClusterVersion = "4.0",
-                OsType = HDInsightOSType.Linux,
+                OSType = HDInsightOSType.Linux,
                 Tier = HDInsightTier.Standard,
                 ClusterDefinition = new HDInsightClusterDefinition()
                 {
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Name = "headnode",
                 TargetInstanceCount = 2,
                 HardwareVmSize = "standard_e8_v3",
-                OsLinuxOperatingSystemProfile = new HDInsightLinuxOSProfile()
+                OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
                 },
                 VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = Common_VNet_Id,
+                    Id = new ResourceIdentifier(Common_VNet_Id),
                     Subnet = Common_SubNet
                 }
             });
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Name = "workernode",
                 TargetInstanceCount = 3,
                 HardwareVmSize = "standard_e8_v3",
-                OsLinuxOperatingSystemProfile = new HDInsightLinuxOSProfile()
+                OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
                 },
                 VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = Common_VNet_Id,
+                    Id = new ResourceIdentifier(Common_VNet_Id),
                     Subnet = Common_SubNet
                 }
             });
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Name = "zookeepernode",
                 TargetInstanceCount = 3,
                 HardwareVmSize = "standard_a2_v2",
-                OsLinuxOperatingSystemProfile = new HDInsightLinuxOSProfile()
+                OSLinuxProfile = new HDInsightLinuxOSProfile()
                 {
                     Username = Common_User,
                     Password = Common_Password
                 },
                 VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = Common_VNet_Id,
+                    Id = new ResourceIdentifier(Common_VNet_Id),
                     Subnet = Common_SubNet
                 }
             });
-            properties.StorageStorageaccounts.Add(new HDInsightStorageAccountInfo()
+            properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()
             {
                 Name = $"{storageAccountName}.blob.core.windows.net",
                 IsDefault = true,

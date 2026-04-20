@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             {
                 ApplicationType = "CustomApplication",
             };
-            var uri = "https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh";
+            var uri = new Uri("https://hdiconfigactions.blob.core.windows.net/linuxhueconfigactionv02/install-hue-uber-v02.sh");
             var roles = new[] { "edgenode" };
             properties.InstallScriptActions.Add(new RuntimeScriptAction(scriptActionName, uri, roles)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         private void ValidateApplication(HDInsightApplicationResource application)
         {
             Assert.IsNotNull(application);
-            Assert.IsNotNull(application.Data.Properties.CreatedDate);
+            Assert.IsNotNull(application.Data.Properties.CreatedOn);
             Assert.AreEqual("CustomApplication", application.Data.Properties.ApplicationType);
             Assert.AreEqual(1, application.Data.Properties.InstallScriptActions.Count);
         }

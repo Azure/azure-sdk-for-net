@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
+    // The TypeSpec-generated RuntimeScriptActionDetail only has an internal constructor.
+    // The old AutoRest-generated version exposed a public constructor with (name, uri, roles) parameters.
+    // This custom partial class re-adds the public constructor for backward compatibility (ApiCompat).
     public partial class RuntimeScriptActionDetail
     {
         /// <summary> Initializes a new instance of <see cref="RuntimeScriptActionDetail"/>. </summary>
