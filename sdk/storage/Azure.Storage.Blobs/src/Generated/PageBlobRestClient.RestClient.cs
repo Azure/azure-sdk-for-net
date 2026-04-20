@@ -298,7 +298,7 @@ namespace Azure.Storage.Blobs
                 request.Headers.SetValue("x-ms-source-content-crc64", TypeFormatters.ConvertToString(sourceContentCrc64, SerializationFormat.Bytes_Base64));
             }
             request.Headers.SetValue("Content-Length", TypeFormatters.ConvertToString(contentLength));
-            request.Headers.SetValue("x-ms-range", range);
+            request.Headers.SetValue("Range", range);
             if (encryptionKey != null)
             {
                 request.Headers.SetValue("x-ms-encryption-key", encryptionKey);
