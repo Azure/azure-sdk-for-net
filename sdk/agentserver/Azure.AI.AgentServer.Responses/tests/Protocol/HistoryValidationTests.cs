@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// Protocol tests for eager history validation.
-/// When previous_response_id or conversation_id are provided, GetHistoryItemIdsAsync
+/// When previous_response_id or conversation.id are provided, GetHistoryItemIdsAsync
 /// must be called before the handler runs. If the provider rejects the reference
 /// (e.g., 404 for unknown previous_response_id), the error must surface to the client
 /// without invoking the handler.
@@ -155,8 +155,9 @@ public class HistoryValidationTests : IDisposable
     // ── Validating provider ─────────────────────────────────────
 
     /// <summary>
-    /// Provider that throws ResourceNotFoundException for configured invalid IDs,
-    /// simulating Foundry storage's validation behaviour.
+    /// Provider that throws ResourceNotFoundException for configured invalid previous response IDs
+    /// and BadRequestException for configured invalid conversation IDs, simulating Foundry
+    /// storage's validation behaviour.
     /// </summary>
     private sealed class ValidatingProvider : ResponsesProvider
     {

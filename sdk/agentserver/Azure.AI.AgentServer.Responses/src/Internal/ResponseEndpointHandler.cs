@@ -223,9 +223,10 @@ internal sealed class ResponseEndpointHandler
             isolation);
         execution.Context = context;
 
-        // Eager history validation: if previous_response_id or conversation_id is present,
-        // resolve history item IDs now to validate they exist before the handler runs.
-        // The provider throws ResourceNotFoundException (404) for invalid references.
+        // Eager history validation: if previous_response_id or conversation.id is present,
+        // resolve history item IDs now to validate referenced state before the handler runs.
+        // Invalid references are provider-validated here and may surface as 404 or 400
+        // depending on which identifier is invalid.
         // The Lazy<Task<>> cache means the handler and persistence can reuse the result.
         if (!string.IsNullOrEmpty(request.PreviousResponseId) || !string.IsNullOrEmpty(conversationId))
         {
