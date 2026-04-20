@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteObjectValue<ETag?>(ETag.Value, options);
             }
             if (Optional.IsDefined(EncryptionKey))
             {
@@ -305,7 +305,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = Azure.ETag.DeserializeETag(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryptionKey"u8))

@@ -134,7 +134,7 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteObjectValue<AzureLocation?>(Location.Value, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
@@ -304,7 +304,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = AzureLocation.DeserializeAzureLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))

@@ -28,13 +28,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
         /// <param name="additionalProperties"></param>
-        internal QueryAnswerResult(double? score, string key, string text, string highlights, IDictionary<string, object> additionalProperties)
+        internal QueryAnswerResult(double? score, string key, string text, string highlights, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Score = score;
             Key = key;
             Text = text;
             Highlights = highlights;
-            _additionalBinaryDataProperties = additionalProperties;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, object>(additionalProperties);
         }
 
         /// <summary> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </summary>

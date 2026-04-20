@@ -32,20 +32,6 @@ namespace Azure.Search.Documents.Models
             return new FacetResult(count, additionalProperties);
         }
 
-        /// <summary> An answer is a text passage extracted from the contents of the most relevant documents that matched the query. Answers are extracted from the top search results. Answer candidates are scored and the top answers are selected. </summary>
-        /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
-        /// <param name="key"> The key of the document the answer was extracted from. </param>
-        /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
-        /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.QueryAnswerResult"/> instance for mocking. </returns>
-        public static QueryAnswerResult QueryAnswerResult(double? score = default, string key = default, string text = default, string highlights = default, IDictionary<string, object> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, object>();
-
-            return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
-        }
-
         /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
