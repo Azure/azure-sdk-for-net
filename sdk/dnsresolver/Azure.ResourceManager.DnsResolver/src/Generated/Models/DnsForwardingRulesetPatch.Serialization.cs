@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -143,6 +144,53 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDnsForwardingRulesetPatch(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DnsForwardingRulesetPatch DeserializeDnsForwardingRulesetPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("dnsResolverOutboundEndpoints"u8))
+                {
+                    DeserializeDnsResolverOutboundEndpoints(prop, ref dnsResolverOutboundEndpoints);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new DnsForwardingRulesetPatch(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

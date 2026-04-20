@@ -2,82 +2,43 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    // Workaround for generator bug: generated DeserializeDnsForwardingRulesetPatch calls
-    // WritableSubResource.DeserializeWritableSubResource which is internal in Azure.ResourceManager.
-    [CodeGenSuppress("DeserializeDnsForwardingRulesetPatch", typeof(JsonElement), typeof(System.ClientModel.Primitives.ModelReaderWriterOptions))]
+    // Justification: keep the generator-owned DeserializeDnsForwardingRulesetPatch and only
+    // customize the WritableSubResource list property that needs a special read path.
+    [CodeGenSerialization(nameof(DnsResolverOutboundEndpoints), DeserializationValueHook = nameof(DeserializeDnsResolverOutboundEndpoints))]
     public partial class DnsForwardingRulesetPatch
     {
-        internal static DnsForwardingRulesetPatch DeserializeDnsForwardingRulesetPatch(JsonElement element, System.ClientModel.Primitives.ModelReaderWriterOptions options)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeDnsResolverOutboundEndpoints(JsonProperty property, ref IList<WritableSubResource> dnsResolverOutboundEndpoints)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                return;
             }
-            IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
-            IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+
+            List<WritableSubResource> array = new List<WritableSubResource>();
+            foreach (JsonElement item in property.Value.EnumerateArray())
             {
-                if (prop.NameEquals("dnsResolverOutboundEndpoints"u8))
+                if (item.ValueKind == JsonValueKind.Null)
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        var wsr = new WritableSubResource();
-                        foreach (var innerProp in item.EnumerateObject())
-                        {
-                            if (innerProp.NameEquals("id"u8))
-                            {
-                                if (innerProp.Value.ValueKind != JsonValueKind.Null)
-                                {
-                                    wsr.Id = new ResourceIdentifier(innerProp.Value.GetString());
-                                }
-                            }
-                        }
-                        array.Add(wsr);
-                    }
-                    dnsResolverOutboundEndpoints = array;
-                    continue;
+                    array.Add(null);
                 }
-                if (prop.NameEquals("tags"u8))
+                else
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsResolverContext.Default));
                 }
             }
-            return new DnsForwardingRulesetPatch(dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>(), tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+
+            dnsResolverOutboundEndpoints = array;
         }
     }
 }
