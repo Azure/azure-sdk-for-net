@@ -1319,7 +1319,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
         {
-            return CodeBasedEvaluatorDefinition(initParameters, dataSchema, metrics, codeText, entryPoint: default, imageTag: default, blobUri: default);
+            return CodeBasedEvaluatorDefinition(initParameters: initParameters, dataSchema: dataSchema, metrics: metrics, codeText: codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>
