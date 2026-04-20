@@ -47,20 +47,12 @@ function Update-PSModulePathForCI() {
 }
 
 function Get-ModuleRepositories([string]$moduleName) {
+  # Keep public PowerShell Gallery as a fallback for callers that don't inject an auth token.
+  # This can be removed once all callers provide authentication.
   $DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
-  # List of modules+versions we want to replace with internal feed sources for reliability, security, etc.
-  $packageFeedOverrides = @{
-    'powershell-yaml' = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2'
-  }
+  $InternalPSRepositoryUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/nuget/v2"
 
-  $repoUrls = if ($packageFeedOverrides.Contains("${moduleName}")) {
-    @($packageFeedOverrides["${moduleName}"], $DefaultPSRepositoryUrl)
-  }
-  else {
-    @($DefaultPSRepositoryUrl)
-  }
-
-  return $repoUrls
+  return @($InternalPSRepositoryUrl, $DefaultPSRepositoryUrl)
 }
 
 function moduleIsInstalled([string]$moduleName, [string]$version) {
@@ -87,9 +79,18 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
 }
 
 function installModule([string]$moduleName, [string]$version, $repoUrl) {
+  # Build credential from SYSTEM_ACCESSTOKEN if available for authenticated feeds
+  $credential = $null
+  if ($env:SYSTEM_ACCESSTOKEN) {
+    $password = ConvertTo-SecureString $env:SYSTEM_ACCESSTOKEN -AsPlainText -Force
+    $credential = New-Object PSCredential("build", $password)
+  }
+
   $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
   if ($repo.Count -eq 0) {
-    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
+    $registerArgs = @{ Name = $repoUrl; SourceLocation = $repoUrl; InstallationPolicy = 'Trusted' }
+    if ($credential) { $registerArgs['Credential'] = $credential }
+    Register-PSRepository @registerArgs | Out-Null
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
       throw "Failed to register package repository $repoUrl."
@@ -100,9 +101,18 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
-  Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
+  Write-Verbose "Installing module $moduleName with version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
+  $installArgs = @{
+    Name = $moduleName
+    RequiredVersion = $version
+    Repository = $repo.Name
+    Scope = 'CurrentUser'
+    Force = $true
+    WhatIf = $false
+  }
+  if ($credential) { $installArgs['Credential'] = $credential }
+  Install-Module @installArgs
   # Ensure module installed
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
@@ -153,6 +163,7 @@ function Install-ModuleIfNotInstalled() {
 
     $repoUrls = Get-ModuleRepositories $moduleName
 
+    Write-Host "Module '$moduleName' with version '$version' is not installed. Attempting to install from $($repoUrls -join ", ")."
     foreach ($url in $repoUrls) {
       try {
         $module = installModule -moduleName $moduleName -version $version -repoUrl $url

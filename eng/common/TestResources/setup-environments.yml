@@ -32,3 +32,5 @@ steps:
           $(env-config-dogfood)
         "@ | ConvertFrom-Json -AsHashtable;
         Add-AzEnvironment @environmentSpec
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
