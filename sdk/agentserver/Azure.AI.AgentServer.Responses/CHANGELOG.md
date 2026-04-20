@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2026-05-05)
 
 ### Features Added
 
@@ -9,16 +9,12 @@
   silently ignored. The resolved history item IDs are cached — handlers calling
   `GetHistoryAsync()` reuse the prefetched result without a second storage lookup.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Foundry storage error responses now preserve the full error body (`code`, `message`, `param`, `type`)
   when returned to the client. Previously only the `message` field was forwarded; `param` was lost.
 - Non-400/404 error status codes from Foundry storage are no longer proxied as-is; they are
   normalized to HTTP 500 to avoid leaking upstream infrastructure details.
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2026-04-17)
 
