@@ -61,9 +61,16 @@ namespace Azure.Generator.Management.Providers
             // Build methods for non-resource extension operations
             foreach (var method in _nonResourceMethods)
             {
-                // Process both async and sync method variants
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                // For extension-scoped non-resource methods, create a scope-specific OperationContext
+                // so that parameters within the scope path are contextual (extracted from the scope ResourceIdentifier)
+                // rather than passed as separate method parameters.
+                var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
+                var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
+
+                // Process both async and sync method variants, passing the scope parameter
+                // so that PopulateArguments uses it instead of Id
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, true, scopeParameter: scopeParameter));
+                methods.Add(BuildServiceMethodWithContext(method.InputMethod, method.InputClient, scopeContext, false, scopeParameter: scopeParameter));
             }
 
             return [.. methods];

@@ -13,6 +13,7 @@ import {
   ResourceMethod,
   ResourceOperationKind,
   ResourceScopeKind,
+  ArmScopeInfo,
   ArmProviderSchema,
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
@@ -235,7 +236,7 @@ export function buildArmProviderSchema(
             nonResourceMethods.set(method.crossLanguageDefinitionId, {
               methodId: method.crossLanguageDefinitionId,
               operationPath: opPath,
-              operationScope: opPath.operationScope
+              scope: buildScopeInfoFromPath(opPath)
             });
             return;
           }
@@ -300,7 +301,7 @@ export function buildArmProviderSchema(
         methodId: method.crossLanguageDefinitionId,
         kind,
         operationPath: opPath,
-        operationScope: opPath.operationScope
+        scope: buildScopeInfoFromPath(opPath)
       });
       if (!entry.resourceType && opPath.resourceType) {
         entry.resourceType = opPath.resourceType;
@@ -314,7 +315,7 @@ export function buildArmProviderSchema(
       nonResourceMethods.set(method.crossLanguageDefinitionId, {
         methodId: method.crossLanguageDefinitionId,
         operationPath: operationPath,
-        operationScope: operationPath.operationScope
+        scope: buildScopeInfoFromPath(operationPath)
       });
     }
   };
@@ -1037,6 +1038,34 @@ function getSingletonResource(
     | undefined;
   return singletonResource ?? "default";
 }
+/**
+ * Builds an ArmScopeInfo from an operation path.
+ * Extracts the scope ID pattern and resource type from the path's scope portion.
+ */
+export function buildScopeInfoFromPath(operationPath: RequestPath): ArmScopeInfo {
+  return buildScopeInfo(operationPath.operationScope, operationPath.scopePath);
+}
+
+/**
+ * Builds an ArmScopeInfo from a scope kind and scope path.
+ * Computes scopeResourceType from the scope path when it's concrete (no variable segments).
+ */
+export function buildScopeInfo(
+  kind: ResourceScopeKind,
+  scopePath: RequestPath
+): ArmScopeInfo {
+  const resourceType = scopePath.resourceType;
+  return {
+    kind,
+    scopeIdPattern: scopePath,
+    // Only include scopeResourceType when it's concrete (no variable segments)
+    scopeResourceType:
+      resourceType !== undefined && !resourceType.includes("{")
+        ? resourceType
+        : undefined
+  };
+}
+
 function getResourceScope(methods?: ResourceMethod[]): ResourceScopeKind {
   // Determine scope from the Read method's operation path, which is the source of truth.
   // Scope decorators (@resourceGroupResource, etc.) can be inherited implicitly from base
@@ -1049,7 +1078,7 @@ function getResourceScope(methods?: ResourceMethod[]): ResourceScopeKind {
     // We have logic to filter out resources without get/read operations later in post-processing,
     // so it's possible to have a resource with no Read method. In that case, we skip scope detection since the resource will be filtered out anyway.
     if (getMethod) {
-      return getMethod.operationScope;
+      return getMethod.scope.kind;
     }
   }
 
