@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return SnapshotFileSystemStorage.TotalSizeInGbs;
+                return SnapshotFileSystemStorage is null ? default : SnapshotFileSystemStorage.TotalSizeInGbs;
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return TotalFileSystemStorage.TotalSizeInGbs;
+                return TotalFileSystemStorage is null ? default : TotalFileSystemStorage.TotalSizeInGbs;
             }
         }
     }

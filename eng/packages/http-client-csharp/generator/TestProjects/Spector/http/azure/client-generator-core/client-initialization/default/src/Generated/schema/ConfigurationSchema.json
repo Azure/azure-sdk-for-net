@@ -20,7 +20,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/headerParamClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         },
@@ -43,7 +43,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/multipleParamsClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         },
@@ -63,7 +63,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/mixedParamsClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         },
@@ -83,7 +83,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/pathParamClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         },
@@ -103,7 +103,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/paramAliasClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         },
@@ -123,7 +123,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/queryParamClientOptions"
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
             }
           }
         }
@@ -135,42 +135,7 @@
     }
   },
   "definitions": {
-    "headerParamClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "mixedParamsClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "multipleParamsClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "paramAliasClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "pathParamClientOptions": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/azureOptions"
-        }
-      ]
-    },
-    "queryParamClientOptions": {
+    "specsAzureTcgcClientInitDefaultClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"
