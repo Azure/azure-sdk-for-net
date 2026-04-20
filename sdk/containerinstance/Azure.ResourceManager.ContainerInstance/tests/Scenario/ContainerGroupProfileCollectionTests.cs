@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         {
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_RegularPriority()
         {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_SpotPriority()
         {
@@ -43,6 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_ContainerGroupProfile_ConfidentialContainerGroup()
         {
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfileData, containerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_ContainerGroupProfile_RegularPriority()
         {
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retrievedContainerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_ContainerGroupProfile_SpotPriority()
         {
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retrievedContainerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_ContainerGroupProfile_ConfidentialContainerGroup()
         {
@@ -98,6 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile.Data, retrievedContainerGroupProfile.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task List_ContainerGroupProfile()
         {
@@ -121,6 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile2.Data, retrievedContainerGroupProfile2.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task ListBySubscription_ContainerGroupProfile()
         {
@@ -152,6 +160,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProfileProperties(containerGroupProfile3.Data, containerGroupProfile3FromList.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Check_ContainerGroupProfile_RevisionUpdate()
         {

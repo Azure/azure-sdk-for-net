@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         {
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Delete_RegularPriority()
         {
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, deletedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Delete_SpotPriority()
         {
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, deletedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Delete_ConfidentialContainer()
         {

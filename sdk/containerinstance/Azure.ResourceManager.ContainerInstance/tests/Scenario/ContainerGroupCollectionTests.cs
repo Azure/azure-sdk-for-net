@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
         {
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_RegularPriority()
         {
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_SpotPriority()
         {
@@ -43,6 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdate_ConfidentialContainerGroup()
         {
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_RegularPriority()
         {
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_SpotPriority()
         {
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task Get_ConfidentialContainerGroup()
         {
@@ -98,6 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task List()
         {
@@ -119,6 +126,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             VerifyContainerGroupProperties(containerGroup2.Data, containerGroup2FromList.Data);
         }
 
+        [TestCase]
         [RecordedTest]
         public async Task ListBySubscription()
         {
