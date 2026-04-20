@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Extended information of the container. </summary>
     public partial class WorkloadContainerExtendedInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadContainerExtendedInfo"/>. </summary>
         public WorkloadContainerExtendedInfo()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
         /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadContainerExtendedInfo(string hostServerName, WorkloadContainerInquiryInfo inquiryInfo, IList<DistributedNodesInfo> nodesList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadContainerExtendedInfo(string hostServerName, WorkloadContainerInquiryInfo inquiryInfo, IList<DistributedNodesInfo> nodesList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HostServerName = hostServerName;
             InquiryInfo = inquiryInfo;
             NodesList = nodesList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </summary>
         public string HostServerName { get; set; }
+
         /// <summary> Inquiry Status for the container. </summary>
         public WorkloadContainerInquiryInfo InquiryInfo { get; set; }
+
         /// <summary> List of the nodes in case of distributed container. </summary>
         public IList<DistributedNodesInfo> NodesList { get; }
     }

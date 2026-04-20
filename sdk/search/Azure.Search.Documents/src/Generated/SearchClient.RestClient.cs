@@ -46,7 +46,7 @@ namespace Azure.Search.Documents
             return message;
         }
 
-        internal HttpMessage CreateSearchGetRequest(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
+        internal HttpMessage CreateSearchGetRequest(string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string debug, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -163,25 +163,9 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQuery("semanticQuery", semanticQuery, true);
             }
-            if (queryRewrites != null)
-            {
-                uri.AppendQuery("queryRewrites", queryRewrites, true);
-            }
             if (debug != null)
             {
                 uri.AppendQuery("debug", debug, true);
-            }
-            if (queryLanguage != null)
-            {
-                uri.AppendQuery("queryLanguage", queryLanguage, true);
-            }
-            if (speller != null)
-            {
-                uri.AppendQuery("speller", speller, true);
-            }
-            if (semanticFields != null && !(semanticFields is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
-            {
-                uri.AppendQueryDelimited("semanticFields", semanticFields, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;
@@ -191,18 +175,10 @@ namespace Azure.Search.Documents
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
-            if (querySourceAuthorization != null)
-            {
-                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
-            }
-            if (enableElevatedRead != null)
-            {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
-            }
             return message;
         }
 
-        internal HttpMessage CreateSearchPostRequest(RequestContent content, string querySourceAuthorization, bool? enableElevatedRead, RequestContext context)
+        internal HttpMessage CreateSearchPostRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -221,20 +197,12 @@ namespace Azure.Search.Documents
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
             }
-            if (querySourceAuthorization != null)
-            {
-                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
-            }
-            if (enableElevatedRead != null)
-            {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
-            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetDocumentRequest(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
+        internal HttpMessage CreateGetDocumentRequest(string key, IEnumerable<string> selectedFields, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -258,14 +226,6 @@ namespace Azure.Search.Documents
             if ("application/json;odata.metadata=none" != null)
             {
                 request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
-            }
-            if (querySourceAuthorization != null)
-            {
-                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
-            }
-            if (enableElevatedRead != null)
-            {
-                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
             }
             return message;
         }

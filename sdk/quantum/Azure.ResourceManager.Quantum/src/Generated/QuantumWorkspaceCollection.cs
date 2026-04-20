@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quantum
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Quantum
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new QuantumWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Quantum
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new QuantumWorkspaceResource(Client, data));
+            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
         }
 
         /// <summary>

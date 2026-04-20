@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Search
         {
             TryGetApiVersion(SearchServiceResource.ResourceType, out string searchServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _adminKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _adminKeysRestClient = new AdminKeys(_adminKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _queryKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _queryKeysRestClient = new QueryKeys(_queryKeysClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2025-05-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, searchServiceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Search
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given resource group.
+        /// Gets a list of all search services in the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,11 +312,17 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, default, context), data => new SearchServiceResource(Client, data));
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupAsyncCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
-        /// Gets a list of all Search services in the given resource group.
+        /// Gets a list of all search services in the given resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -328,7 +334,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +347,13 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(_servicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, default, context), data => new SearchServiceResource(Client, data));
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetByResourceGroupCollectionResultOfT(
+                _servicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                default,
+                context,
+                "SearchServiceCollection.GetAll"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
@@ -357,7 +369,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,7 +427,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +485,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,7 +547,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(KeyUrl))
             {
                 writer.WritePropertyName("keyUrl"u8);
-                writer.WriteStringValue(KeyUrl);
+                writer.WriteStringValue(KeyUrl.AbsoluteUri);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
@@ -131,7 +131,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             BatchPoolIdentityReference identityReference = default;
-            string keyUrl = default;
+            Uri keyUrl = default;
             bool? rotationToLatestKeyVersionEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,11 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("keyUrl"u8))
                 {
-                    keyUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("rotationToLatestKeyVersionEnabled"u8))

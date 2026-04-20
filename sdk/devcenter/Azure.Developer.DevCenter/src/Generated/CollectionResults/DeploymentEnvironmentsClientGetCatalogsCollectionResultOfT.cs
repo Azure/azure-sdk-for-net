@@ -19,16 +19,19 @@ namespace Azure.Developer.DevCenter
         private readonly DeploymentEnvironmentsClient _client;
         private readonly string _projectName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeploymentEnvironmentsClient client used to send requests. </param>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT(DeploymentEnvironmentsClient client, string projectName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT(DeploymentEnvironmentsClient client, string projectName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DeploymentEnvironmentsClientGetCatalogsCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.Developer.DevCenter
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCatalogsRequest(nextLink, _projectName, _context) : _client.CreateGetCatalogsRequest(_projectName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeploymentEnvironmentsClient.GetCatalogs");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

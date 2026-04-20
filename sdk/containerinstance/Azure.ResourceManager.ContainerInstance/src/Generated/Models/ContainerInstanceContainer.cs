@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container instance. </summary>
     public partial class ContainerInstanceContainer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
@@ -53,80 +25,181 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Command = new ChangeTrackingList<string>();
-            Ports = new ChangeTrackingList<ContainerPort>();
-            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
-            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/>. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
-        /// <param name="image"> The name of the image used to create the container instance. </param>
-        /// <param name="command"> The commands to execute within the container instance in exec form. </param>
-        /// <param name="ports"> The exposed ports on the container instance. </param>
-        /// <param name="environmentVariables"> The environment variables to set in the container instance. </param>
-        /// <param name="instanceView"> The instance view of the container instance. Only valid in response. </param>
-        /// <param name="resources"> The resource requirements of the container instance. </param>
-        /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
-        /// <param name="livenessProbe"> The liveness probe. </param>
-        /// <param name="readinessProbe"> The readiness probe. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <param name="configMap"> The config map. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IList<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, ConfigMap configMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the container instance. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceContainer(string name, ContainerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Image = image;
-            Command = command;
-            Ports = ports;
-            EnvironmentVariables = environmentVariables;
-            InstanceView = instanceView;
-            Resources = resources;
-            VolumeMounts = volumeMounts;
-            LivenessProbe = livenessProbe;
-            ReadinessProbe = readinessProbe;
-            SecurityContext = securityContext;
-            ConfigMap = configMap;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerInstanceContainer"/> for deserialization. </summary>
-        internal ContainerInstanceContainer()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The user-provided name of the container instance. </summary>
         public string Name { get; set; }
+
+        /// <summary> The properties of the container instance. </summary>
+        internal ContainerProperties Properties { get; set; }
+
         /// <summary> The name of the image used to create the container instance. </summary>
-        public string Image { get; set; }
+        public string Image
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Image;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.Image = value;
+            }
+        }
+
         /// <summary> The commands to execute within the container instance in exec form. </summary>
-        public IList<string> Command { get; }
+        public IList<string> Command
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                return Properties.Command;
+            }
+        }
+
         /// <summary> The exposed ports on the container instance. </summary>
-        public IList<ContainerPort> Ports { get; }
+        public IList<ContainerPort> Ports
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                return Properties.Ports;
+            }
+        }
+
         /// <summary> The environment variables to set in the container instance. </summary>
-        public IList<ContainerEnvironmentVariable> EnvironmentVariables { get; }
+        public IList<ContainerEnvironmentVariable> EnvironmentVariables
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                return Properties.EnvironmentVariables;
+            }
+        }
+
         /// <summary> The instance view of the container instance. Only valid in response. </summary>
-        public ContainerInstanceView InstanceView { get; }
+        public ContainerInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
         /// <summary> The resource requirements of the container instance. </summary>
-        public ContainerResourceRequirements Resources { get; set; }
+        public ContainerResourceRequirements Resources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Resources;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.Resources = value;
+            }
+        }
+
         /// <summary> The volume mounts available to the container instance. </summary>
-        public IList<ContainerVolumeMount> VolumeMounts { get; }
+        public IList<ContainerVolumeMount> VolumeMounts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                return Properties.VolumeMounts;
+            }
+        }
+
         /// <summary> The liveness probe. </summary>
-        public ContainerProbe LivenessProbe { get; set; }
+        public ContainerProbe LivenessProbe
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LivenessProbe;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.LivenessProbe = value;
+            }
+        }
+
         /// <summary> The readiness probe. </summary>
-        public ContainerProbe ReadinessProbe { get; set; }
+        public ContainerProbe ReadinessProbe
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadinessProbe;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.ReadinessProbe = value;
+            }
+        }
+
         /// <summary> The container security properties. </summary>
-        public ContainerSecurityContextDefinition SecurityContext { get; set; }
-        /// <summary> The config map. </summary>
-        internal ConfigMap ConfigMap { get; set; }
+        public ContainerSecurityContextDefinition SecurityContext
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityContext;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                Properties.SecurityContext = value;
+            }
+        }
+
         /// <summary> The key value pairs dictionary in the config map. </summary>
         public IDictionary<string, string> ConfigMapKeyValuePairs
         {
             get
             {
-                if (ConfigMap is null)
-                    ConfigMap = new ConfigMap();
-                return ConfigMap.KeyValuePairs;
+                if (Properties is null)
+                {
+                    Properties = new ContainerProperties();
+                }
+                return Properties.ConfigMapKeyValuePairs;
             }
         }
     }

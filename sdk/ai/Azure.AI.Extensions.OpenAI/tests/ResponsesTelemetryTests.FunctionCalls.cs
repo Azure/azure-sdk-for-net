@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
@@ -68,7 +68,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         // First call: user message with tools → model should issue function_call(s)
         CreateResponseOptions options = new()
@@ -150,7 +150,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -234,7 +234,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -332,7 +332,7 @@ public partial class ResponsesTelemetryTests
 
         AIProjectClient projectClient = GetTestProjectClient();
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-        ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+        ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 
         CreateResponseOptions options = new()
         {
@@ -422,5 +422,5 @@ public partial class ResponsesTelemetryTests
         string outputMessages2 = span2.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(outputMessages2, Does.Contain("\"role\":\"assistant\""));
         Assert.That(outputMessages2, Does.Not.Contain("\"content\":"));
-}
+    }
 }

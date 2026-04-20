@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -188,7 +188,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationEventResource(Client, data));
+                context,
+                "DataReplicationEventCollection.GetAll"), data => new DataReplicationEventResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +228,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 odataOptions,
                 continuationToken,
                 pageSize,
-                context), data => new DataReplicationEventResource(Client, data));
+                context,
+                "DataReplicationEventCollection.GetAll"), data => new DataReplicationEventResource(Client, data));
         }
 
         /// <summary>

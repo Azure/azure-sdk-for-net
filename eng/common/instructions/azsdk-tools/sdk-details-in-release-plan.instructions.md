@@ -1,32 +1,12 @@
 ---
-description: 'Identify languages configured in the TypeSpec project and add it to release plan'
+description: 'Update SDK details in a release plan from a TypeSpec project'
 ---
-# Step 1: Find the list of languages and package names
-**Goal**: Identify languages configured in the TypeSpec project and generate the json object with language and package name.
-1. Identify the language emitter configuration in the `tspconfig.yaml` file in the TypeSpec project root.
-2. Identify the package name or namespace for each language emitter.
-   - For Java and Python, use `emitter-output-dir` for package name if it exists. Otherwise use `package-dir` to get the package name as fallback approach.
-   - For .NET, use namespace property to get package name.
-   - For JavaScript, use `packagedetails:name` property to get package name.
-   - For Go, use module name and remove `github.com/Azure/azure-sdk-for-go/` to get package name.
-3. Map the language name in emitter to one of the following in Pascal case(except .NET):
-   - .NET
-   - Java
-   - Python
-   - JavaScript
-   - Go
-4. Create a JSON array object with the following structure:
-   ```json
-   [
-           {
-               "language": "<LanguageName>",
-               "packageName": "<PackageName>"
-           },
-           ...
-    ]
-   ```
-5. If no languages are configured, inform the user: "No languages configured in TypeSpec project. Please add at least one language emitter in tspconfig.yaml."
-**Success Criteria**: JSON object with languages and package names created.
+# Step 1: Identify the TypeSpec project path
+**Goal**: Identify the path to the TypeSpec project that contains the `tspconfig.yaml` file.
+1. Identify the TypeSpec project directory that contains a `tspconfig.yaml` file.
+2. If a TypeSpec project path is not provided or known, ask the user for the path.
+3. If no `tspconfig.yaml` exists at the given path, inform the user: "No tspconfig.yaml found at the given path. Please provide a valid TypeSpec project path."
+**Success Criteria**: Valid TypeSpec project path identified.
 
 # Step 2: Check if release plan exists
 **Goal**: Determine if a release plan exists for the API spec pull request or work item Id or release plan Id in current context.
@@ -36,17 +16,7 @@ description: 'Identify languages configured in the TypeSpec project and add it t
 **Success Criteria**: Release plan exists or user informed to create one.
 
 # Step 3: Update Release Plan with SDK Information
-> **(MANDATORY - DO NOT SKIP) ALWAYS validate all package names against the format rules AND the examples table before calling any update tool, even if the user provides SDK details directly. Auto-correct and inform the user of invalid package names.**
-> - **JavaScript**: Must start with `@azure/`
-> - **Go**: Must start with `sdk/`
->
-> **Valid package name examples (compare against these to catch invalid formats):**
-> | Language | Valid | Invalid |
-> |----------|-------|---------|
-> | JavaScript | `@azure/arm-compute` | `arm-compute`, `azure/arm-compute`,`@azure-arm-compute` |
-> | Go (management plane) | `sdk/resourcemanager/compute/armcompute` | `sdk/armcompute`, `/sdk/compute`, `github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/compute` |
-
-**Goal**: Update the release plan with the languages and package names identified in Step 1.
-1. Use `azsdk_update_sdk_details_in_release_plan` to update the release plan work item with the JSON object created in Step 1.
+**Goal**: Update the release plan with the SDK package names resolved from the TypeSpec project.
+1. Use `azsdk_update_sdk_details_in_release_plan` with the release plan work item ID and the TypeSpec project path from Step 1.
 2. Confirm successful update of the release plan with the SDK information and summary of languages and package names.
-**Success Criteria**: Release plan updated with languages and package names.
+**Success Criteria**: Release plan updated with languages and package names resolved from the TypeSpec project.

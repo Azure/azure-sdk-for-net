@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FetchTieringCostInfoForRehydrationContent : IUtf8JsonSerializable, IJsonModel<FetchTieringCostInfoForRehydrationContent>
+    /// <summary> Request parameters for fetching cost info of rehydration. </summary>
+    public partial class FetchTieringCostInfoForRehydrationContent : FetchTieringCostInfoContent, IJsonModel<FetchTieringCostInfoForRehydrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchTieringCostInfoForRehydrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostInfoForRehydrationContent"/> for deserialization. </summary>
+        internal FetchTieringCostInfoForRehydrationContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFetchTieringCostInfoForRehydrationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FetchTieringCostInfoForRehydrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostInfoForRehydrationContent IPersistableModel<FetchTieringCostInfoForRehydrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (FetchTieringCostInfoForRehydrationContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FetchTieringCostInfoForRehydrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FetchTieringCostInfoForRehydrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
@@ -45,118 +90,90 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(RehydrationPriority.ToString());
         }
 
-        FetchTieringCostInfoForRehydrationContent IJsonModel<FetchTieringCostInfoForRehydrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostInfoForRehydrationContent IJsonModel<FetchTieringCostInfoForRehydrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FetchTieringCostInfoForRehydrationContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFetchTieringCostInfoForRehydrationContent(document.RootElement, options);
         }
 
-        internal static FetchTieringCostInfoForRehydrationContent DeserializeFetchTieringCostInfoForRehydrationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FetchTieringCostInfoForRehydrationContent DeserializeFetchTieringCostInfoForRehydrationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            RecoveryPointTierType sourceTierType = default;
+            RecoveryPointTierType targetTierType = default;
+            string objectType = "FetchTieringCostInfoForRehydrationRequest";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string containerName = default;
             string protectedItemName = default;
             string recoveryPointId = default;
             RehydrationPriority rehydrationPriority = default;
-            RecoveryPointTierType sourceTierType = default;
-            RecoveryPointTierType targetTierType = default;
-            string objectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("sourceTierType"u8))
                 {
-                    containerName = property.Value.GetString();
+                    sourceTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("protectedItemName"u8))
+                if (prop.NameEquals("targetTierType"u8))
                 {
-                    protectedItemName = property.Value.GetString();
+                    targetTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    recoveryPointId = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rehydrationPriority"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    rehydrationPriority = new RehydrationPriority(property.Value.GetString());
+                    containerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceTierType"u8))
+                if (prop.NameEquals("protectedItemName"u8))
                 {
-                    sourceTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    protectedItemName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetTierType"u8))
+                if (prop.NameEquals("recoveryPointId"u8))
                 {
-                    targetTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    recoveryPointId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("rehydrationPriority"u8))
                 {
-                    objectType = property.Value.GetString();
+                    rehydrationPriority = new RehydrationPriority(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FetchTieringCostInfoForRehydrationContent(
                 sourceTierType,
                 targetTierType,
                 objectType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 containerName,
                 protectedItemName,
                 recoveryPointId,
                 rehydrationPriority);
         }
-
-        BinaryData IPersistableModel<FetchTieringCostInfoForRehydrationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FetchTieringCostInfoForRehydrationContent IPersistableModel<FetchTieringCostInfoForRehydrationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoForRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFetchTieringCostInfoForRehydrationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostInfoForRehydrationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FetchTieringCostInfoForRehydrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

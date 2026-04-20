@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<bool> Exists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.BlobContainerResource> Get(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAll(int? maxpagesize = default(int?), string filter = null, Azure.ResourceManager.Storage.Models.BlobContainerState? include = default(Azure.ResourceManager.Storage.Models.BlobContainerState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAll(string maxpagesize, string filter, Azure.ResourceManager.Storage.Models.BlobContainerState? include, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAllAsync(int? maxpagesize = default(int?), string filter = null, Azure.ResourceManager.Storage.Models.BlobContainerState? include = default(Azure.ResourceManager.Storage.Models.BlobContainerState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAllAsync(string maxpagesize, string filter, Azure.ResourceManager.Storage.Models.BlobContainerState? include, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAll(int? maxpagesize, string filter, Azure.ResourceManager.Storage.Models.BlobContainerState? include, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, Azure.ResourceManager.Storage.Models.BlobContainerState? include = default(Azure.ResourceManager.Storage.Models.BlobContainerState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAllAsync(int? maxpagesize, string filter, Azure.ResourceManager.Storage.Models.BlobContainerState? include, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, Azure.ResourceManager.Storage.Models.BlobContainerState? include = default(Azure.ResourceManager.Storage.Models.BlobContainerState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.BlobContainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Storage.BlobContainerResource> GetIfExists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Storage.BlobContainerResource>> GetIfExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.StoragePublicAccessType? PublicAccess { get { throw null; } set { } }
         public int? RemainingRetentionDays { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.BlobContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.BlobContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.BlobContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -88,7 +91,10 @@ namespace Azure.ResourceManager.Storage
         public BlobInventoryPolicyData() { }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema PolicySchema { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.BlobInventoryPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobInventoryPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobInventoryPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.BlobInventoryPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.BlobInventoryPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -127,7 +133,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.RestorePolicy RestorePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.BlobServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.BlobServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.BlobServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.BlobServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -172,7 +181,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string RestoreReference { get { throw null; } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.DeletedAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.DeletedAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.DeletedAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.DeletedAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.DeletedAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -222,7 +234,10 @@ namespace Azure.ResourceManager.Storage
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.EncryptionScopeSource? Source { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.EncryptionScopeState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.EncryptionScopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.EncryptionScopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.EncryptionScopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.EncryptionScopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.EncryptionScopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -254,7 +269,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.SmbSetting ProtocolSmbSetting { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy ShareDeleteRetentionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.FileServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.FileServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -286,7 +304,10 @@ namespace Azure.ResourceManager.Storage
     {
         public FileServiceUsageData() { }
         public Azure.ResourceManager.Storage.Models.FileServiceUsageProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.FileServiceUsageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileServiceUsageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -316,10 +337,10 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<bool> Exists(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.FileShareResource> Get(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.FileShareResource> GetAll(int? maxpagesize = default(int?), string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.FileShareResource> GetAll(string maxpagesize, string filter, string expand, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.FileShareResource> GetAllAsync(int? maxpagesize = default(int?), string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.FileShareResource> GetAllAsync(string maxpagesize, string filter, string expand, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.FileShareResource> GetAll(int? maxpagesize, string filter, string expand, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.FileShareResource> GetAll(string maxpagesize = null, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.FileShareResource> GetAllAsync(int? maxpagesize, string filter, string expand, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.FileShareResource> GetAllAsync(string maxpagesize = null, string filter = null, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.FileShareResource>> GetAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Storage.FileShareResource> GetIfExists(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Storage.FileShareResource>> GetIfExistsAsync(string shareName, string expand = null, string xMsSnapshot = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -357,7 +378,10 @@ namespace Azure.ResourceManager.Storage
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> SignedIdentifiers { get { throw null; } }
         public System.DateTimeOffset? SnapshotOn { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.FileShareData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileShareData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.FileShareData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.FileShareData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.FileShareData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -395,7 +419,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ETag? ETag { get { throw null; } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.ImmutabilityPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.ImmutabilityPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -412,13 +439,19 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.ImmutabilityPolicyData data, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string containerName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> Delete(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> Delete(Azure.WaitUntil waitUntil, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> ExtendImmutabilityPolicy(Azure.ETag ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> ExtendImmutabilityPolicyAsync(Azure.ETag ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> ExtendImmutabilityPolicy(Azure.ETag ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> ExtendImmutabilityPolicy(string ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> ExtendImmutabilityPolicyAsync(Azure.ETag ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> ExtendImmutabilityPolicyAsync(string ifMatch, Azure.ResourceManager.Storage.ImmutabilityPolicyData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> Get(Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> GetAsync(Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> LockImmutabilityPolicy(Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource> LockImmutabilityPolicy(string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> LockImmutabilityPolicyAsync(Azure.ETag ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.ImmutabilityPolicyResource>> LockImmutabilityPolicyAsync(string ifMatch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Storage.ImmutabilityPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.ImmutabilityPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.ImmutabilityPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -448,7 +481,10 @@ namespace Azure.ResourceManager.Storage
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -499,7 +535,10 @@ namespace Azure.ResourceManager.Storage
         public string PolicyId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> Rules { get { throw null; } }
         public string SourceAccount { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.ObjectReplicationPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ObjectReplicationPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.ObjectReplicationPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.ObjectReplicationPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.ObjectReplicationPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -529,7 +568,10 @@ namespace Azure.ResourceManager.Storage
     {
         public QueueServiceData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageCorsRule> CorsRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.QueueServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.QueueServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.QueueServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.QueueServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.QueueServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -626,7 +668,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? ZonePlacementPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -667,7 +712,10 @@ namespace Azure.ResourceManager.Storage
         public string Sid { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageSshPublicKey> SshAuthorizedKeys { get { throw null; } }
         public int? UserId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageAccountLocalUserData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountLocalUserData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountLocalUserData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageAccountLocalUserData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountLocalUserData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -702,7 +750,10 @@ namespace Azure.ResourceManager.Storage
         public StorageAccountManagementPolicyData() { }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> Rules { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageAccountManagementPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountManagementPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountManagementPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageAccountManagementPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountManagementPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -738,17 +789,20 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.NullableResponse<Azure.ResourceManager.Storage.StorageAccountMigrationResource> GetIfExists(Azure.ResourceManager.Storage.Models.StorageAccountMigrationName migrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Storage.StorageAccountMigrationResource>> GetIfExistsAsync(Azure.ResourceManager.Storage.Models.StorageAccountMigrationName migrationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class StorageAccountMigrationData : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>
+    public partial class StorageAccountMigrationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>
     {
         public StorageAccountMigrationData(Azure.ResourceManager.Storage.Models.StorageSkuName targetSkuName) { }
-        public string Id { get { throw null; } }
+        public new string Id { get { throw null; } }
         public string MigrationFailedDetailedReason { get { throw null; } }
         public string MigrationFailedReason { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus? MigrationStatus { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        public new string Name { get { throw null; } set { } }
+        public new Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageSkuName TargetSkuName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageAccountMigrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageAccountMigrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageAccountMigrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -787,9 +841,11 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation EnableHierarchicalNamespace(Azure.WaitUntil waitUntil, string requestType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableHierarchicalNamespaceAsync(Azure.WaitUntil waitUntil, string requestType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.StorageAccountFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType? failoverType = default(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Storage.Models.StorageAccountFailoverType? failoverType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> Get(Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.Models.GetAccountSasResult> GetAccountSas(Azure.ResourceManager.Storage.Models.AccountSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -797,12 +853,18 @@ namespace Azure.ResourceManager.Storage
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> GetAsync(Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicy() { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobServiceResource GetBlobService() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult> GetByStorageAccount(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>> GetByStorageAccountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource> GetEncryptionScope(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.EncryptionScopeResource>> GetEncryptionScopeAsync(string encryptionScopeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.EncryptionScopeCollection GetEncryptionScopes() { throw null; }
         public virtual Azure.ResourceManager.Storage.FileServiceResource GetFileService() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeys(Azure.ResourceManager.Storage.Models.StorageListKeyExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageListKeyExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeysAsync(Azure.ResourceManager.Storage.Models.StorageListKeyExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageListKeyExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeys() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult> GetKeys(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand? expand = default(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeys(Azure.ResourceManager.Storage.Models.StorageListKeyExpand? expand, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeysAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>> GetKeysAsync(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand? expand = default(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.Models.StorageAccountKey> GetKeysAsync(Azure.ResourceManager.Storage.Models.StorageListKeyExpand? expand, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationResource> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationResource>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationCollection GetNetworkSecurityPerimeterConfigurations() { throw null; }
@@ -876,7 +938,9 @@ namespace Azure.ResourceManager.Storage
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource>> GetDeletedAccountAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Storage.DeletedAccountResource GetDeletedAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.DeletedAccountCollection GetDeletedAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         public static Azure.Pageable<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccounts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         public static Azure.AsyncPageable<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccountsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Storage.EncryptionScopeResource GetEncryptionScopeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Storage.FileServiceResource GetFileServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -928,7 +992,10 @@ namespace Azure.ResourceManager.Storage
         public Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -962,10 +1029,10 @@ namespace Azure.ResourceManager.Storage
         public virtual Azure.Response<bool> Exists(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageQueueResource> Get(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAll(int? maxpagesize = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAll(string maxpagesize, string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAllAsync(int? maxpagesize = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAllAsync(string maxpagesize, string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAll(int? maxpagesize, string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAll(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAllAsync(int? maxpagesize, string filter, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.StorageQueueResource> GetAllAsync(string maxpagesize = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageQueueResource>> GetAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Storage.StorageQueueResource> GetIfExists(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Storage.StorageQueueResource>> GetIfExistsAsync(string queueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -978,7 +1045,10 @@ namespace Azure.ResourceManager.Storage
         public StorageQueueData() { }
         public int? ApproximateMessageCount { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageQueueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageQueueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageQueueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageQueueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageQueueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1023,9 +1093,13 @@ namespace Azure.ResourceManager.Storage
     }
     public partial class StorageTaskAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageTaskAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageTaskAssignmentData>
     {
+        public StorageTaskAssignmentData() { }
         public StorageTaskAssignmentData(Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties properties) { }
         public Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.StorageTaskAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageTaskAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.StorageTaskAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.StorageTaskAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.StorageTaskAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1075,7 +1149,10 @@ namespace Azure.ResourceManager.Storage
         public TableData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier> SignedIdentifiers { get { throw null; } }
         public string TableName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.TableData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.TableData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.TableData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.TableData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.TableData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1105,7 +1182,10 @@ namespace Azure.ResourceManager.Storage
     {
         public TableServiceData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageCorsRule> CorsRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.TableServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.TableServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.TableServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.TableServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.TableServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1175,7 +1255,9 @@ namespace Azure.ResourceManager.Storage.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccount(Azure.Core.AzureLocation location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource>> GetDeletedAccountAsync(Azure.Core.AzureLocation location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.DeletedAccountCollection GetDeletedAccounts() { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Storage.Models.StorageSkuInformation> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Storage.Models.StorageSkuInformation> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1193,7 +1275,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1214,6 +1299,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState left, Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState left, Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicyState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1228,7 +1314,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService Services { get { throw null; } }
         public System.DateTimeOffset SharedAccessExpireOn { get { throw null; } }
         public System.DateTimeOffset? SharedAccessStartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.AccountSasContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.AccountSasContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.AccountSasContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AccountSasContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AccountSasContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.AccountSasContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AccountSasContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1248,6 +1337,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType left, Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType left, Azure.ResourceManager.Storage.Models.ActiveDirectoryAccountType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1264,39 +1354,46 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.AllowedCopyScope left, Azure.ResourceManager.Storage.Models.AllowedCopyScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.AllowedCopyScope (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AllowedCopyScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.AllowedCopyScope left, Azure.ResourceManager.Storage.Models.AllowedCopyScope right) { throw null; }
         public override string ToString() { throw null; }
     }
     public static partial class ArmStorageModelFactory
     {
         public static Azure.ResourceManager.Storage.Models.AccountSasContent AccountSasContent(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService services = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService), Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType resourceTypes = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType), Azure.ResourceManager.Storage.Models.StorageAccountSasPermission permissions = default(Azure.ResourceManager.Storage.Models.StorageAccountSasPermission), string ipAddressOrRange = null, Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol? protocols = default(Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol?), System.DateTimeOffset? sharedAccessStartOn = default(System.DateTimeOffset?), System.DateTimeOffset sharedAccessExpireOn = default(System.DateTimeOffset), string keyToSign = null) { throw null; }
-        public static Azure.ResourceManager.Storage.BlobContainerData BlobContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string version = null, bool? isDeleted = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), string defaultEncryptionScope = null, bool? preventEncryptionScopeOverride = default(bool?), Azure.ResourceManager.Storage.Models.StoragePublicAccessType? publicAccess = default(Azure.ResourceManager.Storage.Models.StoragePublicAccessType?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus = default(Azure.ResourceManager.Storage.Models.StorageLeaseStatus?), Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState = default(Azure.ResourceManager.Storage.Models.StorageLeaseState?), Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration = default(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType?), System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy immutabilityPolicy = null, Azure.ResourceManager.Storage.Models.LegalHoldProperties legalHold = null, bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?), Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning immutableStorageWithVersioning = null, bool? enableNfsV3RootSquash = default(bool?), bool? enableNfsV3AllSquash = default(bool?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Storage.BlobContainerData BlobContainerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, Azure.ResourceManager.Storage.Models.StoragePublicAccessType? publicAccess, System.DateTimeOffset? lastModifiedOn, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IDictionary<string, string> metadata, Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy immutabilityPolicy, Azure.ResourceManager.Storage.Models.LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry> updateHistory = null, int? immutabilityPeriodSinceCreationInDays = default(int?), Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state = default(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState?), bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.BlobInventoryPolicyData BlobInventoryPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema policySchema = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition BlobInventoryPolicyDefinition(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter filters = null, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat format = default(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat), Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule schedule = default(Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule), Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType objectType = default(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType), System.Collections.Generic.IEnumerable<string> schemaFields = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter BlobInventoryPolicyFilter(System.Collections.Generic.IEnumerable<string> includePrefix = null, System.Collections.Generic.IEnumerable<string> excludePrefix = null, System.Collections.Generic.IEnumerable<string> blobTypes = null, bool? includeBlobVersions = default(bool?), bool? includeSnapshots = default(bool?), bool? includeDeleted = default(bool?), int? creationTimeLastNDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema BlobInventoryPolicySchema(bool isEnabled = false, string destination = null, Azure.ResourceManager.Storage.Models.BlobInventoryRuleType ruleType = default(Azure.ResourceManager.Storage.Models.BlobInventoryRuleType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> rules = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.BlobRestoreContent BlobRestoreContent(System.DateTimeOffset timeToRestore = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobRestoreRange> blobRanges = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobRestoreStatus BlobRestoreStatus(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus? status = default(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus?), string failureReason = null, string restoreId = null, Azure.ResourceManager.Storage.Models.BlobRestoreContent parameters = null) { throw null; }
         public static Azure.ResourceManager.Storage.BlobServiceData BlobServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null, string defaultServiceVersion = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy deleteRetentionPolicy = null, bool? isVersioningEnabled = default(bool?), bool? isAutomaticSnapshotPolicyEnabled = default(bool?), Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed changeFeed = null, Azure.ResourceManager.Storage.Models.RestorePolicy restorePolicy = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy containerDeleteRetentionPolicy = null, Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BurstingConstants BurstingConstants(int? burstFloorIops = default(int?), double? burstIOScalar = default(double?), int? burstTimeframeSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.DeletedAccountData DeletedAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier storageAccountResourceId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string restoreReference = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.DeletedShare DeletedShare(string deletedShareName = null, string deletedShareVersion = null) { throw null; }
         public static Azure.ResourceManager.Storage.EncryptionScopeData EncryptionScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.EncryptionScopeSource? source = default(Azure.ResourceManager.Storage.Models.EncryptionScopeSource?), Azure.ResourceManager.Storage.Models.EncryptionScopeState? state = default(Azure.ResourceManager.Storage.Models.EncryptionScopeState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties keyVaultProperties = null, bool? requireInfrastructureEncryption = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties EncryptionScopeKeyVaultProperties(System.Uri keyUri = null, string currentVersionedKeyIdentifier = null, System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ExecutionTarget ExecutionTarget(System.Collections.Generic.IEnumerable<string> prefix = null, System.Collections.Generic.IEnumerable<string> excludePrefix = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = default(int?), int? maxProvisionedStorageGiB = default(int?), int? maxProvisionedIops = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileServiceAccountUsage FileServiceAccountUsage(Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements liveShares = null, Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements softDeletedShares = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = default(int?), int? provisionedStorageGiB = default(int?), int? provisionedIops = default(int?), int? provisionedBandwidthMiBPerSec = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.FileServiceData FileServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageSku sku = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy shareDeleteRetentionPolicy = null, Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings protocolSettings = null) { throw null; }
         public static Azure.ResourceManager.Storage.FileServiceData FileServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Storage.Models.StorageSku sku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules, Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy shareDeleteRetentionPolicy, Azure.ResourceManager.Storage.Models.SmbSetting protocolSmbSetting) { throw null; }
-        public static Azure.ResourceManager.Storage.FileServiceUsageData FileServiceUsageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.FileServiceUsageProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Storage.FileServiceUsageData FileServiceUsageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Storage.Models.FileServiceUsageProperties properties) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileServiceUsageProperties FileServiceUsageProperties(Azure.ResourceManager.Storage.Models.FileServiceAccountLimits storageAccountLimits = null, Azure.ResourceManager.Storage.Models.FileShareLimits fileShareLimits = null, Azure.ResourceManager.Storage.Models.FileShareRecommendations fileShareRecommendations = null, Azure.ResourceManager.Storage.Models.BurstingConstants burstingConstants = null, Azure.ResourceManager.Storage.Models.FileServiceAccountUsage storageAccountUsage = null) { throw null; }
         public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IDictionary<string, string> metadata, int? shareQuota, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol, Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier, System.DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers, System.DateTimeOffset? snapshotOn, Azure.ETag? etag) { throw null; }
-        public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> metadata = null, int? shareQuota = default(int?), int? provisionedIops = default(int?), int? provisionedBandwidthMibps = default(int?), int? includedBurstIops = default(int?), long? maxBurstCreditsForIops = default(long?), System.DateTimeOffset? nextAllowedQuotaDowngradeOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol = default(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol?), Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash = default(Azure.ResourceManager.Storage.Models.RootSquashType?), string version = null, bool? isDeleted = default(bool?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.FileShareAccessTier?), System.DateTimeOffset? accessTierChangeOn = default(System.DateTimeOffset?), string accessTierStatus = null, long? shareUsageBytes = default(long?), Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus = default(Azure.ResourceManager.Storage.Models.StorageLeaseStatus?), Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState = default(Azure.ResourceManager.Storage.Models.StorageLeaseState?), Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration = default(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers = null, System.DateTimeOffset? snapshotOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Storage.FileShareData FileShareData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, System.DateTimeOffset? nextAllowedQuotaDowngradeOn, System.DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, System.DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? enabledProtocol, Azure.ResourceManager.Storage.Models.RootSquashType? rootSquash, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, Azure.ResourceManager.Storage.Models.FileShareAccessTier? accessTier, System.DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier> signedIdentifiers, System.DateTimeOffset? snapshotOn, Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default(int?), int? maxProvisionedStorageGiB = default(int?), int? minProvisionedIops = default(int?), int? maxProvisionedIops = default(int?), int? minProvisionedBandwidthMiBPerSec = default(int?), int? maxProvisionedBandwidthMiBPerSec = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.FileShareRecommendations FileShareRecommendations(int? baseIops = default(int?), double? ioScalar = default(double?), int? baseBandwidthMiBPerSec = default(int?), double? bandwidthScalar = default(double?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.GeoReplicationStatistics GeoReplicationStatistics(Azure.ResourceManager.Storage.Models.GeoReplicationStatus? status, System.DateTimeOffset? lastSyncOn, bool? canFailover) { throw null; }
         public static Azure.ResourceManager.Storage.Models.GeoReplicationStatistics GeoReplicationStatistics(Azure.ResourceManager.Storage.Models.GeoReplicationStatus? status = default(Azure.ResourceManager.Storage.Models.GeoReplicationStatus?), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), bool? canFailover = default(bool?), bool? canPlannedFailover = default(bool?), Azure.ResourceManager.Storage.Models.PostFailoverRedundancy? postFailoverRedundancy = default(Azure.ResourceManager.Storage.Models.PostFailoverRedundancy?), Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy? postPlannedFailoverRedundancy = default(Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.GetAccountSasResult GetAccountSasResult(string accountSasToken = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.GetServiceSasResult GetServiceSasResult(string serviceSasToken = null) { throw null; }
-        public static Azure.ResourceManager.Storage.ImmutabilityPolicyData ImmutabilityPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? immutabilityPeriodSinceCreationInDays = default(int?), Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state = default(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState?), bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Storage.ImmutabilityPolicyData ImmutabilityPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? immutabilityPeriodSinceCreationInDays, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning ImmutableStorageWithVersioning(bool? isEnabled = default(bool?), System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState? migrationState = default(Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy(bool isEnabled = false, Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName? name = default(Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName?), int? trackingGranularityInDays = default(int?), System.Collections.Generic.IEnumerable<string> blobType = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.LeaseContainerContent LeaseContainerContent(Azure.ResourceManager.Storage.Models.LeaseContainerAction action = default(Azure.ResourceManager.Storage.Models.LeaseContainerAction), string leaseId = null, int? breakPeriod = default(int?), int? leaseDuration = default(int?), string proposedLeaseId = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.LeaseContainerResponse LeaseContainerResponse(string leaseId = null, string leaseTimeSeconds = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.LeaseShareContent LeaseShareContent(Azure.ResourceManager.Storage.Models.LeaseShareAction action = default(Azure.ResourceManager.Storage.Models.LeaseShareAction), string leaseId = null, int? breakPeriod = default(int?), int? leaseDuration = default(int?), string proposedLeaseId = null) { throw null; }
@@ -1306,7 +1403,8 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.LegalHoldTag LegalHoldTag(string tag = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string objectIdentifier = null, System.Guid? tenantId = default(System.Guid?), string upn = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.LocalUserKeys LocalUserKeys(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSshPublicKey> sshAuthorizedKeys = null, string sharedKey = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult LocalUserRegeneratePasswordResult(string sshPassword = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(string id = null, System.Guid? perimeterGuid = default(System.Guid?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ManagementPolicyFilter ManagementPolicyFilter(System.Collections.Generic.IEnumerable<string> prefixMatch = null, System.Collections.Generic.IEnumerable<string> blobTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter> blobIndexMatch = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(string id, System.Guid? perimeterGuid, Azure.Core.AzureLocation? location) { throw null; }
         public static Azure.ResourceManager.Storage.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile profile = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile NetworkSecurityPerimeterConfigurationPropertiesProfile(string name = null, float? accessRulesVersion = default(float?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.NspAccessRule> accessRules = null, float? diagnosticSettingsVersion = default(float?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name = null, Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode?)) { throw null; }
@@ -1317,6 +1415,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string policyId, System.DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules) { throw null; }
         public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string policyId, System.DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled) { throw null; }
         public static Azure.ResourceManager.Storage.ObjectReplicationPolicyData ObjectReplicationPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string policyId = null, System.DateTimeOffset? enabledOn = default(System.DateTimeOffset?), string sourceAccount = null, string destinationAccount = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = default(bool?), bool? isPriorityReplicationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter ObjectReplicationPolicyFilter(System.Collections.Generic.IEnumerable<string> prefixMatch = null, string minCreationTime = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory ProtectedAppendWritesHistory(bool? allowProtectedAppendWritesAll = default(bool?), System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Storage.QueueServiceData QueueServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.RestorePolicy RestorePolicy(bool isEnabled = false, int? days = default(int?), System.DateTimeOffset? lastEnabledOn = default(System.DateTimeOffset?), System.DateTimeOffset? minRestoreOn = default(System.DateTimeOffset?)) { throw null; }
@@ -1326,28 +1425,37 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind kind, Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(Azure.ResourceManager.Storage.Models.StorageSku sku = null, Azure.ResourceManager.Storage.Models.StorageKind kind = default(Azure.ResourceManager.Storage.Models.StorageKind), Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope = default(Azure.ResourceManager.Storage.Models.AllowedCopyScope?), Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess?), Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = default(int?), Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain = null, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption = null, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.StorageAccountAccessTier?), Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isExtendedGroupEnabled = default(bool?), bool? isHnsEnabled = default(bool?), Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState = default(Azure.ResourceManager.Storage.Models.LargeFileSharesState?), Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference = null, bool? isIPv6EndpointToBePublished = default(bool?), bool? allowBlobPublicAccess = default(bool?), Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion?), bool? allowSharedKeyAccess = default(bool?), bool? isNfsV3Enabled = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? isDefaultToOAuthAuthentication = default(bool?), Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning = null, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType = default(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType?), bool? isBlobEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind? kind, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy, Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? storageAccountProvisioningState, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints, Azure.Core.AzureLocation? primaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary, System.DateTimeOffset? lastGeoFailoverOn, Azure.Core.AzureLocation? secondaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary, System.DateTimeOffset? createdOn, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress) { throw null; }
-        public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.StorageSku sku = null, Azure.ResourceManager.Storage.Models.StorageKind? kind = default(Azure.ResourceManager.Storage.Models.StorageKind?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy?), Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? storageAccountProvisioningState = default(Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState?), Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints = null, Azure.Core.AzureLocation? primaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary = default(Azure.ResourceManager.Storage.Models.StorageAccountStatus?), System.DateTimeOffset? lastGeoFailoverOn = default(System.DateTimeOffset?), Azure.Core.AzureLocation? secondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary = default(Azure.ResourceManager.Storage.Models.StorageAccountStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain = null, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = default(int?), Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime = null, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption = null, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.StorageAccountAccessTier?), Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = default(bool?), Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isExtendedGroupEnabled = default(bool?), bool? isHnsEnabled = default(bool?), Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = default(bool?), Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState = default(Azure.ResourceManager.Storage.Models.LargeFileSharesState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference = null, bool? isIPv6EndpointToBePublished = default(bool?), Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = default(bool?), Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion?), bool? allowSharedKeyAccess = default(bool?), bool? isNfsV3Enabled = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? isDefaultToOAuthAuthentication = default(bool?), Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess?), Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning = null, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope = default(Azure.ResourceManager.Storage.Models.AllowedCopyScope?), Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType = default(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType?), bool? isSkuConversionBlocked = default(bool?), bool? isAccountMigrationInProgress = default(bool?), bool? isBlobEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind? kind, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy, Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? storageAccountProvisioningState, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints, Azure.Core.AzureLocation? primaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary, System.DateTimeOffset? lastGeoFailoverOn, Azure.Core.AzureLocation? secondaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary, System.DateTimeOffset? createdOn, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, bool? isBlobEnabled) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind? kind, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? storageAccountProvisioningState, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints, Azure.Core.AzureLocation? primaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary, System.DateTimeOffset? lastGeoFailoverOn, Azure.Core.AzureLocation? secondaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary, System.DateTimeOffset? createdOn, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind? kind, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Storage.Models.StorageProvisioningState? provisioningState, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints, Azure.Core.AzureLocation? primaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary, System.DateTimeOffset? lastGeoFailoverOn, Azure.Core.AzureLocation? secondaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary, System.DateTimeOffset? createdOn, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Storage.Models.StorageSku sku, Azure.ResourceManager.Storage.Models.StorageKind? kind, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Storage.Models.StorageProvisioningState? provisioningState, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints, Azure.Core.AzureLocation? primaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary, System.DateTimeOffset? lastGeoFailoverOn, Azure.Core.AzureLocation? secondaryLocation, Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary, System.DateTimeOffset? createdOn, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier, Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress) { throw null; }
+        public static Azure.ResourceManager.Storage.StorageAccountData StorageAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState?), Azure.ResourceManager.Storage.Models.StorageAccountEndpoints primaryEndpoints = null, Azure.Core.AzureLocation? primaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfPrimary = default(Azure.ResourceManager.Storage.Models.StorageAccountStatus?), System.DateTimeOffset? lastGeoFailoverOn = default(System.DateTimeOffset?), Azure.Core.AzureLocation? secondaryLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Storage.Models.StorageAccountStatus? statusOfSecondary = default(Azure.ResourceManager.Storage.Models.StorageAccountStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain = null, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy = null, Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime keyCreationTime = null, Azure.ResourceManager.Storage.Models.StorageAccountEndpoints secondaryEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption = null, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.StorageAccountAccessTier?), Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = default(bool?), Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isExtendedGroupEnabled = default(bool?), bool? isHnsEnabled = default(bool?), Azure.ResourceManager.Storage.Models.GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = default(bool?), Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState = default(Azure.ResourceManager.Storage.Models.LargeFileSharesState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference = null, Azure.ResourceManager.Storage.Models.BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = default(bool?), Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion?), bool? allowSharedKeyAccess = default(bool?), bool? isNfsV3Enabled = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? isDefaultToOAuthAuthentication = default(bool?), Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess?), Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning = null, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope = default(Azure.ResourceManager.Storage.Models.AllowedCopyScope?), Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType = default(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType?), bool? isSkuConversionBlocked = default(bool?), bool? isAccountMigrationInProgress = default(bool?), int? keyExpirationPeriodInDays = default(int?), bool? isIPv6EndpointToBePublished = default(bool?), bool? isBlobEnabled = default(bool?), Azure.ResourceManager.Storage.Models.StorageSku sku = null, Azure.ResourceManager.Storage.Models.StorageKind? kind = default(Azure.ResourceManager.Storage.Models.StorageKind?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountEndpoints StorageAccountEndpoints(System.Uri blobUri, System.Uri queueUri, System.Uri tableUri, System.Uri fileUri, System.Uri webUri, System.Uri dfsUri, Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints microsoftEndpoints, Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints internetEndpoints) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageAccountEndpoints StorageAccountEndpoints(System.Uri blobUri = null, System.Uri queueUri = null, System.Uri tableUri = null, System.Uri fileUri = null, System.Uri webUri = null, System.Uri dfsUri = null, Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints microsoftEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints internetEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints ipv6Endpoints = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountEndpoints StorageAccountEndpoints(System.Uri blobUri = null, System.Uri queueUri = null, System.Uri tableUri = null, System.Uri fileUri = null, System.Uri webUri = null, System.Uri dfsUri = null, Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints microsoftEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints internetEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints iPv6Endpoints = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints StorageAccountInternetEndpoints(System.Uri blobUri = null, System.Uri fileUri = null, System.Uri webUri = null, System.Uri dfsUri = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints StorageAccountIPv6Endpoints(string blob = null, string queue = null, string table = null, string file = null, string web = null, string dfs = null, Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints microsoftEndpoints = null, Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints internetEndpoints = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountKey StorageAccountKey(string keyName = null, string value = null, Azure.ResourceManager.Storage.Models.StorageAccountKeyPermission? permissions = default(Azure.ResourceManager.Storage.Models.StorageAccountKeyPermission?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime StorageAccountKeyCreationTime(System.DateTimeOffset? key1 = default(System.DateTimeOffset?), System.DateTimeOffset? key2 = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime StorageAccountKeyCreationTime(System.DateTimeOffset? key1, System.DateTimeOffset? key2) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties StorageAccountKeyVaultProperties(string keyName = null, string keyVersion = null, System.Uri keyVaultUri = null, string currentVersionedKeyIdentifier = null, System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? currentVersionedKeyExpirationTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult StorageAccountListKeysResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageAccountKey> keys = null) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountLocalUserData StorageAccountLocalUserData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StoragePermissionScope> permissionScopes, string homeDirectory, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword) { throw null; }
         public static Azure.ResourceManager.Storage.StorageAccountLocalUserData StorageAccountLocalUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StoragePermissionScope> permissionScopes = null, string homeDirectory = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageSshPublicKey> sshAuthorizedKeys = null, string sid = null, bool? hasSharedKey = default(bool?), bool? hasSshKey = default(bool?), bool? hasSshPassword = default(bool?), int? userId = default(int?), int? groupId = default(int?), bool? isAclAuthorizationAllowed = default(bool?), System.Collections.Generic.IEnumerable<int> extendedGroups = null, bool? isNfsV3Enabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Storage.StorageAccountManagementPolicyData StorageAccountManagementPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> rules = null) { throw null; }
+        public static Azure.ResourceManager.Storage.StorageAccountManagementPolicyData StorageAccountManagementPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? lastModifiedOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.ManagementPolicyRule> rules) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints StorageAccountMicrosoftEndpoints(System.Uri blobUri = null, System.Uri queueUri = null, System.Uri tableUri = null, System.Uri fileUri = null, System.Uri webUri = null, System.Uri dfsUri = null) { throw null; }
-        public static Azure.ResourceManager.Storage.StorageAccountMigrationData StorageAccountMigrationData(string id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Storage.Models.StorageSkuName targetSkuName = default(Azure.ResourceManager.Storage.Models.StorageSkuName), Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus? migrationStatus = default(Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus?), string migrationFailedReason = null, string migrationFailedDetailedReason = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType)) { throw null; }
+        public static Azure.ResourceManager.Storage.StorageAccountMigrationData StorageAccountMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageSkuName? targetSkuName = default(Azure.ResourceManager.Storage.Models.StorageSkuName?), Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus? migrationStatus = default(Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus?), string migrationFailedReason = null, string migrationFailedDetailedReason = null, string name0 = null) { throw null; }
+        public static Azure.ResourceManager.Storage.StorageAccountMigrationData StorageAccountMigrationData(string id, string name, Azure.Core.ResourceType? resourceType, Azure.ResourceManager.Storage.Models.StorageSkuName targetSkuName, Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus? migrationStatus, string migrationFailedReason, string migrationFailedDetailedReason) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult StorageAccountNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Storage.Models.StorageAccountNameUnavailableReason? reason = default(Azure.ResourceManager.Storage.Models.StorageAccountNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet StorageAccountNetworkRuleSet(Azure.ResourceManager.Storage.Models.StorageNetworkBypass? bypass = default(Azure.ResourceManager.Storage.Models.StorageNetworkBypass?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule> resourceAccessRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageAccountIPRule> ipRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageAccountIPRule> iPv6Rules = null, Azure.ResourceManager.Storage.Models.StorageNetworkDefaultAction defaultAction = Azure.ResourceManager.Storage.Models.StorageNetworkDefaultAction.Allow) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountPatch StorageAccountPatch(Azure.ResourceManager.Storage.Models.StorageSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Storage.Models.StorageCustomDomain customDomain = null, Azure.ResourceManager.Storage.Models.StorageAccountEncryption encryption = null, Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy sasPolicy = null, Azure.ResourceManager.Storage.Models.StorageAccountAccessTier? accessTier = default(Azure.ResourceManager.Storage.Models.StorageAccountAccessTier?), Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = default(bool?), bool? isSftpEnabled = default(bool?), bool? isLocalUserEnabled = default(bool?), bool? isExtendedGroupEnabled = default(bool?), Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.Storage.Models.LargeFileSharesState? largeFileSharesState = default(Azure.ResourceManager.Storage.Models.LargeFileSharesState?), Azure.ResourceManager.Storage.Models.StorageRoutingPreference routingPreference = null, bool? allowBlobPublicAccess = default(bool?), Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion?), bool? allowSharedKeyAccess = default(bool?), bool? allowCrossTenantReplication = default(bool?), bool? isDefaultToOAuthAuthentication = default(bool?), Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess?), Azure.ResourceManager.Storage.Models.ImmutableStorageAccount immutableStorageWithVersioning = null, Azure.ResourceManager.Storage.Models.AllowedCopyScope? allowedCopyScope = default(Azure.ResourceManager.Storage.Models.AllowedCopyScope?), Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? dnsEndpointType = default(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType?), int? keyExpirationPeriodInDays = default(int?), bool? isIPv6EndpointToBePublished = default(bool?), bool? isBlobEnabled = default(bool?), Azure.ResourceManager.Storage.Models.StorageKind? kind = default(Azure.ResourceManager.Storage.Models.StorageKind?), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent StorageAccountRegenerateKeyContent(string keyName = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState? skuConversionStatus = default(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState?), Azure.ResourceManager.Storage.Models.StorageSkuName? targetSkuName = default(Azure.ResourceManager.Storage.Models.StorageSkuName?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageCorsRule StorageCorsRule(System.Collections.Generic.IEnumerable<string> allowedOrigins = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod> allowedMethods = null, int maxAgeInSeconds = 0, System.Collections.Generic.IEnumerable<string> exposedHeaders = null, System.Collections.Generic.IEnumerable<string> allowedHeaders = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageEncryptionService StorageEncryptionService(bool? isEnabled = default(bool?), System.DateTimeOffset? lastEnabledOn = default(System.DateTimeOffset?), Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType? keyType = default(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType?)) { throw null; }
-        public static Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData StoragePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier privateEndpointId, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.Storage.StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState?), string privateEndpointId = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData StoragePrivateLinkResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.Core.ResourceIdentifier groupId, System.Collections.Generic.IEnumerable<string> requiredMembers, System.Collections.Generic.IEnumerable<string> requiredZoneNames) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult StoragePrivateLinkResourceListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData> value = null) { throw null; }
         public static Azure.ResourceManager.Storage.StorageQueueData StorageQueueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> metadata = null, int? approximateMessageCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageSku StorageSku(Azure.ResourceManager.Storage.Models.StorageSkuName name = default(Azure.ResourceManager.Storage.Models.StorageSkuName), Azure.ResourceManager.Storage.Models.StorageSkuTier? tier = default(Azure.ResourceManager.Storage.Models.StorageSkuTier?)) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageSkuCapability StorageSkuCapability(string name = null, string value = null) { throw null; }
@@ -1357,27 +1465,30 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.StorageSkuRestriction StorageSkuRestriction(string restrictionType = null, System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode? reasonCode = default(Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode?)) { throw null; }
         public static Azure.ResourceManager.Storage.StorageTaskAssignmentData StorageTaskAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, Azure.ResourceManager.Storage.Models.StorageProvisioningState? provisioningState, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId = null, bool? isEnabled = default(bool?), string description = null, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext executionContext = null, string reportPrefix = null, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState = default(Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState?), Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties StorageTaskAssignmentProperties(Azure.Core.ResourceIdentifier taskId, bool isEnabled, string description, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext executionContext, string reportPrefix, Azure.ResourceManager.Storage.Models.StorageProvisioningState? provisioningState, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties StorageTaskAssignmentProperties(Azure.Core.ResourceIdentifier taskId = null, bool isEnabled = false, string description = null, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext executionContext = null, string reportPrefix = null, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState = default(Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState?), Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageTaskReportInstance StorageTaskReportInstance(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.StorageTaskReportProperties StorageTaskReportProperties(Azure.Core.ResourceIdentifier taskAssignmentId = null, Azure.Core.ResourceIdentifier storageAccountId = null, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishedOn = default(System.DateTimeOffset?), string objectsTargetedCount = null, string objectsOperatedOnCount = null, string objectFailedCount = null, string objectsSucceededCount = null, string runStatusError = null, Azure.ResourceManager.Storage.Models.StorageTaskRunStatus? runStatusEnum = default(Azure.ResourceManager.Storage.Models.StorageTaskRunStatus?), string summaryReportPath = null, Azure.Core.ResourceIdentifier taskId = null, string taskVersion = null, Azure.ResourceManager.Storage.Models.StorageTaskRunResult? runResult = default(Azure.ResourceManager.Storage.Models.StorageTaskRunResult?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties StorageTaskAssignmentProperties(Azure.Core.ResourceIdentifier taskId, bool isEnabled, string description, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext executionContext, string reportPrefix, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties runStatus) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageTaskReportInstance StorageTaskReportInstance(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Storage.Models.StorageTaskReportProperties properties) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageTaskReportProperties StorageTaskReportProperties(Azure.Core.ResourceIdentifier taskAssignmentId, Azure.Core.ResourceIdentifier storageAccountId, System.DateTimeOffset? startedOn, System.DateTimeOffset? finishedOn, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, Azure.ResourceManager.Storage.Models.StorageTaskRunStatus? runStatusEnum, string summaryReportPath, Azure.Core.ResourceIdentifier taskId, string taskVersion, Azure.ResourceManager.Storage.Models.StorageTaskRunResult? runResult) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageUsage StorageUsage(Azure.ResourceManager.Storage.Models.StorageUsageUnit? unit = default(Azure.ResourceManager.Storage.Models.StorageUsageUnit?), int? currentValue = default(int?), int? limit = default(int?), Azure.ResourceManager.Storage.Models.StorageUsageName name = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.StorageUsageName StorageUsageName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Storage.TableData TableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string tableName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier> signedIdentifiers = null) { throw null; }
         public static Azure.ResourceManager.Storage.TableServiceData TableServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.StorageCorsRule> corsRules = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.UpdateHistoryEntry UpdateHistoryEntry(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType? updateType = default(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType?), int? immutabilityPeriodSinceCreationInDays = default(int?), System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string objectIdentifier = null, System.Guid? tenantId = default(System.Guid?), string upn = null, bool? allowProtectedAppendWrites = default(bool?), bool? allowProtectedAppendWritesAll = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.UpdateHistoryEntry UpdateHistoryEntry(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, System.DateTimeOffset? timestamp, string objectIdentifier, System.Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll) { throw null; }
     }
     public partial class BlobContainerImmutabilityPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>
     {
-        internal BlobContainerImmutabilityPolicy() { }
-        public bool? AllowProtectedAppendWrites { get { throw null; } }
-        public bool? AllowProtectedAppendWritesAll { get { throw null; } }
+        public BlobContainerImmutabilityPolicy() { }
+        public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
+        public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } }
+        public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? State { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry> UpdateHistory { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1396,6 +1507,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobContainerState left, Azure.ResourceManager.Storage.Models.BlobContainerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobContainerState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobContainerState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobContainerState left, Azure.ResourceManager.Storage.Models.BlobContainerState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1407,7 +1519,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType ObjectType { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule Schedule { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SchemaFields { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1424,7 +1539,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IncludeDeleted { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> IncludePrefix { get { throw null; } }
         public bool? IncludeSnapshots { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1444,6 +1562,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1459,6 +1578,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1475,6 +1595,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicyObjectType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1485,7 +1606,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string Destination { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1505,6 +1629,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule left, Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchedule right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1515,7 +1640,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobInventoryPolicyRule> Rules { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobInventoryRuleType RuleType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobInventoryPolicySchema>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1534,6 +1662,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobInventoryRuleType left, Azure.ResourceManager.Storage.Models.BlobInventoryRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobInventoryRuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobInventoryRuleType left, Azure.ResourceManager.Storage.Models.BlobInventoryRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1542,7 +1671,10 @@ namespace Azure.ResourceManager.Storage.Models
         public BlobRestoreContent(System.DateTimeOffset timeToRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobRestoreRange> blobRanges) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobRestoreRange> BlobRanges { get { throw null; } }
         public System.DateTimeOffset TimeToRestore { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobRestoreContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1563,6 +1695,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus left, Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus left, Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1571,7 +1704,10 @@ namespace Azure.ResourceManager.Storage.Models
         public BlobRestoreRange(string startRange, string endRange) { }
         public string EndRange { get { throw null; } set { } }
         public string StartRange { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobRestoreRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobRestoreRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobRestoreRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1580,12 +1716,15 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class BlobRestoreStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>
     {
-        internal BlobRestoreStatus() { }
+        public BlobRestoreStatus() { }
         public string FailureReason { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobRestoreContent Parameters { get { throw null; } }
         public string RestoreId { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.BlobRestoreProgressStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobRestoreStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobRestoreStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobRestoreStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1597,7 +1736,10 @@ namespace Azure.ResourceManager.Storage.Models
         public BlobServiceChangeFeed() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BlobServiceChangeFeed>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1610,7 +1752,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? BurstFloorIops { get { throw null; } }
         public double? BurstIOScalar { get { throw null; } }
         public int? BurstTimeframeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.BurstingConstants JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.BurstingConstants PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.BurstingConstants System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.BurstingConstants System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.BurstingConstants>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1638,6 +1783,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod left, Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod left, Azure.ResourceManager.Storage.Models.CorsRuleAllowedMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1646,7 +1792,10 @@ namespace Azure.ResourceManager.Storage.Models
         public DateAfterCreation(float daysAfterCreationGreaterThan) { }
         public float DaysAfterCreationGreaterThan { get { throw null; } set { } }
         public float? DaysAfterLastTierChangeGreaterThan { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.DateAfterCreation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.DateAfterCreation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.DateAfterCreation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DateAfterCreation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DateAfterCreation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.DateAfterCreation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DateAfterCreation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1660,7 +1809,10 @@ namespace Azure.ResourceManager.Storage.Models
         public float? DaysAfterLastAccessTimeGreaterThan { get { throw null; } set { } }
         public float? DaysAfterLastTierChangeGreaterThan { get { throw null; } set { } }
         public float? DaysAfterModificationGreaterThan { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.DateAfterModification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.DateAfterModification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.DateAfterModification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DateAfterModification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DateAfterModification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.DateAfterModification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DateAfterModification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1682,6 +1834,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.DefaultSharePermission left, Azure.ResourceManager.Storage.Models.DefaultSharePermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.DefaultSharePermission (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.DefaultSharePermission? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.DefaultSharePermission left, Azure.ResourceManager.Storage.Models.DefaultSharePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1690,7 +1843,10 @@ namespace Azure.ResourceManager.Storage.Models
         public DeletedShare(string deletedShareName, string deletedShareVersion) { }
         public string DeletedShareName { get { throw null; } }
         public string DeletedShareVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.DeletedShare JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.DeletedShare PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.DeletedShare System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DeletedShare>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DeletedShare>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.DeletedShare System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DeletedShare>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1703,7 +1859,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? AllowPermanentDelete { get { throw null; } set { } }
         public int? Days { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.DeleteRetentionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1725,6 +1884,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.DirectoryServiceOption left, Azure.ResourceManager.Storage.Models.DirectoryServiceOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.DirectoryServiceOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.DirectoryServiceOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.DirectoryServiceOption left, Azure.ResourceManager.Storage.Models.DirectoryServiceOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1734,7 +1894,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string CurrentVersionedKeyIdentifier { get { throw null; } }
         public System.Uri KeyUri { get { throw null; } set { } }
         public System.DateTimeOffset? LastKeyRotationTimestamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.EncryptionScopeKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1755,6 +1918,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType left, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType left, Azure.ResourceManager.Storage.Models.EncryptionScopesIncludeType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1771,6 +1935,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.EncryptionScopeSource left, Azure.ResourceManager.Storage.Models.EncryptionScopeSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopeSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopeSource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.EncryptionScopeSource left, Azure.ResourceManager.Storage.Models.EncryptionScopeSource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1787,6 +1952,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.EncryptionScopeState left, Azure.ResourceManager.Storage.Models.EncryptionScopeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopeState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.EncryptionScopeState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.EncryptionScopeState left, Azure.ResourceManager.Storage.Models.EncryptionScopeState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1802,6 +1968,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit left, Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit left, Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1810,7 +1977,10 @@ namespace Azure.ResourceManager.Storage.Models
         public ExecutionTarget() { }
         public System.Collections.Generic.IList<string> ExcludePrefix { get { throw null; } }
         public System.Collections.Generic.IList<string> Prefix { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTarget PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ExecutionTarget System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ExecutionTarget System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ExecutionTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1824,7 +1994,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType TaskExecutionTriggerType { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ExecutionTriggerType TriggerType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTrigger JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTrigger PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ExecutionTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ExecutionTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ExecutionTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1839,7 +2012,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit? IntervalUnit { get { throw null; } set { } }
         public System.DateTimeOffset? StartFrom { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1854,7 +2030,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ExecutionIntervalUnit? IntervalUnit { get { throw null; } set { } }
         public System.DateTimeOffset? StartFrom { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1872,7 +2051,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ExecutionTriggerParametersUpdate Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType? TaskExecutionTriggerType { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ExecutionTriggerType? TriggerType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1892,7 +2074,25 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ExpirationAction left, Azure.ResourceManager.Storage.Models.ExpirationAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ExpirationAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ExpirationAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ExpirationAction left, Azure.ResourceManager.Storage.Models.ExpirationAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FailoverRequestFailoverType : System.IEquatable<Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FailoverRequestFailoverType(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType Planned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType left, Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountFailoverType (Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType (Azure.ResourceManager.Storage.Models.StorageAccountFailoverType value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType left, Azure.ResourceManager.Storage.Models.FailoverRequestFailoverType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class FileServiceAccountLimits : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>
@@ -1902,7 +2102,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? MaxProvisionedBandwidthMiBPerSec { get { throw null; } }
         public int? MaxProvisionedIops { get { throw null; } }
         public int? MaxProvisionedStorageGiB { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountLimits JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountLimits PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileServiceAccountLimits System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileServiceAccountLimits System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountLimits>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1914,7 +2117,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal FileServiceAccountUsage() { }
         public Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements LiveShares { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements SoftDeletedShares { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileServiceAccountUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileServiceAccountUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1928,7 +2134,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? ProvisionedBandwidthMiBPerSec { get { throw null; } }
         public int? ProvisionedIops { get { throw null; } }
         public int? ProvisionedStorageGiB { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceAccountUsageElements>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1940,7 +2149,10 @@ namespace Azure.ResourceManager.Storage.Models
         public FileServiceProtocolSettings() { }
         public bool? IsRequired { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.SmbSetting SmbSetting { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceProtocolSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1955,7 +2167,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.FileShareRecommendations FileShareRecommendations { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.FileServiceAccountLimits StorageAccountLimits { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.FileServiceAccountUsage StorageAccountUsage { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceUsageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileServiceUsageProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileServiceUsageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileServiceUsageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileServiceUsageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1977,6 +2192,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.FileShareAccessTier left, Azure.ResourceManager.Storage.Models.FileShareAccessTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.FileShareAccessTier (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.FileShareAccessTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.FileShareAccessTier left, Azure.ResourceManager.Storage.Models.FileShareAccessTier right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1993,6 +2209,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol left, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol left, Azure.ResourceManager.Storage.Models.FileShareEnabledProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2005,7 +2222,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? MinProvisionedBandwidthMiBPerSec { get { throw null; } }
         public int? MinProvisionedIops { get { throw null; } }
         public int? MinProvisionedStorageGiB { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileShareLimits JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileShareLimits PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileShareLimits System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileShareLimits System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareLimits>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2018,7 +2238,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? PaidBurstingEnabled { get { throw null; } set { } }
         public int? PaidBurstingMaxBandwidthMibps { get { throw null; } set { } }
         public int? PaidBurstingMaxIops { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileSharePropertiesFileSharePaidBursting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2032,7 +2255,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? BaseBandwidthMiBPerSec { get { throw null; } }
         public int? BaseIops { get { throw null; } }
         public double? IoScalar { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.FileShareRecommendations JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FileShareRecommendations PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FileShareRecommendations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FileShareRecommendations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FileShareRecommendations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2046,7 +2272,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.DefaultSharePermission? DefaultSharePermission { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DirectoryServiceOption DirectoryServiceOptions { get { throw null; } set { } }
         public bool? IsSmbOAuthEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.FilesIdentityBasedAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2055,14 +2284,17 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class GeoReplicationStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GeoReplicationStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.GeoReplicationStatistics>
     {
-        internal GeoReplicationStatistics() { }
+        public GeoReplicationStatistics() { }
         public bool? CanFailover { get { throw null; } }
         public bool? CanPlannedFailover { get { throw null; } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.PostFailoverRedundancy? PostFailoverRedundancy { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy? PostPlannedFailoverRedundancy { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.GeoReplicationStatus? Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.GeoReplicationStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.GeoReplicationStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.GeoReplicationStatistics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GeoReplicationStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GeoReplicationStatistics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.GeoReplicationStatistics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.GeoReplicationStatistics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2083,6 +2315,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.GeoReplicationStatus left, Azure.ResourceManager.Storage.Models.GeoReplicationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.GeoReplicationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.GeoReplicationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.GeoReplicationStatus left, Azure.ResourceManager.Storage.Models.GeoReplicationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2090,7 +2323,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal GetAccountSasResult() { }
         public string AccountSasToken { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.GetAccountSasResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.GetAccountSasResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.GetAccountSasResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GetAccountSasResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GetAccountSasResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.GetAccountSasResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.GetAccountSasResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2101,7 +2337,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal GetServiceSasResult() { }
         public string ServiceSasToken { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.GetServiceSasResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.GetServiceSasResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.GetServiceSasResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GetServiceSasResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.GetServiceSasResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.GetServiceSasResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.GetServiceSasResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2121,6 +2360,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState left, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState left, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2138,6 +2378,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType left, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType left, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2146,7 +2387,10 @@ namespace Azure.ResourceManager.Storage.Models
         public ImmutableStorageAccount() { }
         public Azure.ResourceManager.Storage.Models.AccountImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ImmutableStorageAccount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ImmutableStorageAccount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ImmutableStorageAccount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ImmutableStorageAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ImmutableStorageAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ImmutableStorageAccount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ImmutableStorageAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2159,7 +2403,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState? MigrationState { get { throw null; } }
         public System.DateTimeOffset? TimeStamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2179,6 +2426,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState left, Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState left, Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioningMigrationState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2195,6 +2443,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.LargeFileSharesState left, Azure.ResourceManager.Storage.Models.LargeFileSharesState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.LargeFileSharesState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.LargeFileSharesState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.LargeFileSharesState left, Azure.ResourceManager.Storage.Models.LargeFileSharesState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2205,7 +2454,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName? Name { get { throw null; } set { } }
         public int? TrackingGranularityInDays { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2224,6 +2476,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName left, Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName left, Azure.ResourceManager.Storage.Models.LastAccessTimeTrackingPolicyName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2243,6 +2496,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.LeaseContainerAction left, Azure.ResourceManager.Storage.Models.LeaseContainerAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.LeaseContainerAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.LeaseContainerAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.LeaseContainerAction left, Azure.ResourceManager.Storage.Models.LeaseContainerAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2254,7 +2508,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseContainerContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseContainerContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LeaseContainerContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseContainerContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseContainerContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LeaseContainerContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LeaseContainerContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2266,7 +2523,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal LeaseContainerResponse() { }
         public string LeaseId { get { throw null; } }
         public string LeaseTimeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseContainerResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseContainerResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LeaseContainerResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseContainerResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseContainerResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LeaseContainerResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LeaseContainerResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2289,6 +2549,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.LeaseShareAction left, Azure.ResourceManager.Storage.Models.LeaseShareAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.LeaseShareAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.LeaseShareAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.LeaseShareAction left, Azure.ResourceManager.Storage.Models.LeaseShareAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2300,7 +2561,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseShareContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseShareContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LeaseShareContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseShareContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseShareContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LeaseShareContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LeaseShareContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2312,7 +2576,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal LeaseShareResponse() { }
         public string LeaseId { get { throw null; } }
         public string LeaseTimeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseShareResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LeaseShareResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LeaseShareResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseShareResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LeaseShareResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LeaseShareResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LeaseShareResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2325,7 +2592,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
         public bool? HasLegalHold { get { throw null; } }
         public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHold JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHold PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LegalHold System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHold>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHold>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LegalHold System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHold>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2334,11 +2604,14 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class LegalHoldProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldProperties>
     {
-        internal LegalHoldProperties() { }
+        public LegalHoldProperties() { }
         public bool? HasLegalHold { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.LegalHoldTag> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHoldProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHoldProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LegalHoldProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LegalHoldProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2347,18 +2620,38 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class LegalHoldTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>
     {
-        internal LegalHoldTag() { }
+        public LegalHoldTag() { }
         public string ObjectIdentifier { get { throw null; } }
         public string Tag { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public string Upn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHoldTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LegalHoldTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LegalHoldTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LegalHoldTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LegalHoldTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ListKeysRequestExpand : System.IEquatable<Azure.ResourceManager.Storage.Models.ListKeysRequestExpand>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ListKeysRequestExpand(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ListKeysRequestExpand Kerb { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand left, Azure.ResourceManager.Storage.Models.ListKeysRequestExpand right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageListKeyExpand (Azure.ResourceManager.Storage.Models.ListKeysRequestExpand value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ListKeysRequestExpand (Azure.ResourceManager.Storage.Models.StorageListKeyExpand value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ListKeysRequestExpand (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.ListKeysRequestExpand left, Azure.ResourceManager.Storage.Models.ListKeysRequestExpand right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ListLocalUserIncludeParam : System.IEquatable<Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam>
@@ -2372,6 +2665,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam left, Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam left, Azure.ResourceManager.Storage.Models.ListLocalUserIncludeParam right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2380,7 +2674,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal LocalUserKeys() { }
         public string SharedKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.StorageSshPublicKey> SshAuthorizedKeys { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LocalUserKeys JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LocalUserKeys PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LocalUserKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LocalUserKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LocalUserKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LocalUserKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LocalUserKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2391,7 +2688,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal LocalUserRegeneratePasswordResult() { }
         public string SshPassword { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.LocalUserRegeneratePasswordResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2404,7 +2704,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob BaseBlob { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot Snapshot { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ManagementPolicyVersion Version { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2420,7 +2723,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.DateAfterModification TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterModification TierToCool { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterModification TierToHot { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyBaseBlob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2432,7 +2738,10 @@ namespace Azure.ResourceManager.Storage.Models
         public ManagementPolicyDefinition(Azure.ResourceManager.Storage.Models.ManagementPolicyAction actions) { }
         public Azure.ResourceManager.Storage.Models.ManagementPolicyAction Actions { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ManagementPolicyFilter Filters { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2445,7 +2754,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter> BlobIndexMatch { get { throw null; } }
         public System.Collections.Generic.IList<string> BlobTypes { get { throw null; } }
         public System.Collections.Generic.IList<string> PrefixMatch { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2464,6 +2776,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ManagementPolicyName left, Azure.ResourceManager.Storage.Models.ManagementPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ManagementPolicyName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ManagementPolicyName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ManagementPolicyName left, Azure.ResourceManager.Storage.Models.ManagementPolicyName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2474,7 +2787,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType RuleType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2493,6 +2809,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType left, Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType left, Azure.ResourceManager.Storage.Models.ManagementPolicyRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2504,7 +2821,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToHot { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicySnapShot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2517,7 +2837,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string Name { get { throw null; } set { } }
         public string Operator { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyTagFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2532,7 +2855,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCold { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToCool { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DateAfterCreation TierToHot { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ManagementPolicyVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ManagementPolicyVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ManagementPolicyVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagementPolicyVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2545,7 +2871,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string Id { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Guid? PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2560,7 +2889,10 @@ namespace Azure.ResourceManager.Storage.Models
         public float? DiagnosticSettingsVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledLogCategories { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2572,7 +2904,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation() { }
         public Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2595,6 +2930,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2603,7 +2939,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal NetworkSecurityPerimeterProvisioningIssue() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2616,7 +2955,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType? IssueType { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2636,6 +2978,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2652,6 +2995,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType left, Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeterProvisioningIssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2660,7 +3004,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal NspAccessRule() { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.NspAccessRuleProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NspAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NspAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NspAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NspAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NspAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NspAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NspAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2680,6 +3027,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.NspAccessRuleDirection left, Azure.ResourceManager.Storage.Models.NspAccessRuleDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.NspAccessRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.NspAccessRuleDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.NspAccessRuleDirection left, Azure.ResourceManager.Storage.Models.NspAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2691,7 +3039,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Subscriptions { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.NspAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.NspAccessRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.NspAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NspAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.NspAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.NspAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.NspAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2703,7 +3054,10 @@ namespace Azure.ResourceManager.Storage.Models
         public ObjectReplicationPolicyFilter() { }
         public string MinCreationTime { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PrefixMatch { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2717,7 +3071,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyFilter Filters { get { throw null; } set { } }
         public string RuleId { get { throw null; } set { } }
         public string SourceContainer { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ObjectReplicationPolicyRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2737,6 +3094,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.PostFailoverRedundancy left, Azure.ResourceManager.Storage.Models.PostFailoverRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.PostFailoverRedundancy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.PostFailoverRedundancy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.PostFailoverRedundancy left, Azure.ResourceManager.Storage.Models.PostFailoverRedundancy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2755,15 +3113,19 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy left, Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy left, Azure.ResourceManager.Storage.Models.PostPlannedFailoverRedundancy right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ProtectedAppendWritesHistory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>
     {
-        internal ProtectedAppendWritesHistory() { }
-        public bool? AllowProtectedAppendWritesAll { get { throw null; } }
+        public ProtectedAppendWritesHistory() { }
+        public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ProtectedAppendWritesHistory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2784,6 +3146,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.Storage.Models.ResourceAssociationAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2794,7 +3157,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastEnabledOn { get { throw null; } }
         public System.DateTimeOffset? MinRestoreOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.RestorePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.RestorePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.RestorePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.RestorePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.RestorePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.RestorePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.RestorePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2815,6 +3181,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.RootSquashType left, Azure.ResourceManager.Storage.Models.RootSquashType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.RootSquashType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.RootSquashType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.RootSquashType left, Azure.ResourceManager.Storage.Models.RootSquashType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2839,7 +3206,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string RowKeyStart { get { throw null; } set { } }
         public System.DateTimeOffset? SharedAccessExpiryOn { get { throw null; } set { } }
         public System.DateTimeOffset? SharedAccessStartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.ServiceSasContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.ServiceSasContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.ServiceSasContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ServiceSasContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ServiceSasContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.ServiceSasContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ServiceSasContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2861,6 +3231,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType left, Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType left, Azure.ResourceManager.Storage.Models.ServiceSasSignedResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2873,7 +3244,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsRequired { get { throw null; } set { } }
         public string KerberosTicketEncryption { get { throw null; } set { } }
         public string Versions { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.SmbSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.SmbSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.SmbSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.SmbSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.SmbSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.SmbSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.SmbSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2912,19 +3286,22 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsNfsV3Enabled { get { throw null; } set { } }
         public bool? IsSftpEnabled { get { throw null; } set { } }
         public int? KeyExpirationPeriodInDays { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageKind Kind { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageKind Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.LargeFileSharesState? LargeFileSharesState { get { throw null; } set { } }
-        public Azure.Core.AzureLocation Location { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageRoutingPreference RoutingPreference { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy SasPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? ZonePlacementPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2939,7 +3316,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices Services { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2951,7 +3331,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountEncryptionIdentity() { }
         public string EncryptionFederatedIdentityClientId { get { throw null; } set { } }
         public string EncryptionUserAssignedIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2965,7 +3348,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageEncryptionService File { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageEncryptionService Queue { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageEncryptionService Table { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountEncryptionServices>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2974,17 +3360,20 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageAccountEndpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountEndpoints>
     {
-        internal StorageAccountEndpoints() { }
+        public StorageAccountEndpoints() { }
         public System.Uri BlobUri { get { throw null; } }
         public System.Uri DfsUri { get { throw null; } }
         public System.Uri FileUri { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints IPv6Endpoints { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints IPv6Endpoints { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } set { } }
         public System.Uri QueueUri { get { throw null; } }
         public System.Uri TableUri { get { throw null; } }
         public System.Uri WebUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEndpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountEndpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3018,12 +3407,15 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageAccountInternetEndpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints>
     {
-        internal StorageAccountInternetEndpoints() { }
+        public StorageAccountInternetEndpoints() { }
         public System.Uri BlobUri { get { throw null; } }
         public System.Uri DfsUri { get { throw null; } }
         public System.Uri FileUri { get { throw null; } }
         public System.Uri WebUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3035,25 +3427,45 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountIPRule(string ipAddressOrRange) { }
         public Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction? Action { get { throw null; } set { } }
         public string IPAddressOrRange { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountIPRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountIPRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageAccountIPRuleAction : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageAccountIPRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountIPRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction value) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class StorageAccountIPv6Endpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>
     {
-        internal StorageAccountIPv6Endpoints() { }
+        public StorageAccountIPv6Endpoints() { }
         public string Blob { get { throw null; } }
         public string Dfs { get { throw null; } }
         public string File { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } }
-        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountInternetEndpoints InternetEndpoints { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get { throw null; } set { } }
         public string Queue { get { throw null; } }
         public string Table { get { throw null; } }
         public string Web { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountIPv6Endpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3067,7 +3479,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string KeyName { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountKeyPermission? Permissions { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3076,10 +3491,13 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class StorageAccountKeyCreationTime : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime>
     {
-        internal StorageAccountKeyCreationTime() { }
-        public System.DateTimeOffset? Key1 { get { throw null; } }
-        public System.DateTimeOffset? Key2 { get { throw null; } }
+        public StorageAccountKeyCreationTime() { }
+        public System.DateTimeOffset? Key1 { get { throw null; } set { } }
+        public System.DateTimeOffset? Key2 { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyCreationTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3104,6 +3522,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountKeySource left, Azure.ResourceManager.Storage.Models.StorageAccountKeySource right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountKeySource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountKeySource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountKeySource left, Azure.ResourceManager.Storage.Models.StorageAccountKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3116,23 +3535,43 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public System.DateTimeOffset? LastKeyRotationTimestamp { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StorageAccountListKeysResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>
+    {
+        internal StorageAccountListKeysResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.StorageAccountKey> Keys { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountListKeysResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StorageAccountMicrosoftEndpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints>
     {
-        internal StorageAccountMicrosoftEndpoints() { }
+        public StorageAccountMicrosoftEndpoints() { }
         public System.Uri BlobUri { get { throw null; } }
         public System.Uri DfsUri { get { throw null; } }
         public System.Uri FileUri { get { throw null; } }
         public System.Uri QueueUri { get { throw null; } }
         public System.Uri TableUri { get { throw null; } }
         public System.Uri WebUri { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountMicrosoftEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3151,6 +3590,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountMigrationName left, Azure.ResourceManager.Storage.Models.StorageAccountMigrationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountMigrationName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountMigrationName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountMigrationName left, Azure.ResourceManager.Storage.Models.StorageAccountMigrationName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3170,15 +3610,20 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus left, Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus left, Azure.ResourceManager.Storage.Models.StorageAccountMigrationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class StorageAccountNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>
     {
         public StorageAccountNameAvailabilityContent(string name) { }
+        public StorageAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3191,7 +3636,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountNameUnavailableReason? Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3215,6 +3663,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction left, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3227,7 +3676,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageAccountIPRule> IPv6Rules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule> ResourceAccessRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3250,6 +3702,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState left, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState left, Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3286,7 +3739,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? ZonePlacementPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3307,6 +3763,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState left, Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState left, Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3314,7 +3771,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public StorageAccountRegenerateKeyContent(string keyName) { }
         public string KeyName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3326,7 +3786,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountResourceAccessRule() { }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountResourceAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3352,6 +3815,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountSasPermission left, Azure.ResourceManager.Storage.Models.StorageAccountSasPermission right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasPermission (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasPermission? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountSasPermission left, Azure.ResourceManager.Storage.Models.StorageAccountSasPermission right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3360,7 +3824,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountSasPolicy(string sasExpirationPeriod, Azure.ResourceManager.Storage.Models.ExpirationAction expirationAction) { }
         public Azure.ResourceManager.Storage.Models.ExpirationAction ExpirationAction { get { throw null; } set { } }
         public string SasExpirationPeriod { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountSasPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3381,6 +3848,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType left, Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType left, Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3399,6 +3867,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService left, Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService left, Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3416,6 +3885,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState left, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState left, Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3426,7 +3896,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionState? SkuConversionStatus { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageSkuName? TargetSkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountSkuConversionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3444,12 +3917,29 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction? Action { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleState? State { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageAccountVirtualNetworkRuleAction : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageAccountVirtualNetworkRuleAction(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction Allow { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountNetworkRuleAction (Azure.ResourceManager.Storage.Models.StorageAccountVirtualNetworkRuleAction value) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccountZonePlacementPolicy : System.IEquatable<Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy>
@@ -3464,6 +3954,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy left, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy left, Azure.ResourceManager.Storage.Models.StorageAccountZonePlacementPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3480,7 +3971,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string ForestName { get { throw null; } set { } }
         public string NetBiosDomainName { get { throw null; } set { } }
         public string SamAccountName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageActiveDirectoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3495,7 +3989,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } }
         public System.Collections.Generic.IList<string> ExposedHeaders { get { throw null; } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageCorsRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageCorsRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageCorsRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageCorsRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageCorsRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageCorsRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageCorsRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3507,7 +4004,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageCustomDomain(string name) { }
         public bool? IsUseSubDomainNameEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageCustomDomain JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageCustomDomain PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageCustomDomain System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageCustomDomain>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageCustomDomain>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageCustomDomain System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageCustomDomain>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3527,6 +4027,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType left, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageDnsEndpointType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageDnsEndpointType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageDnsEndpointType left, Azure.ResourceManager.Storage.Models.StorageDnsEndpointType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3543,6 +4044,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType left, Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType left, Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3552,7 +4054,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageEncryptionKeyType? KeyType { get { throw null; } set { } }
         public System.DateTimeOffset? LastEnabledOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageEncryptionService JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageEncryptionService PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageEncryptionService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageEncryptionService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageEncryptionService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3575,6 +4080,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageKind left, Azure.ResourceManager.Storage.Models.StorageKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageKind left, Azure.ResourceManager.Storage.Models.StorageKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3591,6 +4097,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType left, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseDurationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageLeaseDurationType left, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3610,6 +4117,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageLeaseState left, Azure.ResourceManager.Storage.Models.StorageLeaseState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageLeaseState left, Azure.ResourceManager.Storage.Models.StorageLeaseState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3626,6 +4134,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageLeaseStatus left, Azure.ResourceManager.Storage.Models.StorageLeaseStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageLeaseStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageLeaseStatus left, Azure.ResourceManager.Storage.Models.StorageLeaseStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3650,6 +4159,10 @@ namespace Azure.ResourceManager.Storage.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageMinimumTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls10 { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls11 { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls12 { get { throw null; } }
+        public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls13 { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls1_0 { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls1_1 { get { throw null; } }
         public static Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion Tls1_2 { get { throw null; } }
@@ -3659,6 +4172,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion left, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion left, Azure.ResourceManager.Storage.Models.StorageMinimumTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3677,6 +4191,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageNetworkBypass left, Azure.ResourceManager.Storage.Models.StorageNetworkBypass right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageNetworkBypass (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageNetworkBypass? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageNetworkBypass left, Azure.ResourceManager.Storage.Models.StorageNetworkBypass right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3691,7 +4206,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string Permissions { get { throw null; } set { } }
         public string ResourceName { get { throw null; } set { } }
         public string Service { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePermissionScope JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePermissionScope PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StoragePermissionScope System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StoragePermissionScope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePermissionScope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3713,6 +4231,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointConnectionProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3730,6 +4249,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3739,12 +4259,29 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.Core.ResourceIdentifier GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StoragePrivateLinkResourceListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>
+    {
+        internal StoragePrivateLinkResourceListResult() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceData> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkResourceListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StoragePrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState>
     {
@@ -3752,7 +4289,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string ActionRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StoragePrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StoragePrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3790,6 +4330,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess left, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess left, Azure.ResourceManager.Storage.Models.StoragePublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3806,6 +4347,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode left, Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode left, Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3822,6 +4364,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageRoutingChoice left, Azure.ResourceManager.Storage.Models.StorageRoutingChoice right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageRoutingChoice (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageRoutingChoice? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageRoutingChoice left, Azure.ResourceManager.Storage.Models.StorageRoutingChoice right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3831,7 +4374,10 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? IsInternetEndpointsPublished { get { throw null; } set { } }
         public bool? IsMicrosoftEndpointsPublished { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageRoutingChoice? RoutingChoice { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageRoutingPreference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageRoutingPreference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageRoutingPreference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageRoutingPreference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageRoutingPreference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageRoutingPreference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageRoutingPreference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3844,7 +4390,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Permission { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3856,7 +4405,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSignedIdentifier() { }
         public Azure.ResourceManager.Storage.Models.StorageServiceAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSignedIdentifier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSignedIdentifier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSignedIdentifier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSignedIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSignedIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3868,7 +4420,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSku(Azure.ResourceManager.Storage.Models.StorageSkuName name) { }
         public Azure.ResourceManager.Storage.Models.StorageSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageSkuTier? Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSku JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSku PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3880,7 +4435,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3898,7 +4456,10 @@ namespace Azure.ResourceManager.Storage.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.StorageSkuRestriction> Restrictions { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageSkuTier? Tier { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSkuInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSkuInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSkuInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3910,7 +4471,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageSkuLocationInfo() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSkuLocationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3942,6 +4506,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageSkuName left, Azure.ResourceManager.Storage.Models.StorageSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageSkuName? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageSkuName left, Azure.ResourceManager.Storage.Models.StorageSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3951,7 +4516,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageRestrictionReasonCode? ReasonCode { get { throw null; } }
         public string RestrictionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuRestriction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSkuRestriction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSkuRestriction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSkuRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSkuRestriction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSkuRestriction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3968,7 +4536,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSshPublicKey() { }
         public string Description { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSshPublicKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageSshPublicKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageSshPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSshPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageSshPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageSshPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageSshPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3982,7 +4553,10 @@ namespace Azure.ResourceManager.Storage.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public string Permission { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3994,7 +4568,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageTableSignedIdentifier(string id) { }
         public Azure.ResourceManager.Storage.Models.StorageTableAccessPolicy AccessPolicy { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTableSignedIdentifier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4006,7 +4583,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageTaskAssignmentExecutionContext(Azure.ResourceManager.Storage.Models.ExecutionTrigger trigger) { }
         public Azure.ResourceManager.Storage.Models.ExecutionTarget Target { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ExecutionTrigger Trigger { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentExecutionContext>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4017,7 +4597,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public StorageTaskAssignmentPatch() { }
         public Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4034,8 +4617,11 @@ namespace Azure.ResourceManager.Storage.Models
         public string ReportPrefix { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageTaskReportProperties RunStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState { get { throw null; } }
-        public string TaskId { get { throw null; } }
+        public string TaskId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4053,7 +4639,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.ResourceManager.Storage.Models.StorageTaskReportProperties RunStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TaskId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4079,6 +4668,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState left, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState left, Azure.ResourceManager.Storage.Models.StorageTaskAssignmentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4086,7 +4676,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public StorageTaskAssignmentReport(string prefix) { }
         public string Prefix { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentReport>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4098,7 +4691,10 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageTaskAssignmentUpdateExecutionContext() { }
         public Azure.ResourceManager.Storage.Models.ExecutionTarget Target { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ExecutionTriggerUpdate Trigger { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskAssignmentUpdateExecutionContext>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4109,7 +4705,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public StorageTaskReportInstance() { }
         public Azure.ResourceManager.Storage.Models.StorageTaskReportProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskReportInstance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskReportInstance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskReportInstance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskReportInstance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskReportInstance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4133,7 +4732,10 @@ namespace Azure.ResourceManager.Storage.Models
         public Azure.Core.ResourceIdentifier TaskAssignmentId { get { throw null; } }
         public Azure.Core.ResourceIdentifier TaskId { get { throw null; } }
         public string TaskVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskReportProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageTaskReportProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageTaskReportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskReportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageTaskReportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageTaskReportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageTaskReportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4153,6 +4755,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageTaskRunResult left, Azure.ResourceManager.Storage.Models.StorageTaskRunResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskRunResult (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskRunResult? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageTaskRunResult left, Azure.ResourceManager.Storage.Models.StorageTaskRunResult right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4169,6 +4772,7 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.StorageTaskRunStatus left, Azure.ResourceManager.Storage.Models.StorageTaskRunStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskRunStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.StorageTaskRunStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.StorageTaskRunStatus left, Azure.ResourceManager.Storage.Models.StorageTaskRunStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4179,7 +4783,10 @@ namespace Azure.ResourceManager.Storage.Models
         public int? Limit { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageUsageName Name { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageUsageUnit? Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageUsage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4191,7 +4798,10 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageUsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageUsageName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.StorageUsageName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.StorageUsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.StorageUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.StorageUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.StorageUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4220,21 +4830,25 @@ namespace Azure.ResourceManager.Storage.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType left, Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType left, Azure.ResourceManager.Storage.Models.TaskExecutionTriggerType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UpdateHistoryEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>
     {
-        internal UpdateHistoryEntry() { }
-        public bool? AllowProtectedAppendWrites { get { throw null; } }
-        public bool? AllowProtectedAppendWritesAll { get { throw null; } }
+        public UpdateHistoryEntry() { }
+        public bool? AllowProtectedAppendWrites { get { throw null; } set { } }
+        public bool? AllowProtectedAppendWritesAll { get { throw null; } set { } }
         public int? ImmutabilityPeriodSinceCreationInDays { get { throw null; } }
         public string ObjectIdentifier { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.ImmutabilityPolicyUpdateType? UpdateType { get { throw null; } }
         public string Upn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Storage.Models.UpdateHistoryEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Storage.Models.UpdateHistoryEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Storage.Models.UpdateHistoryEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Storage.Models.UpdateHistoryEntry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -13,154 +13,246 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    /// <summary>
-    /// A class representing the NewRelicMonitorResource data model.
-    /// A Monitor Resource by NewRelic
-    /// </summary>
+    /// <summary> A Monitor Resource by NewRelic. </summary>
     public partial class NewRelicMonitorResourceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public NewRelicMonitorResourceData(AzureLocation location) : base(location)
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="monitoringStatus"> MonitoringStatus of the resource. </param>
-        /// <param name="marketplaceSubscriptionStatus"> NewRelic Organization properties of the resource. </param>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
-        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
-        /// <param name="userInfo"> User Info. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="saaSData"> SaaS details. </param>
-        /// <param name="liftrResourceCategory"> Liftr resource category. </param>
-        /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
-        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NewRelicProvisioningState? provisioningState, NewRelicObservabilityMonitoringStatus? monitoringStatus, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSubscriptionId, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilitySaaSContent saaSData, NewRelicLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, string subscriptionState, string saaSAzureSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NewRelicMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, MonitorProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            MonitoringStatus = monitoringStatus;
-            MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
-            MarketplaceSubscriptionId = marketplaceSubscriptionId;
-            NewRelicAccountProperties = newRelicAccountProperties;
-            UserInfo = userInfo;
-            PlanData = planData;
-            SaaSData = saaSData;
-            LiftrResourceCategory = liftrResourceCategory;
-            LiftrResourcePreference = liftrResourcePreference;
-            OrgCreationSource = orgCreationSource;
-            AccountCreationSource = accountCreationSource;
-            SubscriptionState = subscriptionState;
-            SaaSAzureSubscriptionStatus = saaSAzureSubscriptionStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceData"/> for deserialization. </summary>
-        internal NewRelicMonitorResourceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
+        internal MonitorProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Provisioning State of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NewRelicProvisioningState? ProvisioningState { get; }
+        public NewRelicProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> MonitoringStatus of the resource. </summary>
         [WirePath("properties.monitoringStatus")]
-        public NewRelicObservabilityMonitoringStatus? MonitoringStatus { get; }
+        public NewRelicObservabilityMonitoringStatus? MonitoringStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringStatus;
+            }
+        }
+
         /// <summary> NewRelic Organization properties of the resource. </summary>
         [WirePath("properties.marketplaceSubscriptionStatus")]
-        public NewRelicObservabilityMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+        public NewRelicObservabilityMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceSubscriptionStatus;
+            }
+        }
+
         /// <summary> Marketplace Subscription Id. </summary>
         [WirePath("properties.marketplaceSubscriptionId")]
-        public string MarketplaceSubscriptionId { get; }
+        public string MarketplaceSubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceSubscriptionId;
+            }
+        }
+
         /// <summary> MarketplaceSubscriptionStatus of the resource. </summary>
         [WirePath("properties.newRelicAccountProperties")]
-        public NewRelicAccountProperties NewRelicAccountProperties { get; set; }
-        /// <summary> User Info. </summary>
-        [WirePath("properties.userInfo")]
-        public NewRelicObservabilityUserInfo UserInfo { get; set; }
-        /// <summary> Plan details. </summary>
-        [WirePath("properties.planData")]
-        public NewRelicPlanDetails PlanData { get; set; }
-        /// <summary> SaaS details. </summary>
-        internal NewRelicObservabilitySaaSContent SaaSData { get; set; }
-        /// <summary> SaaS resource id. </summary>
-        [WirePath("properties.saaSData.saaSResourceId")]
-        public string SaaSResourceId
+        public NewRelicAccountProperties NewRelicAccountProperties
         {
-            get => SaaSData is null ? default : SaaSData.SaaSResourceId;
+            get
+            {
+                return Properties is null ? default : Properties.NewRelicAccountProperties;
+            }
             set
             {
-                if (SaaSData is null)
-                    SaaSData = new NewRelicObservabilitySaaSContent();
-                SaaSData.SaaSResourceId = value;
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.NewRelicAccountProperties = value;
+            }
+        }
+
+        /// <summary> User Info. </summary>
+        [WirePath("properties.userInfo")]
+        public NewRelicObservabilityUserInfo UserInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.UserInfo = value;
+            }
+        }
+
+        /// <summary> Plan details. </summary>
+        [WirePath("properties.planData")]
+        public NewRelicPlanDetails PlanData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlanData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.PlanData = value;
             }
         }
 
         /// <summary> Liftr resource category. </summary>
         [WirePath("properties.liftrResourceCategory")]
-        public NewRelicLiftrResourceCategory? LiftrResourceCategory { get; }
+        public NewRelicLiftrResourceCategory? LiftrResourceCategory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LiftrResourceCategory;
+            }
+        }
+
         /// <summary> Liftr resource preference. The priority of the resource. </summary>
         [WirePath("properties.liftrResourcePreference")]
-        public int? LiftrResourcePreference { get; }
+        public int? LiftrResourcePreference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LiftrResourcePreference;
+            }
+        }
+
         /// <summary> Source of org creation. </summary>
         [WirePath("properties.orgCreationSource")]
-        public NewRelicObservabilityOrgCreationSource? OrgCreationSource { get; set; }
+        public NewRelicObservabilityOrgCreationSource? OrgCreationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrgCreationSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.OrgCreationSource = value.Value;
+            }
+        }
+
         /// <summary> Source of account creation. </summary>
         [WirePath("properties.accountCreationSource")]
-        public NewRelicObservabilityAccountCreationSource? AccountCreationSource { get; set; }
+        public NewRelicObservabilityAccountCreationSource? AccountCreationSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountCreationSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.AccountCreationSource = value.Value;
+            }
+        }
+
         /// <summary> State of the Azure Subscription containing the monitor resource. </summary>
         [WirePath("properties.subscriptionState")]
-        public string SubscriptionState { get; set; }
+        public string SubscriptionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.SubscriptionState = value;
+            }
+        }
+
         /// <summary> Status of Azure Subscription where Marketplace SaaS is located. </summary>
         [WirePath("properties.saaSAzureSubscriptionStatus")]
-        public string SaaSAzureSubscriptionStatus { get; set; }
+        public string SaaSAzureSubscriptionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SaaSAzureSubscriptionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.SaaSAzureSubscriptionStatus = value;
+            }
+        }
+
+        /// <summary> SaaS resource id. </summary>
+        [WirePath("properties.saaSData.saaSResourceId")]
+        public string SaaSResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SaaSResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorProperties();
+                }
+                Properties.SaaSResourceId = value;
+            }
+        }
     }
 }

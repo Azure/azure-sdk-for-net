@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeLimitGuestSubscriptionData, ComputeLimitGuestSubscriptionResource>(new GuestSubscriptionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_guestSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitGuestSubscriptionResource(Client, data));
+            return new AsyncPageableWrapper<ComputeLimitGuestSubscriptionData, ComputeLimitGuestSubscriptionResource>(new GuestSubscriptionsGetBySubscriptionLocationResourceAsyncCollectionResultOfT(_guestSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitGuestSubscriptionCollection.GetAll"), data => new ComputeLimitGuestSubscriptionResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ComputeLimit
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeLimitGuestSubscriptionData, ComputeLimitGuestSubscriptionResource>(new GuestSubscriptionsGetBySubscriptionLocationResourceCollectionResultOfT(_guestSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new ComputeLimitGuestSubscriptionResource(Client, data));
+            return new PageableWrapper<ComputeLimitGuestSubscriptionData, ComputeLimitGuestSubscriptionResource>(new GuestSubscriptionsGetBySubscriptionLocationResourceCollectionResultOfT(_guestSubscriptionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ComputeLimitGuestSubscriptionCollection.GetAll"), data => new ComputeLimitGuestSubscriptionResource(Client, data));
         }
 
         /// <summary>

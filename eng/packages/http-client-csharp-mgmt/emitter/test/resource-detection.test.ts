@@ -11,7 +11,10 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ArmResourceSchema, ResourceScope } from "../src/resource-metadata.js";
+import {
+  ArmResourceSchema,
+  ResourceScopeKind
+} from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -111,7 +114,7 @@ interface Employees2 {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -131,7 +134,7 @@ interface Employees2 {
 
     // Validate resource metadata
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -139,9 +142,9 @@ interface Employees2 {
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -159,12 +162,12 @@ interface Employees2 {
     const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
     strictEqual(
-      getMethod.operationPath,
+      getMethod.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(getMethod.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(getMethod.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      getMethod.resourceScope,
+      getMethod.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -172,12 +175,12 @@ interface Employees2 {
     const createEntry = metadata.methods.find((m: any) => m.kind === "Create");
     ok(createEntry);
     strictEqual(
-      createEntry.operationPath,
+      createEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(createEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(createEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      createEntry.resourceScope,
+      createEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -185,12 +188,12 @@ interface Employees2 {
     const updateEntry = metadata.methods.find((m: any) => m.kind === "Update");
     ok(updateEntry);
     strictEqual(
-      updateEntry.operationPath,
+      updateEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(updateEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(updateEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScope,
+      updateEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -198,45 +201,48 @@ interface Employees2 {
     const deleteEntry = metadata.methods.find((m: any) => m.kind === "Delete");
     ok(deleteEntry);
     strictEqual(
-      deleteEntry.operationPath,
+      deleteEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(deleteEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(deleteEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScope,
+      deleteEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationPath.includes("employeeParents")
+        m.kind === "List" && m.operationPath.path.includes("employeeParents")
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
     strictEqual(
-      listByRgEntry.operationPath,
+      listByRgEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listByRgEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(listByRgEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScope,
+      listByRgEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationScope === ResourceScope.Subscription
+        m.kind === "List" && m.scope.kind === ResourceScopeKind.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
     strictEqual(
-      listBySubEntry.operationPath,
+      listBySubEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
-    strictEqual(listBySubEntry.resourceScope, undefined);
+    strictEqual(listBySubEntry.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      listBySubEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -334,7 +340,7 @@ interface CurrentEmployees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -349,7 +355,7 @@ interface CurrentEmployees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
     );
     strictEqual(
@@ -357,7 +363,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/employees"
     );
     strictEqual(metadata.singletonResourceName, "default");
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.methods.length, 3);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -376,7 +382,7 @@ interface CurrentEmployees {
     const currentMetadata = currentEmployeeResource.metadata;
     ok(currentMetadata);
     strictEqual(
-      currentMetadata.resourceIdPattern,
+      currentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/currentEmployees/current"
     );
     strictEqual(
@@ -384,7 +390,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
     strictEqual(currentMetadata.singletonResourceName, "current");
-    strictEqual(currentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(currentMetadata.scope.kind, "ResourceGroup");
     strictEqual(currentMetadata.methods.length, 3);
     strictEqual(currentMetadata.resourceName, "CurrentEmployee");
 
@@ -476,7 +482,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -493,7 +499,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -501,7 +507,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
+    strictEqual(employeeMetadata.scope.kind, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -509,7 +515,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -525,7 +531,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -533,10 +539,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(departmentMetadata.scope.kind, "ResourceGroup");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -551,7 +557,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -559,7 +565,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "ResourceGroup");
+    strictEqual(companyMetadata.scope.kind, "ResourceGroup");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -653,7 +659,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -670,7 +676,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -678,7 +684,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "Subscription");
+    strictEqual(employeeMetadata.scope.kind, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -686,7 +692,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -702,7 +708,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -710,10 +716,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Subscription");
+    strictEqual(departmentMetadata.scope.kind, "Subscription");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -728,7 +734,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -736,7 +742,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Subscription");
+    strictEqual(companyMetadata.scope.kind, "Subscription");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -830,7 +836,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -848,7 +854,7 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -856,7 +862,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "Tenant");
+    strictEqual(metadata.scope.kind, "Tenant");
     strictEqual(metadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -864,7 +870,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -880,7 +886,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -888,10 +894,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.scope.kind, "Tenant");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -906,7 +912,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -914,7 +920,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Tenant");
+    strictEqual(companyMetadata.scope.kind, "Tenant");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -958,7 +964,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -971,15 +977,15 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
 
-    // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
+    // The model should inherit its ResourceScopeKind from the Read method's operationScope (Subscription)
     // because the Read method operates at subscription scope and there are no explicit scope decorators
-    strictEqual(metadata.resourceScope, "Subscription");
+    strictEqual(metadata.scope.kind, "Subscription");
 
     // Verify the Read method itself has the correct scope
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Read");
-    strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
+    strictEqual(getMethodEntry.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1038,7 +1044,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
 
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1057,14 +1063,14 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
     strictEqual(metadata.methods.length, 2); // Get and ListByParent
@@ -1117,7 +1123,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1133,7 +1139,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    strictEqual(metadata.resourceScope, "ManagementGroup");
+    strictEqual(metadata.scope.kind, "ManagementGroup");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1197,7 +1203,7 @@ interface ScheduledActionExtension {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1228,25 +1234,25 @@ interface ScheduledActionExtension {
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getAssociatedScheduledActions")
+      m.operationPath.path.includes("getAssociatedScheduledActions")
     );
     ok(
       methodEntry,
       "getAssociatedScheduledActions should be in non-resource methods"
     );
-    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(methodEntry.scope.kind, ResourceScopeKind.ResourceGroup);
 
     // Verify getPostgresVersions is also a non-resource method
     const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getPostgresVersions")
+      m.operationPath.path.includes("getPostgresVersions")
     );
     ok(
       getPostgresVersionsEntry,
       "getPostgresVersions should be in non-resource methods"
     );
     strictEqual(
-      getPostgresVersionsEntry.operationScope,
-      ResourceScope.ResourceGroup
+      getPostgresVersionsEntry.scope.kind,
+      ResourceScopeKind.ResourceGroup
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1330,7 +1336,7 @@ interface BestPracticeVersions {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -1357,9 +1363,9 @@ interface BestPracticeVersions {
     // Find metadata for BestPractices resource (parent-level)
     const bestPracticesResource = resourcesForModel.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes(
+        r.metadata.resourceIdPattern.path.includes(
           "/bestPractices/{bestPracticeName}"
-        ) && !r.metadata.resourceIdPattern.includes("/versions")
+        ) && !r.metadata.resourceIdPattern.path.includes("/versions")
     );
     ok(bestPracticesResource, "Should have metadata for parent-level resource");
     const bestPracticesMetadata = bestPracticesResource.metadata;
@@ -1369,7 +1375,7 @@ interface BestPracticeVersions {
       "Parent resource should be named BestPractice"
     );
     strictEqual(
-      bestPracticesMetadata.resourceIdPattern,
+      bestPracticesMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     strictEqual(
@@ -1384,7 +1390,7 @@ interface BestPracticeVersions {
 
     // Find metadata for BestPracticeVersions resource (child-level)
     const bestPracticeVersionsResource = resourcesForModel.find((r) =>
-      r.metadata.resourceIdPattern.includes("/versions/{versionName}")
+      r.metadata.resourceIdPattern.path.includes("/versions/{versionName}")
     );
     ok(
       bestPracticeVersionsResource,
@@ -1397,7 +1403,7 @@ interface BestPracticeVersions {
       "Child resource should be named BestPracticeVersion"
     );
     strictEqual(
-      bestPracticeVersionsMetadata.resourceIdPattern,
+      bestPracticeVersionsMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     strictEqual(
@@ -1412,8 +1418,8 @@ interface BestPracticeVersions {
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
     strictEqual(
-      bestPracticeVersionsMetadata.parentResourceId,
-      bestPracticesMetadata.resourceIdPattern
+      bestPracticeVersionsMetadata.parentResourceId?.path,
+      bestPracticesMetadata.resourceIdPattern.path
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1526,7 +1532,7 @@ interface BestPracticeVersionDetails {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -1539,21 +1545,21 @@ interface BestPracticeVersionDetails {
     // Find each resource by its path pattern
     const bestPractice = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     ok(bestPractice, "Should have BestPractice resource");
 
     const bestPracticeVersion = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     ok(bestPracticeVersion, "Should have BestPracticeVersion resource");
 
     const bestPracticeVersionDetail = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
     );
     ok(
@@ -1563,16 +1569,16 @@ interface BestPracticeVersionDetails {
 
     // Critical assertion: BestPracticeVersion's parent should be BestPractice
     strictEqual(
-      bestPracticeVersion.metadata.parentResourceId,
-      bestPractice.metadata.resourceIdPattern,
+      bestPracticeVersion.metadata.parentResourceId?.path,
+      bestPractice.metadata.resourceIdPattern.path,
       "BestPracticeVersion's parent should be BestPractice"
     );
 
     // Critical assertion: BestPracticeVersionDetail's parent should be BestPracticeVersion (NOT BestPractice)
     // This is the exact scenario the longest-prefix-match fix addresses
     strictEqual(
-      bestPracticeVersionDetail.metadata.parentResourceId,
-      bestPracticeVersion.metadata.resourceIdPattern,
+      bestPracticeVersionDetail.metadata.parentResourceId?.path,
+      bestPracticeVersion.metadata.resourceIdPattern.path,
       "BestPracticeVersionDetail's parent should be BestPracticeVersion, not BestPractice"
     );
 
@@ -1642,7 +1648,7 @@ interface NoGetResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1672,8 +1678,8 @@ interface NoGetResources {
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
         m.kind === "Action" &&
-        m.operationPath.includes("noGetResources") &&
-        m.operationPath.endsWith("/noGetResources")
+        m.operationPath.path.includes("noGetResources") &&
+        m.operationPath.path.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
@@ -1682,7 +1688,8 @@ interface NoGetResources {
 
     // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
@@ -1691,7 +1698,8 @@ interface NoGetResources {
 
     // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
@@ -1707,7 +1715,7 @@ interface NoGetResources {
     // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
-      m.operationPath.includes("noGetResources")
+      m.operationPath.path.includes("noGetResources")
     );
     strictEqual(
       noGetMethods.length,
@@ -1770,7 +1778,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -1794,21 +1802,21 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Verify each resource exists with the correct resource ID pattern
     const rgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(rgSite, "Should have ResourceGroup-scoped Site");
 
     const subSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(subSite, "Should have Subscription-scoped Site");
 
     const sgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(sgSite, "Should have ServiceGroup-scoped Site");
@@ -1822,7 +1830,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       strictEqual(
         listMethods.length,
         1,
-        `Resource ${resource.metadata.resourceIdPattern} should have exactly 1 List method`
+        `Resource ${resource.metadata.resourceIdPattern.path} should have exactly 1 List method`
       );
     }
 
@@ -1834,15 +1842,17 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
     // - Legacy detection (buildArmProviderSchema): uses Tenant scope
     // - resolveArmResources: uses Extension scope
-    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    // We normalize ResourceScopeKind and operationScope only for the ServiceGroup-scoped resource
     const serviceGroupResourcePattern =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
-        (resource.metadata as { resourceScope: unknown }).resourceScope =
+      if (
+        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
+      ) {
+        (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { operationScope: unknown }).operationScope =
+          (method as { scope: { kind: unknown } }).scope.kind =
             "<normalized>";
         }
       }
@@ -1921,7 +1931,7 @@ interface SharedConfigs {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -1945,14 +1955,14 @@ interface SharedConfigs {
     // Find each resource by its path pattern
     const rgResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
     );
     ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
 
     const subResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
     );
     ok(
@@ -2058,7 +2068,7 @@ interface ConfigOperations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2079,15 +2089,15 @@ interface ConfigOperations {
 
     // Find the public (subscription-scoped, read-only) resource
     const publicResource = configResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("publicConfigs")
+      r.metadata.resourceIdPattern.path.includes("publicConfigs")
     );
     ok(publicResource, "Should have public resource");
 
     // Find the RG-scoped CRUD resource
     const rgResource = configResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
+        r.metadata.resourceIdPattern.path.includes("/configs/") &&
+        !r.metadata.resourceIdPattern.path.includes("/publicConfigs/")
     );
     ok(rgResource, "Should have RG-scoped resource");
 
@@ -2103,8 +2113,8 @@ interface ConfigOperations {
 
     // The list path should be at RG scope with the configs segment
     ok(
-      rgListMethods[0].operationPath.includes("resourceGroups") &&
-        rgListMethods[0].operationPath.endsWith("/configs"),
+      rgListMethods[0].operationPath.path.includes("resourceGroups") &&
+        rgListMethods[0].operationPath.path.endsWith("/configs"),
       "RG resource's list should be at resource group scope with configs segment"
     );
 
@@ -2244,7 +2254,7 @@ interface TrafficEndpoints {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2306,8 +2316,8 @@ interface TrafficEndpoints {
 
     // Verify the parent-child relationship
     strictEqual(
-      trafficEndpointResource.metadata.parentResourceId,
-      trafficProfileResource.metadata.resourceIdPattern,
+      trafficEndpointResource.metadata.parentResourceId?.path,
+      trafficProfileResource.metadata.resourceIdPattern.path,
       "TrafficEndpoint should have TrafficProfile as parent"
     );
 
@@ -2388,7 +2398,7 @@ interface NetworkSecurityPerimeterConfigurations {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2521,7 +2531,7 @@ interface MonitorResources {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2753,7 +2763,7 @@ interface TenantTranscripts {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -2769,23 +2779,27 @@ interface TenantTranscripts {
     // Find each resource by its path pattern
     const subTicket = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const tenantTicket = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const subTranscript = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
     const tenantTranscript = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
 
     ok(subTicket, "Should have subscription-scoped ticket");
@@ -2796,26 +2810,26 @@ interface TenantTranscripts {
     // KEY ASSERTION: Tenant-scoped transcript should have tenant-scoped ticket as parent
     // (not the subscription-scoped ticket from @parentResource decorator)
     strictEqual(
-      tenantTranscript.metadata.parentResourceId,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscript.metadata.parentResourceId?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript's parent should be the tenant ticket (same scope)"
     );
 
     // Subscription-scoped transcript should have subscription-scoped ticket as parent
     strictEqual(
-      subTranscript.metadata.parentResourceId,
-      subTicket.metadata.resourceIdPattern,
+      subTranscript.metadata.parentResourceId?.path,
+      subTicket.metadata.resourceIdPattern.path,
       "Subscription transcript's parent should be the subscription ticket (same scope)"
     );
 
-    // Verify the list operations have correct resourceScope for tenant transcript
+    // Verify the list operations have correct ResourceScopeKind for tenant transcript
     const tenantTranscriptList = tenantTranscript.metadata.methods.find(
       (m: any) => m.kind === "List"
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScope,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscriptList.scope.scopeIdPattern?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );
 
@@ -2866,7 +2880,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2919,7 +2933,7 @@ interface Widgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -2971,7 +2985,7 @@ interface Gadgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3024,7 +3038,7 @@ interface Items {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3072,7 +3086,7 @@ interface Employees {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3161,7 +3175,7 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Test buildArmProviderSchema (legacy path)
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
@@ -3239,7 +3253,7 @@ interface Widgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3292,7 +3306,7 @@ interface Gadgets {
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
@@ -3308,5 +3322,319 @@ interface Gadgets {
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
+
+  it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
+    // This test reproduces the Storage SDK pattern where a list operation
+    // (e.g., blobContainersList) is modeled as an ArmResourceActionSync on a
+    // singleton parent (BlobService) rather than as ArmResourceListByParent on
+    // the child interface (BlobContainers).
+    //
+    // The emitter classifies it as kind=Action on the parent resource.
+    // The generator then routes it to the parent's Resource class instead of
+    // the child's Collection class, breaking backward compatibility.
+    //
+    // Expected behavior: the emitter should detect that this Action's operation
+    // path matches a child resource's collection path and reclassify it as a
+    // List on the child resource.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+/** List of containers */
+model ListContainerItems {
+  /** The list of containers */
+  @pageItems
+  value?: Container[];
+
+  /** The next link */
+  @nextLink
+  nextLink?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers in the blob service - modeled as action on parent */
+  @get
+  @list
+  containers is ArmResourceActionSync<
+    BlobService,
+    void,
+    ListContainerItems
+  >;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Find the resources
+    const storageAccountResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts"
+    );
+    ok(storageAccountResource, "StorageAccount resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    // Verify BlobService is a singleton with correct parent
+    strictEqual(blobServiceResource.metadata.singletonResourceName, "default");
+    strictEqual(
+      blobServiceResource.metadata.parentResourceId,
+      storageAccountResource.metadata.resourceIdPattern
+    );
+
+    // Verify Container's parent is BlobService
+    strictEqual(
+      containerResource.metadata.parentResourceId,
+      blobServiceResource.metadata.resourceIdPattern
+    );
+
+    // After fix: listContainers should have been moved from BlobService to Container
+    const blobServiceMethods = blobServiceResource.metadata.methods;
+    const containerMethods = containerResource.metadata.methods;
+
+    // The listContainers method should be on Container as kind=List
+    const listOnContainer = containerMethods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(
+      listOnContainer,
+      "listContainers should be on Container as a List method"
+    );
+    strictEqual(listOnContainer!.kind, "List");
+    ok(
+      listOnContainer!.operationPath.path.includes("/containers"),
+      "The List method should be the relocated containers operation"
+    );
+
+    // BlobService should NOT have the listContainers action anymore
+    const listContainersOnService = blobServiceMethods.find(
+      (m: any) =>
+        m.kind === "Action" && m.operationPath?.includes("/containers")
+    );
+    strictEqual(
+      listContainersOnService,
+      undefined,
+      "listContainers should no longer be on BlobService"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Read"),
+      "BlobService should still have Read"
+    );
+    ok(
+      blobServiceMethods.some((m: any) => m.kind === "Create"),
+      "BlobService should still have Create"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("ArmResourceListByParent in parent interface routes list to child resource", async () => {
+    // Validates the spec-level fix: using ArmResourceListByParent<Container>
+    // in the BlobServices interface (instead of ArmResourceActionSync) produces
+    // kind=List and correctly assigns it to the Container resource — even though
+    // the operation is defined in the parent's interface.
+
+    const program = await typeSpecCompile(
+      `
+/** Storage account resource */
+model StorageAccount is TrackedResource<StorageAccountProperties> {
+  ...ResourceNameParameter<StorageAccount>;
+}
+
+/** Storage account properties */
+model StorageAccountProperties {
+  /** Account description */
+  description?: string;
+}
+
+/** Blob service singleton resource */
+@singleton
+@parentResource(StorageAccount)
+model BlobService is ProxyResource<BlobServiceProperties> {
+  ...ResourceNameParameter<BlobService>;
+}
+
+/** Blob service properties */
+model BlobServiceProperties {
+  /** Whether versioning is enabled */
+  isVersioningEnabled?: boolean;
+}
+
+/** Container child resource */
+@parentResource(BlobService)
+model Container is ProxyResource<ContainerProperties> {
+  ...ResourceNameParameter<Container>;
+}
+
+/** Container properties */
+model ContainerProperties {
+  /** Public access level */
+  publicAccess?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageAccounts {
+  get is ArmResourceRead<StorageAccount>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageAccount>;
+}
+
+@armResourceOperations
+interface BlobServices {
+  get is ArmResourceRead<BlobService>;
+  setProperties is ArmResourceCreateOrReplaceSync<BlobService>;
+
+  /** Lists all containers - uses ArmResourceListByParent in parent interface */
+  listContainers is ArmResourceListByParent<Container>;
+}
+
+@armResourceOperations
+interface Containers {
+  get is ArmResourceRead<Container>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<Container>;
+  delete is ArmResourceDeleteSync<Container>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const containerResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices/containers"
+    );
+    ok(containerResource, "Container resource should exist");
+
+    const blobServiceResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/storageAccounts/blobServices"
+    );
+    ok(blobServiceResource, "BlobService resource should exist");
+
+    // Container should have the List method (routed from BlobServices interface)
+    const listOnContainer = containerResource.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(listOnContainer, "Container should have a List method");
+    strictEqual(listOnContainer!.kind, "List");
+
+    // BlobService should NOT have the list operation
+    const listOnService = blobServiceResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "List" ||
+        (m.kind === "Action" && m.operationPath?.includes("/containers"))
+    );
+    strictEqual(
+      listOnService,
+      undefined,
+      "BlobService should not have the list containers operation"
+    );
+
+    // BlobService should still have its own methods (Read + Create)
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Read")
+    );
+    ok(
+      blobServiceResource.metadata.methods.some((m: any) => m.kind === "Create")
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
   });
 });

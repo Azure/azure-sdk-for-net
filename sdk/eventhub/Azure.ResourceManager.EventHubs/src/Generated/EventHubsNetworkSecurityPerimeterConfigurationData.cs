@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ProvisioningIssues;
+                return Properties is null ? default : Properties.ProvisioningIssues;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.NetworkSecurityPerimeter;
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ResourceAssociation;
+                return Properties is null ? default : Properties.ResourceAssociation;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.Profile;
+                return Properties is null ? default : Properties.Profile;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.IsBackingResource;
+                return Properties is null ? default : Properties.IsBackingResource;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ApplicableFeatures;
+                return Properties is null ? default : Properties.ApplicableFeatures;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.ParentAssociationName;
+                return Properties is null ? default : Properties.ParentAssociationName;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             get
             {
-                return Properties.SourceResourceId;
+                return Properties is null ? default : Properties.SourceResourceId;
             }
         }
     }

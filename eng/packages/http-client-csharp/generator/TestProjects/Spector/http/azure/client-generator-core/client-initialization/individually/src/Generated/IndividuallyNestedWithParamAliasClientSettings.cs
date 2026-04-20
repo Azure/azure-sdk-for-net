@@ -27,7 +27,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
             set => throw null;
         }
 
-        public IndividuallyNestedWithParamAliasClientOptions Options
+        public SpecsAzureTcgcClientInitIndividuallyClientOptions Options
         {
             get => throw null;
             set => throw null;
