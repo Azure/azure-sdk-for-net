@@ -12,7 +12,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> List of admin request approval resources. </summary>
-    public partial class RequestApprovalsList
+    internal partial class RequestApprovalsList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="RequestApprovalsList"/>. </summary>
         internal RequestApprovalsList()
         {
-            Value = new ChangeTrackingList<RequestApprovalResourceData>();
+            Value = new ChangeTrackingList<MarketplaceApprovalRequestData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestApprovalsList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestApprovalsList(IList<RequestApprovalResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestApprovalsList(IList<MarketplaceApprovalRequestData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<RequestApprovalResourceData> Value { get; }
+        public IList<MarketplaceApprovalRequestData> Value { get; }
 
         /// <summary> URL to get the next set of notifications list results if there are any. </summary>
         public string NextLink { get; }

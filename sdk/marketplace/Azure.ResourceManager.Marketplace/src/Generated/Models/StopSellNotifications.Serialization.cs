@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (Optional.IsDefined(Icon))
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
-                writer.WriteStringValue(Icon);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(Plans))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             string displayName = default;
             bool? isEntire = default;
             long? messageCode = default;
-            string icon = default;
+            Uri iconUri = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +190,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("icon"u8))
                 {
-                    icon = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("plans"u8))
@@ -217,7 +221,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 displayName,
                 isEntire,
                 messageCode,
-                icon,
+                iconUri,
                 plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
                 additionalBinaryDataProperties);
         }

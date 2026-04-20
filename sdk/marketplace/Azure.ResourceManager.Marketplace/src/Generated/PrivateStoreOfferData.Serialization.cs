@@ -17,71 +17,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> The Collection data structure. </summary>
-    public partial class CollectionData : ResourceData, IJsonModel<CollectionData>
+    /// <summary> The privateStore offer data structure. </summary>
+    public partial class PrivateStoreOfferData : ResourceData, IJsonModel<PrivateStoreOfferData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCollectionData(document.RootElement, options);
+                        return DeserializePrivateStoreOfferData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreOfferData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CollectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreOfferData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CollectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CollectionData IPersistableModel<CollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CollectionData)PersistableModelCreateCore(data, options);
+        PrivateStoreOfferData IPersistableModel<PrivateStoreOfferData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateStoreOfferData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="collectionData"> The <see cref="CollectionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CollectionData collectionData)
+        /// <param name="privateStoreOfferData"> The <see cref="PrivateStoreOfferData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PrivateStoreOfferData privateStoreOfferData)
         {
-            if (collectionData == null)
+            if (privateStoreOfferData == null)
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(collectionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(privateStoreOfferData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CollectionData"/> from. </param>
-        internal static CollectionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateStoreOfferData"/> from. </param>
+        internal static PrivateStoreOfferData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCollectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePrivateStoreOfferData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateStoreOfferData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -92,10 +90,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreOfferData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -107,24 +105,24 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CollectionData IJsonModel<CollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CollectionData)JsonModelCreateCore(ref reader, options);
+        PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateStoreOfferData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreOfferData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCollectionData(document.RootElement, options);
+            return DeserializePrivateStoreOfferData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CollectionData DeserializeCollectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateStoreOfferData DeserializePrivateStoreOfferData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +133,7 @@ namespace Azure.ResourceManager.Marketplace
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            CollectionProperties properties = default;
+            PrivateStoreOfferResult properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -172,7 +170,7 @@ namespace Azure.ResourceManager.Marketplace
                     {
                         continue;
                     }
-                    properties = CollectionProperties.DeserializeCollectionProperties(prop.Value, options);
+                    properties = PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +178,7 @@ namespace Azure.ResourceManager.Marketplace
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CollectionData(
+            return new PrivateStoreOfferData(
                 id,
                 name,
                 resourceType,

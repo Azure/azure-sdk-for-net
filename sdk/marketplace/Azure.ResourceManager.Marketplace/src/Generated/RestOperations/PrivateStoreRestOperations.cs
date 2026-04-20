@@ -12,27 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> The PrivateStoreRestOperations sub-client. </summary>
-    internal partial class PrivateStoreRestOperations
+    internal partial class PrivateStore
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of PrivateStore for mocking. </summary>
+        protected PrivateStore()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PrivateStore. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"> The API version to use for this client. </param>
-        internal PrivateStoreRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal PrivateStore(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-        }
-
-        /// <summary> Initializes a new instance of PrivateStoreRestOperations for mocking. </summary>
-        protected PrivateStoreRestOperations()
-        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateBillingAccountsRequest(string privateStoreId, RequestContext context)
+        internal HttpMessage CreateFetchBillingAccountsRequest(string privateStoreId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateCollectionsToSubscriptionsMappingRequest(string privateStoreId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateFetchCollectionsToSubscriptionsMappingRequest(string privateStoreId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateBulkCollectionsActionRequest(string privateStoreId, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePerformActionOnBulkCollectionsRequest(string privateStoreId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateFetchAllSubscriptionsInTenantRequest(string privateStoreId, string nextPageToken, RequestContext context)
+        internal HttpMessage CreateFetchAllMarketplaceSubscriptionsRequest(string privateStoreId, string nextPageToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreateQueryRequestApprovalRequest(string privateStoreId, string requestApprovalId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateQueryApprovalRequestRequest(string privateStoreId, string requestApprovalId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

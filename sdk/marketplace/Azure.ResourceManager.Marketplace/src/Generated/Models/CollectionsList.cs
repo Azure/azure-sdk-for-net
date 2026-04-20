@@ -12,7 +12,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> The CollectionsList. </summary>
-    public partial class CollectionsList
+    internal partial class CollectionsList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="CollectionsList"/>. </summary>
         internal CollectionsList()
         {
-            Value = new ChangeTrackingList<CollectionData>();
+            Value = new ChangeTrackingList<PrivateStoreCollectionInfoData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CollectionsList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CollectionsList(IList<CollectionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CollectionsList(IList<PrivateStoreCollectionInfoData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<CollectionData> Value { get; }
+        public IList<PrivateStoreCollectionInfoData> Value { get; }
 
         /// <summary> URL to get the next set of offer list results if there are any. </summary>
         public string NextLink { get; }

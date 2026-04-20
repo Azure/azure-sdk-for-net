@@ -16,19 +16,22 @@ namespace Azure.ResourceManager.Marketplace
 {
     internal partial class PrivateStoreGetAllCollectionResultOfT : Pageable<PrivateStoreData>
     {
-        private readonly PrivateStoreRestOperations _client;
+        private readonly PrivateStore _client;
         private readonly string _useCache;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateStoreGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateStore client used to send requests. </param>
         /// <param name="useCache"> Determines if to use cache or DB for serving this request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateStoreGetAllCollectionResultOfT(PrivateStoreRestOperations client, string useCache, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateStoreGetAllCollectionResultOfT(PrivateStore client, string useCache, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _useCache = useCache;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateStoreGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _useCache, _context) : _client.CreateGetAllRequest(_useCache, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateStoreCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

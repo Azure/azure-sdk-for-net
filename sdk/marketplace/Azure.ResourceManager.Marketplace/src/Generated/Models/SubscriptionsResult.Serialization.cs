@@ -15,58 +15,58 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Subscription list operation response. </summary>
-    public partial class SubscriptionsResponse : IJsonModel<SubscriptionsResponse>
+    public partial class SubscriptionsResult : IJsonModel<SubscriptionsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionsResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SubscriptionsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubscriptionsResponse(document.RootElement, options);
+                        return DeserializeSubscriptionsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SubscriptionsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionsResponse IPersistableModel<SubscriptionsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SubscriptionsResult IPersistableModel<SubscriptionsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SubscriptionsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SubscriptionsResponse"/> from. </param>
-        internal static SubscriptionsResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SubscriptionsResult"/> from. </param>
+        internal static SubscriptionsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSubscriptionsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSubscriptionsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SubscriptionsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionsResponse IJsonModel<SubscriptionsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SubscriptionsResult IJsonModel<SubscriptionsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SubscriptionsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionsResponse(document.RootElement, options);
+            return DeserializeSubscriptionsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubscriptionsResponse DeserializeSubscriptionsResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static SubscriptionsResult DeserializeSubscriptionsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionsResponse(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken, count, additionalBinaryDataProperties);
+            return new SubscriptionsResult(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken, count, additionalBinaryDataProperties);
         }
     }
 }

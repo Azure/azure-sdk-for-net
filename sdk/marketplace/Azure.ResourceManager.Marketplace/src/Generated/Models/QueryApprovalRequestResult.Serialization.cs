@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(MessageCode))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             string uniqueOfferId = default;
             IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default;
-            string eTag = default;
+            ETag? eTag = default;
             long? messageCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("messageCode"u8))

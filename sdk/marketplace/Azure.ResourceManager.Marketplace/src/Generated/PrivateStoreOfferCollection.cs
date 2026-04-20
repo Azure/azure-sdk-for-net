@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OfferResource"/> and their operations.
-    /// Each <see cref="OfferResource"/> in the collection will belong to the same instance of <see cref="CollectionResource"/>.
-    /// To get a <see cref="OfferCollection"/> instance call the GetOffers method from an instance of <see cref="CollectionResource"/>.
+    /// A class representing a collection of <see cref="PrivateStoreOfferResource"/> and their operations.
+    /// Each <see cref="PrivateStoreOfferResource"/> in the collection will belong to the same instance of <see cref="PrivateStoreCollectionInfoResource"/>.
+    /// To get a <see cref="PrivateStoreOfferCollection"/> instance call the GetPrivateStoreOffers method from an instance of <see cref="PrivateStoreCollectionInfoResource"/>.
     /// </summary>
-    public partial class OfferCollection : ArmCollection, IEnumerable<OfferResource>, IAsyncEnumerable<OfferResource>
+    public partial class PrivateStoreOfferCollection : ArmCollection, IEnumerable<PrivateStoreOfferResource>, IAsyncEnumerable<PrivateStoreOfferResource>
     {
         private readonly ClientDiagnostics _privateStoreCollectionOfferClientDiagnostics;
-        private readonly PrivateStoreCollectionOfferRestOperations _privateStoreCollectionOfferRestClient;
+        private readonly PrivateStoreCollectionOffer _privateStoreCollectionOfferRestClient;
 
-        /// <summary> Initializes a new instance of OfferCollection for mocking. </summary>
-        protected OfferCollection()
+        /// <summary> Initializes a new instance of PrivateStoreOfferCollection for mocking. </summary>
+        protected PrivateStoreOfferCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OfferCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateStoreOfferCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OfferResource.ResourceType, out string offerApiVersion);
-            _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", OfferResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOfferRestOperations(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, offerApiVersion ?? "2025-01-01");
+            TryGetApiVersion(PrivateStoreOfferResource.ResourceType, out string privateStoreOfferApiVersion);
+            _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreOfferResource.ResourceType.Namespace, Diagnostics);
+            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreOfferApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Marketplace
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CollectionResource.ResourceType)
+            if (id.ResourceType != PrivateStoreCollectionInfoResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CollectionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateStoreCollectionInfoResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<OfferResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string offerId, OfferData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateStoreOfferResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string offerId, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, OfferData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, PrivateStoreOfferData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OfferData> response = Response.FromValue(OfferData.FromResponse(result), result);
+                Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<OfferResource> operation = new MarketplaceArmOperation<OfferResource>(Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MarketplaceArmOperation<PrivateStoreOfferResource> operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<OfferResource> CreateOrUpdate(WaitUntil waitUntil, string offerId, OfferData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateStoreOfferResource> CreateOrUpdate(WaitUntil waitUntil, string offerId, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, OfferData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreCollectionOfferRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, offerId, PrivateStoreOfferData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OfferData> response = Response.FromValue(OfferData.FromResponse(result), result);
+                Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<OfferResource> operation = new MarketplaceArmOperation<OfferResource>(Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MarketplaceArmOperation<PrivateStoreOfferResource> operation = new MarketplaceArmOperation<PrivateStoreOfferResource>(Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OfferResource>> GetAsync(string offerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreOfferResource>> GetAsync(string offerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.Get");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OfferData> response = Response.FromValue(OfferData.FromResponse(result), result);
+                Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OfferResource> Get(string offerId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreOfferResource> Get(string offerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.Get");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OfferData> response = Response.FromValue(OfferData.FromResponse(result), result);
+                Response<PrivateStoreOfferData> response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OfferResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreOfferResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OfferData, OfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context), data => new OfferResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllAsyncCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -308,14 +308,14 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OfferResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreOfferResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OfferData, OfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context), data => new OfferResource(Client, data));
+            return new PageableWrapper<PrivateStoreOfferData, PrivateStoreOfferResource>(new PrivateStoreCollectionOfferGetAllCollectionResultOfT(_privateStoreCollectionOfferRestClient, Id.Parent.Name, Id.Name, context, "PrivateStoreOfferCollection.GetAll"), data => new PrivateStoreOfferResource(Client, data));
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.Exists");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Exists");
             scope.Start();
             try
             {
@@ -354,14 +354,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OfferData> response = default;
+                Response<PrivateStoreOfferData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OfferData.FromResponse(result), result);
+                        response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OfferData)null, result);
+                        response = Response.FromValue((PrivateStoreOfferData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.Exists");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.Exists");
             scope.Start();
             try
             {
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OfferData> response = default;
+                Response<PrivateStoreOfferData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OfferData.FromResponse(result), result);
+                        response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OfferData)null, result);
+                        response = Response.FromValue((PrivateStoreOfferData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -453,11 +453,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PrivateStoreOfferResource>> GetIfExistsAsync(string offerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -468,23 +468,23 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<OfferData> response = default;
+                Response<PrivateStoreOfferData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OfferData.FromResponse(result), result);
+                        response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OfferData)null, result);
+                        response = Response.FromValue((PrivateStoreOfferData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<OfferResource>(response.GetRawResponse());
+                    return new NoValueResponse<PrivateStoreOfferResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -514,11 +514,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<OfferResource> GetIfExists(string offerId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PrivateStoreOfferResource> GetIfExists(string offerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("OfferCollection.GetIfExists");
+            using DiagnosticScope scope = _privateStoreCollectionOfferClientDiagnostics.CreateScope("PrivateStoreOfferCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -529,23 +529,23 @@ namespace Azure.ResourceManager.Marketplace
                 HttpMessage message = _privateStoreCollectionOfferRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, offerId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<OfferData> response = default;
+                Response<PrivateStoreOfferData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(OfferData.FromResponse(result), result);
+                        response = Response.FromValue(PrivateStoreOfferData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((OfferData)null, result);
+                        response = Response.FromValue((PrivateStoreOfferData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<OfferResource>(response.GetRawResponse());
+                    return new NoValueResponse<PrivateStoreOfferResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new OfferResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreOfferResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        IEnumerator<OfferResource> IEnumerable<OfferResource>.GetEnumerator()
+        IEnumerator<PrivateStoreOfferResource> IEnumerable<PrivateStoreOfferResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<OfferResource> IAsyncEnumerable<OfferResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateStoreOfferResource> IAsyncEnumerable<PrivateStoreOfferResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

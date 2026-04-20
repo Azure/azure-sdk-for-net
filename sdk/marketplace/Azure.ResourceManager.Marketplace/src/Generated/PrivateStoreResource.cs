@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreResource : ArmResource
     {
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
-        private readonly PrivateStoreRestOperations _privateStoreRestClient;
-        private readonly ClientDiagnostics _privateStoreCollectionClientDiagnostics;
-        private readonly PrivateStoreCollectionRestOperations _privateStoreCollectionRestClient;
+        private readonly PrivateStore _privateStoreRestClient;
+        private readonly ClientDiagnostics _privateStoreCollectionInfoClientDiagnostics;
+        private readonly PrivateStoreCollectionInfo _privateStoreCollectionInfoRestClient;
         private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
         private readonly MarketplaceClient _marketplaceClientRestClient;
         private readonly PrivateStoreData _data;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStoreRestOperations(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
-            _privateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(_privateStoreCollectionClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreCollectionInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
+            _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
             _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> PostAsync(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using DiagnosticScope scope = _privateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreResource.Post");
+            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Delete");
             scope.Start();
             try
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionRestClient.CreatePostRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Post(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string collectionId, PrivateStoreOperation? payload = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using DiagnosticScope scope = _privateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreResource.Post");
+            using DiagnosticScope scope = _privateStoreCollectionInfoClientDiagnostics.CreateScope("PrivateStoreResource.Delete");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreCollectionRestClient.CreatePostRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
+                HttpMessage message = _privateStoreCollectionInfoRestClient.CreateDeleteRequest(Id.Name, collectionId, PrivateStoreOperation.ToRequestContent(payload), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -610,9 +610,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateStoreBillingAccountsResult>> BillingAccountsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreBillingAccountsResult>> FetchBillingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateBillingAccountsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateStoreBillingAccountsResult> response = Response.FromValue(PrivateStoreBillingAccountsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -658,9 +658,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateStoreBillingAccountsResult> BillingAccounts(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreBillingAccountsResult> FetchBillingAccounts(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateBillingAccountsRequest(Id.Name, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchBillingAccountsRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateStoreBillingAccountsResult> response = Response.FromValue(PrivateStoreBillingAccountsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -707,9 +707,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BulkCollectionsActionResult>> BulkCollectionsActionAsync(BulkCollectionsActionContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BulkCollectionsActionResult>> PerformActionOnBulkCollectionsAsync(BulkCollectionsActionContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateBulkCollectionsActionRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BulkCollectionsActionResult> response = Response.FromValue(BulkCollectionsActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -756,9 +756,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BulkCollectionsActionResult> BulkCollectionsAction(BulkCollectionsActionContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<BulkCollectionsActionResult> PerformActionOnBulkCollections(BulkCollectionsActionContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateBulkCollectionsActionRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreatePerformActionOnBulkCollectionsRequest(Id.Name, BulkCollectionsActionContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BulkCollectionsActionResult> response = Response.FromValue(BulkCollectionsActionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -805,9 +805,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CollectionsToSubscriptionsMappingResult>> CollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CollectionsToSubscriptionsMappingResult>> FetchCollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CollectionsToSubscriptionsMappingResult> response = Response.FromValue(CollectionsToSubscriptionsMappingResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -854,9 +854,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CollectionsToSubscriptionsMappingResult> CollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<CollectionsToSubscriptionsMappingResult> FetchCollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchCollectionsToSubscriptionsMappingRequest(Id.Name, CollectionsToSubscriptionsMappingContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CollectionsToSubscriptionsMappingResult> response = Response.FromValue(CollectionsToSubscriptionsMappingResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -903,9 +903,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionsResponse>> FetchAllSubscriptionsInTenantAsync(string nextPageToken = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionsResult>> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllSubscriptionsInTenant");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
             scope.Start();
             try
             {
@@ -913,9 +913,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Id.Name, nextPageToken, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchAllMarketplaceSubscriptionsRequest(Id.Name, nextPageToken, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionsResponse> response = Response.FromValue(SubscriptionsResponse.FromResponse(result), result);
+                Response<SubscriptionsResult> response = Response.FromValue(SubscriptionsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -952,9 +952,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionsResponse> FetchAllSubscriptionsInTenant(string nextPageToken = default, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionsResult> FetchAllMarketplaceSubscriptions(string nextPageToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllSubscriptionsInTenant");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
             scope.Start();
             try
             {
@@ -962,9 +962,9 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateFetchAllSubscriptionsInTenantRequest(Id.Name, nextPageToken, context);
+                HttpMessage message = _privateStoreRestClient.CreateFetchAllMarketplaceSubscriptionsRequest(Id.Name, nextPageToken, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionsResponse> response = Response.FromValue(SubscriptionsResponse.FromResponse(result), result);
+                Response<SubscriptionsResult> response = Response.FromValue(SubscriptionsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1858,11 +1858,11 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        /// <summary> Gets a collection of RequestApprovalResources in the <see cref="PrivateStoreResource"/>. </summary>
-        /// <returns> An object representing collection of RequestApprovalResources and their operations over a RequestApprovalResource. </returns>
-        public virtual RequestApprovalResourceCollection GetRequestApprovalResources()
+        /// <summary> Gets a collection of MarketplaceApprovalRequests in the <see cref="PrivateStoreResource"/>. </summary>
+        /// <returns> An object representing collection of MarketplaceApprovalRequests and their operations over a MarketplaceApprovalRequestResource. </returns>
+        public virtual MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests()
         {
-            return GetCachedClient(client => new RequestApprovalResourceCollection(client, Id));
+            return GetCachedClient(client => new MarketplaceApprovalRequestCollection(client, Id));
         }
 
         /// <summary> Get open request approval details. </summary>
@@ -1871,11 +1871,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RequestApprovalResource>> GetRequestApprovalResourceAsync(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            return await GetRequestApprovalResources().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceApprovalRequests().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get open request approval details. </summary>
@@ -1884,18 +1884,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RequestApprovalResource> GetRequestApprovalResource(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            return GetRequestApprovalResources().Get(requestApprovalId, cancellationToken);
+            return GetMarketplaceApprovalRequests().Get(requestApprovalId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AdminRequestApprovalsResources in the <see cref="PrivateStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AdminRequestApprovalsResources and their operations over a AdminRequestApprovalsResource. </returns>
-        public virtual AdminRequestApprovalsResourceCollection GetAdminRequestApprovalsResources()
+        /// <summary> Gets a collection of MarketplaceAdminApprovalRequests in the <see cref="PrivateStoreResource"/>. </summary>
+        /// <returns> An object representing collection of MarketplaceAdminApprovalRequests and their operations over a MarketplaceAdminApprovalRequestResource. </returns>
+        public virtual MarketplaceAdminApprovalRequestCollection GetMarketplaceAdminApprovalRequests()
         {
-            return GetCachedClient(client => new AdminRequestApprovalsResourceCollection(client, Id));
+            return GetCachedClient(client => new MarketplaceAdminApprovalRequestCollection(client, Id));
         }
 
         /// <summary> Get open approval requests. </summary>
@@ -1905,12 +1905,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdminRequestApprovalsResource>> GetAdminRequestApprovalsResourceAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetMarketplaceAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            return await GetAdminRequestApprovalsResources().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceAdminApprovalRequests().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get open approval requests. </summary>
@@ -1920,32 +1920,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AdminRequestApprovalsResource> GetAdminRequestApprovalsResource(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceAdminApprovalRequestResource> GetMarketplaceAdminApprovalRequest(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            return GetAdminRequestApprovalsResources().Get(adminRequestApprovalId, publisherId, cancellationToken);
+            return GetMarketplaceAdminApprovalRequests().Get(adminRequestApprovalId, publisherId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Collections in the <see cref="PrivateStoreResource"/>. </summary>
-        /// <returns> An object representing collection of Collections and their operations over a CollectionResource. </returns>
-        public virtual CollectionCollection GetCollections()
+        /// <summary> Gets a collection of PrivateStoreCollectionInfos in the <see cref="PrivateStoreResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateStoreCollectionInfos and their operations over a PrivateStoreCollectionInfoResource. </returns>
+        public virtual PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos()
         {
-            return GetCachedClient(client => new CollectionCollection(client, Id));
-        }
-
-        /// <summary> Gets private store collection. </summary>
-        /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CollectionResource>> GetCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            return await GetCollections().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new PrivateStoreCollectionInfoCollection(client, Id));
         }
 
         /// <summary> Gets private store collection. </summary>
@@ -1954,11 +1941,24 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CollectionResource> GetCollection(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return GetCollections().Get(collectionId, cancellationToken);
+            return await GetPrivateStoreCollectionInfos().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets private store collection. </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            return GetPrivateStoreCollectionInfos().Get(collectionId, cancellationToken);
         }
     }
 }

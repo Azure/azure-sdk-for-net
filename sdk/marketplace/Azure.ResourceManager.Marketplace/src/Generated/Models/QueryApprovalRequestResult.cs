@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="eTag"> Gets or sets e-tag field. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryApprovalRequestResult(string uniqueOfferId, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails, string eTag, long? messageCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryApprovalRequestResult(string uniqueOfferId, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails, ETag? eTag, long? messageCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueOfferId = uniqueOfferId;
             PlansDetails = plansDetails;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public IReadOnlyDictionary<string, PrivateStorePlanDetails> PlansDetails { get; }
 
         /// <summary> Gets or sets e-tag field. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Gets or sets the notification message id. </summary>
         public long? MessageCode { get; }

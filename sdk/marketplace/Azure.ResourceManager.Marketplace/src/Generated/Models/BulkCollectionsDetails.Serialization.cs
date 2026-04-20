@@ -78,13 +78,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in CollectionIds)
+                foreach (Guid item in CollectionIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -136,7 +131,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            IList<string> collectionIds = default;
+            IList<Guid> collectionIds = default;
             string action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,17 +142,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Guid> array = new List<Guid>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new Guid(item.GetString()));
                     }
                     collectionIds = array;
                     continue;
@@ -172,7 +160,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkCollectionsDetails(collectionIds ?? new ChangeTrackingList<string>(), action, additionalBinaryDataProperties);
+            return new BulkCollectionsDetails(collectionIds ?? new ChangeTrackingList<Guid>(), action, additionalBinaryDataProperties);
         }
     }
 }

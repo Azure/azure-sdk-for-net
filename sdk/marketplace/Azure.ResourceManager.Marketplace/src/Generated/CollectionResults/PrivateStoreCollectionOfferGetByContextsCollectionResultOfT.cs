@@ -16,11 +16,12 @@ namespace Azure.ResourceManager.Marketplace
 {
     internal partial class PrivateStoreCollectionOfferGetByContextsCollectionResultOfT : Pageable<CollectionOffersByContext>
     {
-        private readonly PrivateStoreCollectionOfferRestOperations _client;
+        private readonly PrivateStoreCollectionOffer _client;
         private readonly string _privateStoreId;
         private readonly string _collectionId;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionOfferGetByContextsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateStoreCollectionOffer client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateStoreCollectionOfferGetByContextsCollectionResultOfT(PrivateStoreCollectionOfferRestOperations client, string privateStoreId, string collectionId, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public PrivateStoreCollectionOfferGetByContextsCollectionResultOfT(PrivateStoreCollectionOffer client, string privateStoreId, string collectionId, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _privateStoreId = privateStoreId;
             _collectionId = collectionId;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of PrivateStoreCollectionOfferGetByContextsCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Marketplace
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByContextsRequest(nextLink, _privateStoreId, _collectionId, _content, _context) : _client.CreateGetByContextsRequest(_privateStoreId, _collectionId, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CollectionResource.GetByContexts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

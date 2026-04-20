@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
@@ -22,19 +22,6 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         public PrivateStoreData()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The PrivateStore data structure. </param>
-        internal PrivateStoreData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreProperties properties) : base(id, name, resourceType, systemData)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
         }
 
         /// <summary> The PrivateStore data structure. </summary>
@@ -58,7 +45,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Private Store id. </summary>
-        public string PrivateStoreId
+        public Guid? PrivateStoreId
         {
             get
             {
@@ -67,7 +54,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Identifier for purposes of race condition. </summary>
-        public string ETag
+        public ETag? ETag
         {
             get
             {
@@ -79,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.ETag = value;
+                Properties.ETag = value.Value;
             }
         }
 
@@ -101,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Tenant id. </summary>
-        public string TenantId
+        public Guid? TenantId
         {
             get
             {
@@ -113,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreProperties();
                 }
-                Properties.TenantId = value;
+                Properties.TenantId = value.Value;
             }
         }
 
@@ -135,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Gets list of associated collection ids. </summary>
-        public IReadOnlyList<string> CollectionIds
+        public IReadOnlyList<Guid> CollectionIds
         {
             get
             {

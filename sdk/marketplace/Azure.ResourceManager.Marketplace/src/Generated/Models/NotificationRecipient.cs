@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRecipient(string principalId, string emailAddress, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NotificationRecipient(Guid? principalId, string emailAddress, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             EmailAddress = emailAddress;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Principal ID. </summary>
-        public string PrincipalId { get; set; }
+        public Guid? PrincipalId { get; set; }
 
         /// <summary> Email Address. </summary>
         public string EmailAddress { get; }

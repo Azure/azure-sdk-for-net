@@ -12,27 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> The PrivateStoreCollectionRestOperations sub-client. </summary>
-    internal partial class PrivateStoreCollectionRestOperations
+    internal partial class PrivateStoreCollectionInfo
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of PrivateStoreCollectionInfo for mocking. </summary>
+        protected PrivateStoreCollectionInfo()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PrivateStoreCollectionInfo. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"> The API version to use for this client. </param>
-        internal PrivateStoreCollectionRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal PrivateStoreCollectionInfo(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-        }
-
-        /// <summary> Initializes a new instance of PrivateStoreCollectionRestOperations for mocking. </summary>
-        protected PrivateStoreCollectionRestOperations()
-        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Marketplace
             return message;
         }
 
-        internal HttpMessage CreatePostRequest(string privateStoreId, string collectionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string privateStoreId, string collectionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Marketplace
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            if ("text/plain" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "text/plain");
             }

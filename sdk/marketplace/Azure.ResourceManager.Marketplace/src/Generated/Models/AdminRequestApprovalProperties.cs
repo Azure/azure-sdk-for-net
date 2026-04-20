@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             ApprovedPlans = new ChangeTrackingList<string>();
             Plans = new ChangeTrackingList<PlanRequesterDetails>();
-            CollectionIds = new ChangeTrackingList<string>();
+            CollectionIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdminRequestApprovalProperties"/>. </summary>
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="administrator"> Gets or sets admin details. </param>
         /// <param name="plans"> Gets list of plans with requesters details. </param>
         /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
-        /// <param name="icon"> The offer icon url. </param>
+        /// <param name="iconUri"> The offer icon url. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdminRequestApprovalProperties(string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<string> collectionIds, string icon, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdminRequestApprovalProperties(string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<Guid> collectionIds, Uri iconUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferId = offerId;
             DisplayName = displayName;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Administrator = administrator;
             Plans = plans;
             CollectionIds = collectionIds;
-            Icon = icon;
+            IconUri = iconUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public IReadOnlyList<PlanRequesterDetails> Plans { get; } = new ChangeTrackingList<PlanRequesterDetails>();
 
         /// <summary> Gets or sets list of associated collection ids. </summary>
-        public IList<string> CollectionIds { get; } = new ChangeTrackingList<string>();
+        public IList<Guid> CollectionIds { get; } = new ChangeTrackingList<Guid>();
 
         /// <summary> The offer icon url. </summary>
-        public string Icon { get; }
+        public Uri IconUri { get; }
     }
 }

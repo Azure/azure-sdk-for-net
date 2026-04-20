@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="BulkCollectionsDetails"/>. </summary>
         public BulkCollectionsDetails()
         {
-            CollectionIds = new ChangeTrackingList<string>();
+            CollectionIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkCollectionsDetails"/>. </summary>
         /// <param name="collectionIds"> collection ids list that the action is performed on. </param>
         /// <param name="action"> Action to perform (For example: EnableCollections, DisableCollections). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCollectionsDetails(IList<string> collectionIds, string action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCollectionsDetails(IList<Guid> collectionIds, string action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionIds = collectionIds;
             Action = action;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> collection ids list that the action is performed on. </summary>
-        public IList<string> CollectionIds { get; } = new ChangeTrackingList<string>();
+        public IList<Guid> CollectionIds { get; } = new ChangeTrackingList<Guid>();
 
         /// <summary> Action to perform (For example: EnableCollections, DisableCollections). </summary>
         public string Action { get; set; }

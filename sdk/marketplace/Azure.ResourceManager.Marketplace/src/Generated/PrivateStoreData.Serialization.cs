@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(privateStoreData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(privateStoreData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateStoreData"/> from. </param>

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(EmailAddress))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            string principalId = default;
+            Guid? principalId = default;
             string emailAddress = default;
             string displayName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("emailAddress"u8))

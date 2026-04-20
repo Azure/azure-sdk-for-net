@@ -15,7 +15,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> List of admin request approval resources. </summary>
-    public partial class RequestApprovalsList : IJsonModel<RequestApprovalsList>
+    internal partial class RequestApprovalsList : IJsonModel<RequestApprovalsList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RequestApprovalResourceData item in Value)
+                foreach (MarketplaceApprovalRequestData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            IList<RequestApprovalResourceData> value = default;
+            IList<MarketplaceApprovalRequestData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<RequestApprovalResourceData> array = new List<RequestApprovalResourceData>();
+                    List<MarketplaceApprovalRequestData> array = new List<MarketplaceApprovalRequestData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RequestApprovalResourceData.DeserializeRequestApprovalResourceData(item, options));
+                        array.Add(MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RequestApprovalsList(value ?? new ChangeTrackingList<RequestApprovalResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new RequestApprovalsList(value ?? new ChangeTrackingList<MarketplaceApprovalRequestData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

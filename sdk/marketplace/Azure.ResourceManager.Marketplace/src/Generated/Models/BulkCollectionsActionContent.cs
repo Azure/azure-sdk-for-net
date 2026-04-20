@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal BulkCollectionsDetails Properties { get; set; }
 
         /// <summary> collection ids list that the action is performed on. </summary>
-        public IList<string> CollectionIds
+        public IList<Guid> CollectionIds
         {
             get
             {

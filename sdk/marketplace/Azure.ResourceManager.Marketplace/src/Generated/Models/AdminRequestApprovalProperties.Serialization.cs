@@ -133,21 +133,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in CollectionIds)
+                foreach (Guid item in CollectionIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Icon))
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
-                writer.WriteStringValue(Icon);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -199,8 +194,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             string comment = default;
             string administrator = default;
             IReadOnlyList<PlanRequesterDetails> plans = default;
-            IList<string> collectionIds = default;
-            string icon = default;
+            IList<Guid> collectionIds = default;
+            Uri iconUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -279,24 +274,21 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Guid> array = new List<Guid>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new Guid(item.GetString()));
                     }
                     collectionIds = array;
                     continue;
                 }
                 if (prop.NameEquals("icon"u8))
                 {
-                    icon = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -313,8 +305,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                 comment,
                 administrator,
                 plans ?? new ChangeTrackingList<PlanRequesterDetails>(),
-                collectionIds ?? new ChangeTrackingList<string>(),
-                icon,
+                collectionIds ?? new ChangeTrackingList<Guid>(),
+                iconUri,
                 additionalBinaryDataProperties);
         }
     }

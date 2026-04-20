@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -92,22 +93,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
             {
                 writer.WritePropertyName("privateStoreId"u8);
-                writer.WriteStringValue(PrivateStoreId);
+                writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedAt))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedAt"u8);
-                writer.WriteStringValue(ModifiedAt);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
             {
@@ -124,10 +125,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpdateSuppressedDueIdempotence))
+            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
-                writer.WriteBooleanValue(UpdateSuppressedDueIdempotence.Value);
+                writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
             if (Optional.IsCollectionDefined(IconFileUris))
             {
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             string uniqueOfferId = default;
             string offerDisplayName = default;
             string publisherDisplayName = default;
-            string eTag = default;
-            string privateStoreId = default;
-            string createdAt = default;
-            string modifiedAt = default;
+            ETag? eTag = default;
+            Guid? privateStoreId = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
             IReadOnlyList<string> specificPlanIdsLimitation = default;
-            bool? updateSuppressedDueIdempotence = default;
+            bool? isUpdateSuppressedDueToIdempotence = default;
             IReadOnlyDictionary<string, Uri> iconFileUris = default;
             bool? isStopSell = default;
             IReadOnlyList<PrivateStorePlan> plans = default;
@@ -234,22 +235,38 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateStoreId"u8))
                 {
-                    privateStoreId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateStoreId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("modifiedAt"u8))
                 {
-                    modifiedAt = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("specificPlanIdsLimitation"u8))
@@ -279,7 +296,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    updateSuppressedDueIdempotence = prop.Value.GetBoolean();
+                    isUpdateSuppressedDueToIdempotence = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("iconFileUris"u8))
@@ -337,10 +354,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 publisherDisplayName,
                 eTag,
                 privateStoreId,
-                createdAt,
-                modifiedAt,
+                createdOn,
+                modifiedOn,
                 specificPlanIdsLimitation ?? new ChangeTrackingList<string>(),
-                updateSuppressedDueIdempotence,
+                isUpdateSuppressedDueToIdempotence,
                 iconFileUris ?? new ChangeTrackingDictionary<string, Uri>(),
                 isStopSell,
                 plans ?? new ChangeTrackingList<PrivateStorePlan>(),

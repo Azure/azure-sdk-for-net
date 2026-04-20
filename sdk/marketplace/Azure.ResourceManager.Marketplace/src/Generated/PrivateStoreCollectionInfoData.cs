@@ -7,41 +7,27 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary> The Collection data structure. </summary>
-    public partial class CollectionData : ResourceData
+    public partial class PrivateStoreCollectionInfoData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CollectionData"/>. </summary>
-        public CollectionData()
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
+        public PrivateStoreCollectionInfoData()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CollectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The collection data structure. </param>
-        internal CollectionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CollectionProperties properties) : base(id, name, resourceType, systemData)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
         }
 
         /// <summary> The collection data structure. </summary>
         internal CollectionProperties Properties { get; set; }
 
         /// <summary> Gets collection Id. </summary>
-        public string CollectionId
+        public Guid? CollectionId
         {
             get
             {
@@ -84,11 +70,11 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Indicating whether all subscriptions are selected (=true) or not (=false). </summary>
-        public bool? AllSubscriptions
+        public bool? AreAllSubscriptionsSelected
         {
             get
             {
-                return Properties is null ? default : Properties.AllSubscriptions;
+                return Properties is null ? default : Properties.AreAllSubscriptionsSelected;
             }
             set
             {
@@ -96,16 +82,16 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new CollectionProperties();
                 }
-                Properties.AllSubscriptions = value.Value;
+                Properties.AreAllSubscriptionsSelected = value.Value;
             }
         }
 
         /// <summary> Indicating whether all items are approved for this collection (=true) or not (=false). </summary>
-        public bool? ApproveAllItems
+        public bool? AreAllItemsApproved
         {
             get
             {
-                return Properties is null ? default : Properties.ApproveAllItems;
+                return Properties is null ? default : Properties.AreAllItemsApproved;
             }
         }
 
@@ -132,11 +118,11 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Indicating whether the collection is enabled or disabled. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -144,7 +130,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new CollectionProperties();
                 }
-                Properties.Enabled = value.Value;
+                Properties.IsEnabled = value.Value;
             }
         }
 

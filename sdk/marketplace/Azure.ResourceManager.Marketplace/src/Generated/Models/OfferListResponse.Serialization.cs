@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (OfferData item in Value)
+            foreach (PrivateStoreOfferData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            IList<OfferData> value = default;
+            IList<PrivateStoreOfferData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<OfferData> array = new List<OfferData>();
+                    List<PrivateStoreOfferData> array = new List<PrivateStoreOfferData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OfferData.DeserializeOfferData(item, options));
+                        array.Add(PrivateStoreOfferData.DeserializePrivateStoreOfferData(item, options));
                     }
                     value = array;
                     continue;

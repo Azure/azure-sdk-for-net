@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(PlansContext))
             {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             string offerId = default;
-            string eTag = default;
+            ETag? eTag = default;
             IList<ContextAndPlansDetails> plansContext = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +150,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("plansContext"u8))

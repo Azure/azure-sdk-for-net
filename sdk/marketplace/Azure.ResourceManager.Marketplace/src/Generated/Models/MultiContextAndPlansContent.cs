@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> The offer's eTag. </summary>
-        public string ETag
+        public ETag? ETag
         {
             get
             {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new MultiContextAndPlansProperties();
                 }
-                Properties.ETag = value;
+                Properties.ETag = value.Value;
             }
         }
 

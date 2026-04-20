@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="eTag"> The offer's eTag. </param>
         /// <param name="plansContext"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiContextAndPlansProperties(string offerId, string eTag, IList<ContextAndPlansDetails> plansContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiContextAndPlansProperties(string offerId, ETag? eTag, IList<ContextAndPlansDetails> plansContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferId = offerId;
             ETag = eTag;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get; set; }
 
         /// <summary> The offer's eTag. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Gets the PlansContext. </summary>
         public IList<ContextAndPlansDetails> PlansContext { get; } = new ChangeTrackingList<ContextAndPlansDetails>();

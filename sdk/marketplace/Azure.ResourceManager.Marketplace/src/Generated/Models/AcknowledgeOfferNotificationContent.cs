@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal AcknowledgeOfferNotificationDetails Properties { get; set; }
 
         /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>
-        public bool? Acknowledge
+        public bool? IsAcknowledgeActionFlagEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Acknowledge;
+                return Properties is null ? default : Properties.IsAcknowledgeActionFlagEnabled;
             }
             set
             {
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.Acknowledge = value.Value;
+                Properties.IsAcknowledgeActionFlagEnabled = value.Value;
             }
         }
 
         /// <summary> Gets or sets a value indicating whether dismiss action flag is enabled. </summary>
-        public bool? Dismiss
+        public bool? IsDismissActionFlagEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Dismiss;
+                return Properties is null ? default : Properties.IsDismissActionFlagEnabled;
             }
             set
             {
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.Dismiss = value.Value;
+                Properties.IsDismissActionFlagEnabled = value.Value;
             }
         }
 
         /// <summary> Gets or sets a value indicating whether remove offer action flag is enabled. </summary>
-        public bool? RemoveOffer
+        public bool? IsRemoveOfferActionFlagEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RemoveOffer;
+                return Properties is null ? default : Properties.IsRemoveOfferActionFlagEnabled;
             }
             set
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     Properties = new AcknowledgeOfferNotificationDetails();
                 }
-                Properties.RemoveOffer = value.Value;
+                Properties.IsRemoveOfferActionFlagEnabled = value.Value;
             }
         }
 

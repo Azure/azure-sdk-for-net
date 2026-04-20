@@ -28,31 +28,31 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="collectionId"> Gets collection Id. </param>
         /// <param name="collectionName"> Gets or sets collection name. </param>
         /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
-        /// <param name="allSubscriptions"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
-        /// <param name="approveAllItems"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
+        /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
+        /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
         /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
-        /// <param name="enabled"> Indicating whether the collection is enabled or disabled. </param>
+        /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
         /// <param name="appliedRules"> Gets list of collection rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CollectionProperties(string collectionId, string collectionName, string claim, bool? allSubscriptions, bool? approveAllItems, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? enabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CollectionProperties(Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, IReadOnlyList<MarketplaceRule> appliedRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;
             Claim = claim;
-            AllSubscriptions = allSubscriptions;
-            ApproveAllItems = approveAllItems;
+            AreAllSubscriptionsSelected = areAllSubscriptionsSelected;
+            AreAllItemsApproved = areAllItemsApproved;
             ApproveAllItemsModifiedOn = approveAllItemsModifiedOn;
             SubscriptionsList = subscriptionsList;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             NumberOfOffers = numberOfOffers;
             AppliedRules = appliedRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets collection Id. </summary>
-        public string CollectionId { get; }
+        public Guid? CollectionId { get; }
 
         /// <summary> Gets or sets collection name. </summary>
         public string CollectionName { get; set; }
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string Claim { get; set; }
 
         /// <summary> Indicating whether all subscriptions are selected (=true) or not (=false). </summary>
-        public bool? AllSubscriptions { get; set; }
+        public bool? AreAllSubscriptionsSelected { get; set; }
 
         /// <summary> Indicating whether all items are approved for this collection (=true) or not (=false). </summary>
-        public bool? ApproveAllItems { get; }
+        public bool? AreAllItemsApproved { get; }
 
         /// <summary> Gets the modified date of all items approved. </summary>
         public DateTimeOffset? ApproveAllItemsModifiedOn { get; }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public IList<string> SubscriptionsList { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Indicating whether the collection is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Gets the number of offers associated with the collection. </summary>
         public long? NumberOfOffers { get; }

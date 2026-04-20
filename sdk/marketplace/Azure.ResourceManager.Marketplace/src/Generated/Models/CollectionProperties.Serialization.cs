@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (options.Format != "W" && Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
-                writer.WriteStringValue(CollectionId);
+                writer.WriteStringValue(CollectionId.Value);
             }
             if (Optional.IsDefined(CollectionName))
             {
@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("claim"u8);
                 writer.WriteStringValue(Claim);
             }
-            if (Optional.IsDefined(AllSubscriptions))
+            if (Optional.IsDefined(AreAllSubscriptionsSelected))
             {
                 writer.WritePropertyName("allSubscriptions"u8);
-                writer.WriteBooleanValue(AllSubscriptions.Value);
+                writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApproveAllItems))
+            if (options.Format != "W" && Optional.IsDefined(AreAllItemsApproved))
             {
                 writer.WritePropertyName("approveAllItems"u8);
-                writer.WriteBooleanValue(ApproveAllItems.Value);
+                writer.WriteBooleanValue(AreAllItemsApproved.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ApproveAllItemsModifiedOn))
             {
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(NumberOfOffers))
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            string collectionId = default;
+            Guid? collectionId = default;
             string collectionName = default;
             string claim = default;
-            bool? allSubscriptions = default;
-            bool? approveAllItems = default;
+            bool? areAllSubscriptionsSelected = default;
+            bool? areAllItemsApproved = default;
             DateTimeOffset? approveAllItemsModifiedOn = default;
             IList<string> subscriptionsList = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             long? numberOfOffers = default;
             IReadOnlyList<MarketplaceRule> appliedRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -196,7 +196,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 if (prop.NameEquals("collectionId"u8))
                 {
-                    collectionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    collectionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("collectionName"u8))
@@ -215,7 +219,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    allSubscriptions = prop.Value.GetBoolean();
+                    areAllSubscriptionsSelected = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("approveAllItems"u8))
@@ -224,7 +228,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    approveAllItems = prop.Value.GetBoolean();
+                    areAllItemsApproved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("approveAllItemsModifiedAt"u8))
@@ -263,7 +267,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("numberOfOffers"u8))
@@ -298,11 +302,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 collectionId,
                 collectionName,
                 claim,
-                allSubscriptions,
-                approveAllItems,
+                areAllSubscriptionsSelected,
+                areAllItemsApproved,
                 approveAllItemsModifiedOn,
                 subscriptionsList ?? new ChangeTrackingList<string>(),
-                enabled,
+                isEnabled,
                 numberOfOffers,
                 appliedRules ?? new ChangeTrackingList<MarketplaceRule>(),
                 additionalBinaryDataProperties);

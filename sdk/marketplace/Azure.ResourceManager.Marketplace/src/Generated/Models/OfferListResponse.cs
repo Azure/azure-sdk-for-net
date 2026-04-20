@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Initializes a new instance of <see cref="OfferListResponse"/>. </summary>
         /// <param name="value"> The Offer items on this page. </param>
-        internal OfferListResponse(IEnumerable<OfferData> value)
+        internal OfferListResponse(IEnumerable<PrivateStoreOfferData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="value"> The Offer items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfferListResponse(IList<OfferData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OfferListResponse(IList<PrivateStoreOfferData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> The Offer items on this page. </summary>
-        public IList<OfferData> Value { get; }
+        public IList<PrivateStoreOfferData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

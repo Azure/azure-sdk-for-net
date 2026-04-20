@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
             {
                 writer.WritePropertyName("privateStoreId"u8);
-                writer.WriteStringValue(PrivateStoreId);
+                writer.WriteStringValue(PrivateStoreId.Value);
             }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(PrivateStoreName))
             {
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(IsGov))
             {
@@ -108,13 +109,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in CollectionIds)
+                foreach (Guid item in CollectionIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -183,12 +179,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             PrivateStoreAvailability? availability = default;
-            string privateStoreId = default;
-            string eTag = default;
+            Guid? privateStoreId = default;
+            ETag? eTag = default;
             string privateStoreName = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             bool? isGov = default;
-            IReadOnlyList<string> collectionIds = default;
+            IReadOnlyList<Guid> collectionIds = default;
             IDictionary<string, string> branding = default;
             NotificationsSettingsProperties notificationsSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -205,12 +201,20 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("privateStoreId"u8))
                 {
-                    privateStoreId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateStoreId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateStoreName"u8))
@@ -220,7 +224,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isGov"u8))
@@ -238,17 +246,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Guid> array = new List<Guid>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new Guid(item.GetString()));
                     }
                     collectionIds = array;
                     continue;
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 privateStoreName,
                 tenantId,
                 isGov,
-                collectionIds ?? new ChangeTrackingList<string>(),
+                collectionIds ?? new ChangeTrackingList<Guid>(),
                 branding ?? new ChangeTrackingDictionary<string, string>(),
                 notificationsSettings,
                 additionalBinaryDataProperties);

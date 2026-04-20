@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a AdminRequestApprovalsResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AdminRequestApprovalsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource"/> using the GetAdminRequestApprovalsResources method.
+    /// A class representing a MarketplaceAdminApprovalRequest along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarketplaceAdminApprovalRequestResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource"/> using the GetMarketplaceAdminApprovalRequests method.
     /// </summary>
-    public partial class AdminRequestApprovalsResource : ArmResource
+    public partial class MarketplaceAdminApprovalRequestResource : ArmResource
     {
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
-        private readonly PrivateStoreRestOperations _privateStoreRestClient;
-        private readonly AdminRequestApprovalsResourceData _data;
+        private readonly PrivateStore _privateStoreRestClient;
+        private readonly MarketplaceAdminApprovalRequestData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
 
-        /// <summary> Initializes a new instance of AdminRequestApprovalsResource for mocking. </summary>
-        protected AdminRequestApprovalsResource()
+        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestResource for mocking. </summary>
+        protected MarketplaceAdminApprovalRequestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdminRequestApprovalsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AdminRequestApprovalsResource(ArmClient client, AdminRequestApprovalsResourceData data) : this(client, data.Id)
+        internal MarketplaceAdminApprovalRequestResource(ArmClient client, MarketplaceAdminApprovalRequestData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdminRequestApprovalsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AdminRequestApprovalsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MarketplaceAdminApprovalRequestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string adminRequestApprovalsResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string marketplaceAdminApprovalRequestApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStoreRestOperations(_privateStoreClientDiagnostics, Pipeline, Endpoint, adminRequestApprovalsResourceApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, marketplaceAdminApprovalRequestApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AdminRequestApprovalsResourceData Data
+        public virtual MarketplaceAdminApprovalRequestData Data
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AdminRequestApprovalsResource"/>. </description>
+        /// <description> <see cref="MarketplaceAdminApprovalRequestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AdminRequestApprovalsResource>> GetAsync(string publisherId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetAsync(string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResource.Get");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, publisherId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AdminRequestApprovalsResourceData> response = Response.FromValue(AdminRequestApprovalsResourceData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AdminRequestApprovalsResource"/>. </description>
+        /// <description> <see cref="MarketplaceAdminApprovalRequestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AdminRequestApprovalsResource> Get(string publisherId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceAdminApprovalRequestResource> Get(string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResource.Get");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Get");
             scope.Start();
             try
             {
@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.Marketplace
                 };
                 HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, publisherId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AdminRequestApprovalsResourceData> response = Response.FromValue(AdminRequestApprovalsResourceData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// Update a AdminRequestApprovalsResource.
+        /// Update a MarketplaceAdminApprovalRequest.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -212,16 +212,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AdminRequestApprovalsResource"/>. </description>
+        /// <description> <see cref="MarketplaceAdminApprovalRequestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<AdminRequestApprovalsResource>> UpdateAsync(WaitUntil waitUntil, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> UpdateAsync(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResource.Update");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
             try
             {
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, AdminRequestApprovalsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AdminRequestApprovalsResourceData> response = Response.FromValue(AdminRequestApprovalsResourceData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<AdminRequestApprovalsResource> operation = new MarketplaceArmOperation<AdminRequestApprovalsResource>(Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// Update a AdminRequestApprovalsResource.
+        /// Update a MarketplaceAdminApprovalRequest.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AdminRequestApprovalsResource"/>. </description>
+        /// <description> <see cref="MarketplaceAdminApprovalRequestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<AdminRequestApprovalsResource> Update(WaitUntil waitUntil, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> Update(WaitUntil waitUntil, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResource.Update");
+            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestResource.Update");
             scope.Start();
             try
             {
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, AdminRequestApprovalsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Id.Parent.Name, Id.Name, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AdminRequestApprovalsResourceData> response = Response.FromValue(AdminRequestApprovalsResourceData.FromResponse(result), result);
+                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<AdminRequestApprovalsResource> operation = new MarketplaceArmOperation<AdminRequestApprovalsResource>(Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

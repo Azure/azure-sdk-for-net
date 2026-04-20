@@ -25,30 +25,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AcknowledgeOfferNotificationDetails"/>. </summary>
-        /// <param name="acknowledge"> Gets or sets a value indicating whether acknowledge action flag is enabled. </param>
-        /// <param name="dismiss"> Gets or sets a value indicating whether dismiss action flag is enabled. </param>
-        /// <param name="removeOffer"> Gets or sets a value indicating whether remove offer action flag is enabled. </param>
+        /// <param name="isAcknowledgeActionFlagEnabled"> Gets or sets a value indicating whether acknowledge action flag is enabled. </param>
+        /// <param name="isDismissActionFlagEnabled"> Gets or sets a value indicating whether dismiss action flag is enabled. </param>
+        /// <param name="isRemoveOfferActionFlagEnabled"> Gets or sets a value indicating whether remove offer action flag is enabled. </param>
         /// <param name="addPlans"> Gets or sets added plans. </param>
         /// <param name="removePlans"> Gets or sets remove plans. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcknowledgeOfferNotificationDetails(bool? acknowledge, bool? dismiss, bool? removeOffer, IList<string> addPlans, IList<string> removePlans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcknowledgeOfferNotificationDetails(bool? isAcknowledgeActionFlagEnabled, bool? isDismissActionFlagEnabled, bool? isRemoveOfferActionFlagEnabled, IList<string> addPlans, IList<string> removePlans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Acknowledge = acknowledge;
-            Dismiss = dismiss;
-            RemoveOffer = removeOffer;
+            IsAcknowledgeActionFlagEnabled = isAcknowledgeActionFlagEnabled;
+            IsDismissActionFlagEnabled = isDismissActionFlagEnabled;
+            IsRemoveOfferActionFlagEnabled = isRemoveOfferActionFlagEnabled;
             AddPlans = addPlans;
             RemovePlans = removePlans;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>
-        public bool? Acknowledge { get; set; }
+        public bool? IsAcknowledgeActionFlagEnabled { get; set; }
 
         /// <summary> Gets or sets a value indicating whether dismiss action flag is enabled. </summary>
-        public bool? Dismiss { get; set; }
+        public bool? IsDismissActionFlagEnabled { get; set; }
 
         /// <summary> Gets or sets a value indicating whether remove offer action flag is enabled. </summary>
-        public bool? RemoveOffer { get; set; }
+        public bool? IsRemoveOfferActionFlagEnabled { get; set; }
 
         /// <summary> Gets or sets added plans. </summary>
         public IList<string> AddPlans { get; } = new ChangeTrackingList<string>();

@@ -7,34 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary> The privateStore offer data structure. </summary>
-    public partial class OfferData : ResourceData
+    public partial class PrivateStoreOfferData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
-        public OfferData()
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferData"/>. </summary>
+        public PrivateStoreOfferData()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The privateStore offer data structure. </param>
-        internal OfferData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateStoreOfferResult properties) : base(id, name, resourceType, systemData)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
         }
 
         /// <summary> The privateStore offer data structure. </summary>
@@ -68,7 +55,7 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Identifier for purposes of race condition. </summary>
-        public string ETag
+        public ETag? ETag
         {
             get
             {
@@ -80,12 +67,12 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreOfferResult();
                 }
-                Properties.ETag = value;
+                Properties.ETag = value.Value;
             }
         }
 
         /// <summary> Private store unique id. </summary>
-        public string PrivateStoreId
+        public Guid? PrivateStoreId
         {
             get
             {
@@ -94,20 +81,20 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Private store offer creation date. </summary>
-        public string CreatedAt
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedAt;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
         /// <summary> Private store offer modification date. </summary>
-        public string ModifiedAt
+        public DateTimeOffset? ModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.ModifiedAt;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
@@ -125,11 +112,11 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
-        public bool? UpdateSuppressedDueIdempotence
+        public bool? IsUpdateSuppressedDueToIdempotence
         {
             get
             {
-                return Properties is null ? default : Properties.UpdateSuppressedDueIdempotence;
+                return Properties is null ? default : Properties.IsUpdateSuppressedDueToIdempotence;
             }
             set
             {
@@ -137,7 +124,7 @@ namespace Azure.ResourceManager.Marketplace
                 {
                     Properties = new PrivateStoreOfferResult();
                 }
-                Properties.UpdateSuppressedDueIdempotence = value.Value;
+                Properties.IsUpdateSuppressedDueToIdempotence = value.Value;
             }
         }
 

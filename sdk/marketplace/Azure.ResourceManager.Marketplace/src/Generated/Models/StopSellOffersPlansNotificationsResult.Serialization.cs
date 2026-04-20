@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEntire))
+            if (options.Format != "W" && Optional.IsDefined(IsEntireInStopSell))
             {
                 writer.WritePropertyName("isEntire"u8);
-                writer.WriteBooleanValue(IsEntire.Value);
+                writer.WriteBooleanValue(IsEntireInStopSell.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Icon))
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
-                writer.WriteStringValue(Icon);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
             {
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicContext))
+            if (options.Format != "W" && Optional.IsDefined(HasPublicContext))
             {
                 writer.WritePropertyName("publicContext"u8);
-                writer.WriteBooleanValue(PublicContext.Value);
+                writer.WriteBooleanValue(HasPublicContext.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubscriptionsIds))
             {
@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
             string offerId = default;
             string displayName = default;
-            bool? isEntire = default;
+            bool? isEntireInStopSell = default;
             long? messageCode = default;
-            string icon = default;
+            Uri iconUri = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
-            bool? publicContext = default;
+            bool? hasPublicContext = default;
             IReadOnlyList<string> subscriptionsIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    isEntire = prop.Value.GetBoolean();
+                    isEntireInStopSell = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("messageCode"u8))
@@ -212,7 +212,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("icon"u8))
                 {
-                    icon = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("plans"u8))
@@ -235,7 +239,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    publicContext = prop.Value.GetBoolean();
+                    hasPublicContext = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("subscriptionsIds"u8))
@@ -267,11 +271,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new StopSellOffersPlansNotificationsResult(
                 offerId,
                 displayName,
-                isEntire,
+                isEntireInStopSell,
                 messageCode,
-                icon,
+                iconUri,
                 plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
-                publicContext,
+                hasPublicContext,
                 subscriptionsIds ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

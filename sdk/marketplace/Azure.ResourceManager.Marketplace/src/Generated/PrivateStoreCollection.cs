@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreCollection : ArmCollection, IEnumerable<PrivateStoreResource>, IAsyncEnumerable<PrivateStoreResource>
     {
         private readonly ClientDiagnostics _privateStoreClientDiagnostics;
-        private readonly PrivateStoreRestOperations _privateStoreRestClient;
-        private readonly ClientDiagnostics _privateStoreCollectionClientDiagnostics;
-        private readonly PrivateStoreCollectionRestOperations _privateStoreCollectionRestClient;
+        private readonly PrivateStore _privateStoreRestClient;
+        private readonly ClientDiagnostics _privateStoreCollectionInfoClientDiagnostics;
+        private readonly PrivateStoreCollectionInfo _privateStoreCollectionInfoRestClient;
         private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
         private readonly MarketplaceClient _marketplaceClientRestClient;
 
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(PrivateStoreResource.ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStoreRestOperations(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
-            _privateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(_privateStoreCollectionClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreCollectionInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreResource.ResourceType.Namespace, Diagnostics);
+            _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreResource.ResourceType.Namespace, Diagnostics);
             _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             if (id.ResourceType != TenantResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllAsyncCollectionResultOfT(_privateStoreRestClient, useCache, context), data => new PrivateStoreResource(Client, data));
+            return new AsyncPageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllAsyncCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllCollectionResultOfT(_privateStoreRestClient, useCache, context), data => new PrivateStoreResource(Client, data));
+            return new PageableWrapper<PrivateStoreData, PrivateStoreResource>(new PrivateStoreGetAllCollectionResultOfT(_privateStoreRestClient, useCache, context, "PrivateStoreCollection.GetAll"), data => new PrivateStoreResource(Client, data));
         }
 
         /// <summary>

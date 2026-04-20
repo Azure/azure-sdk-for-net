@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -31,25 +32,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
         /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdAt"> Private store offer creation date. </param>
-        /// <param name="modifiedAt"> Private store offer modification date. </param>
+        /// <param name="createdOn"> Private store offer creation date. </param>
+        /// <param name="modifiedOn"> Private store offer modification date. </param>
         /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="updateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="isStopSell"> Indicating whether the offer is stop sell or not. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, string eTag, string privateStoreId, string createdAt, string modifiedAt, IReadOnlyList<string> specificPlanIdsLimitation, bool? updateSuppressedDueIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, bool? isStopSell, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, bool? isStopSell, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
             PublisherDisplayName = publisherDisplayName;
             ETag = eTag;
             PrivateStoreId = privateStoreId;
-            CreatedAt = createdAt;
-            ModifiedAt = modifiedAt;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
             SpecificPlanIdsLimitation = specificPlanIdsLimitation;
-            UpdateSuppressedDueIdempotence = updateSuppressedDueIdempotence;
+            IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
             IconFileUris = iconFileUris;
             IsStopSell = isStopSell;
             Plans = plans;
@@ -66,22 +67,22 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PublisherDisplayName { get; }
 
         /// <summary> Identifier for purposes of race condition. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Private store unique id. </summary>
-        public string PrivateStoreId { get; }
+        public Guid? PrivateStoreId { get; }
 
         /// <summary> Private store offer creation date. </summary>
-        public string CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Private store offer modification date. </summary>
-        public string ModifiedAt { get; }
+        public DateTimeOffset? ModifiedOn { get; }
 
         /// <summary> Plan ids limitation for this offer. </summary>
         public IReadOnlyList<string> SpecificPlanIdsLimitation { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
-        public bool? UpdateSuppressedDueIdempotence { get; set; }
+        public bool? IsUpdateSuppressedDueToIdempotence { get; set; }
 
         /// <summary> Icon File Uris. </summary>
         public IReadOnlyDictionary<string, Uri> IconFileUris { get; } = new ChangeTrackingDictionary<string, Uri>();

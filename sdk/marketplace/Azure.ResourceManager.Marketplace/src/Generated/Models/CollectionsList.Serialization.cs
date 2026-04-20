@@ -15,7 +15,7 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> The CollectionsList. </summary>
-    public partial class CollectionsList : IJsonModel<CollectionsList>
+    internal partial class CollectionsList : IJsonModel<CollectionsList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CollectionData item in Value)
+                foreach (PrivateStoreCollectionInfoData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            IList<CollectionData> value = default;
+            IList<PrivateStoreCollectionInfoData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    List<CollectionData> array = new List<CollectionData>();
+                    List<PrivateStoreCollectionInfoData> array = new List<PrivateStoreCollectionInfoData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CollectionData.DeserializeCollectionData(item, options));
+                        array.Add(PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CollectionsList(value ?? new ChangeTrackingList<CollectionData>(), nextLink, additionalBinaryDataProperties);
+            return new CollectionsList(value ?? new ChangeTrackingList<PrivateStoreCollectionInfoData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

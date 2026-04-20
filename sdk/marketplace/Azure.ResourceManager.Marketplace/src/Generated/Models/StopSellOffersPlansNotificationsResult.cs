@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsResult"/>. </summary>
         /// <param name="offerId"> The offer id. </param>
         /// <param name="displayName"> The offer display name. </param>
-        /// <param name="isEntire"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
+        /// <param name="isEntireInStopSell"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
         /// <param name="messageCode"> The notification message code. </param>
-        /// <param name="icon"> The icon url. </param>
+        /// <param name="iconUri"> The icon url. </param>
         /// <param name="plans"> The list of removed plans notifications. </param>
-        /// <param name="publicContext"> True if the offer has public plans. </param>
+        /// <param name="hasPublicContext"> True if the offer has public plans. </param>
         /// <param name="subscriptionsIds"> The subscriptions related to private plans. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StopSellOffersPlansNotificationsResult(string offerId, string displayName, bool? isEntire, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans, bool? publicContext, IReadOnlyList<string> subscriptionsIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StopSellOffersPlansNotificationsResult(string offerId, string displayName, bool? isEntireInStopSell, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans, bool? hasPublicContext, IReadOnlyList<string> subscriptionsIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferId = offerId;
             DisplayName = displayName;
-            IsEntire = isEntire;
+            IsEntireInStopSell = isEntireInStopSell;
             MessageCode = messageCode;
-            Icon = icon;
+            IconUri = iconUri;
             Plans = plans;
-            PublicContext = publicContext;
+            HasPublicContext = hasPublicContext;
             SubscriptionsIds = subscriptionsIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string DisplayName { get; }
 
         /// <summary> A value indicating whether entire offer is in stop sell or only few of its plans. </summary>
-        public bool? IsEntire { get; }
+        public bool? IsEntireInStopSell { get; }
 
         /// <summary> The notification message code. </summary>
         public long? MessageCode { get; }
 
         /// <summary> The icon url. </summary>
-        public string Icon { get; }
+        public Uri IconUri { get; }
 
         /// <summary> The list of removed plans notifications. </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
 
         /// <summary> True if the offer has public plans. </summary>
-        public bool? PublicContext { get; }
+        public bool? HasPublicContext { get; }
 
         /// <summary> The subscriptions related to private plans. </summary>
         public IReadOnlyList<string> SubscriptionsIds { get; }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="collectionId"> Collection id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreCollectionDetails(string collectionName, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateStoreCollectionDetails(string collectionName, Guid? collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionName = collectionName;
             CollectionId = collectionId;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string CollectionName { get; }
 
         /// <summary> Collection id. </summary>
-        public string CollectionId { get; }
+        public Guid? CollectionId { get; }
     }
 }

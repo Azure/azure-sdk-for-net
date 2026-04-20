@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             get
             {
-                return Offers.Value;
+                return Offers is null ? default : Offers.Value;
             }
         }
     }

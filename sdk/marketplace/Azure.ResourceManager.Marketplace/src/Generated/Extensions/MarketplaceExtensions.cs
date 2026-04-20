@@ -50,75 +50,75 @@ namespace Azure.ResourceManager.Marketplace
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RequestApprovalResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MarketplaceApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetRequestApprovalResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetMarketplaceApprovalRequestResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RequestApprovalResource"/> object. </returns>
-        public static RequestApprovalResource GetRequestApprovalResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
+        public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMarketplaceArmClient(client).GetRequestApprovalResource(id);
+            return GetMockableMarketplaceArmClient(client).GetMarketplaceApprovalRequestResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AdminRequestApprovalsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetAdminRequestApprovalsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdminRequestApprovalsResource"/> object. </returns>
-        public static AdminRequestApprovalsResource GetAdminRequestApprovalsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
+        public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMarketplaceArmClient(client).GetAdminRequestApprovalsResource(id);
+            return GetMockableMarketplaceArmClient(client).GetMarketplaceAdminApprovalRequestResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CollectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateStoreCollectionInfoResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetCollectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetPrivateStoreCollectionInfoResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CollectionResource"/> object. </returns>
-        public static CollectionResource GetCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
+        public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMarketplaceArmClient(client).GetCollectionResource(id);
+            return GetMockableMarketplaceArmClient(client).GetPrivateStoreCollectionInfoResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OfferResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateStoreOfferResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetOfferResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetPrivateStoreOfferResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
-        public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
+        public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMarketplaceArmClient(client).GetOfferResource(id);
+            return GetMockableMarketplaceArmClient(client).GetPrivateStoreOfferResource(id);
         }
 
         /// <summary>

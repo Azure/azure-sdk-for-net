@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 throw new FormatException($"The model {nameof(AcknowledgeOfferNotificationDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Acknowledge))
+            if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
             {
                 writer.WritePropertyName("acknowledge"u8);
-                writer.WriteBooleanValue(Acknowledge.Value);
+                writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(Dismiss))
+            if (Optional.IsDefined(IsDismissActionFlagEnabled))
             {
                 writer.WritePropertyName("dismiss"u8);
-                writer.WriteBooleanValue(Dismiss.Value);
+                writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(RemoveOffer))
+            if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
             {
                 writer.WritePropertyName("removeOffer"u8);
-                writer.WriteBooleanValue(RemoveOffer.Value);
+                writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AddPlans))
             {
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            bool? acknowledge = default;
-            bool? dismiss = default;
-            bool? removeOffer = default;
+            bool? isAcknowledgeActionFlagEnabled = default;
+            bool? isDismissActionFlagEnabled = default;
+            bool? isRemoveOfferActionFlagEnabled = default;
             IList<string> addPlans = default;
             IList<string> removePlans = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    acknowledge = prop.Value.GetBoolean();
+                    isAcknowledgeActionFlagEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dismiss"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    dismiss = prop.Value.GetBoolean();
+                    isDismissActionFlagEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("removeOffer"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     {
                         continue;
                     }
-                    removeOffer = prop.Value.GetBoolean();
+                    isRemoveOfferActionFlagEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("addPlans"u8))
@@ -244,9 +244,9 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             return new AcknowledgeOfferNotificationDetails(
-                acknowledge,
-                dismiss,
-                removeOffer,
+                isAcknowledgeActionFlagEnabled,
+                isDismissActionFlagEnabled,
+                isRemoveOfferActionFlagEnabled,
                 addPlans ?? new ChangeTrackingList<string>(),
                 removePlans ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

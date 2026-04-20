@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
-                writer.WriteStringValue(CollectionId);
+                writer.WriteStringValue(CollectionId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             string collectionName = default;
-            string collectionId = default;
+            Guid? collectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (prop.NameEquals("collectionId"u8))
                 {
-                    collectionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    collectionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of <see cref="PrivateStoreProperties"/>. </summary>
         public PrivateStoreProperties()
         {
-            CollectionIds = new ChangeTrackingList<string>();
+            CollectionIds = new ChangeTrackingList<Guid>();
             Branding = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="branding"> Gets or sets list of branding characteristics. </param>
         /// <param name="notificationsSettings"> Gets or sets notifications settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreProperties(PrivateStoreAvailability? availability, string privateStoreId, string eTag, string privateStoreName, string tenantId, bool? isGov, IReadOnlyList<string> collectionIds, IDictionary<string, string> branding, NotificationsSettingsProperties notificationsSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateStoreProperties(PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, NotificationsSettingsProperties notificationsSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
@@ -53,22 +54,22 @@ namespace Azure.ResourceManager.Marketplace.Models
         public PrivateStoreAvailability? Availability { get; set; }
 
         /// <summary> Private Store id. </summary>
-        public string PrivateStoreId { get; }
+        public Guid? PrivateStoreId { get; }
 
         /// <summary> Identifier for purposes of race condition. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> Private Store Name. </summary>
         public string PrivateStoreName { get; set; }
 
         /// <summary> Tenant id. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> Is government. </summary>
         public bool? IsGov { get; set; }
 
         /// <summary> Gets list of associated collection ids. </summary>
-        public IReadOnlyList<string> CollectionIds { get; } = new ChangeTrackingList<string>();
+        public IReadOnlyList<Guid> CollectionIds { get; } = new ChangeTrackingList<Guid>();
 
         /// <summary> Gets or sets list of branding characteristics. </summary>
         public IDictionary<string, string> Branding { get; } = new ChangeTrackingDictionary<string, string>();

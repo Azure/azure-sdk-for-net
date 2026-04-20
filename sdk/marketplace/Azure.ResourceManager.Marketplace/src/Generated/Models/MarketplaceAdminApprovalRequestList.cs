@@ -12,22 +12,22 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> List of admin request approval resources. </summary>
-    public partial class AdminRequestApprovalsList
+    internal partial class MarketplaceAdminApprovalRequestList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AdminRequestApprovalsList"/>. </summary>
-        internal AdminRequestApprovalsList()
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
+        internal MarketplaceAdminApprovalRequestList()
         {
-            Value = new ChangeTrackingList<AdminRequestApprovalsResourceData>();
+            Value = new ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdminRequestApprovalsList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdminRequestApprovalsList(IList<AdminRequestApprovalsResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceAdminApprovalRequestList(IList<MarketplaceAdminApprovalRequestData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<AdminRequestApprovalsResourceData> Value { get; }
+        public IList<MarketplaceAdminApprovalRequestData> Value { get; }
 
         /// <summary> URL to get the next set of notifications list results if there are any. </summary>
         public string NextLink { get; }

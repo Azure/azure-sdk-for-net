@@ -12,23 +12,23 @@ using Azure.ResourceManager.Marketplace;
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Subscription list operation response. </summary>
-    public partial class SubscriptionsResponse
+    public partial class SubscriptionsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
-        internal SubscriptionsResponse()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResult"/>. </summary>
+        internal SubscriptionsResult()
         {
             Value = new ChangeTrackingList<MarketplaceSubscription>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResult"/>. </summary>
         /// <param name="value"> An array of subscriptions. </param>
         /// <param name="skipToken"> The skip token to retrieve the next page. </param>
         /// <param name="count"> Number of subscriptions on the page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionsResponse(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionsResult(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             SkipToken = skipToken;

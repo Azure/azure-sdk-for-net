@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(setRulesContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(setRulesContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

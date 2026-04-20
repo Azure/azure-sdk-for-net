@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Marketplace;
+using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Marketplace.Models
+namespace Azure.ResourceManager.Marketplace
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMarketplaceModelFactory
@@ -53,10 +52,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new SetRulesContent(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="availability"> Indicates private store availability. </param>
         /// <param name="privateStoreId"> Private Store id. </param>
         /// <param name="etag"> Identifier for purposes of race condition. </param>
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
         /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
         /// <returns> A new <see cref="Marketplace.PrivateStoreData"/> instance for mocking. </returns>
-        public static PrivateStoreData PrivateStoreData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateStoreAvailability? availability = default, string privateStoreId = default, string etag = default, string privateStoreName = default, string tenantId = default, bool? isGov = default, IEnumerable<string> collectionIds = default, IDictionary<string, string> branding = default, IEnumerable<NotificationRecipient> recipients = default, bool? sendToAllMarketplaceAdmins = default)
+        public static PrivateStoreData PrivateStoreData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateStoreAvailability? availability = default, Guid? privateStoreId = default, ETag? etag = default, string privateStoreName = default, Guid? tenantId = default, bool? isGov = default, IEnumerable<Guid> collectionIds = default, IDictionary<string, string> branding = default, IEnumerable<NotificationRecipient> recipients = default, bool? sendToAllMarketplaceAdmins = default)
         {
             return new PrivateStoreData(
                 id,
@@ -76,17 +75,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                availability is null && privateStoreId is null && etag is null && privateStoreName is null && tenantId is null && isGov is null && collectionIds is null && branding is null && recipients is null && sendToAllMarketplaceAdmins is null ? default : new PrivateStoreProperties(
-                    availability,
-                    privateStoreId,
-                    etag,
-                    privateStoreName,
-                    tenantId,
-                    isGov,
-                    (collectionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    branding,
-                    new NotificationsSettingsProperties((recipients ?? new ChangeTrackingList<NotificationRecipient>()).ToList(), sendToAllMarketplaceAdmins, null),
-                    null));
+                default);
         }
 
         /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
@@ -94,7 +83,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>
         /// <returns> A new <see cref="Models.NotificationRecipient"/> instance for mocking. </returns>
-        public static NotificationRecipient NotificationRecipient(string principalId = default, string emailAddress = default, string displayName = default)
+        public static NotificationRecipient NotificationRecipient(Guid? principalId = default, string emailAddress = default, string displayName = default)
         {
             return new NotificationRecipient(principalId, emailAddress, displayName, additionalBinaryDataProperties: null);
         }
@@ -123,15 +112,15 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
         /// <param name="etag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdAt"> Private store offer creation date. </param>
-        /// <param name="modifiedAt"> Private store offer modification date. </param>
+        /// <param name="createdOn"> Private store offer creation date. </param>
+        /// <param name="modifiedOn"> Private store offer modification date. </param>
         /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="updateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="isStopSell"> Indicating whether the offer is stop sell or not. </param>
         /// <param name="plans"> Offer plans. </param>
         /// <returns> A new <see cref="Models.PrivateStoreOfferResult"/> instance for mocking. </returns>
-        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = default, string offerDisplayName = default, string publisherDisplayName = default, string etag = default, string privateStoreId = default, string createdAt = default, string modifiedAt = default, IEnumerable<string> specificPlanIdsLimitation = default, bool? updateSuppressedDueIdempotence = default, IReadOnlyDictionary<string, Uri> iconFileUris = default, bool? isStopSell = default, IEnumerable<PrivateStorePlan> plans = default)
+        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId = default, string offerDisplayName = default, string publisherDisplayName = default, ETag? etag = default, Guid? privateStoreId = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, IEnumerable<string> specificPlanIdsLimitation = default, bool? isUpdateSuppressedDueToIdempotence = default, IReadOnlyDictionary<string, Uri> iconFileUris = default, bool? isStopSell = default, IEnumerable<PrivateStorePlan> plans = default)
         {
             specificPlanIdsLimitation ??= new ChangeTrackingList<string>();
             iconFileUris ??= new ChangeTrackingDictionary<string, Uri>();
@@ -143,10 +132,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 publisherDisplayName,
                 etag,
                 privateStoreId,
-                createdAt,
-                modifiedAt,
+                createdOn,
+                modifiedOn,
                 specificPlanIdsLimitation.ToList(),
-                updateSuppressedDueIdempotence,
+                isUpdateSuppressedDueToIdempotence,
                 iconFileUris,
                 isStopSell,
                 plans.ToList(),
@@ -244,7 +233,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="collectionId"> Collection id. </param>
         /// <returns> A new <see cref="Models.PrivateStoreCollectionDetails"/> instance for mocking. </returns>
-        public static PrivateStoreCollectionDetails PrivateStoreCollectionDetails(string collectionName = default, string collectionId = default)
+        public static PrivateStoreCollectionDetails PrivateStoreCollectionDetails(string collectionName = default, Guid? collectionId = default)
         {
             return new PrivateStoreCollectionDetails(collectionName, collectionId, additionalBinaryDataProperties: null);
         }
@@ -268,10 +257,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isEntire"> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
+        /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
         /// <returns> A new <see cref="Models.StopSellNotifications"/> instance for mocking. </returns>
-        public static StopSellNotifications StopSellNotifications(string offerId = default, string displayName = default, bool? isEntire = default, long? messageCode = default, string icon = default, IEnumerable<PlanNotificationDetails> plans = default)
+        public static StopSellNotifications StopSellNotifications(string offerId = default, string displayName = default, bool? isEntire = default, long? messageCode = default, Uri iconUri = default, IEnumerable<PlanNotificationDetails> plans = default)
         {
             plans ??= new ChangeTrackingList<PlanNotificationDetails>();
 
@@ -280,7 +269,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 displayName,
                 isEntire,
                 messageCode,
-                icon,
+                iconUri,
                 plans.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -299,10 +288,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
+        /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
         /// <returns> A new <see cref="Models.NewPlanNotification"/> instance for mocking. </returns>
-        public static NewPlanNotification NewPlanNotification(string offerId = default, string displayName = default, bool? isFuturePlansEnabled = default, long? messageCode = default, string icon = default, IEnumerable<PlanNotificationDetails> plans = default)
+        public static NewPlanNotification NewPlanNotification(string offerId = default, string displayName = default, bool? isFuturePlansEnabled = default, long? messageCode = default, Uri iconUri = default, IEnumerable<PlanNotificationDetails> plans = default)
         {
             plans ??= new ChangeTrackingList<PlanNotificationDetails>();
 
@@ -311,7 +300,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 displayName,
                 isFuturePlansEnabled,
                 messageCode,
-                icon,
+                iconUri,
                 plans.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -321,10 +310,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="publisherId"> Gets or sets publisher id. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
+        /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
         /// <returns> A new <see cref="Models.RequestApprovalsDetails"/> instance for mocking. </returns>
-        public static RequestApprovalsDetails RequestApprovalsDetails(string offerId = default, string displayName = default, string publisherId = default, long? messageCode = default, string icon = default, IEnumerable<PlanNotificationDetails> plans = default)
+        public static RequestApprovalsDetails RequestApprovalsDetails(string offerId = default, string displayName = default, string publisherId = default, long? messageCode = default, Uri iconUri = default, IEnumerable<PlanNotificationDetails> plans = default)
         {
             plans ??= new ChangeTrackingList<PlanNotificationDetails>();
 
@@ -333,7 +322,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 displayName,
                 publisherId,
                 messageCode,
-                icon,
+                iconUri,
                 plans.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -342,12 +331,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="value"> An array of subscriptions. </param>
         /// <param name="skipToken"> The skip token to retrieve the next page. </param>
         /// <param name="count"> Number of subscriptions on the page. </param>
-        /// <returns> A new <see cref="Models.SubscriptionsResponse"/> instance for mocking. </returns>
-        public static SubscriptionsResponse SubscriptionsResponse(IEnumerable<MarketplaceSubscription> value = default, string skipToken = default, long? count = default)
+        /// <returns> A new <see cref="Models.SubscriptionsResult"/> instance for mocking. </returns>
+        public static SubscriptionsResult SubscriptionsResult(IEnumerable<MarketplaceSubscription> value = default, string skipToken = default, long? count = default)
         {
             value ??= new ChangeTrackingList<MarketplaceSubscription>();
 
-            return new SubscriptionsResponse(value.ToList(), skipToken, count, additionalBinaryDataProperties: null);
+            return new SubscriptionsResult(value.ToList(), skipToken, count, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Subscription information. </summary>
@@ -394,14 +383,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> List of stop sell offers and plans notifications. </summary>
         /// <param name="offerId"> The offer id. </param>
         /// <param name="displayName"> The offer display name. </param>
-        /// <param name="isEntire"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
+        /// <param name="isEntireInStopSell"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
         /// <param name="messageCode"> The notification message code. </param>
-        /// <param name="icon"> The icon url. </param>
+        /// <param name="iconUri"> The icon url. </param>
         /// <param name="plans"> The list of removed plans notifications. </param>
-        /// <param name="publicContext"> True if the offer has public plans. </param>
+        /// <param name="hasPublicContext"> True if the offer has public plans. </param>
         /// <param name="subscriptionsIds"> The subscriptions related to private plans. </param>
         /// <returns> A new <see cref="Models.StopSellOffersPlansNotificationsResult"/> instance for mocking. </returns>
-        public static StopSellOffersPlansNotificationsResult StopSellOffersPlansNotificationsResult(string offerId = default, string displayName = default, bool? isEntire = default, long? messageCode = default, string icon = default, IEnumerable<PlanNotificationDetails> plans = default, bool? publicContext = default, IEnumerable<string> subscriptionsIds = default)
+        public static StopSellOffersPlansNotificationsResult StopSellOffersPlansNotificationsResult(string offerId = default, string displayName = default, bool? isEntireInStopSell = default, long? messageCode = default, Uri iconUri = default, IEnumerable<PlanNotificationDetails> plans = default, bool? hasPublicContext = default, IEnumerable<string> subscriptionsIds = default)
         {
             plans ??= new ChangeTrackingList<PlanNotificationDetails>();
             subscriptionsIds ??= new ChangeTrackingList<string>();
@@ -409,11 +398,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new StopSellOffersPlansNotificationsResult(
                 offerId,
                 displayName,
-                isEntire,
+                isEntireInStopSell,
                 messageCode,
-                icon,
+                iconUri,
                 plans.ToList(),
-                publicContext,
+                hasPublicContext,
                 subscriptionsIds.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -428,33 +417,26 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new SubscriptionsContextList(subscriptionsIds.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="offerId"> Gets or sets unique offer id. </param>
         /// <param name="offerDisplayName"> Gets offer display name. </param>
         /// <param name="publisherId"> The offer's publisher id. </param>
         /// <param name="plansDetails"> Gets or sets the plans details. </param>
         /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
         /// <param name="messageCode"> Gets or sets the request approval message code. </param>
-        /// <returns> A new <see cref="Marketplace.RequestApprovalResourceData"/> instance for mocking. </returns>
-        public static RequestApprovalResourceData RequestApprovalResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string offerDisplayName = default, string publisherId = default, IEnumerable<PrivateStorePlanDetails> plansDetails = default, bool? isClosed = default, long? messageCode = default)
+        /// <returns> A new <see cref="Marketplace.MarketplaceApprovalRequestData"/> instance for mocking. </returns>
+        public static MarketplaceApprovalRequestData MarketplaceApprovalRequestData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string offerDisplayName = default, string publisherId = default, IEnumerable<PrivateStorePlanDetails> plansDetails = default, bool? isClosed = default, long? messageCode = default)
         {
-            return new RequestApprovalResourceData(
+            return new MarketplaceApprovalRequestData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                offerId is null && offerDisplayName is null && publisherId is null && plansDetails is null && isClosed is null && messageCode is null ? default : new RequestApprovalProperties(
-                    offerId,
-                    offerDisplayName,
-                    publisherId,
-                    (plansDetails ?? new ChangeTrackingList<PrivateStorePlanDetails>()).ToList(),
-                    isClosed,
-                    messageCode,
-                    null));
+                default);
         }
 
         /// <summary> Return plan with request details. </summary>
@@ -477,17 +459,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> List of admin request approval resources. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
-        /// <returns> A new <see cref="Models.RequestApprovalsList"/> instance for mocking. </returns>
-        public static RequestApprovalsList RequestApprovalsList(IEnumerable<RequestApprovalResourceData> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<RequestApprovalResourceData>();
-
-            return new RequestApprovalsList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Request details needed to get the plans statuses. </summary>
         /// <param name="publisherId"> The offer's publisher id. </param>
         /// <param name="planIds"> Current plans list. </param>
@@ -500,22 +471,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new RequestDetails(publisherId, planIds.ToList(), subscriptionId, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
-        /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="etag"> Gets or sets e-tag field. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <returns> A new <see cref="Models.QueryApprovalRequestResult"/> instance for mocking. </returns>
-        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId = default, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default, string etag = default, long? messageCode = default)
-        {
-            plansDetails ??= new ChangeTrackingDictionary<string, PrivateStorePlanDetails>();
-
-            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails, etag, messageCode, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="offerId"> Gets or sets offer Id. </param>
         /// <param name="displayName"> Gets display name. </param>
         /// <param name="publisherId"> Gets or sets publisher Id. </param>
@@ -525,28 +484,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="administrator"> Gets or sets admin details. </param>
         /// <param name="plans"> Gets list of plans with requesters details. </param>
         /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
-        /// <param name="icon"> The offer icon url. </param>
-        /// <returns> A new <see cref="Marketplace.AdminRequestApprovalsResourceData"/> instance for mocking. </returns>
-        public static AdminRequestApprovalsResourceData AdminRequestApprovalsResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string displayName = default, string publisherId = default, MarketplaceAdminAction? adminAction = default, IEnumerable<string> approvedPlans = default, string comment = default, string administrator = default, IEnumerable<PlanRequesterDetails> plans = default, IEnumerable<string> collectionIds = default, string icon = default)
+        /// <param name="iconUri"> The offer icon url. </param>
+        /// <returns> A new <see cref="Marketplace.MarketplaceAdminApprovalRequestData"/> instance for mocking. </returns>
+        public static MarketplaceAdminApprovalRequestData MarketplaceAdminApprovalRequestData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string offerId = default, string displayName = default, string publisherId = default, MarketplaceAdminAction? adminAction = default, IEnumerable<string> approvedPlans = default, string comment = default, string administrator = default, IEnumerable<PlanRequesterDetails> plans = default, IEnumerable<Guid> collectionIds = default, Uri iconUri = default)
         {
-            return new AdminRequestApprovalsResourceData(
+            return new MarketplaceAdminApprovalRequestData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                offerId is null && displayName is null && publisherId is null && adminAction is null && approvedPlans is null && comment is null && administrator is null && plans is null && collectionIds is null && icon is null ? default : new AdminRequestApprovalProperties(
-                    offerId,
-                    displayName,
-                    publisherId,
-                    adminAction,
-                    (approvedPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    comment,
-                    administrator,
-                    (plans ?? new ChangeTrackingList<PlanRequesterDetails>()).ToList(),
-                    (collectionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    icon,
-                    null));
+                default);
         }
 
         /// <summary> Plan with requesters details. </summary>
@@ -579,63 +527,30 @@ namespace Azure.ResourceManager.Marketplace.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> List of admin request approval resources. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
-        /// <returns> A new <see cref="Models.AdminRequestApprovalsList"/> instance for mocking. </returns>
-        public static AdminRequestApprovalsList AdminRequestApprovalsList(IEnumerable<AdminRequestApprovalsResourceData> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<AdminRequestApprovalsResourceData>();
-
-            return new AdminRequestApprovalsList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="collectionId"> Gets collection Id. </param>
         /// <param name="collectionName"> Gets or sets collection name. </param>
         /// <param name="claim"> Gets or sets the association with Commercial's Billing Account. </param>
-        /// <param name="allSubscriptions"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
-        /// <param name="approveAllItems"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
+        /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
+        /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
         /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
-        /// <param name="enabled"> Indicating whether the collection is enabled or disabled. </param>
+        /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
         /// <param name="appliedRules"> Gets list of collection rules. </param>
-        /// <returns> A new <see cref="Marketplace.CollectionData"/> instance for mocking. </returns>
-        public static CollectionData CollectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string collectionId = default, string collectionName = default, string claim = default, bool? allSubscriptions = default, bool? approveAllItems = default, DateTimeOffset? approveAllItemsModifiedOn = default, IEnumerable<string> subscriptionsList = default, bool? enabled = default, long? numberOfOffers = default, IEnumerable<MarketplaceRule> appliedRules = default)
+        /// <returns> A new <see cref="Marketplace.PrivateStoreCollectionInfoData"/> instance for mocking. </returns>
+        public static PrivateStoreCollectionInfoData PrivateStoreCollectionInfoData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? collectionId = default, string collectionName = default, string claim = default, bool? areAllSubscriptionsSelected = default, bool? areAllItemsApproved = default, DateTimeOffset? approveAllItemsModifiedOn = default, IEnumerable<string> subscriptionsList = default, bool? isEnabled = default, long? numberOfOffers = default, IEnumerable<MarketplaceRule> appliedRules = default)
         {
-            return new CollectionData(
+            return new PrivateStoreCollectionInfoData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                collectionId is null && collectionName is null && claim is null && allSubscriptions is null && approveAllItems is null && approveAllItemsModifiedOn is null && subscriptionsList is null && enabled is null && numberOfOffers is null && appliedRules is null ? default : new CollectionProperties(
-                    collectionId,
-                    collectionName,
-                    claim,
-                    allSubscriptions,
-                    approveAllItems,
-                    approveAllItemsModifiedOn,
-                    (subscriptionsList ?? new ChangeTrackingList<string>()).ToList(),
-                    enabled,
-                    numberOfOffers,
-                    (appliedRules ?? new ChangeTrackingList<MarketplaceRule>()).ToList(),
-                    null));
-        }
-
-        /// <summary> The CollectionsList. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
-        /// <returns> A new <see cref="Models.CollectionsList"/> instance for mocking. </returns>
-        public static CollectionsList CollectionsList(IEnumerable<CollectionData> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<CollectionData>();
-
-            return new CollectionsList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
@@ -658,45 +573,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new CollectionOffersByContext(context, value is null ? default : new CollectionOffersByContextOffers((value ?? new ChangeTrackingList<PrivateStoreOfferResult>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
         /// <param name="etag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdAt"> Private store offer creation date. </param>
-        /// <param name="modifiedAt"> Private store offer modification date. </param>
+        /// <param name="createdOn"> Private store offer creation date. </param>
+        /// <param name="modifiedOn"> Private store offer modification date. </param>
         /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="updateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
         /// <param name="isStopSell"> Indicating whether the offer is stop sell or not. </param>
         /// <param name="plans"> Offer plans. </param>
-        /// <returns> A new <see cref="Marketplace.OfferData"/> instance for mocking. </returns>
-        public static OfferData OfferData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueOfferId = default, string offerDisplayName = default, string publisherDisplayName = default, string etag = default, string privateStoreId = default, string createdAt = default, string modifiedAt = default, IEnumerable<string> specificPlanIdsLimitation = default, bool? updateSuppressedDueIdempotence = default, IReadOnlyDictionary<string, Uri> iconFileUris = default, bool? isStopSell = default, IEnumerable<PrivateStorePlan> plans = default)
+        /// <returns> A new <see cref="Marketplace.PrivateStoreOfferData"/> instance for mocking. </returns>
+        public static PrivateStoreOfferData PrivateStoreOfferData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string uniqueOfferId = default, string offerDisplayName = default, string publisherDisplayName = default, ETag? etag = default, Guid? privateStoreId = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, IEnumerable<string> specificPlanIdsLimitation = default, bool? isUpdateSuppressedDueToIdempotence = default, IReadOnlyDictionary<string, Uri> iconFileUris = default, bool? isStopSell = default, IEnumerable<PrivateStorePlan> plans = default)
         {
-            return new OfferData(
+            return new PrivateStoreOfferData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                uniqueOfferId is null && offerDisplayName is null && publisherDisplayName is null && etag is null && privateStoreId is null && createdAt is null && modifiedAt is null && specificPlanIdsLimitation is null && updateSuppressedDueIdempotence is null && iconFileUris is null && isStopSell is null && plans is null ? default : new PrivateStoreOfferResult(
-                    uniqueOfferId,
-                    offerDisplayName,
-                    publisherDisplayName,
-                    etag,
-                    privateStoreId,
-                    createdAt,
-                    modifiedAt,
-                    (specificPlanIdsLimitation ?? new ChangeTrackingList<string>()).ToList(),
-                    updateSuppressedDueIdempotence,
-                    iconFileUris,
-                    isStopSell,
-                    (plans ?? new ChangeTrackingList<PrivateStorePlan>()).ToList(),
-                    null));
+                default);
         }
 
         /// <summary> Object of plans per context. </summary>
@@ -708,199 +610,6 @@ namespace Azure.ResourceManager.Marketplace.Models
             planIds ??= new ChangeTrackingList<string>();
 
             return new ContextAndPlansDetails(context, planIds.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Marketplace.PrivateStoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="availability"> Indicates private store availability. </param>
-        /// <param name="privateStoreId"> Private Store id. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
-        /// <param name="privateStoreName"> Private Store Name. </param>
-        /// <param name="tenantId"> Tenant id. </param>
-        /// <param name="isGov"> Is government. </param>
-        /// <param name="collectionIds"> Gets list of associated collection ids. </param>
-        /// <param name="branding"> Gets or sets list of branding characteristics. </param>
-        /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
-        /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
-        /// <returns> A new <see cref="Marketplace.PrivateStoreData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateStoreData PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IEnumerable<Guid> collectionIds, IDictionary<string, string> branding, IEnumerable<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins)
-        {
-            collectionIds ??= new ChangeTrackingList<Guid>();
-            branding ??= new ChangeTrackingDictionary<string, string>();
-            recipients ??= new ChangeTrackingList<NotificationRecipient>();
-
-            return new PrivateStoreData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateStoreOfferResult"/>. </summary>
-        /// <param name="uniqueOfferId"> Offers unique id. </param>
-        /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
-        /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
-        /// <param name="eTag"> Identifier for purposes of race condition. </param>
-        /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdOn"> Private store offer creation date. </param>
-        /// <param name="modifiedOn"> Private store offer modification date. </param>
-        /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
-        /// <param name="iconFileUris"> Icon File Uris. </param>
-        /// <param name="plans"> Offer plans. </param>
-        /// <returns> A new <see cref="Models.PrivateStoreOfferResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateStoreOfferResult PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IEnumerable<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IEnumerable<PrivateStorePlan> plans)
-        {
-            specificPlanIdsLimitation ??= new ChangeTrackingList<string>();
-            iconFileUris ??= new ChangeTrackingDictionary<string, Uri>();
-            plans ??= new ChangeTrackingList<PrivateStorePlan>();
-
-            return new PrivateStoreOfferResult(
-                uniqueOfferId,
-                offerDisplayName,
-                publisherDisplayName,
-                eTag,
-                privateStoreId,
-                default,
-                default,
-                specificPlanIdsLimitation.ToList(),
-                default,
-                iconFileUris,
-                default,
-                plans.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateStorePlan"/>. </summary>
-        /// <param name="skuId"> Identifier for this plan. </param>
-        /// <param name="planId"> Text identifier for this plan. </param>
-        /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
-        /// <param name="accessibility"> Plan accessibility. </param>
-        /// <param name="altStackReference"> Alternative stack type. </param>
-        /// <param name="stackType"> Stack type (classic or arm). </param>
-        /// <returns> A new <see cref="Models.PrivateStorePlan"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateStorePlan PrivateStorePlan(string skuId, string planId, string planDisplayName, PrivateStorePlanAccessibility? accessibility, string altStackReference, string stackType)
-        {
-            return PrivateStorePlan(skuId, planId, planDisplayName, accessibility, altStackReference, stackType, isStopSell: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.QueryApprovalRequestResult"/>. </summary>
-        /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
-        /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="eTag"> Gets or sets e-tag field. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <returns> A new <see cref="Models.QueryApprovalRequestResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static QueryApprovalRequestResult QueryApprovalRequestResult(string uniqueOfferId, IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails, ETag? eTag, long? messageCode)
-        {
-            plansDetails ??= new ChangeTrackingDictionary<string, PrivateStorePlanDetails>();
-
-            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails, eTag, messageCode, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StopSellNotifications"/>. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="isEntire"> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="iconUri"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        /// <returns> A new <see cref="Models.StopSellNotifications"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StopSellNotifications StopSellNotifications(string offerId, string displayName, bool? isEntire, long? messageCode, Uri iconUri, IEnumerable<PlanNotificationDetails> plans)
-        {
-            plans ??= new ChangeTrackingList<PlanNotificationDetails>();
-
-            return new StopSellNotifications(
-                offerId,
-                displayName,
-                isEntire,
-                messageCode,
-                default,
-                plans.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NewPlanNotification"/>. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="iconUri"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        /// <returns> A new <see cref="Models.NewPlanNotification"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NewPlanNotification NewPlanNotification(string offerId, string displayName, bool? isFuturePlansEnabled, long? messageCode, Uri iconUri, IEnumerable<PlanNotificationDetails> plans)
-        {
-            plans ??= new ChangeTrackingList<PlanNotificationDetails>();
-
-            return new NewPlanNotification(
-                offerId,
-                displayName,
-                isFuturePlansEnabled,
-                messageCode,
-                default,
-                plans.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RequestApprovalsDetails"/>. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> Gets or sets publisher id. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="iconUri"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        /// <returns> A new <see cref="Models.RequestApprovalsDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RequestApprovalsDetails RequestApprovalsDetails(string offerId, string displayName, string publisherId, long? messageCode, Uri iconUri, IEnumerable<PlanNotificationDetails> plans)
-        {
-            plans ??= new ChangeTrackingList<PlanNotificationDetails>();
-
-            return new RequestApprovalsDetails(
-                offerId,
-                displayName,
-                publisherId,
-                messageCode,
-                default,
-                plans.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StopSellOffersPlansNotificationsResult"/>. </summary>
-        /// <param name="offerId"> The offer id. </param>
-        /// <param name="displayName"> The offer display name. </param>
-        /// <param name="isEntireInStopSell"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
-        /// <param name="messageCode"> The notification message code. </param>
-        /// <param name="iconUri"> The icon url. </param>
-        /// <param name="plans"> The list of removed plans notifications. </param>
-        /// <param name="hasPublicContext"> True if the offer has public plans. </param>
-        /// <param name="subscriptionsIds"> The subscriptions related to private plans. </param>
-        /// <returns> A new <see cref="Models.StopSellOffersPlansNotificationsResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StopSellOffersPlansNotificationsResult StopSellOffersPlansNotificationsResult(string offerId, string displayName, bool? isEntireInStopSell, long? messageCode, Uri iconUri, IEnumerable<PlanNotificationDetails> plans, bool? hasPublicContext, IEnumerable<string> subscriptionsIds)
-        {
-            plans ??= new ChangeTrackingList<PlanNotificationDetails>();
-            subscriptionsIds ??= new ChangeTrackingList<string>();
-
-            return new StopSellOffersPlansNotificationsResult(
-                offerId,
-                displayName,
-                default,
-                messageCode,
-                default,
-                plans.ToList(),
-                default,
-                subscriptionsIds.ToList(),
-                additionalBinaryDataProperties: null);
         }
     }
 }

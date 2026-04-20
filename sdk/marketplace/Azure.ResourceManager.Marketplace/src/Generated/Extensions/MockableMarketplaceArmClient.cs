@@ -35,40 +35,40 @@ namespace Azure.ResourceManager.Marketplace.Mocking
             return new PrivateStoreResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RequestApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RequestApprovalResource"/> object. </returns>
-        public virtual RequestApprovalResource GetRequestApprovalResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
+        public virtual MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(ResourceIdentifier id)
         {
-            RequestApprovalResource.ValidateResourceId(id);
-            return new RequestApprovalResource(Client, id);
+            MarketplaceApprovalRequestResource.ValidateResourceId(id);
+            return new MarketplaceApprovalRequestResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AdminRequestApprovalsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdminRequestApprovalsResource"/> object. </returns>
-        public virtual AdminRequestApprovalsResource GetAdminRequestApprovalsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
+        public virtual MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier id)
         {
-            AdminRequestApprovalsResource.ValidateResourceId(id);
-            return new AdminRequestApprovalsResource(Client, id);
+            MarketplaceAdminApprovalRequestResource.ValidateResourceId(id);
+            return new MarketplaceAdminApprovalRequestResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateStoreCollectionInfoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CollectionResource"/> object. </returns>
-        public virtual CollectionResource GetCollectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
+        public virtual PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(ResourceIdentifier id)
         {
-            CollectionResource.ValidateResourceId(id);
-            return new CollectionResource(Client, id);
+            PrivateStoreCollectionInfoResource.ValidateResourceId(id);
+            return new PrivateStoreCollectionInfoResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="OfferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateStoreOfferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
-        public virtual OfferResource GetOfferResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
+        public virtual PrivateStoreOfferResource GetPrivateStoreOfferResource(ResourceIdentifier id)
         {
-            OfferResource.ValidateResourceId(id);
-            return new OfferResource(Client, id);
+            PrivateStoreOfferResource.ValidateResourceId(id);
+            return new PrivateStoreOfferResource(Client, id);
         }
     }
 }
