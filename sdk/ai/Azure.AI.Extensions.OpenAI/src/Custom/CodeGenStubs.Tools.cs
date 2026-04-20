@@ -25,7 +25,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("BrowserAutomationToolConnectionParameters")] public partial class ResponsesBrowserAutomationToolConnectionParameters { }
 [CodeGenType("BrowserAutomationToolParameters")] public partial class ResponsesBrowserAutomationToolParameters { }
 [CodeGenType("CaptureStructuredOutputsTool")] public partial class ResponsesCaptureStructuredOutputsTool { }
-[CodeGenType("ComputerTool")] public partial class ResponseComputerTool { }
+[CodeGenType("ComputerTool")] public partial class ResponsesComputerTool { }
 [CodeGenType("ContainerAutoParam")] public partial class ResponsesContainerAutoParam { }
 [CodeGenType("ContainerNetworkPolicyAllowlistParam")] public partial class ResponsesContainerNetworkPolicyAllowlistParam { }
 [CodeGenType("ContainerNetworkPolicyDisabledParam")] public partial class ResponsesContainerNetworkPolicyDisabledParam { }

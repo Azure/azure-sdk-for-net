@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponseComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesBingGroundingTool"/>, <see cref="ResponsesMicrosoftFabricPreviewTool"/>, <see cref="ResponsesSharepointPreviewTool"/>, <see cref="ResponsesAzureAISearchTool"/>, <see cref="ResponsesOpenApiTool"/>, <see cref="ResponsesBingCustomSearchPreviewTool"/>, <see cref="ResponsesBrowserAutomationPreviewTool"/>, <see cref="ResponsesAzureFunctionTool"/>, <see cref="ResponsesCaptureStructuredOutputsTool"/>, <see cref="ResponsesA2APreviewTool"/>, <see cref="ResponsesWorkIQPreviewTool"/>, <see cref="ResponsesMemorySearchPreviewTool"/>, <see cref="ResponsesWebSearchTool"/>, <see cref="ResponsesLocalShellToolParam"/>, <see cref="ResponsesFunctionShellToolParam"/>, <see cref="ResponsesCustomToolParam"/>, <see cref="ResponsesComputerTool"/>, <see cref="ResponsesNamespaceToolParam"/>, and <see cref="ResponsesToolSearchToolParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ResponsesTool : IJsonModel<ResponsesTool>
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                     case "apply_patch":
                         return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
                     case "computer":
-                        return ResponseComputerTool.DeserializeResponseComputerTool(element, options);
+                        return ResponsesComputerTool.DeserializeResponsesComputerTool(element, options);
                     case "namespace":
                         return ResponsesNamespaceToolParam.DeserializeResponsesNamespaceToolParam(element, options);
                     case "tool_search":

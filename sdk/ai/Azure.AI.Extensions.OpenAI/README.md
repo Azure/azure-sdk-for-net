@@ -523,7 +523,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 The deployment of hosted Agent may take time so we may need to wait while it is complete.
 
 ```C# Snippet:Sample_WaitForDeployment_HostedAgent_Async
-while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
     agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);

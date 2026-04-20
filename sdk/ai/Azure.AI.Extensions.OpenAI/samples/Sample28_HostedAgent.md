@@ -117,7 +117,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Synchronous sample:
 ```C# Snippet:Sample_WaitForDeployment_HostedAgent_Sync
-while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     Thread.Sleep(500);
     agentVersion = projectClient.AgentAdministrationClient.GetAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
@@ -130,7 +130,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 
 Asynchronous sample:
 ```C# Snippet:Sample_WaitForDeployment_HostedAgent_Async
-while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
 {
     await Task.Delay(500);
     agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
