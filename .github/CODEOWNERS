@@ -1224,6 +1224,7 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
+/.config/1espt/                                                    @benbp @weshaggard
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
 /doc/                                                              @jsquire @scottaddie
