@@ -23,3 +23,21 @@ For the full list of rules, see [docs/list-of-diagnostics.md](docs/list-of-diagn
 These analyzers run automatically during build and will produce warnings when your code doesn't follow Azure SDK conventions. Review the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) for detailed guidance on all rules.
 
 For detailed information about each diagnostic rule, see the [list of diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/list-of-diagnostics.md).
+
+## Troubleshooting
+
+### Suppressing a diagnostic
+
+Most rules can be suppressed with the standard `#pragma warning disable` / `#pragma warning restore` syntax or via a `[SuppressMessage]` attribute:
+
+```csharp
+#pragma warning disable AZC0012 // Justified: intentionally generic name used here
+public class Format { }
+#pragma warning restore AZC0012
+```
+
+> **Note:** AZC0101 is a **Warning** and can be suppressed. In the rare case where `ConfigureAwait(true)` is intentional, prefer omitting the `ConfigureAwait` call entirely.
+
+### Build output shows no diagnostics
+
+Ensure the package is referenced in your `.csproj` and that the project targets a framework compatible with Roslyn analyzers (net6.0 or later is recommended).
