@@ -152,19 +152,19 @@ namespace Azure.AI.Projects.Agents
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
-                        return OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
-                        return OpenAI.InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
-                        return OpenAI.InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
+                        return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
-                        return OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
+                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
                     case "mcp":
-                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
-                        return OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
+                        return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
                         return InternalLocalShellTool.DeserializeInternalLocalShellTool(element, options);
                     case "shell":
