@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
                 // For extension-scoped non-resource methods, create a scope-specific OperationContext
                 // so that parameters within the scope path are contextual (extracted from the scope ResourceIdentifier)
                 // rather than passed as separate method parameters.
-                var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier));
+                var scopeParameter = new ParameterProvider("scope", $"The scope that the resource will apply against.", typeof(ResourceIdentifier), validation: ParameterValidationType.AssertNotNull);
                 var scopeContext = OperationContext.Create(method.Scope.ScopeIdPattern);
 
                 // Process both async and sync method variants, passing the scope parameter
