@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The cached image and OS type. </summary>
     public partial class CachedImages
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>
         internal CachedImages(string osType, string image)
         {
-            Argument.AssertNotNull(osType, nameof(osType));
-            Argument.AssertNotNull(image, nameof(image));
-
             OSType = osType;
             Image = image;
         }
@@ -61,21 +28,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CachedImages(string osType, string image, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CachedImages(string osType, string image, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             Image = image;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CachedImages"/> for deserialization. </summary>
-        internal CachedImages()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The OS type of the cached image. </summary>
         public string OSType { get; }
+
         /// <summary> The cached image name. </summary>
         public string Image { get; }
     }

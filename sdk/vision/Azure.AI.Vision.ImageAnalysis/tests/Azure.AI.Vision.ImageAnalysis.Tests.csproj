@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="image-analysis-sample.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
