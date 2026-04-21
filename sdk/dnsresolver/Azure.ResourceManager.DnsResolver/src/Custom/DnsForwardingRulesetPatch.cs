@@ -12,9 +12,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     // Justification: the generator's default read path for this PATCH model's
-    // IList<WritableSubResource> currently emits an invalid call to a nonexistent
-    // WritableSubResource.DeserializeWritableSubResource method. Keep a property-level
-    // deserialization hook until the generator uses the correct per-item read path.
+    // IList<WritableSubResource> currently emits an invalid call to the internal
+    // WritableSubResource.DeserializeWritableSubResource method (CS0117). Keep a
+    // property-level deserialization hook until the generator uses the correct
+    // per-item read path (ModelReaderWriter.Read<WritableSubResource>(...)).
+    // TODO: remove this customization once https://github.com/Azure/azure-sdk-for-net/issues/58426 is fixed.
     [CodeGenSerialization(nameof(DnsResolverOutboundEndpoints), DeserializationValueHook = nameof(DeserializeDnsResolverOutboundEndpoints))]
     public partial class DnsForwardingRulesetPatch
     {
