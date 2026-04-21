@@ -3,6 +3,7 @@
 ## 4.10.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added KeySize to `KeyProperties` for symmetric keys
 
 ### Breaking Changes
 
