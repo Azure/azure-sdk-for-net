@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("is_directory"u8);
             writer.WriteBooleanValue(IsDirectory);
             writer.WritePropertyName("modified_time"u8);
-            writer.WriteStringValue(ModifiedTime, "O");
+            writer.WriteNumberValue(ModifiedTime, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("modified_time"u8))
                 {
-                    modifiedTime = prop.Value.GetDateTimeOffset("O");
+                    modifiedTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")

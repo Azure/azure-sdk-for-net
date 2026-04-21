@@ -560,61 +560,64 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [Ignore("Blocked by ADO Item 5205120.")]
     public async Task TestSessionFilesCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentSessionFiles filesClient = agentsClient.GetAgentSessionFiles();
-        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
+        ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             isolationKey: "key_1",
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         string fileLocalPath = GetTestFile("weather_openapi.json");
-        string file1 = "storage/file1.json", file2 = "storage/file2.json";
+        string file1 = "file1.json", file2 = "file2.json";
         int fileLength = File.ReadAllBytes(fileLocalPath).Length;
         //Create
         SessionFileWriteResponse writeResponse = await filesClient.UploadSessionFileAsync(
             agentName: agentVersion.Name,
             sessionId: session.AgentSessionId,
-            sessionStoragePath: file1,
+            sessionStoragePath: $"storage/{file1}",
             localPath: fileLocalPath
         );
-        Assert.That(writeResponse.Path, Is.EqualTo(file1));
+        Assert.That(writeResponse.Path, Is.EqualTo($"storage/{file1}"));
         Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         fileLocalPath = GetTestFile("test.txt");
         fileLength = File.ReadAllBytes(fileLocalPath).Length;
         writeResponse = await filesClient.UploadSessionFileAsync(
             agentName: agentVersion.Name,
             sessionId: session.AgentSessionId,
-            sessionStoragePath: file2,
+            sessionStoragePath: $"storage/{file2}",
             localPath: fileLocalPath
         );
-        Assert.That(writeResponse.Path, Is.EqualTo(file2));
+        Assert.That(writeResponse.Path, Is.EqualTo($"storage/{file2}"));
         Assert.That(writeResponse.BytesWritten, Is.EqualTo(fileLength));
         // List
         SessionDirectoryListResponse response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
         Assert.That(response.Entries, Has.Count.EqualTo(2));
-        Assert.That(response.Entries, Does.Contain(file1));
-        Assert.That(response.Entries, Does.Contain(file2));
+        List<string> lstEntries = [.. response.Entries.Select(x => x.Name)];
+        Assert.That(lstEntries, Does.Contain(file1));
+        Assert.That(lstEntries, Does.Contain(file2));
         // Download
         string temporaryFile = Path.GetTempFileName();
         File.Delete(temporaryFile);
-        await filesClient.DownloadSessionFileAsync(
+        BinaryData dataBin = await filesClient.DownloadSessionFileAsync(
             agentName: agentVersion.Name,
             sessionId: session.AgentSessionId,
-            sessionStoragePath: file2,
+            sessionStoragePath: $"storage/{file2}",
             localPath: temporaryFile
         );
         string data = File.ReadAllText(temporaryFile);
-        Assert.That(data, Is.EqualTo("The test file\r\n"));
+        Assert.That(data, Is.EqualTo("The test file\n"));
+        data = dataBin.ToString();
+        Assert.That(data, Is.EqualTo("The test file\n"));
         // Delete
-        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: file2);
+        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file2}");
         response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
-        Assert.That(response.Entries, Has.Count.EqualTo(1));
-        Assert.That(response.Entries[0], Is.EqualTo(file1));
-        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: file1);
+        lstEntries = [.. response.Entries.Select(x => x.Name)];
+        Assert.That(lstEntries, Has.Count.EqualTo(1));
+        Assert.That(lstEntries[0], Is.EqualTo(file1));
+        await filesClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: $"storage/{file1}");
         response = await filesClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "storage");
         Assert.That(response.Entries, Has.Count.EqualTo(0));
         await agentsClient.DeleteSessionAsync(

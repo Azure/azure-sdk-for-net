@@ -162,7 +162,7 @@ foreach (SessionDirectoryEntry entry in response.Entries)
 
 Asynchronous sample:
 ```C# Snippet:Sample_List_SessionFiles_Async
-SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: "/store");
+SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
 Console.WriteLine($"The path {response.Path} contains the next files:");
 foreach (SessionDirectoryEntry entry in response.Entries)
 {
@@ -203,13 +203,13 @@ File.Delete(filePath);
 Synchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Sync
 sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
+sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
 agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Async
 await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
-await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
+await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
 await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
 ```

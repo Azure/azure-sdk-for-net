@@ -127,7 +127,7 @@ public partial class AgentSessionFiles
         return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
     }
 
-    /// <summary> Download a file from the session sandbox as a binary stream. </summary>
+    /// <summary> Download a file from the session sandbox as a binary stream. Also return file as binary data. </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session ID. </param>
     /// <param name="sessionStoragePath"> The destination file path within the sandbox, relative to the session home directory. </param>
@@ -136,7 +136,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task DownloadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual async Task<BinaryData> DownloadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -145,9 +145,10 @@ public partial class AgentSessionFiles
 
         ClientResult result = await DownloadSessionFileAsync(agentName, sessionId, sessionStoragePath, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
+        return result.GetRawResponse().Content;
     }
 
-    /// <summary> Download a file from the session sandbox as a binary stream. </summary>
+    /// <summary> Download a file from the session sandbox as a binary stream. Also return file as binary data. </summary>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session ID. </param>
     /// <param name="sessionStoragePath"> The destination file path within the sandbox, relative to the session home directory. </param>
@@ -156,7 +157,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void DownloadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
+    public virtual BinaryData DownloadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -165,6 +166,7 @@ public partial class AgentSessionFiles
 
         ClientResult result = DownloadSessionFile(agentName, sessionId, sessionStoragePath, default, cancellationToken.ToRequestOptions());
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
+        return result.GetRawResponse().Content;
     }
 
     /// <summary>

@@ -1076,7 +1076,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedTime"> The last modification time in UTC (ISO 8601). </param>
+        /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
         {

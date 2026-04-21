@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedTime"> The last modification time in UTC (ISO 8601). </param>
+        /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
         internal SessionDirectoryEntry(string name, long size, bool isDirectory, DateTimeOffset modifiedTime)
         {
             Name = name;
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedTime"> The last modification time in UTC (ISO 8601). </param>
+        /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SessionDirectoryEntry(string name, long size, bool isDirectory, DateTimeOffset modifiedTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Whether this entry is a directory. </summary>
         public bool IsDirectory { get; }
 
-        /// <summary> The last modification time in UTC (ISO 8601). </summary>
+        /// <summary> The Unix timestamp (in seconds) when the file was last modified. </summary>
         public DateTimeOffset ModifiedTime { get; }
     }
 }

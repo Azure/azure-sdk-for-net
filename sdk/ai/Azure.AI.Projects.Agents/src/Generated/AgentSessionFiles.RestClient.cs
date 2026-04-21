@@ -20,14 +20,14 @@ namespace Azure.AI.Projects.Agents
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string sessionId, string path, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
-            uri.AppendPath(sessionId, true);
+            uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files/content", false);
             uri.AppendQuery("path", path, true);
             if (_apiVersion != null)
@@ -47,14 +47,14 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadSessionFileRequest(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDownloadSessionFileRequest(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
-            uri.AppendPath(sessionId, true);
+            uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files/content", false);
             uri.AppendQuery("path", path, true);
             if (_apiVersion != null)
@@ -72,14 +72,14 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
-            uri.AppendPath(sessionId, true);
+            uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files", false);
             uri.AppendQuery("path", path, true);
             if (_apiVersion != null)
@@ -97,14 +97,14 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionFileRequest(string agentName, string sessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionFileRequest(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/endpoint/sessions/", false);
-            uri.AppendPath(sessionId, true);
+            uri.AppendPath(agentSessionId, true);
             uri.AppendPath("/files", false);
             uri.AppendQuery("path", path, true);
             if (recursive != null)

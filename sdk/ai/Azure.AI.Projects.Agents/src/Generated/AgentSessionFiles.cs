@@ -52,16 +52,16 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult UploadSessionFile(string agentName, string sessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, sessionId, path, content, foundryFeatures, options);
+            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -75,16 +75,16 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string sessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, sessionId, path, content, foundryFeatures, options);
+            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -93,15 +93,15 @@ namespace Azure.AI.Projects.Agents
         /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"></param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string sessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = UploadSessionFile(agentName, sessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = UploadSessionFile(agentName, agentSessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -110,15 +110,15 @@ namespace Azure.AI.Projects.Agents
         /// Maximum file size is 50 MB. Uploads exceeding this limit return 413 Payload Too Large.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"></param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string sessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await UploadSessionFileAsync(agentName, sessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UploadSessionFileAsync(agentName, agentSessionId, path, BinaryContent.Create(content), foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -131,15 +131,15 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadSessionFile(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, sessionId, path, foundryFeatures, options);
+            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -152,41 +152,41 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, sessionId, path, foundryFeatures, options);
+            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
         /// <summary> Download a file from the session sandbox as a binary stream. </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadSessionFile(agentName, sessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = DownloadSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
         /// <summary> Download a file from the session sandbox as a binary stream. </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadSessionFileAsync(agentName, sessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DownloadSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -200,15 +200,15 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSessionFiles(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual ClientResult GetSessionFiles(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, sessionId, path, foundryFeatures, options);
+            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -222,15 +222,15 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string sessionId, string path, string foundryFeatures, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionFilesAsync(string agentName, string agentSessionId, string path, string foundryFeatures, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, sessionId, path, foundryFeatures, options);
+            using PipelineMessage message = CreateGetSessionFilesRequest(agentName, agentSessionId, path, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -239,14 +239,14 @@ namespace Azure.AI.Projects.Agents
         /// Returns only the immediate children of the specified directory (non-recursive).
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionDirectoryListResponse> GetSessionFiles(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionDirectoryListResponse> GetSessionFiles(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = GetSessionFiles(agentName, sessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = GetSessionFiles(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
         }
 
@@ -255,14 +255,14 @@ namespace Azure.AI.Projects.Agents
         /// Returns only the immediate children of the specified directory (non-recursive).
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The directory path to list, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionDirectoryListResponse>> GetSessionFilesAsync(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionDirectoryListResponse>> GetSessionFilesAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await GetSessionFilesAsync(agentName, sessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetSessionFilesAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((SessionDirectoryListResponse)result, result.GetRawResponse());
         }
 
@@ -276,16 +276,16 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSessionFile(string agentName, string sessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
+        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, sessionId, path, foundryFeatures, recursive, options);
+            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -299,16 +299,16 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string sessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, string foundryFeatures, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, sessionId, path, foundryFeatures, recursive, options);
+            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, foundryFeatures, recursive, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -317,15 +317,15 @@ namespace Azure.AI.Projects.Agents
         /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult DeleteSessionFile(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            return DeleteSessionFile(agentName, sessionId, path, foundryFeatures?.ToSerialString(), recursive, cancellationToken.ToRequestOptions());
+            return DeleteSessionFile(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -333,15 +333,15 @@ namespace Azure.AI.Projects.Agents
         /// If `recursive` is false (default) and the target is a non-empty directory, the API returns 409 Conflict.
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
-        /// <param name="sessionId"> The session ID. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string sessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, AgentDefinitionOptInKeys? foundryFeatures = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteSessionFileAsync(agentName, sessionId, path, foundryFeatures?.ToSerialString(), recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteSessionFileAsync(agentName, agentSessionId, path, foundryFeatures?.ToSerialString(), recursive, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
     }
 }
