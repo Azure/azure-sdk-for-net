@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateResyncWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkTapRuleName)
+        internal RequestUriBuilder CreateSynchronizeRequestUri(string subscriptionId, string resourceGroupName, string networkTapRuleName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateResyncWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkTapRuleName)
+        internal HttpMessage CreateSynchronizeRequest(string subscriptionId, string resourceGroupName, string networkTapRuleName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -607,13 +607,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResyncWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response> SynchronizeAsync(string subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
 
-            using var message = CreateResyncWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapRuleName);
+            using var message = CreateSynchronizeRequest(subscriptionId, resourceGroupName, networkTapRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -632,13 +632,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResyncWithTypedResult(string subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
+        public Response Synchronize(string subscriptionId, string resourceGroupName, string networkTapRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
 
-            using var message = CreateResyncWithTypedResultRequest(subscriptionId, resourceGroupName, networkTapRuleName);
+            using var message = CreateSynchronizeRequest(subscriptionId, resourceGroupName, networkTapRuleName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

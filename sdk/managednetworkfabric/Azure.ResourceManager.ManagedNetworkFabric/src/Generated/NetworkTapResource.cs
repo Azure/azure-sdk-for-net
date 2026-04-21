@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ResyncWithTypedResult</description>
+        /// <description>NetworkTaps_Synchronize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkTapResyncResult>> ResyncWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkTapResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.ResyncWithTypedResult");
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.Synchronize");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.ResyncWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(new NetworkTapResyncResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateResyncWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkTapRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(new NetworkTapResyncResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_ResyncWithTypedResult</description>
+        /// <description>NetworkTaps_Synchronize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkTapResyncResult> ResyncWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkTapResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.ResyncWithTypedResult");
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.Synchronize");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.ResyncWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(new NetworkTapResyncResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateResyncWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkTapRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapResyncResult>(new NetworkTapResyncResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_UpdateAdministrativeStateWithTypedResult</description>
+        /// <description>NetworkTaps_SetAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -455,16 +455,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> UpdateAdministrativeStateWithTypedResultAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeStateWithTypedResult");
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkTapRestClient.UpdateAdministrativeStateWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateUpdateAdministrativeStateWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkTapRestClient.SetAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTaps_UpdateAdministrativeStateWithTypedResult</description>
+        /// <description>NetworkTaps_SetAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -501,16 +501,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> UpdateAdministrativeStateWithTypedResult(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.UpdateAdministrativeStateWithTypedResult");
+            using var scope = _networkTapClientDiagnostics.CreateScope("NetworkTapResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkTapRestClient.UpdateAdministrativeStateWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateUpdateAdministrativeStateWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkTapRestClient.SetAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkTapClientDiagnostics, Pipeline, _networkTapRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -13,102 +13,102 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult / DeviceUpdateCommonPostActionResult / ValidateConfigurationResult)
     // to operation-specific types. The generated methods were renamed via operationId directives
-    // (adding "WithTypedResult" suffix), and these shims preserve the original v1.1.2 method signatures.
+    // (adding synonym-based renaming), and these shims preserve the original v1.1.2 method signatures.
     public partial class NetworkFabricResource
     {
-        /// <summary> Backward-compatible shim for CommitConfiguration. Use CommitConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for CommitConfiguration. Use ApplyConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> CommitConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await CommitConfigurationWithTypedResultAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
+            var operation = await ApplyConfigurationAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<CommitConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for CommitConfiguration. Use CommitConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for CommitConfiguration. Use ApplyConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> CommitConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = CommitConfigurationWithTypedResult(waitUntil, null, cancellationToken);
+            var operation = ApplyConfiguration(waitUntil, null, cancellationToken);
             return new CompatArmOperation<CommitConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for Deprovision. Use DeprovisionWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> DeprovisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await DeprovisionWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await DeactivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
-        /// <summary> Backward-compatible shim for Deprovision. Use DeprovisionWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Deprovision. Use Deactivate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Deprovision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = DeprovisionWithTypedResult(waitUntil, cancellationToken);
+            var operation = Deactivate(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
-        /// <summary> Backward-compatible shim for Provision. Use ProvisionWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> ProvisionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await ProvisionWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await ActivateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
-        /// <summary> Backward-compatible shim for Provision. Use ProvisionWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Provision. Use Activate instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> Provision(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = ProvisionWithTypedResult(waitUntil, cancellationToken);
+            var operation = Activate(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use RefreshConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await RefreshConfigurationWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await ReloadConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use RefreshConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = RefreshConfigurationWithTypedResult(waitUntil, cancellationToken);
+            var operation = ReloadConfiguration(waitUntil, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateInfraManagementBfdConfiguration. Use UpdateInfraManagementBfdConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateInfraManagementBfdConfiguration. Use SetInfraManagementBfdConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateInfraManagementBfdConfigurationAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await UpdateInfraManagementBfdConfigurationWithTypedResultAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            var operation = await SetInfraManagementBfdConfigurationAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateInfraManagementBfdConfiguration. Use UpdateInfraManagementBfdConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateInfraManagementBfdConfiguration. Use SetInfraManagementBfdConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateInfraManagementBfdConfiguration(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = UpdateInfraManagementBfdConfigurationWithTypedResult(waitUntil, content, cancellationToken);
+            var operation = SetInfraManagementBfdConfiguration(waitUntil, content, cancellationToken);
             return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateWorkloadManagementBfdConfiguration. Use UpdateWorkloadManagementBfdConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateWorkloadManagementBfdConfiguration. Use SetWorkloadManagementBfdConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateWorkloadManagementBfdConfigurationAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await UpdateWorkloadManagementBfdConfigurationWithTypedResultAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            var operation = await SetWorkloadManagementBfdConfigurationAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateWorkloadManagementBfdConfiguration. Use UpdateWorkloadManagementBfdConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateWorkloadManagementBfdConfiguration. Use SetWorkloadManagementBfdConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateWorkloadManagementBfdConfiguration(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = UpdateWorkloadManagementBfdConfigurationWithTypedResult(waitUntil, content, cancellationToken);
+            var operation = SetWorkloadManagementBfdConfiguration(waitUntil, content, cancellationToken);
             return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             throw new NotSupportedException("This overload is no longer supported. Use Upgrade with UpgradeNetworkFabricProperties instead.");
         }
 
-        /// <summary> Backward-compatible shim for GetTopology. Use GetTopologyWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for GetTopology. Use RetrieveTopology instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ValidateConfigurationResult>> GetTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await GetTopologyWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await RetrieveTopologyAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
         }
 
-        /// <summary> Backward-compatible shim for GetTopology. Use GetTopologyWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for GetTopology. Use RetrieveTopology instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ValidateConfigurationResult> GetTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = GetTopologyWithTypedResult(waitUntil, cancellationToken);
+            var operation = RetrieveTopology(waitUntil, cancellationToken);
             return new CompatArmOperation<GetTopologyResult, ValidateConfigurationResult>(operation, r => new ValidateConfigurationResult(r.Error, null, null, null));
         }
     }

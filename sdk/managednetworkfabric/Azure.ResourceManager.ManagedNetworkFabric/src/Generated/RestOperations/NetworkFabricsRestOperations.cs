@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateCommitConfigurationWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content)
+        internal RequestUriBuilder CreateApplyConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateCommitConfigurationWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content)
+        internal HttpMessage CreateApplyConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -795,13 +795,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CommitConfigurationWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ApplyConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateCommitConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateApplyConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -821,13 +821,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CommitConfigurationWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public Response ApplyConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateCommitConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateApplyConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateDeprovisionWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal RequestUriBuilder CreateDeactivateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateDeprovisionWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateDeactivateRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -882,13 +882,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeprovisionWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public async Task<Response> DeactivateAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateDeprovisionWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateDeactivateRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -907,13 +907,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeprovisionWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public Response Deactivate(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateDeprovisionWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateDeactivateRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateGetTopologyWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal RequestUriBuilder CreateRetrieveTopologyRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateGetTopologyWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateRetrieveTopologyRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1062,13 +1062,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetTopologyWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public async Task<Response> RetrieveTopologyAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateGetTopologyWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateRetrieveTopologyRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1087,13 +1087,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetTopologyWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public Response RetrieveTopology(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateGetTopologyWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateRetrieveTopologyRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateProvisionWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal RequestUriBuilder CreateActivateRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1214,7 +1214,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateProvisionWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateActivateRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1242,13 +1242,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ProvisionWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public async Task<Response> ActivateAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateProvisionWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateActivateRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1267,13 +1267,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ProvisionWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public Response Activate(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateProvisionWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateActivateRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateRefreshConfigurationWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal RequestUriBuilder CreateReloadConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateRefreshConfigurationWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
+        internal HttpMessage CreateReloadConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1328,13 +1328,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RefreshConfigurationWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public async Task<Response> ReloadConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateRefreshConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateReloadConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1353,13 +1353,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RefreshConfigurationWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
+        public Response ReloadConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
 
-            using var message = CreateRefreshConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName);
+            using var message = CreateReloadConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateSetInfraManagementBfdConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1752,7 +1752,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateSetInfraManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1785,14 +1785,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateInfraManagementBfdConfigurationWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SetInfraManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateSetInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1812,14 +1812,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateInfraManagementBfdConfigurationWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response SetInfraManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateSetInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1831,7 +1831,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateSetWorkloadManagementBfdConfigurationRequestUri(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1846,7 +1846,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateSetWorkloadManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1879,14 +1879,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateWorkloadManagementBfdConfigurationWithTypedResultAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SetWorkloadManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateSetWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1906,14 +1906,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateWorkloadManagementBfdConfigurationWithTypedResult(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response SetWorkloadManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequest(subscriptionId, resourceGroupName, networkFabricName, content);
+            using var message = CreateSetWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

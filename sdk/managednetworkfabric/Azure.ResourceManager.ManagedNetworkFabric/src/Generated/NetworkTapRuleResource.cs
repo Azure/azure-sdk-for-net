@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_ResyncWithTypedResult</description>
+        /// <description>NetworkTapRules_Synchronize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkTapRuleResyncResult>> ResyncWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkTapRuleResyncResult>> SynchronizeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleResource.ResyncWithTypedResult");
+            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleResource.Synchronize");
             scope.Start();
             try
             {
-                var response = await _networkTapRuleRestClient.ResyncWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(new NetworkTapRuleResyncResultOperationSource(), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateResyncWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkTapRuleRestClient.SynchronizeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(new NetworkTapRuleResyncResultOperationSource(), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkTapRules_ResyncWithTypedResult</description>
+        /// <description>NetworkTapRules_Synchronize</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -411,14 +411,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkTapRuleResyncResult> ResyncWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkTapRuleResyncResult> Synchronize(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleResource.ResyncWithTypedResult");
+            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleResource.Synchronize");
             scope.Start();
             try
             {
-                var response = _networkTapRuleRestClient.ResyncWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(new NetworkTapRuleResyncResultOperationSource(), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateResyncWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkTapRuleRestClient.Synchronize(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResyncResult>(new NetworkTapRuleResyncResultOperationSource(), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateSynchronizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

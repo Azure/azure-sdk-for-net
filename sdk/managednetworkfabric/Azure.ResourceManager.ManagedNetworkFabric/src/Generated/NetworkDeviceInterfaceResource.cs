@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_UpdateAdministrativeStateWithTypedResult</description>
+        /// <description>NetworkInterfaces_SetAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -370,16 +370,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> UpdateAdministrativeStateWithTypedResultAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.UpdateAdministrativeStateWithTypedResult");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.UpdateAdministrativeStateWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateAdministrativeStateWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.SetAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_UpdateAdministrativeStateWithTypedResult</description>
+        /// <description>NetworkInterfaces_SetAdministrativeState</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,16 +416,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> UpdateAdministrativeStateWithTypedResult(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.UpdateAdministrativeStateWithTypedResult");
+            using var scope = _networkDeviceInterfaceNetworkInterfacesClientDiagnostics.CreateScope("NetworkDeviceInterfaceResource.SetAdministrativeState");
             scope.Start();
             try
             {
-                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.UpdateAdministrativeStateWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateUpdateAdministrativeStateWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkDeviceInterfaceNetworkInterfacesRestClient.SetAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateSetAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

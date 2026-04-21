@@ -12,55 +12,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult / DeviceUpdateCommonPostActionResult) to operation-specific types.
-    // The generated methods were renamed via operationId directives (adding "WithTypedResult" suffix),
+    // The generated methods were renamed via operationId directives (adding synonym-based renaming),
     // and these shims preserve the original v1.1.2 method signatures.
     public partial class NetworkDeviceResource
     {
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use UpdateAdministrativeStateWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await UpdateAdministrativeStateWithTypedResultAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            var operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkDeviceUpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use UpdateAdministrativeStateWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateDeviceAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = UpdateAdministrativeStateWithTypedResult(waitUntil, content, cancellationToken);
+            var operation = SetAdministrativeState(waitUntil, content, cancellationToken);
             return new CompatArmOperation<NetworkDeviceUpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for Reboot. Use RebootWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RebootAsync(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await RebootWithTypedResultAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            var operation = await RestartAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for Reboot. Use RebootWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Reboot. Use Restart instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Reboot(WaitUntil waitUntil, NetworkDeviceRebootContent content, CancellationToken cancellationToken = default)
         {
-            var operation = RebootWithTypedResult(waitUntil, content, cancellationToken);
+            var operation = Restart(waitUntil, content, cancellationToken);
             return new CompatArmOperation<OperationStatusResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use RefreshConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> RefreshConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await RefreshConfigurationWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await ReloadConfigurationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkDeviceRefreshConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for RefreshConfiguration. Use RefreshConfigurationWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for RefreshConfiguration. Use ReloadConfiguration instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> RefreshConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = RefreshConfigurationWithTypedResult(waitUntil, cancellationToken);
+            var operation = ReloadConfiguration(waitUntil, cancellationToken);
             return new CompatArmOperation<NetworkDeviceRefreshConfigurationResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 

@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateAdministrativeStateWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateSetAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateAdministrativeStateWithTypedResultRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateSetAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAdministrativeStateWithTypedResultAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SetAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
+            using var message = CreateSetAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAdministrativeStateWithTypedResult(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response SetAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
+            using var message = CreateSetAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal RequestUriBuilder CreateUpdateStaticRouteBfdAdministrativeStateWithTypedResultRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        internal RequestUriBuilder CreateSetStaticRouteBfdAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return uri;
         }
 
-        internal HttpMessage CreateUpdateStaticRouteBfdAdministrativeStateWithTypedResultRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        internal HttpMessage CreateSetStaticRouteBfdAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateStaticRouteBfdAdministrativeStateWithTypedResultAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> SetStaticRouteBfdAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateStaticRouteBfdAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
+            using var message = CreateSetStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/>, <paramref name="externalNetworkName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l3IsolationDomainName"/> or <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateStaticRouteBfdAdministrativeStateWithTypedResult(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public Response SetStaticRouteBfdAdministrativeState(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateStaticRouteBfdAdministrativeStateWithTypedResultRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
+            using var message = CreateSetStaticRouteBfdAdministrativeStateRequest(subscriptionId, resourceGroupName, l3IsolationDomainName, externalNetworkName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

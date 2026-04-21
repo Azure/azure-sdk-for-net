@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_CommitConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_ApplyConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -615,14 +615,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CommitConfigurationResult>> CommitConfigurationWithTypedResultAsync(WaitUntil waitUntil, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommitConfigurationResult>> ApplyConfigurationAsync(WaitUntil waitUntil, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.CommitConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ApplyConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.CommitConfigurationWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(new CommitConfigurationResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateCommitConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.ApplyConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(new CommitConfigurationResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateApplyConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_CommitConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_ApplyConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -658,14 +658,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CommitConfigurationResult> CommitConfigurationWithTypedResult(WaitUntil waitUntil, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommitConfigurationResult> ApplyConfiguration(WaitUntil waitUntil, CommitConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.CommitConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ApplyConfiguration");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.CommitConfigurationWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(new CommitConfigurationResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateCommitConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.ApplyConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<CommitConfigurationResult>(new CommitConfigurationResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateApplyConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_DeprovisionWithTypedResult</description>
+        /// <description>NetworkFabrics_Deactivate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -700,14 +700,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> DeprovisionWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> DeactivateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.DeprovisionWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.Deactivate");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.DeprovisionWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateDeprovisionWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.DeactivateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_DeprovisionWithTypedResult</description>
+        /// <description>NetworkFabrics_Deactivate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -742,14 +742,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> DeprovisionWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Deactivate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.DeprovisionWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.Deactivate");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.DeprovisionWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateDeprovisionWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.Deactivate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateDeactivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_GetTopologyWithTypedResult</description>
+        /// <description>NetworkFabrics_RetrieveTopology</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -876,14 +876,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GetTopologyResult>> GetTopologyWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GetTopologyResult>> RetrieveTopologyAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.GetTopologyWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.RetrieveTopology");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.GetTopologyWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(new GetTopologyResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateGetTopologyWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.RetrieveTopologyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(new GetTopologyResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateRetrieveTopologyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_GetTopologyWithTypedResult</description>
+        /// <description>NetworkFabrics_RetrieveTopology</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -918,14 +918,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GetTopologyResult> GetTopologyWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GetTopologyResult> RetrieveTopology(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.GetTopologyWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.RetrieveTopology");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.GetTopologyWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(new GetTopologyResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateGetTopologyWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.RetrieveTopology(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<GetTopologyResult>(new GetTopologyResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateRetrieveTopologyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_ProvisionWithTypedResult</description>
+        /// <description>NetworkFabrics_Activate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1052,14 +1052,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> ProvisionWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> ActivateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ProvisionWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.Activate");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.ProvisionWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateProvisionWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.ActivateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateActivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_ProvisionWithTypedResult</description>
+        /// <description>NetworkFabrics_Activate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1094,14 +1094,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> ProvisionWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Activate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ProvisionWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.Activate");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.ProvisionWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateProvisionWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.Activate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateActivateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_RefreshConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_ReloadConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1136,14 +1136,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> RefreshConfigurationWithTypedResultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> ReloadConfigurationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.RefreshConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ReloadConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.RefreshConfigurationWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateRefreshConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.ReloadConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateReloadConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_RefreshConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_ReloadConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1178,14 +1178,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> RefreshConfigurationWithTypedResult(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> ReloadConfiguration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.RefreshConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.ReloadConfiguration");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.RefreshConfigurationWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateRefreshConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.ReloadConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateReloadConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_UpdateInfraManagementBfdConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_SetInfraManagementBfdConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1572,16 +1572,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> UpdateInfraManagementBfdConfigurationWithTypedResultAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetInfraManagementBfdConfigurationAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.UpdateInfraManagementBfdConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.SetInfraManagementBfdConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.UpdateInfraManagementBfdConfigurationWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.SetInfraManagementBfdConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateSetInfraManagementBfdConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1602,7 +1602,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_UpdateInfraManagementBfdConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_SetInfraManagementBfdConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1618,16 +1618,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> UpdateInfraManagementBfdConfigurationWithTypedResult(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetInfraManagementBfdConfiguration(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.UpdateInfraManagementBfdConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.SetInfraManagementBfdConfiguration");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.UpdateInfraManagementBfdConfigurationWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateUpdateInfraManagementBfdConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.SetInfraManagementBfdConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateSetInfraManagementBfdConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1648,7 +1648,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_UpdateWorkloadManagementBfdConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_SetWorkloadManagementBfdConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1664,16 +1664,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> UpdateWorkloadManagementBfdConfigurationWithTypedResultAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UpdateAdministrativeStateResult>> SetWorkloadManagementBfdConfigurationAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.UpdateWorkloadManagementBfdConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.SetWorkloadManagementBfdConfiguration");
             scope.Start();
             try
             {
-                var response = await _networkFabricRestClient.UpdateWorkloadManagementBfdConfigurationWithTypedResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkFabricRestClient.SetWorkloadManagementBfdConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1694,7 +1694,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_UpdateWorkloadManagementBfdConfigurationWithTypedResult</description>
+        /// <description>NetworkFabrics_SetWorkloadManagementBfdConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1710,16 +1710,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<UpdateAdministrativeStateResult> UpdateWorkloadManagementBfdConfigurationWithTypedResult(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UpdateAdministrativeStateResult> SetWorkloadManagementBfdConfiguration(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.UpdateWorkloadManagementBfdConfigurationWithTypedResult");
+            using var scope = _networkFabricClientDiagnostics.CreateScope("NetworkFabricResource.SetWorkloadManagementBfdConfiguration");
             scope.Start();
             try
             {
-                var response = _networkFabricRestClient.UpdateWorkloadManagementBfdConfigurationWithTypedResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateUpdateWorkloadManagementBfdConfigurationWithTypedResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _networkFabricRestClient.SetWorkloadManagementBfdConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ManagedNetworkFabricArmOperation<UpdateAdministrativeStateResult>(new UpdateAdministrativeStateResultOperationSource(), _networkFabricClientDiagnostics, Pipeline, _networkFabricRestClient.CreateSetWorkloadManagementBfdConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

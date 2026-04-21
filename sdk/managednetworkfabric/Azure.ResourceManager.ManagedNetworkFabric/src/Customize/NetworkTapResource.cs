@@ -12,39 +12,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult / DeviceUpdateCommonPostActionResult) to operation-specific types.
-    // The generated methods were renamed via operationId directives (adding "WithTypedResult" suffix),
+    // The generated methods were renamed via operationId directives (adding synonym-based renaming),
     // and these shims preserve the original v1.1.2 method signatures.
     public partial class NetworkTapResource
     {
-        /// <summary> Backward-compatible shim for Resync. Use ResyncWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Resync. Use Synchronize instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = await ResyncWithTypedResultAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var operation = await SynchronizeAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for Resync. Use ResyncWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for Resync. Use Synchronize instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var operation = ResyncWithTypedResult(waitUntil, cancellationToken);
+            var operation = Synchronize(waitUntil, cancellationToken);
             return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
         }
 
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use UpdateAdministrativeStateWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = await UpdateAdministrativeStateWithTypedResultAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            var operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
 
-        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use UpdateAdministrativeStateWithTypedResult instead for richer result type. </summary>
+        /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            var operation = UpdateAdministrativeStateWithTypedResult(waitUntil, content, cancellationToken);
+            var operation = SetAdministrativeState(waitUntil, content, cancellationToken);
             return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => new DeviceUpdateCommonPostActionResult(r.Error, null, null, Array.Empty<string>(), Array.Empty<string>()));
         }
     }
