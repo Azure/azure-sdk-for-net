@@ -195,6 +195,7 @@ public class AgentsTestBase : ProjectsClientTestBase
 
     protected const string AGENT_NAME = "cs-e2e-tests-client";
     protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
+    protected const string HOSTED_AGENT = "cs-e2e-tests-hosted";
     protected const string VECTOR_STORE = "cs-e2e-tests-vector-store";
     protected const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private readonly List<string> _conversationIDs = [];
@@ -602,6 +603,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         {
             projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
+        try
+        {
+            projectClient.AgentAdministrationClient.DeleteAgent(HOSTED_AGENT);
+        }
+        catch { }
     }
     #endregion
 }

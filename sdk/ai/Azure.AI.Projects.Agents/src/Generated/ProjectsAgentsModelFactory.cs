@@ -29,12 +29,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
         /// <param name="definition"></param>
+        /// <param name="status"> The provisioning status of the agent version. Defaults to 'active' for non-hosted agents. For hosted agents, reflects infrastructure readiness. </param>
         /// <param name="instanceIdentity"> The instance identity of the agent. </param>
         /// <param name="blueprint"> The blueprint for the agent. </param>
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentGuid"> The unique GUID identifier of the agent. </param>
         /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
-        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, string agentGuid = default)
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, ProjectsAgentDefinition definition = default, AgentVersionStatus? status = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, string agentGuid = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -47,6 +48,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 definition,
+                status,
                 instanceIdentity,
                 blueprint,
                 blueprintReference,
@@ -88,8 +90,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="containerConfiguration"> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </param>
         /// <param name="protocolVersions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
+        /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> protocolVersions = default, CodeConfiguration codeConfiguration = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> protocolVersions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
         {
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -108,7 +111,8 @@ namespace Azure.AI.Projects.Agents
                 image,
                 containerConfiguration,
                 protocolVersions.ToList(),
-                codeConfiguration);
+                codeConfiguration,
+                telemetryConfig);
         }
 
         /// <summary>
@@ -579,6 +583,71 @@ namespace Azure.AI.Projects.Agents
             return new CodeConfiguration(runtime, entryPoint.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
+        /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
+        /// <returns> A new <see cref="Agents.TelemetryConfig"/> instance for mocking. </returns>
+        public static TelemetryConfig TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints = default)
+        {
+            endpoints ??= new ChangeTrackingList<TelemetryEndpoint>();
+
+            return new TelemetryConfig(endpoints.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A telemetry export endpoint configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
+        /// </summary>
+        /// <param name="kind"> The telemetry export endpoint kind. </param>
+        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
+        {
+            data ??= new ChangeTrackingList<TelemetryDataKind>();
+
+            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Authentication configuration for a telemetry endpoint.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
+        /// </summary>
+        /// <param name="type"> The authentication type. </param>
+        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
+        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
+        {
+            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
+        /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
+        /// <param name="secretId"> The identifier of the secret store or connection. </param>
+        /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
+        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
+        public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
+        {
+            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+        }
+
+        /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
+        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
+        /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
+        /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        {
+            data ??= new ChangeTrackingList<TelemetryDataKind>();
+
+            return new OtlpTelemetryEndpoint(
+                TelemetryEndpointKind.OTLP,
+                data.ToList(),
+                auth,
+                additionalBinaryDataProperties: null,
+                endpoint,
+                protocol);
+        }
+
         /// <summary> The prompt agent definition. </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="model"> The model deployment to use for this agent. </param>
@@ -859,10 +928,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdAt"> The Unix timestamp (in seconds) when the session was created. </param>
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
-        /// <returns> A new <see cref="Agents.AgentSessionResource"/> instance for mocking. </returns>
-        public static AgentSessionResource AgentSessionResource(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
+        /// <returns> A new <see cref="Agents.ProjectAgentSession"/> instance for mocking. </returns>
+        public static ProjectAgentSession ProjectAgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
         {
-            return new AgentSessionResource(
+            return new ProjectAgentSession(
                 agentSessionId,
                 versionIndicator,
                 status,
@@ -870,6 +939,31 @@ namespace Azure.AI.Projects.Agents
                 lastAccessedAt,
                 expiresAt,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A single Server-Sent Event frame emitted by the hosted agent session log stream.
+        /// Each frame contains an `event` field identifying the event type and a `data`
+        /// field carrying the payload as plain text. Although the current `data` payload
+        /// is JSON-formatted, its schema is not contractual — additional keys may appear
+        /// and the format may change over time. Clients should treat `data` as an
+        /// opaque string and optionally attempt JSON parsing.
+        /// New event types may be added in the future. Clients should gracefully
+        /// ignore unrecognized event types.
+        /// Wire format:
+        /// ```
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:33:17.121Z","stream":"stdout","message":"Starting server on port 18080"}
+        /// event: log
+        /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
+        /// ```
+        /// </summary>
+        /// <param name="event"> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </param>
+        /// <param name="data"> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </param>
+        /// <returns> A new <see cref="Agents.SessionLogEvent"/> instance for mocking. </returns>
+        public static SessionLogEvent SessionLogEvent(SessionLogEventType @event = default, string data = default)
+        {
+            return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
@@ -923,6 +1017,72 @@ namespace Azure.AI.Projects.Agents
             return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A skill object. </summary>
+        /// <param name="skillId"> The unique identifier of the skill. </param>
+        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="description"> A human-readable description of the skill. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
+        public static AgentsSkill AgentsSkill(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgentsSkill(
+                skillId,
+                hasBlob,
+                name,
+                description,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill Object. </summary>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="deleted"> Whether the skill was successfully deleted. </param>
+        /// <returns> A new <see cref="Agents.DeleteSkillResponse"/> instance for mocking. </returns>
+        public static DeleteSkillResponse DeleteSkillResponse(string name = default, bool deleted = default)
+        {
+            return new DeleteSkillResponse(name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from uploading a file to a session sandbox. </summary>
+        /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
+        /// <param name="bytesWritten"> Number of bytes written. </param>
+        /// <returns> A new <see cref="Agents.SessionFileWriteResponse"/> instance for mocking. </returns>
+        public static SessionFileWriteResponse SessionFileWriteResponse(string path = default, long bytesWritten = default)
+        {
+            return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from listing a directory in a session sandbox. </summary>
+        /// <param name="path"> The path that was listed, relative to the session home directory. </param>
+        /// <param name="entries"> The directory entries. </param>
+        /// <returns> A new <see cref="Agents.SessionDirectoryListResponse"/> instance for mocking. </returns>
+        public static SessionDirectoryListResponse SessionDirectoryListResponse(string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
+        {
+            entries ??= new ChangeTrackingList<SessionDirectoryEntry>();
+
+            return new SessionDirectoryListResponse(path, entries.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single entry in a directory listing. </summary>
+        /// <param name="name"> The name of the file or directory. </param>
+        /// <param name="size"> The size in bytes (0 for directories). </param>
+        /// <param name="isDirectory"> Whether this entry is a directory. </param>
+        /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
+        /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
+        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
+        {
+            return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -962,13 +1122,22 @@ namespace Azure.AI.Projects.Agents
             return new CreateAgentVersionFromManifestRequest(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The PatchAgentOptions. </summary>
+        /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+        /// <param name="agentCard"> Optional agent card for the agent. </param>
+        /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpoint agentEndpoint = default, AgentCard agentCard = default)
+        {
+            return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The UpdateToolboxRequest. </summary>
-        /// <param name="toolboxName"> The name of the toolbox to update. </param>
+        /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
         /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
-        public static UpdateToolboxRequest UpdateToolboxRequest(string toolboxName = default, string defaultVersion = default)
+        public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
-            return new UpdateToolboxRequest(toolboxName, defaultVersion, additionalBinaryDataProperties: null);
+            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>
@@ -989,7 +1158,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
-            return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
+            return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
         }
 
         /// <summary> A tool for capturing structured outputs. </summary>
@@ -1016,7 +1185,7 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
         {
-            return HostedAgentDefinition(contentFilterConfiguration: contentFilterConfiguration, tools: tools, versions: versions, cpu: cpu, memory: memory, environmentVariables: environmentVariables, image: image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default);
+            return HostedAgentDefinition(contentFilterConfiguration: contentFilterConfiguration, tools: tools, versions: versions, cpu: cpu, memory: memory, environmentVariables: environmentVariables, image: image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default, telemetryConfig: default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

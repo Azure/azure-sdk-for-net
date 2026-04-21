@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct HDInsightPrivateLinkServiceConnectionStatus : IEquatable<HDInsightPrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Removed. </summary>
+        private const string RemovedValue = "Removed";
 
         /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HDInsightPrivateLinkServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
-        private const string PendingValue = "Pending";
-        private const string RemovedValue = "Removed";
+            _value = value;
+        }
 
         /// <summary> Approved. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Approved { get; } = new HDInsightPrivateLinkServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Rejected. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Rejected { get; } = new HDInsightPrivateLinkServiceConnectionStatus(RejectedValue);
+
         /// <summary> Pending. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Pending { get; } = new HDInsightPrivateLinkServiceConnectionStatus(PendingValue);
+
         /// <summary> Removed. </summary>
         public static HDInsightPrivateLinkServiceConnectionStatus Removed { get; } = new HDInsightPrivateLinkServiceConnectionStatus(RemovedValue);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HDInsightPrivateLinkServiceConnectionStatus left, HDInsightPrivateLinkServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HDInsightPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HDInsightPrivateLinkServiceConnectionStatus left, HDInsightPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HDInsightPrivateLinkServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HDInsightPrivateLinkServiceConnectionStatus(string value) => new HDInsightPrivateLinkServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HDInsightPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HDInsightPrivateLinkServiceConnectionStatus?(string value) => value == null ? null : new HDInsightPrivateLinkServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HDInsightPrivateLinkServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HDInsightPrivateLinkServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

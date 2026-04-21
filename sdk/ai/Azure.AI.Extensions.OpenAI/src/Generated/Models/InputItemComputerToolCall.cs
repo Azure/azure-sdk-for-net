@@ -15,23 +15,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
-        /// <param name="action"></param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
         /// <param name="status">
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/>, <paramref name="action"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
-        public InputItemComputerToolCall(string id, string callId, InternalComputerAction action, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="callId"/> or <paramref name="pendingSafetyChecks"/> is null. </exception>
+        public InputItemComputerToolCall(string id, string callId, IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(InputItemType.ComputerCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(pendingSafetyChecks, nameof(pendingSafetyChecks));
 
             Id = id;
             CallId = callId;
-            Action = action;
+            Actions = new ChangeTrackingList<InternalComputerAction>();
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Status = status;
         }
@@ -42,16 +40,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"> The unique ID of the computer call. </param>
         /// <param name="callId"> An identifier used when responding to the tool call with output. </param>
         /// <param name="action"></param>
+        /// <param name="actions"></param>
         /// <param name="pendingSafetyChecks"> The pending safety checks for the computer call. </param>
         /// <param name="status">
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, OutputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemComputerToolCall(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, InternalComputerAction action, IList<InternalComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, InputItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
             Action = action;
+            Actions = actions;
             PendingSafetyChecks = pendingSafetyChecks;
             Status = status;
         }
@@ -62,8 +62,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> An identifier used when responding to the tool call with output. </summary>
         public string CallId { get; }
 
-        /// <summary> Gets the Action. </summary>
-        public InternalComputerAction Action { get; }
+        /// <summary> Gets or sets the Action. </summary>
+        public InternalComputerAction Action { get; set; }
+
+        /// <summary> Gets the Actions. </summary>
+        public IList<InternalComputerAction> Actions { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
@@ -72,6 +75,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public OutputItemComputerToolCallStatus Status { get; }
+        public InputItemComputerToolCallStatus Status { get; }
     }
 }

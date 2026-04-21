@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct JsonWebKeyEncryptionAlgorithm : IEquatable<JsonWebKeyEncryptionAlgorithm>
     {
         private readonly string _value;
+        /// <summary> RSA-OAEP. </summary>
+        private const string RsaOaepValue = "RSA-OAEP";
+        /// <summary> RSA-OAEP-256. </summary>
+        private const string RsaOaep256Value = "RSA-OAEP-256";
+        /// <summary> RSA1_5. </summary>
+        private const string Rsa15Value = "RSA1_5";
 
         /// <summary> Initializes a new instance of <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JsonWebKeyEncryptionAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RsaOaepValue = "RSA-OAEP";
-        private const string RsaOaep256Value = "RSA-OAEP-256";
-        private const string Rsa15Value = "RSA1_5";
+            _value = value;
+        }
 
         /// <summary> RSA-OAEP. </summary>
         public static JsonWebKeyEncryptionAlgorithm RsaOaep { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaepValue);
+
         /// <summary> RSA-OAEP-256. </summary>
         public static JsonWebKeyEncryptionAlgorithm RsaOaep256 { get; } = new JsonWebKeyEncryptionAlgorithm(RsaOaep256Value);
+
         /// <summary> RSA1_5. </summary>
         public static JsonWebKeyEncryptionAlgorithm Rsa15 { get; } = new JsonWebKeyEncryptionAlgorithm(Rsa15Value);
+
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JsonWebKeyEncryptionAlgorithm left, JsonWebKeyEncryptionAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JsonWebKeyEncryptionAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JsonWebKeyEncryptionAlgorithm left, JsonWebKeyEncryptionAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JsonWebKeyEncryptionAlgorithm(string value) => new JsonWebKeyEncryptionAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JsonWebKeyEncryptionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JsonWebKeyEncryptionAlgorithm?(string value) => value == null ? null : new JsonWebKeyEncryptionAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JsonWebKeyEncryptionAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JsonWebKeyEncryptionAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
