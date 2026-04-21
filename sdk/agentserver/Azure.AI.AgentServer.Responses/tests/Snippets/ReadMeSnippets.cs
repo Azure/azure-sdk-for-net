@@ -33,14 +33,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
         {
             #region Snippet:Responses_ReadMe_ConfigureServer_Manual
 
-            var builder = WebApplication.CreateBuilder();
-
-            builder.Services.AddResponsesServer();
-            builder.Services.AddScoped<ResponseHandler, EchoHandler>();
-
-            var app = builder.Build();
-            app.MapResponsesServer();
-            app.Run();
+            var builder = AgentHost.CreateBuilder();
+            builder.AddResponses<EchoHandler>();
+            builder.Build().Run();
 
             #endregion
         }

@@ -11,6 +11,7 @@ using Azure.Compute.Batch.Custom;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using static Azure.Core.HttpPipelineExtensions;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Compute.Batch
 {
@@ -733,6 +734,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -748,14 +750,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJobAsync(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<DeleteJobOperation> DeleteJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<DeleteJobOperation> DeleteJobAsync(WaitUntil waitUntil, string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
             {
                 Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
-                return new DeleteJobOperation(this, jobId, response);
+                DeleteJobOperation operation = new DeleteJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -775,6 +784,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -790,14 +800,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobOperation object to allow for polling of operation status. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='DeleteJob(string,TimeSpan?,DateTimeOffset?,bool?,RequestConditions,RequestContext)']/*" />
-        public virtual DeleteJobOperation DeleteJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual DeleteJobOperation DeleteJob(WaitUntil waitUntil, string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
             {
                 Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context);
-                return new DeleteJobOperation(this, jobId, response);
+                DeleteJobOperation operation = new DeleteJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null? context.CancellationToken: default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -817,6 +834,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -831,14 +849,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobScheduleOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<DeleteJobScheduleOperation> DeleteJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<DeleteJobScheduleOperation> DeleteJobScheduleAsync(WaitUntil waitUntil, string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
             {
                 Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
-                return new DeleteJobScheduleOperation(this, jobScheduleId, response);
+                DeleteJobScheduleOperation operation = new DeleteJobScheduleOperation(this, jobScheduleId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -858,6 +883,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to delete. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -872,14 +898,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeleteJobScheduleOperation object to allow for polling of operation status. </returns>
-        public virtual DeleteJobScheduleOperation DeleteJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual DeleteJobScheduleOperation DeleteJobSchedule(WaitUntil waitUntil, string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
             {
                 Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
-                return new DeleteJobScheduleOperation(this, jobScheduleId, response);
+                DeleteJobScheduleOperation operation = new DeleteJobScheduleOperation(this, jobScheduleId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -899,6 +932,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -912,14 +946,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeletePoolOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<DeletePoolOperation> DeletePoolAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<DeletePoolOperation> DeletePoolAsync(WaitUntil waitUntil, string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
             scope.Start();
             try
             {
                 Response response = await DeletePoolInternalAsync(poolId, timeOutInSeconds, ocpDate, requestConditions, context).ConfigureAwait(false);
-                return new DeletePoolOperation(this, poolId, response);
+                DeletePoolOperation operation = new DeletePoolOperation(this, poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -939,6 +980,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -952,14 +994,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The DeletePoolOperation object to allow for polling of operation status. </returns>
-        public virtual DeletePoolOperation DeletePool(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual DeletePoolOperation DeletePool(WaitUntil waitUntil, string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeletePool");
             scope.Start();
             try
             {
                 Response response = DeletePoolInternal(poolId, timeOutInSeconds, ocpDate, requestConditions, context);
-                return new DeletePoolOperation(this, poolId, response);
+                DeletePoolOperation operation = new DeletePoolOperation(this, poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -969,6 +1018,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Terminates the specified Job, marking it as completed. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="parameters"> The options to use for terminating the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -991,14 +1041,20 @@ namespace Azure.Compute.Batch
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
         /// <returns> The TerminateJobOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<TerminateJobOperation> TerminateJobAsync(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<TerminateJobOperation> TerminateJobAsync(WaitUntil waitUntil, string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
             {
                 Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken).ConfigureAwait(false);
-                return new TerminateJobOperation(this, jobId, response);
+                TerminateJobOperation operation = new TerminateJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1008,6 +1064,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Terminates the specified Job, marking it as completed. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to terminate. </param>
         /// <param name="parameters"> The options to use for terminating the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1030,14 +1087,20 @@ namespace Azure.Compute.Batch
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
         /// <returns> The TerminateJobOperation object to allow for polling of operation status. </returns>
-        public virtual TerminateJobOperation TerminateJob(string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual TerminateJobOperation TerminateJob(WaitUntil waitUntil, string jobId, BatchJobTerminateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
             {
                 Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken);
-                return new TerminateJobOperation(this, jobId, response);
+                TerminateJobOperation operation = new TerminateJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1057,6 +1120,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1071,14 +1135,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The TerminateJobScheduleOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<TerminateJobScheduleOperation> TerminateJobScheduleAsync(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<TerminateJobScheduleOperation> TerminateJobScheduleAsync(WaitUntil waitUntil, string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
             {
                 Response response = await TerminateJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
-                return new TerminateJobScheduleOperation(this, jobScheduleId, response);
+                TerminateJobScheduleOperation operation = new TerminateJobScheduleOperation(this, jobScheduleId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1098,6 +1169,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobScheduleId"> The ID of the Job Schedule to terminates. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1112,14 +1184,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The TerminateJobScheduleOperation object to allow for polling of operation status. </returns>
-        public virtual TerminateJobScheduleOperation TerminateJobSchedule(string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual TerminateJobScheduleOperation TerminateJobSchedule(WaitUntil waitUntil, string jobScheduleId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, bool? force = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJobSchedule");
             scope.Start();
             try
             {
                 Response response = TerminateJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
-                return new TerminateJobScheduleOperation(this, jobScheduleId, response);
+                TerminateJobScheduleOperation operation = new TerminateJobScheduleOperation(this, jobScheduleId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1129,6 +1208,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Disables the specified Job, preventing new Tasks from running. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="disableOptions"> The options to use for disabling the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1152,14 +1232,20 @@ namespace Azure.Compute.Batch
         /// the request fails with status code 409.
         /// </remarks>
         /// <returns> The DisableJobOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<DisableJobOperation> DisableJobAsync(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<DisableJobOperation> DisableJobAsync(WaitUntil waitUntil, string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
             scope.Start();
             try
             {
                 Response response = await DisableJobInternalAsync(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken).ConfigureAwait(false);
-                return new DisableJobOperation(this, jobId, response);
+                DisableJobOperation operation = new DisableJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1169,6 +1255,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Disables the specified Job, preventing new Tasks from running. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to disable. </param>
         /// <param name="disableOptions"> The options to use for disabling the Job. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1192,14 +1279,20 @@ namespace Azure.Compute.Batch
         /// the request fails with status code 409.
         /// </remarks>
         /// <returns> The DisableJobOperation object to allow for polling of operation status. </returns>
-        public virtual DisableJobOperation DisableJob(string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual DisableJobOperation DisableJob(WaitUntil waitUntil, string jobId, BatchJobDisableOptions disableOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DisableJob");
             scope.Start();
             try
             {
                 Response response = DisableJobInternal(jobId, disableOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken);
-                return new DisableJobOperation(this, jobId, response);
+                DisableJobOperation operation = new DisableJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1219,6 +1312,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1232,14 +1326,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The EnableJobOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<EnableJobOperation> EnableJobAsync(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<EnableJobOperation> EnableJobAsync(WaitUntil waitUntil, string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
             scope.Start();
             try
             {
                 Response response = await EnableJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions).ConfigureAwait(false);
-                return new EnableJobOperation(this, jobId, response);
+                EnableJobOperation operation = new EnableJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1259,6 +1360,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="jobId"> The ID of the Job to enable. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1272,14 +1374,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The EnableJobOperation object to allow for polling of operation status. </returns>
-        public virtual EnableJobOperation EnableJob(string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual EnableJobOperation EnableJob(WaitUntil waitUntil, string jobId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.EnableJob");
             scope.Start();
             try
             {
                 Response response = EnableJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions);
-                return new EnableJobOperation(this, jobId, response);
+                EnableJobOperation operation = new EnableJobOperation(this, jobId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1289,6 +1398,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
@@ -1303,14 +1413,20 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
         /// <returns> The DeallocateNodeOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<DeallocateNodeOperation> DeallocateNodeAsync(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual async Task<DeallocateNodeOperation> DeallocateNodeAsync(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
             scope.Start();
             try
             {
                 Response response = await DeallocateNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                DeallocateNodeOperation operation = new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1320,6 +1436,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Deallocates the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for deallocating the Compute Node. </param>
@@ -1334,14 +1451,20 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can deallocate a Compute Node only if it is in an idle or running state. </remarks>
         /// <returns> The DeallocateNodeOperation object to allow for polling of operation status. </returns>
-        public virtual DeallocateNodeOperation DeallocateNode(string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual DeallocateNodeOperation DeallocateNode(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeDeallocateOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeallocateNode");
             scope.Start();
             try
             {
                 Response response = DeallocateNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
-                return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                DeallocateNodeOperation operation = new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1361,6 +1484,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1374,14 +1498,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The StartNodeOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<StartNodeOperation> StartNodeAsync(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        public virtual async Task<StartNodeOperation> StartNodeAsync(WaitUntil waitUntil, string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
             scope.Start();
             try
             {
                 Response response = await StartNodeInternalAsync(poolId, nodeId, timeOutInSeconds, ocpDate, context: context).ConfigureAwait(false);
-                return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                StartNodeOperation operation = new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1401,6 +1532,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1414,14 +1546,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The StartNodeOperation object to allow for polling of operation status. </returns>
-        public virtual StartNodeOperation StartNode(string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
+        public virtual StartNodeOperation StartNode(WaitUntil waitUntil, string poolId, string nodeId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.StartNode");
             scope.Start();
             try
             {
                 Response response = StartNodeInternal(poolId, nodeId, timeOutInSeconds, ocpDate, context: context);
-                return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                StartNodeOperation operation = new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1431,6 +1570,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Restarts the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
@@ -1445,14 +1585,20 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
         /// <returns> The RebootNodeOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<RebootNodeOperation> RebootNodeAsync(string poolId, string nodeId, BatchNodeRebootOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual async Task<RebootNodeOperation> RebootNodeAsync(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeRebootOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
             scope.Start();
             try
             {
                 Response response = await RebootNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                RebootNodeOperation operation = new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1462,6 +1608,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Restarts the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for rebooting the Compute Node. </param>
@@ -1476,14 +1623,20 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
         /// <returns> The RebootNodeOperation object to allow for polling of operation status. </returns>
-        public virtual RebootNodeOperation RebootNode(string poolId, string nodeId, BatchNodeRebootOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual RebootNodeOperation RebootNode(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeRebootOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.RebootNode");
             scope.Start();
             try
             {
                 Response response = RebootNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
-                return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                RebootNodeOperation operation = new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1493,6 +1646,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
@@ -1511,14 +1665,20 @@ namespace Azure.Compute.Batch
         /// cloud service configuration property.
         /// </remarks>
         /// <returns> The ReimageNodeOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<ReimageNodeOperation> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ReimageNodeOperation> ReimageNodeAsync(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
             scope.Start();
             try
             {
                 Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId: nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                ReimageNodeOperation operation = new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1528,6 +1688,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Reinstalls the operating system on the specified Compute Node. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to restart. </param>
         /// <param name="parameters"> The options to use for reimaging the Compute Node. </param>
@@ -1546,14 +1707,20 @@ namespace Azure.Compute.Batch
         /// cloud service configuration property.
         /// </remarks>
         /// <returns> The ReimageNodeOperation object to allow for polling of operation status. </returns>
-        public virtual ReimageNodeOperation ReimageNode(string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
+        public virtual ReimageNodeOperation ReimageNode(WaitUntil waitUntil, string poolId, string nodeId, BatchNodeReimageOptions parameters = null, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.ReimageNode");
             scope.Start();
             try
             {
                 Response response = ReimageNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
-                return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+                ReimageNodeOperation operation = new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1563,6 +1730,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Changes the number of Compute Nodes that are assigned to a Pool. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="resizeOptions"> The options to use for resizing the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1585,14 +1753,20 @@ namespace Azure.Compute.Batch
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// <returns> The ResizePoolOperation object to allow for polling of operation status. </returns>
         /// </remarks>
-        public virtual async Task<ResizePoolOperation> ResizePoolAsync(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ResizePoolOperation> ResizePoolAsync(WaitUntil waitUntil, string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.ResizePool");
             scope.Start();
             try
             {
                 Response response = await ResizePoolInternalAsync(poolId, resizeOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken).ConfigureAwait(false);
-                return new ResizePoolOperation(this, resizeId: poolId, response);
+                ResizePoolOperation operation = new ResizePoolOperation(this, resizeId: poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1602,6 +1776,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Changes the number of Compute Nodes that are assigned to a Pool. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="resizeOptions"> The options to use for resizing the pool. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1624,14 +1799,20 @@ namespace Azure.Compute.Batch
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// <returns> The ResizePoolOperation object to allow for polling of operation status. </returns>
         /// </remarks>
-        public virtual ResizePoolOperation ResizePool(string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual ResizePoolOperation ResizePool(WaitUntil waitUntil, string poolId, BatchPoolResizeOptions resizeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.ResizePool");
             scope.Start();
             try
             {
                 Response response = ResizePoolInternal(poolId, resizeOptions, timeOutInSeconds, ocpDate, requestConditions, cancellationToken);
-                return new ResizePoolOperation(this, resizeId: poolId, response);
+                ResizePoolOperation operation = new ResizePoolOperation(this, resizeId: poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1651,6 +1832,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1664,14 +1846,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The StopPoolResizeOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<StopPoolResizeOperation> StopPoolResizeAsync(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual async Task<StopPoolResizeOperation> StopPoolResizeAsync(WaitUntil waitUntil, string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResize");
             scope.Start();
             try
             {
                 Response response = await StopPoolResizeInternalAsync(poolId, timeOutInSeconds, ocpDate, requestConditions).ConfigureAwait(false);
-                return new StopPoolResizeOperation(this, resizeId: poolId, response);
+                StopPoolResizeOperation operation = new StopPoolResizeOperation(this, resizeId: poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1691,6 +1880,7 @@ namespace Azure.Compute.Batch
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
         /// <param name="ocpDate">
@@ -1704,14 +1894,21 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The StopPoolResizeOperation object to allow for polling of operation status. </returns>
-        public virtual StopPoolResizeOperation StopPoolResize(string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        public virtual StopPoolResizeOperation StopPoolResize(WaitUntil waitUntil, string poolId, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.StopPoolResize");
             scope.Start();
             try
             {
                 Response response = StopPoolResizeInternal(poolId, timeOutInSeconds, ocpDate, requestConditions);
-                return new StopPoolResizeOperation(this, resizeId: poolId, response);
+                StopPoolResizeOperation operation = new StopPoolResizeOperation(this, resizeId: poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    CancellationToken cancellationToken = context != null ? context.CancellationToken : default;
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1721,6 +1918,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Removes Compute Nodes from the specified Pool. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="removeOptions"> The options to use for removing the node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1739,14 +1937,20 @@ namespace Azure.Compute.Batch
         /// Each request may remove up to 100 nodes.
         /// </remarks>
         /// <returns> The RemoveNodesOperation object to allow for polling of operation status. </returns>
-        public virtual async Task<RemoveNodesOperation> RemoveNodesAsync(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<RemoveNodesOperation> RemoveNodesAsync(WaitUntil waitUntil, string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodes");
             scope.Start();
             try
             {
                 Response response = await RemoveNodesInternalAsync(poolId, removeOptions, timeOutInSeconds, ocpDate, requestConditions).ConfigureAwait(false);
-                return new RemoveNodesOperation(this, poolId, response);
+                RemoveNodesOperation operation = new RemoveNodesOperation(this, poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -1756,6 +1960,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Removes Compute Nodes from the specified Pool. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
         /// <param name="poolId"> The ID of the Pool to get. </param>
         /// <param name="removeOptions"> The options to use for removing the node. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -1774,14 +1979,20 @@ namespace Azure.Compute.Batch
         /// Each request may remove up to 100 nodes.
         /// </remarks>
         /// <returns> The RemoveNodesOperation object to allow for polling of operation status. </returns>
-        public virtual RemoveNodesOperation RemoveNodes(string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
+        public virtual RemoveNodesOperation RemoveNodes(WaitUntil waitUntil, string poolId, BatchNodeRemoveOptions removeOptions, TimeSpan? timeOutInSeconds = null, DateTimeOffset? ocpDate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             using var scope = ClientDiagnostics.CreateScope("BatchClient.RemoveNodes");
             scope.Start();
             try
             {
                 Response response = RemoveNodesInternal(poolId, removeOptions, timeOutInSeconds, ocpDate, requestConditions);
-                return new RemoveNodesOperation(this, poolId, response);
+                RemoveNodesOperation operation = new RemoveNodesOperation(this, poolId, response);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

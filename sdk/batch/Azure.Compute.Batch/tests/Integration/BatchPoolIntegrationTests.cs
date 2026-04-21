@@ -60,7 +60,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(2, nodeCount);
 
                 BatchNodeRemoveOptions content = new BatchNodeRemoveOptions(new string[] { batchNodeID });
-                RemoveNodesOperation operation = await client.RemoveNodesAsync(poolID, content);
+                RemoveNodesOperation operation = await client.RemoveNodesAsync(WaitUntil.Started, poolID, content);
                 await operation.WaitForCompletionAsync();
 
                 BatchPool modfiedPool = operation.Value;
@@ -128,7 +128,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                DeletePoolOperation deletePoolOperation = await client.DeletePoolAsync(poolID);
+                DeletePoolOperation deletePoolOperation = await client.DeletePoolAsync(WaitUntil.Started, poolID);
                 await deletePoolOperation.WaitForCompletionAsync();
             }
         }
@@ -212,7 +212,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     SecurityProfile = new SecurityProfile()
                     {
                         SecurityType = SecurityTypes.ConfidentialVM,
-                        EncryptionAtHost = false,
+                        IsEncryptedAtHost = false,
                         UefiSettings = new BatchUefiSettings()
                         {
                             SecureBootEnabled = true,
@@ -255,7 +255,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.IsEncryptedAtHost, false);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
@@ -269,7 +269,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     SecurityProfile = new SecurityProfile()
                     {
                         SecurityType = SecurityTypes.ConfidentialVM,
-                        EncryptionAtHost = false,
+                        IsEncryptedAtHost = false,
                         UefiSettings = new BatchUefiSettings()
                         {
                             SecureBootEnabled = true,
@@ -358,7 +358,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchPool pool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, false);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.IsEncryptedAtHost, false);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
@@ -373,7 +373,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -397,17 +397,17 @@ namespace Azure.Compute.Batch.Tests.Integration
                 };
 
                 // resize pool
-                await client.ResizePoolAsync(poolID, resizeContent);
+                await client.ResizePoolAsync(WaitUntil.Started, poolID, resizeContent);
                 resizePool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(AllocationState.Resizing, resizePool.AllocationState);
 
                 // stop resizing
-                StopPoolResizeOperation operation = await client.StopPoolResizeAsync(poolID);
+                StopPoolResizeOperation operation = await client.StopPoolResizeAsync(WaitUntil.Started, poolID);
                 await operation.WaitForCompletionAsync();
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
 
@@ -502,7 +502,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     },
                     RollingUpgradePolicy = new RollingUpgradePolicy()
                     {
-                        EnableCrossZoneUpgrade = true,
+                        IsCrossZoneUpgradeEnabled = true,
                         MaxBatchInstancePercent = 20,
                         MaxUnhealthyInstancePercent = 20,
                         MaxUnhealthyUpgradedInstancePercent = 20,
@@ -553,7 +553,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeletePoolAsync(poolID);
+                await client.DeletePoolAsync(WaitUntil.Started, poolID);
             }
         }
     }

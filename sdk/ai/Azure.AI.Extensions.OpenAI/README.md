@@ -492,43 +492,81 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
-```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+```C# Snippet:Sample_HostedAgentDefinition_HostedAgent
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
-        cpu: "1",
-        memory: "2Gi"
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+        cpu: "0.5",
+        memory: "1Gi"
     )
     {
-        EnvironmentVariables = {
-            { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
-            // Optional variables, used for logging
-            { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
-            { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        },
         Image = dockerImage,
     };
     return agentDefinition;
 }
 ```
 
-The created agent needs to be deployed using [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
+Use `HostedAgentDefinition` to create an agent.
 
-```bash
-az login
-az cognitiveservices agent start --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```C# Snippet:Sample_CreateAgent_HostedAgent_Async
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
+    dockerImage: dockerImage
+);
+ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+creationOptions.Metadata["enableVnextExperience"] = "true";
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myHostedAgent",
+    options: creationOptions);
 ```
 
-After the deployment is complete, this Agent can be used for calling responses.
+The deployment of hosted Agent may take time so we may need to wait while it is complete.
 
-Agent deletion should be done through Azure CLI.
-
-```bash
-az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
-az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```C# Snippet:Sample_WaitForDeployment_HostedAgent_Async
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+{
+    await Task.Delay(500);
+    agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+}
+if (agentVersion.Status != AgentVersionStatus.Active)
+{
+    throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+}
 ```
+
+Configure an Agent endpoint for Responses protocol.
+
+```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
+AgentEndpoint config = new()
+{
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    Protocols = { AgentEndpointProtocol.Responses }
+};
+PatchAgentOptions patchOptions = new()
+{
+    AgentEndpoint = config,
+};
+ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.PatchAgentObject(
+    agentName: agentVersion.Name,
+    patchAgentOptions: patchOptions);
+Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
+```
+
+In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient`
+property as we need to access customized endpoint, for the Agent, we have created.
+We set its name in `ProjectOpenAIClientOptions`.
+
+```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
+ProjectOpenAIClientOptions responsesOptions = new()
+{
+    AgentName = agentVersion.Name
+};
+ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
+ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+Console.WriteLine(response.GetOutputText());
+```
+
 
 ### Structured Output
 

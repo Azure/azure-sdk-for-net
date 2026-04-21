@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Gets the application SSH endpoint. </summary>
     public partial class HDInsightApplicationEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightApplicationEndpoint"/>. </summary>
         public HDInsightApplicationEndpoint()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="destinationPort"> The destination port to connect to. </param>
         /// <param name="publicPort"> The public port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationEndpoint(string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightApplicationEndpoint(string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointLocation = endpointLocation;
             DestinationPort = destinationPort;
             PublicPort = publicPort;
             PrivateIPAddress = privateIPAddress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The location of the endpoint. </summary>
         public string EndpointLocation { get; set; }
+
         /// <summary> The destination port to connect to. </summary>
         public int? DestinationPort { get; set; }
+
         /// <summary> The public port to connect to. </summary>
         public int? PublicPort { get; set; }
+
         /// <summary> The private ip address of the endpoint. </summary>
         public IPAddress PrivateIPAddress { get; set; }
     }

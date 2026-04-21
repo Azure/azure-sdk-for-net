@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerInstance
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class NGroupCollection : ArmCollection, IEnumerable<NGroupResource>, IAsyncEnumerable<NGroupResource>
     {
-        private readonly ClientDiagnostics _nGroupClientDiagnostics;
-        private readonly NGroupsRestOperations _nGroupRestClient;
+        private readonly ClientDiagnostics _nGroupsClientDiagnostics;
+        private readonly NGroups _nGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NGroupCollection for mocking. </summary>
         protected NGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NGroupResource.ResourceType, out string nGroupApiVersion);
-            _nGroupRestClient = new NGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _nGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
+            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Endpoint, nGroupApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update a NGroups resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="data"> The NGroup object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ngroupsName, NGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _nGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerInstanceArmOperation<NGroupResource>(new NGroupOperationSource(Client), _nGroupClientDiagnostics, Pipeline, _nGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
+                    new NGroupOperationSource(Client),
+                    _nGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Create or update a NGroups resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="data"> The NGroup object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ngroupsName, NGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _nGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, data, cancellationToken);
-                var operation = new ContainerInstanceArmOperation<NGroupResource>(new NGroupOperationSource(Client), _nGroupClientDiagnostics, Pipeline, _nGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
+                    new NGroupOperationSource(Client),
+                    _nGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Get the properties of the specified NGroups resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NGroupResource>> GetAsync(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.Get");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _nGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NGroupData> response = Response.FromValue(NGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Get the properties of the specified NGroups resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NGroupResource> Get(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.Get");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _nGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NGroupData> response = Response.FromValue(NGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Gets a list of all NGroups resources under a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NGroupResource(Client, NGroupData.DeserializeNGroupData(e)), _nGroupClientDiagnostics, Pipeline, "NGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupAsyncCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of all NGroups resources under a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="NGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NGroupResource(Client, NGroupData.DeserializeNGroupData(e)), _nGroupClientDiagnostics, Pipeline, "NGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NGroupData, NGroupResource>(new NGroupsGetByResourceGroupCollectionResultOfT(_nGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NGroupCollection.GetAll"), data => new NGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.Exists");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _nGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.Exists");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _nGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NGroupResource>> GetIfExistsAsync(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _nGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ngroupsName"> The NGroups name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NGroupResource> GetIfExists(string ngroupsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ngroupsName, nameof(ngroupsName));
 
-            using var scope = _nGroupClientDiagnostics.CreateScope("NGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _nGroupsClientDiagnostics.CreateScope("NGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _nGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ngroupsName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NGroupResource> IAsyncEnumerable<NGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

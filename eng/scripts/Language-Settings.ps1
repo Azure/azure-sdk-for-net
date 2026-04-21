@@ -142,33 +142,21 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 # Returns the nuget publish status of a package id and version.
 function IsNugetPackageVersionPublished ($pkgId, $pkgVersion)
 {
-  $nugetUri = "https://api.nuget.org/v3-flatcontainer/$($pkgId.ToLowerInvariant())/index.json"
+  $existingVersions = GetExistingPackageVersions -PackageName $pkgId
 
-  try
-  {
-    $nugetVersions = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -uri $nugetUri -Method "GET"
-    return $nugetVersions.versions.Contains($pkgVersion)
+  # If the feed returned nothing, the package has not been published.
+  if (!$existingVersions) {
+    return $False
   }
-  catch
-  {
-    $statusCode = $_.Exception.Response.StatusCode.value__
-    $statusDescription = $_.Exception.Response.ReasonPhrase
 
-    # if this is 404ing, then this pkg has never been published before
-    if ($statusCode -eq 404) {
-      return $False
-    }
-
-    Write-Host "Nuget Invocation failed:"
-    Write-Host "StatusCode:" $statusCode
-    Write-Host "StatusDescription:" $statusDescription
-    exit(1)
-  }
+  return $existingVersions.Contains($pkgVersion)
 }
 
 # Parse out package publishing information given a nupkg ZIP format.
 function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
 {
+  Write-Host "Parsing package file $($pkg.FullName)"
+
   $workFolder = "$workingDirectory$($pkg.Basename)"
   $zipFileLocation = "$workFolder/$($pkg.Basename).zip"
   $releaseNotes = ""
@@ -354,13 +342,15 @@ function GetExistingPackageVersions ($PackageName, $GroupId=$null)
 {
   try {
     $PackageName = $PackageName.ToLower()
-    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    $uri = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/flat2/${PackageName}/index.json"
+    $existingVersion = Invoke-RestMethod -MaximumRetryCount 3 -RetryIntervalSec 10 -Method GET -Uri $uri
     return $existingVersion.versions
   }
   catch {
     if ($_.Exception.Response.StatusCode -ne 404)
     {
       LogError "Failed to retrieve package versions for ${PackageName}. $($_.Exception.Message)"
+      throw
     }
     return $null
   }
