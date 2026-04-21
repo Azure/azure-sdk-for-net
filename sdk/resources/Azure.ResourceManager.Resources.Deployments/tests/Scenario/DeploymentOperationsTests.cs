@@ -4,7 +4,8 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources._Deployments;
+using Azure.ResourceManager.Resources._Deployments.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-D-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deployment = (await Client.GetDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await deployment.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -42,17 +43,21 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroupResource rg = lro.Value;
-            ResourceIdentifier deploymentResourceIdentifier = ArmDeploymentResource.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
-            ArmDeploymentResource deployment = Client.GetArmDeploymentResource(deploymentResourceIdentifier);
-            var deploymentWhatIf = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            ResourceIdentifier deploymentResourceIdentifier = DeploymentResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.ResourceGroupName, "testDeploymentWhatIf");
+            DeploymentResource deployment = Client.GetDeploymentResource(deploymentResourceIdentifier);
+            var whatIfProps = new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
                 Template = CreateDeploymentPropertiesUsingString().Template,
-                Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
-            });
+            };
+            foreach (var kvp in CreateDeploymentPropertiesUsingJsonElement().Parameters)
+            {
+                whatIfProps.Parameters[kvp.Key] = kvp.Value;
+            }
+            var deploymentWhatIf = new DeploymentWhatIf(whatIfProps);
             WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
-            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, WhatIfChangeType.Create);
+            Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);
         }
     }
 }
