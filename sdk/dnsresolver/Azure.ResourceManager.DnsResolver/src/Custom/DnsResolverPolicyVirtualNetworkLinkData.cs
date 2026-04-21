@@ -10,9 +10,8 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverPolicyVirtualNetworkLinkData
     {
-        // Justification: the released SDK exposed a WritableSubResource-based constructor.
-        // The generated model now restores the flattened VirtualNetworkId property directly,
-        // so this partial only preserves the legacy constructor overload.
+        // Justification: keep the shipped WritableSubResource-based constructor overload for
+        // backward compatibility. The flattened VirtualNetworkId property is now generator-owned.
         /// <summary>
         /// Initializes a new instance of the <see cref="DnsResolverPolicyVirtualNetworkLinkData"/> class.
         /// </summary>

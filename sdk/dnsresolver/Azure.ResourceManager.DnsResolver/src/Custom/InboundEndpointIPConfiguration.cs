@@ -8,9 +8,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     public partial class InboundEndpointIPConfiguration
     {
-        // Justification: the released SDK exposed a WritableSubResource-based constructor.
-        // The generated model now restores the flattened SubnetId property directly, so
-        // this partial only preserves the legacy constructor overload.
+        // Justification: keep the shipped WritableSubResource-based constructor overload for
+        // backward compatibility. The flattened SubnetId property is now generator-owned.
         /// <summary>
         /// Initializes a new instance of the <see cref="InboundEndpointIPConfiguration"/> class.
         /// </summary>
