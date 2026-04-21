@@ -2,7 +2,7 @@
   <!--
     NUnit 3 baseline pinning.
 
-    The repository default is now NUnit 4.4.0 + NUnit3TestAdapter 6.1.0.
+    The repository default is now NUnit 4.4.0 + NUnit3TestAdapter 4.6.0.
     Projects listed here are temporarily pinned to NUnit 3.14.0 until they
     are individually migrated.
 
@@ -75,7 +75,6 @@
         $(MSBuildProjectName) == 'Azure.Developer.DevCenter.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.LoadTesting.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.MSTest.Tests' or
-        $(MSBuildProjectName) == 'Azure.Developer.Playwright.NUnit' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.NUnit.Tests' or
         $(MSBuildProjectName) == 'Azure.Developer.Playwright.Tests' or
         $(MSBuildProjectName) == 'Azure.DigitalTwins.Core.Tests' or
