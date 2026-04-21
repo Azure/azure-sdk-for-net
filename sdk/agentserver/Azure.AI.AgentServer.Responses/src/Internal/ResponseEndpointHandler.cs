@@ -486,12 +486,35 @@ internal sealed class ResponseEndpointHandler
                 throw new ResourceNotFoundException($"Response '{responseId}' not found.");
             }
 
-            // Persistence-failed responses are terminal — allow deletion by
-            // evicting from the tracker (the response was never persisted).
+            // Persistence-failed responses are terminal — evict from tracker and
+            // attempt to clean up storage. In background mode, Phase 1 (CreateResponse)
+            // may have succeeded before Phase 2 (UpdateResponse) failed, so the response
+            // could exist in storage. Best-effort delete — ignore NotFound.
             if (execution.PersistenceFailed)
             {
                 _tracker.TryEvict(responseId);
-                return Results.NoContent();
+
+                try
+                {
+                    await _provider.DeleteResponseAsync(responseId, isolation);
+                }
+                catch (ResourceNotFoundException)
+                {
+                    // Expected for non-background mode where CreateResponse never ran.
+                }
+
+                try
+                {
+                    await _streamProvider.DeleteEventStreamAsync(responseId);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "DeleteEventStreamAsync failed during persistence-failed cleanup for {ResponseId}", responseId);
+                }
+
+                var deleteResult = AgentServerResponsesModelFactory.DeleteResponseResult(id: responseId);
+                _logger.LogInformation("Deleted persistence-failed response {ResponseId}", responseId);
+                return Results.Json(deleteResult, SharedJsonOptions.Instance, statusCode: 200);
             }
 
             // B16: non-background in-flight responses are not findable

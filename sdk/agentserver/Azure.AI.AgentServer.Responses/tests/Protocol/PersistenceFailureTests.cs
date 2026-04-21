@@ -207,6 +207,41 @@ public class PersistenceFailureTests : IDisposable
     // ═══════════════════════════════════════════════════════════════════════
 
     [Test]
+    public async Task Background_UpdateFailure_DeleteCleansUpStorageAndTracker()
+    {
+        // Arrange: Create succeeds (Phase 1), Update always fails (Phase 2 terminal)
+        _provider.UpdateBehavior = _ => throw new ResponsesApiException(
+            new Error("storage_error", "Service unavailable"), 500);
+
+        // Act: POST bg (non-streaming) — Phase 1 creates in storage
+        var json = JsonSerializer.Serialize(new { model = "test", background = true });
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var postResponse = await _client.PostAsync("/responses", content);
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var postDoc = await JsonDocument.ParseAsync(await postResponse.Content.ReadAsStreamAsync());
+        var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
+
+        // Wait for finalization to mark persistence as failed
+        await WaitForSpecificStatusAsync(responseId, "failed");
+
+        // Act: DELETE — should clean up from both tracker AND storage
+        var deleteResponse = await _client.DeleteAsync($"/responses/{responseId}");
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var deleteDoc = await JsonDocument.ParseAsync(await deleteResponse.Content.ReadAsStreamAsync());
+        Assert.That(deleteDoc.RootElement.GetProperty("id").GetString(), Is.EqualTo(responseId));
+        Assert.That(deleteDoc.RootElement.GetProperty("deleted").GetBoolean(), Is.True);
+
+        // Verify provider saw the delete (cleanup of Phase 1 storage)
+        Assert.That(_provider.Calls, Does.Contain("DeleteResponseAsync"));
+
+        // GET should now 404 — evicted from tracker AND deleted from storage
+        var getResponse = await _client.GetAsync($"/responses/{responseId}");
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+    }
+
+    [Test]
     public async Task BackgroundStreaming_Phase1Failure_EmitsStandaloneErrorEvent()
     {
         // Arrange: Phase 1 CreateResponseAsync fails (before response.created is
