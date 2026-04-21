@@ -8,12 +8,6 @@
 - Added `ComputeLimitVmFamilyResource`, `ComputeLimitVmFamilyCollection`, and `ComputeLimitVmFamilyData` for managing VM family resources.
 - Added `Disable` operation on `ComputeLimitFeatureResource`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.1 (2025-11-21)
 
 ### Features Added
