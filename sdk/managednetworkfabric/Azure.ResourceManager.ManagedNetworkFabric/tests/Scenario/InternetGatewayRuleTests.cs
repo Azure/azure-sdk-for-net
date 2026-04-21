@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // invoke the create operation
             NetworkFabricInternetGatewayRuleData data =
-                new NetworkFabricInternetGatewayRuleData(new AzureLocation(TestEnvironment.Location), new InternetGatewayRules(InternetGatewayRuleAction.Allow, new string[] { "10.10.10.10" }))
+                new NetworkFabricInternetGatewayRuleData(new AzureLocation(TestEnvironment.Location), new InternetGatewayRules(InternetGatewayRuleAction.Allow)
+                {
+                    AddressList = { "10.10.10.10" },
+                })
                 {
                     Annotation = "annotationValue",
                     Tags =

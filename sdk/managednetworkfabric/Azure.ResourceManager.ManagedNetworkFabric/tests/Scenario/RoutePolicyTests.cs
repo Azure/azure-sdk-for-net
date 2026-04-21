@@ -34,11 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
-            {
-                Annotation = "annotation",
-                DefaultAction = CommunityActionType.Permit,
-                Statements =
+            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new[]
                 {
                     new RoutePolicyStatementProperties(
                         7,
@@ -54,7 +50,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         Annotation = "annotation",
                     }
-                },
+                }, new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            {
+                Annotation = "annotation",
+                DefaultAction = CommunityActionType.Permit,
                 AddressFamilyType = AddressFamilyType.IPv4,
                 Tags =
                 {

@@ -31,10 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"))
-            {
-                Annotation = "annotation",
-                Destination = new NeighborGroupDestination()
+            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"), new NeighborGroupDestination()
                 {
                     IPv4Addresses =
                     {
@@ -44,7 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                     "2F::/100"
                     },
-                },
+                })
+            {
+                Annotation = "annotation",
                 Tags =
                 {
                     ["key8107"] = "1234",

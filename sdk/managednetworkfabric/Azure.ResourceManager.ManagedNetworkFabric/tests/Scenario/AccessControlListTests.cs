@@ -31,10 +31,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"))
+            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"), NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://ACL-Storage-URL"),
                 DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
