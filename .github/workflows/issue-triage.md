@@ -24,6 +24,8 @@ network:
   allowed:
     - defaults
     - "api.nuget.org"
+    - "pkgs.dev.azure.com"
+    - "releaseassets.githubusercontent.com"
 
 safe-outputs:
   report-failure-as-issue: false
@@ -453,7 +455,7 @@ Scan starts from end of file (line 1230) upward:
 
 The `%Mgmt` catch-all at line 912 is never reached because the more specific `%ARM %Mgmt` entry at line 924 was encountered first (it appears after the catch-all in the file)
 
-**Outcome:** Matches `%ARM %Mgmt` (line 924). ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" + "needs-team-attention" labels, no assignment, no @mention
+**Outcome:** Matches `%ARM %Mgmt` (line 924). ServiceOwners: @Azure/arm-sdk-owners, no AzureSdkOwners. Add "Service Attention" label, no assignment, no @mention. If the issue also has "customer-reported", add "needs-team-attention"
 
 **Example 2 — Predicted labels: "Event Hubs" + "Client"**
 
@@ -462,7 +464,7 @@ Scan starts from end of file (line 1230) upward:
 2. `%Mgmt` catch-all (line 912) — requires "Mgmt"; issue has "Client" → no match, continue
 3. `%Event Hubs` (line 329) — requires only "Event Hubs"; issue has "Event Hubs" → ALL labels match ✅ STOP
 
-**Outcome:** Matches `%Event Hubs` (line 329). AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, add "needs-team-attention", @mention @jsquire in Step 6 comment
+**Outcome:** Matches `%Event Hubs` (line 329). AzureSdkOwners: @jsquire, ServiceOwners: @axisc @hmlam. Assign @jsquire, @mention @jsquire in Step 6 comment. If the issue also has "customer-reported", add "needs-team-attention"
 
 Note: There is no `%Client` catch-all entry in CODEOWNERS, so "Client" as a category label does not contribute to CODEOWNERS matching. The service label drives the match
 

@@ -11,7 +11,11 @@ on:
 
 permissions: read-all
 
-network: defaults
+network:
+  allowed:
+    - defaults
+    - "pkgs.dev.azure.com"
+    - "releaseassets.githubusercontent.com"
 
 safe-outputs:
   report-failure-as-issue: false
