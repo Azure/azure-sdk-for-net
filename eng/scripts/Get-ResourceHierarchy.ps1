@@ -2,13 +2,15 @@
 <#
 .SYNOPSIS
     Analyzes an Azure SDK management-plane library DLL and outputs the resource
-    hierarchy as JSON (stdout) and a markdown summary (stderr).
+    hierarchy as JSON.
 
 .DESCRIPTION
     Reflects over an Azure.ResourceManager.<RP>.dll to discover ArmResource,
     ArmCollection and ResourceData subtypes, maps parent-child relationships by
     inspecting Get* methods, and identifies scopes (ResourceGroup, Subscription,
     Tenant, ManagementGroup) via Mockable extension types.
+
+    Diagnostic messages are written to stderr; the JSON result is written to stdout.
 
     The DLL's directory must contain its dependencies (notably
     Azure.ResourceManager.dll). Typically you produce that with:
@@ -255,35 +257,6 @@ try {
 
     # JSON to stdout
     $resources | ConvertTo-Json -Depth 8
-
-    # Markdown summary to stderr
-    [Console]::Error.WriteLine("`n## $assemblyName Resource Hierarchy`n")
-    foreach ($r in $resources) {
-        if ($r.Name.StartsWith('Mockable')) { continue }
-
-        $tags = New-Object System.Collections.Generic.List[string]
-        if ($r.IsSingleton)            { $tags.Add('singleton')    | Out-Null }
-        if ($r.IsObsolete)             { $tags.Add('obsolete')     | Out-Null }
-        if ($r.IsEditorBrowsableNever) { $tags.Add('hidden (EBN)') | Out-Null }
-        $tagStr    = if ($tags.Count -gt 0) { " _($($tags -join ', '))_" } else { '' }
-
-        $scopeStr  = if ($r.Scopes.Count -gt 0)          { " (scopes: $($r.Scopes -join ', '))" }          else { '' }
-        $parentStr = if ($r.ParentResources.Count -gt 0) { " [parent: $($r.ParentResources -join ', ')]" } else { ' [top-level]' }
-
-        # Strike-through deprecated/hidden resources but keep them visible.
-        $nameDisplay = if ($r.IsObsolete -or $r.IsEditorBrowsableNever) { "~~$($r.Name)~~" } else { $r.Name }
-        [Console]::Error.WriteLine("- **$nameDisplay**$tagStr$parentStr$scopeStr")
-        if ($r.IsObsolete -and $r.ObsoleteMessage) { [Console]::Error.WriteLine("  - Obsolete: $($r.ObsoleteMessage)") }
-        if ($null -ne $r.DataType)     { [Console]::Error.WriteLine("  - Data: $($r.DataType) (tracked: $($r.IsTrackedResource))") }
-        if ($null -ne $r.ResourceType) { [Console]::Error.WriteLine("  - ResourceType: $($r.ResourceType)") }
-        if ($null -ne $r.ResourceId)   { [Console]::Error.WriteLine("  - ResourceId: $($r.ResourceId)") }
-        if ($r.ChildCollections.Count -gt 0) {
-            [Console]::Error.WriteLine("  - Children:")
-            foreach ($c in $r.ChildCollections) {
-                [Console]::Error.WriteLine("    - $($c.MethodName)() -> $($c.ReturnType)")
-            }
-        }
-    }
 
     exit 0
 }
