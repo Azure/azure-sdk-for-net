@@ -6,7 +6,6 @@
 - Migrated from Swagger/AutoRest to TypeSpec-based generation.
 
 ### Breaking Changes
-- No user-facing breaking changes are intended for this migration; compatibility shims preserve the existing `VirtualNetworkDnsResolverResource` entry points.
 
 ### Bugs Fixed
 
