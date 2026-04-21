@@ -24,6 +24,10 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
   - [Toolboxes](#toolboxes)
+  - [Sessions](#sessions)
+  - [Skills](#skills)
+  - [Agent endpoints](#agent-endpoints)
+  - [Streaming the logs](#streaming-the-logs)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -169,21 +173,14 @@ internal class FeaturePolicy(string feature) : PipelinePolicy
 To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
-private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
-        cpu: "1",
-        memory: "2Gi"
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+        cpu: "0.5",
+        memory: "1Gi"
     )
     {
-        EnvironmentVariables = {
-            { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
-            { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", modelDeploymentName },
-            // Optional variables, used for logging
-            { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
-            { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        },
         Image = dockerImage,
     };
     return agentDefinition;
@@ -208,6 +205,9 @@ az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJ
 
 ### Toolboxes
 
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
 As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
@@ -219,7 +219,7 @@ ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpT
     toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 ));
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -227,7 +227,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     }
 );
 ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
-    toolboxName: toolboxName,
+    name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
     metadata: new Dictionary<string, string> {
@@ -243,7 +243,7 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(toolboxName: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
@@ -254,6 +254,176 @@ ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name,
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
+### Sessions
+
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
+sessions for the same agent version.
+
+```C# Snippet:Sample_CreateSessions_SessionsCRUD_Async
+string sessionKey1 = Guid.NewGuid().ToString();
+string sessionKey2 = Guid.NewGuid().ToString();
+string sessionId1 = Guid.NewGuid().ToString();
+string sessionId2 = Guid.NewGuid().ToString();
+ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    agentSessionId: sessionId1,
+    isolationKey: sessionKey1,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
+ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    agentSessionId: sessionId2,
+    isolationKey: sessionKey2,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
+while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session1 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+}
+while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session2 = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
+}
+```
+
+It is also possible to upload the files to the session store, so that it will only be accessible inside its session.
+To use this feature we need to create the `AgentSessionFiles` client:
+
+```C# Snippet:Sample_CreateClient_SessionFiles
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
+var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
+AgentAdministrationClientOptions options = new();
+options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
+```
+
+We can use it to upload the files.
+
+```C# Snippet:Sample_Upload_SessionFiles_Async
+string filePath = "sample_file_for_upload1.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
+        agentName: agentVersion.Name,
+        sessionId: session.AgentSessionId,
+        sessionStoragePath: filePath,
+        localPath: filePath
+    );
+Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+File.Delete(filePath);
+filePath = "sample_file_for_upload2.txt";
+File.WriteAllText(
+    path: filePath,
+    contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
+writeResponse = await sessionClient.UploadSessionFileAsync(
+    agentName: agentVersion.Name,
+    sessionId: session.AgentSessionId,
+    sessionStoragePath: $"{filePath}",
+    localPath: filePath
+);
+Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
+File.Delete(filePath);
+```
+
+### Skills
+
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Skills=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
+to manage skills in Microsoft foundry. Skills may be created from the folder with instructions or on-the-fly.
+
+```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
+AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
+AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+    To calculate the sum  run
+    bash:
+    echo $((<first> + <second>))
+    powershell:
+    (<first> + <second>)
+    Replace <first> and <second> by the actual summation arguments.
+""");
+Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
+```
+
+For more information on skills please see the [Microsoft learning](https://learn.microsoft.com/agent-framework/agents/skills) page.
+
+### Agent endpoints
+
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
+The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
+because we are using three experimental features: hosted agents, skills and Agent endpoints.
+
+The hosted agent can be further configurable by using `PatchAgentObject` and `PatchAgentObjectAsync` methods.
+1. Retrieve the agent
+
+```C# Snippet:Sample_GetAgentAndCreateSession_AgentsEndpoint_Async
+ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+    agentName: hostedAgentName,
+    agentVersion: hostedAgentVersion);
+Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Version}");
+```
+
+2. Create the skill.
+
+```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
+AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
+    To calculate the sum  run
+    bash:
+    echo $((<first> + <second>))
+    powershell:
+    (<first> + <second>)
+    Replace <first> and <second> by the actual summation arguments.
+    """);
+```
+
+3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+make it aware of the skill we have created.
+
+```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
+AgentEndpoint config = new()
+{
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    Protocols = {AgentEndpointProtocol.Responses}
+};
+AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+PatchAgentOptions patchOptions = new()
+{
+    AgentEndpoint = config,
+    AgentCard = card
+};
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+    agentName: hostedAgentName,
+    patchAgentOptions: patchOptions);
+Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
+```
+
+### Streaming the logs
+
+The most probable reason for an error during session creation is the failure of a main script in the agent container.
+The hosted agent container logs can be streamed using `AgentAdministrationClient` methods `GetSessionLogStream`
+and `GetSessionLogStreamAsync`.
+
+```C# Snippet:Sample_Agents_StreamLogs_HostedAgentLogStreaming
+ProjectAgentSession session = await agentsClient.CreateSessionAsync(
+    agentName: agentVersion.Name,
+    isolationKey: "key_1",
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
+);
+SessionLogEvent logEvent = await agentsClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session.AgentSessionId);
+Console.WriteLine(logEvent.Data);
+```
 
 ## Tracing
 
