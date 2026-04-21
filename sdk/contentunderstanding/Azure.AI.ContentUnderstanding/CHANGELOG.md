@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.3 (2026-04-17)
+## 1.1.0 (2026-04-24)
 
 ### Features Added
 
 - Added `ContentUnderstandingClientSettings` to support creating a `ContentUnderstandingClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
-### Bugs Fixed
-
-- Added `AnalyzeUsageDetails` class and `AnalyzeOperationExtensions.GetUsage()` extension method to expose usage/billing information (page counts, token consumption) from completed analyze operations. Previously, the `usage` field returned by the REST API was discarded during LRO deserialization. ([#46249](https://github.com/Azure/azure-sdk-for-python/issues/46249))
+- Added `AnalyzeUsageDetails` class and `AnalyzeOperationExtensions.GetUsage()` extension method to surface billing and token consumption details (`AnalyzeUsageDetails`) returned by the REST API.
 
 ## 1.0.2 (2026-03-11)
 
