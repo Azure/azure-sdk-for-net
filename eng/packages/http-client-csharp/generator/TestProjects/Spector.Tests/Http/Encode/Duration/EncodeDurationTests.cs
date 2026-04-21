@@ -260,19 +260,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         [SpectorTest]
         public Task PropertyInt32Milliseconds() => Test(async (host) =>
         {
-            var data = new
-            {
-                value = 36000,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().Int32MillisecondsAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("36000", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyInt32MillisecondsConvenience() => Test(async (host) =>
-        {
             var body = new Int32MillisecondsDurationProperty(TimeSpan.FromMilliseconds(36000));
             var response = await new DurationClient(host, null).GetPropertyClient().Int32MillisecondsAsync(body);
             Assert.AreEqual(body.Value, response.Value.Value);
@@ -280,19 +267,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
 
         [SpectorTest]
         public Task PropertyFloatMilliseconds() => Test(async (host) =>
-        {
-            var data = new
-            {
-                value = 35625,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().FloatMillisecondsAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35625", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyFloatMillisecondsConvenience() => Test(async (host) =>
         {
             var body = new FloatMillisecondsDurationProperty(TimeSpan.FromMilliseconds(35625));
             var response = await new DurationClient(host, null).GetPropertyClient().FloatMillisecondsAsync(body);
@@ -302,19 +276,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         [SpectorTest]
         public Task PropertyFloat64Milliseconds() => Test(async (host) =>
         {
-            var data = new
-            {
-                value = 35625,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().Float64MillisecondsAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35625", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyFloat64MillisecondsConvenience() => Test(async (host) =>
-        {
             var body = new Float64MillisecondsDurationProperty(TimeSpan.FromMilliseconds(35625));
             var response = await new DurationClient(host, null).GetPropertyClient().Float64MillisecondsAsync(body);
             Assert.AreEqual(body.Value, response.Value.Value);
@@ -322,20 +283,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
 
         [SpectorTest]
         public Task PropertyFloatMillisecondsArray() => Test(async (host) =>
-        {
-            var data = new
-            {
-                value = new[] { 35625, 46750 }
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().FloatMillisecondsArrayAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("35625", jsonResult.GetProperty("value")[0].ToString());
-            Assert.AreEqual("46750", jsonResult.GetProperty("value")[1].ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyFloatMillisecondsArrayConvenience() => Test(async (host) =>
         {
             var data1 = TimeSpan.FromMilliseconds(35625);
             var data2 = TimeSpan.FromMilliseconds(46750);
@@ -347,19 +294,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         [SpectorTest]
         public Task PropertyInt32SecondsLargerUnit() => Test(async (host) =>
         {
-            var data = new
-            {
-                value = 120,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().Int32SecondsLargerUnitAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("120", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyInt32SecondsLargerUnitConvenience() => Test(async (host) =>
-        {
             var body = new Int32SecondsLargerUnitDurationProperty(TimeSpan.FromMinutes(2));
             var response = await new DurationClient(host, null).GetPropertyClient().Int32SecondsLargerUnitAsync(body);
             Assert.AreEqual(body.Value, response.Value.Value);
@@ -367,19 +301,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
 
         [SpectorTest]
         public Task PropertyFloatSecondsLargerUnit() => Test(async (host) =>
-        {
-            var data = new
-            {
-                value = 150.0,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsLargerUnitAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("150", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyFloatSecondsLargerUnitConvenience() => Test(async (host) =>
         {
             var body = new FloatSecondsLargerUnitDurationProperty(TimeSpan.FromMinutes(2.5));
             var response = await new DurationClient(host, null).GetPropertyClient().FloatSecondsLargerUnitAsync(body);
@@ -389,19 +310,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
         [SpectorTest]
         public Task PropertyInt32MillisecondsLargerUnit() => Test(async (host) =>
         {
-            var data = new
-            {
-                value = 180000,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().Int32MillisecondsLargerUnitAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("180000", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyInt32MillisecondsLargerUnitConvenience() => Test(async (host) =>
-        {
             var body = new Int32MillisecondsLargerUnitDurationProperty(TimeSpan.FromMinutes(3));
             var response = await new DurationClient(host, null).GetPropertyClient().Int32MillisecondsLargerUnitAsync(body);
             Assert.AreEqual(body.Value, response.Value.Value);
@@ -409,19 +317,6 @@ namespace TestProjects.Spector.Tests.Http.Encode.Duration
 
         [SpectorTest]
         public Task PropertyFloatMillisecondsLargerUnit() => Test(async (host) =>
-        {
-            var data = new
-            {
-                value = 210000.0,
-            };
-            BinaryData binaryData = new BinaryData(data);
-            var response = await new DurationClient(host, null).GetPropertyClient().FloatMillisecondsLargerUnitAsync(RequestContent.Create(binaryData), null);
-            JsonElement jsonResult = JsonDocument.Parse(response.ContentStream!).RootElement;
-            Assert.AreEqual("210000", jsonResult.GetProperty("value").ToString());
-        });
-
-        [SpectorTest]
-        public Task PropertyFloatMillisecondsLargerUnitConvenience() => Test(async (host) =>
         {
             var body = new FloatMillisecondsLargerUnitDurationProperty(TimeSpan.FromMinutes(3.5));
             var response = await new DurationClient(host, null).GetPropertyClient().FloatMillisecondsLargerUnitAsync(body);
