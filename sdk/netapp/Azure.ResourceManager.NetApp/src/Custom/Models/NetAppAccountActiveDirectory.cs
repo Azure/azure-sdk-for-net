@@ -7,9 +7,13 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // Backward compatibility: v1.15.0 exposed the boolean properties as `AesEncryption`,
+    // `LdapSigning`, `LdapOverTLS`. They were renamed in this migration to the
+    // `Is...Enabled` style for consistency with other SDKs. The old names are preserved
+    // here as forwarding shims so existing user code continues to compile.
     public partial class NetAppAccountActiveDirectory
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        /// <summary> Compatibility shim — formerly named <c>AesEncryption</c>; use <see cref="IsAesEncryptionEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? AesEncryption
         {
@@ -17,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsAesEncryptionEnabled = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        /// <summary> Compatibility shim — formerly named <c>LdapSigning</c>; use <see cref="IsLdapSigningEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? LdapSigning
         {
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             set => IsLdapSigningEnabled = value;
         }
 
-        /// <summary> Compatibility shim for the former property name. </summary>
+        /// <summary> Compatibility shim — formerly named <c>LdapOverTLS</c>; use <see cref="IsLdapOverTlsEnabled"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? LdapOverTLS
         {

@@ -1,6 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility — hand-rolled REST client for the deprecated
+// `/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups`
+// endpoints. These per-volume backup operations were superseded by `BackupVaults/{vault}/backups`
+// in the current TypeSpec spec, so the generator no longer emits a client for them. We retain
+// this hand-rolled client to satisfy the `NetAppVolumeBackupCollection`/`NetAppVolumeBackupResource`
+// backward-compat types.
+//
+// TODO: Drop this file once the NetApp service retires the legacy per-volume backup endpoints
+// and the backward-compat surface can be removed.
+
 #nullable disable
 
 using System;

@@ -1,6 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility — hand-rolled REST client for the deprecated
+// `/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups` endpoints.
+// The legacy `AccountBackups` API was superseded by `BackupVaults/{vault}/backups` in
+// the current spec. Existing customers continue to call `accountBackups` for their
+// pre-migration backups, so we retain this hand-rolled client to satisfy the
+// `NetAppAccountBackupCollection`/`NetAppAccountBackupResource` types (also kept as
+// backward-compat shims). The TypeSpec spec no longer exposes this operation.
+//
+// TODO: When the NetApp service team retires the legacy endpoint and the backward-compat
+// surface can be dropped, delete this file along with the corresponding `NetAppAccountBackupCollection`/
+// `NetAppAccountBackupResource` custom partials.
+
 #nullable disable
 
 using System;

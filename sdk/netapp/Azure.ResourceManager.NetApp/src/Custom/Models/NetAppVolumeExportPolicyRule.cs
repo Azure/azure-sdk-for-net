@@ -7,9 +7,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // Backward compatibility: v1.15.0 exposed the protocol/permission flags with bare
+    // names (UnixReadOnly, Cifs, Nfsv3, etc.). They were renamed in this migration to
+    // the `Is...`/`Allow...Protocol` style for naming consistency. The old names are
+    // preserved here as `[EditorBrowsable(Never)]` forwarding shims so existing user
+    // code continues to compile while new code uses the renamed properties.
     public partial class NetAppVolumeExportPolicyRule
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        /// <summary> Compatibility shim — formerly <c>UnixReadOnly</c>; use <see cref="IsUnixReadOnly"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? UnixReadOnly
         {

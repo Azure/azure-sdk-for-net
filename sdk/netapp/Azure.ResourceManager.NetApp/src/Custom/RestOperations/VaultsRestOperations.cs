@@ -1,6 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility — hand-rolled REST client for the deprecated
+// `GET /providers/Microsoft.NetApp/netAppAccounts/{accountName}/vaults` operation
+// that exposed a list of NetAppVault entries. The TypeSpec spec for the current API
+// versions does not model this operation (it predates BackupVaults and is being phased
+// out), so the generator no longer emits a client for it. We retain a manual
+// `Autorest.CSharp.Core`-based REST client to call the legacy endpoint via the public
+// `NetAppAccountResource.GetVaults`/`GetVaultsAsync` methods, which are themselves
+// hidden via [EditorBrowsable(Never)] (see Custom/NetAppAccountResource.cs).
+//
+// TODO: Coordinate with the NetApp service team to confirm when the backend endpoint
+// can be retired. Once it is, delete this file along with `Custom/NetAppAccountResource.cs`,
+// `Custom/Models/NetAppVault.cs`, `Custom/Models/VaultList.cs`, and the accompanying
+// `IncludeAutorestDependency=true` line in the .csproj.
+
 #nullable disable
 
 using System;

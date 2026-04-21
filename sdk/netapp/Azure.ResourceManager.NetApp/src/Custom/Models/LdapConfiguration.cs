@@ -7,9 +7,15 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // Note: this is the *new* property name added for naming consistency with sibling
+    // bool properties (Is...Enabled). The generated property `LdapOverTLS` matches the
+    // wire name; we expose `IsLdapOverTlsEnabled` as a forwarding alias so callers can
+    // adopt the new naming. Marked [EditorBrowsable(Never)] only because the new name
+    // is added later in the migration and we want to steer users to the new naming via
+    // CHANGELOG guidance rather than IntelliSense ranking.
     public partial class LdapConfiguration
     {
-        /// <summary> Compatibility shim for the former property name. </summary>
+        /// <summary> Naming-consistency alias for <see cref="LdapOverTLS"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsLdapOverTlsEnabled
         {
