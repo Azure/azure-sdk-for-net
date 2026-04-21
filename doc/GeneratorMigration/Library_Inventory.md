@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-20 11:02:11 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-21 02:22:18 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -20,8 +20,8 @@
 - Total libraries: 400
 - Management Plane (MPG): 232
   - Autorest/Swagger: 61
-  - Incomplete (Spec migrated to TypeSpec): 34
-  - New Emitter (TypeSpec): 137
+  - Incomplete (Spec migrated to TypeSpec): 33
+  - New Emitter (TypeSpec): 138
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
   - New Emitter (TypeSpec): 43
@@ -135,7 +135,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 137 / 171 (80.1%)
+**Migration Status**: 138 / 171 (80.7%)
 
 This total includes incomplete libraries whose specs have already migrated to TypeSpec but whose SDK generation is still Swagger-based.
 
@@ -171,6 +171,7 @@ This total includes incomplete libraries whose specs have already migrated to Ty
 | confidentialledger | Azure.ResourceManager.ConfidentialLedger | ✅ |
 | confluent | Azure.ResourceManager.Confluent | ✅ |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
+| containerinstance | Azure.ResourceManager.ContainerInstance | ✅ |
 | containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
@@ -282,7 +283,7 @@ This total includes incomplete libraries whose specs have already migrated to Ty
 
 ## Management Plane Libraries (MPG) - Incomplete
 
-Libraries whose corresponding specs have already been migrated to TypeSpec, but whose SDK generation is still Swagger-based. Total: 34
+Libraries whose corresponding specs have already been migrated to TypeSpec, but whose SDK generation is still Swagger-based. Total: 33
 
 | Service | Library |
 | ------- | ------- |
@@ -293,7 +294,6 @@ Libraries whose corresponding specs have already been migrated to TypeSpec, but 
 | compute | Azure.ResourceManager.Compute |
 | consumption | Azure.ResourceManager.Consumption |
 | containerapps | Azure.ResourceManager.AppContainers |
-| containerinstance | Azure.ResourceManager.ContainerInstance |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | costmanagement | Azure.ResourceManager.CostManagement |
 | datafactory | Azure.ResourceManager.DataFactory |
