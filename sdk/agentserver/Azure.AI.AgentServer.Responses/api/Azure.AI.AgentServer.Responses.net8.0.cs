@@ -1,15 +1,5 @@
 namespace Azure.AI.AgentServer.Responses
 {
-    public static partial class AgentServerResponsesModelFactory
-    {
-        public static Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem AgentsPagedResultOutputItem(System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ApiErrorResponse ApiErrorResponse(Azure.AI.AgentServer.Responses.Models.Error error = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.DeleteResponseResult DeleteResponseResult(string id = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.Error Error(string? code = null, string? message = null, string? param = null, string? type = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.Error>? details = null, System.Collections.Generic.IDictionary<string, System.BinaryData>? additionalInfo = null, System.Collections.Generic.IDictionary<string, System.BinaryData>? debugInfo = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent ResponseCreatedEvent(Azure.AI.AgentServer.Responses.Models.ResponseObject response = null, long sequenceNumber = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ResponseErrorInfo ResponseErrorInfo(Azure.AI.AgentServer.Responses.Models.ResponseErrorCode code = default(Azure.AI.AgentServer.Responses.Models.ResponseErrorCode), string message = null) { throw null; }
-        public static Azure.AI.AgentServer.Responses.Models.ResponseObject ResponseObject(string id = null, string model = null, Azure.AI.AgentServer.Responses.Models.ResponseStatus? status = default(Azure.AI.AgentServer.Responses.Models.ResponseStatus?), System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.AgentServer.Responses.Models.ResponseErrorInfo error = null, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem> output = null) { throw null; }
-    }
     public partial class AzureAIAgentServerResponsesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIAgentServerResponsesContext() { }

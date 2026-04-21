@@ -9,14 +9,14 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// A factory class for creating instances of models for mocking and testing.
+/// A factory class for creating instances of models used internally.
 /// <para>
 /// This is hand-maintained because the generated factory from tsp-output has
 /// constructor parameter ordering mismatches with our customized generated models.
 /// Only methods actively used by this library are included.
 /// </para>
 /// </summary>
-public static partial class AgentServerResponsesModelFactory
+internal static partial class AgentServerResponsesModelFactory
 {
     /// <summary>Creates an <see cref="Models.Error"/> instance for mocking.</summary>
     /// <param name="code">The error code.</param>
@@ -171,5 +171,25 @@ public static partial class AgentServerResponsesModelFactory
             lastId,
             hasMore,
             additionalBinaryDataProperties: null);
+    }
+
+    /// <summary>Creates a <see cref="Models.ResponseUsage"/> instance for mocking.</summary>
+    /// <param name="inputTokens">The number of input tokens.</param>
+    /// <param name="inputTokensDetails">A detailed breakdown of the input tokens.</param>
+    /// <param name="outputTokens">The number of output tokens.</param>
+    /// <param name="outputTokensDetails">A detailed breakdown of the output tokens.</param>
+    /// <param name="totalTokens">The total number of tokens used.</param>
+    /// <returns>A new <see cref="Models.ResponseUsage"/> instance.</returns>
+    public static ResponseUsage ResponseUsage(
+        long inputTokens = default,
+        ResponseUsageInputTokensDetails inputTokensDetails = default!,
+        long outputTokens = default,
+        ResponseUsageOutputTokensDetails outputTokensDetails = default!,
+        long totalTokens = default)
+    {
+        inputTokensDetails ??= new ResponseUsageInputTokensDetails(cachedTokens: 0);
+        outputTokensDetails ??= new ResponseUsageOutputTokensDetails(reasoningTokens: 0);
+
+        return new ResponseUsage(inputTokens, inputTokensDetails, outputTokens, outputTokensDetails, totalTokens);
     }
 }

@@ -1281,12 +1281,14 @@ yield return stream.EmitFailed(ResponseErrorCode.ServerError, "Error message", u
 yield return stream.EmitIncomplete(ResponseIncompleteDetailsReason.MaxOutputTokens, usage);
 ```
 
-Create `ResponseUsage` using the model factory:
+Create `ResponseUsage` directly:
 
 ```csharp
-var usage = AgentServerResponsesModelFactory.ResponseUsage(
+var usage = new ResponseUsage(
     inputTokens: 150,
+    inputTokensDetails: new ResponseUsageInputTokensDetails(cachedTokens: 0),
     outputTokens: 42,
+    outputTokensDetails: new ResponseUsageOutputTokensDetails(reasoningTokens: 0),
     totalTokens: 192);
 yield return stream.EmitCompleted(usage);
 ```
