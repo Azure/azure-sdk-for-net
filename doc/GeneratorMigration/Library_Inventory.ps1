@@ -1,8 +1,8 @@
 # Azure SDK for .NET Libraries Inventory Generator
 #
 # This script generates an inventory of libraries in the Azure SDK for .NET repository,
-# categorizing them as data plane or management plane, and by the type of generator used
-# (Swagger or TypeSpec).
+# categorizing them as data plane, management plane, or provisioning, and by the type of
+# generator used (Swagger or TypeSpec).
 #
 # Usage:
 #     powershell Library_Inventory.ps1 [-Json]
@@ -22,14 +22,6 @@ $EmitterMap = @{
     'eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json' = '@azure-typespec/http-client-csharp-provisioning'
     'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
 }
-
-# Hardcoded management libraries to exclude from the Incomplete bucket.
-# Use this for special cases where the spec is TypeSpec-based, but the existing SDK project
-# intentionally will not migrate to the new generator shape.
-$IncompleteExclusionLibraries = @(
-    'Azure.ResourceManager.KubernetesConfiguration'
-    'Azure.ResourceManager.Resources'
-)
 
 function Test-MgmtLibrary {
     param([string]$Path)
@@ -174,213 +166,6 @@ function Test-HasTspLocation {
     return ($tspLocationFiles.Count -gt 0)
 }
 
-function Get-SpecificationDirectoryFromContent {
-    param([string]$Content)
-
-    if (-not $Content) {
-        return $null
-    }
-
-    if ($Content -match 'specification/(?<service>[^/\r\n]+)/') {
-        return $matches['service'].Trim().Trim('"').ToLower()
-    }
-
-    return $null
-}
-
-function Get-ResourceProviderNamespace {
-    param([string]$Path)
-
-    $assemblyInfoPath = Join-Path $Path "src\Properties\AssemblyInfo.cs"
-    if (-not (Test-Path $assemblyInfoPath)) {
-        return $null
-    }
-
-    try {
-        $content = Get-Content $assemblyInfoPath -Raw -ErrorAction SilentlyContinue
-        if ($content -match '(?:Azure\.Core\.)?AzureResourceProviderNamespace\("(?<provider>[^"]+)"\)') {
-            return $matches['provider'].Trim()
-        }
-    }
-    catch {
-        # Continue
-    }
-
-    return $null
-}
-
-function Invoke-WebRequestWithRetry {
-    param(
-        [string]$Uri,
-        [hashtable]$Headers,
-        [int]$TimeoutSec = 10,
-        [int]$MaxRetries = 3
-    )
-
-    for ($attempt = 1; $attempt -le $MaxRetries; $attempt++) {
-        try {
-            return Invoke-WebRequest -Uri $Uri -UseBasicParsing -Headers $Headers -TimeoutSec $TimeoutSec -ErrorAction Stop
-        }
-        catch {
-            $response = $_.Exception.Response
-            $statusCode = if ($response -and $response.StatusCode) { [int]$response.StatusCode } else { $null }
-            $isRetriable = $statusCode -in @(429, 500, 502, 503, 504)
-
-            if (-not $isRetriable -or $attempt -eq $MaxRetries) {
-                Write-Verbose "Request failed for ${Uri}: $($_.Exception.Message)"
-                return $null
-            }
-
-            $retryAfterSeconds = 2
-            if ($response) {
-                $retryAfterHeader = $response.Headers['Retry-After']
-                if ($retryAfterHeader) {
-                    $parsedRetryAfter = 0
-                    if ([int]::TryParse($retryAfterHeader, [ref]$parsedRetryAfter)) {
-                        $retryAfterSeconds = $parsedRetryAfter
-                    }
-                }
-                elseif ($response.Headers['X-RateLimit-Reset']) {
-                    $resetEpoch = 0L
-                    if ([long]::TryParse($response.Headers['X-RateLimit-Reset'], [ref]$resetEpoch)) {
-                        $resetTime = [DateTimeOffset]::FromUnixTimeSeconds($resetEpoch)
-                        $secondsUntilReset = [math]::Ceiling(($resetTime - [DateTimeOffset]::UtcNow).TotalSeconds)
-                        if ($secondsUntilReset -gt 0) {
-                            $retryAfterSeconds = $secondsUntilReset
-                        }
-                    }
-                }
-            }
-
-            $sleepSeconds = [Math]::Min([Math]::Max([int]$retryAfterSeconds, 1), 15)
-            Write-Verbose "Retrying $Uri in $sleepSeconds second(s) after HTTP $statusCode."
-            Start-Sleep -Seconds $sleepSeconds
-        }
-    }
-
-    return $null
-}
-
-function Get-ServiceMainTspContents {
-    param(
-        [string]$ServiceDirectory,
-        [string]$ProviderNamespace
-    )
-
-    if (-not $ServiceDirectory -or -not $ProviderNamespace) {
-        return @()
-    }
-
-    if (-not $script:ServiceMainTspCache) {
-        $script:ServiceMainTspCache = @{}
-    }
-
-    $cacheKey = "$($ServiceDirectory.ToLower())|$($ProviderNamespace.ToLower())"
-    if ($script:ServiceMainTspCache.ContainsKey($cacheKey)) {
-        return $script:ServiceMainTspCache[$cacheKey]
-    }
-
-    $headers = @{
-        'User-Agent' = 'PowerShell'
-        'Accept' = 'application/vnd.github+json'
-        'X-GitHub-Api-Version' = '2022-11-28'
-    }
-
-    $providerPath = "specification/$ServiceDirectory/resource-manager/$ProviderNamespace"
-    $candidatePaths = [System.Collections.Generic.List[string]]::new()
-    $candidatePaths.Add($providerPath)
-
-    $directoryEnumerationSucceeded = $false
-    $contentsApiUrl = "https://api.github.com/repos/Azure/azure-rest-api-specs/contents/${providerPath}?ref=main"
-    $directoryResponse = Invoke-WebRequestWithRetry -Uri $contentsApiUrl -Headers $headers -TimeoutSec 10
-    if ($directoryResponse -and $directoryResponse.Content) {
-        try {
-            $directoryItems = @($directoryResponse.Content | ConvertFrom-Json)
-            foreach ($item in $directoryItems) {
-                if ($item.type -eq 'dir' -and $item.path) {
-                    $candidatePaths.Add($item.path)
-                }
-            }
-            $directoryEnumerationSucceeded = $true
-        }
-        catch {
-            Write-Verbose "Unable to parse GitHub contents response for $providerPath."
-        }
-    }
-
-    if (-not $directoryEnumerationSucceeded) {
-        Write-Verbose "GitHub Contents API unavailable for $providerPath; falling back to directory page discovery."
-        $htmlResponse = Invoke-WebRequestWithRetry -Uri "https://github.com/Azure/azure-rest-api-specs/tree/main/$providerPath" -Headers @{ 'User-Agent' = 'PowerShell' } -TimeoutSec 10
-        if ($htmlResponse -and $htmlResponse.Content) {
-            $escapedProviderPath = [regex]::Escape("/Azure/azure-rest-api-specs/tree/main/$providerPath/")
-            $pattern = 'href="' + $escapedProviderPath + '(?<name>[^"#/]+)"'
-            $directoryMatches = [regex]::Matches($htmlResponse.Content, $pattern)
-
-            foreach ($match in $directoryMatches) {
-                $name = $match.Groups['name'].Value
-                if ($name) {
-                    $candidatePaths.Add("$providerPath/$name")
-                }
-            }
-        }
-        else {
-            Write-Verbose "Unable to enumerate nested TypeSpec directories for $providerPath; probing the direct provider path only."
-        }
-    }
-
-    $mainTspContents = New-Object System.Collections.Generic.List[string]
-    foreach ($candidatePath in ($candidatePaths | Select-Object -Unique)) {
-        $rawUrl = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/$candidatePath/main.tsp"
-        $content = Invoke-WebRequestWithRetry -Uri $rawUrl -Headers $headers -TimeoutSec 10
-        if ($content -and $content.Content) {
-            $mainTspContents.Add($content.Content)
-        }
-    }
-
-    $script:ServiceMainTspCache[$cacheKey] = @($mainTspContents)
-    return $script:ServiceMainTspCache[$cacheKey]
-}
-
-function Test-MgmtSpecMigratedToTypeSpec {
-    param([string]$Path)
-
-    if (-not (Test-MgmtLibrary $Path)) {
-        return $false
-    }
-
-    $libraryName = Split-Path $Path -Leaf
-    if ($libraryName -in $IncompleteExclusionLibraries) {
-        return $false
-    }
-
-    $autorestMdPath = Join-Path $Path "src\autorest.md"
-    if (-not (Test-Path $autorestMdPath)) {
-        return $false
-    }
-
-    try {
-        $content = Get-Content $autorestMdPath -Raw -ErrorAction SilentlyContinue
-        $serviceDirectory = Get-SpecificationDirectoryFromContent $content
-        $providerNamespace = Get-ResourceProviderNamespace $Path
-
-        if (-not $serviceDirectory -or -not $providerNamespace) {
-            return $false
-        }
-
-        $mainTspContents = Get-ServiceMainTspContents $serviceDirectory $providerNamespace
-        foreach ($mainTspContent in $mainTspContents) {
-            if ($mainTspContent -match [regex]::Escape($providerNamespace)) {
-                return $true
-            }
-        }
-
-        return $false
-    }
-    catch {
-        return $false
-    }
-}
-
 function Get-SdkLibraries {
     param([string]$SdkRoot)
 
@@ -390,17 +175,34 @@ function Get-SdkLibraries {
 
     # Scan through all service directories
     $serviceDirs = Get-ChildItem -Path $SdkRoot -Directory -Force -ErrorAction SilentlyContinue
-    Write-Host "SDK root resolved to: $SdkRoot"
-    Write-Host "Service directories discovered: $($serviceDirs.Count)"
-
+    $totalServices = [Math]::Max($serviceDirs.Count, 1)
     $serviceIndex = 0
+    $lastReportedBucket = 0
+
+    Write-Host "  Scan progress: 0% (0/$($totalServices) services)"
+
     foreach ($serviceDir in $serviceDirs) {
         $serviceIndex++
-        Write-Host "Processing service [$serviceIndex/$($serviceDirs.Count)]: $($serviceDir.Name)" -ForegroundColor DarkGray
+        $servicePercent = [Math]::Min([math]::Floor((($serviceIndex - 1) * 100) / $totalServices), 100)
+        $displayPercent = [Math]::Min([math]::Floor(($serviceIndex * 100) / $totalServices), 100)
+        $progressBucket = [Math]::Floor($displayPercent / 10)
+        if ($progressBucket -gt $lastReportedBucket) {
+            Write-Host "  Scan progress: $displayPercent% ($serviceIndex/$($totalServices) services)"
+            $lastReportedBucket = $progressBucket
+        }
+
+        Write-Progress -Id 1 -Activity "Scanning SDK libraries" -Status "Service $serviceIndex/$($totalServices): $($serviceDir.Name)" -PercentComplete $servicePercent
 
         # Look for library directories
         $libraryDirs = Get-ChildItem -Path $serviceDir.FullName -Directory -Force -ErrorAction SilentlyContinue
+        $totalLibrariesInService = [Math]::Max($libraryDirs.Count, 1)
+        $libraryIndex = 0
+
         foreach ($libraryDir in $libraryDirs) {
+            $libraryIndex++
+            $libraryPercent = [Math]::Min([math]::Round(($libraryIndex / $totalLibrariesInService) * 100, 0), 100)
+            Write-Progress -Id 2 -ParentId 1 -Activity "Scanning $($serviceDir.Name)" -Status "Library $libraryIndex/$($totalLibrariesInService): $($libraryDir.Name)" -PercentComplete $libraryPercent
+
             # Skip directories that don't look like libraries
             if ($libraryDir.Name -in @("tests", "samples", "perf", "assets", "docs")) {
                 continue
@@ -417,15 +219,18 @@ function Get-SdkLibraries {
                 continue
             }
 
-            $libraryType = if (Test-ProvisioningLibrary $libraryDir.FullName) { "Provisioning" } elseif (Test-MgmtLibrary $libraryDir.FullName) { "Management" } else { "Data Plane" }
+            if (Test-ProvisioningLibrary $libraryDir.FullName) {
+                $libraryType = "Provisioning"
+            }
+            elseif (Test-MgmtLibrary $libraryDir.FullName) {
+                $libraryType = "Management"
+            }
+            else {
+                $libraryType = "Data Plane"
+            }
+
             $generator = Get-GeneratorType $libraryDir.FullName
             $hasTspLocation = Test-HasTspLocation $libraryDir.FullName
-
-            # If a management-plane library is still Swagger-based, check whether its corresponding
-            # spec has already moved to TypeSpec. If so, track it as incomplete rather than Swagger.
-            if ($libraryType -eq "Management" -and $generator -eq "Swagger" -and (Test-MgmtSpecMigratedToTypeSpec $libraryDir.FullName)) {
-                $generator = "Incomplete"
-            }
 
             # Calculate relative path from parent of SDK root (to include 'sdk' prefix)
             $repoRoot = Split-Path $SdkRoot -Parent
@@ -439,12 +244,14 @@ function Get-SdkLibraries {
                 type = $libraryType
                 generator = $generator
                 hasTspLocation = $hasTspLocation
-                mgmtPeerLibrary = if (Test-ProvisioningLibrary $libraryDir.FullName) { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
+                mgmtPeerLibrary = if ($libraryType -eq "Provisioning") { @(Get-ProvisioningMgmtPeerLibrary $libraryDir.Name) } else { @() }
             }
         }
     }
 
-    Write-Host "Completed library scan. Total libraries identified: $($libraries.Count)" -ForegroundColor Green
+    Write-Progress -Id 2 -Activity "Scanning SDK libraries" -Completed
+    Write-Progress -Id 1 -Activity "Scanning SDK libraries" -Completed
+
     return $libraries
 }
 
@@ -454,21 +261,18 @@ function New-MarkdownReport {
     # Generate a markdown report from the library inventory.
 
     # Define exclusion list for generator types that are not TypeSpec new emitters
-    $excludedGenerators = @("Swagger", "Incomplete", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)", "Provisioning (No Generator)")
+    $excludedGenerators = @("Swagger", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)", "Provisioning (No Generator)")
 
     # Group by type and generator
     $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
-    $dataLibraries = $Libraries | Where-Object { $_.type -eq "Data Plane" }
-    $provisioningLibraries = $Libraries | Where-Object { $_.generator -like "Provisioning*" }
+    $dataPlaneNonProvisioning = $Libraries | Where-Object { $_.type -eq "Data Plane" }
+    $provisioningLibraries = $Libraries | Where-Object { $_.type -eq "Provisioning" }
     $noGenerator = $Libraries | Where-Object { $_.generator -eq "No Generator" }
-    
-    # Calculate the count of Data Plane libraries excluding provisioning
-    $dataPlaneNonProvisioning = $dataLibraries | Where-Object { $_.generator -notlike "Provisioning*" }
 
     # Count libraries by generator type (excluding provisioning from data plane)
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
-    $mgmtIncomplete = $mgmtLibraries | Where-Object { $_.generator -eq "Incomplete" }
     $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin $excludedGenerators }
+    $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
 
     # For Data Plane, explicitly exclude provisioning libraries from all counts
     $dataSwagger = $dataPlaneNonProvisioning | Where-Object { $_.generator -eq "Swagger" }
@@ -477,7 +281,7 @@ function New-MarkdownReport {
 
     # Calculate TypeSpec library counts (only those with tsp-location.yaml or Azure.AI.OpenAI with special handling)
     # Exclude provisioning libraries from data plane TypeSpec counts
-    $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true -or $_.generator -eq "Incomplete" }
+    $mgmtTypeSpecLibs = $mgmtLibraries | Where-Object { $_.hasTspLocation -eq $true }
     $dataTypeSpecLibs = $dataPlaneNonProvisioning | Where-Object { $_.hasTspLocation -eq $true -or $_.library -eq "Azure.AI.OpenAI" }
 
     # Calculate migration percentages (migrated / total TypeSpec libraries)
@@ -501,7 +305,6 @@ function New-MarkdownReport {
     $report += "- [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)"
     $report += "- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)"
     $report += "- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)"
-    $report += "- [Management Plane Libraries (MPG) - Incomplete](#management-plane-libraries-mpg---incomplete)"
     $report += "- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)"
     $report += "- [Provisioning Libraries](#provisioning-libraries)"
     $report += "- [Libraries with No Generator](#libraries-with-no-generator)"
@@ -511,8 +314,8 @@ function New-MarkdownReport {
     $report += "- Total libraries: $($Libraries.Count)"
     $report += "- Management Plane (MPG): $($mgmtLibraries.Count)"
     $report += "  - Autorest/Swagger: $($mgmtSwagger.Count)"
-    $report += "  - Incomplete (Spec migrated to TypeSpec): $($mgmtIncomplete.Count)"
     $report += "  - New Emitter (TypeSpec): $($mgmtNewEmitter.Count)"
+    $report += "  - Old TypeSpec: $($mgmtTspOld.Count)"
     $report += "- Data Plane (DPG): $($dataPlaneNonProvisioning.Count)"
     $report += "  - Autorest/Swagger: $($dataSwagger.Count)"
     $report += "  - New Emitter (TypeSpec): $($dataNewEmitter.Count)"
@@ -559,7 +362,6 @@ function New-MarkdownReport {
     $report += "## Management Plane Libraries (MPG) - Migrated to New Emitter`n"
     $report += "Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.`n"
     $report += "**Migration Status**: $mgmtMigrated / $mgmtTypeSpecTotal ($mgmtPercentage%)`n"
-    $report += "This total includes incomplete libraries whose specs have already migrated to TypeSpec but whose SDK generation is still Swagger-based.`n"
     $report += "| Service | Library | New Emitter |"
     $report += "| ------- | ------- | ----------- |"
     # Only include libraries that have tsp-location.yaml
@@ -570,23 +372,10 @@ function New-MarkdownReport {
     }
     $report += "`n"
 
-    # Management Plane Libraries with incomplete migration
-    if ($mgmtIncomplete.Count -gt 0) {
-        $report += "## Management Plane Libraries (MPG) - Incomplete`n"
-        $report += "Libraries whose corresponding specs have already been migrated to TypeSpec, but whose SDK generation is still Swagger-based. Total: $($mgmtIncomplete.Count)`n"
-        $report += "| Service | Library |"
-        $report += "| ------- | ------- |"
-        $sortedMgmtIncomplete = $mgmtIncomplete | Sort-Object service, library
-        foreach ($lib in $sortedMgmtIncomplete) {
-            $report += "| $($lib.service) | $($lib.library) |"
-        }
-        $report += "`n"
-    }
-
     # Management Plane Libraries still on Swagger
     if ($mgmtSwagger.Count -gt 0) {
         $report += "## Management Plane Libraries (MPG) - Still on Swagger`n"
-        $report += "Libraries whose corresponding specs are still Swagger-based. Total: $($mgmtSwagger.Count)`n"
+        $report += "Libraries that have not yet been migrated to the new TypeSpec emitter. Total: $($mgmtSwagger.Count)`n"
         $report += "| Service | Library |"
         $report += "| ------- | ------- |"
         $sortedMgmtSwagger = $mgmtSwagger | Sort-Object service, library
@@ -650,25 +439,23 @@ try {
 
     # Print summary counts
     $mgmtSwagger = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "Swagger" }).Count
+    $mgmtTspOld = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "TSP-Old" }).Count
     $dataSwagger = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "Swagger" }).Count
     $dataTspOld = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq "TSP-Old" }).Count
-    $provisioningLibraries = $libraries | Where-Object { $_.type -eq "Provisioning" }
-    $provReflection = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (Reflection)" }).Count
-    $provTypeSpec = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (TypeSpec)" }).Count
-    $provNoGenerator = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (No Generator)" }).Count
+    $provisioningReflection = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (Reflection)" }).Count
+    $provisioningTypeSpec = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (TypeSpec)" }).Count
+    $provisioningNoGenerator = ($libraries | Where-Object { $_.type -eq "Provisioning" -and $_.generator -eq "Provisioning (No Generator)" }).Count
     $noGenerator = ($libraries | Where-Object { $_.generator -eq "No Generator" }).Count
 
     # Get counts for specific TypeSpec generators
-    $newGeneratorTypes = $libraries | Where-Object { $_.generator -notin @("Swagger", "Incomplete", "TSP-Old", "No Generator") } |
-                        Select-Object -ExpandProperty generator -Unique | Sort-Object
+    $newGeneratorTypes = $libraries | Where-Object {
+        $_.generator -notin @("Swagger", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)", "Provisioning (No Generator)")
+    } | Select-Object -ExpandProperty generator -Unique | Sort-Object
 
     Write-Host "Total libraries found: $($libraries.Count)"
-    $mgmtIncomplete = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq "Incomplete" }).Count
-
-    Write-Host "Summary by category:" -ForegroundColor Cyan
-
     Write-Host "  Management Plane (Swagger): $mgmtSwagger"
-    Write-Host "  Management Plane (Incomplete): $mgmtIncomplete"
+    Write-Host "  Management Plane (TSP-Old): $mgmtTspOld"
+
     # Print counts for each new generator type in Management Plane
     foreach ($genType in $newGeneratorTypes) {
         $mgmtGenCount = ($libraries | Where-Object { $_.type -eq "Management" -and $_.generator -eq $genType }).Count
@@ -679,6 +466,7 @@ try {
 
     Write-Host "  Data Plane (Swagger): $dataSwagger"
     Write-Host "  Data Plane (TSP-Old): $dataTspOld"
+
     # Print counts for each new generator type in Data Plane
     foreach ($genType in $newGeneratorTypes) {
         $dataGenCount = ($libraries | Where-Object { $_.type -eq "Data Plane" -and $_.generator -eq $genType }).Count
@@ -687,14 +475,12 @@ try {
         }
     }
 
-    Write-Host "  Provisioning (Reflection): $provReflection"
-    Write-Host "  Provisioning (TypeSpec): $provTypeSpec"
-    Write-Host "  Provisioning (No Generator): $provNoGenerator"
-
-    Write-Host "  No generator: $noGenerator"
+    Write-Host "  Provisioning (Reflection): $provisioningReflection"
+    Write-Host "  Provisioning (TypeSpec): $provisioningTypeSpec"
+    Write-Host "  Provisioning (No Generator): $provisioningNoGenerator"
+    Write-Host "No generator: $noGenerator"
 
     # Generate the inventory markdown file
-    Write-Host "Generating markdown report..." -ForegroundColor Green
     $markdownReport = New-MarkdownReport $libraries
     $inventoryMdPath = Join-Path $PSScriptRoot "Library_Inventory.md"
     $markdownReport | Out-File -FilePath $inventoryMdPath -Encoding UTF8

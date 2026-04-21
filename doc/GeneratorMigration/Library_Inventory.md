@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-04-21 02:22:18 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-04-21 02:59:25 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -9,7 +9,6 @@
 - [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
 - [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
 - [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
-- [Management Plane Libraries (MPG) - Incomplete](#management-plane-libraries-mpg---incomplete)
 - [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
 - [Provisioning Libraries](#provisioning-libraries)
 - [Libraries with No Generator](#libraries-with-no-generator)
@@ -19,9 +18,9 @@
 
 - Total libraries: 400
 - Management Plane (MPG): 232
-  - Autorest/Swagger: 61
-  - Incomplete (Spec migrated to TypeSpec): 33
+  - Autorest/Swagger: 94
   - New Emitter (TypeSpec): 138
+  - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
   - New Emitter (TypeSpec): 43
@@ -135,9 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 138 / 171 (80.7%)
-
-This total includes incomplete libraries whose specs have already migrated to TypeSpec but whose SDK generation is still Swagger-based.
+**Migration Status**: 138 / 138 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -281,74 +278,50 @@ This total includes incomplete libraries whose specs have already migrated to Ty
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
-## Management Plane Libraries (MPG) - Incomplete
-
-Libraries whose corresponding specs have already been migrated to TypeSpec, but whose SDK generation is still Swagger-based. Total: 33
-
-| Service | Library |
-| ------- | ------- |
-| alertsmanagement | Azure.ResourceManager.AlertsManagement |
-| apimanagement | Azure.ResourceManager.ApiManagement |
-| billing | Azure.ResourceManager.Billing |
-| cdn | Azure.ResourceManager.Cdn |
-| compute | Azure.ResourceManager.Compute |
-| consumption | Azure.ResourceManager.Consumption |
-| containerapps | Azure.ResourceManager.AppContainers |
-| cosmosdb | Azure.ResourceManager.CosmosDB |
-| costmanagement | Azure.ResourceManager.CostManagement |
-| datafactory | Azure.ResourceManager.DataFactory |
-| datamigration | Azure.ResourceManager.DataMigration |
-| dns | Azure.ResourceManager.Dns |
-| eventgrid | Azure.ResourceManager.EventGrid |
-| extendedlocation | Azure.ResourceManager.ExtendedLocations |
-| frontdoor | Azure.ResourceManager.FrontDoor |
-| hdinsight | Azure.ResourceManager.HDInsight |
-| healthcareapis | Azure.ResourceManager.HealthcareApis |
-| kusto | Azure.ResourceManager.Kusto |
-| logic | Azure.ResourceManager.Logic |
-| maintenance | Azure.ResourceManager.Maintenance |
-| managedserviceidentity | Azure.ResourceManager.ManagedServiceIdentities |
-| marketplace | Azure.ResourceManager.Marketplace |
-| netapp | Azure.ResourceManager.NetApp |
-| privatedns | Azure.ResourceManager.PrivateDns |
-| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
-| redis | Azure.ResourceManager.Redis |
-| resourcehealth | Azure.ResourceManager.ResourceHealth |
-| resources | Azure.ResourceManager.Resources.Deployments |
-| securityinsights | Azure.ResourceManager.SecurityInsights |
-| sqlmanagement | Azure.ResourceManager.Sql |
-| storagecache | Azure.ResourceManager.StorageCache |
-| subscription | Azure.ResourceManager.Subscription |
-| websites | Azure.ResourceManager.AppService |
-
-
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries whose corresponding specs are still Swagger-based. Total: 61
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 94
 
 | Service | Library |
 | ------- | ------- |
 | agrifood | Azure.ResourceManager.AgFoodPlatform |
+| alertsmanagement | Azure.ResourceManager.AlertsManagement |
 | analysisservices | Azure.ResourceManager.Analysis |
+| apimanagement | Azure.ResourceManager.ApiManagement |
 | applicationinsights | Azure.ResourceManager.ApplicationInsights |
 | arc-scvmm | Azure.ResourceManager.ScVmm |
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | automation | Azure.ResourceManager.Automation |
+| billing | Azure.ResourceManager.Billing |
 | blueprint | Azure.ResourceManager.Blueprint |
+| cdn | Azure.ResourceManager.Cdn |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
+| compute | Azure.ResourceManager.Compute |
 | connectedvmwarevsphere | Azure.ResourceManager.ConnectedVMwarevSphere |
+| consumption | Azure.ResourceManager.Consumption |
+| containerapps | Azure.ResourceManager.AppContainers |
+| cosmosdb | Azure.ResourceManager.CosmosDB |
+| costmanagement | Azure.ResourceManager.CostManagement |
 | customer-insights | Azure.ResourceManager.CustomerInsights |
+| datafactory | Azure.ResourceManager.DataFactory |
 | datalake-analytics | Azure.ResourceManager.DataLakeAnalytics |
 | datalake-store | Azure.ResourceManager.DataLakeStore |
+| datamigration | Azure.ResourceManager.DataMigration |
 | datashare | Azure.ResourceManager.DataShare |
 | defendereasm | Azure.ResourceManager.DefenderEasm |
 | deviceupdate | Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces |
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
+| dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
+| eventgrid | Azure.ResourceManager.EventGrid |
+| extendedlocation | Azure.ResourceManager.ExtendedLocations |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
+| frontdoor | Azure.ResourceManager.FrontDoor |
 | graphservices | Azure.ResourceManager.GraphServices |
+| hdinsight | Azure.ResourceManager.HDInsight |
+| healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
 | hybridcompute | Azure.ResourceManager.HybridCompute |
 | hybridnetwork | Azure.ResourceManager.HybridNetwork |
@@ -356,37 +329,53 @@ Libraries whose corresponding specs are still Swagger-based. Total: 61
 | iotcentral | Azure.ResourceManager.IotCentral |
 | iothub | Azure.ResourceManager.IotHub |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
+| kusto | Azure.ResourceManager.Kusto |
 | labservices | Azure.ResourceManager.LabServices |
+| logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
 | machinelearningservices | Azure.ResourceManager.MachineLearning |
+| maintenance | Azure.ResourceManager.Maintenance |
 | managednetwork | Azure.ResourceManager.ManagedNetwork |
 | managednetworkfabric | Azure.ResourceManager.ManagedNetworkFabric |
+| managedserviceidentity | Azure.ResourceManager.ManagedServiceIdentities |
 | managedservices | Azure.ResourceManager.ManagedServices |
 | managementpartner | Azure.ResourceManager.ManagementPartner |
+| marketplace | Azure.ResourceManager.Marketplace |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | monitor | Azure.ResourceManager.Monitor |
+| netapp | Azure.ResourceManager.NetApp |
 | network | Azure.ResourceManager.Network |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | operationalinsights | Azure.ResourceManager.OperationalInsights |
 | orbital | Azure.ResourceManager.Orbital |
 | policyinsights | Azure.ResourceManager.PolicyInsights |
 | postgresql | Azure.ResourceManager.PostgreSql |
+| privatedns | Azure.ResourceManager.PrivateDns |
+| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
+| redis | Azure.ResourceManager.Redis |
 | reservations | Azure.ResourceManager.Reservations |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
+| resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources |
+| resources | Azure.ResourceManager.Resources.Deployments |
 | securitycenter | Azure.ResourceManager.SecurityCenter |
 | securitydevops | Azure.ResourceManager.SecurityDevOps |
+| securityinsights | Azure.ResourceManager.SecurityInsights |
 | servicegroups | Azure.ResourceManager.ServiceGroups |
 | servicelinker | Azure.ResourceManager.ServiceLinker |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
+| sqlmanagement | Azure.ResourceManager.Sql |
+| storagecache | Azure.ResourceManager.StorageCache |
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
+| subscription | Azure.ResourceManager.Subscription |
 | synapse | Azure.ResourceManager.Synapse |
 | voiceservices | Azure.ResourceManager.VoiceServices |
+| websites | Azure.ResourceManager.AppService |
 | workloadmonitor | Azure.ResourceManager.WorkloadMonitor |
 | workloads | Azure.ResourceManager.Workloads |
 
