@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 throw new FormatException($"The model {nameof(AlertsManagementNotificationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StatusURL))
+            if (Optional.IsDefined(StatusUri))
             {
                 writer.WritePropertyName("statusURL"u8);
-                writer.WriteStringValue(StatusURL);
+                writer.WriteStringValue(StatusUri);
             }
             if (Optional.IsDefined(Status))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            string statusURL = default;
+            string statusUri = default;
             AlertsManagementResultStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("statusURL"u8))
                 {
-                    statusURL = prop.Value.GetString();
+                    statusUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertsManagementNotificationResult(statusURL, status, additionalBinaryDataProperties);
+            return new AlertsManagementNotificationResult(statusUri, status, additionalBinaryDataProperties);
         }
     }
 }

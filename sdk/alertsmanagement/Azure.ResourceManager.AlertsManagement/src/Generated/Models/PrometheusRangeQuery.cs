@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
-        /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
+        /// <param name="startOn"> The start evaluation date and time in ISO8601 format. </param>
+        /// <param name="endOn"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startOn, DateTimeOffset endOn, string step) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
             Step = step;
         }
 
         /// <summary> The start evaluation date and time in ISO8601 format. </summary>
-        public DateTimeOffset Start { get; }
+        public DateTimeOffset StartOn { get; }
 
         /// <summary> The end evaluation date and time in ISO8601 format. </summary>
-        public DateTimeOffset End { get; }
+        public DateTimeOffset EndOn { get; }
 
         /// <summary> Query resolution step width in ISO8601 format. </summary>
         public string Step { get; }

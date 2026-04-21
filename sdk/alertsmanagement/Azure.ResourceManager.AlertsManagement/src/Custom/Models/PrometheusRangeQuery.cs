@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     [CodeGenSuppress("PrometheusRangeQuery", typeof(string), typeof(string), typeof(AlertsManagementStatus), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(string))]
     public partial class PrometheusRangeQuery
     {
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset start, DateTimeOffset end, string step)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startOn, DateTimeOffset endOn, string step)
             : base(title, description, status, AlertsManagementType.PrometheusRangeQuery, linkToApi, datasources, grafanaExplorePath, query)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
             Step = step;
         }
     }

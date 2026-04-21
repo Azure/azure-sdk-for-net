@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagementNotificationResult"/>. </summary>
-        /// <param name="statusURL"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
+        /// <param name="statusUri"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
         /// <param name="status"> The status of the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertsManagementNotificationResult(string statusURL, AlertsManagementResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertsManagementNotificationResult(string statusUri, AlertsManagementResultStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StatusURL = statusURL;
+            StatusUri = statusUri;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </summary>
-        public string StatusURL { get; set; }
+        public string StatusUri { get; set; }
 
         /// <summary> The status of the notification. </summary>
         public AlertsManagementResultStatus? Status { get; set; }
