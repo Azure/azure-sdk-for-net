@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Batch
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateSubmitBatchRequest(string contentType, long contentLength, RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSubmitBatchRequest(long contentLength, RequestContent content, string contentType, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

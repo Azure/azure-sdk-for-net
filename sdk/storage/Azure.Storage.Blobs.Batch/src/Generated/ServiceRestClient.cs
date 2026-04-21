@@ -52,20 +52,20 @@ namespace Azure.Storage.Blobs.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="contentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SubmitBatch(string contentType, long contentLength, RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response SubmitBatch(long contentLength, RequestContent content, string contentType, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SubmitBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitBatchRequest(contentType, contentLength, content, timeout, context);
+                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -83,20 +83,20 @@ namespace Azure.Storage.Blobs.Batch
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="contentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SubmitBatchAsync(string contentType, long contentLength, RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SubmitBatchAsync(long contentLength, RequestContent content, string contentType, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SubmitBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitBatchRequest(contentType, contentLength, content, timeout, context);
+                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SubmitBatchRequest> SubmitBatch(string contentType, long contentLength, SubmitBatchRequest body, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = SubmitBatch(contentType, contentLength, body, timeout, cancellationToken.ToRequestContext());
+            Response result = SubmitBatch(contentLength, body, contentType, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((SubmitBatchRequest)result, result);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SubmitBatchRequest>> SubmitBatchAsync(string contentType, long contentLength, SubmitBatchRequest body, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await SubmitBatchAsync(contentType, contentLength, body, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SubmitBatchAsync(contentLength, body, contentType, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SubmitBatchRequest)result, result);
         }
     }
