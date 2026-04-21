@@ -8,7 +8,6 @@ using Azure.Messaging.ServiceBus;
 
 namespace Plugins
 {
-    #region Snippet:PluginProcessor
     public class PluginProcessor : ServiceBusProcessor
     {
         private IEnumerable<Func<ServiceBusReceivedMessage, Task>> _plugins;
@@ -35,5 +34,4 @@ namespace Plugins
             await base.OnProcessMessageAsync(args);
         }
     }
-    #endregion
 }

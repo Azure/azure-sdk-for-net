@@ -11,7 +11,6 @@ namespace Plugins
 {
     public static class ServiceBusClientExtensions
     {
-        #region Snippet:ServiceBusExtensions
         public static PluginSender CreatePluginSender(
             this ServiceBusClient client,
             string queueOrTopicName,
@@ -76,7 +75,6 @@ namespace Plugins
         {
             return new PluginSessionProcessor(topicName, subscriptionName, client, plugins, options ?? new ServiceBusSessionProcessorOptions());
         }
-        #endregion
 
         public static async Task<PluginSessionReceiver> AcceptNextSessionPluginAsync(
             this ServiceBusClient client,

@@ -9,7 +9,6 @@ using Azure.Messaging.ServiceBus;
 
 namespace Plugins
 {
-    #region Snippet:PluginReceiver
     public class PluginReceiver : ServiceBusReceiver
     {
         private IEnumerable<Func<ServiceBusReceivedMessage, Task>> _plugins;
@@ -37,5 +36,4 @@ namespace Plugins
             return message;
         }
     }
-    #endregion
 }

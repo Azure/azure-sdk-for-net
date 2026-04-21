@@ -8,7 +8,6 @@ using Azure.Messaging.ServiceBus;
 
 namespace Plugins
 {
-    #region Snippet:PluginSessionProcessor
     public class PluginSessionProcessor : ServiceBusSessionProcessor
     {
         private IEnumerable<Func<ServiceBusReceivedMessage, Task>> _plugins;
@@ -40,5 +39,4 @@ namespace Plugins
             return Task.CompletedTask;
         }
     }
-    #endregion
 }

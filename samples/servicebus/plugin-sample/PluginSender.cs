@@ -9,7 +9,6 @@ using Azure.Messaging.ServiceBus;
 
 namespace Plugins
 {
-    #region Snippet:PluginSender
     public class PluginSender : ServiceBusSender
     {
         private IEnumerable<Func<ServiceBusMessage, Task>> _plugins;
@@ -28,5 +27,4 @@ namespace Plugins
             await base.SendMessageAsync(message, cancellationToken).ConfigureAwait(false);
         }
     }
-    #endregion
 }
