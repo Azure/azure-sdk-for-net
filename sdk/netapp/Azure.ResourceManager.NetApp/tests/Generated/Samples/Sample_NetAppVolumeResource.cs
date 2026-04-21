@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VolumesGet()
+        public async Task Get_VolumesGet_20250901Preview()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Volumes_Get.json
             // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
@@ -494,8 +494,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            ArmOperation<NetAppVolumeQuotaReportListResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
-            NetAppVolumeQuotaReportListResult result = lro.Value;
+            ArmOperation<ListQuotaReportResult> lro = await netAppVolume.GetQuotaReportAsync(WaitUntil.Completed);
+            ListQuotaReportResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

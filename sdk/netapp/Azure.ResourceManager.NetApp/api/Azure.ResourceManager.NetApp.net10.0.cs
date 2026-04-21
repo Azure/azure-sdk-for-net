@@ -929,6 +929,7 @@ namespace Azure.ResourceManager.NetApp
         public NetAppBackupPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? MonthlyBackupsToKeep { get { throw null; } set { } }
@@ -1833,6 +1834,7 @@ namespace Azure.ResourceManager.NetApp
     {
         public SnapshotPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -1949,6 +1951,7 @@ namespace Azure.ResourceManager.NetApp
         public Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel? ServiceLevel { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SmbNonBrowsable? SmbNonBrowsable { get { throw null; } set { } }
+        public bool? SnapshotDirectoryVisible { get { throw null; } set { } }
         public string SnapshotId { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -3411,7 +3414,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ElasticProtocolType(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType Nfsv3 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType NFSv3 { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType Nfsv4 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType NFSv4 { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.ElasticProtocolType SMB { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.ElasticProtocolType other) { throw null; }
@@ -3913,6 +3918,10 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter left, Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ExportPolicyRule : Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule
+    {
+        public ExportPolicyRule() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExternalReplicationSetupStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.ExternalReplicationSetupStatus>
     {
@@ -4032,6 +4041,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public LdapConfiguration() { }
         public string CertificateCNHost { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
+        public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }
         public bool? LdapOverTLS { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> LdapServers { get { throw null; } }
         public string ServerCACertificate { get { throw null; } set { } }
@@ -4149,6 +4159,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string ActiveDirectoryId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Administrators { get { throw null; } }
         public string AdName { get { throw null; } set { } }
+        public bool? AesEncryption { get { throw null; } set { } }
         public bool? AllowLocalNfsUsersWithLdap { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> BackupOperators { get { throw null; } }
         public string Dns { get { throw null; } set { } }
@@ -4158,7 +4169,9 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }
         public bool? IsLdapSigningEnabled { get { throw null; } set { } }
         public System.Net.IPAddress KdcIP { get { throw null; } set { } }
+        public bool? LdapOverTLS { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration LdapSearchScope { get { throw null; } set { } }
+        public bool? LdapSigning { get { throw null; } set { } }
         public string OrganizationalUnit { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PreferredServersForLdapClient { get { throw null; } set { } }
@@ -4282,6 +4295,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppBackupPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? MonthlyBackupsToKeep { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -5054,6 +5068,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public Azure.Core.ResourceIdentifier BackupVaultId { get { throw null; } set { } }
         public bool? IsBackupEnabled { get { throw null; } set { } }
         public bool? IsPolicyEnforced { get { throw null; } set { } }
+        public bool? PolicyEnforced { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5183,6 +5198,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? AllowNfsV3Protocol { get { throw null; } set { } }
         public bool? AllowNfsV41Protocol { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppChownMode? ChownMode { get { throw null; } set { } }
+        public bool? Cifs { get { throw null; } set { } }
         public bool? HasRootAccess { get { throw null; } set { } }
         public bool? IsKerberos5iReadOnly { get { throw null; } set { } }
         public bool? IsKerberos5iReadWrite { get { throw null; } set { } }
@@ -5192,7 +5208,17 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsKerberos5ReadWrite { get { throw null; } set { } }
         public bool? IsUnixReadOnly { get { throw null; } set { } }
         public bool? IsUnixReadWrite { get { throw null; } set { } }
+        public bool? Kerberos5IReadOnly { get { throw null; } set { } }
+        public bool? Kerberos5IReadWrite { get { throw null; } set { } }
+        public bool? Kerberos5PReadOnly { get { throw null; } set { } }
+        public bool? Kerberos5PReadWrite { get { throw null; } set { } }
+        public bool? Kerberos5ReadOnly { get { throw null; } set { } }
+        public bool? Kerberos5ReadWrite { get { throw null; } set { } }
+        public bool? Nfsv3 { get { throw null; } set { } }
+        public bool? Nfsv41 { get { throw null; } set { } }
         public int? RuleIndex { get { throw null; } set { } }
+        public bool? UnixReadOnly { get { throw null; } set { } }
+        public bool? UnixReadWrite { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.NetApp.Models.NetAppVolumeExportPolicyRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6212,6 +6238,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public SnapshotPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyMonthlySchedule MonthlySchedule { get { throw null; } set { } }
@@ -6308,6 +6335,10 @@ namespace Azure.ResourceManager.NetApp.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.UpdateNetworkSiblingSetContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.UpdateNetworkSiblingSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VolumeBackupProperties : Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupConfiguration
+    {
+        public VolumeBackupProperties() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VolumeBackupRelationshipStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus>
     {
@@ -6325,6 +6356,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public static implicit operator Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus left, Azure.ResourceManager.NetApp.Models.VolumeBackupRelationshipStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class VolumeGroupVolumeProperties : Azure.ResourceManager.NetApp.Models.NetAppVolumeGroupVolume
+    {
+        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) : base (default(string), default(long), default(Azure.Core.ResourceIdentifier)) { }
+        public VolumeGroupVolumeProperties(string creationToken, long usageThreshold, string subnetId) : base (default(string), default(long), default(Azure.Core.ResourceIdentifier)) { }
+        public Azure.Core.ResourceIdentifier ProximityPlacementGroup { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VolumeLanguage : System.IEquatable<Azure.ResourceManager.NetApp.Models.VolumeLanguage>

@@ -47,46 +47,46 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         internal VolumeCollection _volumeCollection;
         public static ResourceIdentifier DefaultSubnetId { get; set; }
 
-        public static ExportPolicyRule _defaultExportPolicyRule = new()
+        public static NetAppVolumeExportPolicyRule _defaultExportPolicyRule = new()
         {
             RuleIndex = 1,
-            UnixReadOnly = false,
-            UnixReadWrite = true,
-            Cifs = false,
-            Nfsv3 = true,
-            Nfsv41 = false,
+            IsUnixReadOnly = false,
+            IsUnixReadWrite = true,
+            AllowCifsProtocol = false,
+            AllowNfsV3Protocol = true,
+            AllowNfsV41Protocol = false,
             AllowedClients = "0.0.0.0/0",
-            Kerberos5ReadOnly = false,
-            Kerberos5ReadWrite = false,
-            Kerberos5IReadOnly = false,
-            Kerberos5IReadWrite = false,
-            Kerberos5PReadOnly = false,
-            Kerberos5PReadWrite = false
+            IsKerberos5ReadOnly = false,
+            IsKerberos5ReadWrite = false,
+            IsKerberos5iReadOnly = false,
+            IsKerberos5iReadWrite = false,
+            IsKerberos5pReadOnly = false,
+            IsKerberos5pReadWrite = false
         };
 
-        public static IList<ExportPolicyRule> _defaultExportPolicyRuleList = new List<ExportPolicyRule>()
+        public static IList<NetAppVolumeExportPolicyRule> _defaultExportPolicyRuleList = new List<NetAppVolumeExportPolicyRule>()
         {
             _defaultExportPolicyRule
         };
 
-        public static ExportPolicyRule _nfs41ExportPolicyRule = new()
+        public static NetAppVolumeExportPolicyRule _nfs41ExportPolicyRule = new()
         {
             RuleIndex = 1,
-            UnixReadOnly = false,
-            UnixReadWrite = true,
-            Cifs = false,
-            Nfsv3 = false,
-            Nfsv41 = true,
+            IsUnixReadOnly = false,
+            IsUnixReadWrite = true,
+            AllowCifsProtocol = false,
+            AllowNfsV3Protocol = false,
+            AllowNfsV41Protocol = true,
             AllowedClients = "0.0.0.0/0",
-            Kerberos5ReadOnly = false,
-            Kerberos5ReadWrite = false,
-            Kerberos5IReadOnly = false,
-            Kerberos5IReadWrite = false,
-            Kerberos5PReadOnly = false,
-            Kerberos5PReadWrite = false
+            IsKerberos5ReadOnly = false,
+            IsKerberos5ReadWrite = false,
+            IsKerberos5iReadOnly = false,
+            IsKerberos5iReadWrite = false,
+            IsKerberos5pReadOnly = false,
+            IsKerberos5pReadWrite = false
         };
 
-        public static IList<ExportPolicyRule> _nfs41ExportPolicyRuleList = new List<ExportPolicyRule>()
+        public static IList<NetAppVolumeExportPolicyRule> _nfs41ExportPolicyRuleList = new List<NetAppVolumeExportPolicyRule>()
         {
             _nfs41ExportPolicyRule
         };
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
                 location = DefaultLocationString;
             }
             // create the account with only the one required property location
-            var volumeData = new VolumeData(location, creationToken, usageThreshold, subnetId.ToString());
+            var volumeData = new VolumeData(location, creationToken, usageThreshold, subnetId);
             volumeData.Tags.InitializeFrom(DefaultTags);
             volumeData.UsageThreshold = 100 * _gibibyte;
             foreach (string protocolType in _defaultProtocolTypes)
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             return capactiyPoolResource1;
         }
 
-        public async Task<VolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, ExportPolicyRule exportPolicyRule = null, VolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
+        public async Task<VolumeResource> CreateVolume(string location, NetAppFileServiceLevel serviceLevel, long? usageThreshold, string volumeName, ResourceIdentifier subnetId = null, List<string> protocolTypes = null, NetAppVolumeExportPolicyRule exportPolicyRule = null, VolumeCollection volumeCollection = null, NetAppVolumeDataProtection dataProtection = null, string snapshotId = "", string backupId = "", string volumeType = "", string growPool = "")
         {
             location = string.IsNullOrEmpty(location) ? DefaultLocationString : location;
             if (volumeCollection == null)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
             }
             usageThreshold ??= _defaultUsageThreshold;
 
-            VolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId.ToString());
+            VolumeData volumeData = new(location, volumeName, usageThreshold.Value, subnetId);
             if (exportPolicyRule != null)
             {
                 volumeData.ExportRules.Add(exportPolicyRule);

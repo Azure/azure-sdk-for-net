@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.NetApp.Tests
         //public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
         //public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
-        #pragma warning disable CS0649
+#pragma warning disable CS0649
         internal NetAppAccountBackupCollection _accountBackupCollection;
 #pragma warning restore CS0649
-        #pragma warning disable CS0649
+#pragma warning disable CS0649
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
 #pragma warning restore CS0649
         internal VolumeResource _volumeResource;

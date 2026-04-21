@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private readonly AzureLocation _defaultLocation = AzureLocation.WestUS2;
         //private new readonly AzureLocation _defaultLocationString = _defaultLocation;
         internal NetAppAccountBackupCollection _accountBackupCollection;
-        #pragma warning disable CS0649
+#pragma warning disable CS0649
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
 #pragma warning restore CS0649
         internal VolumeResource _volumeResource;

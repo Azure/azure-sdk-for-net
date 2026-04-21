@@ -4,12 +4,10 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppBackupPolicy data model. </summary>
-    public partial class NetAppBackupPolicyData : TrackedResourceData
+    public partial class SnapshotPolicyData
     {
         /// <summary> Compatibility shim for the former property name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

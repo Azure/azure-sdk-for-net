@@ -157,11 +157,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             SnapshotPolicyResource snapshotPolicy = client.GetSnapshotPolicyResource(snapshotPolicyResourceId);
 
             // invoke the operation
-            var volumeListResponse = await snapshotPolicy.GetVolumesAsync();
-            foreach (VolumeData item in volumeListResponse.Value.Value)
+            await foreach (NetAppVolumeResource item in snapshotPolicy.GetVolumesAsync())
             {
                 // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {item.Id}");
+                Console.WriteLine($"Succeeded on id: {item.Data.Id}");
             }
 
             Console.WriteLine("Succeeded");

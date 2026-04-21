@@ -8,9 +8,16 @@
 
 ### Breaking Changes
 
+- `NetAppBackupVaultBackupCollection` and `NetAppBackupVaultBackupResource` now expose a strongly-typed sub-resource for backups owned by a backup vault. The data type returned by `NetAppBackupVaultBackupResource.Data` continues to be `NetAppBackupData` for backward compatibility.
+- `SnapshotPolicyResource.GetVolumes` and `GetVolumesAsync` now return paged collections of `NetAppVolumeResource` (`Pageable<NetAppVolumeResource>` / `AsyncPageable<NetAppVolumeResource>`) rather than a single response wrapping `SnapshotPolicyVolumeList`.
+- `NetAppVolumeResource.GetQuotaReport`/`GetQuotaReportAsync` now return `ArmOperation<ListQuotaReportResult>` instead of `ArmOperation<NetAppVolumeQuotaReportListResult>`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- A number of properties were renamed for naming consistency. Backward-compatibility shims (marked with `[EditorBrowsable(Never)]`) were added for the previous names so existing code continues to compile. Examples include `Enabled` → `IsEnabled`, `LdapOverTLS` → `IsLdapOverTlsEnabled`, `AesEncryption` → `IsAesEncryptionEnabled`, `LdapSigning` → `IsLdapSigningEnabled`, `UnixReadOnly`/`UnixReadWrite` → `IsUnixReadOnly`/`IsUnixReadWrite`, `Kerberos5*ReadOnly`/`*ReadWrite` → `IsKerberos5*ReadOnly`/`*ReadWrite`, `Cifs`/`Nfsv3`/`Nfsv41` → `AllowCifsProtocol`/`AllowNfsV3Protocol`/`AllowNfsV41Protocol`, `PolicyEnforced` → `IsPolicyEnforced`, `SnapshotDirectoryVisible` → `IsSnapshotDirectoryVisible`, `ProximityPlacementGroup` → `ProximityPlacementGroupId`.
+- A number of types were renamed for naming consistency. Compatibility wrapper types are provided for `ExportPolicyRule` (now `NetAppVolumeExportPolicyRule`), `VolumeBackupProperties` (now `NetAppVolumeBackupConfiguration`), and `VolumeGroupVolumeProperties` (now `NetAppVolumeGroupVolume`).
 
 ## 1.16.0-beta.2 (2026-03-26)
 

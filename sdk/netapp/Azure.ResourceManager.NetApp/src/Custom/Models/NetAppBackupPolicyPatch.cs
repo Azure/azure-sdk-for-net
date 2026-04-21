@@ -15,5 +15,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetAppBackupPolicyPatch(AzureLocation location) { Location = location.ToString(); }
+
+        /// <summary> Compatibility shim for the former property name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? Enabled
+        {
+            get => IsEnabled;
+            set => IsEnabled = value;
+        }
     }
 }

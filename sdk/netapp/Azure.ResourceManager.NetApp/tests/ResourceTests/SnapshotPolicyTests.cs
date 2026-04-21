@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id.ToString() };
+            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork();
             VolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id.ToString() };
+            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork(DefaultLocationString);
             VolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //List volumes
             //List<SnapshotPolicyResource> snapshotPoliciesList = await _snapshotPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            SnapshotPolicyVolumeList volumesList = (await snapshotPolicyResource1.GetVolumesAsync()).Value;
+            List<NetAppVolumeResource> volumesList = await snapshotPolicyResource1.GetVolumesAsync().ToEnumerableAsync();
             Assert.IsNotNull(volumesList);
-            volumesList.Value.Should().HaveCount(1);
-            volumesList.Value[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
+            volumesList.Should().HaveCount(1);
+            volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);

@@ -4,19 +4,17 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppBackupPolicy data model. </summary>
-    public partial class NetAppBackupPolicyData : TrackedResourceData
+    public partial class VolumeData
     {
         /// <summary> Compatibility shim for the former property name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? Enabled
+        public bool? SnapshotDirectoryVisible
         {
-            get => IsEnabled;
-            set => IsEnabled = value;
+            get => IsSnapshotDirectoryVisible;
+            set => IsSnapshotDirectoryVisible = value;
         }
     }
 }

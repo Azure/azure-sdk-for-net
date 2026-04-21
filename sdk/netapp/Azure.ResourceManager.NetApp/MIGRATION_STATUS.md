@@ -1,8 +1,8 @@
-## Phase 3 — Mitigate Breaking Changes (In Progress)
+## Phase 3 — Mitigate Breaking Changes (Complete)
 
 ### Summary
 - Started with ~950 unique API compat violations
-- Currently at 1 remaining (0 compile errors)
+- **All ApiCompat violations resolved** (0 remaining, 0 compile errors)
 
 ### Techniques used
 - **@@clientName**: 75+ type/property renames for backward compat
@@ -14,14 +14,15 @@
 - **[CodeGenSuppress]**: Workaround for CapacityPoolPatch ModelFactory bug (microsoft/typespec#10397), BackupVaultBackupResource Data property
 - **Custom code**: Backward-compat wrapper properties, deprecated operation stubs, constructors, ModelFactory overloads, IJsonModel/IEnumerable on deprecated types
 
-### Remaining 1 API compat violation
+### Resolution of last violation
 
-**NetAppBackupVaultBackupResource.Data type mismatch:**
-- Old API: `Data` returns `NetAppBackupData`
-- New API: `Data` returns `NetAppBackupVaultBackupData`
-- Root cause: The resource type name changed from `NetAppBackup` to `NetAppBackupVaultBackup`, changing the data type
-- Cannot fix without CodeGenSuppress which breaks generated serialization code
-- Impact: Low — callers accessing `.Data` need to use the new type
+**NetAppBackupVaultBackupResource.Data type mismatch (resolved):**
+- Resolved by renaming `NetAppBackupVaultBackupData` → `NetAppBackupData` via `[CodeGenType("NetAppBackupData")]` on the generated model. `NetAppBackupVaultBackupResource.Data` now returns `NetAppBackupData`, matching the v1.15.0 baseline.
+
+### Additional Phase 3 work after merge from main
+- Added compatibility property shims after rebasing onto main: `Enabled` (BackupPolicy/SnapshotPolicy data + patch), `PolicyEnforced` (NetAppVolumeBackupConfiguration), `SnapshotDirectoryVisible` (VolumeData), `LdapOverTLS`/`AesEncryption`/`LdapSigning` (NetAppAccountActiveDirectory), `IsLdapOverTlsEnabled` (LdapConfiguration), `UnixReadOnly`/`UnixReadWrite`/`Cifs`/`Nfsv3`/`Nfsv41`/`Kerberos5*ReadOnly`/`*ReadWrite` (NetAppVolumeExportPolicyRule), `Nfsv3`/`Nfsv4` (ElasticProtocolType), `ProximityPlacementGroup` (VolumeGroupVolumeProperties).
+- Added compatibility wrapper types: `ExportPolicyRule`, `VolumeBackupProperties`, `VolumeGroupVolumeProperties`.
+- Updated internal tests (NetAppTestBase, SnapshotPolicyTests, etc.) to use the canonical new property names.
 
 ### Known issues
 - microsoft/typespec#10397: @@hierarchyBuilding causes ModelFactory backward-compat overload arg-order bug (workaround: CodeGenSuppress)
@@ -29,4 +30,4 @@
 
 ### Next Steps
 - Phase 4: Self-review against mpg-migration-pr-review skill rules
-- Phase 5: Push spec and SDK branches to fork, create draft PRs
+- Phase 5: Run pre-commit checks (Update-Snippets, Export-API), push branches, create draft PRs
