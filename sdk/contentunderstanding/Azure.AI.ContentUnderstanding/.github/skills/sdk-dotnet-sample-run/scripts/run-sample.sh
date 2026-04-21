@@ -613,23 +613,14 @@ PROGRAM_HEADER
 # ─── Post-process: fix unmatched braces and inject fallback variables ─────────
 
 # Fix unmatched braces: some snippets include 'try {' without the closing '} catch/finally'.
-OPEN_COUNT=$(grep -o '{' "$RUNNER_DIR/Program.cs" | wc -l)
-CLOSE_COUNT=$(grep -o '}' "$RUNNER_DIR/Program.cs" | wc -l)
-MISSING=$((OPEN_COUNT - CLOSE_COUNT))
-if [ "$MISSING" -gt 0 ]; then
-    # Check for unclosed try blocks
-    TRY_COUNT=$(grep -cE '\btry\s*\{' "$RUNNER_DIR/Program.cs" || true)
-    CATCH_FINALLY_COUNT=$(grep -cE '\b(catch|finally)\s*(\([^)]*\))?\s*\{' "$RUNNER_DIR/Program.cs" || true)
-    UNCLOSED_TRY=$((TRY_COUNT - CATCH_FINALLY_COUNT))
-    if [ "$UNCLOSED_TRY" -gt 0 ]; then
-        for ((i=0; i<UNCLOSED_TRY; i++)); do
-            echo '} catch (Exception ex) { Console.WriteLine($"Cleanup error: {ex.Message}"); }' >> "$RUNNER_DIR/Program.cs"
-            MISSING=$((MISSING - 2))
-        done
-    fi
-    # Close remaining unmatched braces
-    for ((i=0; i<MISSING && i>=0; i++)); do
-        echo '}' >> "$RUNNER_DIR/Program.cs"
+# Instead of counting all braces (which is unreliable due to string interpolation and
+# initializers), directly check for unclosed try blocks.
+TRY_COUNT=$(grep -cE '\btry\s*$|\btry\s*\{' "$RUNNER_DIR/Program.cs" || true)
+CATCH_FINALLY_COUNT=$(grep -cE '\b(catch|finally)\s*(\([^)]*\))?\s*\{|\b(catch|finally)\s*$' "$RUNNER_DIR/Program.cs" || true)
+UNCLOSED_TRY=$((TRY_COUNT - CATCH_FINALLY_COUNT))
+if [ "$UNCLOSED_TRY" -gt 0 ]; then
+    for ((i=0; i<UNCLOSED_TRY; i++)); do
+        echo '} catch (Exception ex) { Console.WriteLine($"Cleanup error: {ex.Message}"); }' >> "$RUNNER_DIR/Program.cs"
     done
 fi
 
