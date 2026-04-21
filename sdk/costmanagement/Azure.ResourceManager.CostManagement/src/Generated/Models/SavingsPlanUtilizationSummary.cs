@@ -16,54 +16,104 @@ namespace Azure.ResourceManager.CostManagement.Models
     public partial class SavingsPlanUtilizationSummary : BenefitUtilizationSummary
     {
         /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
-        public SavingsPlanUtilizationSummary()
+        public SavingsPlanUtilizationSummary() : base(BillingAccountBenefitKind.SavingsPlan)
         {
-            Kind = BillingAccountBenefitKind.SavingsPlan;
         }
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanUtilizationSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="armSkuName"> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </param>
-        /// <param name="benefitId"> The benefit ID is the identifier of the benefit. </param>
-        /// <param name="benefitOrderId"> The benefit order ID is the identifier for a benefit purchase. </param>
-        /// <param name="benefitType"> The benefit type. Supported values: 'SavingsPlan'. </param>
-        /// <param name="usageOn"> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </param>
-        /// <param name="avgUtilizationPercentage"> This is the average hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the avgUtilizationPercentage value will be equal to the average of the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. </param>
-        /// <param name="minUtilizationPercentage"> This is the minimum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the minUtilizationPercentage value will be equal to the smallest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the lowest utilization percentage was 10% at hour 4, then the value for the minUtilizationPercentage in the response will be 10%. </param>
-        /// <param name="maxUtilizationPercentage"> This is the maximum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the maxUtilizationPercentage value will be equal to the largest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the largest utilization percentage was 90% at hour 5, then the value for the maxUtilizationPercentage in the response will be 90%. </param>
-        internal SavingsPlanUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string armSkuName, string benefitId, string benefitOrderId, BillingAccountBenefitKind? benefitType, DateTimeOffset? usageOn, decimal? avgUtilizationPercentage, decimal? minUtilizationPercentage, decimal? maxUtilizationPercentage) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="properties"> Savings plan utilization summary properties. </param>
+        internal SavingsPlanUtilizationSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingAccountBenefitKind kind, SavingsPlanUtilizationSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            ArmSkuName = armSkuName;
-            BenefitId = benefitId;
-            BenefitOrderId = benefitOrderId;
-            BenefitType = benefitType;
-            UsageOn = usageOn;
-            AvgUtilizationPercentage = avgUtilizationPercentage;
-            MinUtilizationPercentage = minUtilizationPercentage;
-            MaxUtilizationPercentage = maxUtilizationPercentage;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Savings plan utilization summary properties. </summary>
+        internal SavingsPlanUtilizationSummaryProperties Properties { get; set; }
+
         /// <summary> ARM SKU name. For example, 'Compute_Savings_Plan' for savings plan. </summary>
-        public string ArmSkuName { get; }
+        public string ArmSkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArmSkuName;
+            }
+        }
+
         /// <summary> The benefit ID is the identifier of the benefit. </summary>
-        public string BenefitId { get; }
+        public string BenefitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitId;
+            }
+        }
+
         /// <summary> The benefit order ID is the identifier for a benefit purchase. </summary>
-        public string BenefitOrderId { get; }
+        public string BenefitOrderId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitOrderId;
+            }
+        }
+
         /// <summary> The benefit type. Supported values: 'SavingsPlan'. </summary>
-        public BillingAccountBenefitKind? BenefitType { get; set; }
+        public BillingAccountBenefitKind? BenefitType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BenefitType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavingsPlanUtilizationSummaryProperties();
+                }
+                Properties.BenefitType = value.Value;
+            }
+        }
+
         /// <summary> Date corresponding to the utilization summary record. If the grain of data is monthly, value for this field will be first day of the month. </summary>
-        public DateTimeOffset? UsageOn { get; }
-        /// <summary> This is the average hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the avgUtilizationPercentage value will be equal to the average of the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. </summary>
-        public decimal? AvgUtilizationPercentage { get; }
-        /// <summary> This is the minimum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the minUtilizationPercentage value will be equal to the smallest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the lowest utilization percentage was 10% at hour 4, then the value for the minUtilizationPercentage in the response will be 10%. </summary>
-        public decimal? MinUtilizationPercentage { get; }
-        /// <summary> This is the maximum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2023-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the maxUtilizationPercentage value will be equal to the largest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the largest utilization percentage was 90% at hour 5, then the value for the maxUtilizationPercentage in the response will be 90%. </summary>
-        public decimal? MaxUtilizationPercentage { get; }
+        public DateTimeOffset? UsageOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsageOn;
+            }
+        }
+
+        /// <summary> This is the average hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2025-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the avgUtilizationPercentage value will be equal to the average of the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. </summary>
+        public decimal? AvgUtilizationPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvgUtilizationPercentage;
+            }
+        }
+
+        /// <summary> This is the minimum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2025-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the minUtilizationPercentage value will be equal to the smallest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the lowest utilization percentage was 10% at hour 4, then the value for the minUtilizationPercentage in the response will be 10%. </summary>
+        public decimal? MinUtilizationPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinUtilizationPercentage;
+            }
+        }
+
+        /// <summary> This is the maximum hourly utilization for each date range that corresponds to given grain (Daily, Monthly). Suppose the API call is for usageDate &gt; 2025-03-01 and usageDate &lt; 2022-10-31 at a daily granularity. There will be one record per benefit id for each day. For a single day, the maxUtilizationPercentage value will be equal to the largest in the set of values where the set contains 24 utilization percentage entries one for each hour in a specific day. If on the day 2022-10-18, the largest utilization percentage was 90% at hour 5, then the value for the maxUtilizationPercentage in the response will be 90%. </summary>
+        public decimal? MaxUtilizationPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxUtilizationPercentage;
+            }
+        }
     }
 }

@@ -23,14 +23,16 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="desirableDirection"> It indicates whether a higher value is better or a lower value is better for this metric. </param>
         /// <param name="minValue"> Minimum value for the metric. </param>
         /// <param name="maxValue"> Maximum value for the metric. If not specified, it is assumed to be unbounded. </param>
+        /// <param name="threshold"> Default pass/fail threshold for this metric. </param>
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, float? threshold, bool? isPrimary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             DesirableDirection = desirableDirection;
             MinValue = minValue;
             MaxValue = maxValue;
+            Threshold = threshold;
             IsPrimary = isPrimary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,6 +48,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Maximum value for the metric. If not specified, it is assumed to be unbounded. </summary>
         public float? MaxValue { get; set; }
+
+        /// <summary> Default pass/fail threshold for this metric. </summary>
+        public float? Threshold { get; set; }
 
         /// <summary> Indicates if this metric is primary when there are multiple metrics. </summary>
         public bool? IsPrimary { get; set; }

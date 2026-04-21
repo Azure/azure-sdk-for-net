@@ -369,10 +369,7 @@ model MigrationResponse {
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
     );
     ok(bulkImportMethod, "Should find bulk import method");
-    strictEqual(
-      bulkImportMethod.scope.kind,
-      ResourceScopeKind.Subscription
-    );
+    strictEqual(bulkImportMethod.scope.kind, ResourceScopeKind.Subscription);
 
     const migrateMethod = nonResourceMethods.find(
       (m: any) =>
