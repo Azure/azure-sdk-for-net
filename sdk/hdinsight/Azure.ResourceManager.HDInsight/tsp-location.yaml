@@ -1,5 +1,5 @@
 directory: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight
-commit: be4263d817668b305368193ec6c3c623361d73b0
+commit: 95f51465fabf7014889dc9c4766f5f05b7b94794
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
