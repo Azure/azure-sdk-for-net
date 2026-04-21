@@ -23,10 +23,11 @@ namespace Azure.Generator.Management.Visitors
         private static CSharpType WirePathAttributeType => ManagementClientGenerator.Instance.OutputLibrary.WirePathAttributeDefinition.Type;
 
         // Drop any WirePath attribute that may be attached to the inner property (e.g., copied verbatim from a
-        // customization partial class). The WirePathVisitor will add the correct combined wire-path attribute on
-        // the flattened property after it is created. Keeping the original attribute here can cause duplicate
-        // (and in some base-library versions, malformed) WirePath attributes to be emitted.
-        private static IReadOnlyList<AttributeStatement> FilterAttributesForFlatten(IReadOnlyList<AttributeStatement> attributes)
+        // customization partial class). When a property is flattened, its wire path changes (e.g., "left" becomes
+        // "properties.left"), so any WirePath attribute copied from the inner property is stale and incorrect.
+        // WirePathVisitor will add the correct combined wire-path attribute on the flattened property after it
+        // is created; keeping the original attribute here can cause duplicate or malformed attributes.
+        internal static IReadOnlyList<AttributeStatement> FilterAttributesForFlatten(IReadOnlyList<AttributeStatement> attributes)
         {
             if (attributes is null || attributes.Count == 0)
             {
@@ -36,15 +37,34 @@ namespace Azure.Generator.Management.Visitors
             return [.. attributes.Where(a => !IsWirePathAttribute(a, wirePathType))];
         }
 
-        private static bool IsWirePathAttribute(AttributeStatement attribute, CSharpType wirePathType)
+        internal static bool IsWirePathAttribute(AttributeStatement attribute, CSharpType wirePathType)
         {
-            if (attribute.Type.Equals(wirePathType))
+            // Resolving AttributeStatement.Type walks through Data!.AttributeClass!.GetCSharpType(); for
+            // source-parsed attributes that fail to bind (e.g., the attribute type is not visible to the
+            // customization compilation), that chain can throw. Fall through to a best-effort name compare
+            // using whatever we can safely read.
+            CSharpType? type = null;
+            try
+            {
+                type = attribute.Type;
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (type is null)
+            {
+                return false;
+            }
+
+            if (type.Equals(wirePathType))
             {
                 return true;
             }
             // Source-parsed attributes (from a customization partial class) may have a different CSharpType
             // instance, so fall back to a name comparison.
-            var name = attribute.Type.Name;
+            var name = type.Name;
             return name == wirePathType.Name || name == "WirePath";
         }
 
