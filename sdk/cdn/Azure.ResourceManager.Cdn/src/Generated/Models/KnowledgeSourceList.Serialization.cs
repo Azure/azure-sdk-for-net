@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (KnowledgeSourceData item in Value)
+            foreach (CdnWebAgentKnowledgeSourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<KnowledgeSourceData> value = default;
+            IList<CdnWebAgentKnowledgeSourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<KnowledgeSourceData> array = new List<KnowledgeSourceData>();
+                    List<CdnWebAgentKnowledgeSourceData> array = new List<CdnWebAgentKnowledgeSourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeSourceData.DeserializeKnowledgeSourceData(item, options));
+                        array.Add(CdnWebAgentKnowledgeSourceData.DeserializeCdnWebAgentKnowledgeSourceData(item, options));
                     }
                     value = array;
                     continue;

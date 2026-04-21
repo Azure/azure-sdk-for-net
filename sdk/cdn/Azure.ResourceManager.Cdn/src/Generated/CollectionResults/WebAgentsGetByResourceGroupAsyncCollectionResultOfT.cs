@@ -15,7 +15,7 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class WebAgentsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<WebAgentData>
+    internal partial class WebAgentsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<CdnWebAgentData>
     {
         private readonly WebAgents _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAgentsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<WebAgentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<CdnWebAgentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 WebAgentList result = WebAgentList.FromResponse(response);
-                yield return Page<WebAgentData>.FromValues((IReadOnlyList<WebAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CdnWebAgentData>.FromValues((IReadOnlyList<CdnWebAgentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

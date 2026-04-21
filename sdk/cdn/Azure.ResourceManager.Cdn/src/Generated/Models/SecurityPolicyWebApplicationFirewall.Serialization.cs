@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             SecurityPolicyType policyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceReference wafPolicy = default;
+            CdnResourceReference wafPolicy = default;
             IList<SecurityPolicyWebApplicationFirewallAssociation> associations = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    wafPolicy = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    wafPolicy = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("associations"u8))

@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Cdn
     public partial class CdnDeploymentVersionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnDeploymentVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnDeploymentVersionData>
     {
         internal CdnDeploymentVersionData() { }
-        public Azure.ResourceManager.Cdn.Models.ApprovalStatus? ApprovalStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus? ApprovalStatus { get { throw null; } }
         public System.DateTimeOffset? ApprovedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.DeploymentStages Stages { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnDeploymentStages Stages { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Cdn
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation Approve(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ApproveAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult> Compare(Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter compareDeploymentVersionsContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>> CompareAsync(Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter compareDeploymentVersionsContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult> Compare(Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>> CompareAsync(Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string versionName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnDeploymentVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnDeploymentVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -235,6 +235,14 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.ResourceManager.Cdn.CdnKeyGroupResource GetCdnKeyGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnOriginGroupResource GetCdnOriginGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnOriginResource GetCdnOriginResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnProfileAgentResource GetCdnProfileAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> GetCdnWebAgentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource GetCdnWebAgentKnowledgeSourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentResource GetCdnWebAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentCollection GetCdnWebAgents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -250,11 +258,9 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.ResourceManager.Cdn.FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecretResource GetFrontDoorSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.KnowledgeSourceResource GetKnowledgeSourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> GetProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Cdn.ProfileAgentResource GetProfileAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> GetProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileResource GetProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileCollection GetProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -262,12 +268,6 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgent(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> GetWebAgentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Cdn.WebAgentResource GetWebAgentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.WebAgentCollection GetWebAgents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.Models.MigrateResult> MigrateProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.MigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.Models.MigrateResult>> MigrateProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.MigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult> ValidateProbe(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
     {
         public CdnKeyGroupData() { }
         public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> KeyReferences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> KeyReferences { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -443,6 +443,178 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnOriginResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnOriginResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class CdnProfileAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnProfileAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnProfileAgentResource>, System.Collections.IEnumerable
+    {
+        protected CdnProfileAgentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnProfileAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.Cdn.CdnProfileAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnProfileAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.Cdn.CdnProfileAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource> Get(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnProfileAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnProfileAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource>> GetAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnProfileAgentResource> GetIfExists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnProfileAgentResource>> GetIfExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.CdnProfileAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnProfileAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.CdnProfileAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnProfileAgentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CdnProfileAgentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>
+    {
+        public CdnProfileAgentData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> CustomDomains { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WebAgentId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.CdnProfileAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnProfileAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnProfileAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CdnProfileAgentResource() { }
+        public virtual Azure.ResourceManager.Cdn.CdnProfileAgentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string agentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Cdn.CdnProfileAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnProfileAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnProfileAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CdnWebAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentResource>, System.Collections.IEnumerable
+    {
+        protected CdnWebAgentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string webAgentName, Azure.ResourceManager.Cdn.CdnWebAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string webAgentName, Azure.ResourceManager.Cdn.CdnWebAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> Get(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> GetAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetIfExists(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnWebAgentResource>> GetIfExistsAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.CdnWebAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.CdnWebAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CdnWebAgentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>
+    {
+        public CdnWebAgentData(Azure.Core.AzureLocation location) { }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> Paths { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> ProfileAgentLinks { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState? ProvisioningState { get { throw null; } }
+        public string SystemPrompt { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.CdnWebAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnWebAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnWebAgentKnowledgeSourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>, System.Collections.IEnumerable
+    {
+        protected CdnWebAgentKnowledgeSourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string knowledgeSourceName, Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string knowledgeSourceName, Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> Get(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>> GetAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> GetIfExists(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>> GetIfExistsAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CdnWebAgentKnowledgeSourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>
+    {
+        public CdnWebAgentKnowledgeSourceData() { }
+        public string Description { get { throw null; } set { } }
+        public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType SourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnWebAgentKnowledgeSourceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CdnWebAgentKnowledgeSourceResource() { }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webAgentName, string knowledgeSourceName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Purge(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CdnWebAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CdnWebAgentResource() { }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webAgentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource> GetCdnWebAgentKnowledgeSource(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource>> GetCdnWebAgentKnowledgeSourceAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceCollection GetCdnWebAgentKnowledgeSources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Cdn.CdnWebAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.CdnWebAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.CdnWebAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebAgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class CdnWebApplicationFirewallPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource>, System.Collections.IEnumerable
     {
         protected CdnWebApplicationFirewallPolicyCollection() { }
@@ -533,7 +705,7 @@ namespace Azure.ResourceManager.Cdn
         public Azure.ResourceManager.Cdn.Models.DomainValidationState? DomainValidationState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ExtendedProperties { get { throw null; } }
         public string HostName { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters MtlsSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings MtlsSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
@@ -667,7 +839,7 @@ namespace Azure.ResourceManager.Cdn
         public string HostName { get { throw null; } set { } }
         public int? HttpPort { get { throw null; } set { } }
         public int? HttpsPort { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties OriginCapacityResource { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings OriginCapacityResource { get { throw null; } set { } }
         public string OriginGroupName { get { throw null; } }
         public string OriginHostHeader { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
@@ -1049,115 +1221,6 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class KnowledgeSourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.KnowledgeSourceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.KnowledgeSourceResource>, System.Collections.IEnumerable
-    {
-        protected KnowledgeSourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.KnowledgeSourceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string knowledgeSourceName, Azure.ResourceManager.Cdn.KnowledgeSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.KnowledgeSourceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string knowledgeSourceName, Azure.ResourceManager.Cdn.KnowledgeSourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource> Get(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.KnowledgeSourceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.KnowledgeSourceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource>> GetAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.KnowledgeSourceResource> GetIfExists(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.KnowledgeSourceResource>> GetIfExistsAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.KnowledgeSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.KnowledgeSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.KnowledgeSourceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.KnowledgeSourceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class KnowledgeSourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>
-    {
-        public KnowledgeSourceData() { }
-        public string Description { get { throw null; } set { } }
-        public System.DateTimeOffset? LastRefreshedOn { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.KnowledgeSourceType SourceType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.KnowledgeSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.KnowledgeSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class KnowledgeSourceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected KnowledgeSourceResource() { }
-        public virtual Azure.ResourceManager.Cdn.KnowledgeSourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webAgentName, string knowledgeSourceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Purge(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Cdn.KnowledgeSourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.KnowledgeSourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.KnowledgeSourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ProfileAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.ProfileAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.ProfileAgentResource>, System.Collections.IEnumerable
-    {
-        protected ProfileAgentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.ProfileAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.Cdn.ProfileAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.ProfileAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentName, Azure.ResourceManager.Cdn.ProfileAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource> Get(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.ProfileAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.ProfileAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource>> GetAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.ProfileAgentResource> GetIfExists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.ProfileAgentResource>> GetIfExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.ProfileAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.ProfileAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.ProfileAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.ProfileAgentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ProfileAgentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>
-    {
-        public ProfileAgentData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> CustomDomains { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier WebAgentId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.ProfileAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.ProfileAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ProfileAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ProfileAgentResource() { }
-        public virtual Azure.ResourceManager.Cdn.ProfileAgentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string agentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Cdn.ProfileAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.ProfileAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.ProfileAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.ProfileAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.ProfileAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class ProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.ProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.ProfileResource>, System.Collections.IEnumerable
     {
         protected ProfileCollection() { }
@@ -1229,6 +1292,9 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnKeyGroupResource> GetCdnKeyGroup(string keyGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnKeyGroupResource>> GetCdnKeyGroupAsync(string keyGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnKeyGroupCollection GetCdnKeyGroups() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource> GetCdnProfileAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnProfileAgentResource>> GetCdnProfileAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnProfileAgentCollection GetCdnProfileAgents() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.FrontDoorCustomDomainCollection GetFrontDoorCustomDomains() { throw null; }
@@ -1261,9 +1327,6 @@ namespace Azure.ResourceManager.Cdn
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.RankingsResponse>> GetLogAnalyticsRankingsAsync(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogRanking> rankings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogRankingMetric> metrics, int maxRanking, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd, System.Collections.Generic.IEnumerable<string> customDomains = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ResourcesResponse> GetLogAnalyticsResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ResourcesResponse>> GetLogAnalyticsResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource> GetProfileAgent(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileAgentResource>> GetProfileAgentAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.ProfileAgentCollection GetProfileAgents() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.SupportedOptimizationTypesListResult> GetSupportedOptimizationTypes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1296,69 +1359,6 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateSecretResult> ValidateSecretFrontDoorProfile(Azure.ResourceManager.Cdn.Models.ValidateSecretContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateSecretResult>> ValidateSecretFrontDoorProfileAsync(Azure.ResourceManager.Cdn.Models.ValidateSecretContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WebAgentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.WebAgentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.WebAgentResource>, System.Collections.IEnumerable
-    {
-        protected WebAgentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.WebAgentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string webAgentName, Azure.ResourceManager.Cdn.WebAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.WebAgentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string webAgentName, Azure.ResourceManager.Cdn.WebAgentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> Get(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.WebAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.WebAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> GetAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Cdn.WebAgentResource> GetIfExists(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Cdn.WebAgentResource>> GetIfExistsAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.WebAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.WebAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.WebAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.WebAgentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class WebAgentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>
-    {
-        public WebAgentData(Azure.Core.AzureLocation location) { }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AgentPath> Paths { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.ResourceReference> ProfileAgentLinks { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState? ProvisioningState { get { throw null; } }
-        public string SystemPrompt { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.WebAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.WebAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class WebAgentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected WebAgentResource() { }
-        public virtual Azure.ResourceManager.Cdn.WebAgentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string webAgentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource> GetKnowledgeSource(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.KnowledgeSourceResource>> GetKnowledgeSourceAsync(string knowledgeSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.KnowledgeSourceCollection GetKnowledgeSources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Cdn.WebAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.WebAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.WebAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.WebAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.WebAgentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.WebAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.WebAgentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.WebAgentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.Cdn.Mocking
 {
@@ -1371,6 +1371,9 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual Azure.ResourceManager.Cdn.CdnKeyGroupResource GetCdnKeyGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnOriginGroupResource GetCdnOriginGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnOriginResource GetCdnOriginResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnProfileAgentResource GetCdnProfileAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceResource GetCdnWebAgentKnowledgeSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentResource GetCdnWebAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.FrontDoorEndpointResource GetFrontDoorEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1381,10 +1384,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual Azure.ResourceManager.Cdn.FrontDoorRuleSetResource GetFrontDoorRuleSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.FrontDoorSecretResource GetFrontDoorSecretResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.KnowledgeSourceResource GetKnowledgeSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.ProfileAgentResource GetProfileAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.ProfileResource GetProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.WebAgentResource GetWebAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableCdnResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -1393,15 +1393,15 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.Models.CanMigrateResult>> CanMigrateProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CanMigrateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult> CheckEndpointNameAvailability(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgent(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebAgentResource>> GetCdnWebAgentAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.CdnWebAgentCollection GetCdnWebAgents() { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> GetProfile(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> GetProfileAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.ProfileCollection GetProfiles() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgent(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.WebAgentResource>> GetWebAgentAsync(string webAgentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.WebAgentCollection GetWebAgents() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.Models.MigrateResult> MigrateProfile(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.MigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.Models.MigrateResult>> MigrateProfileAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.MigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1410,14 +1410,14 @@ namespace Azure.ResourceManager.Cdn.Mocking
         protected MockableCdnSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.CdnWebAgentResource> GetCdnWebAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.ProfileResource> GetProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.WebAgentResource> GetWebAgentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult> ValidateProbe(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult>> ValidateProbeAsync(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1489,131 +1489,69 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 left, Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13 right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AfdSecretMtlsCertificateChain : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>
+    public partial class AfdOriginCapacitySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>
     {
-        public AfdSecretMtlsCertificateChain(string secretVersion) { }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
-        public string SecretVersion { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AfdUrlSigningAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>
-    {
-        public AfdUrlSigningAction(Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters parameters) { }
-        public Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters Parameters { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AfdUrlSigningActionParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>
-    {
-        public AfdUrlSigningActionParameters(Azure.ResourceManager.Cdn.Models.TypeName typeName) { }
-        public Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? Algorithm { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier KeyGroupReferenceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> ParameterNameOverride { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.TypeName TypeName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public AfdOriginCapacitySettings() { }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? Enabled { get { throw null; } set { } }
+        public long? OriginIngressRateThreshold { get { throw null; } set { } }
+        public long? OriginRequestRateThreshold { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AgentPath : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AgentPath>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AgentPath>
-    {
-        public AgentPath(Azure.ResourceManager.Cdn.Models.AgentPathType type, string path) { }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AgentPathType Type { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.AgentPath JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.AgentPath PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.AgentPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AgentPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AgentPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.AgentPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AgentPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AgentPath>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AgentPath>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentPathType : System.IEquatable<Azure.ResourceManager.Cdn.Models.AgentPathType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentPathType(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AgentPathType Chat { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AgentPathType McpServer { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AgentPathType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AgentPathType left, Azure.ResourceManager.Cdn.Models.AgentPathType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AgentPathType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AgentPathType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AgentPathType left, Azure.ResourceManager.Cdn.Models.AgentPathType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApprovalStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.ApprovalStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApprovalStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ApprovalStatus Approved { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ApprovalStatus NotApproved { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.ApprovalStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ApprovalStatus left, Azure.ResourceManager.Cdn.Models.ApprovalStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.ApprovalStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.ApprovalStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ApprovalStatus left, Azure.ResourceManager.Cdn.Models.ApprovalStatus right) { throw null; }
-        public override string ToString() { throw null; }
+        Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmCdnModelFactory
     {
-        public static Azure.ResourceManager.Cdn.Models.AfdSecretMtlsCertificateChain AfdSecretMtlsCertificateChain(Azure.Core.ResourceIdentifier secretSourceId = null, string secretVersion = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdUrlSigningActionParameters AfdUrlSigningActionParameters(Azure.ResourceManager.Cdn.Models.TypeName typeName = default(Azure.ResourceManager.Cdn.Models.TypeName), Azure.Core.ResourceIdentifier keyGroupReferenceId = null, Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? algorithm = default(Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> parameterNameOverride = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.AzureFirstPartyManagedCertificateProperties AzureFirstPartyManagedCertificateProperties(Azure.Core.ResourceIdentifier secretSourceId = null, string subject = null, string expirationDate = null, string certificateAuthority = null, System.Collections.Generic.IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CanMigrateContent CanMigrateContent(Azure.Core.ResourceIdentifier classicResourceReferenceId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CanMigrateResult CanMigrateResult(Azure.Core.ResourceIdentifier resourceId = null, string canMigrateResultType = null, bool? canMigrate = default(bool?), Azure.ResourceManager.Cdn.Models.CanMigrateDefaultSku? defaultSku = default(Azure.ResourceManager.Cdn.Models.CanMigrateDefaultSku?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationErrorType> errors = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CanMigrateResult CanMigrateResult(string id, string canMigrateResultType, bool? canMigrate, Azure.ResourceManager.Cdn.Models.CanMigrateDefaultSku? defaultSku, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationErrorType> errors) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnCustomDomainData CdnCustomDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string hostName = null, Azure.ResourceManager.Cdn.Models.CustomDomainResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.CustomDomainResourceState?), Azure.ResourceManager.Cdn.Models.CustomHttpsProvisioningState? customHttpsProvisioningState = default(Azure.ResourceManager.Cdn.Models.CustomHttpsProvisioningState?), Azure.ResourceManager.Cdn.Models.CustomHttpsAvailabilityState? customHttpsAvailabilityState = default(Azure.ResourceManager.Cdn.Models.CustomHttpsAvailabilityState?), Azure.ResourceManager.Cdn.Models.CustomDomainHttpsContent customDomainHttpsContent = null, string validationData = null, Azure.ResourceManager.Cdn.Models.CustomHttpsProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CustomHttpsProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.CdnDeploymentVersionData CdnDeploymentVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? approvedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.ApprovalStatus? approvalStatus = default(Azure.ResourceManager.Cdn.Models.ApprovalStatus?), Azure.ResourceManager.Cdn.Models.DeploymentStages stages = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentStages CdnDeploymentStages(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus? preview = default(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus?), Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus? production = default(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange CdnDeploymentVersionChange(string resourceType = null, Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnDeploymentVersionData CdnDeploymentVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? approvedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus? approvalStatus = default(Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus?), Azure.ResourceManager.Cdn.Models.CdnDeploymentStages stages = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange CdnDeploymentVersionFrontDoorOriginChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties currentProperties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange CdnDeploymentVersionFrontDoorOriginGroupChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties currentProperties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange CdnDeploymentVersionRouteChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.CdnRouteProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.CdnRouteProperties currentProperties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange CdnDeploymentVersionRuleChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.CdnRuleProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.CdnRuleProperties currentProperties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange CdnDeploymentVersionRuleSetChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties currentProperties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange CdnDeploymentVersionSecurityPolicyChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = null) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnEndpointData CdnEndpointData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string originPath, System.Collections.Generic.IEnumerable<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, Azure.ResourceManager.Cdn.Models.QueryStringCachingBehavior? queryStringCachingBehavior, Azure.ResourceManager.Cdn.Models.OptimizationType? optimizationType, string probePath, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.GeoFilter> geoFilters, Azure.Core.ResourceIdentifier defaultOriginGroupId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningKey> uriSigningKeys, Azure.ResourceManager.Cdn.Models.EndpointDeliveryPolicy deliveryPolicy, Azure.Core.ResourceIdentifier webApplicationFirewallPolicyLinkId, string hostName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeepCreatedOrigin> origins, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeepCreatedOriginGroup> originGroups, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnCustomDomainData> customDomains, Azure.ResourceManager.Cdn.Models.EndpointResourceState? resourceState, Azure.ResourceManager.Cdn.Models.CdnEndpointProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnEndpointData CdnEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string originPath = null, System.Collections.Generic.IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), Azure.ResourceManager.Cdn.Models.QueryStringCachingBehavior? queryStringCachingBehavior = default(Azure.ResourceManager.Cdn.Models.QueryStringCachingBehavior?), Azure.ResourceManager.Cdn.Models.OptimizationType? optimizationType = default(Azure.ResourceManager.Cdn.Models.OptimizationType?), string probePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.GeoFilter> geoFilters = null, Azure.Core.ResourceIdentifier defaultOriginGroupId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningKey> uriSigningKeys = null, Azure.ResourceManager.Cdn.Models.EndpointDeliveryPolicy deliveryPolicy = null, Azure.Core.ResourceIdentifier webApplicationFirewallPolicyLinkId = null, string hostName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeepCreatedOrigin> origins = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeepCreatedOriginGroup> originGroups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeepCreatedCustomDomain> deepCreatedCustomDomains = null, Azure.ResourceManager.Cdn.Models.EndpointResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.EndpointResourceState?), Azure.ResourceManager.Cdn.Models.CdnEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CdnEndpointProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnEndpointPatch CdnEndpointPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string originPath = null, System.Collections.Generic.IEnumerable<string> contentTypesToCompress = null, string originHostHeader = null, bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), Azure.ResourceManager.Cdn.Models.QueryStringCachingBehavior? queryStringCachingBehavior = default(Azure.ResourceManager.Cdn.Models.QueryStringCachingBehavior?), Azure.ResourceManager.Cdn.Models.OptimizationType? optimizationType = default(Azure.ResourceManager.Cdn.Models.OptimizationType?), string probePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.GeoFilter> geoFilters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningKey> uriSigningKeys = null, Azure.ResourceManager.Cdn.Models.EndpointDeliveryPolicy deliveryPolicy = null, Azure.Core.ResourceIdentifier defaultOriginGroupId = null, Azure.Core.ResourceIdentifier webApplicationFirewallPolicyLinkId = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.CdnKeyGroupData CdnKeyGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> keyReferences = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch CdnKeyGroupPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> keyReferences = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnKeyGroupData CdnKeyGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> keyReferences = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch CdnKeyGroupPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> keyReferences = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnMigrationToAfdContent CdnMigrationToAfdContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationEndpointMapping> migrationEndpointMappings = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent CdnNameAvailabilityContent(string name = null, Azure.ResourceManager.Cdn.Models.CdnResourceType resourceType = default(Azure.ResourceManager.Cdn.Models.CdnResourceType)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult CdnNameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnOriginData CdnOriginData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string hostName = null, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = null, int? priority = default(int?), int? weight = default(int?), bool? enabled = default(bool?), string privateLinkAlias = null, Azure.Core.ResourceIdentifier privateLinkResourceId = null, string privateLinkLocation = null, string privateLinkApprovalMessage = null, Azure.ResourceManager.Cdn.Models.OriginResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.OriginResourceState?), Azure.ResourceManager.Cdn.Models.OriginProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.OriginProvisioningState?), Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus? privateEndpointStatus = default(Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus?)) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnOriginGroupData CdnOriginGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> origins = null, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default(int?), Azure.ResourceManager.Cdn.Models.ResponseBasedOriginErrorDetectionSettings responseBasedOriginErrorDetectionSettings = null, Azure.ResourceManager.Cdn.Models.OriginGroupResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.OriginGroupResourceState?), Azure.ResourceManager.Cdn.Models.OriginGroupProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.OriginGroupProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnProfileAgentData CdnProfileAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> customDomains = null, Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState?), Azure.Core.ResourceIdentifier webAgentId = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnRouteProperties CdnRouteProperties(string endpointName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> customDomains = null, Azure.Core.ResourceIdentifier originGroupId = null, string originPath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> supportedProtocols = null, System.Collections.Generic.IEnumerable<string> patternsToMatch = null, Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration cacheConfiguration = null, Azure.ResourceManager.Cdn.Models.ForwardingProtocol? forwardingProtocol = default(Azure.ResourceManager.Cdn.Models.ForwardingProtocol?), Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? linkToDefaultDomain = default(Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain?), Azure.ResourceManager.Cdn.Models.HttpsRedirect? httpsRedirect = default(Azure.ResourceManager.Cdn.Models.HttpsRedirect?), Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState? grpcState = default(Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink CdnRoutingRuleLink(string id = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnRuleProperties CdnRuleProperties(string ruleSetName = null, int? order = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> conditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> actions = null, Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? matchProcessingBehavior = default(Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties CdnRuleSetProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnSecretProperties CdnSecretProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink CdnSecurityPolicyLink(string id = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties CdnSecurityPolicyProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnUsage CdnUsage(string resourceType = null, Azure.ResourceManager.Cdn.Models.CdnUsageUnit? unit = default(Azure.ResourceManager.Cdn.Models.CdnUsageUnit?), int? currentValue = default(int?), int? limit = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentData CdnWebAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> paths = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> profileAgentLinks = null, Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType? sourceType = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType?), string uri = null, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch CdnWebAgentPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> paths = null) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.ResourceManager.Cdn.Models.WafPolicySettings policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RateLimitRule> rateLimitRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRule> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet> managedRuleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> endpointLinks = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState?), Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName, Azure.ResourceManager.Cdn.Models.WafPolicySettings policySettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RateLimitRule> rateLimitRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRule> customRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet> managedRuleSets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> endpointLinks, Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicyProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CdnWebApplicationFirewallPolicyPatch CdnWebApplicationFirewallPolicyPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings ClientCertificateRequiredAndValidatedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> secrets = null, System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? certificateRevocationCheck = default(Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings ClientCertificateValidatedIfPresentedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> secrets = null, System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? certificateRevocationCheck = default(Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings ClientCertificateRequiredAndValidatedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> secrets = null, System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? certificateRevocationCheck = default(Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings ClientCertificateValidatedIfPresentedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> secrets = null, System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? certificateRevocationCheck = default(Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition ClientPortMatchCondition(Azure.ResourceManager.Cdn.Models.ClientPortOperator clientPortOperator = default(Azure.ResourceManager.Cdn.Models.ClientPortOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter CompareDeploymentVersionsParameter(string compareTo = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult CompareDeploymentVersionsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange> value = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent CompareDeploymentVersionsContent(string compareTo = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult CompareDeploymentVersionsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange> value = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(System.DateTimeOffset? dateOn = default(System.DateTimeOffset?), float? value = default(float?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(System.DateTimeOffset? dateOn = default(System.DateTimeOffset?), float? value = default(float?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(string metric = null, long? value = default(long?), double? percentage = default(double?)) { throw null; }
@@ -1623,20 +1561,11 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.CookiesMatchCondition CookiesMatchCondition(string selector = null, Azure.ResourceManager.Cdn.Models.CookiesOperator cookiesOperator = default(Azure.ResourceManager.Cdn.Models.CookiesOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CustomerCertificateProperties CustomerCertificateProperties(Azure.Core.ResourceIdentifier secretSourceId = null, string secretVersion = null, bool? useLatestVersion = default(bool?), string subject = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string certificateAuthority = null, System.Collections.Generic.IEnumerable<string> subjectAlternativeNames = null, string thumbprint = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CustomRule CustomRule(string name = null, Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState?), int priority = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRuleMatchCondition> matchConditions = null, Azure.ResourceManager.Cdn.Models.OverrideActionType action = default(Azure.ResourceManager.Cdn.Models.OverrideActionType)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CustomRuleAfd CustomRuleAfd(string name = null, int priority = 0, Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState?), Azure.ResourceManager.Cdn.Models.RuleType ruleType = default(Azure.ResourceManager.Cdn.Models.RuleType), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.GroupByVariable> groupBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MatchConditionAfd> matchConditions = null, Azure.ResourceManager.Cdn.Models.OverrideActionType action = default(Azure.ResourceManager.Cdn.Models.OverrideActionType)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.CustomRuleMatchCondition CustomRuleMatchCondition(Azure.ResourceManager.Cdn.Models.WafMatchVariable matchVariable = default(Azure.ResourceManager.Cdn.Models.WafMatchVariable), string selector = null, Azure.ResourceManager.Cdn.Models.MatchOperator matchOperator = default(Azure.ResourceManager.Cdn.Models.MatchOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValue = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.TransformType> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.DeepCreatedCustomDomain DeepCreatedCustomDomain(string name = null, string hostName = null, string validationData = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.DeepCreatedOrigin DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, Azure.Core.ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus? privateEndpointStatus) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.DeliveryRule DeliveryRule(string name = null, int order = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> conditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> actions = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.DeliveryRuleSslProtocolMatchCondition DeliveryRuleSslProtocolMatchCondition(Azure.ResourceManager.Cdn.Models.SslProtocolOperator sslProtocolOperator = default(Azure.ResourceManager.Cdn.Models.SslProtocolOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleSslProtocol> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentStages DeploymentStages(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus? preview = default(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus?), Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus? production = default(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange DeploymentVersionAFDOriginChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties currentProperties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange DeploymentVersionAFDOriginGroupChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties currentProperties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionChange DeploymentVersionChange(string resourceType = null, Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange DeploymentVersionRouteChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.RouteProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.RouteProperties currentProperties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange DeploymentVersionRuleChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.RuleProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.RuleProperties currentProperties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange DeploymentVersionRuleSetChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.RuleSetProperties previousProperties = null, Azure.ResourceManager.Cdn.Models.RuleSetProperties currentProperties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange DeploymentVersionSecurityPolicyChange(Azure.Core.ResourceIdentifier resourceId = null, string resourceName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.DomainValidationProperties DomainValidationProperties(string validationToken = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.EdgeNode EdgeNode(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.IPAddressGroup> ipAddressGroups = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.EndpointDeliveryPolicy EndpointDeliveryPolicy(string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRule> rules = null) { throw null; }
@@ -1645,22 +1574,27 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo FrontDoorActivatedResourceInfo(Azure.Core.ResourceIdentifier id = null, bool? isActive = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorCustomDomainData FrontDoorCustomDomainData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string profileName, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent tlsSettings, Azure.Core.ResourceIdentifier dnsZoneId, Azure.Core.ResourceIdentifier preValidatedCustomDomainResourceId, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus, Azure.ResourceManager.Cdn.Models.DomainValidationState? domainValidationState, string hostName, Azure.ResourceManager.Cdn.Models.DomainValidationProperties validationProperties) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorCustomDomainData FrontDoorCustomDomainData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string profileName, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent tlsSettings, Azure.Core.ResourceIdentifier dnsZoneId, Azure.Core.ResourceIdentifier preValidatedCustomDomainResourceId, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus, Azure.ResourceManager.Cdn.Models.DomainValidationState? domainValidationState, string hostName, System.Collections.Generic.IDictionary<string, string> extendedProperties, Azure.ResourceManager.Cdn.Models.DomainValidationProperties validationProperties) { throw null; }
-        public static Azure.ResourceManager.Cdn.FrontDoorCustomDomainData FrontDoorCustomDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string profileName = null, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent tlsSettings = null, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters mtlsSettings = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), Azure.ResourceManager.Cdn.Models.DomainValidationState? domainValidationState = default(Azure.ResourceManager.Cdn.Models.DomainValidationState?), string hostName = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Cdn.Models.DomainValidationProperties validationProperties = null, Azure.Core.ResourceIdentifier dnsZoneId = null, Azure.Core.ResourceIdentifier preValidatedCustomDomainResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorCustomDomainData FrontDoorCustomDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string profileName = null, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent tlsSettings = null, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings mtlsSettings = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), Azure.ResourceManager.Cdn.Models.DomainValidationState? domainValidationState = default(Azure.ResourceManager.Cdn.Models.DomainValidationState?), string hostName = null, System.Collections.Generic.IDictionary<string, string> extendedProperties = null, Azure.ResourceManager.Cdn.Models.DomainValidationProperties validationProperties = null, Azure.Core.ResourceIdentifier dnsZoneId = null, Azure.Core.ResourceIdentifier preValidatedCustomDomainResourceId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls12> cipherSuiteSetForTls12 = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.AfdCustomizedCipherSuiteForTls13> cipherSuiteSetForTls13 = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch FrontDoorCustomDomainPatch(string profileName, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent tlsSettings, Azure.Core.ResourceIdentifier dnsZoneId, Azure.Core.ResourceIdentifier preValidatedCustomDomainResourceId) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule FrontDoorCustomRule(string name = null, int priority = 0, Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState?), Azure.ResourceManager.Cdn.Models.CdnRuleType ruleType = default(Azure.ResourceManager.Cdn.Models.CdnRuleType), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable> groupBy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition> matchConditions = null, Azure.ResourceManager.Cdn.Models.OverrideActionType action = default(Azure.ResourceManager.Cdn.Models.OverrideActionType)) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorEndpointData FrontDoorEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string profileName = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.EnforceMtlsEnabledState? enforceMtls = default(Azure.ResourceManager.Cdn.Models.EnforceMtlsEnabledState?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string hostName = null, Azure.ResourceManager.Cdn.Models.DomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.Cdn.Models.DomainNameLabelScope?)) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorEndpointData FrontDoorEndpointData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string profileName, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus, string hostName, Azure.ResourceManager.Cdn.Models.DomainNameLabelScope? autoGeneratedDomainNameLabelScope) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorEndpointPatch FrontDoorEndpointPatch(System.Collections.Generic.IDictionary<string, string> tags, string profileName, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorEndpointPatch FrontDoorEndpointPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string profileName = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.EnforceMtlsEnabledState? enforceMtls = default(Azure.ResourceManager.Cdn.Models.EnforceMtlsEnabledState?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride FrontDoorManagedRuleGroupOverride(string ruleGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride> rules = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride FrontDoorManagedRuleOverride(string ruleId = null, Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState? enabledState = default(Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState?), Azure.ResourceManager.Cdn.Models.OverrideActionType? action = default(Azure.ResourceManager.Cdn.Models.OverrideActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet FrontDoorManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType? ruleSetAction = default(Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride> ruleGroupOverrides = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition FrontDoorMatchCondition(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable matchVariable = default(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable), string selector = null, Azure.ResourceManager.Cdn.Models.MatchOperator matchOperator = default(Azure.ResourceManager.Cdn.Models.MatchOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValue = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.TransformType> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorOriginData FrontDoorOriginData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string originGroupName, Azure.Core.ResourceIdentifier originId, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState, bool? enforceCertificateNameCheck, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus) { throw null; }
-        public static Azure.ResourceManager.Cdn.FrontDoorOriginData FrontDoorOriginData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string originGroupName = null, string hostName = null, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = null, int? priority = default(int?), int? weight = default(int?), Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties originCapacityResource = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), bool? enforceCertificateNameCheck = default(bool?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), Azure.Core.ResourceIdentifier originId = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorOriginData FrontDoorOriginData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string originGroupName = null, string hostName = null, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = null, int? priority = default(int?), int? weight = default(int?), Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings originCapacityResource = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), bool? enforceCertificateNameCheck = default(bool?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), Azure.Core.ResourceIdentifier originId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorOriginGroupData FrontDoorOriginGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string profileName = null, Azure.ResourceManager.Cdn.Models.LoadBalancingSettings loadBalancingSettings = null, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = default(int?), Azure.ResourceManager.Cdn.Models.EnabledState? sessionAffinityState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.OriginAuthenticationProperties authentication = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorOriginGroupData FrontDoorOriginGroupData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string profileName, Azure.ResourceManager.Cdn.Models.LoadBalancingSettings loadBalancingSettings, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, Azure.ResourceManager.Cdn.Models.EnabledState? sessionAffinityState, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, Azure.ResourceManager.Cdn.Models.LoadBalancingSettings loadBalancingSettings, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, Azure.ResourceManager.Cdn.Models.EnabledState? sessionAffinityState) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, Azure.ResourceManager.Cdn.Models.LoadBalancingSettings loadBalancingSettings, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, Azure.ResourceManager.Cdn.Models.EnabledState? sessionAffinityState, Azure.ResourceManager.Cdn.Models.OriginAuthenticationProperties authentication) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties FrontDoorOriginGroupProperties(string profileName = null, Azure.ResourceManager.Cdn.Models.LoadBalancingSettings loadBalancingSettings = null, Azure.ResourceManager.Cdn.Models.HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = default(int?), Azure.ResourceManager.Cdn.Models.EnabledState? sessionAffinityState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.OriginAuthenticationProperties authentication = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginPatch FrontDoorOriginPatch(string originGroupName, Azure.Core.ResourceIdentifier originId, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState, bool? enforceCertificateNameCheck) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = null, Azure.Core.ResourceIdentifier originId = null, string hostName = null, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = null, int? priority = default(int?), int? weight = default(int?), Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties originCapacityResource = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), bool? enforceCertificateNameCheck = default(bool?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = null, Azure.Core.ResourceIdentifier originId = null, string hostName = null, int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = null, int? priority = default(int?), int? weight = default(int?), Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings originCapacityResource = null, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), bool? enforceCertificateNameCheck = default(bool?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorPurgeContent FrontDoorPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths = null, System.Collections.Generic.IEnumerable<string> domains = null) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorRouteData FrontDoorRouteData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string endpointName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> customDomains, Azure.Core.ResourceIdentifier originGroupId, string originPath, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleSets, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> supportedProtocols, System.Collections.Generic.IEnumerable<string> patternsToMatch, Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration cacheConfiguration, Azure.ResourceManager.Cdn.Models.ForwardingProtocol? forwardingProtocol, Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? linkToDefaultDomain, Azure.ResourceManager.Cdn.Models.HttpsRedirect? httpsRedirect, Azure.ResourceManager.Cdn.Models.EnabledState? enabledState, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorRouteData FrontDoorRouteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string endpointName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> customDomains = null, string originPath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> supportedProtocols = null, System.Collections.Generic.IEnumerable<string> patternsToMatch = null, Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration cacheConfiguration = null, Azure.ResourceManager.Cdn.Models.ForwardingProtocol? forwardingProtocol = default(Azure.ResourceManager.Cdn.Models.ForwardingProtocol?), Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? linkToDefaultDomain = default(Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain?), Azure.ResourceManager.Cdn.Models.HttpsRedirect? httpsRedirect = default(Azure.ResourceManager.Cdn.Models.HttpsRedirect?), Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState? grpcState = default(Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), Azure.Core.ResourceIdentifier originGroupId = null) { throw null; }
@@ -1669,8 +1603,10 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.FrontDoorRulePatch FrontDoorRulePatch(string ruleSetName, int? order, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> conditions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> actions, Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? matchProcessingBehavior) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorRuleSetData FrontDoorRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecretData FrontDoorSecretData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(Azure.Core.ResourceIdentifier secretSourceId = null, string secretVersion = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties FrontDoorStateProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent FrontDoorUrlSigningActionContent(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName typeName = default(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName), Azure.Core.ResourceIdentifier keyGroupReferenceId = null, Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? algorithm = default(Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> parameterNameOverride = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsage FrontDoorUsage(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit unit = default(Azure.ResourceManager.Cdn.Models.FrontDoorUsageUnit), long currentValue = (long)0, long limit = (long)0, Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName name = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontDoorUsageResourceName FrontDoorUsageResourceName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.FrontendEndpointLink FrontendEndpointLink(string id = null) { throw null; }
@@ -1680,17 +1616,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.HttpVersionMatchCondition HttpVersionMatchCondition(Azure.ResourceManager.Cdn.Models.HttpVersionOperator httpVersionOperator = default(Azure.ResourceManager.Cdn.Models.HttpVersionOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.IPAddressGroup IPAddressGroup(string deliveryRegion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CidrIPAddress> iPv4Addresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CidrIPAddress> iPv6Addresses = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchCondition IsDeviceMatchCondition(Azure.ResourceManager.Cdn.Models.IsDeviceOperator isDeviceOperator = default(Azure.ResourceManager.Cdn.Models.IsDeviceOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.KnowledgeSourceData KnowledgeSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.Cdn.Models.KnowledgeSourceType? sourceType = default(Azure.ResourceManager.Cdn.Models.KnowledgeSourceType?), string uri = null, Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency? updateFrequency = default(Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency?), System.DateTimeOffset? lastRefreshedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.LoadContent LoadContent(System.Collections.Generic.IEnumerable<string> contentPaths = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedCertificateProperties ManagedCertificateProperties(string subject = null, System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition ManagedRuleDefinition(string ruleId = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition ManagedRuleGroupDefinition(string ruleGroupName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleDefinition> rules = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd ManagedRuleGroupOverrideAfd(string ruleGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd> rules = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting ManagedRuleGroupOverrideSetting(string ruleGroupName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideSetting> rules = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd ManagedRuleOverrideAfd(string ruleId = null, Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState? enabledState = default(Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState?), Azure.ResourceManager.Cdn.Models.OverrideActionType? action = default(Azure.ResourceManager.Cdn.Models.OverrideActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd ManagedRuleSetAfd(string ruleSetType = null, string ruleSetVersion = null, Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType? ruleSetAction = default(Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> exclusions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd> ruleGroupOverrides = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition ManagedRuleSetDefinition(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), string provisioningState = null, string ruleSetType = null, string ruleSetVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition> ruleGroups = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.MatchConditionAfd MatchConditionAfd(Azure.ResourceManager.Cdn.Models.MatchVariable matchVariable = default(Azure.ResourceManager.Cdn.Models.MatchVariable), string selector = null, Azure.ResourceManager.Cdn.Models.MatchOperator matchOperator = default(Azure.ResourceManager.Cdn.Models.MatchOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValue = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.TransformType> transforms = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponse MetricsResponse(System.DateTimeOffset? dateTimeBegin = default(System.DateTimeOffset?), System.DateTimeOffset? dateTimeEnd = default(System.DateTimeOffset?), Azure.ResourceManager.Cdn.Models.MetricsResponseGranularity? granularity = default(Azure.ResourceManager.Cdn.Models.MetricsResponseGranularity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItem> series = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItem MetricsResponseSeriesItem(string metric = null, Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItemUnit? unit = default(Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesItemUnit?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesPropertiesItemsItem> groups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MetricsResponseSeriesPropertiesItemsItem MetricsResponseSeriesPropertiesItemsItem(string name = null, string value = null) { throw null; }
@@ -1699,7 +1630,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.MigrationContent MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.Core.ResourceIdentifier classicResourceReferenceId = null, string profileName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.PostArgsMatchCondition PostArgsMatchCondition(string selector = null, Azure.ResourceManager.Cdn.Models.PostArgsOperator postArgsOperator = default(Azure.ResourceManager.Cdn.Models.PostArgsOperator), bool? negateCondition = default(bool?), System.Collections.Generic.IEnumerable<string> matchValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.PreTransformCategory> transforms = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.ProfileAgentData ProfileAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> customDomains = null, Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState?), Azure.Core.ResourceIdentifier webAgentId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ProfileChangeSkuWafMapping ProfileChangeSkuWafMapping(string securityPolicyName = null, Azure.Core.ResourceIdentifier changeToWafPolicyId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileData ProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), string kind = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Cdn.Models.ProfileResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.ProfileResourceState?), Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.ProfileProvisioningState?), System.Collections.Generic.IReadOnlyDictionary<string, string> extendedProperties = null, System.Guid? frontDoorId = default(System.Guid?), int? originResponseTimeoutSeconds = default(int?), Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing logScrubbing = null) { throw null; }
         public static Azure.ResourceManager.Cdn.ProfileData ProfileData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName, string kind, Azure.ResourceManager.Cdn.Models.ProfileResourceState? resourceState, Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? provisioningState, System.Guid? frontDoorId, int? originResponseTimeoutSeconds) { throw null; }
@@ -1725,13 +1655,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.ResourcesResponseEndpointsPropertiesItemsItem ResourcesResponseEndpointsPropertiesItemsItem(string id = null, string name = null, string endpointId = null, bool? history = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.ResponseBasedOriginErrorDetectionSettings ResponseBasedOriginErrorDetectionSettings(Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorType? responseBasedDetectedErrorType = default(Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorType?), int? responseBasedFailoverThresholdPercentage = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.HttpErrorRange> httpErrorRanges = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.RouteCacheCompressionSettings RouteCacheCompressionSettings(System.Collections.Generic.IEnumerable<string> contentTypesToCompress = null, bool? isCompressionEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RouteProperties RouteProperties(string endpointName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> customDomains = null, Azure.Core.ResourceIdentifier originGroupId = null, string originPath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> ruleSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> supportedProtocols = null, System.Collections.Generic.IEnumerable<string> patternsToMatch = null, Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration cacheConfiguration = null, Azure.ResourceManager.Cdn.Models.ForwardingProtocol? forwardingProtocol = default(Azure.ResourceManager.Cdn.Models.ForwardingProtocol?), Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? linkToDefaultDomain = default(Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain?), Azure.ResourceManager.Cdn.Models.HttpsRedirect? httpsRedirect = default(Azure.ResourceManager.Cdn.Models.HttpsRedirect?), Azure.ResourceManager.Cdn.Models.EnabledState? enabledState = default(Azure.ResourceManager.Cdn.Models.EnabledState?), Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState? grpcState = default(Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RoutingRuleLink RoutingRuleLink(string id = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RuleProperties RuleProperties(string ruleSetName = null, int? order = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> conditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> actions = null, Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? matchProcessingBehavior = default(Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior?), Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RuleSetProperties RuleSetProperties(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.SecretDetails SecretDetails(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails SecurityPolicyDetails(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.SecurityPolicyLink SecurityPolicyLink(string id = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy SecurityPolicyPropertiesWithEmbeddedWafPolicy(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState?), Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? deploymentStatus = default(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus?), string profileName = null, Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy parameters = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewall SecurityPolicyWebApplicationFirewall(Azure.Core.ResourceIdentifier wafPolicyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> associations = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation SecurityPolicyWebApplicationFirewallAssociation(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> domains = null, System.Collections.Generic.IEnumerable<string> patternsToMatch = null) { throw null; }
@@ -1756,9 +1679,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.WafPolicyManagedRuleSet WafPolicyManagedRuleSet(string ruleSetType = null, string ruleSetVersion = null, int? anomalyScore = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting> ruleGroupOverrides = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.WafRankingsResponse WafRankingsResponse(System.DateTimeOffset? dateTimeBegin = default(System.DateTimeOffset?), System.DateTimeOffset? dateTimeEnd = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> groups = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.WafRankingsResponseDataItem> data = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.WafRankingsResponseDataItem WafRankingsResponseDataItem(System.Collections.Generic.IEnumerable<string> groupValues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.WebAgentData WebAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.AgentPath> paths = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> profileAgentLinks = null, Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentPatch WebAgentPatch(System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, string systemPrompt = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.AgentPath> paths = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy WebApplicationFirewallPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.PolicySettingsAfd policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> frontendEndpointLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RoutingRuleLink> routingRuleLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink> securityPolicyLinks = null, string provisioningState = null, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CustomRuleAfd> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd> managedRuleSets = null, string etag = null, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy WebApplicationFirewallPolicy(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings policySettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> frontendEndpointLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> routingRuleLinks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> securityPolicyLinks = null, string provisioningState = null, Azure.ResourceManager.Cdn.Models.PolicyResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.PolicyResourceState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule> customRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet> managedRuleSets = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?)) { throw null; }
     }
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.AzureFirstPartyManagedCertificateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.AzureFirstPartyManagedCertificateProperties>
     {
@@ -1992,6 +1913,85 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnCustomDomainCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnDeploymentRolloutStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnDeploymentRolloutStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus left, Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus left, Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CdnDeploymentStages : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>
+    {
+        internal CdnDeploymentStages() { }
+        public Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus? Preview { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnDeploymentRolloutStatus? Production { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnDeploymentStages JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnDeploymentStages PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentStages System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentStages System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentStages>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class CdnDeploymentVersionChange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>
+    {
+        internal CdnDeploymentVersionChange() { }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        public string ResourceName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionFrontDoorOriginChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>
+    {
+        internal CdnDeploymentVersionFrontDoorOriginChange() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionFrontDoorOriginGroupChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>
+    {
+        internal CdnDeploymentVersionFrontDoorOriginGroupChange() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionFrontDoorOriginGroupChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CdnDeploymentVersionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch>
     {
         public CdnDeploymentVersionPatch() { }
@@ -2005,6 +2005,80 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionRouteChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>
+    {
+        internal CdnDeploymentVersionRouteChange() { }
+        public Azure.ResourceManager.Cdn.Models.CdnRouteProperties CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnRouteProperties PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRouteChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionRuleChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>
+    {
+        internal CdnDeploymentVersionRuleChange() { }
+        public Azure.ResourceManager.Cdn.Models.CdnRuleProperties CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnRuleProperties PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionRuleSetChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>
+    {
+        internal CdnDeploymentVersionRuleSetChange() { }
+        public Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionRuleSetChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnDeploymentVersionSecurityPolicyChange : Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>
+    {
+        internal CdnDeploymentVersionSecurityPolicyChange() { }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy CurrentProperties { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy PreviousProperties { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionSecurityPolicyChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnEdgeAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>
+    {
+        public CdnEdgeAction(Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties parameters) { }
+        public Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties Parameters { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnEdgeAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnEdgeAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnEdgeAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CdnEndpointPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnEndpointPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnEndpointPatch>
     {
@@ -2057,7 +2131,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CdnKeyGroupPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch>
     {
         public CdnKeyGroupPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> KeyReferences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> KeyReferences { get { throw null; } }
         protected virtual Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Cdn.Models.CdnKeyGroupPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2192,6 +2266,54 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnOriginPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnOriginPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CdnProfileAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>
+    {
+        public CdnProfileAgentPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> CustomDomains { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnProfileAgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnProfileAgentProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnProfileAgentProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnProfileAgentProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CdnResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>
+    {
+        public CdnResourceReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnResourceReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnResourceReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnResourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CdnResourceType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnResourceType>
     {
@@ -2208,6 +2330,143 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.CdnResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnResourceType left, Azure.ResourceManager.Cdn.Models.CdnResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class CdnRouteProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>
+    {
+        public CdnRouteProperties() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> CustomDomains { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public string EndpointName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState? GrpcState { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
+        public string OriginPath { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> SupportedProtocols { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRouteProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRouteProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnRouteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnRouteProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRouteProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnRoutingRuleLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>
+    {
+        internal CdnRoutingRuleLink() { }
+        public string Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>
+    {
+        public CdnRuleProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
+        public int? Order { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public string RuleSetName { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnRuleSetProperties : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>
+    {
+        internal CdnRuleSetProperties() { }
+        public string ProfileName { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnRuleSetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnRuleType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnRuleType MatchRule { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnRuleType RateLimitRule { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnRuleType left, Azure.ResourceManager.Cdn.Models.CdnRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnRuleType left, Azure.ResourceManager.Cdn.Models.CdnRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CdnSecretProperties : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>
+    {
+        public CdnSecretProperties() { }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnSecretProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnSecretProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecretProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnSecurityPolicyLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>
+    {
+        internal CdnSecurityPolicyLink() { }
+        public string Id { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnSecurityPolicyProperties : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>
+    {
+        public CdnSecurityPolicyProperties() { }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CdnSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnSku>
     {
@@ -2283,6 +2542,91 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.CdnUsageUnit (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.CdnUsageUnit? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnUsageUnit left, Azure.ResourceManager.Cdn.Models.CdnUsageUnit right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CdnWebAgentKnowledgeSourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>
+    {
+        public CdnWebAgentKnowledgeSourcePatch() { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
+        public string Uri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentKnowledgeSourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnWebAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>
+    {
+        public CdnWebAgentPatch() { }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath> Paths { get { throw null; } }
+        public string SystemPrompt { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CdnWebAgentPath : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>
+    {
+        public CdnWebAgentPath(Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType type, string path) { }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType Type { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentPath JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.CdnWebAgentPath PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentPath System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CdnWebAgentPath System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebAgentPath>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnWebAgentPathType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnWebAgentPathType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType Chat { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType McpServer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType left, Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType left, Azure.ResourceManager.Cdn.Models.CdnWebAgentPathType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CdnWebAgentProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CdnWebAgentProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.CdnWebAgentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CdnWebApplicationFirewallPolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CdnWebApplicationFirewallPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CdnWebApplicationFirewallPolicyPatch>
@@ -2376,12 +2720,12 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CidrIPAddress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CidrIPAddress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>
+    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>
     {
         public ClientCertificateRequiredAndOriginValidatesAdvancedSettings() { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2389,15 +2733,15 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClientCertificateRequiredAndValidatedAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>
+    public partial class ClientCertificateRequiredAndValidatedAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>
     {
-        public ClientCertificateRequiredAndValidatedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> secrets) { }
+        public ClientCertificateRequiredAndValidatedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> secrets) { }
         public System.Collections.Generic.IList<string> AllowedFqdns { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? CertificateRevocationCheck { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> Secrets { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> Secrets { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2405,15 +2749,15 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateRequiredAndValidatedAdvancedSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>
+    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>
     {
-        public ClientCertificateValidatedIfPresentedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.ResourceReference> secrets) { }
+        public ClientCertificateValidatedIfPresentedAdvancedSettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.CdnResourceReference> secrets) { }
         public System.Collections.Generic.IList<string> AllowedFqdns { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.CertificateRevocationCheckEnabledState? CertificateRevocationCheck { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> Secrets { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnResourceReference> Secrets { get { throw null; } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ClientCertificateValidatedIfPresentedAdvancedSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2480,24 +2824,24 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ClientPortOperator left, Azure.ResourceManager.Cdn.Models.ClientPortOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CompareDeploymentVersionsParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>
+    public partial class CompareDeploymentVersionsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>
     {
-        public CompareDeploymentVersionsParameter(string compareTo) { }
+        public CompareDeploymentVersionsContent(string compareTo) { }
         public string CompareTo { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CompareDeploymentVersionsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>
     {
         internal CompareDeploymentVersionsResult() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange> Value { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CdnDeploymentVersionChange> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2508,12 +2852,12 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompareDeploymentVersionsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CompleteMtlsPassthroughToOriginAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>
+    public partial class CompleteMtlsPassthroughToOriginAdvancedSettings : Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>
     {
         public CompleteMtlsPassthroughToOriginAdvancedSettings() { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CompleteMtlsPassthroughToOriginAdvancedSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2789,28 +3133,6 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomRuleAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>
-    {
-        public CustomRuleAfd(int priority, Azure.ResourceManager.Cdn.Models.RuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MatchConditionAfd> matchConditions, Azure.ResourceManager.Cdn.Models.OverrideActionType action) { }
-        public Azure.ResourceManager.Cdn.Models.OverrideActionType Action { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.GroupByVariable> GroupBy { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.MatchConditionAfd> MatchConditions { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public int Priority { get { throw null; } set { } }
-        public int? RateLimitDurationInMinutes { get { throw null; } set { } }
-        public int? RateLimitThreshold { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.RuleType RuleType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.CustomRuleAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.CustomRuleAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.CustomRuleAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.CustomRuleAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.CustomRuleAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomRuleEnabledState : System.IEquatable<Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState>
     {
@@ -3032,20 +3354,20 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleCookiesCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleCookiesCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeliveryRuleEdgeActionParameters : Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>
+    public partial class DeliveryRuleEdgeActionProperties : Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>
     {
-        public DeliveryRuleEdgeActionParameters(Azure.ResourceManager.Cdn.Models.InvocationPoint invocationPoint) { }
+        public DeliveryRuleEdgeActionProperties(Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint invocationPoint) { }
         public Azure.Core.ResourceIdentifier EdgeActionReferenceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.InvocationPoint InvocationPoint { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint InvocationPoint { get { throw null; } set { } }
         protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleActionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeliveryRuleHostNameCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleHostNameCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleHostNameCondition>
     {
@@ -3088,6 +3410,40 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.DeliveryRuleIsDeviceCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleIsDeviceCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleIsDeviceCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleIsDeviceCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeliveryRuleMatchVariable : System.IEquatable<Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeliveryRuleMatchVariable(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable ClientPort { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable Cookies { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable HostName { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable HttpVersion { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable IsDevice { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable PostArgs { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable QueryString { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RemoteAddress { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RequestBody { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RequestHeader { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RequestMethod { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RequestScheme { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable RequestUri { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable ServerPort { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable SocketAddr { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable SslProtocol { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable UrlFileExtension { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable UrlFileName { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable UrlPath { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable left, Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable left, Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DeliveryRulePostArgsCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeliveryRulePostArgsCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRulePostArgsCondition>
     {
@@ -3365,143 +3721,21 @@ namespace Azure.ResourceManager.Cdn.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeliveryRuleUriPathCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DeploymentRolloutStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus>
+    public readonly partial struct DeploymentVersiongApprovalStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DeploymentRolloutStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus NotStarted { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus other) { throw null; }
+        public DeploymentVersiongApprovalStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus NotApproved { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus left, Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus left, Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus left, Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus left, Azure.ResourceManager.Cdn.Models.DeploymentVersiongApprovalStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DeploymentStages : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>
-    {
-        internal DeploymentStages() { }
-        public Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus? Preview { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.DeploymentRolloutStatus? Production { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.DeploymentStages JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.DeploymentStages PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentStages System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentStages System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentStages>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionAFDOriginChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>
-    {
-        internal DeploymentVersionAFDOriginChange() { }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionAFDOriginGroupChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>
-    {
-        internal DeploymentVersionAFDOriginGroupChange() { }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupProperties PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionAFDOriginGroupChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class DeploymentVersionChange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>
-    {
-        internal DeploymentVersionChange() { }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
-        public string ResourceName { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionRouteChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>
-    {
-        internal DeploymentVersionRouteChange() { }
-        public Azure.ResourceManager.Cdn.Models.RouteProperties CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RouteProperties PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRouteChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionRuleChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>
-    {
-        internal DeploymentVersionRuleChange() { }
-        public Azure.ResourceManager.Cdn.Models.RuleProperties CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RuleProperties PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionRuleSetChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>
-    {
-        internal DeploymentVersionRuleSetChange() { }
-        public Azure.ResourceManager.Cdn.Models.RuleSetProperties CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RuleSetProperties PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionRuleSetChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeploymentVersionSecurityPolicyChange : Azure.ResourceManager.Cdn.Models.DeploymentVersionChange, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>
-    {
-        internal DeploymentVersionSecurityPolicyChange() { }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy CurrentProperties { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy PreviousProperties { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeploymentVersionChange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.DeploymentVersionSecurityPolicyChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DestinationProtocol : System.IEquatable<Azure.ResourceManager.Cdn.Models.DestinationProtocol>
@@ -3579,19 +3813,22 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.DomainValidationState left, Azure.ResourceManager.Cdn.Models.DomainValidationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EdgeAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.EdgeAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.EdgeAction>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EdgeActionInvocationPoint : System.IEquatable<Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint>
     {
-        public EdgeAction(Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters parameters) { }
-        public Azure.ResourceManager.Cdn.Models.DeliveryRuleEdgeActionParameters Parameters { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.EdgeAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.EdgeAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.EdgeAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.EdgeAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.EdgeAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.EdgeAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.EdgeAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EdgeActionInvocationPoint(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint ClientRequest { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint OriginRequest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint left, Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint left, Azure.ResourceManager.Cdn.Models.EdgeActionInvocationPoint right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EdgeNode : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.EdgeNode>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.EdgeNode>
     {
@@ -3794,24 +4031,24 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class FrontDoorCustomDomainMtlsParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>
+    public abstract partial class FrontDoorCustomDomainMtlsSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>
     {
-        internal FrontDoorCustomDomainMtlsParameters() { }
-        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal FrontDoorCustomDomainMtlsSettings() { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FrontDoorCustomDomainPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch>
     {
         public FrontDoorCustomDomainPatch() { }
         public Azure.Core.ResourceIdentifier DnsZoneId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsParameters MtlsSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainMtlsSettings MtlsSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
@@ -3824,6 +4061,28 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorCustomRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>
+    {
+        public FrontDoorCustomRule(int priority, Azure.ResourceManager.Cdn.Models.CdnRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition> matchConditions, Azure.ResourceManager.Cdn.Models.OverrideActionType action) { }
+        public Azure.ResourceManager.Cdn.Models.OverrideActionType Action { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.CustomRuleEnabledState? EnabledState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable> GroupBy { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition> MatchConditions { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public int Priority { get { throw null; } set { } }
+        public int? RateLimitDurationInMinutes { get { throw null; } set { } }
+        public int? RateLimitThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.CdnRuleType RuleType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorDeploymentStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus>
@@ -3877,6 +4136,76 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol left, Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorManagedRuleGroupOverride : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>
+    {
+        public FrontDoorManagedRuleGroupOverride(string ruleGroupName) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
+        public string RuleGroupName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride> Rules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorManagedRuleOverride : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>
+    {
+        public FrontDoorManagedRuleOverride(string ruleId) { }
+        public Azure.ResourceManager.Cdn.Models.OverrideActionType? Action { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState? EnabledState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
+        public string RuleId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleOverride>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorManagedRuleSet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>
+    {
+        public FrontDoorManagedRuleSet(string ruleSetType, string ruleSetVersion) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleGroupOverride> RuleGroupOverrides { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType? RuleSetAction { get { throw null; } set { } }
+        public string RuleSetType { get { throw null; } set { } }
+        public string RuleSetVersion { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorMatchCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>
+    {
+        public FrontDoorMatchCondition(Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable matchVariable, Azure.ResourceManager.Cdn.Models.MatchOperator matchOperator, System.Collections.Generic.IEnumerable<string> matchValue) { }
+        public Azure.ResourceManager.Cdn.Models.MatchOperator MatchOperator { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> MatchValue { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.DeliveryRuleMatchVariable MatchVariable { get { throw null; } set { } }
+        public bool? NegateCondition { get { throw null; } set { } }
+        public string Selector { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.TransformType> Transforms { get { throw null; } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum FrontDoorMinimumTlsVersion
     {
@@ -3932,7 +4261,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string HostName { get { throw null; } set { } }
         public int? HttpPort { get { throw null; } set { } }
         public int? HttpsPort { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties OriginCapacityResource { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings OriginCapacityResource { get { throw null; } set { } }
         public string OriginGroupName { get { throw null; } }
         public string OriginHostHeader { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
@@ -3958,7 +4287,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string HostName { get { throw null; } set { } }
         public int? HttpPort { get { throw null; } set { } }
         public int? HttpsPort { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties OriginCapacityResource { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.AfdOriginCapacitySettings OriginCapacityResource { get { throw null; } set { } }
         public string OriginGroupName { get { throw null; } }
         public string OriginHostHeader { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
@@ -3975,6 +4304,29 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorOriginProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorPolicySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>
+    {
+        public FrontDoorPolicySettings() { }
+        public int? CaptchaExpirationInMinutes { get { throw null; } set { } }
+        public string CustomBlockResponseBody { get { throw null; } set { } }
+        public int? CustomBlockResponseStatusCode { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
+        public int? JavascriptChallengeExpirationInMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.PolicyMode? Mode { get { throw null; } set { } }
+        public string RedirectUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules> ScrubbingRules { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingState? State { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState>
@@ -4107,6 +4459,22 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FrontDoorSecretMtlsCertificateChain : Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>
+    {
+        public FrontDoorSecretMtlsCertificateChain(string secretVersion) { }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
+        public string SecretVersion { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretMtlsCertificateChain>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class FrontDoorSecretProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties>
     {
         protected FrontDoorSecretProperties() { }
@@ -4148,6 +4516,37 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorUrlSigningAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>
+    {
+        public FrontDoorUrlSigningAction(Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent parameters) { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent Parameters { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Cdn.Models.DeliveryRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FrontDoorUrlSigningActionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>
+    {
+        public FrontDoorUrlSigningActionContent(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName typeName) { }
+        public Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? Algorithm { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyGroupReferenceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> ParameterNameOverride { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName TypeName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUrlSigningActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FrontDoorUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.FrontDoorUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.FrontDoorUsage>
     {
@@ -4232,20 +4631,6 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         Block = 0,
         Allow = 1,
-    }
-    public partial class GroupByVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>
-    {
-        public GroupByVariable(Azure.ResourceManager.Cdn.Models.VariableName variableName) { }
-        public Azure.ResourceManager.Cdn.Models.VariableName VariableName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.GroupByVariable JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.GroupByVariable PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.GroupByVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.GroupByVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.GroupByVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HeaderAction : System.IEquatable<Azure.ResourceManager.Cdn.Models.HeaderAction>
@@ -4483,23 +4868,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.HttpVersionOperator left, Azure.ResourceManager.Cdn.Models.HttpVersionOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InvocationPoint : System.IEquatable<Azure.ResourceManager.Cdn.Models.InvocationPoint>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InvocationPoint(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.InvocationPoint ClientRequest { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.InvocationPoint OriginRequest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.InvocationPoint other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.InvocationPoint left, Azure.ResourceManager.Cdn.Models.InvocationPoint right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.InvocationPoint (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.InvocationPoint? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.InvocationPoint left, Azure.ResourceManager.Cdn.Models.InvocationPoint right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IPAddressGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.IPAddressGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.IPAddressGroup>
     {
         public IPAddressGroup() { }
@@ -4653,79 +5021,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType left, Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class KnowledgeSourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>
-    {
-        public KnowledgeSourcePatch() { }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency? UpdateFrequency { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.KnowledgeSourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnowledgeSourceProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnowledgeSourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnowledgeSourceType : System.IEquatable<Azure.ResourceManager.Cdn.Models.KnowledgeSourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnowledgeSourceType(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceType RssFeeds { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceType SchemaOrgMarkup { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceType Sitemap { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.KnowledgeSourceType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.KnowledgeSourceType left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.KnowledgeSourceType left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnowledgeSourceUpdateFrequency : System.IEquatable<Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnowledgeSourceUpdateFrequency(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency Daily { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency EverySixHours { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency Monthly { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency Weekly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency left, Azure.ResourceManager.Cdn.Models.KnowledgeSourceUpdateFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4977,22 +5272,6 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedRuleGroupOverrideAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>
-    {
-        public ManagedRuleGroupOverrideAfd(string ruleGroupName) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
-        public string RuleGroupName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd> Rules { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ManagedRuleGroupOverrideSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>
     {
         public ManagedRuleGroupOverrideSetting(string ruleGroupName) { }
@@ -5007,23 +5286,6 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ManagedRuleOverrideAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>
-    {
-        public ManagedRuleOverrideAfd(string ruleId) { }
-        public Azure.ResourceManager.Cdn.Models.OverrideActionType? Action { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
-        public string RuleId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedRuleOverrideSetting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideSetting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleOverrideSetting>
     {
@@ -5059,24 +5321,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType left, Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedRuleSetAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>
-    {
-        public ManagedRuleSetAfd(string ruleSetType, string ruleSetVersion) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleGroupOverrideAfd> RuleGroupOverrides { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ManagedRuleSetActionType? RuleSetAction { get { throw null; } set { } }
-        public string RuleSetType { get { throw null; } set { } }
-        public string RuleSetVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ManagedRuleSetDefinition : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition>
     {
         public ManagedRuleSetDefinition() { }
@@ -5111,25 +5355,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState left, Azure.ResourceManager.Cdn.Models.ManagedRuleSetupState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class MatchConditionAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>
-    {
-        public MatchConditionAfd(Azure.ResourceManager.Cdn.Models.MatchVariable matchVariable, Azure.ResourceManager.Cdn.Models.MatchOperator matchOperator, System.Collections.Generic.IEnumerable<string> matchValue) { }
-        public Azure.ResourceManager.Cdn.Models.MatchOperator MatchOperator { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MatchValue { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.MatchVariable MatchVariable { get { throw null; } set { } }
-        public bool? NegateCondition { get { throw null; } set { } }
-        public string Selector { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.TransformType> Transforms { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.MatchConditionAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.MatchConditionAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.MatchConditionAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.MatchConditionAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MatchConditionAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MatchOperator : System.IEquatable<Azure.ResourceManager.Cdn.Models.MatchOperator>
@@ -5173,40 +5398,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior left, Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MatchVariable : System.IEquatable<Azure.ResourceManager.Cdn.Models.MatchVariable>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MatchVariable(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable ClientPort { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable Cookies { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable HostName { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable HttpVersion { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable IsDevice { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable PostArgs { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable QueryString { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RemoteAddress { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RequestBody { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RequestHeader { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RequestMethod { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RequestScheme { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable RequestUri { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable ServerPort { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable SocketAddr { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable SslProtocol { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable UrlFileExtension { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable UrlFileName { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.MatchVariable UrlPath { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.MatchVariable other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.MatchVariable left, Azure.ResourceManager.Cdn.Models.MatchVariable right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.MatchVariable (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.MatchVariable? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.MatchVariable left, Azure.ResourceManager.Cdn.Models.MatchVariable right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MetricsResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.MetricsResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.MetricsResponse>
@@ -5429,23 +5620,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.OriginAuthenticationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.OriginAuthenticationType left, Azure.ResourceManager.Cdn.Models.OriginAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class OriginCapacityResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>
-    {
-        public OriginCapacityResourceProperties() { }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? Enabled { get { throw null; } set { } }
-        public long? OriginIngressRateThreshold { get { throw null; } set { } }
-        public long? OriginRequestRateThreshold { get { throw null; } set { } }
-        public string Region { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.OriginCapacityResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OriginGroupOverride : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.OriginGroupOverride>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.OriginGroupOverride>
     {
@@ -5696,29 +5870,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.PolicyResourceState left, Azure.ResourceManager.Cdn.Models.PolicyResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PolicySettingsAfd : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>
-    {
-        public PolicySettingsAfd() { }
-        public int? CaptchaExpirationInMinutes { get { throw null; } set { } }
-        public string CustomBlockResponseBody { get { throw null; } set { } }
-        public int? CustomBlockResponseStatusCode { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
-        public int? JavascriptChallengeExpirationInMinutes { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.PolicyMode? Mode { get { throw null; } set { } }
-        public string RedirectUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingRules> ScrubbingRules { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.WebApplicationFirewallScrubbingState? State { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.PolicySettingsAfd JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.PolicySettingsAfd PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.PolicySettingsAfd System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.PolicySettingsAfd System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.PolicySettingsAfd>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicySettingsDefaultCustomBlockResponseStatusCode : System.IEquatable<Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode>
     {
@@ -5836,40 +5987,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus left, Azure.ResourceManager.Cdn.Models.PrivateEndpointStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ProfileAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>
-    {
-        public ProfileAgentPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ResourceReference> CustomDomains { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileAgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ProfileAgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ProfileAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ProfileAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileAgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProfileAgentProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProfileAgentProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.ProfileAgentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ProfileChangeSkuWafMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileChangeSkuWafMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileChangeSkuWafMapping>
@@ -6217,6 +6334,38 @@ namespace Azure.ResourceManager.Cdn.Models
         Azure.ResourceManager.Cdn.Models.RankingsResponseTablesPropertiesItemsMetricsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RankingsResponseTablesPropertiesItemsMetricsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RankingsResponseTablesPropertiesItemsMetricsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RankingsResponseTablesPropertiesItemsMetricsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RateLimitGroupByVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>
+    {
+        public RateLimitGroupByVariable(Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName variableName) { }
+        public Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName VariableName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RateLimitGroupByVariableName : System.IEquatable<Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RateLimitGroupByVariableName(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName GeoLocation { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName None { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName SocketAddr { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName left, Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName left, Azure.ResourceManager.Cdn.Models.RateLimitGroupByVariableName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RateLimitRule : Azure.ResourceManager.Cdn.Models.CustomRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RateLimitRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RateLimitRule>
     {
@@ -6621,20 +6770,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestUriOperator left, Azure.ResourceManager.Cdn.Models.RequestUriOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ResourceReference>
-    {
-        public ResourceReference() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Cdn.Models.ResourceReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.ResourceReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.ResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.ResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ResourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ResourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ResourcesResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ResourcesResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ResourcesResponse>
     {
         internal ResourcesResponse() { }
@@ -6770,48 +6905,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType left, Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RouteProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RouteProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RouteProperties>
-    {
-        public RouteProperties() { }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorActivatedResourceInfo> CustomDomains { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public string EndpointName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteGrpcState? GrpcState { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
-        public string OriginPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> SupportedProtocols { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.RouteProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.RouteProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.RouteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RouteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RouteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.RouteProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RouteProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RouteProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RouteProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RoutingRuleLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>
-    {
-        internal RoutingRuleLink() { }
-        public string Id { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.RoutingRuleLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.RoutingRuleLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.RoutingRuleLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.RoutingRuleLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RoutingRuleLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RuleCacheBehavior : System.IEquatable<Azure.ResourceManager.Cdn.Models.RuleCacheBehavior>
     {
@@ -6847,26 +6940,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleIsCompressionEnabled left, Azure.ResourceManager.Cdn.Models.RuleIsCompressionEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleProperties>
-    {
-        public RuleProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
-        public int? Order { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
-        public string RuleSetName { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.RuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.RuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.RuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.RuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RuleQueryStringCachingBehavior : System.IEquatable<Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior>
     {
@@ -6884,37 +6957,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RuleSetProperties : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>
-    {
-        internal RuleSetProperties() { }
-        public string ProfileName { get { throw null; } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.RuleSetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.RuleSetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.RuleSetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RuleType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RuleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RuleType(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RuleType MatchRule { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RuleType RateLimitRule { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.RuleType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RuleType left, Azure.ResourceManager.Cdn.Models.RuleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.RuleType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.RuleType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleType left, Azure.ResourceManager.Cdn.Models.RuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6973,21 +7015,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretDetails : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecretDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecretDetails>
-    {
-        public SecretDetails() { }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.FrontDoorSecretProperties Properties { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.SecretDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecretDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecretDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.SecretDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecretDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecretDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecretDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecretType : System.IEquatable<Azure.ResourceManager.Cdn.Models.SecretType>
     {
@@ -7024,35 +7051,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType left, Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SecurityPolicyDetails : Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>
-    {
-        public SecurityPolicyDetails() { }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Cdn.Models.FrontDoorStateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SecurityPolicyLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>
-    {
-        internal SecurityPolicyLink() { }
-        public string Id { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.SecurityPolicyLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.SecurityPolicyLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.SecurityPolicyLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.SecurityPolicyLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class SecurityPolicyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties>
     {
@@ -7341,22 +7339,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.TransformType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.TransformType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.TransformType left, Azure.ResourceManager.Cdn.Models.TransformType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TypeName : System.IEquatable<Azure.ResourceManager.Cdn.Models.TypeName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TypeName(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.TypeName DeliveryRuleAfdUrlSigningActionParameters { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.TypeName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.TypeName left, Azure.ResourceManager.Cdn.Models.TypeName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.TypeName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.TypeName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.TypeName left, Azure.ResourceManager.Cdn.Models.TypeName right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class UriFileExtensionMatchCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleConditionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchCondition>
@@ -7744,6 +7726,22 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UrlSigningActionTypeName : System.IEquatable<Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UrlSigningActionTypeName(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName DeliveryRuleAfdUrlSigningActionParameters { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName left, Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName left, Azure.ResourceManager.Cdn.Models.UrlSigningActionTypeName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class UserManagedHttpsContent : Azure.ResourceManager.Cdn.Models.CustomDomainHttpsContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.UserManagedHttpsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.UserManagedHttpsContent>
     {
         public UserManagedHttpsContent(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType protocolType, Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource certificateSourceParameters) : base (default(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType)) { }
@@ -7867,24 +7865,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.ValidationStatus (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.ValidationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ValidationStatus left, Azure.ResourceManager.Cdn.Models.ValidationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VariableName : System.IEquatable<Azure.ResourceManager.Cdn.Models.VariableName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VariableName(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.VariableName GeoLocation { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.VariableName None { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.VariableName SocketAddr { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.VariableName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.VariableName left, Azure.ResourceManager.Cdn.Models.VariableName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.VariableName (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.VariableName? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.VariableName left, Azure.ResourceManager.Cdn.Models.VariableName right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -8172,55 +8152,75 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.WafRuleType left, Azure.ResourceManager.Cdn.Models.WafRuleType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebAgentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>
-    {
-        public WebAgentPatch() { }
-        public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AgentPath> Paths { get { throw null; } }
-        public string SystemPrompt { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.Cdn.Models.WebAgentPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Cdn.Models.WebAgentPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Cdn.Models.WebAgentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Cdn.Models.WebAgentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebAgentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WebAgentProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState>
+    public readonly partial struct WebAgentKnowledgeSourceProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WebAgentProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState other) { throw null; }
+        public WebAgentKnowledgeSourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebAgentKnowledgeSourceType : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebAgentKnowledgeSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType RssFeeds { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType SchemaOrgMarkup { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType Sitemap { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebAgentKnowledgeSourceUpdateFrequency : System.IEquatable<Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebAgentKnowledgeSourceUpdateFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency Daily { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency EverySixHours { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency Monthly { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency Weekly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency left, Azure.ResourceManager.Cdn.Models.WebAgentKnowledgeSourceUpdateFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class WebApplicationFirewallPolicy : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.WebApplicationFirewallPolicy>
     {
         public WebApplicationFirewallPolicy() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CustomRuleAfd> CustomRules { get { throw null; } }
-        public string ETag { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorCustomRule> CustomRules { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.FrontendEndpointLink> FrontendEndpointLinks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ManagedRuleSetAfd> ManagedRuleSets { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.PolicySettingsAfd PolicySettings { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorManagedRuleSet> ManagedRuleSets { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorPolicySettings PolicySettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.PolicyResourceState? ResourceState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.RoutingRuleLink> RoutingRuleLinks { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.SecurityPolicyLink> SecurityPolicyLinks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnRoutingRuleLink> RoutingRuleLinks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Cdn.Models.CdnSecurityPolicyLink> SecurityPolicyLinks { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.CdnSkuName? SkuName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

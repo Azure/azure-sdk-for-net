@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="securityPolicyProperties"> The json object that contains properties required to create a security policy. </param>
-        internal FrontDoorSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityPolicyDetails securityPolicyProperties) : base(id, name, resourceType, systemData)
+        internal FrontDoorSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnSecurityPolicyProperties securityPolicyProperties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             SecurityPolicyProperties = securityPolicyProperties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The json object that contains properties required to create a security policy. </summary>
         [WirePath("properties")]
-        internal SecurityPolicyDetails SecurityPolicyProperties { get; set; }
+        internal CdnSecurityPolicyProperties SecurityPolicyProperties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (SecurityPolicyProperties is null)
                 {
-                    SecurityPolicyProperties = new SecurityPolicyDetails();
+                    SecurityPolicyProperties = new CdnSecurityPolicyProperties();
                 }
                 SecurityPolicyProperties.Properties = value;
             }

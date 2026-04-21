@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public WebApplicationFirewallPolicyProperties()
         {
             FrontendEndpointLinks = new ChangeTrackingList<FrontendEndpointLink>();
-            RoutingRuleLinks = new ChangeTrackingList<RoutingRuleLink>();
-            SecurityPolicyLinks = new ChangeTrackingList<SecurityPolicyLink>();
+            RoutingRuleLinks = new ChangeTrackingList<CdnRoutingRuleLink>();
+            SecurityPolicyLinks = new ChangeTrackingList<CdnSecurityPolicyLink>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyProperties"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyProperties(PolicySettingsAfd policySettings, CustomRuleListAfd customSettings, ManagedRuleSetListAfd managedRules, IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks, IReadOnlyList<RoutingRuleLink> routingRuleLinks, IReadOnlyList<SecurityPolicyLink> securityPolicyLinks, string provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebApplicationFirewallPolicyProperties(FrontDoorPolicySettings policySettings, CustomRuleListAfd customSettings, ManagedRuleSetListAfd managedRules, IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks, IReadOnlyList<CdnRoutingRuleLink> routingRuleLinks, IReadOnlyList<CdnSecurityPolicyLink> securityPolicyLinks, string provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicySettings = policySettings;
             CustomSettings = customSettings;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("policySettings")]
-        public PolicySettingsAfd PolicySettings { get; set; }
+        public FrontDoorPolicySettings PolicySettings { get; set; }
 
         /// <summary> Describes custom rules inside the policy. </summary>
         [WirePath("customRules")]
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
         [WirePath("routingRuleLinks")]
-        public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks { get; } = new ChangeTrackingList<RoutingRuleLink>();
+        public IReadOnlyList<CdnRoutingRuleLink> RoutingRuleLinks { get; } = new ChangeTrackingList<CdnRoutingRuleLink>();
 
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
         [WirePath("securityPolicyLinks")]
-        public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks { get; } = new ChangeTrackingList<SecurityPolicyLink>();
+        public IReadOnlyList<CdnSecurityPolicyLink> SecurityPolicyLinks { get; } = new ChangeTrackingList<CdnSecurityPolicyLink>();
 
         /// <summary> Provisioning state of the policy. </summary>
         [WirePath("provisioningState")]
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("customRules.rules")]
-        public IList<CustomRuleAfd> CustomRules
+        public IList<FrontDoorCustomRule> CustomRules
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRules.managedRuleSets")]
-        public IList<ManagedRuleSetAfd> ManagedRuleSets
+        public IList<FrontDoorManagedRuleSet> ManagedRuleSets
         {
             get
             {

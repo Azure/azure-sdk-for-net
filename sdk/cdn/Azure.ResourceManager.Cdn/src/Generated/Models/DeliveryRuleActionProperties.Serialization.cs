@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Defines the parameters for delivery rule actions
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectActionProperties"/>, <see cref="UriSigningActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="DeliveryRuleEdgeActionParameters"/>, <see cref="UriRewriteActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, and <see cref="RouteConfigurationOverrideActionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectActionProperties"/>, <see cref="UriSigningActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="DeliveryRuleEdgeActionProperties"/>, <see cref="UriRewriteActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, and <see cref="RouteConfigurationOverrideActionProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleActionParameters))]
     public abstract partial class DeliveryRuleActionProperties : IJsonModel<DeliveryRuleActionProperties>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "DeliveryRuleOriginGroupOverrideActionParameters":
                         return OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(element, options);
                     case "DeliveryRuleEdgeActionParameters":
-                        return DeliveryRuleEdgeActionParameters.DeserializeDeliveryRuleEdgeActionParameters(element, options);
+                        return DeliveryRuleEdgeActionProperties.DeserializeDeliveryRuleEdgeActionProperties(element, options);
                     case "DeliveryRuleUrlRewriteActionParameters":
                         return UriRewriteActionProperties.DeserializeUriRewriteActionProperties(element, options);
                     case "DeliveryRuleHeaderActionParameters":

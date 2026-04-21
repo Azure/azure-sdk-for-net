@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateRequiredAndOriginValidates. </summary>
-    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : FrontDoorCustomDomainMtlsParameters
+    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : FrontDoorCustomDomainMtlsSettings
     {
         /// <summary> Initializes a new instance of <see cref="ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>. </summary>
         public ClientCertificateRequiredAndOriginValidatesAdvancedSettings() : base(MtlsScenarioType.ClientCertificateRequiredAndOriginValidates)

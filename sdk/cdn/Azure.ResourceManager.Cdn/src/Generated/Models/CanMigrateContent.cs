@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CanMigrateContent"/>. </summary>
         /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateContent(ResourceReference classicResourceReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CanMigrateContent(CdnResourceReference classicResourceReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassicResourceReference = classicResourceReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
         [WirePath("classicResourceReference")]
-        internal ResourceReference ClassicResourceReference { get; }
+        internal CdnResourceReference ClassicResourceReference { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("classicResourceReference.id")]

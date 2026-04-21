@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="MigrateResultProperties"/>. </summary>
         /// <param name="migratedProfileResourceId"> Arm resource id of the migrated profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateResultProperties(ResourceReference migratedProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateResultProperties(CdnResourceReference migratedProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigratedProfileResourceId = migratedProfileResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Arm resource id of the migrated profile. </summary>
         [WirePath("migratedProfileResourceId")]
-        internal ResourceReference MigratedProfileResourceId { get; }
+        internal CdnResourceReference MigratedProfileResourceId { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("migratedProfileResourceId.id")]

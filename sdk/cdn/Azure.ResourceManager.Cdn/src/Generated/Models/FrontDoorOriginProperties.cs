@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginProperties(string originGroupName, ResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, OriginCapacityResourceProperties originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorOriginProperties(string originGroupName, CdnResourceReference origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, AfdOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginGroupName = originGroupName;
             Origin = origin;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure origin resource. </summary>
         [WirePath("azureOrigin")]
-        internal ResourceReference Origin { get; set; }
+        internal CdnResourceReference Origin { get; set; }
 
         /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
         [WirePath("hostName")]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Origin capacity settings for an origin. </summary>
         [WirePath("originCapacityResource")]
-        public OriginCapacityResourceProperties OriginCapacityResource { get; set; }
+        public AfdOriginCapacitySettings OriginCapacityResource { get; set; }
 
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         [WirePath("enabledState")]
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (Origin is null)
                 {
-                    Origin = new ResourceReference();
+                    Origin = new CdnResourceReference();
                 }
                 Origin.Id = value;
             }

@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
-            FrontDoorCustomDomainMtlsParameters mtlsSettings = default;
-            ResourceReference dnsZone = default;
-            ResourceReference preValidatedCustomDomainResource = default;
+            FrontDoorCustomDomainMtlsSettings mtlsSettings = default;
+            CdnResourceReference dnsZone = default;
+            CdnResourceReference preValidatedCustomDomainResource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    mtlsSettings = FrontDoorCustomDomainMtlsParameters.DeserializeFrontDoorCustomDomainMtlsParameters(prop.Value, options);
+                    mtlsSettings = FrontDoorCustomDomainMtlsSettings.DeserializeFrontDoorCustomDomainMtlsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureDnsZone"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    dnsZone = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    dnsZone = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    preValidatedCustomDomainResource = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    preValidatedCustomDomainResource = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListAfd"/>. </summary>
         public ManagedRuleSetListAfd()
         {
-            ManagedRuleSets = new ChangeTrackingList<ManagedRuleSetAfd>();
+            ManagedRuleSets = new ChangeTrackingList<FrontDoorManagedRuleSet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetListAfd"/>. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetListAfd(IList<ManagedRuleSetAfd> managedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetListAfd(IList<FrontDoorManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedRuleSets = managedRuleSets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRuleSets")]
-        public IList<ManagedRuleSetAfd> ManagedRuleSets { get; }
+        public IList<FrontDoorManagedRuleSet> ManagedRuleSets { get; }
     }
 }

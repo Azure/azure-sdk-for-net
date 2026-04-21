@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("keyReferences"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in KeyReferences)
+                foreach (CdnResourceReference item in KeyReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<ResourceReference> keyReferences = default;
+            IList<CdnResourceReference> keyReferences = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
                     }
                     keyReferences = array;
                     continue;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyGroupProperties(keyReferences ?? new ChangeTrackingList<ResourceReference>(), provisioningState, deploymentStatus, additionalBinaryDataProperties);
+            return new KeyGroupProperties(keyReferences ?? new ChangeTrackingList<CdnResourceReference>(), provisioningState, deploymentStatus, additionalBinaryDataProperties);
         }
     }
 }

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             OriginAuthenticationType? authenticationType = default;
-            ResourceReference userAssignedIdentity = default;
+            CdnResourceReference userAssignedIdentity = default;
             Uri scope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    userAssignedIdentity = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    userAssignedIdentity = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scope"u8))

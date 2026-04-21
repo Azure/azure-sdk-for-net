@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Cdn.Models
             OptimizationType? optimizationType = default;
             string probePath = default;
             IList<GeoFilter> geoFilters = default;
-            ResourceReference defaultOriginGroup = default;
+            CdnResourceReference defaultOriginGroup = default;
             IList<UriSigningKey> uriSigningKeys = default;
             EndpointDeliveryPolicy deliveryPolicy = default;
             EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    defaultOriginGroup = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    defaultOriginGroup = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("urlSigningKeys"u8))

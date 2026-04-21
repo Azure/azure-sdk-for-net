@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in CustomDomains)
+                foreach (CdnResourceReference item in CustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<ResourceReference> customDomains = default;
+            IList<CdnResourceReference> customDomains = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProfileAgentUpdateProperties(customDomains ?? new ChangeTrackingList<ResourceReference>(), additionalBinaryDataProperties);
+            return new ProfileAgentUpdateProperties(customDomains ?? new ChangeTrackingList<CdnResourceReference>(), additionalBinaryDataProperties);
         }
     }
 }

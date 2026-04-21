@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="WebAgentPropertiesUpdateParameters"/>. </summary>
         public WebAgentPropertiesUpdateParameters()
         {
-            Paths = new ChangeTrackingList<AgentPath>();
+            Paths = new ChangeTrackingList<CdnWebAgentPath>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAgentPropertiesUpdateParameters"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="systemPrompt"> System prompt for the web agent. </param>
         /// <param name="paths"> List of paths associated with the web agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAgentPropertiesUpdateParameters(string description, string systemPrompt, IList<AgentPath> paths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAgentPropertiesUpdateParameters(string description, string systemPrompt, IList<CdnWebAgentPath> paths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             SystemPrompt = systemPrompt;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of paths associated with the web agent. </summary>
         [WirePath("paths")]
-        public IList<AgentPath> Paths { get; } = new ChangeTrackingList<AgentPath>();
+        public IList<CdnWebAgentPath> Paths { get; } = new ChangeTrackingList<CdnWebAgentPath>();
     }
 }

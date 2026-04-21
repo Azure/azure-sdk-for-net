@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The JSON object that contains the properties of the Rules to create. </param>
-        internal FrontDoorRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RuleProperties properties) : base(id, name, resourceType, systemData)
+        internal FrontDoorRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnRuleProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The JSON object that contains the properties of the Rules to create. </summary>
         [WirePath("properties")]
-        internal RuleProperties Properties { get; set; }
+        internal CdnRuleProperties Properties { get; set; }
 
         /// <summary> The name of the rule set containing the rule. </summary>
         [WirePath("properties.ruleSetName")]
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RuleProperties();
+                    Properties = new CdnRuleProperties();
                 }
                 Properties.Order = value.Value;
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RuleProperties();
+                    Properties = new CdnRuleProperties();
                 }
                 return Properties.Conditions;
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RuleProperties();
+                    Properties = new CdnRuleProperties();
                 }
                 return Properties.Actions;
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RuleProperties();
+                    Properties = new CdnRuleProperties();
                 }
                 Properties.MatchProcessingBehavior = value.Value;
             }

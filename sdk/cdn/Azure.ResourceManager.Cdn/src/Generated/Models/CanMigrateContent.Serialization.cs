@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference classicResourceReference = default;
+            CdnResourceReference classicResourceReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    classicResourceReference = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

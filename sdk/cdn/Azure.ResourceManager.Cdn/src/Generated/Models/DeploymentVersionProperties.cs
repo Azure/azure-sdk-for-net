@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="approvalStatus"></param>
         /// <param name="stages"> The preview and production deployment status of the deployment version under the profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentVersionProperties(string description, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DateTimeOffset? createdOn, DateTimeOffset? approvedOn, ApprovalStatus? approvalStatus, DeploymentStages stages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentVersionProperties(string description, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DateTimeOffset? createdOn, DateTimeOffset? approvedOn, DeploymentVersiongApprovalStatus? approvalStatus, CdnDeploymentStages stages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the ApprovalStatus. </summary>
         [WirePath("approvalStatus")]
-        public ApprovalStatus? ApprovalStatus { get; }
+        public DeploymentVersiongApprovalStatus? ApprovalStatus { get; }
 
         /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
         [WirePath("stages")]
-        public DeploymentStages Stages { get; }
+        public CdnDeploymentStages Stages { get; }
     }
 }

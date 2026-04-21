@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResult"/>. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
-        internal CompareDeploymentVersionsResult(IEnumerable<DeploymentVersionChange> value)
+        internal CompareDeploymentVersionsResult(IEnumerable<CdnDeploymentVersionChange> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CompareDeploymentVersionsResult"/>. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompareDeploymentVersionsResult(IList<DeploymentVersionChange> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompareDeploymentVersionsResult(IList<CdnDeploymentVersionChange> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The difference between two deployment versions. </summary>
         [WirePath("value")]
-        public IList<DeploymentVersionChange> Value { get; }
+        public IList<CdnDeploymentVersionChange> Value { get; }
     }
 }

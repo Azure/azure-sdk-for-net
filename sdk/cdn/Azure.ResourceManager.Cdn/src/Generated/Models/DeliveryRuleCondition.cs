@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        private protected DeliveryRuleCondition(MatchVariable name)
+        private protected DeliveryRuleCondition(DeliveryRuleMatchVariable name)
         {
             Name = name;
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryRuleCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeliveryRuleCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The name of the condition for the delivery rule. </summary>
         [WirePath("name")]
-        internal MatchVariable Name { get; set; }
+        internal DeliveryRuleMatchVariable Name { get; set; }
     }
 }

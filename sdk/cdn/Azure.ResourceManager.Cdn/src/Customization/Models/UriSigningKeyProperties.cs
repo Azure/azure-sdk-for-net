@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.Cdn.Models
     // Customization: This file adds old constructors to UriSigningKeyProperties for backward API compatibility.
     // Reason: The old SDK (AutoRest-generated) provided constructors accepting a WritableSubResource-typed secretSource
     // parameter, but after the TypeSpec migration, the generated constructor takes (string keyId, string secretVersion)
-    // and the secretSource type changed to ResourceReference (an internal type). Two old constructor signatures —
+    // and the secretSource type changed to CdnResourceReference (an internal type). Two old constructor signatures —
     // (string keyId, WritableSubResource secretSource) and (string keyId, WritableSubResource secretSource, string secretVersion)
-    // — are preserved here to avoid breaking user code, internally converting WritableSubResource to ResourceReference.
+    // — are preserved here to avoid breaking user code, internally converting WritableSubResource to CdnResourceReference.
     public partial class UriSigningKeyProperties
     {
         // Backward compatibility: old API used WritableSubResource secretSource parameter
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(secretSource, nameof(secretSource));
 
             KeyId = keyId;
-            SecretSource = new ResourceReference { Id = secretSource.Id };
+            SecretSource = new CdnResourceReference { Id = secretSource.Id };
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningKeyProperties"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(secretVersion, nameof(secretVersion));
 
             KeyId = keyId;
-            SecretSource = new ResourceReference { Id = secretSource.Id };
+            SecretSource = new CdnResourceReference { Id = secretSource.Id };
             SecretVersion = secretVersion;
         }
     }

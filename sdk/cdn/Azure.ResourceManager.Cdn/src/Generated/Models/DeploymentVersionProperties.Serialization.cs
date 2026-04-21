@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorDeploymentStatus? deploymentStatus = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? approvedOn = default;
-            ApprovalStatus? approvalStatus = default;
-            DeploymentStages stages = default;
+            DeploymentVersiongApprovalStatus? approvalStatus = default;
+            CdnDeploymentStages stages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    approvalStatus = new ApprovalStatus(prop.Value.GetString());
+                    approvalStatus = new DeploymentVersiongApprovalStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("stages"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    stages = DeploymentStages.DeserializeDeploymentStages(prop.Value, options);
+                    stages = CdnDeploymentStages.DeserializeCdnDeploymentStages(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDeliveryRuleCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", additionalBinaryDataProperties)
+        internal UnknownDeliveryRuleCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", additionalBinaryDataProperties)
         {
         }
     }

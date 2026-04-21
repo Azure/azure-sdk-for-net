@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The JSON object that contains the properties of the Routes to create. </param>
-        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteProperties properties) : base(id, name, resourceType, systemData)
+        internal FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnRouteProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
         [WirePath("properties")]
-        internal RouteProperties Properties { get; set; }
+        internal CdnRouteProperties Properties { get; set; }
 
         /// <summary> The name of the endpoint which holds the route. </summary>
         [WirePath("properties.endpointName")]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 return Properties.CustomDomains;
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.OriginPath = value;
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 return Properties.RuleSets;
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 return Properties.SupportedProtocols;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 return Properties.PatternsToMatch;
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.CacheConfiguration = value;
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.ForwardingProtocol = value.Value;
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.LinkToDefaultDomain = value.Value;
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.HttpsRedirect = value.Value;
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.EnabledState = value.Value;
             }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.GrpcState = value.Value;
             }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (Properties is null)
                 {
-                    Properties = new RouteProperties();
+                    Properties = new CdnRouteProperties();
                 }
                 Properties.OriginGroupId = value;
             }

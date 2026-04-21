@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
-                foreach (AgentPath item in Paths)
+                foreach (CdnWebAgentPath item in Paths)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string description = default;
             string systemPrompt = default;
-            IList<AgentPath> paths = default;
+            IList<CdnWebAgentPath> paths = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<AgentPath> array = new List<AgentPath>();
+                    List<CdnWebAgentPath> array = new List<CdnWebAgentPath>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentPath.DeserializeAgentPath(item, options));
+                        array.Add(CdnWebAgentPath.DeserializeCdnWebAgentPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebAgentPropertiesUpdateParameters(description, systemPrompt, paths ?? new ChangeTrackingList<AgentPath>(), additionalBinaryDataProperties);
+            return new WebAgentPropertiesUpdateParameters(description, systemPrompt, paths ?? new ChangeTrackingList<CdnWebAgentPath>(), additionalBinaryDataProperties);
         }
     }
 }

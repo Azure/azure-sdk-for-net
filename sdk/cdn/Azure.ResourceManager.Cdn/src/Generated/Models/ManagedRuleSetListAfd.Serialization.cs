@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();
-                foreach (ManagedRuleSetAfd item in ManagedRuleSets)
+                foreach (FrontDoorManagedRuleSet item in ManagedRuleSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<ManagedRuleSetAfd> managedRuleSets = default;
+            IList<FrontDoorManagedRuleSet> managedRuleSets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<ManagedRuleSetAfd> array = new List<ManagedRuleSetAfd>();
+                    List<FrontDoorManagedRuleSet> array = new List<FrontDoorManagedRuleSet>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleSetAfd.DeserializeManagedRuleSetAfd(item, options));
+                        array.Add(FrontDoorManagedRuleSet.DeserializeFrontDoorManagedRuleSet(item, options));
                     }
                     managedRuleSets = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedRuleSetListAfd(managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetAfd>(), additionalBinaryDataProperties);
+            return new ManagedRuleSetListAfd(managedRuleSets ?? new ChangeTrackingList<FrontDoorManagedRuleSet>(), additionalBinaryDataProperties);
         }
     }
 }

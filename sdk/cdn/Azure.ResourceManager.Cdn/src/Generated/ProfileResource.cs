@@ -2815,11 +2815,11 @@ namespace Azure.ResourceManager.Cdn
             return GetCdnEndpoints().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProfileAgents in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of ProfileAgents and their operations over a ProfileAgentResource. </returns>
-        public virtual ProfileAgentCollection GetProfileAgents()
+        /// <summary> Gets a collection of CdnProfileAgents in the <see cref="ProfileResource"/>. </summary>
+        /// <returns> An object representing collection of CdnProfileAgents and their operations over a CdnProfileAgentResource. </returns>
+        public virtual CdnProfileAgentCollection GetCdnProfileAgents()
         {
-            return GetCachedClient(client => new ProfileAgentCollection(client, Id));
+            return GetCachedClient(client => new CdnProfileAgentCollection(client, Id));
         }
 
         /// <summary> Gets an agent link (web agent association) within a CDN profile. </summary>
@@ -2828,11 +2828,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProfileAgentResource>> GetProfileAgentAsync(string agentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnProfileAgentResource>> GetCdnProfileAgentAsync(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return await GetProfileAgents().GetAsync(agentName, cancellationToken).ConfigureAwait(false);
+            return await GetCdnProfileAgents().GetAsync(agentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an agent link (web agent association) within a CDN profile. </summary>
@@ -2841,11 +2841,11 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProfileAgentResource> GetProfileAgent(string agentName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnProfileAgentResource> GetCdnProfileAgent(string agentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-            return GetProfileAgents().Get(agentName, cancellationToken);
+            return GetCdnProfileAgents().Get(agentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FrontDoorCustomDomains in the <see cref="ProfileResource"/>. </summary>

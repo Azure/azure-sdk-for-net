@@ -161,31 +161,31 @@ namespace Azure.ResourceManager.Cdn.Mocking
             return new CdnCustomDomainResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProfileAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CdnProfileAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProfileAgentResource"/> object. </returns>
-        public virtual ProfileAgentResource GetProfileAgentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnProfileAgentResource"/> object. </returns>
+        public virtual CdnProfileAgentResource GetCdnProfileAgentResource(ResourceIdentifier id)
         {
-            ProfileAgentResource.ValidateResourceId(id);
-            return new ProfileAgentResource(Client, id);
+            CdnProfileAgentResource.ValidateResourceId(id);
+            return new CdnProfileAgentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CdnWebAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAgentResource"/> object. </returns>
-        public virtual WebAgentResource GetWebAgentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnWebAgentResource"/> object. </returns>
+        public virtual CdnWebAgentResource GetCdnWebAgentResource(ResourceIdentifier id)
         {
-            WebAgentResource.ValidateResourceId(id);
-            return new WebAgentResource(Client, id);
+            CdnWebAgentResource.ValidateResourceId(id);
+            return new CdnWebAgentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="KnowledgeSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CdnWebAgentKnowledgeSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KnowledgeSourceResource"/> object. </returns>
-        public virtual KnowledgeSourceResource GetKnowledgeSourceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnWebAgentKnowledgeSourceResource"/> object. </returns>
+        public virtual CdnWebAgentKnowledgeSourceResource GetCdnWebAgentKnowledgeSourceResource(ResourceIdentifier id)
         {
-            KnowledgeSourceResource.ValidateResourceId(id);
-            return new KnowledgeSourceResource(Client, id);
+            CdnWebAgentKnowledgeSourceResource.ValidateResourceId(id);
+            return new CdnWebAgentKnowledgeSourceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FrontDoorCustomDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>

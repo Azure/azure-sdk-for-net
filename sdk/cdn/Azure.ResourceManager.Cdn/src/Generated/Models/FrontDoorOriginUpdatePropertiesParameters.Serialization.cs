@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string originGroupName = default;
-            ResourceReference origin = default;
+            CdnResourceReference origin = default;
             string hostName = default;
             int? httpPort = default;
             int? httpsPort = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? priority = default;
             int? weight = default;
             SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
-            OriginCapacityResourceProperties originCapacityResource = default;
+            AfdOriginCapacitySettings originCapacityResource = default;
             EnabledState? enabledState = default;
             bool? enforceCertificateNameCheck = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    origin = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    origin = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originCapacityResource = OriginCapacityResourceProperties.DeserializeOriginCapacityResourceProperties(prop.Value, options);
+                    originCapacityResource = AfdOriginCapacitySettings.DeserializeAfdOriginCapacitySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enabledState"u8))

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string description = default;
             string uri = default;
-            KnowledgeSourceUpdateFrequency? updateFrequency = default;
+            WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    updateFrequency = new KnowledgeSourceUpdateFrequency(prop.Value.GetString());
+                    updateFrequency = new WebAgentKnowledgeSourceUpdateFrequency(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

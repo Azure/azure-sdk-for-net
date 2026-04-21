@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="KeyGroupProperties"/>. </summary>
         public KeyGroupProperties()
         {
-            KeyReferences = new ChangeTrackingList<ResourceReference>();
+            KeyReferences = new ChangeTrackingList<CdnResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyGroupProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyGroupProperties(IList<ResourceReference> keyReferences, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyGroupProperties(IList<CdnResourceReference> keyReferences, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyReferences = keyReferences;
             ProvisioningState = provisioningState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Names of UrlSigningKey type secret objects. </summary>
         [WirePath("keyReferences")]
-        public IList<ResourceReference> KeyReferences { get; } = new ChangeTrackingList<ResourceReference>();
+        public IList<CdnResourceReference> KeyReferences { get; } = new ChangeTrackingList<CdnResourceReference>();
 
         /// <summary> Provisioning status. </summary>
         [WirePath("provisioningState")]

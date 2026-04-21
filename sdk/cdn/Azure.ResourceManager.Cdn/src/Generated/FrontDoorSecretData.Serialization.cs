@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SecretDetails secretProperties = default;
+            CdnSecretProperties secretProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    secretProperties = SecretDetails.DeserializeSecretDetails(prop.Value, options);
+                    secretProperties = CdnSecretProperties.DeserializeCdnSecretProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

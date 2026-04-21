@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
+        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference secretSource, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
         {
             SecretSource = secretSource;
             Subject = subject;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{certificateName}. </summary>
         [WirePath("secretSource")]
-        internal ResourceReference SecretSource { get; }
+        internal CdnResourceReference SecretSource { get; }
 
         /// <summary> Subject name in the certificate. </summary>
         [WirePath("subject")]

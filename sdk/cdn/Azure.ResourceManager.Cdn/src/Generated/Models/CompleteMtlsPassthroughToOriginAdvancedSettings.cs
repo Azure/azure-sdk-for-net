@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Advanced settings for MtlsScenarioType enum value: CompleteMtlsPassthroughToOrigin. </summary>
-    public partial class CompleteMtlsPassthroughToOriginAdvancedSettings : FrontDoorCustomDomainMtlsParameters
+    public partial class CompleteMtlsPassthroughToOriginAdvancedSettings : FrontDoorCustomDomainMtlsSettings
     {
         /// <summary> Initializes a new instance of <see cref="CompleteMtlsPassthroughToOriginAdvancedSettings"/>. </summary>
         public CompleteMtlsPassthroughToOriginAdvancedSettings() : base(MtlsScenarioType.CompleteMtlsPassthroughToOrigin)

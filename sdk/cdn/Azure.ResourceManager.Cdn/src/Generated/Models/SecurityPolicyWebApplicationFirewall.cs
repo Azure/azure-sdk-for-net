@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="wafPolicy"> Resource ID. </param>
         /// <param name="associations"> Waf associations. </param>
-        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
+        internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, additionalBinaryDataProperties)
         {
             WafPolicy = wafPolicy;
             Associations = associations;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("wafPolicy")]
-        internal ResourceReference WafPolicy { get; set; }
+        internal CdnResourceReference WafPolicy { get; set; }
 
         /// <summary> Waf associations. </summary>
         [WirePath("associations")]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (WafPolicy is null)
                 {
-                    WafPolicy = new ResourceReference();
+                    WafPolicy = new CdnResourceReference();
                 }
                 WafPolicy.Id = value;
             }

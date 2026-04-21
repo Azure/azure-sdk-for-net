@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string keyId = default;
-            ResourceReference secretSource = default;
+            CdnResourceReference secretSource = default;
             string secretVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("secretSource"u8))
                 {
-                    secretSource = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    secretSource = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("secretVersion"u8))

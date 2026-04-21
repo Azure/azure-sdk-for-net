@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateValidatedIfPresented. </summary>
-    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : FrontDoorCustomDomainMtlsParameters, IJsonModel<ClientCertificateValidatedIfPresentedAdvancedSettings>
+    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : FrontDoorCustomDomainMtlsSettings, IJsonModel<ClientCertificateValidatedIfPresentedAdvancedSettings>
     {
         /// <summary> Initializes a new instance of <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/> for deserialization. </summary>
         internal ClientCertificateValidatedIfPresentedAdvancedSettings()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClientCertificateValidatedIfPresentedAdvancedSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Cdn.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("secrets"u8);
             writer.WriteStartArray();
-            foreach (ResourceReference item in Secrets)
+            foreach (CdnResourceReference item in Secrets)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClientCertificateValidatedIfPresentedAdvancedSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             MtlsScenarioType scenario = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ResourceReference> secrets = default;
+            IList<CdnResourceReference> secrets = default;
             IList<string> allowedFqdns = default;
             CertificateRevocationCheckEnabledState? certificateRevocationCheck = default;
             foreach (var prop in element.EnumerateObject())
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("secrets"u8))
                 {
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
                     }
                     secrets = array;
                     continue;

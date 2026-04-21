@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateAuthority"> Certificate issuing authority. </param>
         /// <param name="subjectAlternativeNames"> The list of SANs. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
+        internal CustomerCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference secretSource, string secretVersion, bool? useLatestVersion, string subject, DateTimeOffset? expiresOn, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, additionalBinaryDataProperties)
         {
             SecretSource = secretSource;
             SecretVersion = secretVersion;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
         [WirePath("secretSource")]
-        internal ResourceReference SecretSource { get; set; }
+        internal CdnResourceReference SecretSource { get; set; }
 
         /// <summary> Version of the secret to be used. </summary>
         [WirePath("secretVersion")]
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (SecretSource is null)
                 {
-                    SecretSource = new ResourceReference();
+                    SecretSource = new CdnResourceReference();
                 }
                 SecretSource.Id = value;
             }

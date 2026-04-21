@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
-                foreach (AgentPath item in Paths)
+                foreach (CdnWebAgentPath item in Paths)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("profileAgentLinks"u8);
                 writer.WriteStartArray();
-                foreach (ResourceReference item in ProfileAgentLinks)
+                foreach (CdnResourceReference item in ProfileAgentLinks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string description = default;
             string systemPrompt = default;
-            IList<AgentPath> paths = default;
-            IReadOnlyList<ResourceReference> profileAgentLinks = default;
-            WebAgentProvisioningState? provisioningState = default;
+            IList<CdnWebAgentPath> paths = default;
+            IReadOnlyList<CdnResourceReference> profileAgentLinks = default;
+            CdnWebAgentProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<AgentPath> array = new List<AgentPath>();
+                    List<CdnWebAgentPath> array = new List<CdnWebAgentPath>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentPath.DeserializeAgentPath(item, options));
+                        array.Add(CdnWebAgentPath.DeserializeCdnWebAgentPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
                     }
                     profileAgentLinks = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    provisioningState = new WebAgentProvisioningState(prop.Value.GetString());
+                    provisioningState = new CdnWebAgentProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.Cdn.Models
             return new WebAgentProperties(
                 description,
                 systemPrompt,
-                paths ?? new ChangeTrackingList<AgentPath>(),
-                profileAgentLinks ?? new ChangeTrackingList<ResourceReference>(),
+                paths ?? new ChangeTrackingList<CdnWebAgentPath>(),
+                profileAgentLinks ?? new ChangeTrackingList<CdnResourceReference>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

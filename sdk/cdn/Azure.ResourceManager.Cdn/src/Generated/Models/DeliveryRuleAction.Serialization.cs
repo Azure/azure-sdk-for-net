@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// An action for the delivery rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AfdUrlSigningAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="EdgeAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, and <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FrontDoorUrlSigningAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="CdnEdgeAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, and <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleAction))]
     public abstract partial class DeliveryRuleAction : IJsonModel<DeliveryRuleAction>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 switch (discriminator.GetString())
                 {
                     case "AfdUrlSigning":
-                        return AfdUrlSigningAction.DeserializeAfdUrlSigningAction(element, options);
+                        return FrontDoorUrlSigningAction.DeserializeFrontDoorUrlSigningAction(element, options);
                     case "UrlRedirect":
                         return UriRedirectAction.DeserializeUriRedirectAction(element, options);
                     case "UrlSigning":
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     case "OriginGroupOverride":
                         return OriginGroupOverrideAction.DeserializeOriginGroupOverrideAction(element, options);
                     case "EdgeAction":
-                        return EdgeAction.DeserializeEdgeAction(element, options);
+                        return CdnEdgeAction.DeserializeCdnEdgeAction(element, options);
                     case "UrlRewrite":
                         return UriRewriteAction.DeserializeUriRewriteAction(element, options);
                     case "ModifyRequestHeader":

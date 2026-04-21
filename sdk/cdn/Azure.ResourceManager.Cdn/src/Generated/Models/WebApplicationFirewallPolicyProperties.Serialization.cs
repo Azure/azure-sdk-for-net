@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("routingRuleLinks"u8);
                 writer.WriteStartArray();
-                foreach (RoutingRuleLink item in RoutingRuleLinks)
+                foreach (CdnRoutingRuleLink item in RoutingRuleLinks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("securityPolicyLinks"u8);
                 writer.WriteStartArray();
-                foreach (SecurityPolicyLink item in SecurityPolicyLinks)
+                foreach (CdnSecurityPolicyLink item in SecurityPolicyLinks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            PolicySettingsAfd policySettings = default;
+            FrontDoorPolicySettings policySettings = default;
             CustomRuleListAfd customSettings = default;
             ManagedRuleSetListAfd managedRules = default;
             IReadOnlyList<FrontendEndpointLink> frontendEndpointLinks = default;
-            IReadOnlyList<RoutingRuleLink> routingRuleLinks = default;
-            IReadOnlyList<SecurityPolicyLink> securityPolicyLinks = default;
+            IReadOnlyList<CdnRoutingRuleLink> routingRuleLinks = default;
+            IReadOnlyList<CdnSecurityPolicyLink> securityPolicyLinks = default;
             string provisioningState = default;
             PolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    policySettings = PolicySettingsAfd.DeserializePolicySettingsAfd(prop.Value, options);
+                    policySettings = FrontDoorPolicySettings.DeserializeFrontDoorPolicySettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customRules"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<RoutingRuleLink> array = new List<RoutingRuleLink>();
+                    List<CdnRoutingRuleLink> array = new List<CdnRoutingRuleLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoutingRuleLink.DeserializeRoutingRuleLink(item, options));
+                        array.Add(CdnRoutingRuleLink.DeserializeCdnRoutingRuleLink(item, options));
                     }
                     routingRuleLinks = array;
                     continue;
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<SecurityPolicyLink> array = new List<SecurityPolicyLink>();
+                    List<CdnSecurityPolicyLink> array = new List<CdnSecurityPolicyLink>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecurityPolicyLink.DeserializeSecurityPolicyLink(item, options));
+                        array.Add(CdnSecurityPolicyLink.DeserializeCdnSecurityPolicyLink(item, options));
                     }
                     securityPolicyLinks = array;
                     continue;
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 customSettings,
                 managedRules,
                 frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>(),
-                routingRuleLinks ?? new ChangeTrackingList<RoutingRuleLink>(),
-                securityPolicyLinks ?? new ChangeTrackingList<SecurityPolicyLink>(),
+                routingRuleLinks ?? new ChangeTrackingList<CdnRoutingRuleLink>(),
+                securityPolicyLinks ?? new ChangeTrackingList<CdnSecurityPolicyLink>(),
                 provisioningState,
                 resourceState,
                 additionalBinaryDataProperties);

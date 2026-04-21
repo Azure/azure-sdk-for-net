@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.Cdn.Models
     // Reason: The TypeSpec generator removes separators from cipher suite names to produce member names (e.g., TLSAES128GCMSHA256),
     // but the old SDK used underscore-separated readable names (e.g., Tls_Aes_128_Gcm_Sha256).
     // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
+    // Note: AfdCustomizedCipherSuiteForTls13 is an inline union type used within FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.
+    // The MPG generator does not generate a standalone file for this type, so @@clientName cannot rename it.
+    // The type name retains the original "Afd" prefix from the TypeSpec spec.
     public readonly partial struct AfdCustomizedCipherSuiteForTls13
     {
         /// <summary> TLS_AES_128_GCM_SHA256. </summary>

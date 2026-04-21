@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class KnowledgeSourcesGetByWebAgentCollectionResultOfT : Pageable<KnowledgeSourceData>
+    internal partial class KnowledgeSourcesGetByWebAgentCollectionResultOfT : Pageable<CdnWebAgentKnowledgeSourceData>
     {
         private readonly KnowledgeSources _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of KnowledgeSourcesGetByWebAgentCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KnowledgeSourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CdnWebAgentKnowledgeSourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 KnowledgeSourceList result = KnowledgeSourceList.FromResponse(response);
-                yield return Page<KnowledgeSourceData>.FromValues((IReadOnlyList<KnowledgeSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CdnWebAgentKnowledgeSourceData>.FromValues((IReadOnlyList<CdnWebAgentKnowledgeSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

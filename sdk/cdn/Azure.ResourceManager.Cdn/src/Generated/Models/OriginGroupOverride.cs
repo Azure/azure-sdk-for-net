@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup on route. </param>
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginGroupOverride(ResourceReference originGroup, ForwardingProtocol? forwardingProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginGroupOverride(CdnResourceReference originGroup, ForwardingProtocol? forwardingProtocol, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginGroup = originGroup;
             ForwardingProtocol = forwardingProtocol;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup on route. </summary>
         [WirePath("originGroup")]
-        internal ResourceReference OriginGroup { get; set; }
+        internal CdnResourceReference OriginGroup { get; set; }
 
         /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
         [WirePath("forwardingProtocol")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (OriginGroup is null)
                 {
-                    OriginGroup = new ResourceReference();
+                    OriginGroup = new CdnResourceReference();
                 }
                 OriginGroup.Id = value;
             }

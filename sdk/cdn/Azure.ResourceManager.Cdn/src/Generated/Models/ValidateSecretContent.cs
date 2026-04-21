@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </param>
         /// <param name="secretVersion"> Secret version, if customer is using a specific version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateSecretContent(SecretType secretType, ResourceReference secretSource, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateSecretContent(SecretType secretType, CdnResourceReference secretSource, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretType = secretType;
             SecretSource = secretSource;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}. </summary>
         [WirePath("secretSource")]
-        internal ResourceReference SecretSource { get; }
+        internal CdnResourceReference SecretSource { get; }
 
         /// <summary> Secret version, if customer is using a specific version. </summary>
         [WirePath("secretVersion")]

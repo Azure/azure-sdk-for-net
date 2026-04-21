@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CdnKeyGroupPatch"/>. </summary>
         public CdnKeyGroupPatch()
         {
-            KeyReferences = new ChangeTrackingList<ResourceReference>();
+            KeyReferences = new ChangeTrackingList<CdnResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnKeyGroupPatch"/>. </summary>
         /// <param name="keyReferences"> Names of UrlSigningKey type secret objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnKeyGroupPatch(IList<ResourceReference> keyReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CdnKeyGroupPatch(IList<CdnResourceReference> keyReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyReferences = keyReferences;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Names of UrlSigningKey type secret objects. </summary>
         [WirePath("keyReferences")]
-        public IList<ResourceReference> KeyReferences { get; }
+        public IList<CdnResourceReference> KeyReferences { get; }
     }
 }

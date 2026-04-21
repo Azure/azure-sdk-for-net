@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="userAssignedIdentity"> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </param>
         /// <param name="scope"> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, ResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OriginAuthenticationProperties(OriginAuthenticationType? authenticationType, CdnResourceReference userAssignedIdentity, Uri scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             UserAssignedIdentity = userAssignedIdentity;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The user assigned managed identity to use for the origin authentication if type is UserAssignedIdentity. </summary>
         [WirePath("userAssignedIdentity")]
-        internal ResourceReference UserAssignedIdentity { get; set; }
+        internal CdnResourceReference UserAssignedIdentity { get; set; }
 
         /// <summary> The scope used when requesting token from Microsoft Entra. For example, for Azure Blob Storage, scope could be "https://storage.azure.com/.default". </summary>
         [WirePath("scope")]
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (UserAssignedIdentity is null)
                 {
-                    UserAssignedIdentity = new ResourceReference();
+                    UserAssignedIdentity = new CdnResourceReference();
                 }
                 UserAssignedIdentity.Id = value;
             }

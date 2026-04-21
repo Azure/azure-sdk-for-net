@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Gets the ApprovalStatus. </summary>
         [WirePath("properties.approvalStatus")]
-        public ApprovalStatus? ApprovalStatus
+        public DeploymentVersiongApprovalStatus? ApprovalStatus
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
         [WirePath("properties.stages")]
-        public DeploymentStages Stages
+        public CdnDeploymentStages Stages
         {
             get
             {

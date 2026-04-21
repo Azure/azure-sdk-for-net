@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteObjectValue(WebAgent, options);
             writer.WritePropertyName("customDomains"u8);
             writer.WriteStartArray();
-            foreach (ResourceReference item in CustomDomains)
+            foreach (CdnResourceReference item in CustomDomains)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -135,23 +135,23 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference webAgent = default;
-            IList<ResourceReference> customDomains = default;
-            ProfileAgentProvisioningState? provisioningState = default;
+            CdnResourceReference webAgent = default;
+            IList<CdnResourceReference> customDomains = default;
+            CdnProfileAgentProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("webAgent"u8))
                 {
-                    webAgent = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    webAgent = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customDomains"u8))
                 {
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<CdnResourceReference> array = new List<CdnResourceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(CdnResourceReference.DeserializeCdnResourceReference(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProfileAgentProvisioningState(prop.Value.GetString());
+                    provisioningState = new CdnProfileAgentProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

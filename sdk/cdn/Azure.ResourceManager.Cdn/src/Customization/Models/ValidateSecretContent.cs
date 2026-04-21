@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     // Customization: This file adds the old constructor to ValidateSecretContent for backward API compatibility with the previous SDK.
     // Reason: The old SDK constructor accepted (SecretType, WritableSubResource) parameters,
-    // but after the TypeSpec migration, the secretSource parameter type was changed to ResourceReference.
-    // The old constructor is preserved here, internally converting WritableSubResource to ResourceReference,
+    // but after the TypeSpec migration, the secretSource parameter type was changed to CdnResourceReference.
+    // The old constructor is preserved here, internally converting WritableSubResource to CdnResourceReference,
     // and marked as EditorBrowsable.Never.
     public partial class ValidateSecretContent
     {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             if (secretSource != null)
             {
-                SecretSource = new ResourceReference { Id = secretSource.Id };
+                SecretSource = new CdnResourceReference { Id = secretSource.Id };
             }
         }
     }

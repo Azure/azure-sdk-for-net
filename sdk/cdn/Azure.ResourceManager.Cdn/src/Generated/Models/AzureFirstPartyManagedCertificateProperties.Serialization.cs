@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             SecretType secretType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceReference secretSource = default;
+            CdnResourceReference secretSource = default;
             string subject = default;
             string expirationDate = default;
             string certificateAuthority = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secretSource = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    secretSource = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("subject"u8))

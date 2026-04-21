@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </summary>
         [WirePath("properties.mtlsSettings")]
-        public FrontDoorCustomDomainMtlsParameters MtlsSettings
+        public FrontDoorCustomDomainMtlsSettings MtlsSettings
         {
             get
             {

@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
         public static MigrateResult MigrateResult(ResourceIdentifier resourceId = default, string migrateResultType = default, ResourceIdentifier migratedProfileResourceIdId = default)
         {
-            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new ResourceReference(migratedProfileResourceIdId, null), null), additionalBinaryDataProperties: null);
+            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new CdnResourceReference(migratedProfileResourceIdId, null), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="classicResourceReferenceId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.CanMigrateContent"/> instance for mocking. </returns>
         public static CanMigrateContent CanMigrateContent(ResourceIdentifier classicResourceReferenceId = default)
         {
-            return new CanMigrateContent(classicResourceReferenceId is null ? default : new ResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
+            return new CanMigrateContent(classicResourceReferenceId is null ? default : new CdnResourceReference(classicResourceReferenceId, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="skuName"> Name of the pricing tier. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             migrationWebApplicationFirewallMappings ??= new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
 
-            return new MigrationContent(skuName is null ? default : new CdnSku(skuName, null), classicResourceReferenceId is null ? default : new ResourceReference(classicResourceReferenceId, null), profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
+            return new MigrationContent(skuName is null ? default : new CdnSku(skuName, null), classicResourceReferenceId is null ? default : new CdnResourceReference(classicResourceReferenceId, null), profileName, migrationWebApplicationFirewallMappings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="originId"> Resource ID. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
-        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string originGroupName = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, OriginCapacityResourceProperties originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originId = default)
+        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string originGroupName = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, AfdOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originId = default)
         {
             return new FrontDoorOriginData(
                 id,
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 originGroupName is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && originCapacityResource is null && enabledState is null && enforceCertificateNameCheck is null && provisioningState is null && deploymentStatus is null && originId is null ? default : new FrontDoorOriginProperties(
                     originGroupName,
-                    new ResourceReference(originId, null),
+                    new CdnResourceReference(originId, null),
                     hostName,
                     httpPort,
                     httpsPort,
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <returns> A new <see cref="Models.FrontDoorOriginProperties"/> instance for mocking. </returns>
-        public static FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = default, ResourceIdentifier originId = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, OriginCapacityResourceProperties originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        public static FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = default, ResourceIdentifier originId = default, string hostName = default, int? httpPort = default, int? httpsPort = default, string originHostHeader = default, int? priority = default, int? weight = default, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default, AfdOriginCapacitySettings originCapacityResource = default, EnabledState? enabledState = default, bool? enforceCertificateNameCheck = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
             return new FrontDoorOriginProperties(
                 originGroupName,
-                originId is null ? default : new ResourceReference(originId, null),
+                originId is null ? default : new CdnResourceReference(originId, null),
                 hostName,
                 httpPort,
                 httpsPort,
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                endpointName is null && customDomains is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null && originGroupId is null ? default : new RouteProperties(
+                endpointName is null && customDomains is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null && originGroupId is null ? default : new CdnRouteProperties(
                     endpointName,
                     (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                    new ResourceReference(originGroupId, null),
+                    new CdnResourceReference(originGroupId, null),
                     originPath,
                     (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
@@ -495,18 +495,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        /// <returns> A new <see cref="Models.RouteProperties"/> instance for mocking. </returns>
-        public static RouteProperties RouteProperties(string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, ResourceIdentifier originGroupId = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, FrontDoorRouteGrpcState? grpcState = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        /// <returns> A new <see cref="Models.CdnRouteProperties"/> instance for mocking. </returns>
+        public static CdnRouteProperties CdnRouteProperties(string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, ResourceIdentifier originGroupId = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, FrontDoorRouteGrpcState? grpcState = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
             customDomains ??= new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
             ruleSets ??= new ChangeTrackingList<WritableSubResource>();
             supportedProtocols ??= new ChangeTrackingList<FrontDoorEndpointProtocol>();
             patternsToMatch ??= new ChangeTrackingList<string>();
 
-            return new RouteProperties(
+            return new CdnRouteProperties(
                 endpointName,
                 customDomains.ToList(),
-                originGroupId is null ? default : new ResourceReference(originGroupId, null),
+                originGroupId is null ? default : new CdnResourceReference(originGroupId, null),
                 originPath,
                 ruleSets.ToList(),
                 supportedProtocols.ToList(),
@@ -558,17 +558,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && deploymentStatus is null && profileName is null ? default : new RuleSetProperties(provisioningState, deploymentStatus, null, profileName));
+                provisioningState is null && deploymentStatus is null && profileName is null ? default : new CdnRuleSetProperties(provisioningState, deploymentStatus, null, profileName));
         }
 
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        /// <returns> A new <see cref="Models.RuleSetProperties"/> instance for mocking. </returns>
-        public static RuleSetProperties RuleSetProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default)
+        /// <returns> A new <see cref="Models.CdnRuleSetProperties"/> instance for mocking. </returns>
+        public static CdnRuleSetProperties CdnRuleSetProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default)
         {
-            return new RuleSetProperties(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName);
+            return new CdnRuleSetProperties(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName);
         }
 
         /// <summary> The tracking states for afd resources. </summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                ruleSetName is null && order is null && conditions is null && actions is null && matchProcessingBehavior is null && provisioningState is null && deploymentStatus is null ? default : new RuleProperties(
+                ruleSetName is null && order is null && conditions is null && actions is null && matchProcessingBehavior is null && provisioningState is null && deploymentStatus is null ? default : new CdnRuleProperties(
                     ruleSetName,
                     order,
                     (conditions ?? new ChangeTrackingList<DeliveryRuleCondition>()).ToList(),
@@ -619,13 +619,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        /// <returns> A new <see cref="Models.RuleProperties"/> instance for mocking. </returns>
-        public static RuleProperties RuleProperties(string ruleSetName = default, int? order = default, IEnumerable<DeliveryRuleCondition> conditions = default, IEnumerable<DeliveryRuleAction> actions = default, MatchProcessingBehavior? matchProcessingBehavior = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        /// <returns> A new <see cref="Models.CdnRuleProperties"/> instance for mocking. </returns>
+        public static CdnRuleProperties CdnRuleProperties(string ruleSetName = default, int? order = default, IEnumerable<DeliveryRuleCondition> conditions = default, IEnumerable<DeliveryRuleAction> actions = default, MatchProcessingBehavior? matchProcessingBehavior = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
             conditions ??= new ChangeTrackingList<DeliveryRuleCondition>();
             actions ??= new ChangeTrackingList<DeliveryRuleAction>();
 
-            return new RuleProperties(
+            return new CdnRuleProperties(
                 ruleSetName,
                 order,
                 conditions.ToList(),
@@ -1026,12 +1026,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyGroupReferenceId"> Resource ID. </param>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        /// <returns> A new <see cref="Models.AfdUrlSigningActionParameters"/> instance for mocking. </returns>
-        public static AfdUrlSigningActionParameters AfdUrlSigningActionParameters(TypeName typeName = default, ResourceIdentifier keyGroupReferenceId = default, UriSigningAlgorithm? algorithm = default, IEnumerable<UriSigningParamIdentifier> parameterNameOverride = default)
+        /// <returns> A new <see cref="Models.FrontDoorUrlSigningActionContent"/> instance for mocking. </returns>
+        public static FrontDoorUrlSigningActionContent FrontDoorUrlSigningActionContent(UrlSigningActionTypeName typeName = default, ResourceIdentifier keyGroupReferenceId = default, UriSigningAlgorithm? algorithm = default, IEnumerable<UriSigningParamIdentifier> parameterNameOverride = default)
         {
             parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
-            return new AfdUrlSigningActionParameters(typeName, keyGroupReferenceId is null ? default : new ResourceReference(keyGroupReferenceId, null), algorithm, parameterNameOverride.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorUrlSigningActionContent(typeName, keyGroupReferenceId is null ? default : new CdnResourceReference(keyGroupReferenceId, null), algorithm, parameterNameOverride.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the parameters for the Url Signing action. </summary>
@@ -1062,7 +1062,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new SecurityPolicyDetails(provisioningState, deploymentStatus, null, profileName, properties));
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecurityPolicyProperties(provisioningState, deploymentStatus, null, profileName, properties));
         }
 
         /// <summary> The json object that contains properties required to create a security policy. </summary>
@@ -1070,10 +1070,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
         /// <param name="properties"> object which contains security policy parameters. </param>
-        /// <returns> A new <see cref="Models.SecurityPolicyDetails"/> instance for mocking. </returns>
-        public static SecurityPolicyDetails SecurityPolicyDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
+        /// <returns> A new <see cref="Models.CdnSecurityPolicyProperties"/> instance for mocking. </returns>
+        public static CdnSecurityPolicyProperties CdnSecurityPolicyProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
         {
-            return new SecurityPolicyDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
+            return new CdnSecurityPolicyProperties(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
         }
 
         /// <summary> Contains security policy waf parameters. </summary>
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="Models.WebApplicationFirewallPolicy"/> instance for mocking. </returns>
-        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicySettingsAfd policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<RoutingRuleLink> routingRuleLinks = default, IEnumerable<SecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<CustomRuleAfd> customRules = default, IEnumerable<ManagedRuleSetAfd> managedRuleSets = default, string etag = default, CdnSkuName? skuName = default)
+        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorPolicySettings policySettings = default, IEnumerable<FrontendEndpointLink> frontendEndpointLinks = default, IEnumerable<CdnRoutingRuleLink> routingRuleLinks = default, IEnumerable<CdnSecurityPolicyLink> securityPolicyLinks = default, string provisioningState = default, PolicyResourceState? resourceState = default, IEnumerable<FrontDoorCustomRule> customRules = default, IEnumerable<FrontDoorManagedRuleSet> managedRuleSets = default, ETag? etag = default, CdnSkuName? skuName = default)
         {
             return new WebApplicationFirewallPolicy(
                 id,
@@ -1112,11 +1112,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 additionalBinaryDataProperties: null,
                 policySettings is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null && customRules is null && managedRuleSets is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new CustomRuleListAfd((customRules ?? new ChangeTrackingList<CustomRuleAfd>()).ToList(), null),
-                    new ManagedRuleSetListAfd((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetAfd>()).ToList(), null),
+                    new CustomRuleListAfd((customRules ?? new ChangeTrackingList<FrontDoorCustomRule>()).ToList(), null),
+                    new ManagedRuleSetListAfd((managedRuleSets ?? new ChangeTrackingList<FrontDoorManagedRuleSet>()).ToList(), null),
                     (frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>()).ToList(),
-                    (routingRuleLinks ?? new ChangeTrackingList<RoutingRuleLink>()).ToList(),
-                    (securityPolicyLinks ?? new ChangeTrackingList<SecurityPolicyLink>()).ToList(),
+                    (routingRuleLinks ?? new ChangeTrackingList<CdnRoutingRuleLink>()).ToList(),
+                    (securityPolicyLinks ?? new ChangeTrackingList<CdnSecurityPolicyLink>()).ToList(),
                     provisioningState,
                     resourceState,
                     null),
@@ -1134,13 +1134,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="groupBy"> Describes the list of variables to group the rate limit requests. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        /// <returns> A new <see cref="Models.CustomRuleAfd"/> instance for mocking. </returns>
-        public static CustomRuleAfd CustomRuleAfd(string name = default, int priority = default, CustomRuleEnabledState? enabledState = default, RuleType ruleType = default, int? rateLimitDurationInMinutes = default, int? rateLimitThreshold = default, IEnumerable<GroupByVariable> groupBy = default, IEnumerable<MatchConditionAfd> matchConditions = default, OverrideActionType action = default)
+        /// <returns> A new <see cref="Models.FrontDoorCustomRule"/> instance for mocking. </returns>
+        public static FrontDoorCustomRule FrontDoorCustomRule(string name = default, int priority = default, CustomRuleEnabledState? enabledState = default, CdnRuleType ruleType = default, int? rateLimitDurationInMinutes = default, int? rateLimitThreshold = default, IEnumerable<RateLimitGroupByVariable> groupBy = default, IEnumerable<FrontDoorMatchCondition> matchConditions = default, OverrideActionType action = default)
         {
-            groupBy ??= new ChangeTrackingList<GroupByVariable>();
-            matchConditions ??= new ChangeTrackingList<MatchConditionAfd>();
+            groupBy ??= new ChangeTrackingList<RateLimitGroupByVariable>();
+            matchConditions ??= new ChangeTrackingList<FrontDoorMatchCondition>();
 
-            return new CustomRuleAfd(
+            return new FrontDoorCustomRule(
                 name,
                 priority,
                 enabledState,
@@ -1160,13 +1160,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <returns> A new <see cref="Models.MatchConditionAfd"/> instance for mocking. </returns>
-        public static MatchConditionAfd MatchConditionAfd(MatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
+        /// <returns> A new <see cref="Models.FrontDoorMatchCondition"/> instance for mocking. </returns>
+        public static FrontDoorMatchCondition FrontDoorMatchCondition(DeliveryRuleMatchVariable matchVariable = default, string selector = default, MatchOperator matchOperator = default, bool? negateCondition = default, IEnumerable<string> matchValue = default, IEnumerable<TransformType> transforms = default)
         {
             matchValue ??= new ChangeTrackingList<string>();
             transforms ??= new ChangeTrackingList<TransformType>();
 
-            return new MatchConditionAfd(
+            return new FrontDoorMatchCondition(
                 matchVariable,
                 selector,
                 matchOperator,
@@ -1182,13 +1182,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleSetAction"> Defines the rule set action. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetAfd"/> instance for mocking. </returns>
-        public static ManagedRuleSetAfd ManagedRuleSetAfd(string ruleSetType = default, string ruleSetVersion = default, ManagedRuleSetActionType? ruleSetAction = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleGroupOverrideAfd> ruleGroupOverrides = default)
+        /// <returns> A new <see cref="Models.FrontDoorManagedRuleSet"/> instance for mocking. </returns>
+        public static FrontDoorManagedRuleSet FrontDoorManagedRuleSet(string ruleSetType = default, string ruleSetVersion = default, ManagedRuleSetActionType? ruleSetAction = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<FrontDoorManagedRuleGroupOverride> ruleGroupOverrides = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
-            ruleGroupOverrides ??= new ChangeTrackingList<ManagedRuleGroupOverrideAfd>();
+            ruleGroupOverrides ??= new ChangeTrackingList<FrontDoorManagedRuleGroupOverride>();
 
-            return new ManagedRuleSetAfd(
+            return new FrontDoorManagedRuleSet(
                 ruleSetType,
                 ruleSetVersion,
                 ruleSetAction,
@@ -1201,13 +1201,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="ruleGroupName"> Describes the managed rule group to override. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the group. </param>
         /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleGroupOverrideAfd"/> instance for mocking. </returns>
-        public static ManagedRuleGroupOverrideAfd ManagedRuleGroupOverrideAfd(string ruleGroupName = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<ManagedRuleOverrideAfd> rules = default)
+        /// <returns> A new <see cref="Models.FrontDoorManagedRuleGroupOverride"/> instance for mocking. </returns>
+        public static FrontDoorManagedRuleGroupOverride FrontDoorManagedRuleGroupOverride(string ruleGroupName = default, IEnumerable<ManagedRuleExclusion> exclusions = default, IEnumerable<FrontDoorManagedRuleOverride> rules = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
-            rules ??= new ChangeTrackingList<ManagedRuleOverrideAfd>();
+            rules ??= new ChangeTrackingList<FrontDoorManagedRuleOverride>();
 
-            return new ManagedRuleGroupOverrideAfd(ruleGroupName, exclusions.ToList(), rules.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorManagedRuleGroupOverride(ruleGroupName, exclusions.ToList(), rules.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines a managed rule group override setting. </summary>
@@ -1215,12 +1215,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleOverrideAfd"/> instance for mocking. </returns>
-        public static ManagedRuleOverrideAfd ManagedRuleOverrideAfd(string ruleId = default, ManagedRuleSetupState? enabledState = default, OverrideActionType? action = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
+        /// <returns> A new <see cref="Models.FrontDoorManagedRuleOverride"/> instance for mocking. </returns>
+        public static FrontDoorManagedRuleOverride FrontDoorManagedRuleOverride(string ruleId = default, ManagedRuleSetupState? enabledState = default, OverrideActionType? action = default, IEnumerable<ManagedRuleExclusion> exclusions = default)
         {
             exclusions ??= new ChangeTrackingList<ManagedRuleExclusion>();
 
-            return new ManagedRuleOverrideAfd(ruleId, enabledState, action, exclusions.ToList(), additionalBinaryDataProperties: null);
+            return new FrontDoorManagedRuleOverride(ruleId, enabledState, action, exclusions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the Resource ID for a Frontend Endpoint. </summary>
@@ -1233,18 +1233,18 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Defines the Resource ID for a Routing Rule. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.RoutingRuleLink"/> instance for mocking. </returns>
-        public static RoutingRuleLink RoutingRuleLink(string id = default)
+        /// <returns> A new <see cref="Models.CdnRoutingRuleLink"/> instance for mocking. </returns>
+        public static CdnRoutingRuleLink CdnRoutingRuleLink(string id = default)
         {
-            return new RoutingRuleLink(id, additionalBinaryDataProperties: null);
+            return new CdnRoutingRuleLink(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the Resource ID for a Security Policy. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <returns> A new <see cref="Models.SecurityPolicyLink"/> instance for mocking. </returns>
-        public static SecurityPolicyLink SecurityPolicyLink(string id = default)
+        /// <returns> A new <see cref="Models.CdnSecurityPolicyLink"/> instance for mocking. </returns>
+        public static CdnSecurityPolicyLink CdnSecurityPolicyLink(string id = default)
         {
-            return new SecurityPolicyLink(id, additionalBinaryDataProperties: null);
+            return new CdnSecurityPolicyLink(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> settings for security policy patterns to match. </summary>
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             associations ??= new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>();
 
-            return new SecurityPolicyWebApplicationFirewall(SecurityPolicyType.WebApplicationFirewall, additionalBinaryDataProperties: null, wafPolicyId is null ? default : new ResourceReference(wafPolicyId, null), associations.ToList());
+            return new SecurityPolicyWebApplicationFirewall(SecurityPolicyType.WebApplicationFirewall, additionalBinaryDataProperties: null, wafPolicyId is null ? default : new CdnResourceReference(wafPolicyId, null), associations.ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new SecretDetails(provisioningState, deploymentStatus, null, profileName, properties));
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecretProperties(provisioningState, deploymentStatus, null, profileName, properties));
         }
 
         /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
@@ -1294,10 +1294,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
         /// <param name="properties"> object which contains secret parameters. </param>
-        /// <returns> A new <see cref="Models.SecretDetails"/> instance for mocking. </returns>
-        public static SecretDetails SecretDetails(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
+        /// <returns> A new <see cref="Models.CdnSecretProperties"/> instance for mocking. </returns>
+        public static CdnSecretProperties CdnSecretProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
         {
-            return new SecretDetails(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
+            return new CdnSecretProperties(provisioningState, deploymentStatus, additionalBinaryDataProperties: null, profileName, properties);
         }
 
         /// <summary> Managed Certificate used for https. </summary>
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CustomerCertificateProperties(
                 SecretType.CustomerCertificate,
                 additionalBinaryDataProperties: null,
-                secretSourceId is null ? default : new ResourceReference(secretSourceId, null),
+                secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null),
                 secretVersion,
                 useLatestVersion,
                 subject,
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new AzureFirstPartyManagedCertificateProperties(
                 SecretType.AzureFirstPartyManagedCertificate,
                 additionalBinaryDataProperties: null,
-                secretSourceId is null ? default : new ResourceReference(secretSourceId, null),
+                secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null),
                 subject,
                 expirationDate,
                 certificateAuthority,
@@ -1360,10 +1360,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretSourceId"> Resource ID. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
         /// <param name="expireOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
-        /// <returns> A new <see cref="Models.AfdSecretMtlsCertificateChain"/> instance for mocking. </returns>
-        public static AfdSecretMtlsCertificateChain AfdSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expireOn = default)
+        /// <returns> A new <see cref="Models.FrontDoorSecretMtlsCertificateChain"/> instance for mocking. </returns>
+        public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expireOn = default)
         {
-            return new AfdSecretMtlsCertificateChain(SecretType.MtlsCertificateChain, additionalBinaryDataProperties: null, secretSourceId is null ? default : new ResourceReference(secretSourceId, null), secretVersion, expireOn);
+            return new FrontDoorSecretMtlsCertificateChain(SecretType.MtlsCertificateChain, additionalBinaryDataProperties: null, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null), secretVersion, expireOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <returns> A new <see cref="Cdn.CdnKeyGroupData"/> instance for mocking. </returns>
-        public static CdnKeyGroupData CdnKeyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ResourceReference> keyReferences = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        public static CdnKeyGroupData CdnKeyGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<CdnResourceReference> keyReferences = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
         {
             return new CdnKeyGroupData(
                 id,
@@ -1382,15 +1382,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                keyReferences is null && provisioningState is null && deploymentStatus is null ? default : new KeyGroupProperties((keyReferences ?? new ChangeTrackingList<ResourceReference>()).ToList(), provisioningState, deploymentStatus, null));
+                keyReferences is null && provisioningState is null && deploymentStatus is null ? default : new KeyGroupProperties((keyReferences ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), provisioningState, deploymentStatus, null));
         }
 
         /// <summary> The JSON object containing properties of key group to create or update. </summary>
         /// <param name="keyReferences"> Names of UrlSigningKey type secret objects. </param>
         /// <returns> A new <see cref="Models.CdnKeyGroupPatch"/> instance for mocking. </returns>
-        public static CdnKeyGroupPatch CdnKeyGroupPatch(IEnumerable<ResourceReference> keyReferences = default)
+        public static CdnKeyGroupPatch CdnKeyGroupPatch(IEnumerable<CdnResourceReference> keyReferences = default)
         {
-            keyReferences ??= new ChangeTrackingList<ResourceReference>();
+            keyReferences ??= new ChangeTrackingList<CdnResourceReference>();
 
             return new CdnKeyGroupPatch(keyReferences.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="approvalStatus"> Gets the ApprovalStatus. </param>
         /// <param name="stages"> The preview and production deployment status of the deployment version under the profile. </param>
         /// <returns> A new <see cref="Cdn.CdnDeploymentVersionData"/> instance for mocking. </returns>
-        public static CdnDeploymentVersionData CdnDeploymentVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DateTimeOffset? createdOn = default, DateTimeOffset? approvedOn = default, ApprovalStatus? approvalStatus = default, DeploymentStages stages = default)
+        public static CdnDeploymentVersionData CdnDeploymentVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DateTimeOffset? createdOn = default, DateTimeOffset? approvedOn = default, DeploymentVersiongApprovalStatus? approvalStatus = default, CdnDeploymentStages stages = default)
         {
             return new CdnDeploymentVersionData(
                 id,
@@ -1429,41 +1429,41 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
         /// <param name="preview"> Deployment status of preview stage. </param>
         /// <param name="production"> Deployment status of production stage. </param>
-        /// <returns> A new <see cref="Models.DeploymentStages"/> instance for mocking. </returns>
-        public static DeploymentStages DeploymentStages(DeploymentRolloutStatus? preview = default, DeploymentRolloutStatus? production = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentStages"/> instance for mocking. </returns>
+        public static CdnDeploymentStages CdnDeploymentStages(CdnDeploymentRolloutStatus? preview = default, CdnDeploymentRolloutStatus? production = default)
         {
-            return new DeploymentStages(preview, production, additionalBinaryDataProperties: null);
+            return new CdnDeploymentStages(preview, production, additionalBinaryDataProperties: null);
         }
 
         /// <summary> compare deployment versions request parameter. </summary>
         /// <param name="compareTo"> the deployment version name to be compared to. </param>
-        /// <returns> A new <see cref="Models.CompareDeploymentVersionsParameter"/> instance for mocking. </returns>
-        public static CompareDeploymentVersionsParameter CompareDeploymentVersionsParameter(string compareTo = default)
+        /// <returns> A new <see cref="Models.CompareDeploymentVersionsContent"/> instance for mocking. </returns>
+        public static CompareDeploymentVersionsContent CompareDeploymentVersionsContent(string compareTo = default)
         {
-            return new CompareDeploymentVersionsParameter(compareTo, additionalBinaryDataProperties: null);
+            return new CompareDeploymentVersionsContent(compareTo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> compare deployment versions response. </summary>
         /// <param name="value"> The difference between two deployment versions. </param>
         /// <returns> A new <see cref="Models.CompareDeploymentVersionsResult"/> instance for mocking. </returns>
-        public static CompareDeploymentVersionsResult CompareDeploymentVersionsResult(IEnumerable<DeploymentVersionChange> value = default)
+        public static CompareDeploymentVersionsResult CompareDeploymentVersionsResult(IEnumerable<CdnDeploymentVersionChange> value = default)
         {
-            value ??= new ChangeTrackingList<DeploymentVersionChange>();
+            value ??= new ChangeTrackingList<CdnDeploymentVersionChange>();
 
             return new CompareDeploymentVersionsResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Deployment change under the profile
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeploymentVersionRouteChange"/>, <see cref="Models.DeploymentVersionAFDOriginGroupChange"/>, <see cref="Models.DeploymentVersionAFDOriginChange"/>, <see cref="Models.DeploymentVersionRuleSetChange"/>, <see cref="Models.DeploymentVersionRuleChange"/>, and <see cref="Models.DeploymentVersionSecurityPolicyChange"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnDeploymentVersionRouteChange"/>, <see cref="Models.CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="Models.CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="Models.CdnDeploymentVersionRuleSetChange"/>, <see cref="Models.CdnDeploymentVersionRuleChange"/>, and <see cref="Models.CdnDeploymentVersionSecurityPolicyChange"/>.
         /// </summary>
         /// <param name="resourceType"> Resource type supported by preview. </param>
         /// <param name="resourceId"></param>
         /// <param name="resourceName"></param>
-        /// <returns> A new <see cref="Models.DeploymentVersionChange"/> instance for mocking. </returns>
-        public static DeploymentVersionChange DeploymentVersionChange(string resourceType = default, ResourceIdentifier resourceId = default, string resourceName = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionChange CdnDeploymentVersionChange(string resourceType = default, ResourceIdentifier resourceId = default, string resourceName = default)
         {
-            return new UnknownDeploymentVersionChange(new PreviewSupportedResourceType(resourceType), resourceId, resourceName, additionalBinaryDataProperties: null);
+            return new UnknownCdnDeploymentVersionChange(new PreviewSupportedResourceType(resourceType), resourceId, resourceName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Deployment change of the route under the profile. </summary>
@@ -1471,10 +1471,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the Routes to create. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the Routes to create. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionRouteChange"/> instance for mocking. </returns>
-        public static DeploymentVersionRouteChange DeploymentVersionRouteChange(ResourceIdentifier resourceId = default, string resourceName = default, RouteProperties previousProperties = default, RouteProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionRouteChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionRouteChange CdnDeploymentVersionRouteChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRouteProperties previousProperties = default, CdnRouteProperties currentProperties = default)
         {
-            return new DeploymentVersionRouteChange(
+            return new CdnDeploymentVersionRouteChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesAfdEndpointsRoute,
                 resourceId,
                 resourceName,
@@ -1488,10 +1488,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin group. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin group. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionAFDOriginGroupChange"/> instance for mocking. </returns>
-        public static DeploymentVersionAFDOriginGroupChange DeploymentVersionAFDOriginGroupChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginGroupProperties previousProperties = default, FrontDoorOriginGroupProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionFrontDoorOriginGroupChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionFrontDoorOriginGroupChange CdnDeploymentVersionFrontDoorOriginGroupChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginGroupProperties previousProperties = default, FrontDoorOriginGroupProperties currentProperties = default)
         {
-            return new DeploymentVersionAFDOriginGroupChange(
+            return new CdnDeploymentVersionFrontDoorOriginGroupChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups,
                 resourceId,
                 resourceName,
@@ -1505,10 +1505,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the origin. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the origin. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionAFDOriginChange"/> instance for mocking. </returns>
-        public static DeploymentVersionAFDOriginChange DeploymentVersionAFDOriginChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginProperties previousProperties = default, FrontDoorOriginProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionFrontDoorOriginChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionFrontDoorOriginChange CdnDeploymentVersionFrontDoorOriginChange(ResourceIdentifier resourceId = default, string resourceName = default, FrontDoorOriginProperties previousProperties = default, FrontDoorOriginProperties currentProperties = default)
         {
-            return new DeploymentVersionAFDOriginChange(
+            return new CdnDeploymentVersionFrontDoorOriginChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins,
                 resourceId,
                 resourceName,
@@ -1522,10 +1522,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the Rule Set to create. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the Rule Set to create. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionRuleSetChange"/> instance for mocking. </returns>
-        public static DeploymentVersionRuleSetChange DeploymentVersionRuleSetChange(ResourceIdentifier resourceId = default, string resourceName = default, RuleSetProperties previousProperties = default, RuleSetProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionRuleSetChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionRuleSetChange CdnDeploymentVersionRuleSetChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRuleSetProperties previousProperties = default, CdnRuleSetProperties currentProperties = default)
         {
-            return new DeploymentVersionRuleSetChange(
+            return new CdnDeploymentVersionRuleSetChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSets,
                 resourceId,
                 resourceName,
@@ -1539,10 +1539,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> The JSON object that contains the properties of the Rules to create. </param>
         /// <param name="currentProperties"> The JSON object that contains the properties of the Rules to create. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionRuleChange"/> instance for mocking. </returns>
-        public static DeploymentVersionRuleChange DeploymentVersionRuleChange(ResourceIdentifier resourceId = default, string resourceName = default, RuleProperties previousProperties = default, RuleProperties currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionRuleChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionRuleChange CdnDeploymentVersionRuleChange(ResourceIdentifier resourceId = default, string resourceName = default, CdnRuleProperties previousProperties = default, CdnRuleProperties currentProperties = default)
         {
-            return new DeploymentVersionRuleChange(
+            return new CdnDeploymentVersionRuleChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSetsRules,
                 resourceId,
                 resourceName,
@@ -1556,10 +1556,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="resourceName"></param>
         /// <param name="previousProperties"> Contains properties required to create a security policy. </param>
         /// <param name="currentProperties"> Contains properties required to create a security policy. </param>
-        /// <returns> A new <see cref="Models.DeploymentVersionSecurityPolicyChange"/> instance for mocking. </returns>
-        public static DeploymentVersionSecurityPolicyChange DeploymentVersionSecurityPolicyChange(ResourceIdentifier resourceId = default, string resourceName = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = default)
+        /// <returns> A new <see cref="Models.CdnDeploymentVersionSecurityPolicyChange"/> instance for mocking. </returns>
+        public static CdnDeploymentVersionSecurityPolicyChange CdnDeploymentVersionSecurityPolicyChange(ResourceIdentifier resourceId = default, string resourceName = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = default, SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = default)
         {
-            return new DeploymentVersionSecurityPolicyChange(
+            return new CdnDeploymentVersionSecurityPolicyChange(
                 PreviewSupportedResourceType.MicrosoftCdnProfilesSecurityPolicies,
                 resourceId,
                 resourceName,
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 optimizationType,
                 probePath,
                 (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                new ResourceReference(defaultOriginGroupId, null),
+                new CdnResourceReference(defaultOriginGroupId, null),
                 (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
                 deliveryPolicy,
                 new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, null),
@@ -1807,16 +1807,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customDomains"> List of custom domains associated with this agent link. </param>
         /// <param name="provisioningState"> Provisioning status of the profile agent association. </param>
         /// <param name="webAgentId"> Resource ID. </param>
-        /// <returns> A new <see cref="Cdn.ProfileAgentData"/> instance for mocking. </returns>
-        public static ProfileAgentData ProfileAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ResourceReference> customDomains = default, ProfileAgentProvisioningState? provisioningState = default, ResourceIdentifier webAgentId = default)
+        /// <returns> A new <see cref="Cdn.CdnProfileAgentData"/> instance for mocking. </returns>
+        public static CdnProfileAgentData CdnProfileAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<CdnResourceReference> customDomains = default, CdnProfileAgentProvisioningState? provisioningState = default, ResourceIdentifier webAgentId = default)
         {
-            return new ProfileAgentData(
+            return new CdnProfileAgentData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                customDomains is null && provisioningState is null && webAgentId is null ? default : new ProfileAgentProperties(new ResourceReference(webAgentId, null), (customDomains ?? new ChangeTrackingList<ResourceReference>()).ToList(), provisioningState, null));
+                customDomains is null && provisioningState is null && webAgentId is null ? default : new ProfileAgentProperties(new CdnResourceReference(webAgentId, null), (customDomains ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1830,12 +1830,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="paths"> List of paths associated with the web agent. </param>
         /// <param name="profileAgentLinks"> References to agent links in CDN profiles. </param>
         /// <param name="provisioningState"> Provisioning status of the web agent. </param>
-        /// <returns> A new <see cref="Cdn.WebAgentData"/> instance for mocking. </returns>
-        public static WebAgentData WebAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string systemPrompt = default, IEnumerable<AgentPath> paths = default, IEnumerable<ResourceReference> profileAgentLinks = default, WebAgentProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Cdn.CdnWebAgentData"/> instance for mocking. </returns>
+        public static CdnWebAgentData CdnWebAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string systemPrompt = default, IEnumerable<CdnWebAgentPath> paths = default, IEnumerable<CdnResourceReference> profileAgentLinks = default, CdnWebAgentProvisioningState? provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WebAgentData(
+            return new CdnWebAgentData(
                 id,
                 name,
                 resourceType,
@@ -1846,8 +1846,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 description is null && systemPrompt is null && paths is null && profileAgentLinks is null && provisioningState is null ? default : new WebAgentProperties(
                     description,
                     systemPrompt,
-                    (paths ?? new ChangeTrackingList<AgentPath>()).ToList(),
-                    (profileAgentLinks ?? new ChangeTrackingList<ResourceReference>()).ToList(),
+                    (paths ?? new ChangeTrackingList<CdnWebAgentPath>()).ToList(),
+                    (profileAgentLinks ?? new ChangeTrackingList<CdnResourceReference>()).ToList(),
                     provisioningState,
                     null));
         }
@@ -1856,12 +1856,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="description"> Optional textual description of the agent. </param>
         /// <param name="systemPrompt"> System prompt for the web agent. </param>
         /// <param name="paths"> List of paths associated with the web agent. </param>
-        /// <returns> A new <see cref="Models.WebAgentPatch"/> instance for mocking. </returns>
-        public static WebAgentPatch WebAgentPatch(IDictionary<string, string> tags = default, string description = default, string systemPrompt = default, IEnumerable<AgentPath> paths = default)
+        /// <returns> A new <see cref="Models.CdnWebAgentPatch"/> instance for mocking. </returns>
+        public static CdnWebAgentPatch CdnWebAgentPatch(IDictionary<string, string> tags = default, string description = default, string systemPrompt = default, IEnumerable<CdnWebAgentPath> paths = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WebAgentPatch(tags, description is null && systemPrompt is null && paths is null ? default : new WebAgentPropertiesUpdateParameters(description, systemPrompt, (paths ?? new ChangeTrackingList<AgentPath>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new CdnWebAgentPatch(tags, description is null && systemPrompt is null && paths is null ? default : new WebAgentPropertiesUpdateParameters(description, systemPrompt, (paths ?? new ChangeTrackingList<CdnWebAgentPath>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1874,10 +1874,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="updateFrequency"> Specifies the units of time for scheduling update intervals for the knowledge source. </param>
         /// <param name="lastRefreshedOn"> The last time the knowledge source was updated. </param>
         /// <param name="provisioningState"> Provisioning status of the knowledge source. </param>
-        /// <returns> A new <see cref="Cdn.KnowledgeSourceData"/> instance for mocking. </returns>
-        public static KnowledgeSourceData KnowledgeSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, KnowledgeSourceType? sourceType = default, string uri = default, KnowledgeSourceUpdateFrequency? updateFrequency = default, DateTimeOffset? lastRefreshedOn = default, KnowledgeSourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Cdn.CdnWebAgentKnowledgeSourceData"/> instance for mocking. </returns>
+        public static CdnWebAgentKnowledgeSourceData CdnWebAgentKnowledgeSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, WebAgentKnowledgeSourceType? sourceType = default, string uri = default, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default, DateTimeOffset? lastRefreshedOn = default, WebAgentKnowledgeSourceProvisioningState? provisioningState = default)
         {
-            return new KnowledgeSourceData(
+            return new CdnWebAgentKnowledgeSourceData(
                 id,
                 name,
                 resourceType,
@@ -1909,7 +1909,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="dnsZoneId"> Resource ID. </param>
         /// <param name="preValidatedCustomDomainResourceId"> Resource ID. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorCustomDomainData"/> instance for mocking. </returns>
-        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string profileName = default, FrontDoorCustomDomainHttpsContent tlsSettings = default, FrontDoorCustomDomainMtlsParameters mtlsSettings = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DomainValidationState? domainValidationState = default, string hostName = default, IDictionary<string, string> extendedProperties = default, DomainValidationProperties validationProperties = default, ResourceIdentifier dnsZoneId = default, ResourceIdentifier preValidatedCustomDomainResourceId = default)
+        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string profileName = default, FrontDoorCustomDomainHttpsContent tlsSettings = default, FrontDoorCustomDomainMtlsSettings mtlsSettings = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, DomainValidationState? domainValidationState = default, string hostName = default, IDictionary<string, string> extendedProperties = default, DomainValidationProperties validationProperties = default, ResourceIdentifier dnsZoneId = default, ResourceIdentifier preValidatedCustomDomainResourceId = default)
         {
             return new FrontDoorCustomDomainData(
                 id,
@@ -1921,8 +1921,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     profileName,
                     tlsSettings,
                     mtlsSettings,
-                    new ResourceReference(dnsZoneId, null),
-                    new ResourceReference(preValidatedCustomDomainResourceId, null),
+                    new CdnResourceReference(dnsZoneId, null),
+                    new CdnResourceReference(preValidatedCustomDomainResourceId, null),
                     provisioningState,
                     deploymentStatus,
                     domainValidationState,
@@ -1949,9 +1949,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="allowedFqdns"> List of FQDNs that will be accepted for mutual TLS validation. </param>
         /// <param name="certificateRevocationCheck"> Set to Enabled by default. If set to Disabled, revocation status of client certificate chain will be checked before establishing mutual TLS connection. </param>
         /// <returns> A new <see cref="Models.ClientCertificateRequiredAndValidatedAdvancedSettings"/> instance for mocking. </returns>
-        public static ClientCertificateRequiredAndValidatedAdvancedSettings ClientCertificateRequiredAndValidatedAdvancedSettings(IEnumerable<ResourceReference> secrets = default, IEnumerable<string> allowedFqdns = default, CertificateRevocationCheckEnabledState? certificateRevocationCheck = default)
+        public static ClientCertificateRequiredAndValidatedAdvancedSettings ClientCertificateRequiredAndValidatedAdvancedSettings(IEnumerable<CdnResourceReference> secrets = default, IEnumerable<string> allowedFqdns = default, CertificateRevocationCheckEnabledState? certificateRevocationCheck = default)
         {
-            secrets ??= new ChangeTrackingList<ResourceReference>();
+            secrets ??= new ChangeTrackingList<CdnResourceReference>();
             allowedFqdns ??= new ChangeTrackingList<string>();
 
             return new ClientCertificateRequiredAndValidatedAdvancedSettings(MtlsScenarioType.ClientCertificateRequiredAndValidated, additionalBinaryDataProperties: null, secrets.ToList(), allowedFqdns.ToList(), certificateRevocationCheck);
@@ -1962,9 +1962,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="allowedFqdns"> List of FQDNs that will be accepted for mutual TLS validation. </param>
         /// <param name="certificateRevocationCheck"> Set to Enabled by default. If set to Disabled, revocation status of client certificate chain will be checked before establishing mutual TLS connection. </param>
         /// <returns> A new <see cref="Models.ClientCertificateValidatedIfPresentedAdvancedSettings"/> instance for mocking. </returns>
-        public static ClientCertificateValidatedIfPresentedAdvancedSettings ClientCertificateValidatedIfPresentedAdvancedSettings(IEnumerable<ResourceReference> secrets = default, IEnumerable<string> allowedFqdns = default, CertificateRevocationCheckEnabledState? certificateRevocationCheck = default)
+        public static ClientCertificateValidatedIfPresentedAdvancedSettings ClientCertificateValidatedIfPresentedAdvancedSettings(IEnumerable<CdnResourceReference> secrets = default, IEnumerable<string> allowedFqdns = default, CertificateRevocationCheckEnabledState? certificateRevocationCheck = default)
         {
-            secrets ??= new ChangeTrackingList<ResourceReference>();
+            secrets ??= new ChangeTrackingList<CdnResourceReference>();
             allowedFqdns ??= new ChangeTrackingList<string>();
 
             return new ClientCertificateValidatedIfPresentedAdvancedSettings(MtlsScenarioType.ClientCertificateValidatedIfPresented, additionalBinaryDataProperties: null, secrets.ToList(), allowedFqdns.ToList(), certificateRevocationCheck);
@@ -1993,7 +1993,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ValidateSecretContent"/> instance for mocking. </returns>
         public static ValidateSecretContent ValidateSecretContent(SecretType secretType = default, ResourceIdentifier secretSourceId = default, string secretVersion = default)
         {
-            return new ValidateSecretContent(secretType, secretSourceId is null ? default : new ResourceReference(secretSourceId, null), secretVersion, additionalBinaryDataProperties: null);
+            return new ValidateSecretContent(secretType, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, null), secretVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Output of the validated secret. </summary>
@@ -2020,7 +2020,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.ProfileChangeSkuWafMapping"/> instance for mocking. </returns>
         public static ProfileChangeSkuWafMapping ProfileChangeSkuWafMapping(string securityPolicyName = default, ResourceIdentifier changeToWafPolicyId = default)
         {
-            return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicyId is null ? default : new ResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
+            return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicyId is null ? default : new CdnResourceReference(changeToWafPolicyId, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Metrics Response. </summary>

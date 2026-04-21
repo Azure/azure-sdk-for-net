@@ -14,11 +14,11 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateRequiredAndOriginValidates. </summary>
-    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : FrontDoorCustomDomainMtlsParameters, IJsonModel<ClientCertificateRequiredAndOriginValidatesAdvancedSettings>
+    public partial class ClientCertificateRequiredAndOriginValidatesAdvancedSettings : FrontDoorCustomDomainMtlsSettings, IJsonModel<ClientCertificateRequiredAndOriginValidatesAdvancedSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FrontDoorCustomDomainMtlsParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override FrontDoorCustomDomainMtlsSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClientCertificateRequiredAndOriginValidatesAdvancedSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FrontDoorCustomDomainMtlsParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override FrontDoorCustomDomainMtlsSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ClientCertificateRequiredAndOriginValidatesAdvancedSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

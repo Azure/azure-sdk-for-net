@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. Can be Pending, Approved, Rejected, Disconnected, or Timeout. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPrivateLinkResourceProperties(ResourceReference privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedPrivateLinkResourceProperties(CdnResourceReference privateLink, string privateLinkLocation, string groupId, string requestMessage, SharedPrivateLinkResourceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLink = privateLink;
             PrivateLinkLocation = privateLinkLocation;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The resource id of the resource the shared private link resource is for. </summary>
         [WirePath("privateLink")]
-        internal ResourceReference PrivateLink { get; set; }
+        internal CdnResourceReference PrivateLink { get; set; }
 
         /// <summary> The location of the shared private link resource. </summary>
         [WirePath("privateLinkLocation")]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (PrivateLink is null)
                 {
-                    PrivateLink = new ResourceReference();
+                    PrivateLink = new CdnResourceReference();
                 }
                 PrivateLink.Id = value;
             }

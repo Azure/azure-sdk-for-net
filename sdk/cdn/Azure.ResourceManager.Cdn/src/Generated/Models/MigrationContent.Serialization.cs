@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             CdnSku sku = default;
-            ResourceReference classicResourceReference = default;
+            CdnResourceReference classicResourceReference = default;
             string profileName = default;
             IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    classicResourceReference = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("profileName"u8))

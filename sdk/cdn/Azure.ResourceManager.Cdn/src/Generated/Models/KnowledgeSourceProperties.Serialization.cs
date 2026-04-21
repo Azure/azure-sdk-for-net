@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string description = default;
-            KnowledgeSourceType sourceType = default;
+            WebAgentKnowledgeSourceType sourceType = default;
             string uri = default;
-            KnowledgeSourceUpdateFrequency? updateFrequency = default;
+            WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default;
             DateTimeOffset? lastRefreshedOn = default;
-            KnowledgeSourceProvisioningState? provisioningState = default;
+            WebAgentKnowledgeSourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("sourceType"u8))
                 {
-                    sourceType = new KnowledgeSourceType(prop.Value.GetString());
+                    sourceType = new WebAgentKnowledgeSourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    updateFrequency = new KnowledgeSourceUpdateFrequency(prop.Value.GetString());
+                    updateFrequency = new WebAgentKnowledgeSourceUpdateFrequency(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastRefreshedTime"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    provisioningState = new KnowledgeSourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new WebAgentKnowledgeSourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

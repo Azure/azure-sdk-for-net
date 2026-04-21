@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customizedCipherSuiteSet"> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, ResourceReference secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, CdnResourceReference secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateType = certificateType;
             CipherSuiteSetType = cipherSuiteSetType;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
         [WirePath("secret")]
-        internal ResourceReference Secret { get; set; }
+        internal CdnResourceReference Secret { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("secret.id")]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (Secret is null)
                 {
-                    Secret = new ResourceReference();
+                    Secret = new CdnResourceReference();
                 }
                 Secret.Id = value;
             }

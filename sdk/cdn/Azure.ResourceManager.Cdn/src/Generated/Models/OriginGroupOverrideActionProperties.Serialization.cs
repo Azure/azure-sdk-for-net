@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             DeliveryRuleActionParametersType typeName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceReference originGroup = default;
+            CdnResourceReference originGroup = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("typeName"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("originGroup"u8))
                 {
-                    originGroup = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    originGroup = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

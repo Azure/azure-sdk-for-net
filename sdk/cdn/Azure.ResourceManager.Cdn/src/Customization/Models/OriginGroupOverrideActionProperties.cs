@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
             ActionType = actionType;
             if (originGroup != null)
             {
-                OriginGroup = new ResourceReference { Id = originGroup.Id };
+                OriginGroup = new CdnResourceReference { Id = originGroup.Id };
             }
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             if (originGroup != null)
             {
-                OriginGroup = new ResourceReference { Id = originGroup.Id };
+                OriginGroup = new CdnResourceReference { Id = originGroup.Id };
             }
         }
     }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string securityPolicyName = default;
-            ResourceReference changeToWafPolicy = default;
+            CdnResourceReference changeToWafPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("changeToWafPolicy"u8))
                 {
-                    changeToWafPolicy = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    changeToWafPolicy = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>, and <see cref="AfdSecretMtlsCertificateChain"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>, and <see cref="FrontDoorSecretMtlsCertificateChain"/>.
     /// </summary>
     public abstract partial class FrontDoorSecretProperties
     {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for the endpoint (if applicable). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointPropertiesUpdateParameters(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, ResourceReference defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointPropertiesUpdateParameters(string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, CdnResourceReference defaultOriginGroup, IList<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> A reference to the origin group. </summary>
         [WirePath("defaultOriginGroup")]
-        internal ResourceReference DefaultOriginGroup { get; set; }
+        internal CdnResourceReference DefaultOriginGroup { get; set; }
 
         /// <summary> List of keys used to validate the signed URL hashes. </summary>
         [WirePath("urlSigningKeys")]
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (DefaultOriginGroup is null)
                 {
-                    DefaultOriginGroup = new ResourceReference();
+                    DefaultOriginGroup = new CdnResourceReference();
                 }
                 DefaultOriginGroup.Id = value;
             }

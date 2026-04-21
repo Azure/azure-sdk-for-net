@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference migratedFrom = default;
-            ResourceReference migratedTo = default;
+            CdnResourceReference migratedFrom = default;
+            CdnResourceReference migratedTo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    migratedFrom = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    migratedFrom = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("migratedTo"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    migratedTo = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    migratedTo = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretProperties"> The JSON object that contains the properties of the Secret to create. </param>
-        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecretDetails secretProperties) : base(id, name, resourceType, systemData)
+        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnSecretProperties secretProperties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             SecretProperties = secretProperties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
         [WirePath("properties")]
-        internal SecretDetails SecretProperties { get; set; }
+        internal CdnSecretProperties SecretProperties { get; set; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (SecretProperties is null)
                 {
-                    SecretProperties = new SecretDetails();
+                    SecretProperties = new CdnSecretProperties();
                 }
                 SecretProperties.Properties = value;
             }

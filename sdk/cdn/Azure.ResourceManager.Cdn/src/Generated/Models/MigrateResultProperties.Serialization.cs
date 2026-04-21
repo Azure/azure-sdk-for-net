@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference migratedProfileResourceId = default;
+            CdnResourceReference migratedProfileResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    migratedProfileResourceId = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    migratedProfileResourceId = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

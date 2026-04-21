@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteUpdatePropertiesParameters(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, ResourceReference originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteUpdatePropertiesParameters(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, CdnResourceReference originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> A reference to the origin group. </summary>
         [WirePath("originGroup")]
-        internal ResourceReference OriginGroup { get; set; }
+        internal CdnResourceReference OriginGroup { get; set; }
 
         /// <summary> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </summary>
         [WirePath("originPath")]
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (OriginGroup is null)
                 {
-                    OriginGroup = new ResourceReference();
+                    OriginGroup = new CdnResourceReference();
                 }
                 OriginGroup.Id = value;
             }

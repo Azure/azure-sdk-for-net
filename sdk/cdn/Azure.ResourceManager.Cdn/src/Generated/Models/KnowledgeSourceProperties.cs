@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sourceType"> Format or origin of the knowledge source. </param>
         /// <param name="uri"> Endpoint or location of the knowledge source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public KnowledgeSourceProperties(KnowledgeSourceType sourceType, string uri)
+        public KnowledgeSourceProperties(WebAgentKnowledgeSourceType sourceType, string uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="lastRefreshedOn"> The last time the knowledge source was updated. </param>
         /// <param name="provisioningState"> Provisioning status of the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceProperties(string description, KnowledgeSourceType sourceType, string uri, KnowledgeSourceUpdateFrequency? updateFrequency, DateTimeOffset? lastRefreshedOn, KnowledgeSourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceProperties(string description, WebAgentKnowledgeSourceType sourceType, string uri, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency, DateTimeOffset? lastRefreshedOn, WebAgentKnowledgeSourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             SourceType = sourceType;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Format or origin of the knowledge source. </summary>
         [WirePath("sourceType")]
-        public KnowledgeSourceType SourceType { get; set; }
+        public WebAgentKnowledgeSourceType SourceType { get; set; }
 
         /// <summary> Endpoint or location of the knowledge source. </summary>
         [WirePath("url")]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Specifies the units of time for scheduling update intervals for the knowledge source. </summary>
         [WirePath("updateFrequency")]
-        public KnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
+        public WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
 
         /// <summary> The last time the knowledge source was updated. </summary>
         [WirePath("lastRefreshedTime")]
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Provisioning status of the knowledge source. </summary>
         [WirePath("provisioningState")]
-        public KnowledgeSourceProvisioningState? ProvisioningState { get; }
+        public WebAgentKnowledgeSourceProvisioningState? ProvisioningState { get; }
     }
 }

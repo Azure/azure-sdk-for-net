@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
             return GetProfiles().Get(profileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebAgents in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of WebAgents and their operations over a WebAgentResource. </returns>
-        public virtual WebAgentCollection GetWebAgents()
+        /// <summary> Gets a collection of CdnWebAgents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CdnWebAgents and their operations over a CdnWebAgentResource. </returns>
+        public virtual CdnWebAgentCollection GetCdnWebAgents()
         {
-            return GetCachedClient(client => new WebAgentCollection(client, Id));
+            return GetCachedClient(client => new CdnWebAgentCollection(client, Id));
         }
 
         /// <summary>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAgentResource>> GetWebAgentAsync(string webAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnWebAgentResource>> GetCdnWebAgentAsync(string webAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
 
-            return await GetWebAgents().GetAsync(webAgentName, cancellationToken).ConfigureAwait(false);
+            return await GetCdnWebAgents().GetAsync(webAgentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="webAgentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="webAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAgentResource> GetWebAgent(string webAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnWebAgentResource> GetCdnWebAgent(string webAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webAgentName, nameof(webAgentName));
 
-            return GetWebAgents().Get(webAgentName, cancellationToken);
+            return GetCdnWebAgents().Get(webAgentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>

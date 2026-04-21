@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RuleSetProperties properties = default;
+            CdnRuleSetProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    properties = RuleSetProperties.DeserializeRuleSetProperties(prop.Value, options);
+                    properties = CdnRuleSetProperties.DeserializeCdnRuleSetProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

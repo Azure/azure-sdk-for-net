@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Cdn.Models
     // Customization: This file adds the old constructor to MigrationContent for backward API compatibility.
     // Reason: The old SDK (AutoRest-generated) constructor accepted a WritableSubResource-typed classicResourceReference
     // parameter, but after the TypeSpec migration, the generated constructor takes only profileName (string) and the
-    // classicResourceReference type changed to ResourceReference (an internal type). The old constructor signature
+    // classicResourceReference type changed to CdnResourceReference (an internal type). The old constructor signature
     // (CdnSku, WritableSubResource, string) is preserved here to avoid breaking user code that depends on it,
-    // internally converting WritableSubResource to ResourceReference.
+    // internally converting WritableSubResource to CdnResourceReference.
     public partial class MigrationContent
     {
         /// <summary> Initializes a new instance of <see cref="MigrationContent"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(profileName, nameof(profileName));
 
             Sku = sku;
-            ClassicResourceReference = new ResourceReference { Id = classicResourceReference.Id };
+            ClassicResourceReference = new CdnResourceReference { Id = classicResourceReference.Id };
             ProfileName = profileName;
             MigrationWebApplicationFirewallMappings = new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
         }

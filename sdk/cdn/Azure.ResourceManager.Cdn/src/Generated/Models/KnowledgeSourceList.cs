@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceList"/>. </summary>
         /// <param name="value"> The KnowledgeSource items on this page. </param>
-        internal KnowledgeSourceList(IEnumerable<KnowledgeSourceData> value)
+        internal KnowledgeSourceList(IEnumerable<CdnWebAgentKnowledgeSourceData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="value"> The KnowledgeSource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceList(IList<KnowledgeSourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceList(IList<CdnWebAgentKnowledgeSourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The KnowledgeSource items on this page. </summary>
         [WirePath("value")]
-        public IList<KnowledgeSourceData> Value { get; }
+        public IList<CdnWebAgentKnowledgeSourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

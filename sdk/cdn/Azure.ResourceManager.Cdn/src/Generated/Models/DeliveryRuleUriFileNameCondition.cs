@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleUriFileNameCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleUriFileNameCondition(UriFileNameMatchCondition properties) : base(MatchVariable.UrlFileName)
+        public DeliveryRuleUriFileNameCondition(UriFileNameMatchCondition properties) : base(DeliveryRuleMatchVariable.UrlFileName)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleUriFileNameCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, UriFileNameMatchCondition properties) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleUriFileNameCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, UriFileNameMatchCondition properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

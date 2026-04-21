@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ProfileAgentProperties"/>. </summary>
         /// <param name="customDomains"> List of custom domains associated with this agent link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomains"/> is null. </exception>
-        public ProfileAgentProperties(IEnumerable<ResourceReference> customDomains)
+        public ProfileAgentProperties(IEnumerable<CdnResourceReference> customDomains)
         {
             Argument.AssertNotNull(customDomains, nameof(customDomains));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="customDomains"> List of custom domains associated with this agent link. </param>
         /// <param name="provisioningState"> Provisioning status of the profile agent association. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileAgentProperties(ResourceReference webAgent, IList<ResourceReference> customDomains, ProfileAgentProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileAgentProperties(CdnResourceReference webAgent, IList<CdnResourceReference> customDomains, CdnProfileAgentProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebAgent = webAgent;
             CustomDomains = customDomains;
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Reference to the web agent resource. </summary>
         [WirePath("webAgent")]
-        internal ResourceReference WebAgent { get; set; }
+        internal CdnResourceReference WebAgent { get; set; }
 
         /// <summary> List of custom domains associated with this agent link. </summary>
         [WirePath("customDomains")]
-        public IList<ResourceReference> CustomDomains { get; } = new ChangeTrackingList<ResourceReference>();
+        public IList<CdnResourceReference> CustomDomains { get; } = new ChangeTrackingList<CdnResourceReference>();
 
         /// <summary> Provisioning status of the profile agent association. </summary>
         [WirePath("provisioningState")]
-        public ProfileAgentProvisioningState? ProvisioningState { get; }
+        public CdnProfileAgentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("webAgent.id")]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (WebAgent is null)
                 {
-                    WebAgent = new ResourceReference();
+                    WebAgent = new CdnResourceReference();
                 }
                 WebAgent.Id = value;
             }

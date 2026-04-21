@@ -13,12 +13,12 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Advanced settings for MtlsScenarioType enum value: ClientCertificateValidatedIfPresented. </summary>
-    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : FrontDoorCustomDomainMtlsParameters
+    public partial class ClientCertificateValidatedIfPresentedAdvancedSettings : FrontDoorCustomDomainMtlsSettings
     {
         /// <summary> Initializes a new instance of <see cref="ClientCertificateValidatedIfPresentedAdvancedSettings"/>. </summary>
         /// <param name="secrets"> List of one or two of Resource References (ie. subs/rg/profile/secret) to Secrets of type MtlsCertificateChain to use in mutual TLS handshake as the trusted issuer certificate chain. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
-        public ClientCertificateValidatedIfPresentedAdvancedSettings(IEnumerable<ResourceReference> secrets) : base(MtlsScenarioType.ClientCertificateValidatedIfPresented)
+        public ClientCertificateValidatedIfPresentedAdvancedSettings(IEnumerable<CdnResourceReference> secrets) : base(MtlsScenarioType.ClientCertificateValidatedIfPresented)
         {
             Argument.AssertNotNull(secrets, nameof(secrets));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secrets"> List of one or two of Resource References (ie. subs/rg/profile/secret) to Secrets of type MtlsCertificateChain to use in mutual TLS handshake as the trusted issuer certificate chain. </param>
         /// <param name="allowedFqdns"> List of FQDNs that will be accepted for mutual TLS validation. </param>
         /// <param name="certificateRevocationCheck"> Set to Enabled by default. If set to Disabled, revocation status of client certificate chain will be checked before establishing mutual TLS connection. </param>
-        internal ClientCertificateValidatedIfPresentedAdvancedSettings(MtlsScenarioType scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceReference> secrets, IList<string> allowedFqdns, CertificateRevocationCheckEnabledState? certificateRevocationCheck) : base(scenario, additionalBinaryDataProperties)
+        internal ClientCertificateValidatedIfPresentedAdvancedSettings(MtlsScenarioType scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CdnResourceReference> secrets, IList<string> allowedFqdns, CertificateRevocationCheckEnabledState? certificateRevocationCheck) : base(scenario, additionalBinaryDataProperties)
         {
             Secrets = secrets;
             AllowedFqdns = allowedFqdns;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of one or two of Resource References (ie. subs/rg/profile/secret) to Secrets of type MtlsCertificateChain to use in mutual TLS handshake as the trusted issuer certificate chain. </summary>
         [WirePath("secrets")]
-        public IList<ResourceReference> Secrets { get; }
+        public IList<CdnResourceReference> Secrets { get; }
 
         /// <summary> List of FQDNs that will be accepted for mutual TLS validation. </summary>
         [WirePath("allowedFqdns")]

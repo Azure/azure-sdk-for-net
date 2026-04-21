@@ -315,57 +315,57 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProfileAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CdnProfileAgentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetProfileAgentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetCdnProfileAgentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProfileAgentResource"/> object. </returns>
-        public static ProfileAgentResource GetProfileAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnProfileAgentResource"/> object. </returns>
+        public static CdnProfileAgentResource GetCdnProfileAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCdnArmClient(client).GetProfileAgentResource(id);
+            return GetMockableCdnArmClient(client).GetCdnProfileAgentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CdnWebAgentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetWebAgentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetCdnWebAgentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAgentResource"/> object. </returns>
-        public static WebAgentResource GetWebAgentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnWebAgentResource"/> object. </returns>
+        public static CdnWebAgentResource GetCdnWebAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCdnArmClient(client).GetWebAgentResource(id);
+            return GetMockableCdnArmClient(client).GetCdnWebAgentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KnowledgeSourceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="CdnWebAgentKnowledgeSourceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetKnowledgeSourceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnArmClient.GetCdnWebAgentKnowledgeSourceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KnowledgeSourceResource"/> object. </returns>
-        public static KnowledgeSourceResource GetKnowledgeSourceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnWebAgentKnowledgeSourceResource"/> object. </returns>
+        public static CdnWebAgentKnowledgeSourceResource GetCdnWebAgentKnowledgeSourceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCdnArmClient(client).GetKnowledgeSourceResource(id);
+            return GetMockableCdnArmClient(client).GetCdnWebAgentKnowledgeSourceResource(id);
         }
 
         /// <summary>
@@ -460,27 +460,27 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Gets a collection of WebAgents in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of CdnWebAgents in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetWebAgents()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetCdnWebAgents()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of WebAgents and their operations over a WebAgentResource. </returns>
-        public static WebAgentCollection GetWebAgents(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CdnWebAgents and their operations over a CdnWebAgentResource. </returns>
+        public static CdnWebAgentCollection GetCdnWebAgents(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCdnResourceGroupResource(resourceGroupResource).GetWebAgents();
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebAgents();
         }
 
         /// <summary>
         /// Gets a web agent with the specified name within a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetWebAgentAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetCdnWebAgentAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -488,18 +488,18 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WebAgentResource>> GetWebAgentAsync(this ResourceGroupResource resourceGroupResource, string webAgentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CdnWebAgentResource>> GetCdnWebAgentAsync(this ResourceGroupResource resourceGroupResource, string webAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableCdnResourceGroupResource(resourceGroupResource).GetWebAgentAsync(webAgentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebAgentAsync(webAgentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a web agent with the specified name within a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetWebAgent(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnResourceGroupResource.GetCdnWebAgent(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WebAgentResource> GetWebAgent(this ResourceGroupResource resourceGroupResource, string webAgentName, CancellationToken cancellationToken = default)
+        public static Response<CdnWebAgentResource> GetCdnWebAgent(this ResourceGroupResource resourceGroupResource, string webAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableCdnResourceGroupResource(resourceGroupResource).GetWebAgent(webAgentName, cancellationToken);
+            return GetMockableCdnResourceGroupResource(resourceGroupResource).GetCdnWebAgent(webAgentName, cancellationToken);
         }
 
         /// <summary>
@@ -721,36 +721,36 @@ namespace Azure.ResourceManager.Cdn
         /// Lists all web agents within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.GetWebAgentsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.GetCdnWebAgentsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAgentResource> GetWebAgentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CdnWebAgentResource> GetCdnWebAgentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCdnSubscriptionResource(subscriptionResource).GetWebAgentsAsync(cancellationToken);
+            return GetMockableCdnSubscriptionResource(subscriptionResource).GetCdnWebAgentsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all web agents within a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.GetWebAgents(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCdnSubscriptionResource.GetCdnWebAgents(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAgentResource> GetWebAgents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CdnWebAgentResource> GetCdnWebAgents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCdnSubscriptionResource(subscriptionResource).GetWebAgents(cancellationToken);
+            return GetMockableCdnSubscriptionResource(subscriptionResource).GetCdnWebAgents(cancellationToken);
         }
 
         /// <summary>

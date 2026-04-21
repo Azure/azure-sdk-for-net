@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Cdn.Models
     // Reason: The TypeSpec generator removes separators (underscores, dots) from version numbers to produce member names (e.g., TLS102019),
     // but the old SDK used underscore-separated readable names (e.g., Tls1_0_2019).
     // CodeGenMember attributes map the generated names to the old names to preserve public API naming compatibility.
+    // Note: This type retains the original "Afd" prefix because @@clientName cannot rename it without breaking the
+    // generated property FrontDoorCustomDomainHttpsContent.CipherSuiteSetType, which uses this type directly.
     public readonly partial struct AfdCipherSuiteSetType
     {
         /// <summary> TLS1_0_2019. </summary>

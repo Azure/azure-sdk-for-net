@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="secretSource"> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, ResourceReference secretSource, string secretVersion) : base(secretType, additionalBinaryDataProperties)
+        internal UriSigningKeyProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyId, CdnResourceReference secretSource, string secretVersion) : base(secretType, additionalBinaryDataProperties)
         {
             KeyId = keyId;
             SecretSource = secretSource;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference to the Azure Key Vault secret. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{secretName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
         [WirePath("secretSource")]
-        internal ResourceReference SecretSource { get; set; }
+        internal CdnResourceReference SecretSource { get; set; }
 
         /// <summary> Version of the secret to be used. </summary>
         [WirePath("secretVersion")]
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (SecretSource is null)
                 {
-                    SecretSource = new ResourceReference();
+                    SecretSource = new CdnResourceReference();
                 }
                 SecretSource.Id = value;
             }

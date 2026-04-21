@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="securityPolicyName"> The security policy name. </param>
         /// <param name="changeToWafPolicy"> The new waf resource for the security policy to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileChangeSkuWafMapping(string securityPolicyName, ResourceReference changeToWafPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileChangeSkuWafMapping(string securityPolicyName, CdnResourceReference changeToWafPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityPolicyName = securityPolicyName;
             ChangeToWafPolicy = changeToWafPolicy;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The new waf resource for the security policy to use. </summary>
         [WirePath("changeToWafPolicy")]
-        internal ResourceReference ChangeToWafPolicy { get; }
+        internal CdnResourceReference ChangeToWafPolicy { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("changeToWafPolicy.id")]

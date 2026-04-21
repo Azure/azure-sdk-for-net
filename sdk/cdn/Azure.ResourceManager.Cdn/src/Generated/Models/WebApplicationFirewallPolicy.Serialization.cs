@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Sku))
             {
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             WebApplicationFirewallPolicyProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             CdnSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +174,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

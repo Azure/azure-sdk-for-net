@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn
     public partial class ProfileResource
     {
         /// <summary>
-        /// Get log report for AFD profile
+        /// Get log report for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get log report for AFD profile
+        /// Get log report for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get log analytics ranking report for AFD profile
+        /// Get log analytics ranking report for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get log analytics ranking report for AFD profile
+        /// Get log analytics ranking report for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get Waf related log analytics report for AFD profile.
+        /// Get Waf related log analytics report for FrontDoor profile.
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get Waf related log analytics report for AFD profile.
+        /// Get Waf related log analytics report for FrontDoor profile.
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get WAF log analytics charts for AFD profile
+        /// Get WAF log analytics charts for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Get WAF log analytics charts for AFD profile
+        /// Get WAF log analytics charts for FrontDoor profile
         /// </summary>
         /// <param name="options"> The options parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

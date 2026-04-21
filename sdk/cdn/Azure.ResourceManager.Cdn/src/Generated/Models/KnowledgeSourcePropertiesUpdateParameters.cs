@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="uri"> Endpoint or location of the knowledge source. </param>
         /// <param name="updateFrequency"> Specifies the units of time for scheduling update intervals for the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourcePropertiesUpdateParameters(string description, string uri, KnowledgeSourceUpdateFrequency? updateFrequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourcePropertiesUpdateParameters(string description, string uri, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Uri = uri;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Specifies the units of time for scheduling update intervals for the knowledge source. </summary>
         [WirePath("updateFrequency")]
-        public KnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
+        public WebAgentKnowledgeSourceUpdateFrequency? UpdateFrequency { get; set; }
     }
 }

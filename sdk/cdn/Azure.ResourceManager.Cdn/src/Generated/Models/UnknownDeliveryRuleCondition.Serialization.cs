@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            MatchVariable name = default;
+            DeliveryRuleMatchVariable name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
                 {
-                    name = new MatchVariable(prop.Value.GetString());
+                    name = new DeliveryRuleMatchVariable(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

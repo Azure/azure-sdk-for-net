@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="WebAgentProperties"/>. </summary>
         public WebAgentProperties()
         {
-            Paths = new ChangeTrackingList<AgentPath>();
-            ProfileAgentLinks = new ChangeTrackingList<ResourceReference>();
+            Paths = new ChangeTrackingList<CdnWebAgentPath>();
+            ProfileAgentLinks = new ChangeTrackingList<CdnResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAgentProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileAgentLinks"> References to agent links in CDN profiles. </param>
         /// <param name="provisioningState"> Provisioning status of the web agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAgentProperties(string description, string systemPrompt, IList<AgentPath> paths, IReadOnlyList<ResourceReference> profileAgentLinks, WebAgentProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAgentProperties(string description, string systemPrompt, IList<CdnWebAgentPath> paths, IReadOnlyList<CdnResourceReference> profileAgentLinks, CdnWebAgentProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             SystemPrompt = systemPrompt;
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of paths associated with the web agent. </summary>
         [WirePath("paths")]
-        public IList<AgentPath> Paths { get; } = new ChangeTrackingList<AgentPath>();
+        public IList<CdnWebAgentPath> Paths { get; } = new ChangeTrackingList<CdnWebAgentPath>();
 
         /// <summary> References to agent links in CDN profiles. </summary>
         [WirePath("profileAgentLinks")]
-        public IReadOnlyList<ResourceReference> ProfileAgentLinks { get; } = new ChangeTrackingList<ResourceReference>();
+        public IReadOnlyList<CdnResourceReference> ProfileAgentLinks { get; } = new ChangeTrackingList<CdnResourceReference>();
 
         /// <summary> Provisioning status of the web agent. </summary>
         [WirePath("provisioningState")]
-        public WebAgentProvisioningState? ProvisioningState { get; }
+        public CdnWebAgentProvisioningState? ProvisioningState { get; }
     }
 }

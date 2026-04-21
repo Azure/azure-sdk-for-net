@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="migratedFrom"> Migration From Waf policy. </param>
         /// <param name="migratedTo"> Migration to Waf policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationWebApplicationFirewallMapping(ResourceReference migratedFrom, ResourceReference migratedTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationWebApplicationFirewallMapping(CdnResourceReference migratedFrom, CdnResourceReference migratedTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigratedFrom = migratedFrom;
             MigratedTo = migratedTo;
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Migration From Waf policy. </summary>
         [WirePath("migratedFrom")]
-        internal ResourceReference MigratedFrom { get; set; }
+        internal CdnResourceReference MigratedFrom { get; set; }
 
         /// <summary> Migration to Waf policy. </summary>
         [WirePath("migratedTo")]
-        internal ResourceReference MigratedTo { get; set; }
+        internal CdnResourceReference MigratedTo { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("migratedFrom.id")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (MigratedFrom is null)
                 {
-                    MigratedFrom = new ResourceReference();
+                    MigratedFrom = new CdnResourceReference();
                 }
                 MigratedFrom.Id = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (MigratedTo is null)
                 {
-                    MigratedTo = new ResourceReference();
+                    MigratedTo = new CdnResourceReference();
                 }
                 MigratedTo.Id = value;
             }

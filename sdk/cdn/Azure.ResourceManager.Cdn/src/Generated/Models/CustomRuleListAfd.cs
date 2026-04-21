@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CustomRuleListAfd"/>. </summary>
         public CustomRuleListAfd()
         {
-            Rules = new ChangeTrackingList<CustomRuleAfd>();
+            Rules = new ChangeTrackingList<FrontDoorCustomRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRuleListAfd"/>. </summary>
         /// <param name="rules"> List of rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRuleListAfd(IList<CustomRuleAfd> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRuleListAfd(IList<FrontDoorCustomRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("rules")]
-        public IList<CustomRuleAfd> Rules { get; }
+        public IList<FrontDoorCustomRule> Rules { get; }
     }
 }

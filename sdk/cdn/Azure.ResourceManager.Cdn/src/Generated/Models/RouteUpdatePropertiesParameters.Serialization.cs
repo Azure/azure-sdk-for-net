@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             string endpointName = default;
             IList<FrontDoorActivatedResourceInfo> customDomains = default;
-            ResourceReference originGroup = default;
+            CdnResourceReference originGroup = default;
             string originPath = default;
             IList<WritableSubResource> ruleSets = default;
             IList<FrontDoorEndpointProtocol> supportedProtocols = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originGroup = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    originGroup = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("originPath"u8))

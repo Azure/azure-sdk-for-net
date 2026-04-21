@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="profileName"> Name of the new profile that need to be created. </param>
         /// <param name="migrationWebApplicationFirewallMappings"> Waf mapping for the migrated profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationContent(CdnSku sku, ResourceReference classicResourceReference, string profileName, IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationContent(CdnSku sku, CdnResourceReference classicResourceReference, string profileName, IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             ClassicResourceReference = classicResourceReference;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
         [WirePath("classicResourceReference")]
-        internal ResourceReference ClassicResourceReference { get; }
+        internal CdnResourceReference ClassicResourceReference { get; }
 
         /// <summary> Name of the new profile that need to be created. </summary>
         [WirePath("profileName")]

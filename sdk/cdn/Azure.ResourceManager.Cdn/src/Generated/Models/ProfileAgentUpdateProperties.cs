@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="ProfileAgentUpdateProperties"/>. </summary>
         public ProfileAgentUpdateProperties()
         {
-            CustomDomains = new ChangeTrackingList<ResourceReference>();
+            CustomDomains = new ChangeTrackingList<CdnResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProfileAgentUpdateProperties"/>. </summary>
         /// <param name="customDomains"> List of custom domains associated with this agent link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileAgentUpdateProperties(IList<ResourceReference> customDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileAgentUpdateProperties(IList<CdnResourceReference> customDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomDomains = customDomains;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of custom domains associated with this agent link. </summary>
         [WirePath("customDomains")]
-        public IList<ResourceReference> CustomDomains { get; } = new ChangeTrackingList<ResourceReference>();
+        public IList<CdnResourceReference> CustomDomains { get; } = new ChangeTrackingList<CdnResourceReference>();
     }
 }

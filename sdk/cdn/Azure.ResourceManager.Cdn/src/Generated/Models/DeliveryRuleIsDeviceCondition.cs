@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleIsDeviceCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleIsDeviceCondition(IsDeviceMatchCondition properties) : base(MatchVariable.IsDevice)
+        public DeliveryRuleIsDeviceCondition(IsDeviceMatchCondition properties) : base(DeliveryRuleMatchVariable.IsDevice)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleIsDeviceCondition(MatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsDeviceMatchCondition properties) : base(name, additionalBinaryDataProperties)
+        internal DeliveryRuleIsDeviceCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsDeviceMatchCondition properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference originGroup = default;
+            CdnResourceReference originGroup = default;
             ForwardingProtocol? forwardingProtocol = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    originGroup = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    originGroup = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("forwardingProtocol"u8))

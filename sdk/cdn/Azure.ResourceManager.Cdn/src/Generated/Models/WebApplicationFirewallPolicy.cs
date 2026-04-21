@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="properties"> Properties of the web application firewall policy. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </param>
-        internal WebApplicationFirewallPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, string eTag, CdnSku sku) : base(id, name, resourceType, systemData)
+        internal WebApplicationFirewallPolicy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, ETag? eTag, CdnSku sku) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </summary>
         [WirePath("sku")]
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes settings for the policy. </summary>
         [WirePath("properties.policySettings")]
-        public PolicySettingsAfd PolicySettings
+        public FrontDoorPolicySettings PolicySettings
         {
             get
             {
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.routingRuleLinks")]
-        public IReadOnlyList<RoutingRuleLink> RoutingRuleLinks
+        public IReadOnlyList<CdnRoutingRuleLink> RoutingRuleLinks
         {
             get
             {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
         [WirePath("properties.securityPolicyLinks")]
-        public IReadOnlyList<SecurityPolicyLink> SecurityPolicyLinks
+        public IReadOnlyList<CdnSecurityPolicyLink> SecurityPolicyLinks
         {
             get
             {
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rules. </summary>
         [WirePath("properties.customRules.rules")]
-        public IList<CustomRuleAfd> CustomRules
+        public IList<FrontDoorCustomRule> CustomRules
         {
             get
             {
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("properties.managedRules.managedRuleSets")]
-        public IList<ManagedRuleSetAfd> ManagedRuleSets
+        public IList<FrontDoorManagedRuleSet> ManagedRuleSets
         {
             get
             {

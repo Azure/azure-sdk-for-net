@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (CustomRuleAfd item in Rules)
+                foreach (FrontDoorCustomRule item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            IList<CustomRuleAfd> rules = default;
+            IList<FrontDoorCustomRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    List<CustomRuleAfd> array = new List<CustomRuleAfd>();
+                    List<FrontDoorCustomRule> array = new List<FrontDoorCustomRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomRuleAfd.DeserializeCustomRuleAfd(item, options));
+                        array.Add(FrontDoorCustomRule.DeserializeFrontDoorCustomRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomRuleListAfd(rules ?? new ChangeTrackingList<CustomRuleAfd>(), additionalBinaryDataProperties);
+            return new CustomRuleListAfd(rules ?? new ChangeTrackingList<FrontDoorCustomRule>(), additionalBinaryDataProperties);
         }
     }
 }

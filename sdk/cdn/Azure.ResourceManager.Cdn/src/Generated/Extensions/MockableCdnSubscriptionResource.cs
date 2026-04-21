@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAgentResource> GetWebAgentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CdnWebAgentResource> GetCdnWebAgentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetBySubscriptionAsyncCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetWebAgents"), data => new WebAgentResource(Client, data));
+            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionAsyncCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAgentResource> GetWebAgents(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CdnWebAgentResource> GetCdnWebAgents(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAgentData, WebAgentResource>(new WebAgentsGetBySubscriptionCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetWebAgents"), data => new WebAgentResource(Client, data));
+            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
         }
 
         /// <summary>

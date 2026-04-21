@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="typeName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
-        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceReference originGroup) : base(typeName, additionalBinaryDataProperties)
+        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference originGroup) : base(typeName, additionalBinaryDataProperties)
         {
             OriginGroup = originGroup;
         }
 
         /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
         [WirePath("originGroup")]
-        internal ResourceReference OriginGroup { get; set; }
+        internal CdnResourceReference OriginGroup { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("originGroup.id")]
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (OriginGroup is null)
                 {
-                    OriginGroup = new ResourceReference();
+                    OriginGroup = new CdnResourceReference();
                 }
                 OriginGroup.Id = value;
             }

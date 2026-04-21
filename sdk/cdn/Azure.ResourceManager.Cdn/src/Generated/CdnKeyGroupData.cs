@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> Names of UrlSigningKey type secret objects. </summary>
         [WirePath("properties.keyReferences")]
-        public IList<ResourceReference> KeyReferences
+        public IList<CdnResourceReference> KeyReferences
         {
             get
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
         /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainUpdatePropertiesParameters(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsParameters mtlsSettings, ResourceReference dnsZone, ResourceReference preValidatedCustomDomainResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorCustomDomainUpdatePropertiesParameters(string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsSettings mtlsSettings, CdnResourceReference dnsZone, CdnResourceReference preValidatedCustomDomainResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProfileName = profileName;
             TlsSettings = tlsSettings;
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </summary>
         [WirePath("mtlsSettings")]
-        public FrontDoorCustomDomainMtlsParameters MtlsSettings { get; set; }
+        public FrontDoorCustomDomainMtlsSettings MtlsSettings { get; set; }
 
         /// <summary> Resource reference to the Azure DNS zone. </summary>
         [WirePath("azureDnsZone")]
-        internal ResourceReference DnsZone { get; set; }
+        internal CdnResourceReference DnsZone { get; set; }
 
         /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
         [WirePath("preValidatedCustomDomainResourceId")]
-        internal ResourceReference PreValidatedCustomDomainResource { get; set; }
+        internal CdnResourceReference PreValidatedCustomDomainResource { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("azureDnsZone.id")]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (DnsZone is null)
                 {
-                    DnsZone = new ResourceReference();
+                    DnsZone = new CdnResourceReference();
                 }
                 DnsZone.Id = value;
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (PreValidatedCustomDomainResource is null)
                 {
-                    PreValidatedCustomDomainResource = new ResourceReference();
+                    PreValidatedCustomDomainResource = new CdnResourceReference();
                 }
                 PreValidatedCustomDomainResource.Id = value;
             }

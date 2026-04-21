@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The JSON object that contains the properties of the Rule Set to create. </param>
-        internal FrontDoorRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RuleSetProperties properties) : base(id, name, resourceType, systemData)
+        internal FrontDoorRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnRuleSetProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
         [WirePath("properties")]
-        internal RuleSetProperties Properties { get; }
+        internal CdnRuleSetProperties Properties { get; }
 
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]

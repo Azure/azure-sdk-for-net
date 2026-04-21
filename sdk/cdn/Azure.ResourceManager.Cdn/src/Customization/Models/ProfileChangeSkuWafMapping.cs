@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     // Customization: This file adds the old constructor to ProfileChangeSkuWafMapping for backward API compatibility with the previous SDK.
     // Reason: The old SDK constructor accepted a WritableSubResource-typed changeToWafPolicy parameter,
-    // but after the TypeSpec migration it was changed to ResourceReference. The old constructor is preserved here,
+    // but after the TypeSpec migration it was changed to CdnResourceReference. The old constructor is preserved here,
     // internally converting the type, and marked as EditorBrowsable.Never.
     public partial class ProfileChangeSkuWafMapping
     {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             if (changeToWafPolicy != null)
             {
-                ChangeToWafPolicy = new ResourceReference { Id = changeToWafPolicy.Id };
+                ChangeToWafPolicy = new CdnResourceReference { Id = changeToWafPolicy.Id };
             }
         }
     }

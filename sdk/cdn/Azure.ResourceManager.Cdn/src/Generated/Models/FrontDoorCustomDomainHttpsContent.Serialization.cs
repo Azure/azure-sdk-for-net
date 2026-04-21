@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
             AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
             FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
-            ResourceReference secret = default;
+            CdnResourceReference secret = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secret = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    secret = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

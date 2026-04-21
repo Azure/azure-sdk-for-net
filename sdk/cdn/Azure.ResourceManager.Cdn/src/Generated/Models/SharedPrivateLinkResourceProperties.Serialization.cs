@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            ResourceReference privateLink = default;
+            CdnResourceReference privateLink = default;
             string privateLinkLocation = default;
             string groupId = default;
             string requestMessage = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    privateLink = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    privateLink = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("privateLinkLocation"u8))

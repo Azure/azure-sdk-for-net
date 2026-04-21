@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RouteProperties properties = default;
+            CdnRouteProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    properties = RouteProperties.DeserializeRouteProperties(prop.Value, options);
+                    properties = CdnRouteProperties.DeserializeCdnRouteProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
