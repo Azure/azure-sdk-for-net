@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ModelFactory` methods for `HDInsightAutoScaleRecurrence`, `HDInsightAutoScaleSchedule`, `HDInsightAzureMonitorSelectedConfigurations`, `HDInsightClusterCreateOrUpdateContent`, `HDInsightClusterCreateOrUpdateProperties`, `HDInsightClusterCreationValidateContent`, `HDInsightClusterDefinition`, `HDInsightClusterGatewaySettings`, `HDInsightClusterRole`, `HDInsightClusterUpdateGatewaySettingsContent`, `HDInsightSecurityProfile`, and `KafkaRestProperties`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
